@@ -186,104 +186,96 @@
                 </div>
 
                 {# UPC #}
-                {% if upc_enabled %}
-                  <div class="row mb-3">
-                    <label for="input-upc" class="col-sm-2 col-form-label">{{ entry_upc }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
-                        {% if master_id %}
-                          <div class="input-group-text">
-                            <div class="form-check form-switch">
-                              <input type="checkbox" name="override[upc]" value="1" id="input-variant-upc" data-oc-toggle="switch" data-oc-target="#input-upc" class="form-check-input"{% if override.upc %} checked{% endif %}/> <label for="input-variant-upc" class="form-check-label"></label>
-                            </div>
+                <div class="row mb-3{% if upc_enabled %} d-none{% endif %}">
+                  <label for="input-upc" class="col-sm-2 col-form-label">{{ entry_upc }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[upc]" value="1" id="input-variant-upc" data-oc-toggle="switch" data-oc-target="#input-upc" class="form-check-input"{% if override.upc %} checked{% endif %}/> <label for="input-variant-upc" class="form-check-label"></label>
                           </div>
-                        {% endif %}
-                      </div>
-                      <div class="form-text">{{ help_upc }}</div>
+                        </div>
+                      {% endif %}
                     </div>
+                    <div class="form-text">{{ help_upc }}</div>
                   </div>
-                {% endif %}
+                </div>
+
 
                 {# EAN #}
-                {% if ean_enabled %}
-                  <div class="row mb-3">
-                    <label for="input-ean" class="col-sm-2 col-form-label">{{ entry_ean }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
-                        {% if master_id %}
-                          <div class="input-group-text">
-                            <div class="form-check form-switch">
-                              <input type="checkbox" name="override[ean]" value="1" id="input-variant-ean" data-oc-toggle="switch" data-oc-target="#input-ean" class="form-check-input"{% if override.ean %} checked{% endif %}/> <label for="input-variant-ean" class="form-check-label"></label>
-                            </div>
+                <div class="row mb-3{% if ean_enabled %} d-none{% endif %}">
+                  <label for="input-ean" class="col-sm-2 col-form-label">{{ entry_ean }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[ean]" value="1" id="input-variant-ean" data-oc-toggle="switch" data-oc-target="#input-ean" class="form-check-input"{% if override.ean %} checked{% endif %}/> <label for="input-variant-ean" class="form-check-label"></label>
                           </div>
-                        {% endif %}
-                      </div>
-                      <div class="form-text">{{ help_ean }}</div>
+                        </div>
+                      {% endif %}
                     </div>
+                    <div class="form-text">{{ help_ean }}</div>
                   </div>
-                {% endif %}
+                </div>
 
                 {# JAN #}
-                {% if jan_enabled %}
-                  <div class="row mb-3">
-                    <label for="input-jan" class="col-sm-2 col-form-label">{{ entry_jan }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
-                        {% if master_id %}
-                          <div class="input-group-text">
-                            <div class="form-check form-switch">
-                              <input type="checkbox" name="override[jan]" value="1" id="input-variant-jan" data-oc-toggle="switch" data-oc-target="#input-jan" class="form-check-input"{% if override.jan %} checked{% endif %}/> <label for="input-variant-jan" class="form-check-label"></label>
-                            </div>
+                <div class="row mb-3{% if jan_enabled %} d-none{% endif %}">
+                  <label for="input-jan" class="col-sm-2 col-form-label">{{ entry_jan }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[jan]" value="1" id="input-variant-jan" data-oc-toggle="switch" data-oc-target="#input-jan" class="form-check-input"{% if override.jan %} checked{% endif %}/> <label for="input-variant-jan" class="form-check-label"></label>
                           </div>
-                        {% endif %}
-                      </div>
-                      <div class="form-text">{{ help_jan }}</div>
+                        </div>
+                      {% endif %}
                     </div>
+                    <div class="form-text">{{ help_jan }}</div>
                   </div>
-                {% endif %}
+                </div>
 
                 {# ISBN #}
-                {% if isbn_enabled %}
-                  <div class="row mb-3">
-                    <label for="input-isbn" class="col-sm-2 col-form-label">{{ entry_isbn }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
-                        {% if master_id %}
-                          <div class="input-group-text">
-                            <div class="form-check form-switch">
-                              <input type="checkbox" name="override[isbn]" value="1" id="input-variant-isbn" data-oc-toggle="switch" data-oc-target="#input-isbn" class="form-check-input"{% if override.isbn %} checked{% endif %}/> <label for="input-variant-isbn" class="form-check-label"></label>
-                            </div>
+                <div class="row mb-3{% if isbn_enabled %} d-none{% endif %}">
+                  <label for="input-isbn" class="col-sm-2 col-form-label">{{ entry_isbn }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[isbn]" value="1" id="input-variant-isbn" data-oc-toggle="switch" data-oc-target="#input-isbn" class="form-check-input"{% if override.isbn %} checked{% endif %}/> <label for="input-variant-isbn" class="form-check-label"></label>
                           </div>
-                        {% endif %}
-                      </div>
-                      <div class="form-text">{{ help_isbn }}</div>
+                        </div>
+                      {% endif %}
                     </div>
+                    <div class="form-text">{{ help_isbn }}</div>
                   </div>
-                {% endif %}
+                </div>
 
                 {# MPN #}
-                {% if mpn_enabled %}
-                  <div class="row mb-3">
-                    <label for="input-mpn" class="col-sm-2 col-form-label">{{ entry_mpn }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
-                        {% if master_id %}
-                          <div class="input-group-text">
-                            <div class="form-check form-switch">
-                              <input type="checkbox" name="override[mpn]" value="1" id="input-variant-mpn" data-oc-toggle="switch" data-oc-target="#input-mpn" class="form-check-input"{% if override.mpn %} checked{% endif %}/> <label for="input-variant-mpn" class="form-check-label"></label>
-                            </div>
+                <div class="row mb-3{% if mpn_enabled %} d-none{% endif %}">
+                  <label for="input-mpn" class="col-sm-2 col-form-label">{{ entry_mpn }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[mpn]" value="1" id="input-variant-mpn" data-oc-toggle="switch" data-oc-target="#input-mpn" class="form-check-input"{% if override.mpn %} checked{% endif %}/> <label for="input-variant-mpn" class="form-check-label"></label>
                           </div>
-                        {% endif %}
-                      </div>
-                      <div class="form-text">{{ help_mpn }}</div>
+                        </div>
+                      {% endif %}
                     </div>
+                    <div class="form-text">{{ help_mpn }}</div>
                   </div>
-                {% endif %}
+                </div>
+
                 <div class="row mb-3">
                   <label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
                   <div class="col-sm-10">

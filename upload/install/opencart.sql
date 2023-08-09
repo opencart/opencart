@@ -2095,6 +2095,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (-1, 'config', 'config_product_jan', '1', 0),
 (-1, 'config', 'config_product_isbn', '1', 0),
 (-1, 'config', 'config_product_mpn', '1', 0),
+(-1, 'config', 'config_price_incl_tax', '1', 0),
 (0, 'developer', 'developer_sass', '1', 0),
 (0, 'currency_ecb', 'currency_ecb_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_status', '1', 0),

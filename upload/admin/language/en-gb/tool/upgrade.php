@@ -26,5 +26,5 @@ $_['error_version']        = 'Version is lower than the current version!';
 $_['error_download']       = 'Upgrade could not be downloaded!';
 $_['error_file']           = 'Upgrade file could not be found!';
 $_['error_directory']      = 'Could not create directory %s!';
-$_['error_copy']           = 'Could not copy file from: %s to: %s !';
+$_['error_copy']           = 'Could not copy file %s to: %s !';
 $_['error_unzip']          = 'Zip file could not be opened!';

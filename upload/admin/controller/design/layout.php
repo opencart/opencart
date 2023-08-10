@@ -245,7 +245,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 			$module_data = [];
 
-			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] .'.' . $extension['code']);
+			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] . '.' . $extension['code']);
 
 			foreach ($modules as $module) {
 				$module_data[] = [

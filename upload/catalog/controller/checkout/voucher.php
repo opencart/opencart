@@ -42,7 +42,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('checkout/voucher.add', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
 
 		if ($this->customer->isLogged()) {
-			$data['from_name'] = $this->customer->getFirstName() . ' '  . $this->customer->getLastName();
+			$data['from_name'] = $this->customer->getFirstName() . ' ' . $this->customer->getLastName();
 		} else {
 			$data['from_name'] = '';
 		}

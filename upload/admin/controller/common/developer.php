@@ -62,7 +62,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 				foreach ($directories as $directory) {
 					$files = glob($directory . '/*');
 					
-					foreach ($files as $file) { 
+					foreach ($files as $file) {
 						if (is_file($file)) {
 							unlink($file);
 						}

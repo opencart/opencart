@@ -36,7 +36,7 @@ $_['action_pre_action']  = [
 ];
 
 // Action Events
-$_['action_event']      = [
+$_['action_event']       = [
 	'controller/*/before' => [
 		0 => 'event/language.before',
 	//	1 => 'event/debug.before'

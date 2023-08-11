@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']         = 'You have successfully modified customers';
+$_['text_success']         = 'Success: You have successfully modified customers!';
 
 // Error
 $_['error_customer']       = 'Warning: Customer could not be found!';

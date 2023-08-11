@@ -15,7 +15,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function index(&$route, &$args, &$output) {
+	public function index(&$route, &$args, &$output): void {
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];
 		} else {
@@ -69,7 +69,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function reset(&$route, &$args, &$output) {
+	public function reset(&$route, &$args, &$output): void {
 		if (isset($this->request->get['route'])) {
 			$route = $this->request->get['route'];
 		} else {

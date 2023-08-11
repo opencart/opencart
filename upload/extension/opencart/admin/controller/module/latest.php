@@ -61,7 +61,7 @@ class Latest extends \Opencart\System\Engine\Controller {
 		if (isset($module_info['axis'])) {
 			$data['axis'] = $module_info['axis'];
 		} else {
-			$data['axis'] ='';
+			$data['axis'] = '';
 		}
 
 		if (isset($module_info['limit'])) {

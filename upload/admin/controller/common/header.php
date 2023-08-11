@@ -78,7 +78,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			if ($user_info) {
 				$data['firstname'] = $user_info['firstname'];
 				$data['lastname'] = $user_info['lastname'];
-				$data['username']  = $user_info['username'];
+				$data['username'] = $user_info['username'];
 				$data['user_group'] = $user_info['user_group'];
 
 				if (is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {

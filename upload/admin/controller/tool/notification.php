@@ -173,7 +173,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 	 */
 	public function info(): void {
 		if (isset($this->request->get['notification_id'])) {
-			$notification_id = $this->request->get['notification_id'];
+			$notification_id = (int)$this->request->get['notification_id'];
 		} else {
 			$notification_id = 0;
 		}

@@ -177,7 +177,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
 		if (isset($this->request->get['api_id'])) {
-			$data['api_id'] = $this->request->get['api_id'];
+			$data['api_id'] = (int)$this->request->get['api_id'];
 		} else {
 			$data['api_id'] = 0;
 		}

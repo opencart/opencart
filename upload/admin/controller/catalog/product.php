@@ -256,14 +256,14 @@ class Product extends \Opencart\System\Engine\Controller {
             if($is_price_incl_tax){
                 $price = $this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
                 if($special !== false){
-                    $special = $this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax'));
+                    $special = $this->tax->calculate(floatval($special), $result['tax_class_id'], $this->config->get('config_tax'));
                 }
             }else{
                 $price = $result['price'];
             }
 
             if($special !== false){
-                $special = $this->currency->format($special, $this->config->get('config_currency'));
+                $special = $this->currency->format(floatval($special), $this->config->get('config_currency'));
             }
 
 
@@ -272,7 +272,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'image'      => $image,
 				'name'       => $result['name'],
 				'model'      => $result['model'],
-				'price'      => $this->currency->format($result['price'], $this->config->get('config_currency')),
+				'price'      => $this->currency->format($price, $this->config->get('config_currency')),
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'],

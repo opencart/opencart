@@ -212,6 +212,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_tax'] = $this->config->get('config_tax');
 		$data['config_tax_default'] = $this->config->get('config_tax_default');
 		$data['config_tax_customer'] = $this->config->get('config_tax_customer');
+        $data['config_list_taxes_separately'] = $this->config->get('config_list_taxes_separately');
 
 		$data['config_customer_online'] = $this->config->get('config_customer_online');
 

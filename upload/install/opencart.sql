@@ -2090,6 +2090,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_captcha', 'basic', 0),
 (0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
 (0, 'config', 'config_login_attempts', '5', 0),
+(0, 'config', 'config_list_taxes_separately', '0', 0),
 (-1, 'config', 'config_product_upc', '1', 0),
 (-1, 'config', 'config_product_ean', '1', 0),
 (-1, 'config', 'config_product_jan', '1', 0),

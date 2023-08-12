@@ -467,6 +467,16 @@
                           <div class="form-text">{{ help_tax_customer }}</div>
                         </div>
                       </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_list_taxes_separately }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_list_taxes_separately" value="0"/>
+                            <input type="checkbox" name="config_list_taxes_separately" value="1" id="input-list-taxes-separately" class="form-check-input"{% if config_list_taxes_separately %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_list_taxes_separately }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

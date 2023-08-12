@@ -613,6 +613,15 @@
                         </div>
                       </div>
                       <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_show_store_logo_on_invoice }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_show_store_logo_on_invoice" value="0"/>
+                            <input type="checkbox" name="config_show_store_logo_on_invoice" value="1" id="input-show-store-logo-on-invoice" class="form-check-input"{% if config_show_store_logo_on_invoice %} checked{% endif %}/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">

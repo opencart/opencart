@@ -265,6 +265,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_invoice_prefix'] = 'INV-' . date('Y') . '-00';
 		}
 
+        $data['config_show_store_logo_on_invoice'] = $this->config->get('config_show_store_logo_on_invoice');
+
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

@@ -1509,11 +1509,16 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 
-                $store_logo = $this->config->get('config_logo', $order_info['store_id']);
+                $show_store_logo_on_invoice = $this->config->get('config_show_store_logo_on_invoice', $order_info['store_id']);
+                if(intval($show_store_logo_on_invoice) === 1){
+                    $store_logo = $this->config->get('config_logo', $order_info['store_id']);
 
-                if (is_file(DIR_IMAGE . html_entity_decode($store_logo, ENT_QUOTES, 'UTF-8'))) {
-                    $store_logo = $this->model_tool_image->resize(html_entity_decode($store_logo, ENT_QUOTES, 'UTF-8'), 200, 100);
-                } else {
+                    if (is_file(DIR_IMAGE . html_entity_decode($store_logo, ENT_QUOTES, 'UTF-8'))) {
+                        $store_logo = $this->model_tool_image->resize(html_entity_decode($store_logo, ENT_QUOTES, 'UTF-8'), 200, 100);
+                    } else {
+                        $store_logo = false;
+                    }
+                }else{
                     $store_logo = false;
                 }
 

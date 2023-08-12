@@ -85,6 +85,7 @@ $_['entry_tax']                           = 'Display Prices With Tax';
 $_['entry_tax_default']                   = 'Use Store Tax Address';
 $_['entry_tax_customer']                  = 'Use Customer Tax Address';
 $_['entry_list_taxes_separately']         = 'List Taxes Separately';
+$_['entry_show_store_logo_on_invoice']    = 'Show Store Logo on Invoice';
 $_['entry_customer_online']               = 'Customers Online';
 $_['entry_customer_online_expire']        = 'Customers Online Timeout';
 $_['entry_customer_activity']             = 'Customers Activity';

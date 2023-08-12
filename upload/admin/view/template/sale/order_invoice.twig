@@ -9,6 +9,7 @@
   <script src="{{ jquery }}" type="text/javascript"></script>
   <script src="{{ bootstrap_js }}" type="text/javascript"></script>
   <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
+  <style>@media print { @page { margin-top: 0; margin-bottom: 0; } }</style>
 </head>
 <body>
 <div class="container">
@@ -22,7 +23,7 @@
         </div>
         {% if order.store_logo  %}
         <div class="col-auto">
-          <img src="{{ order.store_logo }}">
+          <img src="{{ order.store_logo }}" alt="{{ order.store_name }}">
         </div>
         {% endif %}
       </div>

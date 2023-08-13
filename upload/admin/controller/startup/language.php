@@ -15,11 +15,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		if (isset($this->request->cookie['language'])) {
-			$code = (string)$this->request->cookie['language'];
-		} else {
-			$code = $this->config->get('config_language_admin');
-		}
+		$code = $this->config->get('config_language_admin');
 
 		$this->load->model('localisation/language');
 

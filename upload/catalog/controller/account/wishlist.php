@@ -164,7 +164,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['wishlist'] = array_unique($this->session->data['wishlist']);
 
-			// Store the
+			// Store the 
 			if ($this->customer->isLogged()) {
 				// Edit customers cart
 				$this->load->model('account/wishlist');

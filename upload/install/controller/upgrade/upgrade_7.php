@@ -30,7 +30,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = 'value'");
 			}
 
-			// tags
+			// Tags
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
 
 			if ($query->num_rows) {

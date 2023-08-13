@@ -52,7 +52,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 
 		$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
 
-		// Whos Online
+		// Who's Online
 		if ($this->config->get('config_customer_online')) {
 			$this->load->model('tool/online');
 

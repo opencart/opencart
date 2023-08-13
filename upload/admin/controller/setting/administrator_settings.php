@@ -37,11 +37,10 @@ class AdministratorSettings extends \Opencart\System\Engine\Controller
 
         $this->load->model("setting/admin");
 
-        // Get the identifier settings of Default Store.
-        $identifier_settings = $this->model_setting_admin->getByKeys(self::$setting_keys);
-        foreach($identifier_settings as $setting_name => $setting_value){
-            $data[$setting_name] = $setting_value;
-        }
+        // Get the administrator settings of Default Store.
+		foreach (self::$setting_keys as $setting_name){
+			$data[$setting_name] = $this->config->get($setting_name);
+		}
 
         $data['save'] = $this->url->link('setting/administrator_settings.save', 'user_token=' . $this->session->data['user_token']);
 

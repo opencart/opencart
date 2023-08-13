@@ -223,8 +223,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_product->getProducts($filter_data);
 
 
-        $this->load->model("setting/admin");
-        $is_price_incl_tax = $this->model_setting_admin->getByKey('config_price_incl_tax');
+		$is_price_incl_tax = intval($this->config->get("config_price_incl_tax")) === 1;
         if(!empty($is_price_incl_tax) && intval($is_price_incl_tax) === 1){
             $is_price_incl_tax = true;
         }else{
@@ -559,24 +558,13 @@ class Product extends \Opencart\System\Engine\Controller {
 
         $this->load->model('setting/admin');
         // Get the identifier settings of Default Store.
-        $admin_settings = $this->model_setting_admin->getByKeys([
-            'config_product_upc',
-            'config_product_ean',
-            'config_product_jan',
-            'config_product_isbn',
-            'config_product_mpn',
-            'config_price_incl_tax'
-        ]);
-        foreach(['upc', 'ean', 'jan', 'isbn', 'mpn'] as $identifier_name){
-            if(!empty($admin_settings['config_product_' . $identifier_name])){
-                $data[$identifier_name . '_enabled'] = true;
-            }
-        }
 
-        $is_price_incl_tax = false;
-        if(!empty($admin_settings['config_price_incl_tax']) && intval($admin_settings['config_price_incl_tax']) === 1){
-            $is_price_incl_tax = true;
-        }
+		$data['upc_enabled'] = $this->config->get("config_product_upc");
+		$data['ean_enabled'] = $this->config->get("config_product_ean");
+		$data['jan_enabled'] = $this->config->get("config_product_jan");
+		$data['isbn_enabled'] = $this->config->get("config_product_isbn");
+		$data['mpn_enabled'] = $this->config->get("config_product_mpn");
+        $is_price_incl_tax = intval($this->config->get("config_price_incl_tax")) === 1;
         $data['is_price_incl_tax'] = $is_price_incl_tax;
 
 		if (!empty($product_info)) {
@@ -1174,8 +1162,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 
-            $this->load->model("setting/admin");
-            $is_price_incl_tax = $this->model_setting_admin->getByKey('config_price_incl_tax');
+			$is_price_incl_tax = intval($this->config->get("config_price_incl_tax")) === 1;
             if(!empty($is_price_incl_tax) && intval($is_price_incl_tax) === 1){
                 $is_price_incl_tax = true;
             }else{

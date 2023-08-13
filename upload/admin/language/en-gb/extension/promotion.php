@@ -1,3 +1,3 @@
 <?php
-// Heading Title
+// Heading
 $_['heading_title']	= 'Promotion';

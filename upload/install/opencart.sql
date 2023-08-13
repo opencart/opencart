@@ -1394,7 +1394,8 @@ INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
 --
 
 INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `sort_order`, `status`) VALUES
-(1, 'English', 'en-gb', 'en-gb,en', 1, 1);
+(1, 'English', 'en-gb', 'en-gb,en', 1, 1),
+(2, 'Deutsch (DE)', 'de-de', 'de-de,de_DE.UTF-8,de_DE,de-DE,de,deutsch', 2, 0);
 
 -----------------------------------------------------------
 

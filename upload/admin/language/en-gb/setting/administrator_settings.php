@@ -13,6 +13,7 @@ $_['entry_product_jan']                   = 'JAN';
 $_['entry_product_isbn']                  = 'ISBN';
 $_['entry_product_mpn']                   = 'MPN';
 $_['entry_price_incl_tax']                = 'Price Incl. Tax';
+$_['entry_language_admin']                = 'Administration Language';
 
 $_['help_identifier_fields']              = 'Determines the visibility of the additional identifier fields for products.';
 $_['help_price_incl_tax']                 = 'When enabled, any product price is displayed as price including tax.';

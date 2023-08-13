@@ -4,6 +4,7 @@ namespace Opencart\Admin\Controller\Setting;
 class AdministratorSettings extends \Opencart\System\Engine\Controller
 {
     private static array $setting_keys = [
+		'config_language_admin',
         'config_product_upc',
         'config_product_ean',
         'config_product_jan',
@@ -41,6 +42,10 @@ class AdministratorSettings extends \Opencart\System\Engine\Controller
 		foreach (self::$setting_keys as $setting_name){
 			$data[$setting_name] = $this->config->get($setting_name);
 		}
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['config_language_admin'] = $this->config->get('config_language_admin');
 
         $data['save'] = $this->url->link('setting/administrator_settings.save', 'user_token=' . $this->session->data['user_token']);
 

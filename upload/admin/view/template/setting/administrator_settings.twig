@@ -21,6 +21,17 @@
       <div id="store" class="card-body">
         <form id="form-setting" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <div class="row mb-3">
+            <label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
+            <div class="col-sm-10">
+              <select name="config_language_admin" id="input-language-admin" class="form-select">
+                {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == config_language_admin %} selected{% endif %}>{{ language.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_identifier_fields }}</label>
 
             <div class="col-sm-10">

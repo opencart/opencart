@@ -61,7 +61,7 @@ set_error_handler(/**
  * @return false
  * @throws \ErrorException
  */ function($code, $message, $file, $line, array $errcontext) {
-	// error was suppressed with the @-operator
+	// Error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;
 	}
@@ -284,7 +284,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
 			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', `value` = '" . (int)$last_id . "'");
 
-			// set the current years prefix
+			// Set the current years prefix
 			$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
 		}
 

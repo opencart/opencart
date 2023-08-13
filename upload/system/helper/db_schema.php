@@ -7855,5 +7855,115 @@ function oc_db_schema() {
 		'collate' => 'utf8mb4_general_ci'
 	];
 
+	$tables[] = [
+		'name' => 'popup',
+		'field' => [
+			[
+				'name' => 'popup_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'title',
+				'type' => 'varchar(255)',
+				'not_null' => true,
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'initial_delay',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'time_to_close',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '3000'
+			],
+			[
+				'name' => 'width',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '1000'
+			],
+			[
+				'name' => 'show_everytime',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'popup_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'popup_content',
+		'field' => [
+			[
+				'name' => 'popup_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'header',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'content',
+				'type' => 'text',
+				'not_null' => true
+			],
+		],
+		'primary' => [
+			'popup_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'popup_id',
+				'table' => 'popup',
+				'field' => 'popup_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
 	return $tables;
 }

@@ -25,7 +25,7 @@ class Error extends \Opencart\System\Engine\Controller {
 	 * @return bool
 	 */
 	public function error(string $code, string $message, string $file, string $line): bool {
-		// Error suppressed with @
+		// Error was suppressed with the @-operator
 		if (error_reporting() === 0) {
 			return false;
 		}

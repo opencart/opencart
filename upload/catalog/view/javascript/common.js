@@ -108,6 +108,11 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+	let locale = $('html').attr('lang');
+	if(typeof locale === 'string'){
+		moment.locale(locale);
+	}
+
     // Currency
     $('#form-currency .dropdown-item').on('click', function(e) {
         e.preventDefault();

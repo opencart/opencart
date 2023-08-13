@@ -41,7 +41,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Only grab the
+			// Only grab the 
 			$option = [
 				'expires'  => time() + 3600 * 24 * 7,
 				'path'     => $this->config->get('session_path'),

@@ -717,7 +717,7 @@ class Product extends \Opencart\System\Engine\Model {
 				'variant'
 			];
 
-			// Now we want to
+			// Now we want to 
 			foreach ($product as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
 				if (array_key_exists($key, $override) || in_array($key, $replace)) {

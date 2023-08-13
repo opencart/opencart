@@ -14,6 +14,6 @@ class Admin extends \Opencart\System\Engine\Model
 
 	public function save(array $data): void {
 		$settings = new Setting($this->registry);
-		$settings->editSpecificSettings('config', $data, 0);
+		$settings->editSetting('config', $data, 0);
 	}
 }

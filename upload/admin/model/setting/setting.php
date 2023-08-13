@@ -72,31 +72,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editSetting(string $code, array $data, int $store_id = 0): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
-
-		foreach ($data as $key => $value) {
-			if (str_starts_with($key, $code)) {
-				if (!is_array($value)) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
-				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape(json_encode($value)) . "', `serialized` = '1'");
-				}
-			}
-		}
-	}
-
-	/**
-	 * @param string $code
-	 * @param array  $data It is an associative array that contains setting key as key and setting value as value.
-	 * @param int    $store_id
-	 *
-	 * @return void
-	 */
-	public function editSpecificSettings(string $code, array $data, int $store_id = 0): void {
 		$setting_keys = array_keys($data);
-		if(!empty($setting_keys)){
+		if(!empty($setting_keys)) {
 			$escaped_setting_keys = [];
-			foreach ($setting_keys as $setting_key){
+			foreach ($setting_keys as $setting_key) {
 				$escaped_setting_keys[] = "'" . $this->db->escape($setting_key) . "'";
 			}
 

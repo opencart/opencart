@@ -95,6 +95,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$start = ($page - 1) * $limit;
 		$end = $start > ($total - $limit) ? $total : ($start + $limit);
 
+		$added_files = [];
+
 		if ($paths) {
 			// Split the array based on current page number and max number of items per page of 10
 			foreach (array_slice($paths, $start, $end) as $path) {
@@ -117,21 +119,23 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 					}
 
-					if (is_dir($path)) {
+					if (is_dir($path) && !in_array($name, $added_files)) {
 						$data['directories'][] = [
 							'name' => $name,
 							'path' => oc_substr($path, oc_strlen($base)) . '/',
 							'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(oc_substr($path, oc_strlen($base))) . $url)
 						];
+						$added_files[] = $name;
 					}
 
-					if (is_file($path) && in_array(substr($path, strrpos($path, '.')), $allowed)) {
+					if (is_file($path) && !in_array($name, $added_files) && in_array(substr($path, strrpos($path, '.')), $allowed)) {
 						$data['images'][] = [
 							'name'  => $name,
 							'path'  => oc_substr($path, oc_strlen($base)),
 							'href'  => HTTP_CATALOG . 'image/catalog/' . oc_substr($path, oc_strlen($base)),
 							'thumb' => $this->model_tool_image->resize(oc_substr($path, oc_strlen(DIR_IMAGE)), 136, 136)
 						];
+						$added_files[] = $name;
 					}
 				}
 			}

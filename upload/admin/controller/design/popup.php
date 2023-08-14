@@ -225,12 +225,19 @@ class Popup extends \Opencart\System\Engine\Controller
 			$data['popup_id'] = 0;
 		}
 
-
-		$data['title'] = $popup_info['title'];
-		$data['initial_delay'] = $popup_info['initial_delay'];
-		$data['time_to_close'] = $popup_info['time_to_close'];
-		$data['show_everytime'] = $popup_info['show_everytime'];
-		$data['width'] = $popup_info['width'];
+		if(!empty($popup_info)){
+			$data['title'] = $popup_info['title'];
+			$data['initial_delay'] = $popup_info['initial_delay'];
+			$data['time_to_close'] = $popup_info['time_to_close'];
+			$data['show_everytime'] = $popup_info['show_everytime'];
+			$data['width'] = $popup_info['width'];
+		}else{
+			$data['title'] = '';
+			$data['initial_delay'] = 0;
+			$data['time_to_close'] = 3;
+			$data['show_everytime'] = 0;
+			$data['width'] = 0;
+		}
 
 		if (!empty($popup_info)) {
 			$data['status'] = $popup_info['status'];

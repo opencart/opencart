@@ -50,6 +50,5 @@ $_['error_password']        = 'Das Passwort muss zwischen 4 und 20 Zeichen lang 
 $_['error_confirm']         = 'Das Passwort und die Passwortbestätigung stimmen nicht überein!';
 
 // old versions
-$_['text_user_login']       = 'Benutzer Login';
 $_['tab_login']             = 'Anmeldungen';
 

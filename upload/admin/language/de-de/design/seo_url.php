@@ -14,6 +14,7 @@ $_['text_default']            = 'Standart';
 $_['column_key']              = 'Referenz / Key';
 $_['column_value']            = 'Referenz-Wert';
 $_['column_keyword']          = 'SEO-URL Kennung';
+$_['column_sort_order']       = 'Sortierung';
 $_['column_store']            = 'Online-Shop (Store)';
 $_['column_language']         = 'Sprache';
 $_['column_action']           = 'Aktion';

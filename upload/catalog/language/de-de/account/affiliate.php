@@ -17,7 +17,7 @@ $_['text_agree']                = 'Ich habe die <a href="%s" class="modal-link">
 $_['entry_company']             = 'Firma';
 $_['entry_website']             = 'Webseite';
 $_['entry_tax']                 = 'Steuer-ID (-nummer)';
-$_['entry_payment']             = 'Zahlungs-Methode';
+$_['entry_payment_method']      = 'Zahlungs-Methode';
 $_['entry_cheque']              = 'Scheck Empfängername';
 $_['entry_paypal']              = 'PayPal Emailadresse (-konto)';
 $_['entry_bank_name']           = 'Bankname';
@@ -35,3 +35,4 @@ $_['error_bank_account_name']   = 'Name des KontoßInhabers ist erforderlich!';
 $_['error_bank_account_number'] = 'Die Kontonummer ist erforderlich!';
 $_['error_custom_field']        = '%s benötigt!';
 $_['error_regex']               = '%s ist keine gültige Eingabe!';
+$_['error_payment_method']      = 'Bitte wählen Sie eine Zahlungsmethode!';

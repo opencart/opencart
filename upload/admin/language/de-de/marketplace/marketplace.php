@@ -51,7 +51,6 @@ $_['text_install']       = 'Installieren';
 $_['text_uninstall']     = 'Deinstallieren';
 $_['text_delete']        = 'Löschen';
 $_['text_more']          = 'mehr Antworten sehen...';
-$_['text_leave']         = 'mehr Antworten sehen...';
 $_['text_refresh']       = 'aktualisieren';
 
 // Entry
@@ -64,7 +63,7 @@ $_['tab_download']       = 'Download';
 $_['tab_comment']        = 'Kommentar';
 
 // Button
-$_['button_opencart']    = 'Marketplace API';
+$_['button_api']    	 = 'Marketplace API';
 $_['button_purchase']    = 'Kaufen';
 $_['button_view_all']    = 'Zeige alle Erweiterungen';
 $_['button_support']     = 'Support anfordern';
@@ -74,6 +73,6 @@ $_['button_forgot_pin']  = 'PIN vergessen?';
 
 // Error
 $_['error_permission']   = 'Warnung: Sie haben keine Berechtigung Erweiterung Marketplace zu modifizieren!';
-$_['error_opencart']     = 'Warnung: Sie müssen Ihre OpenCart API-Informationen eingeben, bevor Sie einkaufen können!';
+$_['error_api']     	 = 'Warnung: Sie müssen Ihre OpenCart API-Informationen eingeben, bevor Sie einkaufen können!';
 $_['error_purchase']     = 'Die Erweiterung konnte nicht gekauft werden!';
 $_['error_download']     = 'Die Erweiterung konnte nicht heruntergeladen werden!';

@@ -62,7 +62,6 @@ $_['entry_country']                       = 'Land';
 $_['entry_zone']                          = 'Region / Bundesland';
 $_['entry_timezone']                      = 'Zeitzone';
 $_['entry_language']                      = 'Sprache';
-$_['entry_language_admin']                = 'Administrations-Sprache';
 $_['entry_currency']                      = 'Währung';
 $_['entry_currency_engine']               = 'Wechselkurs-Anbieter Erweiterung';
 $_['entry_currency_auto']                 = 'Automatisch Währungs-Aktualisierung';
@@ -84,6 +83,8 @@ $_['entry_gdpr_limit']                    = 'DSGVO Limit';
 $_['entry_tax']                           = 'Preise mit Steuer anzeigen';
 $_['entry_tax_default']                   = 'Steuerrelevante Gäste-Adresse (Online-Shop-Adresse)';
 $_['entry_tax_customer']                  = 'Steuerrelevante Kunden-Adresse';
+$_['entry_list_taxes_separately']         = 'Steuern getrennt auflisten';
+$_['entry_show_store_logo_on_invoice']    = 'Shop-Logo auf Rechnung anzeigen';
 $_['entry_customer_online']               = 'Kunden Online';
 $_['entry_customer_online_expire']        = 'Kunden Online Timeout';
 $_['entry_customer_activity']             = 'Kunden Aktivität';
@@ -238,6 +239,7 @@ $_['help_file_mime_allowed']              = 'Geben Sie an, welche Mime-Typen hoc
 $_['help_maintenance']                    = 'Verhindert, dass Kunden in Ihrem Geschäft stöbern. Sie sehen stattdessen eine Wartungsmeldung. Wenn Sie als Administrator eingeloggt sind, sehen Sie den Online-Shop wie gewohnt.';
 $_['help_encryption']                     = 'Bitte geben Sie einen geheimen Schlüssel an, der zur Verschlüsselung privater Informationen bei der Bearbeitung von Bestellungen verwendet wird.';
 $_['help_compression']                    = 'GZIP für eine effizientere Übertragung an anfragende Clients. Die Komprimierungsstufe muss zwischen 0 und 9 liegen.';
+$_['help_list_taxes_separately']          = 'Aktivieren Sie diese Einstellung, wenn Sie die Steuerbeträge für zusätzliche Dienstleistungen (Versand, Bearbeitung usw.) getrennt auflisten möchten. <b>Warnung: Diese Einstellung wirkt sich nicht auf die Gesamtsummen der bestehenden Bestellungen aus.</b>';
 
 // Error
 $_['error_warning']                       = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
@@ -275,8 +277,3 @@ $_['error_log_required']                  = 'Fehlerprotokoll Dateiname benötigt
 $_['error_log_invalid']                   = 'Fehlerprotokoll Dateiname ungültig!';
 $_['error_log_extension']                 = 'Fehlerprotokoll Dateinamen-Extension muß .log sein!';
 $_['error_encryption']                    = 'Der Sicherheitsschlüssel muss zwischen 32 und 1024 Zeichen lang sein!';
-
-// older OpenCart 4 versions
-$_['entry_checkout_address']              = 'Rechnungsadresse benötigt';
-$_['help_checkout_address']               = 'Wählen Sie, ob Kunden eine Rechnungsadresse für den Checkout benötigen.';
-

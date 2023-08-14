@@ -30,6 +30,9 @@ $_['entry_date_to']     = 'Datum bis';
 // Help
 $_['help_product']      = '(Automatische Vervollständigung)';
 
+// Button
+$_['button_rating']     = 'Produktbewertungen synchronisieren';
+
 // Error
 $_['error_warning']     = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']  = 'Warnung: Sie haben keine Berechtigung Bewertungen zu modifizieren!';

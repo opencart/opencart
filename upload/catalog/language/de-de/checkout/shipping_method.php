@@ -4,7 +4,7 @@ $_['heading_title']          = 'Versand-Methode';
 
 // Text
 $_['text_shipping_method']   = 'Optionen Versand-Methode';
-$_['text_estimate']          = 'Bitte wählen Sie die gewünschte Versand-Methode für diese Bestellung.';
+$_['text_shipping']          = 'Bitte wählen Sie die gewünschte Versandmethode für diese Bestellung aus.';
 $_['text_success']           = 'Erfolgreich: Sie haben die Versand-Methode geändert!';
 
 // Entry

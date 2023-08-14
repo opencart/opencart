@@ -5,7 +5,7 @@ $_['heading_title']                        = 'Abonnements verwalten';
 // Text
 $_['text_account']                         = 'Kunden-Konto';
 $_['text_subscription']                    = 'Abonnement #%s';
-$_['text_invoice_id']                      = 'Rechnungs-Nr.';
+$_['text_invoice_no']                      = 'Rechnungs-Nr.';
 $_['text_subscription_id']                 = 'Abonnement ID';
 $_['text_order_id']                        = 'Bestell-Nr.';
 $_['text_shipping_address']                = 'Versandadresse';
@@ -20,12 +20,8 @@ $_['text_week']                            = 'Woche(n)';
 $_['text_semi_month']                      = '14 Tage';
 $_['text_month']                           = 'Monat(e)';
 $_['text_year']                            = 'Jahr(e)';
-$_['text_history']                         = 'Abonnement-Historie';
-$_['text_orders']                          = 'Bestell-Historie';
-
 $_['text_date_added']                      = 'Datum hinzugefügt:';
 $_['text_status']                          = 'Status:';
-
 $_['text_description']                     = 'Beschreibung';
 $_['text_quantity']                        = 'Menge:';
 $_['text_order']                           = 'Bestell-Historie';
@@ -46,17 +42,3 @@ $_['column_date_added']                    = 'Datum hinzugefügt';
 $_['error_not_cancelled']                  = 'Error: %s';
 $_['error_not_found']                      = 'Wiederkehrende Zahlung konnte nicht storniert werden';
 
- $_['text_subscription_detail']             = 'Abonnement Zahlungs-Details';
- $_['text_product']                         = 'Produkt:';
- $_['text_reference']                       = 'Referenz';
- $_['text_transaction']                     = 'Finanz-Transaktionen';
- $_['text_transaction_date_added']          = 'Erstellt';
- $_['text_transaction_payment']             = 'Zahlung';
- $_['text_transaction_outstanding_payment'] = 'Ausstehende Zahlung';
- $_['text_transaction_skipped']             = 'Zahlung ausgelassen / übersprungen';
- $_['text_transaction_failed']              = 'Zahlung fehlgeschlagen';
- $_['text_transaction_cancelled']           = 'Abgebrochen';
- $_['text_transaction_suspended']           = 'Ausgesetzt';
- $_['text_transaction_suspended_failed']    = 'Ausgesetzt wegen gescheiterter Zahlung';
- $_['text_transaction_outstanding_failed']  = 'Ausstehende Zahlung fehlgeschlagen';
- $_['text_transaction_expired']             = 'Abgelaufen';

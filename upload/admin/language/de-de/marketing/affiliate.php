@@ -20,6 +20,9 @@ $_['text_transaction']          = 'Transaktionen';
 $_['text_transaction_add']      = 'Neue Transaktion';
 $_['text_report']               = 'Berichte';
 $_['text_filter']               = 'Filter';
+$_['text_payment_cheque']       = 'Scheckzahlung';
+$_['text_payment_paypal']       = 'Zahlung über PayPal';
+$_['text_payment_bank']         = 'Zahlung per Banküberweisung';
 
 // Column
 $_['column_name']               = 'Partner (Kunden-Konto)';
@@ -45,7 +48,7 @@ $_['entry_tracking']            = 'Tracking Code';
 $_['entry_website']             = 'Web-Seite';
 $_['entry_commission']          = 'Provision (%)';
 $_['entry_tax']                 = 'Steuer-ID';
-$_['entry_payment']             = 'Zahlungs-Methode';
+$_['entry_payment_method']      = 'Zahlungs-Methode';
 $_['entry_cheque']              = 'Scheckempfänger Name';
 $_['entry_paypal']              = 'PayPal Konto-Email';
 $_['entry_bank_name']           = 'Bank Name';
@@ -58,6 +61,7 @@ $_['entry_description']         = 'Beschreibung';
 $_['entry_amount']              = 'Betrag';
 $_['entry_date_from']           = 'Datum von';
 $_['entry_date_to']             = 'Datum bis';
+$_['entry_limit']               = 'Limit';
 
 // Help
 $_['help_tracking']             = 'Der Tracking-Code, der für die Verfolgung von Empfehlungen des Partners verwendet wird.';
@@ -75,3 +79,4 @@ $_['error_paypal']              = 'PayPal Email Adresse scheint nicht gültig zu
 $_['error_bank_account_name']   = 'Bank Konto-Name erforderlich!';
 $_['error_bank_account_number'] = 'Bank Konto-Nummer erforderlich!';
 $_['error_custom_field']        = '%s benötigt!';
+$_['error_payment_method']      = 'Bitte wählen Sie eine Zahlungsmethode!';

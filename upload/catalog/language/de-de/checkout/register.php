@@ -11,6 +11,7 @@ $_['text_shipping_address']   = 'Lieferadresse';
 $_['text_your_password']      = 'Ihr Passwort';
 $_['text_agree']              = '<a href="%s" class="modal-link"><b>%s</b></a> habe ich gelesen und akzeptiert.';
 $_['text_success_add']        = 'Erfolgreich: Ihr Kunden-Konto wurde eingerichtet!';
+$_['text_success_guest']      = 'Erfolgreich: Ihre Gästekontoinformationen wurden gespeichert!';
 $_['text_success_edit']       = 'Erfolgreich: Ihr Kunden-Konto wurde erfolgreich aktualisiert.';
 
 // Entry

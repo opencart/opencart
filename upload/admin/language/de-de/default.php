@@ -122,6 +122,9 @@ $_['button_backup']                 = 'Backup';
 $_['button_developer']              = 'Entwickler-Setting';
 $_['button_master']                 = 'Master Produkt';
 $_['button_resend']                 = 'Erneut senden';
+$_['button_calculate']              = 'Zahlungen berechnen';
+$_['button_csv']                    = 'CSV herunterladen';
+$_['button_complete']               = 'Zahlungen abschließen';
 
 // Tab
 $_['tab_address']                   = 'Adressen';

@@ -21,7 +21,6 @@ $_['entry_trial_duration']  = 'Probe Laufzeit';
 $_['entry_trial_cycle']     = 'Probe Zyklen';
 $_['entry_trial_frequency'] = 'Probe Frequenz';
 $_['entry_trial_status']    = 'Probe Status';
-$_['entry_price']           = 'Preis';
 $_['entry_duration']        = 'Laufzeit';
 $_['entry_cycle']           = 'Zyklen';
 $_['entry_frequency']       = 'Frequenz';

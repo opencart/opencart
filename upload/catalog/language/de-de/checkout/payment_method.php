@@ -14,6 +14,7 @@ $_['text_comment']           = 'Erfolgreich: Anmerkung hinzugefügt!';
 $_['entry_payment_method']   = 'Zahlungs-Methode wählen...';
 
 // Error
+$_['error_customer'] = 'Kunde erforderlich!';
 $_['error_payment_address']  = 'Rechnungsadresse erforderlich!';
 $_['error_shipping_address'] = 'Versandadresse erforderlich!';
 $_['error_shipping_method']  = 'Versand-Methode erforderlich!';

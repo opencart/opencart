@@ -12,7 +12,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/forgotten');
 
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
@@ -48,7 +48,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Stop any undefined index messages.
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
 			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 

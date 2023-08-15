@@ -43,7 +43,11 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		$data['login'] = $this->url->link('common/login.login', 'login_token=' . $this->session->data['login_token'], true);
 
-		$data['forgotten'] = $this->url->link('common/forgotten');
+		if ($this->config->get('config_mail_engine')) {
+			$data['forgotten'] = $this->url->link('common/forgotten');
+		} else {
+			$data['forgotten'] = '';
+		}
 
 		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
 			$args = $this->request->get;

@@ -16,7 +16,7 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		// Check to see if user is already logged
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
+			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		// Check to see if user is using incorrect token
@@ -43,7 +43,11 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		$data['login'] = $this->url->link('common/login.login', 'login_token=' . $this->session->data['login_token'], true);
 
-		$data['forgotten'] = $this->url->link('common/forgotten');
+		if ($this->config->get('config_mail_engine')) {
+			$data['forgotten'] = $this->url->link('common/forgotten');
+		} else {
+			$data['forgotten'] = '';
+		}
 
 		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
 			$args = $this->request->get;

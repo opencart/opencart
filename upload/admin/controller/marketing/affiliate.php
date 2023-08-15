@@ -900,7 +900,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			return new \Opencart\System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/permission');
 		}
 	}
 

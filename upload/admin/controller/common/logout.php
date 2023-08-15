@@ -14,6 +14,6 @@ class Logout extends \Opencart\System\Engine\Controller {
 
 		unset($this->session->data['user_token']);
 
-		$this->response->redirect($this->url->link('common/login'));
+		$this->response->redirect($this->url->link('common/login', '', true));
 	}
 }

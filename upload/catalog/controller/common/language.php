@@ -30,6 +30,9 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&' . urldecode(http_build_query($url_data));
 		}
 
+		// Added so the correct SEO language URL is used.
+		$language_id = $this->config->get('config_language_id');
+
 		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
@@ -37,6 +40,8 @@ class Language extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_language->getLanguages();
 
 		foreach ($results as $result) {
+			$this->config->set('config_language_id', $result['language_id']);
+
 			$data['languages'][] = [
 				'name'  => $result['name'],
 				'code'  => $result['code'],
@@ -44,6 +49,8 @@ class Language extends \Opencart\System\Engine\Controller {
 				'href'  => $this->url->link($route, 'language=' . $result['code'] . $url, true)
 			];
 		}
+
+		$this->config->set('config_language_id', $language_id);
 
 		$data['code'] = $this->config->get('config_language');
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Localisation;
+/**
+ * Class Currency
+ *
+ * @package Opencart\Catalog\Controller\Api\Localisation
+ */
 class Currency extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/localisation/currency');
 

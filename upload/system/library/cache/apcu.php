@@ -1,7 +1,18 @@
 <?php
 namespace Opencart\System\Library\Cache;
-class APCu {
+/**
+ * Class APCU
+ *
+ * @package
+ */
+class APCU {
+	/**
+	 * @var int
+	 */
 	private int $expire;
+	/**
+	 * @var bool
+	 */
 	private bool $active;
 
 	/**

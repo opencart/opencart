@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
+/**
+ * Class ECB
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Currency
+ */
 class ECB extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/currency/ecb');
 
@@ -35,6 +43,9 @@ class ECB extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/currency/ecb', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/currency/ecb');
 
@@ -56,6 +67,11 @@ class ECB extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @param string $default
+	 *
+	 * @return void
+	 */
 	public function currency(string $default = ''): void {
 		if ($this->config->get('currency_ecb_status')) {
 			$curl = curl_init();

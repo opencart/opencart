@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+/**
+ * Class Marketing
+ *
+ * @package Opencart\Catalog\Controller\Startup
+ */
 class Marketing extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$tracking = '';
 

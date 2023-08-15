@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
+/**
+ * Class Information
+ *
+ * @package Opencart\Catalog\Controller\Information
+ */
 class Information extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('information/information');
 
@@ -72,6 +80,9 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function info(): void {
 		if (isset($this->request->get['information_id'])) {
 			$information_id = (int)$this->request->get['information_id'];

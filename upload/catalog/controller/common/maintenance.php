@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+/**
+ * Class Maintenance
+ *
+ * @package Opencart\Catalog\Controller\Common
+ */
 class Maintenance extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('common/maintenance');
 

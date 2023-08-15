@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+/**
+ * Class Thumb
+ *
+ * @package Opencart\Catalog\Controller\Product
+ */
 class Thumb extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param array $data
+	 *
+	 * @return string
+	 */
 	public function index(array $data): string {
 		$this->load->language('product/thumb');
 

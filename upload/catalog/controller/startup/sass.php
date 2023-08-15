@@ -1,6 +1,15 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+/**
+ * Class Sass
+ *
+ * @package Opencart\Catalog\Controller\Startup
+ */
 class Sass extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 * @throws \ScssPhp\ScssPhp\Exception\SassException
+	 */
 	public function index(): void {
 		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
 

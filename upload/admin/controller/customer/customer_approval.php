@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
+/**
+ * Class Customer Approval
+ *
+ * @package Opencart\Admin\Controller\Customer
+ */
 class CustomerApproval extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('customer/customer_approval');
 
@@ -36,12 +44,18 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/customer_approval', $data));	
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('customer/customer_approval');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
@@ -189,6 +203,9 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/customer_approval_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function approve(): void {
 		$this->load->language('customer/customer_approval');
 
@@ -230,8 +247,11 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
-	
+	}
+
+	/**
+	 * @return void
+	 */
 	public function deny(): void {
 		$this->load->language('customer/customer_approval');
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
+/**
+ * Class Payment Address
+ *
+ * @package Opencart\Catalog\Controller\Api\Sale
+ */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/sale/payment_address');
 

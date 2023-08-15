@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
+/**
+ * Class Installer
+ *
+ * @package Opencart\Admin\Controller\Marketplace
+ */
 class Installer extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('marketplace/installer');
 
@@ -42,12 +50,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('marketplace/cron');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		$this->load->language('marketplace/installer');
 
@@ -178,6 +192,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/installer_extension', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function upload(): void {
 		$this->load->language('marketplace/installer');
 
@@ -275,6 +292,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		$this->load->language('marketplace/installer');
 
@@ -407,6 +427,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function uninstall(): void {
 		$this->load->language('marketplace/installer');
 
@@ -528,6 +551,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/* Generate new autoloader file */
+	/**
+	 * @return void
+	 */
 	public function vendor(): void {
 		$this->load->language('marketplace/installer');
 
@@ -638,6 +664,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('marketplace/installer');
 

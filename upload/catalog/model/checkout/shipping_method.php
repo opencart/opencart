@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
+/**
+ * Class ShippingMethod
+ *
+ * @package Opencart\Catalog\Model\Checkout
+ */
 class ShippingMethod extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param array $shipping_address
+	 *
+	 * @return array
+	 */
 	public function getMethods(array $shipping_address): array {
 		$method_data = [];
 

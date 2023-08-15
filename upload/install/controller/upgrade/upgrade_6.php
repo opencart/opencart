@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
+/**
+ * Class Upgrade6
+ *
+ * @package Opencart\Install\Controller\Upgrade
+ */
 class Upgrade6 extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
 

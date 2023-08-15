@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
+/**
+ * Class Reward
+ *
+ * @package Opencart\Catalog\Controller\Api\Sale
+ */
 class Reward extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/sale/reward');
 
@@ -48,6 +56,9 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function maximum(): void {
 		$this->load->language('api/sale/reward');
 
@@ -65,6 +76,9 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function available(): void {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(['points' => $this->customer->getRewardPoints()]));

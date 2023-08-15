@@ -1,8 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
+/**
+ * Class Tax
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
+ */
 class Tax extends \Opencart\System\Engine\Controller {
+	/**
+	 * @var array
+	 */
 	private array $error = [];
 
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/total/tax');
 
@@ -38,6 +49,9 @@ class Tax extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/tax', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/tax');
 

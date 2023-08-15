@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
+/**
+ * Class Customer Activity
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
+ */
 class CustomerActivity extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/report/customer_activity');
 
@@ -36,6 +44,9 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_activity_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/report/customer_activity');
 
@@ -57,6 +68,9 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function report(): void {
 		$this->load->language('extension/opencart/report/customer_activity');
 
@@ -67,12 +81,18 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_activity', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('extension/opencart/report/customer_activity');
 
 		$this->response->setOutput($this->getReport());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getReport(): string {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];

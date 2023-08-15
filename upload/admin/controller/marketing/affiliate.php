@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
+/**
+ * Class Affiliate
+ *
+ * @package Opencart\Admin\Controller\Marketing
+ */
 class Affiliate extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('marketing/affiliate');
 
@@ -184,12 +192,18 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/affiliate', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('marketing/affiliate');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = (string)$this->request->get['filter_customer'];
@@ -450,6 +464,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/affiliate_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('marketing/affiliate');
 
@@ -677,6 +694,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/affiliate_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('marketing/affiliate');
 
@@ -768,6 +788,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('marketing/affiliate');
 
@@ -797,6 +820,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function calculate() {
 		$this->load->language('marketing/affiliate');
 
@@ -823,10 +849,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return \Opencart\System\Engine\Action|void
+	 */
 	public function csv() {
 		$this->load->language('marketing/affiliate');
-
-		$json = [];
 
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
@@ -865,7 +892,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
 				header('Content-Transfer-Encoding: binary');
-				header('Content-Disposition: attachment; filename="masspay-' . date('d-m-Y') . '.csv"');
+				header('Content-Disposition: attachment; filename=payout-' . date('d-m-Y') . '.csv"');
 				header('Content-Length: ' . strlen($csv));
 
 				print($csv);
@@ -873,10 +900,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			return new \Opencart\System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/permission');
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function complete() {
 		$this->load->language('marketing/affiliate');
 
@@ -913,12 +943,18 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function report(): void {
 		$this->load->language('marketing/affiliate');
 
 		$this->response->setOutput($this->getReport());
 	}
 
+	/**
+	 * @return string
+	 */
 	private function getReport(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
@@ -977,6 +1013,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/affiliate_report', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function autocomplete(): void {
 		$json = [];
 

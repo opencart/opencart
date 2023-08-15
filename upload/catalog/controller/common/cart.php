@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+/**
+ * Class Cart
+ *
+ * @package Opencart\Catalog\Controller\Common
+ */
 class Cart extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('common/cart');
 
@@ -108,10 +116,16 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/cart', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function info(): void {
 		$this->response->setOutput($this->index());
 	}
 
+	/**
+	 * @return void
+	 */
 	public function removeProduct(): void {
 		$this->load->language('checkout/cart');
 
@@ -143,6 +157,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function removeVoucher(): void {
 		$this->load->language('checkout/cart');
 

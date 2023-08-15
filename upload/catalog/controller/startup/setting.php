@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+/**
+ * Class Setting
+ *
+ * @package Opencart\Catalog\Controller\Startup
+ */
 class Setting extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->model('setting/store');
 
@@ -18,7 +26,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$store_info) {
-			$this->config->set('config_url', HTTP_SERVER);
+			// If catalog constant is defined
+			if (defined('HTTP_CATALOG')) {
+				$this->config->set('config_url', HTTP_CATALOG);
+			} else{
+				$this->config->set('config_url', HTTP_SERVER);
+			}
 		}
 
 		// Settings

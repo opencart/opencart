@@ -51,7 +51,16 @@ $response = new \Opencart\System\Library\Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
-set_error_handler(function($code, $message, $file, $line, array $errcontext) {
+set_error_handler(/**
+ * @param       $code
+ * @param       $message
+ * @param       $file
+ * @param       $line
+ * @param array $errcontext
+ *
+ * @return false
+ * @throws \ErrorException
+ */ function($code, $message, $file, $line, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;
@@ -60,7 +69,13 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
+/**
+ *
+ */
 class CliCloud extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
@@ -87,6 +102,11 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
+	/**
+	 * @param $argv
+	 *
+	 * @return string
+	 */
 	public function install($argv): string {
 		// Options
 		$option = [];
@@ -274,6 +294,9 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function usage(): string {
 		$option = implode(' ', [
 			'--username',

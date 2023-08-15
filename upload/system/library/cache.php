@@ -6,12 +6,14 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
-
-/**
-* Cache class
-*/
 namespace Opencart\System\Library;
+/**
+ * Class Cache
+ */
 class Cache {
+	/**
+	 * @var object|mixed
+	 */
 	private object $adaptor;
 	
 	/**
@@ -43,6 +45,8 @@ class Cache {
 	}
 	
     /**
+	 * Set
+	 *
      * Sets a cache by key value.
      *
      * @param	string	$key	The cache key

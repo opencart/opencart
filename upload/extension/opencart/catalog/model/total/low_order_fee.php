@@ -1,6 +1,18 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
+/**
+ * Class LowOrderFee
+ *
+ * @package
+ */
 class LowOrderFee extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $totals
+	 * @param array $taxes
+	 * @param float $total
+	 *
+	 * @return void
+	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if ($this->cart->getSubTotal() && ($this->cart->getSubTotal() < (float)$this->config->get('total_low_order_fee_total'))) {
 			$this->load->language('extension/opencart/total/low_order_fee');

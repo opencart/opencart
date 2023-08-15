@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Fraud;
+/**
+ * Class Ip
+ *
+ * @package
+ */
 class Ip extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $order_info
+	 *
+	 * @return int
+	 */
 	public function check(array $order_info): int {
 		$status = false;
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
+/**
+ * Class Map
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
+ */
 class Map extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/map');
 
@@ -44,6 +52,9 @@ class Map extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/map_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/dashboard/map');
 
@@ -65,6 +76,9 @@ class Map extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return string
+	 */
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/map');
 
@@ -73,6 +87,9 @@ class Map extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/dashboard/map_info', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function map(): void {
 		$json = [];
 

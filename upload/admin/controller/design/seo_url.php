@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
+/**
+ * Class SEO URL
+ *
+ * @package Opencart\Admin\Controller\Design
+ */
 class SeoUrl extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('design/seo_url');
 
@@ -110,12 +118,18 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_url', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('design/seo_url');
 
 		$this->response->setOutput($this->getList());
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['filter_keyword'])) {
 			$filter_keyword = (string)$this->request->get['filter_keyword'];
@@ -240,6 +254,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				'language'   => $code,
 				'key'        => $result['key'],
 				'value'      => $result['value'],
+				'sort_order' => $result['sort_order'],
 				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
 				'edit'       => $this->url->link('design/seo_url.form', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url)
 			];
@@ -276,6 +291,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$data['sort_keyword'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
 		$data['sort_key'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
 		$data['sort_value'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
+		$data['sort_sort_order'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 		$data['sort_store'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
 		$data['sort_language'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url);
 
@@ -324,6 +340,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/seo_url_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('design/seo_url');
 
@@ -457,6 +476,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_url_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('design/seo_url');
 
@@ -517,6 +539,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('design/seo_url');
 

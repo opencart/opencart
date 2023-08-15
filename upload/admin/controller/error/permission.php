@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Error;
+/**
+ * Class Permission
+ *
+ * @package Opencart\Admin\Controller\Error
+ */
 class Permission extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('error/permission');
 

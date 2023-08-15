@@ -1,6 +1,19 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+/**
+ * Class Voucher
+ *
+ * @package Opencart\Catalog\Controller\Mail
+ */
 class Voucher extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('checkout/order');
 

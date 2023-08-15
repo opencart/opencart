@@ -1,25 +1,27 @@
 <?php
 /**
- * @package		OpenCart
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
- */
-
-/**
- * Proxy class
+ * @package        OpenCart
+ * @author         Daniel Kerr
+ * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license        https://opensource.org/licenses/GPL-3.0
+ * @link           https://www.opencart.com
  */
 namespace Opencart\System\Engine;
+/**
+ * Class Proxy
+ */
 class Proxy {
+	/**
+	 * @var array
+	 */
 	protected $data = [];
 
 	/**
 	 * __get
 	 *
-	 * @param	string	$key
+	 * @param string $key
 	 *
-	 * @return	object|null
+	 * @return object|null
 	 */
 	public function &__get(string $key): object|null {
 		if (isset($this->data[$key])) {
@@ -32,8 +34,8 @@ class Proxy {
 	/**
 	 * __set
 	 *
-	 * @param	string	$key
-	 * @param	string	$value
+	 * @param string $key
+	 * @param string $value
 	 *
 	 * @return void
 	 */
@@ -44,7 +46,7 @@ class Proxy {
 	/**
 	 * __isset
 	 *
-	 * @param	string	$key
+	 * @param string $key
 	 *
 	 * @return void
 	 */
@@ -55,7 +57,7 @@ class Proxy {
 	/**
 	 * __unset
 	 *
-	 * @param	string	$key
+	 * @param string $key
 	 *
 	 * @return void
 	 */
@@ -66,14 +68,14 @@ class Proxy {
 	/**
 	 * __call
 	 *
-	 * @param	string	$method
-	 * @param	array	$args
+	 * @param string $method
+	 * @param array  $args
 	 *
 	 * @return mixed
 	 */
 	public function __call(string $method, array $args): mixed {
 		// Hack for pass-by-reference
-		foreach ($args as $key => &$value);
+		foreach ($args as $key => &$value) ;
 
 		if (isset($this->data[$method])) {
 			return call_user_func_array($this->data[$method], $args);

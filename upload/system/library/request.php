@@ -6,16 +6,30 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
-
-/**
-* Request class
-*/
 namespace Opencart\System\Library;
+/**
+ * Class Request
+ */
 class Request {
+	/**
+	 * @var array|mixed
+	 */
 	public array $get = [];
+	/**
+	 * @var array|mixed
+	 */
 	public array $post = [];
+	/**
+	 * @var array|mixed
+	 */
 	public array $cookie = [];
+	/**
+	 * @var array|mixed
+	 */
 	public array $files = [];
+	/**
+	 * @var array|mixed
+	 */
 	public array $server = [];
 	
 	/**
@@ -30,7 +44,8 @@ class Request {
 	}
 	
 	/**
-     * 
+     * Clean
+	 *
 	 * @param	mixed	$data
 	 *
      * @return	mixed

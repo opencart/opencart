@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
+/**
+ * Class Banner
+ *
+ * @package
+ */
 class Banner extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param array $setting
+	 *
+	 * @return string
+	 */
 	public function index(array $setting): string {
 		static $module = 0;
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Install\Controller\Install;
+/**
+ * Class Step1
+ *
+ * @package Opencart\Install\Controller\Install
+ */
 class Step1 extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('install/step_1');
 

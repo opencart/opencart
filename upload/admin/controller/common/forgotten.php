@@ -1,11 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ * Class Forgotten
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class Forgotten extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('common/forgotten');
 
-		if ($this->user->isLogged()) {
-			$this->response->redirect($this->url->link('common/login'));
+		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
+			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -31,13 +39,16 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$this->load->language('common/forgotten');
 
 		$json = [];
 
 		// Stop any undefined index messages.
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
 			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
@@ -69,6 +80,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function reset(): void {
 		$this->load->language('common/forgotten');
 
@@ -84,8 +98,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($this->user->isLogged()) {
-			$this->response->redirect($this->url->link('common/login'));
+		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
+			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
 		$this->load->model('user/user');
@@ -97,7 +111,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['error'] = $this->language->get('error_code');
 
-			$this->response->redirect($this->url->link('common/login'));
+			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
 		$this->document->setTitle($this->language->get('heading_reset'));
@@ -125,6 +139,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten_reset', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function password(): void {
 		$this->load->language('common/forgotten');
 

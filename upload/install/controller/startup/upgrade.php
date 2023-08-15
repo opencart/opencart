@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Install\Controller\Startup;
+/**
+ * Class Upgrade
+ *
+ * @package Opencart\Install\Controller\Startup
+ */
 class Upgrade extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$upgrade = false;
 

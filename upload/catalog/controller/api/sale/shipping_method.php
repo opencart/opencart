@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
+/**
+ * Class Shipping Method
+ *
+ * @package Opencart\Catalog\Controller\Api\Sale
+ */
 class ShippingMethod extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/sale/shipping_method');
 
@@ -30,6 +38,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('api/sale/shipping_method');
 

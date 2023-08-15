@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ * Class ShippingAddress
+ *
+ * @package Opencart\Catalog\Controller\Checkout
+ */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('checkout/shipping_address');
 
@@ -52,6 +60,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/shipping_address', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('checkout/shipping_address');
 
@@ -180,6 +191,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function address(): void {
 		$this->load->language('checkout/shipping_address');
 

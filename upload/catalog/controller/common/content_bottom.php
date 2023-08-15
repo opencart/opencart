@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+/**
+ * Class Content Bottom
+ *
+ * @package Opencart\Catalog\Controller\Common
+ */
 class ContentBottom extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->model('design/layout');
 

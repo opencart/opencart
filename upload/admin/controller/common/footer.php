@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ * Class Footer
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class Footer extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('common/footer');
 

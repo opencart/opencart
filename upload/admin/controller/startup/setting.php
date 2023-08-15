@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
+/**
+ * Class Setting
+ *
+ * @package Opencart\Admin\Controller\Startup
+ */
 class Setting extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->model('setting/setting');
 

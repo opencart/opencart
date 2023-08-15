@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
+/**
+ * Class Handling
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
+ */
 class Handling extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/total/handling');
 
@@ -44,6 +52,9 @@ class Handling extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/handling', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/handling');
 

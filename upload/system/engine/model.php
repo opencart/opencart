@@ -11,7 +11,13 @@
 * Model class
 */
 namespace Opencart\System\Engine;
+/**
+ * Class Model
+ */
 class Model {
+	/**
+	 * @var object|\Opencart\System\Engine\Registry
+	 */
 	protected $registry;
 
 	/**

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ * Class File Manager
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class FileManager extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('common/filemanager');
 
@@ -33,6 +41,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('common/filemanager');
 
@@ -225,6 +236,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/filemanager_list', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function upload(): void {
 		$this->load->language('common/filemanager');
 
@@ -330,6 +344,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function folder(): void {
 		$this->load->language('common/filemanager');
 
@@ -383,6 +400,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('common/filemanager');
 

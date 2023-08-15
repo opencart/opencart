@@ -1,6 +1,17 @@
 <?php
 namespace Opencart\Catalog\Controller\Event;
+/**
+ * Class Translation
+ *
+ * @package Opencart\Catalog\Controller\Event
+ */
 class Translation extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param string $prefix
+	 *
+	 * @return void
+	 */
 	public function index(string &$route, string &$prefix): void {
 		$this->load->model('design/translation');
 

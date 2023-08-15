@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
+/**
+ * Class Latest
+ *
+ * @package
+ */
 class Latest extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param array $setting
+	 *
+	 * @return string
+	 */
 	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/latest');
 

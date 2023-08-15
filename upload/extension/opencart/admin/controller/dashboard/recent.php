@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
+/**
+ * Class Recent
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
+ */
 class Recent extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/recent');
 
@@ -44,6 +52,9 @@ class Recent extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/recent_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/dashboard/recent');
 
@@ -64,7 +75,10 @@ class Recent extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/recent');
 

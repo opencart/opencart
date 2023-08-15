@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
+/**
+ * Class Contact
+ *
+ * @package Opencart\Admin\Controller\Marketing
+ */
 class Contact extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('marketing/contact');
 
@@ -38,6 +46,10 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/contact', $data));
 	}
 
+	/**
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function send(): void {
 		$this->load->language('marketing/contact');
 

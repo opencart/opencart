@@ -1,7 +1,20 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+/**
+ * Class Gdpr
+ *
+ * @package Opencart\Catalog\Controller\Mail
+ */
 class Gdpr extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/gdpr/addGdpr
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		// $args[0] $code
 		// $args[1] $email
@@ -67,6 +80,15 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	// catalog/model/account/gdpr/editStatus/after
+
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function remove(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$gdpr_id = $args[0];

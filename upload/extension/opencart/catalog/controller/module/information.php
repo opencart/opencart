@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
+/**
+ * Class Information
+ *
+ * @package
+ */
 class Information extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('extension/opencart/module/information');
 

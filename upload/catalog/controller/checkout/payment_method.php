@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ * Class PaymentMethod
+ *
+ * @package Opencart\Catalog\Controller\Checkout
+ */
 class PaymentMethod extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('checkout/payment_method');
 
@@ -33,6 +41,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/payment_method', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function getMethods(): void {
 		$this->load->language('checkout/payment_method');
 
@@ -103,6 +114,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('checkout/payment_method');
 
@@ -139,7 +153,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 				// Validate shipping method
 				if (!isset($this->session->data['shipping_method'])) {
-					$json['error'] = $this->language->get('error_payment_method');
+					$json['error'] = $this->language->get('error_shipping_method');
 				}
 			}
 
@@ -165,6 +179,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function comment(): void {
 		$this->load->language('checkout/payment_method');
 
@@ -194,6 +211,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function agree(): void {
 		$this->load->language('checkout/payment_method');
 

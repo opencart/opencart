@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
+/**
+ * Class Event
+ *
+ * @package Opencart\Admin\Controller\Startup
+ */
 class Event extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		// Add events from the DB
 		$this->load->model('setting/event');

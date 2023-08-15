@@ -6,17 +6,25 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
-
+namespace Opencart\System\Library;
 /**
-* Response class
+ * Class Response
  *
  * Stores the response so the correct headers can go out before the response output is shown.
  *
-*/
-namespace Opencart\System\Library;
+ */
 class Response {
+	/**
+	 * @var array
+	 */
 	private array $headers = [];
+	/**
+	 * @var int
+	 */
 	private int $level = 0;
+	/**
+	 * @var string
+	 */
 	private string $output = '';
 
 	/**

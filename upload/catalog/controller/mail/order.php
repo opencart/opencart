@@ -1,6 +1,17 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+/**
+ * Class Order
+ *
+ * @package Opencart\Catalog\Controller\Mail
+ */
 class Order extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function index(string &$route, array &$args): void {
 		if (isset($args[0])) {
 			$order_id = $args[0];
@@ -42,6 +53,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @param array  $order_info
+	 * @param int    $order_status_id
+	 * @param string $comment
+	 * @param bool   $notify
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function add(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		// Check for any downloadable products
 		$download_status = false;
@@ -338,6 +358,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @param array  $order_info
+	 * @param int    $order_status_id
+	 * @param string $comment
+	 * @param bool   $notify
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function edit(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -430,6 +459,14 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	// catalog/model/checkout/order/addHistory/before
+
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function alert(string &$route, array &$args): void {
 		if (isset($args[0])) {
 			$order_id = $args[0];

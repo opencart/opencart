@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ * Class Transaction
+ *
+ * @package Opencart\Catalog\Controller\Account
+ */
 class Transaction extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('account/transaction');
 

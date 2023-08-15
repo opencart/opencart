@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ * Class Returns
+ *
+ * @package Opencart\Catalog\Controller\Account
+ */
 class Returns extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('account/returns');
 
@@ -83,6 +91,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/returns_list', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function info(): void {
 		$this->load->language('account/returns');
 
@@ -213,6 +224,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function add(): void {
 		$this->load->language('account/returns');
 
@@ -342,6 +356,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/returns_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('account/returns');
 
@@ -438,6 +455,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function success(): void {
 		$this->load->language('account/returns');
 

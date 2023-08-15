@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
+/**
+ * Class HTML
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
+ */
 class HTML extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/module/html');
 
@@ -82,6 +90,9 @@ class HTML extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/html', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/module/html');
 

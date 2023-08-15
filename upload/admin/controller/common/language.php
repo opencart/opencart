@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ * Class Language
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class Language extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$data['languages'] = [];
 
@@ -46,6 +54,9 @@ class Language extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/language', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('common/language');
 

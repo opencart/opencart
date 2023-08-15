@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ * Class Authorize
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class Authorize extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('common/authorize');
 
@@ -82,6 +90,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/authorize', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function send() {
 		$this->load->language('common/authorize');
 
@@ -93,6 +104,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function validate(): void {
 		$this->load->language('common/authorize');
 
@@ -138,6 +152,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function unlock() {
 		$this->load->language('common/authorize');
 
@@ -164,6 +181,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/authorize_unlock', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm() {
 		$this->load->language('common/authorize');
 
@@ -180,6 +200,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function reset() {
 		$this->load->language('common/authorize');
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
+/**
+ * Class Basic
+ *
+ * @package
+ */
 class Basic extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
@@ -11,6 +19,9 @@ class Basic extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/captcha/basic', $data);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function validate(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
@@ -21,6 +32,9 @@ class Basic extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function captcha(): void {
 		$image  = imagecreatetruecolor(150, 35);
 

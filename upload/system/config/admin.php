@@ -55,7 +55,6 @@ $_['action_event']       = [
 		999 => 'event/language'
 	],
     'language/*/after' => [
-        0 => 'startup/language.after',
-        1 => 'event/translation'
+        0 => 'startup/language.after'
     ]
 ];

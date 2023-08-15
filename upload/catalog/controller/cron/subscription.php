@@ -1,6 +1,22 @@
 <?php
 namespace Opencart\Catalog\Controller\Cron;
+/**
+ * Class Subscription
+ *
+ * @package Opencart\Catalog\Controller\Cron
+ */
 class Subscription extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * @param int    $cron_id
+	 * @param string $code
+	 * @param string $cycle
+	 * @param string $date_added
+	 * @param string $date_modified
+	 *
+	 * @return void
+	 */
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
         $this->load->language('cron/subscription');
 
@@ -166,7 +182,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$error = $this->language->get('error_payment_method');
 					}
 				}
-
 
 				if (!$error) {
 					$this->load->model('marketing/marketing');
@@ -353,15 +368,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['forwarded_ip'] = $result['forwarded_ip'];
 					$order_data['user_agent'] = $result['user_agent'];
 					$order_data['accept_language'] = $result['accept_language'];
-
-
-
-
 				}
 
-
-
-				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining']) && ) {
+				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
 					$amount = $result['trial_price'];
 				} elseif (!$result['duration'] || $result['remaining']) {
 					$amount = $result['price'];
@@ -434,8 +443,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Failed if payment method does not have recurring payment method
 		/*
+		// Failed if payment method does not have recurring payment method
+
 		$subscription_status_id = $this->config->get('config_subscription_failed_status_id');
 
 		$this->model_checkout_subscription->addHistory($result['subscription_id'], $subscription_status_id, $this->language->get('error_recurring'), true);

@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
+/**
+ * Class Cheque
+ *
+ * @package
+ */
 class Cheque extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $address
+	 *
+	 * @return array
+	 */
 	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/cheque');
 

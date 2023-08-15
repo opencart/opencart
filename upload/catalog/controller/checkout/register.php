@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ * Class Register
+ *
+ * @package Opencart\Catalog\Controller\Checkout
+ */
 class Register extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('checkout/register');
 
@@ -156,6 +164,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/register', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('checkout/register');
 

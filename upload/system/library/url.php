@@ -7,13 +7,18 @@
  * @author    Daniel Kerr
  * @see       https://www.opencart.com
  */
-
-/**
- * URL class.
- */
 namespace Opencart\System\Library;
+/**
+ * Class URL
+ */
 class Url {
+	/**
+	 * @var string
+	 */
 	private string $url;
+	/**
+	 * @var array
+	 */
 	private array $rewrite = [];
 
 	/**
@@ -26,6 +31,8 @@ class Url {
 	}
 
 	/**
+	 * addRewrite
+	 *
 	 * Add a rewrite method to the URL system
 	 *
 	 * @param	object	$rewrite

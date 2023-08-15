@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\User;
+/**
+ * Class User Permission
+ *
+ * @package Opencart\Admin\Controller\User
+ */
 class UserPermission extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('user/user_group');
 
@@ -46,12 +54,18 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_group', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('user/user_group');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -149,6 +163,9 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		return $this->load->view('user/user_group_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('user/user_group');
 
@@ -306,6 +323,9 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_group_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('user/user_group');
 
@@ -335,6 +355,9 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('user/user_group');
 

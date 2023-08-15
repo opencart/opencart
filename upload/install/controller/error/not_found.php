@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Install\Controller\Error;
+/**
+ * Class NotFound
+ *
+ * @package Opencart\Install\Controller\Error
+ */
 class NotFound extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('error/not_found');
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Controller\User;
+/**
+ * Class User
+ *
+ * @package Opencart\Admin\Controller\User
+ */
 class User extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('user/user');
 
@@ -46,12 +54,18 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('user/user');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -153,6 +167,9 @@ class User extends \Opencart\System\Engine\Controller {
 		return $this->load->view('user/user_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('user/user');
 
@@ -257,6 +274,9 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('user/user');
 
@@ -332,6 +352,9 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('user/user');
 
@@ -367,12 +390,18 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function authorize(): void {
 		$this->load->language('user/user');
 
 		$this->response->setOutput($this->getAuthorize());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getAuthorize(): string {
 		if (isset($this->request->get['user_id'])) {
 			$user_id = (int)$this->request->get['user_id'];
@@ -420,6 +449,9 @@ class User extends \Opencart\System\Engine\Controller {
 		return $this->load->view('user/user_authorize', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function deleteAuthorize(): void {
 		$this->load->language('user/user');
 
@@ -466,12 +498,18 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function login(): void {
 		$this->load->language('user/user');
 
 		$this->response->setOutput($this->getLogin());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getLogin(): string {
 		if (isset($this->request->get['user_id'])) {
 			$user_id = (int)$this->request->get['user_id'];

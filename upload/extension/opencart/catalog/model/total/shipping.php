@@ -1,6 +1,18 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
+/**
+ * Class Shipping
+ *
+ * @package
+ */
 class Shipping extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $totals
+	 * @param array $taxes
+	 * @param float $total
+	 *
+	 * @return void
+	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if ($this->cart->hasShipping() && isset($this->session->data['shipping_method'])) {
 			$totals[] = [

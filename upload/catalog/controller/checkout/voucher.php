@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ * Class Voucher
+ *
+ * @package Opencart\Catalog\Controller\Checkout
+ */
 class Voucher extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('checkout/voucher');
 
@@ -61,6 +69,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/voucher', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function add(): void {
 		$this->load->language('checkout/voucher');
 
@@ -142,6 +153,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function remove(): void {
 		$this->load->language('checkout/voucher');
 
@@ -176,6 +190,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function success(): void {
 		$this->load->language('checkout/voucher');
 

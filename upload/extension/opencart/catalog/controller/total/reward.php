@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
+/**
+ * Class Reward
+ *
+ * @package
+ */
 class Reward extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		if ($this->config->get('total_reward_status')) {
 			$available = $this->customer->getRewardPoints();
@@ -36,6 +44,9 @@ class Reward extends \Opencart\System\Engine\Controller {
 		return '';
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/reward');
 

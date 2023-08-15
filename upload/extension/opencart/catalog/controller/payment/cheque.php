@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
+/**
+ * Class Cheque
+ *
+ * @package
+ */
 class Cheque extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/cheque');
 
@@ -12,6 +20,9 @@ class Cheque extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/payment/cheque', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$this->load->language('extension/opencart/payment/cheque');
 

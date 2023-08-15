@@ -253,7 +253,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
             if($is_price_incl_tax){
-                $price = $this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
+                $price = $this->tax->calculate(floatval($result['price']), $result['tax_class_id'], $this->config->get('config_tax'));
                 if($special !== false){
                     $special = $this->tax->calculate(floatval($special), $result['tax_class_id'], $this->config->get('config_tax'));
                 }
@@ -577,7 +577,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['price'] = $product_info['price'];
 
             if($is_price_incl_tax){
-                $data['price'] = $this->tax->calculate($product_info['price'], $product_info['tax_class_id']);
+                $data['price'] = $this->tax->calculate(floatval($product_info['price']), $product_info['tax_class_id']);
             }
 		} else {
 			$data['price'] = '';
@@ -872,7 +872,7 @@ class Product extends \Opencart\System\Engine\Controller {
 							'name'                    => $option_value_info['name'],
 							'quantity'                => $product_option_value['quantity'],
 							'subtract'                => $product_option_value['subtract'],
-							'price'                   => $is_price_incl_tax ? $this->tax->calculate($product_option_value['price'], $data['tax_class_id'], 'P') : $product_option_value['price'],
+							'price'                   => $is_price_incl_tax ? $this->tax->calculate(floatval($product_option_value['price']), $data['tax_class_id'], 'P') : $product_option_value['price'],
 							'price_prefix'            => $product_option_value['price_prefix'],
 							'points'                  => round($product_option_value['points']),
 							'points_prefix'           => $product_option_value['points_prefix'],
@@ -934,7 +934,7 @@ class Product extends \Opencart\System\Engine\Controller {
 							'product_option_value_id' => $product_option_value['product_option_value_id'],
 							'option_value_id'         => $product_option_value['option_value_id'],
 							'name'                    => $option_value_info['name'],
-							'price'                   => (float)$product_option_value['price'] ? ($is_price_incl_tax ? $this->tax->calculate($product_option_value['price'], $data['tax_class_id'], 'P') : $product_option_value['price']) : false,
+							'price'                   => (float)$product_option_value['price'] ? ($is_price_incl_tax ? $this->tax->calculate(floatval($product_option_value['price']), $data['tax_class_id'], 'P') : $product_option_value['price']) : false,
 							'price_prefix'            => $product_option_value['price_prefix']
 						];
 					}
@@ -967,8 +967,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
         if($is_price_incl_tax) {
             foreach ($data['product_subscriptions'] as $i => $product_subscription) {
-                $data['product_subscriptions'][$i]['trial_price'] = $this->tax->calculate($product_subscription['trial_price'], $data['tax_class_id']);
-                $data['product_subscriptions'][$i]['price'] = $this->tax->calculate($product_subscription['price'], $data['tax_class_id']);
+                $data['product_subscriptions'][$i]['trial_price'] = $this->tax->calculate(floatval($product_subscription['trial_price']), $data['tax_class_id']);
+                $data['product_subscriptions'][$i]['price'] = $this->tax->calculate(floatval($product_subscription['price']), $data['tax_class_id']);
             }
         }
 
@@ -986,7 +986,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'customer_group_id' => $product_discount['customer_group_id'],
 				'quantity'          => $product_discount['quantity'],
 				'priority'          => $product_discount['priority'],
-				'price'             => $is_price_incl_tax ? $this->tax->calculate($product_discount['price'], $data['tax_class_id']) : $product_discount['price'],
+				'price'             => $is_price_incl_tax ? $this->tax->calculate(floatval($product_discount['price']), $data['tax_class_id']) : $product_discount['price'],
 				'date_start'        => ($product_discount['date_start'] != '0000-00-00') ? $product_discount['date_start'] : '',
 				'date_end'          => ($product_discount['date_end'] != '0000-00-00') ? $product_discount['date_end'] : ''
 			];
@@ -1005,7 +1005,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_specials'][] = [
 				'customer_group_id' => $product_special['customer_group_id'],
 				'priority'          => $product_special['priority'],
-				'price'             => $is_price_incl_tax ? $this->tax->calculate($product_special['price'], $data['tax_class_id']) : $product_special['price'],
+				'price'             => $is_price_incl_tax ? $this->tax->calculate(floatval($product_special['price']), $data['tax_class_id']) : $product_special['price'],
 				'date_start'        => ($product_special['date_start'] != '0000-00-00') ? $product_special['date_start'] : '',
 				'date_end'          => ($product_special['date_end'] != '0000-00-00') ? $product_special['date_end'] : ''
 			];
@@ -1170,32 +1170,32 @@ class Product extends \Opencart\System\Engine\Controller {
             }
 
             if($is_price_incl_tax){
-                $this->request->post['price'] = $this->tax->calculatePriceExclTax($this->request->post['price'], $this->request->post['tax_class_id']);
+                $this->request->post['price'] = $this->tax->calculatePriceExclTax(floatval($this->request->post['price']), $this->request->post['tax_class_id']);
 
                 if(!empty($this->request->post['product_option'])) {
                     foreach ($this->request->post['product_option'] as $i => $product_option) {
                         foreach ($product_option['product_option_value'] as $j => $product_option_value) {
-                            $this->request->post['product_option'][$i]['product_option_value'][$j]['price'] = $this->tax->calculatePriceExclTax($product_option_value['price'], $this->request->post['tax_class_id'], 'P');
+                            $this->request->post['product_option'][$i]['product_option_value'][$j]['price'] = $this->tax->calculatePriceExclTax(floatval($product_option_value['price']), $this->request->post['tax_class_id'], 'P');
                         }
                     }
                 }
 
                 if(!empty($this->request->post['product_subscription'])){
                     foreach ($this->request->post['product_subscription'] as $i => $product_subscription){
-                        $this->request->post['product_subscription'][$i]['price'] = $this->tax->calculatePriceExclTax($product_subscription['price'], $this->request->post['tax_class_id']);
-                        $this->request->post['product_subscription'][$i]['trial_price'] = $this->tax->calculatePriceExclTax($product_subscription['trial_price'], $this->request->post['tax_class_id']);
+                        $this->request->post['product_subscription'][$i]['price'] = $this->tax->calculatePriceExclTax(floatval($product_subscription['price']), $this->request->post['tax_class_id']);
+                        $this->request->post['product_subscription'][$i]['trial_price'] = $this->tax->calculatePriceExclTax(floatval($product_subscription['trial_price']), $this->request->post['tax_class_id']);
                     }
                 }
 
                 if(!empty($this->request->post['product_discount'])) {
                     foreach ($this->request->post['product_discount'] as $i => $product_discount) {
-                        $this->request->post['product_discount'][$i]['price'] = $this->tax->calculatePriceExclTax($product_discount['price'], $this->request->post['tax_class_id']);
+                        $this->request->post['product_discount'][$i]['price'] = $this->tax->calculatePriceExclTax(floatval($product_discount['price']), $this->request->post['tax_class_id']);
                     }
                 }
 
                 if(!empty($this->request->post['product_special'])) {
                     foreach ($this->request->post['product_special'] as $i => $product_special) {
-                        $this->request->post['product_special'][$i]['price'] = $this->tax->calculatePriceExclTax($product_special['price'], $this->request->post['tax_class_id']);
+                        $this->request->post['product_special'][$i]['price'] = $this->tax->calculatePriceExclTax(floatval($product_special['price']), $this->request->post['tax_class_id']);
                     }
                 }
             }

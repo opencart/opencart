@@ -114,13 +114,13 @@ class Log extends \Opencart\System\Engine\Controller {
 		if (!is_file($file)) {
 			$this->session->data['error'] = sprintf($this->language->get('error_file'), $filename);
 
-			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
+			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		if (!filesize($file)) {
 			$this->session->data['error'] = sprintf($this->language->get('error_empty'), $filename);
 
-			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
+			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$this->response->addheader('Pragma: public');

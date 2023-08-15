@@ -391,13 +391,13 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$this->response->redirect($this->url->link('error/permission'));
+			$this->response->redirect($this->url->link('error/permission', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$file = DIR_STORAGE . 'backup/' . $filename;
 
 		if (!is_file($file)) {
-			$this->response->redirect($this->url->link('error/not_found'));
+			$this->response->redirect($this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		if (!headers_sent()) {

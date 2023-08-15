@@ -1242,6 +1242,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function call(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
 		if (isset($this->request->get['store_id'])) {
 			$store_id = (int)$this->request->get['store_id'];
 		} else {
@@ -1266,7 +1270,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			$session_id = '';
 		}
 
-		if ($action) {
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries
 			$this->load->model('setting/store');
 
@@ -1285,9 +1293,13 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Call the required API controller
 			$store->load->controller($store->request->get['route']);
 
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput($store->response->getOutput());
+			$output = $store->response->getOutput();
+		} else {
+			$output = json_encode($json);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($output);
 	}
 
 	/**

@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Install\Model\Install;
+use Opencart\System\Library\DB;
+
 /**
  * Class Install
  *
@@ -7,38 +9,16 @@ namespace Opencart\Install\Model\Install;
  */
 class Install extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $data
-	 *
+	 * @param DB $db
+	 * @param array $tables
+	 * @param string $db_prefix
 	 * @return void
-	 * @throws \Exception
 	 */
-	public function database(array $data): void {
-		$db = new \Opencart\System\Library\DB($data['db_driver'], html_entity_decode($data['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8'), $data['db_port']);
-
-		// Structure
-		$this->load->helper('db_schema');
-
-		$tables = oc_db_schema();
-
-		// Clear any old db foreign key constraints
-		/*
+	public function createDatabaseSchema(\Opencart\System\Library\DB $db, array $tables, string $db_prefix): void{
 		foreach ($tables as $table) {
-			$foreign_query = $db->query("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '" . html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8') . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "' AND CONSTRAINT_TYPE = 'FOREIGN KEY'");
+			$db->query("DROP TABLE IF EXISTS `" . $db_prefix . $table['name'] . "`");
 
-			foreach ($foreign_query->rows as $foreign) {
-				$db->query("ALTER TABLE `" . $data['db_prefix'] . $table['name'] . "` DROP FOREIGN KEY `" . $foreign['CONSTRAINT_NAME'] . "`");
-			}
-		}
-		*/
-
-		// CLear old DB
-		foreach ($tables as $table) {
-			$db->query("DROP TABLE IF EXISTS `" . $data['db_prefix'] . $table['name'] . "`");
-		}
-
-		// Need to sort the creation of tables on foreign keys
-		foreach ($tables as $table) {
-			$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
+			$sql = "CREATE TABLE `" . $db_prefix . $table['name'] . "` (" . "\n";
 
 			foreach ($table['field'] as $field) {
 				$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
@@ -67,24 +47,23 @@ class Install extends \Opencart\System\Engine\Model {
 			}
 
 			$sql = rtrim($sql, ",\n") . "\n";
-			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " ROW_FORMAT=DYNAMIC COLLATE=" . $table['collate'] . ";\n";
+			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
 
-			// Add table into another array so that it can be sorted to avoid foreign keys from being incorrectly formed.
 			$db->query($sql);
 		}
+	}
 
-		// Setup foreign keys
-		/*
-		foreach ($tables as $table) {
-			if (isset($table['foreign'])) {
-				foreach ($table['foreign'] as $foreign) {
-					$db->query("ALTER TABLE `" . $data['db_prefix'] . $table['name'] . "` ADD FOREIGN KEY (`" . $foreign['key'] . "`) REFERENCES `" . $data['db_prefix'] . $foreign['table'] . "` (`" . $foreign['field'] . "`)");
-				}
-			}
-		}
-		*/
-		// Data
-		$lines = file(DIR_APPLICATION . 'opencart.sql', FILE_IGNORE_NEW_LINES);
+	/**
+	 * @param DB $db
+	 * @param string $data_sql_file
+	 * @param string $db_prefix
+	 * @param string $admin_username
+	 * @param string $admin_password
+	 * @param string $admin_email
+	 * @return void
+	 */
+	public function setupDatabaseData(\Opencart\System\Library\DB $db, string $data_sql_file, string $db_prefix, string $admin_username, string $admin_password, string $admin_email){
+		$lines = file($data_sql_file, FILE_IGNORE_NEW_LINES);
 
 		if ($lines) {
 			$sql = '';
@@ -103,33 +82,165 @@ class Install extends \Opencart\System\Engine\Model {
 				}
 
 				if (substr($line, -2) == ');') {
-					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
+					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $db_prefix, $sql));
 
 					$start = false;
 				}
 			}
+
+			$db->query("SET CHARACTER SET utf8");
+
+			$db->query("SET @@session.sql_mode = ''");
+
+			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE `user_id` = '1'");
+
+			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($admin_username) . "', `password` = '" . $db->escape($admin_password) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($admin_email) . "', `status` = '1', `date_added` = NOW()");
+
+			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($admin_email) . "'");
+
+			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_encryption'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(oc_token(1024)) . "'");
+
+			$db->query("INSERT INTO `" . $db_prefix . "api` SET `username` = 'Default', `key` = '" . $db->escape(oc_token(256)) . "', `status` = 1, `date_added` = NOW(), `date_modified` = NOW()");
+
+			$last_id = $db->getLastId();
+
+			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', `value` = '" . (int)$last_id . "'");
+
+			// set the current years prefix
+			$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
+		}
+	}
+
+	/**
+	 * @param DB $db
+	 * @param array $tables
+	 * @param string $database_name
+	 * @param string $db_prefix
+	 * @return void
+	 */
+	public function upgradeDatabaseSchema(\Opencart\System\Library\DB $db, array $tables, string $database_name, string $db_prefix): void{
+		$tables_to_insert = [];
+		$tables_to_update = [];
+		foreach ($tables as $table) {
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $database_name . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
+			if($table_query->num_rows > 0){
+				$tables_to_update[] = $table;
+			}else{
+				$tables_to_insert[] = $table;
+			}
 		}
 
-		$db->query("SET CHARACTER SET utf8mb4");
-		
-		$db->query("SET @@session.sql_mode = ''");
+		// Create tables that do not exist.
+		$this->createDatabaseSchema($db, $tables_to_insert, $db_prefix);
 
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE `user_id` = '1'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($data['username']) . "', `password` = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($data['email']) . "', `status` = '1', `date_added` = NOW()");
+		// Update the existing tables if needed.
+		foreach ($tables_to_update as $table) {
+			for ($i = 0; $i < count($table['field']); $i++) {
+				$sql = "ALTER TABLE `" . $db_prefix . $table['name'] . "`";
 
-		$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($data['email']) . "' WHERE `key` = 'config_email'");
+				$field_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $database_name . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "' AND COLUMN_NAME = '" . $table['field'][$i]['name'] . "'");
 
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(oc_token(512)) . "'");
+				if (!$field_query->num_rows) {
+					$sql .= " ADD";
+				} else {
+					$sql .= " MODIFY";
+				}
 
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET `username` = 'Default', `key` = '" . $db->escape(oc_token(256)) . "', `status` = '1', `date_added` = NOW(), `date_modified` = NOW()");
+				$sql .= " `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'];
 
-		$api_id = $db->getLastId();
+				if (!empty($table['field'][$i]['not_null'])) {
+					$sql .= " NOT NULL";
+				}
 
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', `value` = '" . (int)$api_id . "'");
+				if (isset($table['field'][$i]['default'])) {
+					$sql .= " DEFAULT '" . $table['field'][$i]['default'] . "'";
+				}
 
-		// set the current years prefix
-		$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
+				if (!isset($table['field'][$i - 1])) {
+					$sql .= " FIRST";
+				} else {
+					$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
+				}
+
+				$db->query($sql);
+			}
+
+			$keys = [];
+
+			// Remove all primary keys and indexes
+			$query = $db->query("SHOW INDEXES FROM `" . $db_prefix . $table['name'] . "`");
+
+			foreach ($query->rows as $result) {
+				if ($result['Key_name'] == 'PRIMARY') {
+					// We need to remove the AUTO_INCREMENT
+					$field_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $database_name . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "' AND COLUMN_NAME = '" . $result['Column_name'] . "'");
+
+					$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` MODIFY `" . $result['Column_name'] . "` " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
+				}
+
+				if (!in_array($result['Key_name'], $keys)) {
+					// Remove indexes below
+					$keys[] = $result['Key_name'];
+				}
+			}
+
+			foreach ($keys as $key) {
+				if ($result['Key_name'] == 'PRIMARY') {
+					$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` DROP PRIMARY KEY");
+				} else {
+					$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` DROP INDEX `" . $key . "`");
+				}
+			}
+
+			// Primary Key
+			if (isset($table['primary'])) {
+				$primary_data = [];
+
+				foreach ($table['primary'] as $primary) {
+					$primary_data[] = "`" . $primary . "`";
+				}
+
+				$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` ADD PRIMARY KEY(" . implode(",", $primary_data) . ")");
+			}
+
+			for ($i = 0; $i < count($table['field']); $i++) {
+				if (isset($table['field'][$i]['auto_increment'])) {
+					$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` MODIFY `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'] . " AUTO_INCREMENT");
+				}
+			}
+
+			// Indexes
+			if (isset($table['index'])) {
+				foreach ($table['index'] as $index) {
+					$index_data = [];
+
+					foreach ($index['key'] as $key) {
+						$index_data[] = "`" . $key . "`";
+					}
+
+					$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` ADD INDEX `" . $index['name'] . "` (" . implode(",", $index_data) . ")");
+				}
+			}
+
+			// DB Engine
+			if (isset($table['engine'])) {
+				$db->query("ALTER TABLE `" . $db_prefix . $table['name'] . "` ENGINE = `" . $table['engine'] . "`");
+			}
+
+			// Charset
+			if (isset($table['charset'])) {
+				$sql = "ALTER TABLE `" . $db_prefix . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "`";
+
+				if (isset($table['collate'])) {
+					$sql .= " COLLATE `" . $table['collate'] . "`";
+				}
+
+				$db->query($sql);
+
+			}
+		}
 	}
 }

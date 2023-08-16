@@ -16,11 +16,33 @@ class Step3 extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		$this->load->language('install/step_3');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->load->helper('db_schema');
+
 			$this->load->model('install/install');
 
-			$this->model_install_install->database($this->request->post);
+			// Establish database connection.
+			$db = new \Opencart\System\Library\DB(
+				$this->request->post['db_driver'],
+				html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'),
+				html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'),
+				html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'),
+				html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'),
+				$this->request->post['db_port']
+			);
+
+			$tables = oc_db_schema();
+
+			// Create database schema.
+			$this->load->model('install/install');
+			$this->model_install_install->createDatabaseSchema($db, $tables, $this->request->post['db_prefix']);
+
+			// Fill database with initial data.
+			$data_sql_file = DIR_APPLICATION . 'opencart.sql';
+			$admin_password = password_hash($this->request->post['password'], PASSWORD_DEFAULT);
+			$this->model_install_install->setupDatabaseData($db, $data_sql_file, $this->request->post['db_prefix'], $this->request->post['username'], $admin_password, $this->request->post['email']);
+
 
 			// Catalog config.php
 			$output  = '<?php' . "\n";
@@ -46,7 +68,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
 			$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
-			
+
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
@@ -87,7 +109,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
 			$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
-			
+
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
@@ -96,7 +118,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
 			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
 			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
-			
+
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
@@ -112,7 +134,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_step_3'] = $this->language->get('text_step_3');
 		$data['text_db_connection'] = $this->language->get('text_db_connection');
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
@@ -166,13 +188,13 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['error_db_database'] = '';
 		}
-		
+
 		if (isset($this->error['db_port'])) {
 			$data['error_db_port'] = $this->error['db_port'];
 		} else {
 			$data['error_db_port'] = '';
 		}
-		
+
 		if (isset($this->error['db_prefix'])) {
 			$data['error_db_prefix'] = $this->error['db_prefix'];
 		} else {
@@ -244,13 +266,13 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['db_database'] = '';
 		}
-		
+
 		if (isset($this->request->post['db_port'])) {
 			$data['db_port'] = $this->request->post['db_port'];
 		} else {
 			$data['db_port'] = 3306;
 		}
-		
+
 		if (isset($this->request->post['db_prefix'])) {
 			$data['db_prefix'] = $this->request->post['db_prefix'];
 		} else {

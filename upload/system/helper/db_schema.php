@@ -7965,5 +7965,49 @@ function oc_db_schema() {
 		'collate' => 'utf8mb4_general_ci'
 	];
 
+	$tables[] = [
+		'name' => 'blog_post',
+		'field' => [
+			[
+				'name' => 'blog_post_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'header',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'content',
+				'type' => 'text',
+				'not_null' => true
+			],
+		],
+		'primary' => [
+			'blog_post_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'popup_id',
+				'table' => 'popup',
+				'field' => 'popup_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
 	return $tables;
 }

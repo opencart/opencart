@@ -1,5 +1,9 @@
 # OpenCart change log
 
+## [v4.0.2.3] (Release date: 14.08.2023)
+
+https://github.com/myteril/opencart/releases/tag/4.0.2.3
+
 ## [v4.0.2.2] (Release date: 18.04.2023)
 
 https://github.com/opencart/opencart/releases/tag/4.0.2.2
@@ -14,7 +18,7 @@ https://github.com/opencart/opencart/releases/tag/4.0.2.0
 * Changed the route to use . instead of using | for compatibility with some payment gateways
 * Payment methods need to be updated:
 
-```		
+```
 $method_data = [];
 
 if ($status) {

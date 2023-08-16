@@ -7965,5 +7965,210 @@ function oc_db_schema() {
 		'collate' => 'utf8mb4_general_ci'
 	];
 
+	$tables[] = [
+		'name' => 'blog_post',
+		'field' => [
+			[
+				'name' => 'blog_post_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'created_at',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'modified_at',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'blog_author_id',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_post_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_author_id',
+				'table' => 'blog_author',
+				'field' => 'blog_author_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'sort_order',
+				'key' => [
+					'status',
+					'sort_order'
+				]
+			],
+			[
+				'name' => 'created_at',
+				'key' => [
+					'status',
+					'created_at'
+				]
+			],
+			[
+				'name' => 'name',
+				'key' => [
+					'status',
+					'name'
+				]
+			],
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_post_content',
+		'field' => [
+			[
+				'name' => 'blog_post_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'title',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'content',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_post_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_post_id',
+				'table' => 'blog_post',
+				'field' => 'blog_post_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_author',
+		'field' => [
+			[
+				'name' => 'blog_author_id',
+				'type' => 'bigint(16)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'fullname',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'email',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'created_at',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'modified_at',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_author_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_tag_to_post',
+		'field' => [
+			[
+				'name' => 'tag',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'blog_post_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+		],
+		'primary' => [
+			'tag',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_post_id',
+				'table' => 'blog_post',
+				'field' => 'blog_post_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
 	return $tables;
 }

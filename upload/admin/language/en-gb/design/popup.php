@@ -25,6 +25,7 @@ $_['entry_show_everytime'] = 'Show Everytime';
 $_['entry_show_once']  = 'Show Once';
 $_['entry_header']     = 'Header';
 $_['entry_content']    = 'Content';
+$_['entry_store']      = 'Store';
 
 // Placeholder
 $_['placeholder_delay']      = 'Initial Delay (in seconds)';

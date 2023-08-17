@@ -266,6 +266,17 @@ class Popup extends \Opencart\System\Engine\Controller
 			];
 		}
 
+
+		$this->load->model('setting/store');
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = [
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			];
+		}
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');

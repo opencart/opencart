@@ -25,6 +25,7 @@ $_['entry_show_everytime'] = 'Immer anzeigen';
 $_['entry_show_once']  = 'Einmal anzeigen';
 $_['entry_header']     = 'Kopfzeile';
 $_['entry_content']    = 'Inhalt';
+$_['entry_store']      = 'Online-Shop (Store)';
 
 // Placeholder
 $_['placeholder_delay']      = 'Anfangsverzögerung (in Sekunden)';

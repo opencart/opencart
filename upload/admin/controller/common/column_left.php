@@ -423,6 +423,35 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			// Blog
+			$blog = [];
+
+			if ($this->user->hasPermission('access', 'blog/author')) {
+				$blog[] = [
+					'name'	   => $this->language->get('text_blog_authors'),
+					'href'     => $this->url->link('blog/author', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if ($this->user->hasPermission('access', 'blog/article')) {
+				$blog[] = [
+					'name'	   => $this->language->get('text_blog_articles'),
+					'href'     => $this->url->link('blog/article', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if (!empty($blog)) {
+				$data['menus'][] = [
+					'id'       => 'menu-blog',
+					'icon'	   => 'fas fa-newspaper',
+					'name'	   => $this->language->get('text_blog'),
+					'href'     => '',
+					'children' => $blog
+				];
+			}
+
 			// System
 			$system = [];
 

@@ -1,0 +1,62 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-author" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-author" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3 required">
+            <label for="input-fullname" class="col-sm-2 col-form-label">{{ entry_fullname }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="fullname" value="{{ fullname }}" placeholder="{{ entry_fullname }}" id="input-fullname" class="form-control" maxlength="255" />
+              <div id="error-fullname" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+            <div class="col-sm-10">
+              <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" maxlength="255" />
+              <div id="error-email" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-author-photo" class="col-sm-2 col-form-label">{{ entry_photo }}</label>
+            <div class="col-sm-10">
+              <div class="card image px-2 text-center">
+                <img src="{{ photo }}" alt="" title="" id="thumb-author-photo" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>
+                <input type="hidden" name="photo" value="{{ original_photo }}" id="input-author-photo"/>
+                <div class="card-body">
+                  <button type="button" data-oc-toggle="image" data-oc-target="#input-author-photo" data-oc-thumb="#thumb-author-photo" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                  <button type="button" data-oc-toggle="clear" data-oc-target="#input-author-photo" data-oc-thumb="#thumb-author-photo" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <input type="hidden" name="blog_author_id" value="{{ blog_author_id }}" id="input-blog-author-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+  language: '{{ ckeditor }}'
+});
+</script>
+
+{{ footer }}

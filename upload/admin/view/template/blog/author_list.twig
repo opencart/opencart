@@ -1,0 +1,38 @@
+<form id="form-blog-author" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#form-blog-author">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+        <td class="text-start">{{ column_photo }}</td>
+        <td class="text-start">{{ column_name }}</td>
+        <td class="text-start">{{ column_email }}</td>
+        <td class="text-start">{{ column_post_count }}</td>
+        <td class="text-end">{{ column_action }}</td>
+      </tr>
+      </thead>
+      <tbody>
+      {% if blog_authors is not null and blog_authors|length > 0 %}
+        {% for blog_author in blog_authors %}
+          <tr>
+            <td class="text-center"><input type="checkbox" name="selected[]" value="{{ blog_author.blog_author_id }}" class="form-check-input"/></td>
+            <td class="text-start"><img src="{% if blog_author.photo %}{{ blog_author.photo }}{% else %}{{ photo_placeholder }}{% endif %}" alt=""></td>
+            <td class="text-start">{{ blog_author.fullname }}</td>
+            <td class="text-start">{{ blog_author.email }}</td>
+            <td class="text-start">{{ blog_author.post_count }}</td>
+            <td class="text-end"><a href="{{ blog_author.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

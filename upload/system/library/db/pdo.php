@@ -18,7 +18,7 @@ class PDO {
 	 * @var int
 	 */
 	private int $affected;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -49,7 +49,7 @@ class PDO {
 			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 		}
 	}
-	
+
 	/**
 	 * Query
 	 *
@@ -75,22 +75,20 @@ class PDO {
 					$result->num_rows = count($data);
 					$this->affected = 0;
 
+					$statement->closeCursor();
 					return $result;
 				} else {
 					$this->affected = $statement->rowCount();
 
+					$statement->closeCursor();
 					return true;
 				}
-
-				$statement->closeCursor();
 			} else {
 				return true;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' <br/>Error Code : ' . $e->getCode() . ' <br/>' . $sql);
 		}
-
-		return false;
 	}
 
 	/**

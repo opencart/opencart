@@ -32,11 +32,13 @@ class Step3 extends \Opencart\System\Engine\Controller {
 				$this->request->post['db_port']
 			);
 
+			$db_prefix = strval($this->request->post['db_prefix']);
 			$tables = oc_db_schema();
+			$triggers = oc_db_triggers($db_prefix);
 
 			// Create database schema.
 			$this->load->model('install/install');
-			$this->model_install_install->createDatabaseSchema($db, $tables, $this->request->post['db_prefix']);
+			$this->model_install_install->createDatabaseSchema($db, $tables, $triggers, $db_prefix);
 
 			// Fill database with initial data.
 			$data_sql_file = DIR_APPLICATION . 'opencart.sql';

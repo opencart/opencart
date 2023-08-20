@@ -11,10 +11,11 @@ class Install extends \Opencart\System\Engine\Model {
 	/**
 	 * @param DB $db
 	 * @param array $tables
+	 * @param array $triggers
 	 * @param string $db_prefix
 	 * @return void
 	 */
-	public function createDatabaseSchema(\Opencart\System\Library\DB $db, array $tables, string $db_prefix): void{
+	public function createDatabaseSchema(\Opencart\System\Library\DB $db, array $tables, array $triggers, string $db_prefix): void{
 		foreach ($tables as $table) {
 			$db->query("DROP TABLE IF EXISTS `" . $db_prefix . $table['name'] . "`");
 
@@ -50,6 +51,31 @@ class Install extends \Opencart\System\Engine\Model {
 			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
 
 			$db->query($sql);
+		}
+
+		foreach ($triggers as $trigger){
+			$table = $trigger['table'];
+			foreach(['after', 'before'] as $trigger_time){
+				foreach(['update', 'delete', 'insert'] as $trigger_event){
+					if(isset($trigger[$trigger_time][$trigger_event]) && is_string($trigger[$trigger_time][$trigger_event])){
+						$trigger_content = $trigger[$trigger_time][$trigger_event];
+
+						$trigger_name = $db_prefix . $table . '_' .  $trigger_time . '_' .  $trigger_event;
+
+						$db->query('DROP TRIGGER IF EXISTS ' . $trigger_name);
+
+						$trigger_sql = '
+							CREATE TRIGGER ' . $trigger_name . ' ' . oc_strtoupper($trigger_time) . ' ' . oc_strtoupper($trigger_event) . ' ON ' . $db_prefix . $table . '
+							   FOR EACH ROW
+							   BEGIN
+								   ' . $trigger_content . '
+							   END;
+						';
+
+						$db->query($trigger_sql);
+					}
+				}
+			}
 		}
 	}
 
@@ -117,11 +143,12 @@ class Install extends \Opencart\System\Engine\Model {
 	/**
 	 * @param DB $db
 	 * @param array $tables
+	 * @param array $triggers
 	 * @param string $database_name
 	 * @param string $db_prefix
 	 * @return void
 	 */
-	public function upgradeDatabaseSchema(\Opencart\System\Library\DB $db, array $tables, string $database_name, string $db_prefix): void{
+	public function upgradeDatabaseSchema(\Opencart\System\Library\DB $db, array $tables, array $triggers, string $database_name, string $db_prefix): void{
 		$tables_to_insert = [];
 		$tables_to_update = [];
 		foreach ($tables as $table) {
@@ -134,7 +161,7 @@ class Install extends \Opencart\System\Engine\Model {
 		}
 
 		// Create tables that do not exist.
-		$this->createDatabaseSchema($db, $tables_to_insert, $db_prefix);
+		$this->createDatabaseSchema($db, $tables_to_insert, $triggers, $db_prefix);
 
 		// Update the existing tables if needed.
 		foreach ($tables_to_update as $table) {

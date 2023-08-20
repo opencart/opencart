@@ -20,6 +20,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$this->load->helper('db_schema');
 
 			$tables = oc_db_schema();
+			$triggers = oc_db_triggers(DB_PREFIX);
 
 			// Clear any old db foreign key constraints
 			/*
@@ -33,7 +34,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			*/
 
 			$this->load->model('install/install');
-			$this->model_install_install->upgradeDatabaseSchema($this->db, $tables, DB_DATABASE, DB_PREFIX);
+			$this->model_install_install->upgradeDatabaseSchema($this->db, $tables, $triggers, DB_DATABASE, DB_PREFIX);
 
 			/*
 			// Setup foreign keys

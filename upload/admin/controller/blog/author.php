@@ -235,12 +235,12 @@ class Author extends \Opencart\System\Engine\Controller
 		}
 
 		$this->load->model('tool/image');
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 136, 136);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 64, 64);
 		if(!empty($blog_author_info)){
 			$data['fullname'] = $blog_author_info['fullname'];
 			$data['email'] = $blog_author_info['email'];
 			if(!empty($blog_author_info['photo'])){
-				$data['photo'] = $this->model_tool_image->resize($blog_author_info['photo'], 136, 136);
+				$data['photo'] = $this->model_tool_image->resize($blog_author_info['photo'], 64, 64);
 				$data['original_photo'] = $blog_author_info['photo'];
 			}
 			$data['post_count'] = $blog_author_info['post_count'];

@@ -4,7 +4,7 @@
       <thead>
       <tr>
         <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-        <td class="text-start">{{ column_photo }}</td>
+        <td class="text-start col-md-1">{{ column_photo }}</td>
         <td class="text-start">{{ column_name }}</td>
         <td class="text-start">{{ column_email }}</td>
         <td class="text-start">{{ column_post_count }}</td>
@@ -16,7 +16,7 @@
         {% for blog_author in blog_authors %}
           <tr>
             <td class="text-center"><input type="checkbox" name="selected[]" value="{{ blog_author.blog_author_id }}" class="form-check-input"/></td>
-            <td class="text-start"><img src="{% if blog_author.photo %}{{ blog_author.photo }}{% else %}{{ photo_placeholder }}{% endif %}" alt=""></td>
+            <td class="text-center"><img src="{% if blog_author.photo %}{{ blog_author.photo }}{% else %}{{ photo_placeholder }}{% endif %}" alt=""></td>
             <td class="text-start">{{ blog_author.fullname }}</td>
             <td class="text-start">{{ blog_author.email }}</td>
             <td class="text-start">{{ blog_author.post_count }}</td>

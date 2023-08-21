@@ -720,7 +720,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->request->post['config_image_default_width'] || !$this->request->post['config_image_default_height']) {
-			$json['error']['image_admin'] = $this->language->get('error_image_admin');
+			$json['error']['image_default'] = $this->language->get('error_image_default');
 		}
 
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {

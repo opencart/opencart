@@ -96,11 +96,11 @@
   </div>
   <script type="text/javascript"><!--
     {% if key %}
-    $('select[name="store_id"]').prop('disabled', true);
-    $('select[name="language_id"]').prop('disabled', true);
-    $('select[name="route"]').prop('disabled', true);
+    $('select[name="store_id"]').attr('readonly', 'readonly');
+    $('select[name="language_id"]').attr('readonly', 'readonly');
+    $('select[name="route"]').attr('readonly', 'readonly');
     $('select[name="key"]').prop('disabled', true);
-    $('input[name="key"]').prop('disabled', true);
+    $('input[name="key"]').attr('readonly', 'readonly');
     {% else %}
     $('select[name="language_id"]').on('change', function() {
       $.ajax({

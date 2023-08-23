@@ -25,11 +25,6 @@ class Error extends \Opencart\System\Engine\Controller {
 	 * @return bool
 	 */
 	public function error(string $code, string $message, string $file, string $line): bool {
-		// error suppressed with @
-		if (error_reporting() === 0) {
-			return false;
-		}
-
 		switch ($code) {
 			case E_NOTICE:
 			case E_USER_NOTICE:
@@ -73,7 +68,7 @@ class Error extends \Opencart\System\Engine\Controller {
 	 */
 	public function exception(\Throwable $e): void {
 		if ($this->config->get('config_error_log')) {
-			$sting  = get_class($e) . ':  ' . $e->getMessage() . "\n";
+			$sting  = $e->getCode() . ':  ' . $e->getMessage() . "\n";
 			$sting .= 'File: ' . $e->getFile() . "\n";
 			$sting .= 'Line: ' . $e->getLine() . "\n";
 
@@ -81,7 +76,7 @@ class Error extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->config->get('config_error_display')) {
-			echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+			echo '<b>' . $e->getCode() . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
 		} else {
 			header('Location: ' . $this->config->get('error_page'));
 			exit();

@@ -11,7 +11,7 @@ class Error extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		$this->registry->set('log', new \Opencart\System\Library\Log($this->config->get('config_error_filename')));
-		
+
 		set_error_handler([$this, 'error']);
 		set_exception_handler([$this, 'exception']);
 	}
@@ -25,11 +25,6 @@ class Error extends \Opencart\System\Engine\Controller {
 	 * @return bool
 	 */
 	public function error(string $code, string $message, string $file, string $line): bool {
-		// error suppressed with @
-		if (error_reporting() === 0) {
-			return false;
-		}
-	
 		switch ($code) {
 			case E_NOTICE:
 			case E_USER_NOTICE:
@@ -69,11 +64,11 @@ class Error extends \Opencart\System\Engine\Controller {
 	 */
 	public function exception(\Throwable $e): void {
 		if ($this->config->get('config_error_log')) {
-			$this->log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+			$this->log->write($e->getCode() . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 		}
 
 		if ($this->config->get('config_error_display')) {
-			echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+			echo '<b>' . $e->getCode() . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
 		} else {
 			header('Location: ' . $this->config->get('error_page'));
 			exit();

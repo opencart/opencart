@@ -77,73 +77,22 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$second = time() - strtotime($result['date_added']);
+			
+			$ranges = [
+				'second'	=> $second,
+				'minute'	=> floor($second / 60),
+				'hour'		=> floor($second / 3600),
+				'day'		=> floor($second / 86400),
+				'week'		=> floor($second / 604800),
+				'month'		=> floor($second / 2629743),
+				'year'		=> floor($second / 31556926)
+			];
 
-			if ($second < 10) {
-				$code = 'second';
-				$date_added = $second;
-			} elseif ($second) {
-				$code = 'seconds';
-				$date_added = $second;
-			}
-
-			$minute = floor($second / 60);
-
-			if ($minute == 1) {
-				$code = 'minute';
-				$date_added = $minute;
-			} elseif ($minute) {
-				$code = 'minutes';
-				$date_added = $minute;
-			}
-
-			$hour = floor($minute / 60);
-
-			if ($hour == 1) {
-				$code = 'hour';
-				$date_added = $hour;
-			} elseif ($hour) {
-				$code = 'hours';
-				$date_added = $hour;
-			}
-
-			$day = floor($hour / 24);
-
-			if ($day == 1) {
-				$code = 'day';
-				$date_added = $day;
-			} elseif ($day) {
-				$code = 'days';
-				$date_added = $day;
-			}
-
-			$week = floor($day / 7);
-
-			if ($week == 1) {
-				$code = 'week';
-				$date_added = $week;
-			} elseif ($week) {
-				$code = 'weeks';
-				$date_added = $week;
-			}
-
-			$month = floor($week / 4);
-
-			if ($month == 1) {
-				$code = 'month';
-				$date_added = $month;
-			} elseif ($month) {
-				$code = 'months';
-				$date_added = $month;
-			}
-
-			$year = floor($week / 52.1429);
-
-			if ($year == 1) {
-				$code = 'year';
-				$date_added = $year;
-			} elseif ($year) {
-				$code = 'years';
-				$date_added = $year;
+			foreach ($ranges as $range => $value) {
+				if ($value) {
+					$date_added = $value;
+					$code = $range . ($value > 1) ? 's' : '';
+				}
 			}
 
 			$data['notifications'][] = [

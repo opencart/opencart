@@ -1,0 +1,137 @@
+<?php
+// Heading
+$_['heading_title']                 = 'Produkte';
+
+// Text
+$_['text_success']                  = 'Erfolgreich: Sie haben Produkte modifiziert!';
+$_['text_variant']                  = 'Da es sich um ein Variantenprodukt handelt, müssen Sie die Daten des <a href       ="%s" target       ="_blank" class       ="alert-link">Masterprodukts</a> überschreiben. Andernfalls werden die Daten beim Speichern durch die Daten des <a href       ="%s" target       ="_blank" class       ="alert-link">Masterprodukts</a> ersetzt.';
+$_['text_list']                     = 'Produkt Liste';
+$_['text_add']                      = 'Neues Produkt anlegen';
+$_['text_edit']                     = 'Produkt bearbeiten';
+$_['text_variant_add']              = 'Eine Produkt-Variante anlegen';
+$_['text_model']                    = 'Produkt-Kennung';
+$_['text_price']                    = 'Preis';
+$_['text_stock']                    = 'Lager';
+$_['text_specification']            = 'Spezifikation';
+$_['text_filter']                   = 'Filter';
+$_['text_default']                  = 'Standard';
+$_['text_keyword']                  = '<b style       ="color:tomato;">Verwenden Sie keine Leerzeichen, Sonderzeichen (&%$ usw.) oder Umlaute!</b><br />Statt Leerzeichen - (Minus) oder _ (Unterstrich) verwenden, Umlaute wie <u>ä</u> als <u>ae</u> eintragen.<br />Stellen Sie sicher, dass die SEO-URL Kennung global einmalig ist. Ansonsten ist die Erzeugung der SEO-URL nicht mehr eindeutig und fehlerhaft!';
+$_['text_option_add']               = 'Produkt Option';
+$_['text_option_value']             = 'Options-Wert';
+$_['text_select']                   = 'Select';
+$_['text_radio']                    = 'Radio';
+$_['text_checkbox']                 = 'Checkbox';
+$_['text_input']                    = 'Input';
+$_['text_text']                     = 'Text';
+$_['text_textarea']                 = 'Textarea';
+$_['text_file']                     = 'File';
+$_['text_date']                     = 'Datum';
+$_['text_datetime']                 = 'Datum &amp; Zeit';
+$_['text_time']                     = 'Zeit';
+$_['text_image']                    = 'Bild';
+$_['text_image_additional']         = 'Weitere Bilder';
+$_['text_reward']                   = 'Produkt-Preis in Punkten';
+$_['text_points']                   = 'Kauf-Prämie in Punkten';
+$_['text_report']                   = 'Berichte';
+
+// Column
+$_['column_name']                   = 'Produkt Titel';
+$_['column_model']                  = 'Produkt-Kennung';
+$_['column_image']                  = 'Bild';
+$_['column_price']                  = 'Preis (netto)';
+$_['column_price_incl_tax']   		= 'Preis (inklusive Steuern)';
+$_['column_quantity']               = 'Menge';
+$_['column_status']                 = 'Status';
+$_['column_ip']                     = 'IP';
+$_['column_store']                  = 'Online-Shop (Store) Listing';
+$_['column_country']                = 'Land';
+$_['column_date_added']             = 'Datum zugef.';
+$_['column_action']                 = 'Aktion';
+
+// Entry
+$_['entry_name']                    = 'Produkt Titel';
+$_['entry_description']             = 'Beschreibung';
+$_['entry_meta_title']              = 'Meta-Tag Titel';
+$_['entry_meta_keyword']            = 'Meta-Tag Schlüsselwörter';
+$_['entry_meta_description']        = 'Meta-Tag Beschreibung';
+$_['entry_store']                   = 'Online-Shop (Store) Listing';
+$_['entry_keyword']                 = 'SEO-URL Kennung (Schlüsselwort)';
+$_['entry_model']                   = 'Produkt-Kennung';
+$_['entry_sku']                     = 'SKU';
+$_['entry_upc']                     = 'UPC';
+$_['entry_ean']                     = 'EAN';
+$_['entry_jan']                     = 'JAN';
+$_['entry_isbn']                    = 'ISBN';
+$_['entry_mpn']                     = 'MPN';
+$_['entry_location']                = 'Lager- / Standort';
+$_['entry_shipping']                = 'Benötigt Versand';
+$_['entry_manufacturer']            = 'Hersteller / Marke';
+$_['entry_date_available']          = 'Verfügbarkeit | Datum Ab';
+$_['entry_quantity']                = 'Menge';
+$_['entry_required_quantity'] 		= 'Erforderliche Menge';
+$_['entry_minimum']                 = 'Mindest-Bestellmenge';
+$_['entry_stock_status']            = 'Status Kein-Lagerbestand';
+$_['entry_price']                   = 'Preis (netto)';
+$_['entry_price_incl_tax']          = 'Preis (inklusive Steuern)';
+$_['entry_trial_price']       		= 'Testpreis';
+$_['entry_trial_price_incl']  		= 'Testpreis (inkl. Steuern)';
+$_['entry_tax_class']               = 'Steuerkategorie';
+$_['entry_points']                  = 'Punkte';
+$_['entry_subtract']                = 'Lagerbestand verwalten';
+$_['entry_weight_class']            = 'Gewichts-Einheit';
+$_['entry_weight']                  = 'Gewicht';
+$_['entry_dimension']               = 'Abmessungen (L x B x H)';
+$_['entry_length_class']            = 'Längen-Einheit';
+$_['entry_length']                  = 'Länge';
+$_['entry_width']                   = 'Breite';
+$_['entry_height']                  = 'Höhe';
+$_['entry_option']                  = 'Option';
+$_['entry_option_value']            = 'Options-Wert';
+$_['entry_customer_group']          = 'Kunden-Gruppe';
+$_['entry_date_start']              = 'Datum Start';
+$_['entry_date_end']                = 'Datum Ende';
+$_['entry_priority']                = 'Priorität';
+$_['entry_attribute']               = 'Produkt Eigenschaften';
+$_['entry_attribute_group']         = 'Eigenschafts-Gruppe';
+$_['entry_image']                   = 'Bild';
+$_['entry_text']                    = 'Spezifikation / Text';
+$_['entry_required']                = 'Benötigt';
+$_['entry_status']                  = 'Status';
+$_['entry_sort_order']              = 'Sortierreihenfolge';
+$_['entry_category']                = 'Kategorie(n)';
+$_['entry_filter']                  = 'Filter';
+$_['entry_download']                = 'Downloads';
+$_['entry_related']                 = 'Zugehörige Produkte';
+$_['entry_tag']                     = 'Produkt Tags';
+$_['entry_reward']                  = 'Punkte (Prämienpunkte für Kunden-Käufe)';
+$_['entry_layout']                  = 'Layout überschreiben (Layout overwrite)';
+$_['entry_subscription']            = 'Abonnement-Pläne';
+
+// Help
+$_['help_tag']                      = 'Durch Komma (,) trennen';
+$_['help_sku']                      = 'Stock Keeping Unit';
+$_['help_upc']                      = 'Universal Product Code';
+$_['help_ean']                      = 'European Article Number';
+$_['help_jan']                      = 'Japanese Article Number';
+$_['help_isbn']                     = 'International Standard Book Number';
+$_['help_mpn']                      = 'Manufacturer Part Number';
+$_['help_minimum']                  = 'Erzwingen einer Mindestbestellmenge';
+$_['help_stock_status']             = 'Statusanzeige, wenn ein Produkt nicht mehr verfügbar bzw. nicht auf Lager ist';
+$_['help_manufacturer']             = '(Automatische Vervollständigung)';
+$_['help_category']                 = '(Automatische Vervollständigung)';
+$_['help_filter']                   = '(Automatische Vervollständigung)';
+$_['help_download']                 = '(Automatische Vervollständigung)';
+$_['help_related']                  = '(Automatische Vervollständigung)';
+$_['help_option']                   = '(Automatische Vervollständigung)';
+$_['help_points']                   = 'Anzahl der Punkte, die benötigt werden, um diesen Artikel zu kaufen. Wenn Sie nicht wollen, dass dieses Produkt mit Punkten gekauft wird, geben Sie 0 ein.';
+
+// Error
+$_['error_warning']                 = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']              = 'Warnung: Sie haben keine Berechtigung Produkte zu modifizieren!';
+$_['error_name']                    = 'Produkt Titel muss größer als 1 und kleiner als 255 Zeichen sein!';
+$_['error_meta_title']              = 'Meta-Tag Title muss größer als 1 und kleiner als 255 Zeichen sein!';
+$_['error_model']                   = 'Produkt-Kennung muss größer als 1 und kleiner als 64 Zeichen sein!';
+$_['error_keyword']                 = 'Die SEO-URL Kennung muss zwischen 1 und 64 Zeichen lang sein!!';
+$_['error_keyword_exists']          = 'Die SEO-URL Kennung wird bereits verwendet!';
+$_['error_keyword_character']       = 'Die SEO-URL Kennung darf nur aus folgende Zeichen a-z, 0-9, - and _ bestehen!';
+$_['error_required']                = '%s benötigt!';

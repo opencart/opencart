@@ -1,0 +1,34 @@
+<?php
+// Text
+$_['text_subject']               = '%s - Abonnement %s';
+$_['text_greeting']              = 'Vielen Dank für Ihr Interesse an dem Produkt %s. Ihre Anfrage für ein Abonnement ist bei uns eingegangen und wird bearbeitet, sobald die Zahlung bestätigt worden ist.';
+$_['text_link']                  = 'Um Ihr Abonnement zu sehen, klicken Sie auf den unten stehenden Link:';
+$_['text_promotion']             = 'Erfolgreich: Ein Werbe-Feature wurde mit diesem Abonnement erfolgreich hinzugefügt!';
+$_['text_subscription_trial']    = '%s jede(n) %d %s(s) für %d Zahlung(en), dann ';
+$_['text_subscription_duration'] = '%s jede(n) %d %s(s) für %d Zahlung(en)';
+$_['text_subscription_cancel']   = '%s jede(n) %d %s(s) bis Beendigung';
+$_['text_subscription_detail']   = 'Abonnement Details';
+$_['text_instruction']           = 'Anweisungen';
+$_['text_orders_id']             = 'Bestell-ID:';
+$_['text_date_added']            = 'Datum zugef.:';
+$_['text_order_status']          = 'Bestell Status:';
+$_['text_payment_method']        = 'Zahlungs-Methode:';
+$_['text_payment_address']       = 'Rechnungsadresse';
+$_['text_email']                 = 'E-mail:';
+$_['text_telephone']             = 'Telphone:';
+$_['text_ip']                    = 'IP Adresse:';
+$_['text_products']              = 'Produkte';
+$_['text_product']               = 'Produkt';
+$_['text_model']                 = 'Model';
+$_['text_quantity']              = 'Menge';
+$_['text_price']                 = 'Preis';
+$_['text_order_total']           = 'Bestellsummen';
+$_['text_total']                 = 'Gesamt';
+$_['text_comment']               = 'Die Kommentare zu Ihrem Abonnement lauten:';
+$_['text_description']           = 'Beschreibung';
+$_['text_day']                   = 'Tag';
+$_['text_week']                  = 'Woche';
+$_['text_semi_month']            = '14 Tage';
+$_['text_month']                 = 'Monat';
+$_['text_year']                  = 'Jahr';
+$_['text_footer']                = 'Bitte antworten Sie auf diese E-Mail, wenn Sie Fragen haben.';

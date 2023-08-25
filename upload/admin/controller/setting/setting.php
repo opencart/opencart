@@ -134,8 +134,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_language'] = $this->config->get('config_language');
 
-		$data['config_language_admin'] = $this->config->get('config_language_admin');
-
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
@@ -212,6 +210,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_tax'] = $this->config->get('config_tax');
 		$data['config_tax_default'] = $this->config->get('config_tax_default');
 		$data['config_tax_customer'] = $this->config->get('config_tax_customer');
+        $data['config_list_taxes_separately'] = $this->config->get('config_list_taxes_separately');
 
 		$data['config_customer_online'] = $this->config->get('config_customer_online');
 
@@ -263,6 +262,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_invoice_prefix'] = 'INV-' . date('Y') . '-00';
 		}
+
+        $data['config_show_store_logo_on_invoice'] = $this->config->get('config_show_store_logo_on_invoice');
 
 		$this->load->model('localisation/order_status');
 

@@ -7855,5 +7855,423 @@ function oc_db_schema() {
 		'collate' => 'utf8mb4_general_ci'
 	];
 
+	$tables[] = [
+		'name' => 'popup',
+		'field' => [
+			[
+				'name' => 'popup_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'title',
+				'type' => 'varchar(255)',
+				'not_null' => true,
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'initial_delay',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'time_to_close',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '3000'
+			],
+			[
+				'name' => 'width',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '1000'
+			],
+			[
+				'name' => 'show_everytime',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'popup_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'popup_content',
+		'field' => [
+			[
+				'name' => 'popup_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'header',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'content',
+				'type' => 'text',
+				'not_null' => true
+			],
+		],
+		'primary' => [
+			'popup_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'popup_id',
+				'table' => 'popup',
+				'field' => 'popup_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_article',
+		'field' => [
+			[
+				'name' => 'blog_article_id',
+				'type' => 'bigint(16)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'view_count',
+				'type' => 'bigint(16)',
+				'not_null' => true,
+				'default' => 0
+			],
+			[
+				'name' => 'blog_author_id',
+				'type' => 'varchar(255)',
+				'not_null' => false
+			],
+		],
+		'primary' => [
+			'blog_article_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_author_id',
+				'table' => 'blog_author',
+				'field' => 'blog_author_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'date_added',
+				'key' => [
+					'status',
+					'date_added'
+				]
+			],
+			[
+				'name' => 'name',
+				'key' => [
+					'status',
+					'name'
+				]
+			],
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_article_content',
+		'field' => [
+			[
+				'name' => 'blog_article_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'title',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'content',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_article_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_article_id',
+				'table' => 'blog_article',
+				'field' => 'blog_article_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_author',
+		'field' => [
+			[
+				'name' => 'blog_author_id',
+				'type' => 'bigint(16)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'fullname',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'email',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'post_count',
+				'type' => 'bigint(16)',
+				'not_null' => true,
+				'default' => 0
+			],
+			[
+				'name' => 'photo',
+				'type' => 'varchar(255)',
+				'not_null' => false
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_author_id'
+		],
+		'index' => [
+			[
+				'name' => 'fullname',
+				'key' => [
+					'fullname',
+					'blog_author_id'
+				]
+			],
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_tag_to_article',
+		'field' => [
+			[
+				'name' => 'tag',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'blog_article_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+		],
+		'primary' => [
+			'tag',
+			'language_id',
+			'blog_article_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_article_id',
+				'table' => 'blog_article',
+				'field' => 'blog_article_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_store_to_article',
+		'field' => [
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'blog_article_id',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			],
+			[
+				'name' => 'view_count',
+				'type' => 'bigint(16)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'store_id',
+			'blog_article_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			],
+			[
+				'key'   => 'blog_article_id',
+				'table' => 'blog_article',
+				'field' => 'blog_article_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
 	return $tables;
+}
+
+
+/**
+ * @param string $db_prefix
+ * @return array
+ */
+function oc_db_triggers(string $db_prefix): array
+{
+	$triggers = [];
+
+	$triggers[] = [
+		'table' => 'blog_article',
+		'after' => [
+			'insert' => 'IF NEW.blog_author_id IS NOT NULL AND NEW.blog_author_id > 0 THEN
+							UPDATE `'. $db_prefix . 'blog_author` SET post_count = post_count + 1 WHERE blog_author_id = NEW.blog_author_id LIMIT 1;
+						 END IF;',
+			'update' => 'IF NOT (OLD.blog_author_id <=> NEW.blog_author_id) THEN
+							IF OLD.blog_author_id IS NOT NULL THEN
+								UPDATE `'. $db_prefix . 'blog_author` SET post_count = post_count - 1 WHERE blog_author_id = OLD.blog_author_id LIMIT 1;
+							END IF;
+							IF NEW.blog_author_id IS NOT NULL THEN
+								UPDATE `'. $db_prefix . 'blog_author` SET post_count = post_count + 1 WHERE blog_author_id = NEW.blog_author_id LIMIT 1;
+							END IF;
+						 END IF;',
+			'delete' => 'IF OLD.blog_author_id IS NOT NULL AND OLD.blog_author_id > 0 THEN
+							UPDATE `'. $db_prefix . 'blog_author` SET post_count = post_count + 1 WHERE blog_author_id = OLD.blog_author_id LIMIT 1;
+						 END IF;'
+		],
+	];
+
+	$triggers[] = [
+		'table' => 'blog_store_to_article',
+		'after' => [
+			'update' => 'SET @difference = (NEW.view_count - OLD.view_count);
+						 UPDATE `'. $db_prefix . 'blog_article` SET view_count = view_count + @difference WHERE blog_article_id = NEW.blog_article_id LIMIT 1;',
+			'delete' => 'SET @difference = OLD.view_count;
+						 UPDATE `'. $db_prefix . 'blog_article` SET view_count = view_count - @difference WHERE blog_article_id = OLD.blog_article_id LIMIT 1;'
+		],
+	];
+
+	return $triggers;
 }

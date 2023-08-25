@@ -233,6 +233,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if ($this->user->hasPermission('access', 'design/popup')) {
+				$design[] = [
+					'name'	   => $this->language->get('text_popup'),
+					'href'     => $this->url->link('design/popup', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
 			$seo = [];
 
 			if ($this->user->hasPermission('access', 'design/seo_url')) {
@@ -415,6 +423,35 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			// Blog
+			$blog = [];
+
+			if ($this->user->hasPermission('access', 'blog/author')) {
+				$blog[] = [
+					'name'	   => $this->language->get('text_blog_authors'),
+					'href'     => $this->url->link('blog/author', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if ($this->user->hasPermission('access', 'blog/article')) {
+				$blog[] = [
+					'name'	   => $this->language->get('text_blog_articles'),
+					'href'     => $this->url->link('blog/article', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if (!empty($blog)) {
+				$data['menus'][] = [
+					'id'       => 'menu-blog',
+					'icon'	   => 'fas fa-newspaper',
+					'name'	   => $this->language->get('text_blog'),
+					'href'     => '',
+					'children' => $blog
+				];
+			}
+
 			// System
 			$system = [];
 
@@ -422,6 +459,13 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				$system[] = [
 					'name'	   => $this->language->get('text_setting'),
 					'href'     => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+			if ($this->user->hasPermission('access', 'setting/administrator_settings')) {
+				$system[] = [
+					'name'	   => $this->language->get('text_admin_settings'),
+					'href'     => $this->url->link('setting/administrator_settings', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

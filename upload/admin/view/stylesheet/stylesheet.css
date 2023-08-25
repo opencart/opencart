@@ -846,10 +846,6 @@ div.required .col-form-label:not(span):before, td.required:before {
     color: #02afe9;
 }
 
-.table-responsive {
-    overflow: visible;
-}
-
 td {
     position: relative;
 }

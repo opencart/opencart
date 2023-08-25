@@ -1327,6 +1327,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('tool/upload');
 		$this->load->model('sale/subscription');
+		$this->load->model('tool/image');
 
 		$data['orders'] = [];
 
@@ -1520,6 +1521,19 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 
+                $show_store_logo_on_invoice = $this->config->get('config_show_store_logo_on_invoice', $order_info['store_id']);
+                if(intval($show_store_logo_on_invoice) === 1){
+                    $store_logo = $this->config->get('config_logo', $order_info['store_id']);
+
+                    if (is_file(DIR_IMAGE . html_entity_decode($store_logo, ENT_QUOTES, 'UTF-8'))) {
+                        $store_logo = $this->model_tool_image->resize(html_entity_decode($store_logo, ENT_QUOTES, 'UTF-8'), 200, 100);
+                    } else {
+                        $store_logo = false;
+                    }
+                }else{
+                    $store_logo = false;
+                }
+
 				$data['orders'][] = [
 					'order_id'         => $order_id,
 					'invoice_no'       => $invoice_no,
@@ -1529,6 +1543,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'store_address'    => nl2br($store_address),
 					'store_email'      => $store_email,
 					'store_telephone'  => $store_telephone,
+                    'store_logo'       => $store_logo,
 					'email'            => $order_info['email'],
 					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,

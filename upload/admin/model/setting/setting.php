@@ -39,6 +39,31 @@ class Setting extends \Opencart\System\Engine\Model {
 		return $setting_data;
 	}
 
+	public function getSettingsByKeys(array $keys, int $store_id = 0): array {
+        $settings = [];
+
+        if(empty($keys)){
+            return $settings;
+        }
+
+        $escaped_keys = array_map(function($item){
+            return "'" . $this->db->escape($item) . "'";
+        }, array_unique($keys));
+
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` IN (" . implode(', ', $escaped_keys) . ')');
+
+		foreach ($query->rows as $result) {
+			if (!$result['serialized']) {
+                $settings[$result['key']] = $result['value'];
+			} else {
+                $settings[$result['key']] = json_decode($result['value'], true);
+			}
+		}
+
+		return $settings;
+	}
+
+
 	/**
 	 * @param string $code
 	 * @param array  $data
@@ -47,14 +72,23 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editSetting(string $code, array $data, int $store_id = 0): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+		$setting_keys = array_keys($data);
+		if(!empty($setting_keys)) {
+			$escaped_setting_keys = [];
+			foreach ($setting_keys as $setting_key) {
+				$escaped_setting_keys[] = "'" . $this->db->escape($setting_key) . "'";
+			}
 
-		foreach ($data as $key => $value) {
-			if (substr($key, 0, strlen($code)) == $code) {
-				if (!is_array($value)) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
-				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape(json_encode($value)) . "', `serialized` = '1'");
+			// Delete the previous setting records.
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "' AND `key` IN (" . implode(', ', $escaped_setting_keys) . ")");
+
+			foreach ($data as $key => $value) {
+				if (str_starts_with($key, $code)) {
+					if (!is_array($value)) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
+					} else {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape(json_encode($value)) . "', `serialized` = '1'");
+					}
 				}
 			}
 		}

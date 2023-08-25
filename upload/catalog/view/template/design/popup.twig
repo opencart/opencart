@@ -1,0 +1,26 @@
+{% if active_popup %}
+
+  <div class="modal popup-modal" tabindex="-1"
+       data-popup-id="{{ active_popup.popup_id }}"
+       data-initial-delay="{{ active_popup.initial_delay }}"
+       data-minimum-width="{{ active_popup.width }}"
+       data-time-to-close="{{ active_popup.time_to_close }}"
+       data-show-everytime="{{ active_popup.show_everytime }}"
+       data-language-id="{{ active_popup.language_id }}"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header{% if active_popup.header|trim|length < 1 %} border-0{% endif %}">
+          {% if active_popup.header|trim|length > 0 %}<h5 class="modal-title">{{ active_popup.header }}</h5>{% endif %}
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ text_close }}"></button>
+        </div>
+        <div class="modal-body">
+          {{ active_popup.content }}
+        </div>
+        <div class="modal-footer">
+          <p class="popup-timer" data-text-for-plural="{{ text_timer_plural }}" data-text-for-singular="{{ text_timer_singular }}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

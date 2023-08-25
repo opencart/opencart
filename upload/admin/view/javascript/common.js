@@ -77,6 +77,12 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+
+	let locale = $('html').attr('lang');
+	if(typeof locale === 'string'){
+		moment.locale(locale);
+	}
+
     // Tooltip
     var oc_tooltip = function () {
         // Get tooltip instance

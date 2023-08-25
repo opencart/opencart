@@ -100,12 +100,12 @@ class Tax {
 	 *
 	 * @param    float  $value
 	 * @param    int  $tax_class_id
-	 * @param    bool  $calculate
+	 * @param    bool|string  $calculate
 	 *
 	 * @return   float
 	 */
-	public function calculate(float $value, int $tax_class_id, bool $calculate = true): float {
-		if ($tax_class_id && $calculate) {
+	public function calculate(float $value, int $tax_class_id, bool|string $calculate = true): float {
+		if ($tax_class_id > 0 && $calculate) {
 			$amount = 0;
 
 			$tax_rates = $this->getRates($value, $tax_class_id);
@@ -121,6 +121,60 @@ class Tax {
 			return $value + $amount;
 		} else {
 			return $value;
+		}
+	}
+
+	/**
+	 * Calculate Price Excluding Tax
+	 *
+	 * @param    float  $price_incl_tax
+	 * @param    int  $tax_class_id
+	 * @param    bool|string  $calculate
+	 *
+	 * @return   float
+	 */
+	public function calculatePriceExclTax(float $price_incl_tax, int $tax_class_id, bool|string $calculate = true): float {
+		if ($tax_class_id > 0 && $calculate) {
+			$amount = 0;
+
+			$tax_rates = [];
+            if (isset($this->tax_rates[$tax_class_id])) {
+                $total_fixed_amount = 0;
+                $total_rate = 0;
+
+                foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {
+                    if(is_string($calculate)){
+                        if ($tax_rate['type'] == 'F' && $tax_rate['type'] === $calculate) {
+                            $total_fixed_amount += $tax_rate['rate'];
+                        } elseif ($tax_rate['type'] == 'P' && $tax_rate['type'] === $calculate) {
+                            $total_rate += $tax_rate['rate'];
+                        }
+                    }else{
+                        if ($tax_rate['type'] == 'F') {
+                            $total_fixed_amount += $tax_rate['rate'];
+                        } elseif ($tax_rate['type'] == 'P') {
+                            $total_rate += $tax_rate['rate'];
+                        }
+                    }
+                }
+
+                $price_excl_tax = ($price_incl_tax - $total_fixed_amount) / (1 + ($total_rate / 100.0));
+
+                $tax_rates = $this->getRates($price_excl_tax, $tax_class_id);
+            }
+
+
+			foreach ($tax_rates as $tax_rate) {
+				if ($calculate != 'P' && $calculate != 'F') {
+					$amount += $tax_rate['amount'];
+				} elseif ($tax_rate['type'] == $calculate) {
+					$amount += $tax_rate['amount'];
+				}
+			}
+
+			return $price_incl_tax - $amount;
+		} else {
+			return $price_incl_tax;
 		}
 	}
 
@@ -198,7 +252,7 @@ class Tax {
 
 		return $tax_rate_data;
 	}
-	
+
 	/**
 	 * Clear
 	 *

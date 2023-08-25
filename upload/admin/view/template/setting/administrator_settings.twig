@@ -1,0 +1,104 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-setting" data-bs-toggle="tooltip" title="{{ button_save }}"
+                class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+      <div id="store" class="card-body">
+        <form id="form-setting" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
+            <div class="col-sm-10">
+              <select name="config_language_admin" id="input-language-admin" class="form-select">
+                {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == config_language_admin %} selected{% endif %}>{{ language.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_identifier_fields }}</label>
+
+            <div class="col-sm-10">
+              <!-- region UPC -->
+              <div class="form-check form-switch form-switch-lg form-check-inline">
+                <input type="hidden" name="config_product_upc" value="0"/>
+                <input type="checkbox" name="config_product_upc" value="1" id="input-product-upc"
+                       class="form-check-input"{% if config_product_upc %} checked{% endif %}/>
+                <label class="form-check-label" for="config_product_upc">{{ entry_product_upc }}</label>
+              </div>
+              <!-- endregion UPC -->
+
+              <!-- region EAN -->
+              <div class="form-check form-switch form-switch-lg form-check-inline">
+                <input type="hidden" name="config_product_ean" value="0"/>
+                <input type="checkbox" name="config_product_ean" value="1" id="input-product-ean"
+                       class="form-check-input"{% if config_product_ean %} checked{% endif %}/>
+                <label class="form-check-label" for="config_product_ean">{{ entry_product_ean }}</label>
+              </div>
+              <!-- endregion EAN -->
+
+              <!-- region JAN -->
+              <div class="form-check form-switch form-switch-lg form-check-inline">
+                <input type="hidden" name="config_product_jan" value="0"/>
+                <input type="checkbox" name="config_product_jan" value="1" id="input-product-jan"
+                       class="form-check-input"{% if config_product_jan %} checked{% endif %}/>
+                <label class="form-check-label" for="config_product_jan">{{ entry_product_jan }}</label>
+              </div>
+              <!-- endregion JAN -->
+
+              <!-- region ISBN -->
+              <div class="form-check form-switch form-switch-lg form-check-inline">
+                <input type="hidden" name="config_product_isbn" value="0"/>
+                <input type="checkbox" name="config_product_isbn" value="1" id="input-product-isbn"
+                       class="form-check-input"{% if config_product_isbn %} checked{% endif %}/>
+                <label class="form-check-label" for="config_product_isbn">{{ entry_product_isbn }}</label>
+              </div>
+              <!-- endregion ISBN -->
+
+              <!-- region MPN -->
+              <div class="form-check form-switch form-switch-lg form-check-inline">
+                <input type="hidden" name="config_product_mpn" value="0"/>
+                <input type="checkbox" name="config_product_mpn" value="1" id="input-product-mpn"
+                       class="form-check-input"{% if config_product_mpn %} checked{% endif %}/>
+                <label class="form-check-label" for="config_product_mpn">{{ entry_product_mpn }}</label>
+              </div>
+              <!-- endregion MPN -->
+
+              <div class="form-text">{{ help_identifier_fields }}</div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_price_incl_tax }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg form-check-inline">
+                <input type="hidden" name="config_price_incl_tax" value="0"/>
+                <input type="checkbox" name="config_price_incl_tax" value="1" id="input-price-incl-tax"
+                       class="form-check-input"{% if config_price_incl_tax %} checked{% endif %}/>
+              </div>
+              <div class="form-text">{{ help_price_incl_tax }}</div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ footer }}

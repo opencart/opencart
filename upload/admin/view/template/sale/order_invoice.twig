@@ -9,25 +9,35 @@
   <script src="{{ jquery }}" type="text/javascript"></script>
   <script src="{{ bootstrap_js }}" type="text/javascript"></script>
   <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
+  <style>@media print { @page { margin-top: 0; margin-bottom: 0; } }</style>
 </head>
 <body>
 <div class="container">
   {% for order in orders %}
     <div style="page-break-after: always;">
-      <h1>{{ text_invoice }} #{{ order.order_id }}</h1>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1 class="my-4">
+            {{ text_invoice }} #{{ order.order_id }}
+          </h1>
+        </div>
+        {% if order.store_logo  %}
+        <div class="col-auto">
+          <img src="{{ order.store_logo }}" alt="{{ order.store_name }}">
+        </div>
+        {% endif %}
+      </div>
+      <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+        {% if order.invoice_no %}
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_invoice }}</strong>
               <br/>
-              {% if order.invoice_no %}
                 {{ order.invoice_no }}
-              {% else %}
-                &nbsp;
-              {% endif %}
             </div>
           </div>
         </div>
+        {% endif %}
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_order_id }}</strong>

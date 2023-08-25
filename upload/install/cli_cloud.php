@@ -194,99 +194,13 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 
 		// Set up Database structure
 		$tables = oc_db_schema();
+		$triggers = oc_db_triggers($db_prefix);
 
-		foreach ($tables as $table) {
-			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
-
-			if ($table_query->num_rows) {
-				$db->query("DROP TABLE `" . $db_prefix . $table['name'] . "`");
-			}
-
-			$sql = "CREATE TABLE `" . $db_prefix . $table['name'] . "` (" . "\n";
-
-			foreach ($table['field'] as $field) {
-				$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
-			}
-
-			if (isset($table['primary'])) {
-				$primary_data = [];
-
-				foreach ($table['primary'] as $primary) {
-					$primary_data[] = "`" . $primary . "`";
-				}
-
-				$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
-			}
-
-			if (isset($table['index'])) {
-				foreach ($table['index'] as $index) {
-					$index_data = [];
-
-					foreach ($index['key'] as $key) {
-						$index_data[] = "`" . $key . "`";
-					}
-
-					$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
-				}
-			}
-
-			$sql = rtrim($sql, ",\n") . "\n";
-			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
-
-			$db->query($sql);
-		}
-
-		// Setup database data
-		$lines = file($file, FILE_IGNORE_NEW_LINES);
-
-		if ($lines) {
-			$sql = '';
-
-			$start = false;
-
-			foreach ($lines as $line) {
-				if (substr($line, 0, 12) == 'INSERT INTO ') {
-					$sql = '';
-
-					$start = true;
-				}
-
-				if ($start) {
-					$sql .= $line;
-				}
-
-				if (substr($line, -2) == ');') {
-					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $db_prefix, $sql));
-
-					$start = false;
-				}
-			}
-
-			$db->query("SET CHARACTER SET utf8");
-
-			$db->query("SET @@session.sql_mode = ''");
-
-			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE `user_id` = '1'");
-
-			// If cloud we do not need to hash the password as we will be passing the password hash
-			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($option['username']) . "', `password` = '" . $db->escape($option['password']) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($option['email']) . "', `status` = '1', `date_added` = NOW()");
-
-			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
-			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($option['email']) . "'");
-
-			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_encryption'");
-			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(oc_token(1024)) . "'");
-
-			$db->query("INSERT INTO `" . $db_prefix . "api` SET `username` = 'Default', `key` = '" . $db->escape(oc_token(256)) . "', `status` = 1, `date_added` = NOW(), `date_modified` = NOW()");
-
-			$last_id = $db->getLastId();
-
-			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
-			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', `value` = '" . (int)$last_id . "'");
-
-			// set the current years prefix
-			$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
-		}
+		$this->load->model('install/install');
+		$this->model_install_install->createDatabaseSchema($db, $tables, $triggers, $db_prefix);
+		// If cloud we do not need to hash the password as we will be passing the password hash
+		$admin_password = $option['password'];
+		$this->model_install_install->setupDatabaseData($db, $file, $db_prefix, $option['username'], $admin_password, $option['email']);
 
 		// Return success message
 		$output = 'SUCCESS! OpenCart successfully installed on your server' . "\n";

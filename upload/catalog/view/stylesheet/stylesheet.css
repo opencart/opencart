@@ -218,42 +218,16 @@ footer a {
 #header-cart .btn:hover {
   color: #FFF;
 }
-#header-cart.open > .btn {
-  background-image: none;
-  background-color: #FFFFFF;
-  border: 1px solid #E6E6E6;
-  color: #666;
-  box-shadow: none;
-  text-shadow: none;
-}
-#header-cart.open > .btn:hover {
-  color: #444;
-}
 #header-cart .dropdown-menu {
   background: #eee;
-  z-index: 1001;
-  min-width: 100%;
-}
-#header-cart .dropdown-menu table {
-  margin-bottom: 10px;
 }
 #header-cart .dropdown-menu li {
-  min-width: 427px;
-  padding: 0 10px;
+  min-width: 100%;
 }
-#header-cart .dropdown-menu li p {
-  margin: 20px 0;
-}
-@media (max-width: 478px) {
-  #header-cart .dropdown-menu {
-    width: 100%;
+@media (min-width: 768px) {
+  #header-cart .dropdown-menu li {
+    min-width: 427px;
   }
-  #header-cart .dropdown-menu li > div {
-    min-width: 100%;
-  }
-}
-#header-cart .table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: #f9f9f9;
 }
 /* menu */
 #menu {

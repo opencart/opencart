@@ -35,7 +35,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		];
 
-
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
@@ -104,12 +103,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['attributes'] = [];
 
-		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
-		];
+		$filter_data = ['sort' => $sort, 'order' => $order, 'start' => ($page - 1) * $this->config->get('config_pagination_admin'), 'limit' => $this->config->get('config_pagination_admin')];
 
 		$this->load->model('catalog/attribute');
 
@@ -149,12 +143,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $attribute_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		]);
+		$data['pagination'] = $this->load->controller('common/pagination', ['total' => $attribute_total, 'page' => $page, 'limit' => $this->config->get('config_pagination_admin'), 'url' => $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($attribute_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($attribute_total - $this->config->get('config_pagination_admin'))) ? $attribute_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $attribute_total, ceil($attribute_total / $this->config->get('config_pagination_admin')));
 
@@ -190,15 +179,9 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
+		$data['breadcrumbs'][] = ['text' => $this->language->get('text_home'), 'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])];
 
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
+		$data['breadcrumbs'][] = ['text' => $this->language->get('heading_title'), 'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)];
 
 		$data['save'] = $this->url->link('catalog/attribute.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -343,11 +326,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/attribute');
 
-			$filter_data = [
-                'filter_name' => $this->request->get['filter_name'],
-                'start'       => 0,
-                'limit'       => 5
-            ];
+			$filter_data = ['filter_name' => $this->request->get['filter_name'], 'start' => 0, 'limit' => 5];
 
 			$results = $this->model_catalog_attribute->getAttributes($filter_data);
 

@@ -1,4 +1,4 @@
-<div class="dropdown d-grid w-100">
+<div class="dropdown d-grid">
   <button type="button" data-bs-toggle="dropdown" class="btn btn-lg btn-inverse btn-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items }}</button>
   <ul class="dropdown-menu dropdown-menu-end p-2">
     {% if products or vouchers %}
@@ -65,9 +65,7 @@
         </div>
       </li>
     {% else %}
-      <li>
-        <p class="text-center">{{ text_no_results }}</p>
-      </li>
+      <li class="text-center p-4">{{ text_no_results }}</li>
     {% endif %}
   </ul>
 </div>

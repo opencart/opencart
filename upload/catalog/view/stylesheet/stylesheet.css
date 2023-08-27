@@ -222,11 +222,11 @@ footer a {
   background: #eee;
 }
 #header-cart .dropdown-menu li {
-  min-width: 100%;
+  min-width: 427px;
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   #header-cart .dropdown-menu li {
-    min-width: 427px;
+    min-width: 100%;
   }
 }
 /* menu */

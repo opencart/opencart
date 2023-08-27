@@ -270,58 +270,17 @@ footer a {
     color: #FFF;
   }
 
-  &.open {
-    > .btn {
-      background-image: none;
-      background-color: #FFFFFF;
-      border: 1px solid #E6E6E6;
-      color: #666;
-      box-shadow: none;
-      text-shadow: none;
-
-      &:hover {
-        color: #444;
-      }
-    }
-  }
-
   .dropdown-menu {
     background: #eee;
-    z-index: 1001;
-    min-width: 100%;
-
-    table {
-      margin-bottom: 10px;
-
-    }
-
     li {
       min-width: 427px;
-      padding: 0 10px;
-
-      p {
-        margin: 20px 0;
-      }
-    }
-
-    @media (max-width: 478px) {
-      width: 100%;
-      li {
-        > div {
-          min-width: 100%;
-        }
-      }
     }
   }
+}
 
-  .table-striped {
-    > tbody {
-      > tr {
-        &:nth-of-type(odd) {
-          background-color: #f9f9f9;
-        }
-      }
-    }
+@media (max-width: 768px) {
+  #header-cart .dropdown-menu li {
+     min-width: 100%;
   }
 }
 

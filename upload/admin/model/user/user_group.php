@@ -124,7 +124,9 @@ class UserGroup extends \Opencart\System\Engine\Model {
 		if ($user_group_query->num_rows) {
 			$data = json_decode($user_group_query->row['permission'], true);
 
-			$data[$type] = array_diff($data[$type], [$route]);
+			if (isset($data[$type])) {
+				$data[$type] = array_diff($data[$type], [$route]);
+			}
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode($data)) . "' WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 		}

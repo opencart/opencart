@@ -39,7 +39,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['approval'] = '';
 		}
 
-		$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'), true);
+		$data['login'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'), true);
 
 		$data['store'] = $store_name;
 		$data['store_url'] = $this->config->get('config_url');

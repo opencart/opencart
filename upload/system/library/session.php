@@ -20,6 +20,10 @@ class Session {
 	 */
 	protected string $session_id;
 	/**
+	 * @var bool
+	 */
+	private $cookie_status = true;
+	/**
 	 * @var array
 	 */
 	public array $data = [];
@@ -31,8 +35,26 @@ class Session {
 	 * @param	object	$registry
  	*/
 	public function __construct(string $adaptor, \Opencart\System\Engine\Registry $registry) {
+		$cookie_status_path = DIR_SESSION . 'sess_block_' . md5($_SERVER['REMOTE_ADDR']);
+
+		if (!isset($_COOKIE['cookie_status'])) {
+			setcookie('cookie_status', 1, 0, '/');
+
+			if (!is_file($cookie_status_path)) {
+				file_put_contents($cookie_status_path, false);
+			} else {
+				$this->cookie_status = false;
+
+				return false;
+			}
+		} else {
+			if (is_file($cookie_status_path)) {
+				@unlink($cookie_status_path);
+			}
+		}
+
 		$class = 'Opencart\System\Library\Session\\' . $adaptor;
-		
+
 		if (class_exists($class)) {
 			if ($registry) {
 				$this->adaptor = new $class($registry);
@@ -46,13 +68,17 @@ class Session {
 			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
 		}
 	}
-	
+
 	/**
 	 * Get Session ID
 	 *
 	 * @return	string
  	*/	
 	public function getId(): string {
+		if (!$this->cookie_status) {
+			return false;
+		}
+
 		return $this->session_id;
 	}
 
@@ -66,6 +92,10 @@ class Session {
 	 * @return	string	Returns the current session ID.
  	*/	
 	public function start(string $session_id = ''): string {
+		if (!$this->cookie_status) {
+			return false;
+		}
+
 		if (!$session_id) {
 			if (function_exists('random_bytes')) {
 				$session_id = substr(bin2hex(random_bytes(26)), 0, 26);
@@ -79,9 +109,9 @@ class Session {
 		} else {
 			throw new \Exception('Error: Invalid session ID!');
 		}
-		
+
 		$this->data = $this->adaptor->read($session_id);
-		
+
 		return $session_id;
 	}
 
@@ -93,7 +123,9 @@ class Session {
 	 * @return	void
  	*/
 	public function close(): void {
-		$this->adaptor->write($this->session_id, $this->data);
+		if ($this->cookie_status) {
+			$this->adaptor->write($this->session_id, $this->data);
+		}
 	}
 
 	/**
@@ -106,7 +138,9 @@ class Session {
 	public function destroy(): void {
 		$this->data = [];
 
-		$this->adaptor->destroy($this->session_id);
+		if ($this->cookie_status) {
+			$this->adaptor->destroy($this->session_id);
+		}
 	}
 
 	/**
@@ -117,6 +151,8 @@ class Session {
 	 * @return	void
 	 */
 	public function gc(): void {
-		$this->adaptor->gc($this->session_id);
+		if (!$this->cookie_status) {
+			$this->adaptor->gc($this->session_id);
+		}
 	}
 }

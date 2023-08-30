@@ -101,7 +101,6 @@
           <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ product.name }}
             {% for option in product.option %}
               <br/>
-              &nbsp;
               <small> - {{ option.name }}: {{ option.value }}</small>
             {% endfor %}
             {% if product.reward %}

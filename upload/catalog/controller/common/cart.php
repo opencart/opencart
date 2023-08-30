@@ -30,6 +30,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$products = $this->model_checkout_cart->getProducts();
 
 		foreach ($products as $product) {
+			if ($product['option']) {
+				foreach ($product['option'] as $key => $option) {
+					$product['option'][$key]['value'] = (oc_strlen($option['value']) > 20 ? oc_substr($option['value'], 0, 20) . '..' : $option['value']);
+				}
+			}
+
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$unit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));

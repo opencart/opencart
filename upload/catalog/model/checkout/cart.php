@@ -46,7 +46,7 @@ class Cart extends \Opencart\System\Engine\Model {
 					'option_id'               => $option['option_id'],
 					'option_value_id'         => $option['option_value_id'],
 					'name'                    => $option['name'],
-					'value'                   => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value),
+					'value'                   => $value,
 					'type'                    => $option['type']
 				];
 			}

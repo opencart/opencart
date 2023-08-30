@@ -330,6 +330,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$data['products'] = [];
 
 		foreach ($products as $product) {
+			if ($product['option']) {
+				foreach ($product['option'] as $key => $option) {
+					$product['option'][$key]['value'] = (oc_strlen($option['value']) > 20 ? oc_substr($option['value'], 0, 20) . '..' : $option['value']);
+				}
+			}
+
 			$description = '';
 
 			if ($product['subscription']) {

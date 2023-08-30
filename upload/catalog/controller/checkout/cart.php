@@ -141,6 +141,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 			}
 
+			if ($product['option']) {
+				foreach ($product['option'] as $key => $option) {
+					$product['option'][$key]['value'] = (oc_strlen($option['value']) > 20 ? oc_substr($option['value'], 0, 20) . '..' : $option['value']);
+				}
+			}
+
 			$description = '';
 
 			if ($product['subscription']) {

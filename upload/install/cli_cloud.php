@@ -62,7 +62,7 @@ set_error_handler(/**
  * @throws \ErrorException
  */ function($code, $message, $file, $line, array $errcontext) {
 	// error was suppressed with the @-operator
-	if (error_reporting() === 0) {
+	if (!(error_reporting() & $code)) {
 		return false;
 	}
 

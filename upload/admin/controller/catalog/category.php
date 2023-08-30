@@ -263,15 +263,15 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/store');
-
 		$data['stores'] = [];
 		
 		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		];
-		
+
+		$this->load->model('setting/store');
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {

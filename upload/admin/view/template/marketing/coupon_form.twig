@@ -98,7 +98,7 @@
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-product" class="dropdown-menu"></ul>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                    <table id="coupon-product" class="table table-sm m-0">
+                    <table id="coupon-product" class="table m-0">
                       <tbody>
                         {% for coupon_product in coupon_products %}
                           <tr id="coupon-product-{{ coupon_product.product_id }}">
@@ -118,7 +118,7 @@
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-category" class="dropdown-menu"></ul>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                    <table id="coupon-category" class="table table-sm m-0">
+                    <table id="coupon-category" class="table m-0">
                       <tbody>
                         {% for coupon_category in coupon_categories %}
                           <tr id="coupon-category-{{ coupon_category.category_id }}">

@@ -289,7 +289,8 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[price]" value="1" id="input-variant-price" data-oc-toggle="switch" data-oc-target="#input-price" class="form-check-input"{% if override.price %} checked{% endif %}/> <label for="input-variant-price" class="form-check-label"></label>
+                            <input type="checkbox" name="override[price]" value="1" id="input-variant-price" data-oc-toggle="switch" data-oc-target="#input-price" class="form-check-input"{% if override.price %} checked{% endif %}/>
+                            <label for="input-variant-price" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -560,12 +561,12 @@
                   <ul id="autocomplete-category" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-category" class="table table-sm m-0">
+                      <table id="product-category" class="table m-0">
                         <tbody>
                           {% for product_category in product_categories %}
                             <tr id="product-category-{{ product_category.category_id }}">
                               <td>{{ product_category.name }}<input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -589,12 +590,12 @@
                   <ul id="autocomplete-filter" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-filter" class="table table-sm m-0">
+                      <table id="product-filter" class="table m-0">
                         <tbody>
                           {% for product_filter in product_filters %}
                             <tr id="product-filter-{{ product_filter.filter_id }}">
                               <td>{{ product_filter.name }}<input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -639,12 +640,12 @@
                   <ul id="autocomplete-download" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-download" class="table table-sm m-0">
+                      <table id="product-download" class="table m-0">
                         <tbody>
                           {% for product_download in product_downloads %}
                             <tr id="product-download-{{ product_download.download_id }}">
                               <td>{{ product_download.name }}<input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -668,12 +669,12 @@
                   <ul id="autocomplete-related" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-related" class="table table-sm m-0">
+                      <table id="product-related" class="table m-0">
                         <tbody>
                           {% for product_related in product_relateds %}
                             <tr id="product-related-{{ product_related.product_id }}">
                               <td>{{ product_related.name }}<input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -1264,8 +1265,8 @@
                     <div id="image" class="card image">
                       <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                       <div class="card-body">
-                        <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                        <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
 
                         {% if master_id %}
                           <div class="mx-auto w-25">
@@ -1308,8 +1309,8 @@
                             <div class="card image">
                               <img src="{{ product_image.thumb }}" alt="" title="" id="product-image-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-product-image-{{ image_row }}"/>
                               <div class="card-body">
-                                <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                                <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-primary btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-warning btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                               </div>
                             </div>
                           </td>
@@ -1507,7 +1508,7 @@ $('#input-category').autocomplete({
 
         html = '<tr id="product-category-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#product-category tbody').append(html);
@@ -1541,7 +1542,7 @@ $('#input-filter').autocomplete({
 
         html = '<tr id="product-filter-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#product-filter tbody').append(html);
@@ -1575,7 +1576,7 @@ $('#input-download').autocomplete({
 
         html = '<tr id="product-download-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#product-download tbody').append(html);
@@ -1609,7 +1610,7 @@ $('#input-related').autocomplete({
 
         html = '<tr id="product-related-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#product-related tbody').append(html);
@@ -1698,7 +1699,7 @@ $('#input-option').autocomplete({
     },
     'select': function (item) {
         html = '<fieldset id="option-row-' + option_row + '">';
-        html += '  <legend class="float-none">' + item['label'] + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fa-solid fa-minus-circle"></i></button></legend>';
+        html += '  <legend class="float-none">' + item['label'] + ' <button type="button" class="btn btn-danger float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fa-solid fa-minus-circle"></i></button></legend>';
         html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';

@@ -58,7 +58,7 @@
               <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
               <ul id="autocomplete-customer" class="dropdown-menu"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-customer" class="table table-sm m-0">
+                <table id="mail-customer" class="table m-0">
                   <tbody></tbody>
                 </table>
               </div>
@@ -71,7 +71,7 @@
               <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/>
               <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-affiliate" class="table table-sm m-0">
+                <table id="mail-affiliate" class="table m-0">
                   <tbody></tbody>
                 </table>
               </div>
@@ -84,7 +84,7 @@
               <input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
               <ul id="autocomplete-product" class="dropdown-menu"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-product" class="table table-sm m-0">
+                <table id="mail-product" class="table m-0">
                   <tbody></tbody>
                 </table>
               </div>
@@ -147,7 +147,7 @@ $('#input-customer').autocomplete({
 
         html = '<tr id="mail-customer-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#mail-customer tbody').append(html);
@@ -184,7 +184,7 @@ $('#input-affiliate').autocomplete({
 
         html = '<tr id="mail-affiliate-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#mail-affiliate tbody').append(html);
@@ -221,7 +221,7 @@ $('#input-product').autocomplete({
 
         html = '<tr id="mail-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#mail-product tbody').append(html);

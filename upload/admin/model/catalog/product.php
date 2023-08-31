@@ -482,7 +482,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$product_data['product_filter'] = $this->model_catalog_product->getFilters($master_id);
 			}
 
-			// Filters
+			// Images
 			if (!isset($override['product_image'])) {
 				$product_data['product_image'] = $this->model_catalog_product->getImages($master_id);
 			}
@@ -618,7 +618,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$product_data['product_filter'] = $this->model_catalog_product->getFilters($master_id);
 			}
 
-			// Filters
+			// Images
 			if (!isset($override['product_image'])) {
 				$product_data['product_image'] = $this->model_catalog_product->getImages($master_id);
 			}

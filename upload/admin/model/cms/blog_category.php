@@ -16,7 +16,7 @@ class BlogCategory extends \Opencart\System\Engine\Model {
 
 		$blog_category_id = $this->db->getLastId();
 
-		foreach ($data['blog_description'] as $language_id => $value) {
+		foreach ($data['blog_category_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_description` SET `blog_category_id` = '" . (int)$blog_category_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
@@ -46,7 +46,7 @@ class BlogCategory extends \Opencart\System\Engine\Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_category_description` WHERE `blog_category_id` = '" . (int)$blog_category_id . "'");
 
-		foreach ($data['blog_description'] as $language_id => $value) {
+		foreach ($data['blog_category_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_description` SET `blog_category_id` = '" . (int)$blog_category_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 

@@ -349,10 +349,12 @@ class BlogCategory extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('cms/blog_category');
+
 			if (!$this->request->post['blog_category_id']) {
-				$json['blog_category_id'] = $this->model_cms_blog_category->addCategory($this->request->post);
+				$json['blog_category_id'] = $this->model_cms_blog_category->addBlogCategory($this->request->post);
 			} else {
-				$this->model_cms_blog_category->editCategory($this->request->post['blog_category_id'], $this->request->post);
+				$this->model_cms_blog_category->editBlogCategory($this->request->post['blog_category_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

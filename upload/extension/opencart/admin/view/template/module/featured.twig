@@ -31,12 +31,12 @@
               <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
               <ul id="autocomplete-product" class="dropdown-menu"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="featured-product" class="table table-sm m-0">
+                <table id="featured-product" class="table m-0">
                   <tbody>
                     {% for product in products %}
                       <tr id="featured-product-{{ product.product_id }}">
                         <td>{{ product.name }}<input type="hidden" name="product[]" value="{{ product.product_id }}"/></td>
-                        <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-circle-minus"></i></button></td>
+                        <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -106,7 +106,7 @@ $('#input-product').autocomplete({
 
         html  = '<tr id="featured-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-circle-minus"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>';
         html += '</tr>';
 
         $('#featured-product tbody').append(html);

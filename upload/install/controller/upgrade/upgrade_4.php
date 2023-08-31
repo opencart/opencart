@@ -190,6 +190,20 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			}
 
 			$missing[] = [
+				'key'        => 'config_image_blog_width',
+				'value'      => 90,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_blog_height',
+				'value'      => 90,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
 				'key'        => 'config_session_expire',
 				'value'      => 3600000000,
 				'code'       => 'config',
@@ -252,7 +266,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				'code'       => 'config',
 				'serialized' => 0
 			];
-
 
 			$missing[] = [
 				'key'        => 'config_subscription_canceled_status_id',

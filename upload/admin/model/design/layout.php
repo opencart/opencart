@@ -69,6 +69,8 @@ class Layout extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -93,7 +95,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		$sort_data = ['name'];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY `" . $data['sort'] . "`";
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `name`";
 		}

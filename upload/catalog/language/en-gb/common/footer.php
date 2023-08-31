@@ -1,6 +1,7 @@
 <?php
 // Text
 $_['text_information']  = 'Information';
+$_['text_blog']         = 'Blog';
 $_['text_service']      = 'Customer Service';
 $_['text_extra']        = 'Extras';
 $_['text_contact']      = 'Contact Us';

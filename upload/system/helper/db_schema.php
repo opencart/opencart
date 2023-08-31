@@ -481,6 +481,321 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'blog',
+		'field' => [
+			[
+				'name' => 'blog_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_description',
+		'field' => [
+			[
+				'name' => 'blog_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'meta_title',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'meta_description',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'meta_keyword',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key' => [
+					'name'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_to_layout',
+		'field' => [
+			[
+				'name' => 'blog_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'layout_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_id',
+			'store_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_id',
+				'table' => 'blog',
+				'field' => 'blog_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			],
+			[
+				'key'   => 'layout_id',
+				'table' => 'layout',
+				'field' => 'layout_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_to_store',
+		'field' => [
+			[
+				'name' => 'blog_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'blog_id',
+			'store_id',
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_id',
+				'table' => 'blog',
+				'field' => 'blog_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_category',
+		'field' => [
+			[
+				'name' => 'blog_category_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_category_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_category_description',
+		'field' => [
+			[
+				'name' => 'blog_category_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'meta_title',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'meta_description',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'meta_keyword',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'blog_category_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key' => [
+					'name'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'blog_category_to_store',
+		'field' => [
+			[
+				'name' => 'blog_category_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'blog_category_id',
+			'store_id',
+		],
+		'foreign' => [
+			[
+				'key'   => 'blog_category_id',
+				'table' => 'blog_category',
+				'field' => 'blog_category_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'cart',
 		'field' => [
 			[

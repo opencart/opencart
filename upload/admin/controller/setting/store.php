@@ -530,6 +530,18 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_image_related_height'] = 80;
 		}
 
+		if (isset($store_info['config_image_blog_width'])) {
+			$data['config_image_blog_width'] = $store_info['config_image_blog_width'];
+		} else {
+			$data['config_image_blog_width'] = 90;
+		}
+
+		if (isset($store_info['config_image_blog_height'])) {
+			$data['config_image_blog_height'] = $store_info['config_image_blog_height'];
+		} else {
+			$data['config_image_blog_height'] = 90;
+		}
+
 		if (isset($store_info['config_image_compare_width'])) {
 			$data['config_image_compare_width'] = $store_info['config_image_compare_width'];
 		} else {

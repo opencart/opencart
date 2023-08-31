@@ -1073,6 +1073,22 @@
                     <div id="error-image-related" class="invalid-feedback"></div>
                   </div>
                 </div>
+
+                <div class="row mb-3 required">
+                  <label for="input-image-blog-width" class="col-sm-2 col-form-label">{{ entry_image_blog }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-image-blog" class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_blog_width" value="{{ config_image_blog_width }}" placeholder="{{ entry_width }}" id="input-image-blog-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_blog_height" value="{{ config_image_blog_height }}" placeholder="{{ entry_height }}" id="input-image-blog-height" class="form-control"/>
+                      </div>
+                    </div>
+                    <div id="error-image-blog" class="invalid-feedback"></div>
+                  </div>
+                </div>
+
                 <div class="row mb-3 required">
                   <label for="input-image-compare-width" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
                   <div class="col-sm-10">

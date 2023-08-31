@@ -245,6 +245,12 @@ class Blog extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!empty($blog_info)) {
+			$data['author'] = $blog_info['author'];
+		} else {
+			$data['author'] = '';
+		}
+
 		$this->load->model('cms/blog_category');
 
 		$data['blog_categories'] = $this->model_cms_blog_category->getBlogCategories();
@@ -346,6 +352,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			if ((oc_strlen(trim($value['meta_title'])) < 1) || (oc_strlen($value['meta_title']) > 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
+		}
+
+		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 64)) {
+			$json['error']['author'] = $this->language->get('error_author');
 		}
 
 		if ($this->request->post['blog_seo_url']) {

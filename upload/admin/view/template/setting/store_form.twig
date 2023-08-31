@@ -499,7 +499,7 @@
                   </div>
                 </div>
                 <div class="row mb-3 required">
-                  <label for="input-image-related" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
+                  <label for="input-image-related-width" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-related" class="row">
                       <div class="col-sm-6">
@@ -513,7 +513,21 @@
                   </div>
                 </div>
                 <div class="row mb-3 required">
-                  <label for="input-image-compare" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
+                  <label for="input-image-blog-width" class="col-sm-2 col-form-label">{{ entry_image_blog }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-image-blog" class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_blog_width" value="{{ config_image_blog_width }}" placeholder="{{ entry_width }}" id="input-image-blog-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_blog_height" value="{{ config_image_blog_height }}" placeholder="{{ entry_height }}" id="input-image-blog-height" class="form-control"/>
+                      </div>
+                    </div>
+                    <div id="error-image-blog" class="invalid-feedback"></div>
+                  </div>
+                </div>
+                <div class="row mb-3 required">
+                  <label for="input-image-compare-width" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-compare" class="row">
                       <div class="col-sm-6">
@@ -527,7 +541,7 @@
                   </div>
                 </div>
                 <div class="row mb-3 required">
-                  <label for="input-image-wishlist" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
+                  <label for="input-image-wishlist-width" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-wishlist" class="row">
                       <div class="col-sm-6">
@@ -541,7 +555,7 @@
                   </div>
                 </div>
                 <div class="row mb-3 required">
-                  <label for="input-image-cart" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
+                  <label for="input-image-cart-width" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-cart" class="row">
                       <div class="col-sm-6">
@@ -555,7 +569,7 @@
                   </div>
                 </div>
                 <div class="row mb-3 required">
-                  <label for="input-image-location" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
+                  <label for="input-image-location-width" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-location" class="row">
                       <div class="col-sm-6">

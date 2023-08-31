@@ -47,20 +47,20 @@ class BlogCategory extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_category_description` WHERE `blog_category_id` = '" . (int)$blog_category_id . "'");
 
 		foreach ($data['blog_category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_description` SET `blog_category_id` = '" . (int)$blog_category_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_description` SET `blog_category_id` = '" . (int)$blog_category_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_to_store` WHERE `blog_category_id` = '" . (int)$blog_category_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_category_to_store` WHERE `blog_category_id` = '" . (int)$blog_category_id . "'");
 
 		if (isset($data['blog_store'])) {
 			foreach ($data['blog_store'] as $store_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_to_store` SET `blog_category_id` = '" . (int)$blog_category_id . "', `store_id` = '" . (int)$store_id . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_to_store` SET `blog_category_id` = '" . (int)$blog_category_id . "', `store_id` = '" . (int)$store_id . "'");
 			}
 		}
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'blog_category_id' AND `value` = '" . (int)$blog_category_id . "'");
 
-		foreach ($data['blog_seo_url'] as $store_id => $language) {
+		foreach ($data['blog_category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'blog_category_id', `value` = '" . (int)$blog_category_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 			}

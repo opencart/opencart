@@ -120,7 +120,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$data['banners'][] = [
 				'banner_id' => $result['banner_id'],
 				'name'      => $result['name'],
-				'status'    => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'status'    => $result['status'],
 				'edit'      => $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)
 			];
 		}
@@ -138,7 +138,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sort_name'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_status'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
 		$url = '';
 

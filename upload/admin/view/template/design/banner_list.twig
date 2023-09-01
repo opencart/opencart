@@ -5,7 +5,6 @@
         <tr>
           <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
           <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
-          <td class="text-start"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
           <td class="text-end">{{ column_action }}</td>
         </tr>
       </thead>
@@ -14,14 +13,20 @@
           {% for banner in banners %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ banner.banner_id }}" class="form-check-input"/></td>
-              <td class="text-start">{{ banner.name }}</td>
-              <td class="text-start">{{ banner.status }}</td>
+              <td class="text-start">{{ banner.name }}
+                <br/>
+                {% if banner.status %}
+                  <small class="text-success">{{ text_enabled }}</small>
+                {% else %}
+                  <small class="text-danger">{{ text_disabled }}</small>
+                {% endif %}
+              </td>
               <td class="text-end"><a href="{{ banner.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+            <td class="text-center" colspan="3">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

@@ -121,6 +121,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$data['subscription_plans'][] = [
 				'subscription_plan_id' => $result['subscription_plan_id'],
 				'name'                 => $result['name'],
+				'status'               => $result['status'],
 				'sort_order'           => $result['sort_order'],
 				'edit'                 => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)
 			];

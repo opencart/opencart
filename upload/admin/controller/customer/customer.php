@@ -310,7 +310,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'email'          => $result['email'],
 				'store_id'       => $result['store_id'],
 				'customer_group' => $result['customer_group'],
-				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'status'         => $result['status'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'unlock'         => $unlock,
 				'store'          => $store_data,

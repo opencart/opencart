@@ -20,8 +20,8 @@ class BlogCategory extends \Opencart\System\Engine\Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_description` SET `blog_category_id` = '" . (int)$blog_category_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
-		if (isset($data['blog_store'])) {
-			foreach ($data['blog_store'] as $store_id) {
+		if (isset($data['blog_category_store'])) {
+			foreach ($data['blog_category_store'] as $store_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_to_store` SET `blog_category_id` = '" . (int)$blog_category_id . "', `store_id` = '" . (int)$store_id . "'");
 			}
 		}
@@ -52,8 +52,8 @@ class BlogCategory extends \Opencart\System\Engine\Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_category_to_store` WHERE `blog_category_id` = '" . (int)$blog_category_id . "'");
 
-		if (isset($data['blog_store'])) {
-			foreach ($data['blog_store'] as $store_id) {
+		if (isset($data['blog_category_store'])) {
+			foreach ($data['blog_category_store'] as $store_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_to_store` SET `blog_category_id` = '" . (int)$blog_category_id . "', `store_id` = '" . (int)$store_id . "'");
 			}
 		}

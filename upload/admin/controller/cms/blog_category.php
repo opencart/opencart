@@ -120,6 +120,7 @@ class BlogCategory extends \Opencart\System\Engine\Controller {
 			$data['blog_categories'][] = [
 				'blog_category_id' => $result['blog_category_id'],
 				'name'             => $result['name'],
+				'status'           => $result['status'],
 				'sort_order'       => $result['sort_order'],
 				'edit'             => $this->url->link('cms/blog_category.form', 'user_token=' . $this->session->data['user_token'] . '&blog_category_id=' . $result['blog_category_id'] . $url)
 			];

@@ -135,7 +135,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 				'title'         => $result['title'] . (($result['code'] == $this->config->get('config_currency')) ? $this->language->get('text_default') : ''),
 				'code'          => $result['code'],
 				'value'         => $result['value'],
-				'status'        => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'status'        => $result['status'],
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('localisation/currency.form', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $result['currency_id'] . $url)
 			];

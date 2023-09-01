@@ -126,11 +126,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['vouchers'][] = [
 				'voucher_id' => $result['voucher_id'],
 				'code'       => $result['code'],
+				'status'     => $result['status'],
 				'from'       => $result['from_name'],
 				'to'         => $result['to_name'],
 				'theme'      => $result['theme'],
 				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('sale/voucher.form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $result['voucher_id'] . $url),
 				'order'      => $order_href

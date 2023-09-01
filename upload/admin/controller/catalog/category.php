@@ -121,6 +121,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['categories'][] = [
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
+				'status'      => $result['status'],
 				'sort_order'  => $result['sort_order'],
 				'edit'        => $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
 			];

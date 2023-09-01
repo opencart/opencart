@@ -120,6 +120,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['informations'][] = [
 				'information_id' => $result['information_id'],
 				'title'          => $result['title'],
+				'status'         => $result['status'],
 				'sort_order'     => $result['sort_order'],
 				'edit'           => $this->url->link('catalog/information.form', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)
 			];

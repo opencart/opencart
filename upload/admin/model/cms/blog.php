@@ -12,7 +12,7 @@ class Blog extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addBlog(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "blog` SET `blog_category_id` = '" . (int)$data['blog_category_id'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = NOW(), `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "blog` SET `blog_category_id` = '" . (int)$data['blog_category_id'] . "', `author` = '" . $this->db->escape($data['author']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$blog_id = $this->db->getLastId();
 
@@ -50,7 +50,7 @@ class Blog extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editBlog(int $blog_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "blog` SET `blog_category_id` = '" . (int)$data['blog_category_id'] . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW() WHERE `blog_id` = '" . (int)$blog_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "blog` SET `blog_category_id` = '" . (int)$data['blog_category_id'] . "', `author` = '" . $this->db->escape($data['author']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW() WHERE `blog_id` = '" . (int)$blog_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_description` WHERE `blog_id` = '" . (int)$blog_id . "'");
 

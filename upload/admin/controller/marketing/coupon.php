@@ -124,7 +124,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 				'discount'   => $result['discount'],
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'status'     => $result['status'],
 				'edit'       => $this->url->link('marketing/coupon.form', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'] . $url)
 			];
 		}

@@ -121,6 +121,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 				'blog_id'     => $result['blog_id'],
 				'name'        => $result['name'],
 				'author'      => $result['author'],
+				'status'      => $result['status'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'        => $this->url->link('cms/blog.form', 'user_token=' . $this->session->data['user_token'] . '&blog_id=' . $result['blog_id'] . $url)
 			];
@@ -385,6 +386,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('cms/blog');
+
 			if (!$this->request->post['blog_id']) {
 				$json['blog_id'] = $this->model_cms_blog->addBlog($this->request->post);
 			} else {

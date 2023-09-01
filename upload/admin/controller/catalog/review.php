@@ -227,7 +227,7 @@ class Review extends \Opencart\System\Engine\Controller {
 				'name'       => $result['name'],
 				'author'     => $result['author'],
 				'rating'     => $result['rating'],
-				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
 			];
@@ -268,7 +268,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['sort_product'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url);
 		$data['sort_author'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.author' . $url);
 		$data['sort_rating'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.rating' . $url);
-		$data['sort_status'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.status' . $url);
 		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
 
 		$url = '';
@@ -392,8 +391,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['review_id'] = 0;
 		}
-
-		$this->load->model('catalog/product');
 
 		if (!empty($review_info)) {
 			$data['product_id'] = $review_info['product_id'];

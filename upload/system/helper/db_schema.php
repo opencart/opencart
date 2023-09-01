@@ -490,6 +490,16 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'blog_category_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'author',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true

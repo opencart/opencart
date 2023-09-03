@@ -17,7 +17,7 @@ class Blog extends \Opencart\System\Engine\Model {
 		$blog_id = $this->db->getLastId();
 
 		foreach ($data['blog_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_description` SET `blog_id` = '" . (int)$blog_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_description` SET `blog_id` = '" . (int)$blog_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `tag` = '" . $this->db->escape($value['tag']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		if (isset($data['blog_store'])) {
@@ -26,7 +26,6 @@ class Blog extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Seo urls on categories need to be done differently to they include the full keyword path
 		foreach ($data['blog_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'blog_id', `value`= '" . (int)$blog_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
@@ -55,7 +54,7 @@ class Blog extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_description` WHERE `blog_id` = '" . (int)$blog_id . "'");
 
 		foreach ($data['blog_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_description` SET `blog_id` = '" . (int)$blog_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "blog_description` SET `blog_id` = '" . (int)$blog_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($value['image']) . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `tag` = '" . $this->db->escape($value['tag']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "blog_to_store` WHERE `blog_id` = '" . (int)$blog_id . "'");
@@ -169,6 +168,7 @@ class Blog extends \Opencart\System\Engine\Model {
 				'image'            => $result['image'],
 				'name'             => $result['name'],
 				'description'      => $result['description'],
+				'tag'              => $result['tag'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword']

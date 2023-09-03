@@ -20,6 +20,7 @@ $_['column_action']           = 'Action';
 $_['entry_image']             = 'Image';
 $_['entry_name']              = 'Blog Name';
 $_['entry_description']       = 'Description';
+$_['entry_tag']               = 'Tags';
 $_['entry_meta_title']        = 'Meta Tag Title';
 $_['entry_meta_keyword']      = 'Meta Tag Keywords';
 $_['entry_meta_description']  = 'Meta Tag Description';

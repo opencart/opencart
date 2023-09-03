@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col text-end">
           <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
         </div>
       </div>
@@ -81,7 +81,7 @@
         </div>
         <div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4">
           {% for product in products %}
-            <div class="col">{{ product }}</div>
+            <div class="col mb-3">{{ product }}</div>
           {% endfor %}
         </div>
         <div class="row">

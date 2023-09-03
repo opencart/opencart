@@ -98,8 +98,8 @@ class Tracking extends \Opencart\System\Engine\Controller {
 
 			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'],
-				'start' => 0,
-				'limit' => 5
+				'start'       => 0,
+				'limit'       => 5
 			];
 
 			$results = $this->model_catalog_product->getProducts($filter_data);

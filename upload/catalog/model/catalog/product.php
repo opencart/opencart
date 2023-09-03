@@ -110,7 +110,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" AND ", $implode) . "";
+					$sql .= " " . implode(" OR ", $implode) . "";
 				}
 
 				if (!empty($data['filter_description'])) {
@@ -132,7 +132,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" AND ", $implode) . "";
+					$sql .= " " . implode(" OR ", $implode) . "";
 				}
 			}
 
@@ -439,7 +439,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" AND ", $implode) . "";
+					$sql .= " " . implode(" OR ", $implode) . "";
 				}
 
 				if (!empty($data['filter_description'])) {
@@ -461,7 +461,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" AND ", $implode) . "";
+					$sql .= " " . implode(" OR ", $implode) . "";
 				}
 			}
 

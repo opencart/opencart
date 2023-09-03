@@ -552,6 +552,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'tag',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)',
 				'not_null' => true

@@ -1,0 +1,79 @@
+{{ header }}
+<div id="product-category" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h2>{{ heading_title }}</h2>
+
+      {% if thumb or description %}
+        <div class="row">
+          {% if thumb %}
+            <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/></div>
+          {% endif %}
+          {% if description %}
+            <div class="col-sm-10">{{ description }}</div>
+          {% endif %}
+        </div>
+        <hr/>
+      {% endif %}
+
+      {% if categories %}
+        <h3>{{ text_refine }}</h3>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <ul>
+                {% for category in categories %}
+                  <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+      {% endif %}
+
+      {% if blogs %}
+        <div id="display-control" class="row">
+
+          <div class="col-lg-1 d-none d-lg-block">
+            <div class="btn-group">
+              <button type="button" id="button-list" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fa-solid fa-table-list"></i></button>
+              <button type="button" id="button-grid" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fa-solid fa-table-cells"></i></button>
+            </div>
+          </div>
+
+          <div class="col-lg-4 offset-lg-1 col-6">
+            <div class="input-group mb-3">
+              <div class="input-group">
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+                <select id="input-sort" class="form-select" onchange="location = this.value;">
+                  {% for sorts in sorts %}
+                    <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
+        </div>
+      {% endif %}
+
+
+      {% if not blogs %}
+        <p>{{ text_no_results }}</p>
+        <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {% endif %}
+
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

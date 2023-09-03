@@ -163,6 +163,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($comment) {
 			$data['comment'] = nl2br($comment);
+		} elseif ($order_info['comment']) {
+			$data['comment'] = nl2br($order_info['comment']);
 		} else {
 			$data['comment'] = '';
 		}

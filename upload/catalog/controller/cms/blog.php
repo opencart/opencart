@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\cms;
+namespace Opencart\Catalog\Controller\Cms;
 /**
  * Class Blog
  *

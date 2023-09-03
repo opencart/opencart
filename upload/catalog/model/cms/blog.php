@@ -40,11 +40,7 @@ class Blog extends \Opencart\System\Engine\Model {
 				$sql .= " (" . implode(" OR ", $implode) . ")";
 			}
 
-			if (!empty($data['filter_search'])) {
-				$sql .= " OR `bd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
-			}
-
-			$sql .= " OR ";
+			$sql .= " OR `bd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "' OR";
 
 			$implode = [];
 
@@ -118,11 +114,7 @@ class Blog extends \Opencart\System\Engine\Model {
 				$sql .= " (" . implode(" OR ", $implode) . ")";
 			}
 
-			if (!empty($data['filter_search'])) {
-				$sql .= " OR `bd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
-			}
-
-			$sql .= " OR ";
+			$sql .= " OR `bd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "' OR";
 
 			$implode = [];
 

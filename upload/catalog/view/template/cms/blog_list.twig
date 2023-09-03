@@ -7,45 +7,31 @@
   </ul>
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
-      <h2>{{ heading_title }}</h2>
 
-      {% if thumb or description %}
-        <div class="row">
-          {% if thumb %}
-            <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/></div>
-          {% endif %}
-          {% if description %}
-            <div class="col-sm-10">{{ description }}</div>
-          {% endif %}
-        </div>
-        <hr/>
-      {% endif %}
+      {{ heading_title }}
+
+
 
       {% if categories %}
         <h3>{{ text_refine }}</h3>
+        <div class="row">
+          <div class="col-sm-3">
+            <select name="blog_category_id" id="input-category" class="form-select mb-1">
 
-          <div class="row">
-            <div class="col-sm-3">
-              <ul>
-                {% for category in categories %}
-                  <li><a href="{{ category.href }}">{{ category.name }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
+              <option value="0">{{ text_category }}</option>
+
+              {% for category_1 in categories %}
+                <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected{% endif %}>{{ category_1.name }}</option>
+              {% endfor %}
+
+            </select>
           </div>
-
+        </div>
       {% endif %}
 
       {% if blogs %}
+
         <div id="display-control" class="row">
-
-          <div class="col-lg-1 d-none d-lg-block">
-            <div class="btn-group">
-              <button type="button" id="button-list" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fa-solid fa-table-list"></i></button>
-              <button type="button" id="button-grid" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fa-solid fa-table-cells"></i></button>
-            </div>
-          </div>
-
           <div class="col-lg-4 offset-lg-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group">
@@ -58,19 +44,29 @@
               </div>
             </div>
           </div>
-
         </div>
+
+        {% for blog in blogs %}
+
+          <div class="row">
+            <div class="col-sm-6 text-start">{{ blog.name }}</div>
+            <div class="col-sm-6 text-end">{{ blog.image }}</div>
+          </div>
+
+        {% endfor %}
+
+
 
         <div class="row">
           <div class="col-sm-6 text-start">{{ pagination }}</div>
           <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
-      {% endif %}
 
+      {% else %}
 
-      {% if not blogs %}
         <p>{{ text_no_results }}</p>
         <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+
       {% endif %}
 
       {{ content_bottom }}</div>

@@ -66,6 +66,13 @@
                       </div>
                     </div>
                     <div class="row mb-3 required">
+                      <label for="input-tag-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="blog_description[{{ language.language_id }}][tag]" value="{{ blog_description[language.language_id] ? blog_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
+                        <div id="error-tag-{{ language.language_id }}" class="invalid-feedback"></div>
+                      </div>
+                    </div>
+                    <div class="row mb-3 required">
                       <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="blog_description[{{ language.language_id }}][meta_title]" value="{{ blog_description[language.language_id] ? blog_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>

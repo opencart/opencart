@@ -55,6 +55,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$url .= '&search=' . (string)$this->request->get['search'];
 		}
 
+		if (isset($this->request->get['blog_category_id'])) {
+			$url .= '&blog_category_id=' . (int)$this->request->get['blog_category_id'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -84,7 +88,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $blog_category_info['name'],
-				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&blog_category_id=' . $blog_category_id . $url)
+				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
 			];
 
 			$data['heading_title'] = $blog_category_info['name'];
@@ -101,28 +105,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['heading_title'] = $this->language->get('heading_title');
 			$data['description'] = '';
 			$data['thumb'] = '';
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . (string)$this->request->get['search'];
-		}
-
-		if (isset($this->request->get['blog_category_id'])) {
-			$url .= '&blog_category_id=' . (int)$this->request->get['blog_category_id'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$limit = 20;
@@ -151,15 +133,13 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$image = '';
 			}
 
-			$blog_data = [
+			$data['blogs'][] = [
 				'blog_id'     => $result['blog_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
 				'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
 				'href'        => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&blog_id=' . $result['blog_id'] . $url)
 			];
-
-			$data['blogs'][] = $this->load->controller('product/thumb', $blog_data);
 		}
 
 		$url = '';
@@ -312,7 +292,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		if ($blog_category_info) {
 			$data['breadcrumbs'][] = [
 				'text' => $blog_category_info['name'],
-				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&blog_category_id=' . $url)
+				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
 			];
 		}
 
@@ -356,7 +336,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$data['text_error'] = $this->language->get('text_error');
 
-			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
+			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language') . $url);
 
 			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 

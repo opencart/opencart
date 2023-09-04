@@ -97,28 +97,28 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
 			$sql .= " AND (";
 
-			if (!empty($data['filter_name'])) {
+			if (!empty($data['filter_search'])) {
 				$implode = [];
 
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_name'])));
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
 
 				foreach ($words as $word) {
 					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" OR ", $implode) . "";
+					$sql .= " (" . implode(" OR ", $implode) . ")";
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_name'] . '%') . "'";
+					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
 				}
 			}
 
-			if (!empty($data['filter_name']) && !empty($data['filter_tag'])) {
+			if (!empty($data['filter_search']) && !empty($data['filter_tag'])) {
 				$sql .= " OR ";
 			}
 
@@ -132,18 +132,18 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" OR ", $implode) . "";
+					$sql .= " (" . implode(" OR ", $implode) . ")";
 				}
 			}
 
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+			if (!empty($data['filter_search'])) {
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
 			}
 
 			$sql .= ")";
@@ -426,28 +426,28 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
 			$sql .= " AND (";
 
-			if (!empty($data['filter_name'])) {
+			if (!empty($data['filter_search'])) {
 				$implode = [];
 
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_name'])));
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
 
 				foreach ($words as $word) {
 					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" OR ", $implode) . "";
+					$sql .= " (" . implode(" OR ", $implode) . ")";
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_name'] . '%') . "'";
+					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
 				}
 			}
 
-			if (!empty($data['filter_name']) && !empty($data['filter_tag'])) {
+			if (!empty($data['filter_search']) && !empty($data['filter_tag'])) {
 				$sql .= " OR ";
 			}
 
@@ -461,18 +461,18 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" OR ", $implode) . "";
+					$sql .= " (" . implode(" OR ", $implode) . ")";
 				}
 			}
 
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+			if (!empty($data['filter_search'])) {
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
 			}
 
 			$sql .= ")";

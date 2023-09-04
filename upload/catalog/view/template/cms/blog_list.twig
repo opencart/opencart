@@ -31,9 +31,10 @@
 
       {% if blogs %}
 
-        <div id="display-control" class="row">
+        <div class="row">
           <div class="col-lg-4 offset-lg-1 col-6">
-            <div class="input-group mb-3">
+
+
               <div class="input-group">
                 <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
                 <select id="input-sort" class="form-select" onchange="location = this.value;">
@@ -42,7 +43,8 @@
                   {% endfor %}
                 </select>
               </div>
-            </div>
+
+
           </div>
         </div>
 

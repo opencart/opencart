@@ -51,14 +51,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . (string)$this->request->get['search'];
-		}
-
-		if (isset($this->request->get['blog_category_id'])) {
-			$url .= '&blog_category_id=' . (int)$this->request->get['blog_category_id'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -85,6 +77,28 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$this->document->setTitle($blog_category_info['meta_title']);
 			$this->document->setDescription($blog_category_info['meta_description']);
 			$this->document->setKeywords($blog_category_info['meta_keyword']);
+
+			$url = '';
+
+			if (isset($this->request->get['search'])) {
+				$url .= '&search=' . (string)$this->request->get['search'];
+			}
+
+			if (isset($this->request->get['blog_category_id'])) {
+				$url .= '&blog_category_id=' . (int)$this->request->get['blog_category_id'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 
 			$data['breadcrumbs'][] = [
 				'text' => $blog_category_info['name'],
@@ -223,6 +237,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$data['search'] = $search;
 		$data['blog_category_id'] = $blog_category_id;
 
+		$data['blog_categories'] = $this->model_cms_blog_category->getBlogCategories();
+
+
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
@@ -260,6 +278,25 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_blog'),
+			'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
+		];
+
+		$url = '';
+
 		if (isset($this->request->get['search'])) {
 			$url .= '&search=' . $this->request->get['search'];
 		}
@@ -279,11 +316,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_blog'),
-			'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
-		];
 
 		$this->load->model('cms/blog_category');
 
@@ -306,7 +338,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$this->document->setKeywords($blog_info['meta_keyword']);
 
 			$data['breadcrumbs'][] = [
-				'text' => $blog_info['title'],
+				'text' => $blog_info['name'],
 				'href' => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&blog_id=' .  $blog_id . $url)
 			];
 

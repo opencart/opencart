@@ -9,15 +9,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): object|null {
 		$this->load->language('information/information');
-
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		];
 
 		if (isset($this->request->get['information_id'])) {
 			$information_id = (int)$this->request->get['information_id'];
@@ -33,6 +26,13 @@ class Information extends \Opencart\System\Engine\Controller {
 			$this->document->setTitle($information_info['meta_title']);
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
+
+			$data['breadcrumbs'] = [];
+
+			$data['breadcrumbs'][] = [
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $information_info['title'],
@@ -54,30 +54,10 @@ class Information extends \Opencart\System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('information/information', $data));
 		} else {
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_id)
-			];
-
-			$this->document->setTitle($this->language->get('text_error'));
-
-			$data['heading_title'] = $this->language->get('text_error');
-
-			$data['text_error'] = $this->language->get('text_error');
-
-			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-
-			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');
-
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
+
+		return null;
 	}
 
 	/**

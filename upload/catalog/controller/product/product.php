@@ -9,46 +9,95 @@ class Product extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): \Opencart\System\Engine\Action|null {
 		$this->load->language('product/product');
 
-		$data['breadcrumbs'] = [];
+		if (isset($this->request->get['product_id'])) {
+			$product_id = (int)$this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
 
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		];
+		$this->load->model('catalog/product');
 
-		$this->load->model('catalog/category');
+		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-		if (isset($this->request->get['path'])) {
-			$path = '';
+		if ($product_info) {
+			$this->document->setTitle($product_info['meta_title']);
+			$this->document->setDescription($product_info['meta_description']);
+			$this->document->setKeywords($product_info['meta_keyword']);
+			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), 'canonical');
 
-			$parts = explode('_', (string)$this->request->get['path']);
+			$data['breadcrumbs'] = [];
 
-			$category_id = (int)array_pop($parts);
+			$data['breadcrumbs'][] = [
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+			];
 
-			foreach ($parts as $path_id) {
-				if (!$path) {
-					$path = $path_id;
-				} else {
-					$path .= '_' . $path_id;
+			$this->load->model('catalog/category');
+
+			if (isset($this->request->get['path'])) {
+				$path = '';
+
+				$parts = explode('_', (string)$this->request->get['path']);
+
+				$category_id = (int)array_pop($parts);
+
+				foreach ($parts as $path_id) {
+					if (!$path) {
+						$path = $path_id;
+					} else {
+						$path .= '_' . $path_id;
+					}
+
+					$category_info = $this->model_catalog_category->getCategory($path_id);
+
+					if ($category_info) {
+						$data['breadcrumbs'][] = [
+							'text' => $category_info['name'],
+							'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $path)
+						];
+					}
 				}
 
-				$category_info = $this->model_catalog_category->getCategory($path_id);
+				// Set the last category breadcrumb
+				$category_info = $this->model_catalog_category->getCategory($category_id);
 
 				if ($category_info) {
+					$url = '';
+
+					if (isset($this->request->get['sort'])) {
+						$url .= '&sort=' . $this->request->get['sort'];
+					}
+
+					if (isset($this->request->get['order'])) {
+						$url .= '&order=' . $this->request->get['order'];
+					}
+
+					if (isset($this->request->get['page'])) {
+						$url .= '&page=' . $this->request->get['page'];
+					}
+
+					if (isset($this->request->get['limit'])) {
+						$url .= '&limit=' . $this->request->get['limit'];
+					}
+
 					$data['breadcrumbs'][] = [
 						'text' => $category_info['name'],
-						'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $path)
+						'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . $url)
 					];
 				}
 			}
 
-			// Set the last category breadcrumb
-			$category_info = $this->model_catalog_category->getCategory($category_id);
+			$this->load->model('catalog/manufacturer');
 
-			if ($category_info) {
+			if (isset($this->request->get['manufacturer_id'])) {
+				$data['breadcrumbs'][] = [
+					'text' => $this->language->get('text_brand'),
+					'href' => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'))
+				];
+
 				$url = '';
 
 				if (isset($this->request->get['sort'])) {
@@ -67,105 +116,61 @@ class Product extends \Opencart\System\Engine\Controller {
 					$url .= '&limit=' . $this->request->get['limit'];
 				}
 
+				$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
+
+				if ($manufacturer_info) {
+					$data['breadcrumbs'][] = [
+						'text' => $manufacturer_info['name'],
+						'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
+					];
+				}
+			}
+
+			if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
+				$url = '';
+
+				if (isset($this->request->get['search'])) {
+					$url .= '&search=' . $this->request->get['search'];
+				}
+
+				if (isset($this->request->get['tag'])) {
+					$url .= '&tag=' . $this->request->get['tag'];
+				}
+
+				if (isset($this->request->get['description'])) {
+					$url .= '&description=' . $this->request->get['description'];
+				}
+
+				if (isset($this->request->get['category_id'])) {
+					$url .= '&category_id=' . $this->request->get['category_id'];
+				}
+
+				if (isset($this->request->get['sub_category'])) {
+					$url .= '&sub_category=' . $this->request->get['sub_category'];
+				}
+
+				if (isset($this->request->get['sort'])) {
+					$url .= '&sort=' . $this->request->get['sort'];
+				}
+
+				if (isset($this->request->get['order'])) {
+					$url .= '&order=' . $this->request->get['order'];
+				}
+
+				if (isset($this->request->get['page'])) {
+					$url .= '&page=' . $this->request->get['page'];
+				}
+
+				if (isset($this->request->get['limit'])) {
+					$url .= '&limit=' . $this->request->get['limit'];
+				}
+
 				$data['breadcrumbs'][] = [
-					'text' => $category_info['name'],
-					'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . $url)
+					'text' => $this->language->get('text_search'),
+					'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . $url)
 				];
 			}
-		}
 
-		$this->load->model('catalog/manufacturer');
-
-		if (isset($this->request->get['manufacturer_id'])) {
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_brand'),
-				'href' => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'))
-			];
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-
-			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
-
-			if ($manufacturer_info) {
-				$data['breadcrumbs'][] = [
-					'text' => $manufacturer_info['name'],
-					'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
-				];
-			}
-		}
-
-		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
-			$url = '';
-
-			if (isset($this->request->get['search'])) {
-				$url .= '&search=' . $this->request->get['search'];
-			}
-
-			if (isset($this->request->get['tag'])) {
-				$url .= '&tag=' . $this->request->get['tag'];
-			}
-
-			if (isset($this->request->get['description'])) {
-				$url .= '&description=' . $this->request->get['description'];
-			}
-
-			if (isset($this->request->get['category_id'])) {
-				$url .= '&category_id=' . $this->request->get['category_id'];
-			}
-
-			if (isset($this->request->get['sub_category'])) {
-				$url .= '&sub_category=' . $this->request->get['sub_category'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_search'),
-				'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . $url)
-			];
-		}
-
-		if (isset($this->request->get['product_id'])) {
-			$product_id = (int)$this->request->get['product_id'];
-		} else {
-			$product_id = 0;
-		}
-
-		$this->load->model('catalog/product');
-
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-
-		if ($product_info) {
 			$url = '';
 
 			if (isset($this->request->get['path'])) {
@@ -511,74 +516,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
-			$url = '';
-
-			if (isset($this->request->get['path'])) {
-				$url .= '&path=' . $this->request->get['path'];
-			}
-
-			if (isset($this->request->get['filter'])) {
-				$url .= '&filter=' . $this->request->get['filter'];
-			}
-
-			if (isset($this->request->get['manufacturer_id'])) {
-				$url .= '&manufacturer_id=' . $this->request->get['manufacturer_id'];
-			}
-
-			if (isset($this->request->get['search'])) {
-				$url .= '&search=' . $this->request->get['search'];
-			}
-
-			if (isset($this->request->get['tag'])) {
-				$url .= '&tag=' . $this->request->get['tag'];
-			}
-
-			if (isset($this->request->get['description'])) {
-				$url .= '&description=' . $this->request->get['description'];
-			}
-
-			if (isset($this->request->get['category_id'])) {
-				$url .= '&category_id=' . $this->request->get['category_id'];
-			}
-
-			if (isset($this->request->get['sub_category'])) {
-				$url .= '&sub_category=' . $this->request->get['sub_category'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . $url . '&product_id=' . $product_id)
-			];
-
-			$this->document->setTitle($this->language->get('text_error'));
-
-			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');
-
-			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
+
+		return;
 	}
 }

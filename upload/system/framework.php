@@ -67,11 +67,11 @@ set_error_handler(function(string $code, string $message, string $file, string $
 // Exception Handler
 set_exception_handler(function(\Throwable $e) use ($log, $config)  {
 	if ($config->get('error_log')) {
-		$log->write($e->getCode() . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+		$log->write($e->getMessage() . ': in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}
 
 	if ($config->get('error_display')) {
-		echo '<b>' . $e->getCode() . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+		echo '<b>' . $e->getMessage() . '</b>: in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();

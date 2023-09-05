@@ -59,22 +59,7 @@ class Blog extends \Opencart\System\Engine\Model {
 			$sql .= " AND `b`.`blog_category_id` = '" . (int)$data['filter_blog_category_id'] . "'";
 		}
 
-		$sort_data = [
-			'bd.name',
-			'b.date_added'
-		];
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY `b`.`date_added`";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+		$sql .= " ORDER BY `b`.`date_added` DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

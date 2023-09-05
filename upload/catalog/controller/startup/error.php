@@ -64,11 +64,11 @@ class Error extends \Opencart\System\Engine\Controller {
 	 */
 	public function exception(\Throwable $e): void {
 		if ($this->config->get('config_error_log')) {
-			$this->log->write($e->getCode() . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+			$this->log->write($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 		}
 
 		if ($this->config->get('config_error_display')) {
-			echo '<b>' . $e->getCode() . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+			echo '<b>' . $e->getMessage() . '</b>: in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
 		} else {
 			header('Location: ' . $this->config->get('error_page'));
 			exit();

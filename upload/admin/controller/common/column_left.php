@@ -139,26 +139,26 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			$cms = [];
 
-			if ($this->user->hasPermission('access', 'cms/blog')) {
+			if ($this->user->hasPermission('access', 'cms/article')) {
 				$cms[] = [
-					'name'	   => $this->language->get('text_blog'),
-					'href'     => $this->url->link('cms/blog', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_article'),
+					'href'     => $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'cms/blog_category')) {
+			if ($this->user->hasPermission('access', 'cms/topic')) {
 				$cms[] = [
-					'name'	   => $this->language->get('text_blog_category'),
-					'href'     => $this->url->link('cms/blog_category', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_topic'),
+					'href'     => $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'cms/blog_comment')) {
+			if ($this->user->hasPermission('access', 'cms/comment')) {
 				$cms[] = [
-					'name'	   => $this->language->get('text_blog_comment'),
-					'href'     => $this->url->link('cms/blog_comment', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_comment'),
+					'href'     => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

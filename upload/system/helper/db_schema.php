@@ -481,16 +481,16 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog',
+		'name' => 'article',
 		'field' => [
 			[
-				'name' => 'blog_id',
+				'name' => 'article_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
 			],
 			[
-				'name' => 'blog_category_id',
+				'name' => 'topic_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -516,7 +516,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_id'
+			'article_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -524,10 +524,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog_description',
+		'name' => 'article_description',
 		'field' => [
 			[
-				'name' => 'blog_id',
+				'name' => 'article_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -573,7 +573,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_id',
+			'article_id',
 			'language_id'
 		],
 		'foreign' => [
@@ -597,10 +597,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog_to_layout',
+		'name' => 'article_to_layout',
 		'field' => [
 			[
-				'name' => 'blog_id',
+				'name' => 'article_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -616,14 +616,14 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_id',
+			'article_id',
 			'store_id'
 		],
 		'foreign' => [
 			[
-				'key'   => 'blog_id',
-				'table' => 'blog',
-				'field' => 'blog_id'
+				'key'   => 'article_id',
+				'table' => 'article',
+				'field' => 'article_id'
 			],
 			[
 				'key'   => 'store_id',
@@ -642,10 +642,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog_to_store',
+		'name' => 'article_to_store',
 		'field' => [
 			[
-				'name' => 'blog_id',
+				'name' => 'article_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -657,14 +657,14 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_id',
+			'article_id',
 			'store_id',
 		],
 		'foreign' => [
 			[
-				'key'   => 'blog_id',
-				'table' => 'blog',
-				'field' => 'blog_id'
+				'key'   => 'article_id',
+				'table' => 'article',
+				'field' => 'article_id'
 			],
 			[
 				'key'   => 'store_id',
@@ -678,10 +678,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog_category',
+		'name' => 'topic',
 		'field' => [
 			[
-				'name' => 'blog_category_id',
+				'name' => 'topic_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -699,7 +699,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_category_id'
+			'topic_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -707,10 +707,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog_category_description',
+		'name' => 'topic_description',
 		'field' => [
 			[
-				'name' => 'blog_category_id',
+				'name' => 'topic_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -751,7 +751,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_category_id',
+			'topic_id',
 			'language_id'
 		],
 		'foreign' => [
@@ -775,10 +775,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'blog_category_to_store',
+		'name' => 'topic_to_store',
 		'field' => [
 			[
-				'name' => 'blog_category_id',
+				'name' => 'topic_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -790,14 +790,14 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'blog_category_id',
+			'topic_id',
 			'store_id',
 		],
 		'foreign' => [
 			[
-				'key'   => 'blog_category_id',
-				'table' => 'blog_category',
-				'field' => 'blog_category_id'
+				'key'   => 'topic_id',
+				'table' => 'topic',
+				'field' => 'topic_id'
 			],
 			[
 				'key'   => 'store_id',

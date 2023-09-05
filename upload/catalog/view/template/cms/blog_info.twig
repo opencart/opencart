@@ -5,16 +5,20 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+  <div class="row">
+    {{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
       <h2>{{ heading_title }}</h2>
       {% if thumb %}
         <img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/>
       {% endif %}
       <div>{{ description }}</div>
       <hr/>
-      <div class="blog-comment"></div>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      <div id="history" class="blog-comment"></div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 {{ footer }}

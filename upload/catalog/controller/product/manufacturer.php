@@ -65,14 +65,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function info(): void {
+	public function info(): \Opencart\System\Engine\Action|null {
 		$this->load->language('product/manufacturer');
-
-		$this->load->model('catalog/manufacturer');
-
-		$this->load->model('catalog/product');
-
-		$this->load->model('tool/image');
 
 		if (isset($this->request->get['manufacturer_id'])) {
 			$manufacturer_id = (int)$this->request->get['manufacturer_id'];
@@ -104,22 +98,24 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$limit = (int)$this->config->get('config_pagination');
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_brand'),
-			'href' => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'))
-		];
+		$this->load->model('catalog/manufacturer');
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
+
+			$data['breadcrumbs'] = [];
+
+			$data['breadcrumbs'][] = [
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+			];
+
+			$data['breadcrumbs'][] = [
+				'text' => $this->language->get('text_brand'),
+				'href' => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'))
+			];
 
 			$url = '';
 
@@ -159,6 +155,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'start'                  => ($page - 1) * $limit,
 				'limit'                  => $limit
 			];
+
+			$this->load->model('catalog/product');
+			$this->load->model('tool/image');
 
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
@@ -346,51 +345,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('product/manufacturer_info', $data));
 		} else {
-			$url = '';
-
-			if (isset($this->request->get['manufacturer_id'])) {
-				$url .= '&manufacturer_id=' . $this->request->get['manufacturer_id'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . $url)
-			];
-
-			$this->document->setTitle($this->language->get('text_error'));
-
-			$data['heading_title'] = $this->language->get('text_error');
-
-			$data['text_error'] = $this->language->get('text_error');
-
-			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-
-			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['header'] = $this->load->controller('common/header');
-			$data['footer'] = $this->load->controller('common/footer');
-
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
+
+		return null;
 	}
 }

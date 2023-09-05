@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Cms;
 /**
  * Class Blog Category
  *
- * @package Opencart\Admin\Model\Cms
+ * @package Opencart\Catalog\Model\Cms
  */
 class BlogCategory extends \Opencart\System\Engine\Model {
 	/**
@@ -21,7 +21,7 @@ class BlogCategory extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getBlogCategories(): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "blog_category` `bc` LEFT JOIN `" . DB_PREFIX . "blog_category_description` `bcd` ON (`bc`.`blog_id` = `bcd`.`blog_id`) LEFT JOIN `" . DB_PREFIX . "blog_category_to_store` `bc2s` ON (`bc`.`blog_category_id` = `bc2s`.`blog_category_id`) WHERE `bcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `bc2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY `bc`.`sort_order` DESC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "blog_category` `bc` LEFT JOIN `" . DB_PREFIX . "blog_category_description` `bcd` ON (`bc`.`blog_category_id` = `bcd`.`blog_category_id`) LEFT JOIN `" . DB_PREFIX . "blog_category_to_store` `bc2s` ON (`bc`.`blog_category_id` = `bc2s`.`blog_category_id`) WHERE `bcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `bc2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY `bc`.`sort_order` DESC");
 
 		return $query->rows;
 	}

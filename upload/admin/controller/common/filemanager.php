@@ -94,14 +94,12 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		$total = count($paths);
 		$limit = 16;
-
 		$start = ($page - 1) * $limit;
-		$end = $start > ($total - $limit) ? $total : ($start + $limit);
 
 		if ($paths) {
 			// Split the array based on current page number and max number of items per page of 10
-            for ($i = $start; $i < $end; $i++) {
-                $path = str_replace('\\', '/', realpath($paths[$i]));
+            foreach (array_slice($paths, $start, $limit) as $path) {
+                $path = str_replace('\\', '/', realpath($path));
 
 				if (substr($path, 0, strlen($path)) == $path) {
 					$name = basename($path);

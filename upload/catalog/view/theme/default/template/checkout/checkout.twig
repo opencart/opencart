@@ -687,7 +687,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
+				$('.text-danger').parent().parent().addClass('has-error');
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',

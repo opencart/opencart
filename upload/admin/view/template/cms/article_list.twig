@@ -14,7 +14,7 @@
         {% if articles %}
           {% for article in articles %}
             <tr>
-              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ article.topic_id }}" class="form-check-input"/></td>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ article.article_id }}" class="form-check-input"/></td>
               <td class="text-start">{{ article.name }}
                 <br/>
                 {% if article.status %}

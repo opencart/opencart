@@ -18,10 +18,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$search = '';
 		}
 
-		if (isset($this->request->get['blog_category_id'])) {
-			$blog_category_id = (int)$this->request->get['blog_category_id'];
+		if (isset($this->request->get['topic_id'])) {
+			$topic_id = (int)$this->request->get['topic_id'];
 		} else {
-			$blog_category_id = 0;
+			$topic_id = 0;
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -39,6 +39,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['search'])) {
+			$url .= '&search=' . (string)$this->request->get['search'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -48,20 +52,23 @@ class Blog extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
 		];
 
-		$this->load->model('cms/blog_category');
-		$this->load->model('tool/image');
+		$this->load->model('cms/topic');
 
-		$blog_category_info = $this->model_cms_blog_category->getBlogCategory($blog_category_id);
+		$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
-		if ($blog_category_info) {
+		if ($topic_info) {
+			$this->document->setTitle($topic_info['meta_title']);
+			$this->document->setDescription($topic_info['meta_description']);
+			$this->document->setKeywords($topic_info['meta_keyword']);
+
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
 				$url .= '&search=' . (string)$this->request->get['search'];
 			}
 
-			if (isset($this->request->get['blog_category_id'])) {
-				$url .= '&blog_category_id=' . (int)$this->request->get['blog_category_id'];
+			if (isset($this->request->get['topic_id'])) {
+				$url .= '&topic_id=' . (int)$this->request->get['topic_id'];
 			}
 
 			if (isset($this->request->get['page'])) {
@@ -69,65 +76,63 @@ class Blog extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['breadcrumbs'][] = [
-				'text' => $blog_category_info['name'],
+				'text' => $topic_info['name'],
 				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
 			];
 		}
 
-		if ($blog_category_info) {
-			$this->document->setTitle($blog_category_info['meta_title']);
-			$this->document->setDescription($blog_category_info['meta_description']);
-			$this->document->setKeywords($blog_category_info['meta_keyword']);
+		$this->load->model('tool/image');
 
-			$data['heading_title'] = $blog_category_info['name'];
+		if ($topic_info && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_blog_width'), $this->config->get('config_image_blog_height'));
+		} else {
+			$data['thumb'] = '';
+		}
 
-			$data['description'] = html_entity_decode($blog_category_info['description'], ENT_QUOTES, 'UTF-8');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($blog_category_info['image'], ENT_QUOTES, 'UTF-8'))) {
-				$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($blog_category_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_blog_width'), $this->config->get('config_image_blog_height'));
-			} else {
-				$data['thumb'] = '';
-			}
+		if ($topic_info) {
+			$data['heading_title'] = $topic_info['name'];
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$data['heading_title'] = $this->language->get('heading_title');
-			$data['description'] = '';
-			$data['thumb'] = '';
 		}
 
-
+		if ($topic_info) {
+			$data['description'] = html_entity_decode($topic_info['description'], ENT_QUOTES, 'UTF-8');
+		} else {
+			$data['description'] = '';
+		}
 
 		$limit = 20;
 
-		$data['blogs'] = [];
+		$data['articles'] = [];
 
 		$filter_data = [
-			'filter_search'           => $search,
-			'filter_blog_category_id' => $blog_category_id,
-			'start'                   => ($page - 1) * $limit,
-			'limit'                   => $limit
+			'filter_search'   => $search,
+			'filter_topic_id' => $topic_id,
+			'start'           => ($page - 1) * $limit,
+			'limit'           => $limit
 		];
 
-		$this->load->model('cms/blog');
+		$this->load->model('cms/article');
 
-		$blog_total = $this->model_cms_blog->getTotalBlogs($filter_data);
+		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
 
-		$results = $this->model_cms_blog->getBlogs($filter_data);
+		$results = $this->model_cms_article->getArticles($filter_data);
 
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_blog_width'), $this->config->get('config_image_blog_height'));
+				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
 			} else {
 				$image = '';
 			}
 
-			$data['blogs'][] = [
-				'blog_id'     => $result['blog_id'],
+			$data['articles'][] = [
+				'article_id'  => $result['article_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
 				'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
-				'href'        => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&blog_id=' . $result['blog_id'] . $url)
+				'href'        => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $result['article_id'] . $url)
 			];
 		}
 
@@ -137,20 +142,20 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$url .= '&search=' . $this->request->get['search'];
 		}
 
-		if (isset($this->request->get['blog_category_id'])) {
-			$url .= '&blog_category_id=' . $this->request->get['blog_category_id'];
+		if (isset($this->request->get['topic_id'])) {
+			$url .= '&topic_id=' . $this->request->get['topic_id'];
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $blog_total,
+			'total' => $article_total,
 			'page'  => $page,
 			'limit' => $limit,
 			'url'   => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($blog_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($blog_total - $limit)) ? $blog_total : ((($page - 1) * $limit) + $limit), $blog_total, ceil($blog_total / $limit));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($article_total - $limit)) ? $article_total : ((($page - 1) * $limit) + $limit), $article_total, ceil($article_total / $limit));
 
-		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+		// http://googlewebmastercentral.articlespot.com/2011/09/pagination-with-relnext-and-relprev.html
 		if ($page == 1) {
 			$this->document->addLink($this->url->link('cms/blog', 'language=' . $this->config->get('config_language')), 'canonical');
 		} else {
@@ -161,13 +166,13 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$this->document->addLink($this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
 		}
 
-		if (ceil($blog_total / $limit) > $page) {
+		if (ceil($article_total / $limit) > $page) {
 			$this->document->addLink($this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&page='. ($page + 1)), 'next');
 		}
 
 		$data['search'] = $search;
-		$data['blog_category_id'] = $blog_category_id;
-		$data['blog_categories'] = $this->model_cms_blog_category->getBlogCategories();
+		$data['topic_id'] = $topic_id;
+		$data['topics'] = $this->model_cms_topic->getTopics();
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -180,25 +185,29 @@ class Blog extends \Opencart\System\Engine\Controller {
 	}
 
 	public function info(): object|null {
-		$this->load->language('cms/blog');
+		$this->load->language('cms/article');
 
-		if (isset($this->request->get['blog_id'])) {
-			$blog_id = (int)$this->request->get['blog_id'];
+		if (isset($this->request->get['article_id'])) {
+			$article_id = (int)$this->request->get['article_id'];
 		} else {
-			$blog_id = 0;
+			$article_id = 0;
 		}
 
-		if (isset($this->request->get['blog_category_id'])) {
-			$blog_category_id = (int)$this->request->get['blog_category_id'];
+		if (isset($this->request->get['topic_id'])) {
+			$topic_id = (int)$this->request->get['topic_id'];
 		} else {
-			$blog_category_id = 0;
+			$topic_id = 0;
 		}
 
-		$this->load->model('cms/blog');
+		$this->load->model('cms/article');
 
-		$blog_info = $this->model_cms_blog->getBlog($blog_id);
+		$article_info = $this->model_cms_article->getArticle($article_id);
 
-		if ($blog_info) {
+		if ($article_info) {
+			$this->document->setTitle($article_info['meta_title']);
+			$this->document->setDescription($article_info['meta_description']);
+			$this->document->setKeywords($article_info['meta_keyword']);
+
 			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = [
@@ -223,39 +232,35 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$url .= '&search=' . $this->request->get['search'];
 			}
 
-			if (isset($this->request->get['blog_category_id'])) {
-				$url .= '&blog_category_id=' . $this->request->get['blog_category_id'];
+			if (isset($this->request->get['topic_id'])) {
+				$url .= '&topic_id=' . $this->request->get['topic_id'];
 			}
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->load->model('cms/blog_category');
+			$this->load->model('cms/topic');
 
-			$blog_category_info = $this->model_cms_blog_category->getBlogCategory($blog_category_id);
+			$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
-			if ($blog_category_info) {
+			if ($topic_info) {
 				$data['breadcrumbs'][] = [
-					'text' => $blog_category_info['name'],
-					'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
+					'text' => $topic_info['name'],
+					'href' => $this->url->link('cms/article', 'language=' . $this->config->get('config_language') . $url)
 				];
 			}
 
-			$this->document->setTitle($blog_info['meta_title']);
-			$this->document->setDescription($blog_info['meta_description']);
-			$this->document->setKeywords($blog_info['meta_keyword']);
-
 			$data['breadcrumbs'][] = [
-				'text' => $blog_info['name'],
-				'href' => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&blog_id=' .  $blog_id . $url)
+				'text' => $article_info['name'],
+				'href' => $this->url->link('cms/article.info', 'language=' . $this->config->get('config_language') . '&article_id=' .  $article_id . $url)
 			];
 
-			$data['heading_title'] = $blog_info['name'];
+			$data['heading_title'] = $article_info['name'];
 
-			$data['description'] = html_entity_decode($blog_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
 
-			$data['continue'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url);
+			$data['continue'] = $this->url->link('cms/article', 'language=' . $this->config->get('config_language') . $url);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -273,12 +278,12 @@ class Blog extends \Opencart\System\Engine\Controller {
 	}
 	/*
 	public function comment() {
-		$this->load->model('cms/blog');
+		$this->load->model('cms/article');
 
-		if (isset($this->request->get['blog_id'])) {
-			$blog_id = $this->request->get['blog_id'];
+		if (isset($this->request->get['article_id'])) {
+			$article_id = $this->request->get['article_id'];
 		} else {
-			$blog_id = 0;
+			$article_id = 0;
 		}
 
 		if (isset($this->request->get['page']) && $this->request->get['page'] > 0) {
@@ -289,17 +294,17 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['comments'] = array();
 
-		$comment_total = $this->model_cms_blog->getTotalComments($blog_id);
+		$comment_total = $this->model_cms_article->getTotalComments($article_id);
 
-		$results = $this->model_cms_blog->getBlogComments($blog_id, ($page - 1) * 20, 20);
+		$results = $this->model_cms_article->getBlogComments($article_id, ($page - 1) * 20, 20);
 
 		foreach ($results as $result) {
 			// Do the replies first so not to interfere with below results
 			$reply_data = array();
 
-			$reply_total = $this->model_cms_blog->getTotalBlogReplies($blog_id, $result['blog_comment_id']);
+			$reply_total = $this->model_cms_article->getTotalBlogReplies($article_id, $result['article_comment_id']);
 
-			$replies = $this->model_cms_blog->getBlogReplies($blog_id, $result['blog_comment_id'], 0, 5);
+			$replies = $this->model_cms_article->getBlogReplies($article_id, $result['article_comment_id'], 0, 5);
 
 			foreach ($replies as $reply) {
 				if ($reply['image']) {
@@ -365,14 +370,14 @@ class Blog extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($this->member->isModerator()) {
-					$remove = $this->url->link('cms/blog/removecomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&blog_id=' . $blog_id . '&blog_comment_id=' . $reply['blog_comment_id']);
+					$remove = $this->url->link('cms/article/removecomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&article_id=' . $article_id . '&article_comment_id=' . $reply['article_comment_id']);
 				} else {
 					$remove = '';
 				}
 
 				$reply_data[] = array(
-					'blog_comment_id' => $result['blog_comment_id'],
-					'blog_id'         => $reply['blog_id'],
+					'article_comment_id' => $result['article_comment_id'],
+					'article_id'         => $reply['article_id'],
 					'member'          => $reply['member'],
 					'image'           => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 'image.opencart.com/cache/' . substr($image, 0, strrpos($image, '.')) . '-resize-' . $this->config->get('config_image_member_width') . 'x' .  $this->config->get('config_image_member_height') . '.jpg',
 					'comment'         => preg_replace('~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i', '<a href="$0" rel="nofollow" target="_blank">$0</a>', nl2br(strip_tags($reply['comment']))),
@@ -444,26 +449,26 @@ class Blog extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($reply_total > 5) {
-				$next = $this->url->link('cms/blog/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&blog_id=' . $blog_id . '&parent_id=' . $result['blog_comment_id'] . '&page=2');
+				$next = $this->url->link('cms/article/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'] . '&page=2');
 			} else {
 				$next = '';
 			}
 
 			if ($this->member->isModerator()) {
-				$remove = $this->url->link('cms/blog/removecomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&blog_id=' . $blog_id . '&blog_comment_id=' . $result['blog_comment_id']);
+				$remove = $this->url->link('cms/article/removecomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id']);
 			} else {
 				$remove = '';
 			}
 
 			$data['comments'][] = array(
-				'blog_comment_id'      => $result['blog_comment_id'],
+				'article_comment_id'      => $result['article_comment_id'],
 				'member'               => $result['member'],
 				'image'                => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 'image.opencart.com/cache/' . substr($image, 0, strrpos($image, '.')) . '-resize-' . $this->config->get('config_image_member_width') . 'x' .  $this->config->get('config_image_member_height') . '.jpg',
 				'comment'              => preg_replace('~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i', '<a href="$0" rel="nofollow" target="_blank">$0</a>', nl2br(strip_tags($result['comment']))),
 				'date_added'           => $date_added,
 				'reply'                => $reply_data,
-				'add'                  => $this->url->link('cms/blog/addcomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&blog_id=' . $result['blog_id'] . '&parent_id=' . $result['blog_comment_id']),
-				'refresh'              => $this->url->link('cms/blog/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&blog_id=' . $blog_id . '&parent_id=' . $result['blog_comment_id'] . '&page=1'),
+				'add'                  => $this->url->link('cms/article/addcomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&article_id=' . $result['article_id'] . '&parent_id=' . $result['article_comment_id']),
+				'refresh'              => $this->url->link('cms/article/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'] . '&page=1'),
 				'next'                 => $next,
 				'remove'               => $remove
 			);
@@ -473,10 +478,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => 20,
-			'url'   => $this->url->link('cms/blog/comment', 'blog_id=' . $blog_id . '&page={page}')
+			'url'   => $this->url->link('cms/article/comment', 'article_id=' . $article_id . '&page={page}')
 		));
 
-		$data['refresh'] = $this->url->link('cms/blog/comment', 'blog_id=' . $blog_id . '&page=' . $page);
+		$data['refresh'] = $this->url->link('cms/article/comment', 'article_id=' . $article_id . '&page=' . $page);
 
 		$data['logged'] = $this->member->isLogged();
 
@@ -491,18 +496,18 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['comment_image'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . '//image.opencart.com/cache/' . substr($image, 0, strrpos($image, '.')) . '-resize-' . $this->config->get('config_image_member_width') . 'x' .  $this->config->get('config_image_member_height') . '.jpg';
 
-		$this->response->setOutput($this->load->view('cms/blog_comment', $data));
+		$this->response->setOutput($this->load->view('cms/article_comment', $data));
 	}
 
 	public function addComment() {
 		$json = array();
 
-		$this->load->model('cms/blog');
+		$this->load->model('cms/article');
 
-		if (isset($this->request->get['blog_id'])) {
-			$blog_id = $this->request->get['blog_id'];
+		if (isset($this->request->get['article_id'])) {
+			$article_id = $this->request->get['article_id'];
 		} else {
-			$blog_id = 0;
+			$article_id = 0;
 		}
 
 		if (isset($this->request->get['parent_id'])) {
@@ -511,9 +516,9 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$parent_id = 0;
 		}
 
-		$blog_info = $this->model_cms_blog->getBlog($blog_id);
+		$article_info = $this->model_cms_article->getBlog($article_id);
 
-		if (!$blog_info) {
+		if (!$article_info) {
 			$json['error'] = 'Warning: You must be logged in to comment!';
 		}
 			if (!$this->member->isLogged()) {
@@ -542,7 +547,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 					$status = 1;
 				}
 
-				$this->model_cms_blog->addBlogComment($blog_id, $parent_id, $this->request->post['comment'], $status);
+				$this->model_cms_article->addBlogComment($article_id, $parent_id, $this->request->post['comment'], $status);
 
 				if (!$status) {
 					$json['success'] = 'Your comment has been added to our moderation queue!';

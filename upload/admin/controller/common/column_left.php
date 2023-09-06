@@ -139,18 +139,18 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			$cms = [];
 
-			if ($this->user->hasPermission('access', 'cms/article')) {
-				$cms[] = [
-					'name'	   => $this->language->get('text_article'),
-					'href'     => $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
 			if ($this->user->hasPermission('access', 'cms/topic')) {
 				$cms[] = [
 					'name'	   => $this->language->get('text_topic'),
 					'href'     => $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if ($this->user->hasPermission('access', 'cms/article')) {
+				$cms[] = [
+					'name'	   => $this->language->get('text_article'),
+					'href'     => $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

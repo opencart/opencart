@@ -519,6 +519,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 
-		return;
+		return null;
 	}
 }

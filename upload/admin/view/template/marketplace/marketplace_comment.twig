@@ -1,7 +1,7 @@
 {% if comments %}
 	{% for comment in comments %}
 		<div id="comment-{{ comment.extension_comment_id }}" class="media">
-			<img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="mr-3 rounded-circle"/>
+			<img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="me-3 rounded-circle"/>
 			<div class="media-body">
 				<h5 class="mt-0">{{ comment.member }} <span>{{ comment.date_added }}</span></h5>
 				<p>{{ comment.comment }}</p>
@@ -9,7 +9,7 @@
 					<div> {% if comment.reply %}
 						{% for reply in comment.reply %}
 							<div class="media">
-								<img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="mr-3 rounded-circle"/>
+								<img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="me-3 rounded-circle"/>
 								<div class="media-body">
 									<h5 class="mt-0">{{ reply.member }} <span>{{ reply.date_added }}</h5>
 									<p>{{ reply.comment }}</p>

@@ -57,10 +57,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
 		if ($topic_info) {
-			$this->document->setTitle($topic_info['meta_title']);
-			$this->document->setDescription($topic_info['meta_description']);
-			$this->document->setKeywords($topic_info['meta_keyword']);
-
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
@@ -90,6 +86,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($topic_info) {
+			$this->document->setTitle($topic_info['meta_title']);
+			$this->document->setDescription($topic_info['meta_description']);
+			$this->document->setKeywords($topic_info['meta_keyword']);
+
 			$data['heading_title'] = $topic_info['name'];
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
@@ -172,7 +172,22 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['search'] = $search;
 		$data['topic_id'] = $topic_id;
-		$data['topics'] = $this->model_cms_topic->getTopics();
+
+		$data['topics'] = [];
+
+		$data['topics'][] = [
+			'name' => $this->language->get('text_all'),
+			'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'))
+		];
+
+		$results = $this->model_cms_topic->getTopics();
+
+		foreach ($results as $result) {
+			$data['topics'][] = [
+				'name' => $result['name'],
+				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&topic_id='. $result['topic_id'])
+			];
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -185,7 +200,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 	}
 
 	public function info(): object|null {
-		$this->load->language('cms/article');
+		$this->load->language('cms/blog');
 
 		if (isset($this->request->get['article_id'])) {
 			$article_id = (int)$this->request->get['article_id'];
@@ -215,22 +230,12 @@ class Blog extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			];
 
-			$url = '';
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_blog'),
-				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
+				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'))
 			];
 
 			$url = '';
-
-			if (isset($this->request->get['search'])) {
-				$url .= '&search=' . $this->request->get['search'];
-			}
 
 			if (isset($this->request->get['topic_id'])) {
 				$url .= '&topic_id=' . $this->request->get['topic_id'];

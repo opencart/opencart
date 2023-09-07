@@ -14,10 +14,9 @@
         <div class="input-group dropdown mb-3">
           <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
 
-          <select name="blog_category_id" id="input-category" class="form-select">
-            <option value="0">{{ text_category }}</option>
-            {% for blog_category in topics %}
-              <option value="{{ blog_category.blog_category_id }}"{% if blog_category.blog_category_id == blog_category_id %} selected{% endif %}>{{ blog_category.name }}</option>
+          <select name="topic_id" id="input-topic" class="form-select">
+            {% for topic in topics %}
+              <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
             {% endfor %}
           </select>
 
@@ -33,13 +32,16 @@
 
             <h2 class="article-title"><a href="{{ article.href }}">{{ article.name }}</a></h2>
 
-            <ul class="list-unstyled">
-              <li>By <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
-              <li>{{ article.date_added }}</li>
-              <li>{{ article.comment_total }} Comments</li>
+            {% if article.image %}
+              <div class="article-image"><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-responsive"/></a></div>
+            {% endif %}
+
+            <ul class="list-inline">
+              <li class="list-inline-item">By <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
+              <li class="list-inline-item">{{ article.date_added }}</li>
+              <li class="list-inline-item">{{ article.comment_total }} Comments</li>
             </ul>
 
-            <div class="article-image"><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.title }}" alt="{{ article.title }}" class="img-responsive"/></a></div>
             <div class="article-excerpt">{{ article.description }}</div>
 
             <a href="{{ article.href }}" class="btn btn-primary">Continue Reading</a>

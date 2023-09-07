@@ -49,7 +49,7 @@
         </div>
         <br/>
         <div class="row mb-4">
-          <div class="col-sm-auto mr-sm-auto mb-2 mb-lg-0">
+          <div class="col-sm-auto me-sm-auto mb-2 mb-lg-0">
             <div class="btn-group">{% for license in licenses %}
                 {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-light active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-light">{{ license.text }}</a>{% endif %}
               {% endfor %}</div>

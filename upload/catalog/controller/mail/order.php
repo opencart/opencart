@@ -54,15 +54,20 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Event handler to send the Order Confirmation email to the customer.
+	 *
 	 * @param array  $order_info
 	 * @param int    $order_status_id
-	 * @param string $comment
+	 * @param string $payment_instructions Optional text message provided by the
+	 *                                     payment handler detailing any specific
+	 *                                     info regarding the payment of the
+	 *                                     invoice
 	 * @param bool   $notify
 	 *
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function add(array $order_info, int $order_status_id, string $comment, bool $notify): void {
+	public function add(array $order_info, int $order_status_id, string $payment_instructions, bool $notify): void {
 		// Check for any downloadable products
 		$download_status = false;
 
@@ -148,10 +153,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 		$data['payment_method'] = $order_info['payment_method']['name'];
+		$data['payment_instructions'] = $payment_instructions;
 		$data['shipping_method'] = $order_info['shipping_method']['name'];
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
+		$data['comment'] = $order_info['comment'];
 
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
@@ -159,14 +166,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_status'] = $order_status_query->row['name'];
 		} else {
 			$data['order_status'] = '';
-		}
-
-		if ($comment) {
-			$data['comment'] = nl2br($comment);
-		} elseif ($order_info['comment']) {
-			$data['comment'] = nl2br($order_info['comment']);
-		} else {
-			$data['comment'] = '';
 		}
 
 		// Payment Address

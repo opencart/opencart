@@ -142,10 +142,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		$data['sort_code'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_cycle'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cycle' . $url);
 		$data['sort_action'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=action' . $url);

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Cms;
 /**
  * Class Article
  *
- * @package Opencart\Admin\Model\Cms
+ * @package Opencart\Catalog\Model\Cms
  */
 class Article extends \Opencart\System\Engine\Model {
 	/**
@@ -57,6 +57,10 @@ class Article extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_topic_id'])) {
 			$sql .= " AND `a`.`topic_id` = '" . (int)$data['filter_topic_id'] . "'";
+		}
+
+		if (!empty($data['filter_author'])) {
+			$sql .= " AND `a`.`author` = '" . (int)$data['filter_author'] . "'";
 		}
 
 		$sql .= " ORDER BY `a`.`date_added` DESC";
@@ -116,6 +120,10 @@ class Article extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_topic_id'])) {
 			$sql .= " AND `a`.`topic_id` = '" . (int)$data['filter_topic_id'] . "'";
+		}
+
+		if (!empty($data['filter_author'])) {
+			$sql .= " AND `a`.`author` = '" . (int)$data['filter_author'] . "'";
 		}
 
 		$query = $this->db->query($sql);

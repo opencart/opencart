@@ -137,10 +137,6 @@ class Event extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		$data['sort_code'] = $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_sort_order'] = $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 

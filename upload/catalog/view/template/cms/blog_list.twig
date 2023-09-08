@@ -13,13 +13,11 @@
         <h3>{{ text_refine }}</h3>
         <div class="input-group dropdown mb-3">
           <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
-
           <select name="topic_id" id="input-topic" class="form-select">
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
             {% endfor %}
           </select>
-
           <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
         </div>
       {% endif %}

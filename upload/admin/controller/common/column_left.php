@@ -163,6 +163,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if ($this->user->hasPermission('access', 'cms/antispam')) {
+				$cms[] = [
+					'name'	   => $this->language->get('text_antispam'),
+					'href'     => $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
 			if ($cms) {
 				$data['menus'][] = [
 					'id'       => 'menu-cms',

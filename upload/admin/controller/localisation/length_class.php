@@ -134,10 +134,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		$data['sort_title'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 		$data['sort_unit'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
 		$data['sort_value'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);

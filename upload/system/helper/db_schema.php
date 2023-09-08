@@ -481,6 +481,37 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'antispam',
+		'field' => [
+			[
+				'name' => 'antispam_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'keyword',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'antispam_id'
+		],
+		'index' => [
+			[
+				'name' => 'keyword',
+				'key' => [
+					'keyword'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'article',
 		'field' => [
 			[

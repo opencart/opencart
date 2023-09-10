@@ -555,6 +555,69 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'article_comment',
+		'field' => [
+			[
+				'name' => 'article_comment_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'article_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'article_comment_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'article_id',
+				'table' => 'article',
+				'field' => 'article_id'
+			],
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'article_id',
+				'key' => [
+					'article_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'article_description',
 		'field' => [
 			[

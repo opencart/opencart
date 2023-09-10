@@ -22,8 +22,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function editAntispam(int $antispam_id, array $data = []): int {
-		$this->db->query("UPDATE `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "' WHERE = '" . (int)$antispam_id . "'");
+	public function editAntispam(int $antispam_id, array $data = []): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "' WHERE `antispam_id` = '" . (int)$antispam_id . "'");
 	}
 
 	/**
@@ -33,6 +33,17 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteAntispam(int $antispam_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "antispam` WHERE `antispam_id` = '" . (int)$antispam_id . "'");
+	}
+
+	/**
+	 * @param int $antispam_id
+	 *
+	 * @return array
+	 */
+	public function getAntispam(int $antispam_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "antispam` WHERE `antispam_id` = '" . (int)$antispam_id . "'");
+
+		return $query->row;
 	}
 
 	/**
@@ -46,7 +57,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword'] . '%') . "'";
+			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
 		}
 
 		if ($implode) {
@@ -95,7 +106,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword'] . '%') . "'";
+			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
 		}
 
 		if ($implode) {

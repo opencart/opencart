@@ -8,8 +8,8 @@
           <td class="text-end"><a href="{{ sort_rate }}"{% if sort == 'tr.rate' %} class="{{ order|lower }}"{% endif %}>{{ column_rate }}</a></td>
           <td class="text-start"><a href="{{ sort_type }}"{% if sort == 'tr.type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></td>
           <td class="text-start"><a href="{{ sort_geo_zone }}"{% if sort == 'gz.name' %} class="{{ order|lower }}"{% endif %}>{{ column_geo_zone }}</a></td>
-          <td class="text-left d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'tr.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
-          <td class="text-left d-none d-lg-table-cell"><a href="{{ sort_date_modified }}"{% if sort == 'tr.date_modified' %} class="{{ order|lower }}"{% endif %}>{{ column_date_modified }}</a></td>
+          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'tr.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
+          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_modified }}"{% if sort == 'tr.date_modified' %} class="{{ order|lower }}"{% endif %}>{{ column_date_modified }}</a></td>
           <td class="text-end">{{ column_action }}</td>
         </tr>
       </thead>
@@ -22,8 +22,8 @@
               <td class="text-end">{{ tax_rate.rate }}</td>
               <td class="text-start">{{ tax_rate.type }}</td>
               <td class="text-start">{{ tax_rate.geo_zone }}</td>
-              <td class="text-left d-none d-lg-table-cell">{{ tax_rate.date_added }}</td>
-              <td class="text-left d-none d-lg-table-cell">{{ tax_rate.date_modified }}</td>
+              <td class="text-start d-none d-lg-table-cell">{{ tax_rate.date_added }}</td>
+              <td class="text-start d-none d-lg-table-cell">{{ tax_rate.date_modified }}</td>
               <td class="text-end"><a href="{{ tax_rate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
@@ -36,7 +36,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

@@ -133,7 +133,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 				'code'   => $result['code'],
 				'orders' => $result['orders'],
 				'total'  => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'   => $this->url->link('marketing/coupon/edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'])
+				'edit'   => $this->url->link('marketing/coupon.edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'])
 			];
 		}
 

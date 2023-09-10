@@ -7,8 +7,8 @@
           <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
           <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
           <td class="text-end"><a href="{{ sort_discount }}"{% if sort == 'discount' %} class="{{ order|lower }}"{% endif %}>{{ column_discount }}</a></td>
-          <td class="text-left d-none d-lg-table-cell"><a href="{{ sort_date_start }}"{% if sort == 'date_start' %} class="{{ order|lower }}"{% endif %}>{{ column_date_start }}</a></td>
-          <td class="text-left d-none d-lg-table-cell"><a href="{{ sort_date_end }}"{% if sort == 'date_end' %} class="{{ order|lower }}"{% endif %}>{{ column_date_end }}</a></td>
+          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_start }}"{% if sort == 'date_start' %} class="{{ order|lower }}"{% endif %}>{{ column_date_start }}</a></td>
+          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_end }}"{% if sort == 'date_end' %} class="{{ order|lower }}"{% endif %}>{{ column_date_end }}</a></td>
           <td class="text-end">{{ column_action }}</td>
         </tr>
       </thead>
@@ -27,8 +27,8 @@
               </td>
               <td class="text-start">{{ coupon.code }}</td>
               <td class="text-end">{{ coupon.discount }}</td>
-              <td class="text-left d-none d-lg-table-cell">{{ coupon.date_start }}</td>
-              <td class="text-left d-none d-lg-table-cell">{{ coupon.date_end }}</td>
+              <td class="text-start d-none d-lg-table-cell">{{ coupon.date_start }}</td>
+              <td class="text-start d-none d-lg-table-cell">{{ coupon.date_end }}</td>
               <td class="text-start">{{ coupon.status }}</td>
               <td class="text-end"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
@@ -42,7 +42,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

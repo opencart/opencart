@@ -90,6 +90,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteArticle(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article` WHERE `article_id` = '" . (int)$article_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
@@ -116,7 +117,7 @@ class Article extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND `bd`.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "'";
+			$sql .= " AND `ad`.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "'";
 		}
 
 		$sort_data = [
@@ -245,6 +246,95 @@ class Article extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalArticlesByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * @param int $article_comment_id
+	 *
+	 * @return void
+	 */
+	public function deleteComment(int $article_comment_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+	}
+
+	/**
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
+	public function deleteCommentsByCustomerId(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * @param int $article_comment_id
+	 *
+	 * @return array
+	 */
+	public function getComment(int $article_comment_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	public function getComments(array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment`";
+
+		$implode = [];
+
+		if (!empty($data['filter_keyword'])) {
+			$implode[] = "LCASE(`comment`) LIKE '" . $this->db->escape('%' . (string)$data['filter_keyword'] . '%') . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sql .= " ORDER BY `date_added` DESC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
+	public function getTotalComments(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment`";
+
+		$implode = [];
+
+		if (!empty($data['filter_keyword'])) {
+			$implode[] = "LCASE(`comment`) LIKE '" . $this->db->escape('%' . (string)$data['filter_keyword'] . '%') . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

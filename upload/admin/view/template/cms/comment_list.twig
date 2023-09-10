@@ -1,0 +1,39 @@
+{% if comments %}
+  {% for comment in comments %}
+    <table class="table table-bordered">
+
+      <tr>
+        <td class="align-text-top">
+
+          <h4><a href="{{ comment.filter_blog }}" target="_blank">{{ comment.title }}</a></h4>
+          <p><a href="{{ comment.filter_member }}" target="_blank">{{ comment.customer }}</a> - {{ comment.date_added }}</p>
+          <p>{{ comment.comment }}</p>
+
+        </td>
+
+        <td class="w-25 align-text-top">
+
+          {% if comment.approve %}
+            <button type="button" value="{{ comment.approve }}" class="btn btn-success btn-block"><i class="fas fa-check-circle"></i> {{ button_approve }}</button>
+          {% else %}
+            <button type="button" class="btn btn-success btn-block" disabled><i class="fas fa-check-circle"></i> {{ button_approve }}</button>
+          {% endif %}
+
+          <button type="button" value="{{ comment.spam }}" class="btn btn-warning btn-block"><i class="fas fas fa-ban"></i> {{ button_spam }}</button>
+          <button type="button" value="{{ comment.delete }}" class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i> {{ button_delete }}</button>
+
+        </td>
+      </tr>
+    </table>
+  {% endfor %}
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+{% else %}
+  <table class="table">
+    <tr>
+      <td class="text-center">No results!</td>
+    </tr>
+  </table>
+{% endif %}

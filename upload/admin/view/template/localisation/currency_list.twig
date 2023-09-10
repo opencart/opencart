@@ -25,7 +25,7 @@
                 {% endif %}</td>
               <td class="text-start">{{ currency.code }}</td>
               <td class="text-end">{{ currency.value }}</td>
-              <td class="text-left d-none d-lg-table-cell">{{ currency.date_modified }}</td>
+              <td class="text-start d-none d-lg-table-cell">{{ currency.date_modified }}</td>
               <td class="text-end"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
@@ -38,7 +38,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

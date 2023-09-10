@@ -1,0 +1,175 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="filter-comment" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="input-keyword" class="form-label">{{ entry_keyword }}</label>
+              <input type="text" name="filter_keyword" value="" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="input-article" class="form-label">{{ entry_article }}</label>
+              <input type="text" name="filter_article" value="" placeholder="{{ entry_article }}" id="input-article" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+              <input type="text" name="filter_customer" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="input-status" class="form-label">{{ entry_status }}</label>
+              <select name="filter_status" class="form-control">
+                <option value=""></option>
+                <option value="0">{{ text_disabled }}</option>
+                <option value="1">{{ text_enabled }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="text-end">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
+          <div class="card-body">
+            <div id="comment">{{ list }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#comment').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#comment').load(this.href);
+});
+
+$('#comment').on('click', '.btn-success, .btn-danger', function() {
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#button-filter').on('click', function() {
+    var url = '';
+
+    var filter_keyword = $('input-keyword').val();
+
+    if (filter_keyword) {
+        url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
+    }
+
+    var filter_article = $('input-article').val();
+
+    if (filter_article) {
+        url += '&filter_article=' + encodeURIComponent(filter_article);
+    }
+
+    var filter_customer = $('input-customer').val();
+
+    if (filter_customer) {
+        url += '&filter_customer=' + encodeURIComponent(filter_customer);
+    }
+
+    var filter_status = $('input-status').val();
+
+    if (filter_status) {
+        url += '&filter_status=' + filter_status;
+    }
+
+    var filter_date_added = $('input-date-added').val();
+
+    if (filter_date_added) {
+        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    }
+
+    $('#comment').load('index.php?route=cms/comment.list&user_token={{ user_token }}' + url);
+});
+
+$('#input-customer').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-customer').val(item['label']);
+    }
+});
+
+$('#input-email').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['email'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-email').val(item['label']);
+    }
+});
+//--></script>
+{{ footer }}

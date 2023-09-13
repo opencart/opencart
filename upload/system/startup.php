@@ -59,4 +59,5 @@ require_once(DIR_SYSTEM . 'engine/autoloader.php');
 require_once(DIR_SYSTEM . 'engine/config.php');
 
 // Helper
+require_once(DIR_SYSTEM . 'helper/bbcode.php');
 require_once(DIR_SYSTEM . 'helper/general.php');

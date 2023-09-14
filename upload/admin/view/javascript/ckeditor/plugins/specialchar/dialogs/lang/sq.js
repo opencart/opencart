@@ -1,6 +1,6 @@
 ﻿/*
- Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang("specialchar","sq",{euro:"Shenja e Euros",lsquo:"Thonjëza majtas me një vi",rsquo:"Thonjëza djathtas me një vi",ldquo:"Thonjëza majtas",rdquo:"Thonjëza djathtas",ndash:"En viza lidhëse",mdash:"Em viza lidhëse",iexcl:"Pikëçuditëse e përmbysur",cent:"Shenja e Centit",pound:"Shejna e Funtit",curren:"Shenja e valutës",yen:"Shenja e Jenit",brvbar:"Viza e këputur",sect:"Shenja e pjesës",uml:"Diaeresis",copy:"Shenja e të drejtave të kopjimit",ordf:"Tregues rendor femror",laquo:"Thonjëz me dy kënde e kthyer majtas",
 not:"Nuk ka shenjë",reg:"Shenja e të regjistruarit",macr:"Macron",deg:"Shenja e shkallës",sup2:"Super-skripta dy",sup3:"Super-skripta tre",acute:"Theks i mprehtë",micro:"Shjenja e Mikros",para:"Shenja Pilkrou",middot:"Pika e Mesme",cedil:"Hark nën shkronja",sup1:"Super-skripta një",ordm:"Tregues rendor mashkullor",raquo:"Thonjëz me dy kënde e kthyer djathtas",frac14:"Thyesa një të katrat",frac12:"Thyesa një të dytat",frac34:"Thyesa tre të katrat",iquest:"Pikëpyetje e përmbysur",Agrave:"Shkronja e madhe latine A me theks të rëndë",

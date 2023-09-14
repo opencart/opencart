@@ -13,7 +13,7 @@ $_['text_success']    = 'Thank you for your comment. It has been submitted to th
 
 // Entry
 $_['entry_author']    = 'Your Name';
-$_['entry_comment']   = 'Your Review';
+$_['entry_comment']   = 'Comment';
 
 // Error
 $_['error_token']      = 'Warning: Comment token invalid!';

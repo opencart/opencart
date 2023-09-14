@@ -39,6 +39,8 @@ class Article extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		$this->cache->delete('article');
+
 		return $article_id;
 	}
 
@@ -81,6 +83,8 @@ class Article extends \Opencart\System\Engine\Model {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_layout` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 			}
 		}
+
+		$this->cache->delete('article');
 	}
 
 	/**
@@ -95,6 +99,8 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'article_id' AND `value` = '" . (int)$article_id . "'");
+
+		$this->cache->delete('article');
 	}
 
 	/**
@@ -103,9 +109,19 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getArticle(int $article_id): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		return $query->row;
+		$article_data = $this->cache->get('article.'. md5($sql));
+
+		if (!$article_data) {
+			$query = $this->db->query($sql);
+
+			$article_data = $query->row;
+
+			$this->cache->set('article.'. md5($sql), $article_data);
+		}
+
+		return $article_data;
 	}
 
 	/**
@@ -149,9 +165,17 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$query = $this->db->query($sql);
+		$article_data = $this->cache->get('article.'. md5($sql));
 
-		return $query->rows;
+		if (!$article_data) {
+			$query = $this->db->query($sql);
+
+			$article_data = $query->rows;
+
+			$this->cache->set('article.'. md5($sql), $article_data);
+		}
+
+		return $article_data;
 	}
 
 	/**

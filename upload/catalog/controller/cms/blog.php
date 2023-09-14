@@ -148,7 +148,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 				'name'          => $result['name'],
 				'description'   => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_article_description_length')) . '..',
 				'author'        => $result['author'],
-				'comment_total' => $result['comment_total'],
+				'comment_total' => $this->model_cms_article->getTotalComments($result['article_id']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'href'          => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $result['article_id'] . $url)
 			];
@@ -210,10 +210,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&topic_id='. $result['topic_id'])
 			];
 		}
-
-
-
-
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -294,12 +290,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['heading_title'] = $article_info['name'];
 
 			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
-
 			$data['author'] = $article_info['author'];
-
 			$data['date_added'] = $article_info['date_added'];
 
-			$data['comments'] = $this->getComments();
+			$data['comment'] = $this->getComments();
 
 			$data['continue'] = $this->url->link('cms/article', 'language=' . $this->config->get('config_language') . $url);
 
@@ -330,7 +324,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return string
 	 */
-	public function getComments() {
+	public function getComments(): string {
 		if (isset($this->request->get['article_id'])) {
 			$article_id = $this->request->get['article_id'];
 		} else {
@@ -345,17 +339,11 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['articles'] = [];
 
-		$filter_data = [
-			'filter_article_id' => $article_id,
-			'start'             => ($page - 1) * (int)$this->config->get('config_pagination_admin'),
-			'limit'             => (int)$this->config->get('config_pagination_admin')
-		];
-
 		$this->load->model('cms/article');
 
-		$article_total = $this->model_cms_article->getTotalComments($filter_data);
+		$comment_total = $this->model_cms_article->getTotalComments($article_id);
 
-		$results = $this->model_cms_article->getComments($filter_data);
+		$results = $this->model_cms_article->getComments($article_id, ($page - 1) * (int)$this->config->get('config_pagination_admin'), (int)$this->config->get('config_pagination_admin'));
 
 		foreach ($results as $result) {
 			$data['articles'][] = [
@@ -366,18 +354,18 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $article_total,
+			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => 5,
-			'url'   => $this->url->link('cms/blog.comment', 'language=' . $this->config->get('config_language') . '&product_id=' . $article_id . '&page={page}')
+			'url'   => $this->url->link('cms/blog.comment', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($article_total - 5)) ? $article_total : ((($page - 1) * 5) + 5), $article_total, ceil($article_total / 5));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($comment_total - 5)) ? $comment_total : ((($page - 1) * 5) + 5), $comment_total, ceil($comment_total / 5));
 
-		return $this->load->view('cms/blog_list', $data);
+		return $this->load->view('cms/comment', $data);
 	}
 
-	public function addComment() {
+	public function addComment(): void {
 		$this->load->language('cms/article');
 
 		$json = array();
@@ -415,17 +403,34 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_guest');
 		}
 
+		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 25)) {
+			$json['error']['author'] = $this->language->get('error_author');
+		}
+
 		if ((utf8_strlen($this->request->post['comment']) < 2) || (utf8_strlen($this->request->post['comment']) > 1000)) {
 			$json['error']['comment'] = $this->language->get('error_comment');
+		}
+
+		// Captcha
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
+
+		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('comment', (array)$this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '.validate');
+
+			if ($captcha) {
+				$json['error']['captcha'] = $captcha;
+			}
 		}
 
 		if (!$json) {
 			// Anti-Spam
 			$comment = str_replace(' ', '', $this->request->post['comment']);
 
-			$this->load->model('cms/spam');
+			$this->load->model('cms/antispam');
 
-			$spam = $this->model_cms_spam->getSpam($comment);
+			$spam = $this->model_cms_antispam->getSpam($comment);
 
 			if (!$this->customer->isCommentor() || $spam) {
 				$status = 0;
@@ -433,7 +438,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$status = 1;
 			}
 
-			$this->model_cms_article->addComment($article_id, $this->request->post['comment'], $status);
+			$this->model_cms_article->addComment($article_id, $this->request->post + ['status' => $status]);
 
 			if (!$status) {
 				$json['success'] = $this->language->get('text_queue');

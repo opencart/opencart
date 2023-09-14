@@ -1,58 +1,82 @@
-{% if comments %}
-  {% for comment in comments %}
-    <div id="comment{{ comment.blog_comment_id }}" class="media">
-      <div class="media-left"><img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="media-object"/></div>
-      <div class="media-body">{% if comment.remove %}
-          <div class="pull-right"><a href="{{ comment.remove }}" class="btn btn-link btn-xs comment-remove">Remove</a></div>
-        {% endif %}
-        <p class="media-heading">{{ comment.member }} <span>{{ comment.date_added }}</span></p>
-        <p>{{ comment.comment }}</p>
-        <div class="reply">
-          <div class="reply-box">
-            <div>
-              {% if comment.reply %}
-
-                {% for reply in comment.reply %}
-                  <div class="media">
-                    <div class="media-left"><img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="media-object"/></div>
-                    <div class="media-body">{% if reply.remove %}
-                        <div class="pull-right"><a href="{{ reply.remove }}" class="btn btn-link btn-xs reply-remove">Remove</a></div>
-                      {% endif %}
-                      <p class="media-heading">{{ reply.member }} <span>{{ reply.date_added }}</span></p>
-                      <p>{{ reply.comment }}</p>
-                    </div>
-                  </div>
-                {% endfor %}
-
-                {% if comment.next %}
-                  <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">see more replies...</a></div>
-                {% endif %}
-
-              {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a>
-            </div>
-          </div>
-          <p class="text-right"> {% if logged %}
-              <button type="button" data-toggle="tooltip" data-title="Reply" class="btn btn-link btn-sm">Reply</button>
-            {% else %}
-              <button type="button" class="btn btn-link btn-xs" disabled="disabled">Reply</button>
-            {% endif %} </p>
-          <div class="reply-input-box" style="display: none;">
-            <div class="media">
-              <div class="media-left"><img src="{{ comment_image }}" alt="{{ comment_username }}" title="{{ comment_username }}" class="media-object"/></div>
-              <div class="media-body">
-                <div class="form-group">
-                  <label for="input-comment{{ comment.blog_comment_id }}">Leave your comment</label> <textarea name="comment" placeholder="Write your comment here..." id="input-comment{{ comment.blog_comment_id }}" class="form-control"></textarea>
-                </div>
-                <div class="text-right"><a href="{{ comment.add }}" class="btn btn-primary btn-sm">Comment</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
+<form id="form-comment">
+  <div id="comment">{{ list }}</div>
+  <h2>{{ text_write }}</h2>
+  {% if review_guest %}
+    <div class="mb-3 required">
+      <label for="input-author" class="form-label">{{ entry_author }}</label>
+      <input type="text" name="author" value="{{ author }}" id="input-author" class="form-control"/>
+      <div id="error-author" class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3 required">
+      <label for="input-comment" class="form-label">{{ entry_comment }}</label>
+      <textarea name="text" rows="5" id="input-comment" class="form-control"></textarea>
+      <div id="error-comment" class="invalid-feedback"></div>
+    </div>
+    {{ captcha }}
+    <div class="row">
+      <div class="col">
+        <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
+      </div>
+      <div class="col text-end">
+        <button type="submit" id="button-comment" class="btn btn-primary">{{ button_continue }}</button>
       </div>
     </div>
-  {% endfor %}
-  <br/>
-  <div class="text-center">{{ pagination }}</div>
-{% else %}
-  <div class="text-center">{{ text_no_results }}</div>
-{% endif %}
+  {% else %}
+    {{ text_login }}
+  {% endif %}
+</form>
+<script type="text/javascript"><!--
+$('#comment').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#comment').load(this.href);
+});
+
+// Forms
+$('#form-comment').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=cms/comment.addComment&language={{ language }}&comment_token={{ comment_token }}&article_id={{ article_id }}',
+        type: 'post',
+        data: $('#form-comment').serialize(),
+        dataType: 'json',
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded',
+        processData: false,
+        beforeSend: function() {
+            $('#button-comment').button('loading');
+        },
+        complete: function() {
+            $('#button-comment').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+            $('#form-comment').find('.is-invalid').removeClass('is-invalid');
+            $('#form-comment').find('.invalid-feedback').removeClass('d-block');
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-comment').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

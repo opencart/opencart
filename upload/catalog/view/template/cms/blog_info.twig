@@ -7,18 +7,31 @@
   </ul>
   <div class="row">
     {{ column_left }}
+
     <div id="content" class="col">
       {{ content_top }}
       <h2>{{ heading_title }}</h2>
+
       {% if thumb %}
         <img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/>
       {% endif %}
+
       <div>{{ description }}</div>
+
       <hr/>
       <div id="comment">{{ comment }}</div>
+
       {{ content_bottom }}
     </div>
+
     {{ column_right }}
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#comment').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#comment').load(this.href);
+});
+//--></script>
 {{ footer }}

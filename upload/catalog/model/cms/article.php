@@ -12,9 +12,19 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getArticle(int $article_id): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'";
 
-		return $query->row;
+		$article_data = $this->cache->get('article.'. md5($sql));
+
+		if (!$article_data) {
+			$query = $this->db->query($sql);
+
+			$article_data = $query->row;
+
+			$this->cache->set('article.'. md5($sql), $article_data);
+		}
+
+		return $article_data;
 	}
 
 	/**
@@ -77,9 +87,17 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$query = $this->db->query($sql);
+		$article_data = $this->cache->get('article.'. md5($sql));
 
-		return $query->rows;
+		if (!$article_data) {
+			$query = $this->db->query($sql);
+
+			$article_data = $query->rows;
+
+			$this->cache->set('article.'. md5($sql), $article_data);
+		}
+
+		return $article_data;
 	}
 
 	/**
@@ -147,40 +165,44 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int   $product_id
+	 * @param array $data
+	 *
+	 * @return int
+	 */
+	public function addComment(int $article_id, array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
+
+		return $this->db->getLastId();
+	}
+
+	/**
 	 * @param array $data
 	 *
 	 * @return array
 	 */
-	public function getComments(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment`";
-
-		$implode = [];
-
-		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`comment`) LIKE '" . $this->db->escape('%' . (string)$data['filter_keyword'] . '%') . "'";
+	public function getComments(int $article_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
 		}
 
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+		if ($limit < 1) {
+			$limit = 10;
 		}
 
-		$sql .= " ORDER BY `date_added` DESC";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND `status` = '1' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit;
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
+		$comment_data = $this->cache->get('comment.'. md5($sql));
 
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
+		if (!$comment_data) {
+			$query = $this->db->query($sql);
 
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			$comment_data = $query->rows;
+
+			$this->cache->set('comment.'. md5($sql), $comment_data);
 		}
 
-		$query = $this->db->query($sql);
-
-		return $query->rows;
+		return $comment_data;
 	}
 
 	/**
@@ -188,20 +210,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function getTotalComments(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment`";
-
-		$implode = [];
-
-		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`comment`) LIKE '" . $this->db->escape('%' . (string)$data['filter_keyword'] . '%') . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
+	public function getTotalComments(int $article_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND `status` = '1'");
 
 		return (int)$query->row['total'];
 	}

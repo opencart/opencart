@@ -1,0 +1,69 @@
+{% if comments %}
+  {% for comment in comments %}
+    <div id="comment{{ comment.blog_comment_id }}" class="media">
+      <div class="media-left"><img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="media-object"/></div>
+      <div class="media-body">
+
+
+        {% if comment.remove %}
+          <div class="pull-right"><a href="{{ comment.remove }}" class="btn btn-link btn-xs comment-remove">Remove</a></div>
+        {% endif %}
+
+        <p class="media-heading">{{ comment.member }} <span>{{ comment.date_added }}</span></p>
+        <p>{{ comment.comment }}</p>
+        <div class="reply">
+          <div class="reply-box">
+            <div>
+              {% if comment.reply %}
+
+                {% for reply in comment.reply %}
+                  <div class="media">
+                    <div class="media-left"><img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="media-object"/></div>
+                    <div class="media-body">{% if reply.remove %}
+                        <div class="pull-right"><a href="{{ reply.remove }}" class="btn btn-link btn-xs reply-remove">Remove</a></div>
+                      {% endif %}
+                      <p class="media-heading">{{ reply.member }} <span>{{ reply.date_added }}</span></p>
+                      <p>{{ reply.comment }}</p>
+                    </div>
+                  </div>
+                {% endfor %}
+
+                {% if comment.next %}
+                  <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">see more replies...</a></div>
+                {% endif %}
+
+              {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a>
+            </div>
+          </div>
+
+          {% if logged %}
+          <p class="text-right">
+            <button type="button" data-toggle="tooltip" data-title="Reply" class="btn btn-link btn-sm">Reply</button>
+            {% else %}
+              <button type="button" class="btn btn-link btn-xs" disabled="disabled">Reply</button>
+            {% endif %}
+          </p>
+
+
+
+          <div class="reply-input-box" style="display: none;">
+            <div class="media">
+              <div class="media-left"><img src="{{ comment_image }}" alt="{{ comment_username }}" title="{{ comment_username }}" class="media-object"/></div>
+              <div class="media-body">
+                <div class="form-group">
+                  <label for="input-comment{{ comment.blog_comment_id }}">Leave your comment</label>
+                  <textarea name="comment" placeholder="Write your comment here..." id="input-comment{{ comment.blog_comment_id }}" class="form-control"></textarea>
+                </div>
+                <div class="text-right"><a href="{{ comment.add }}" class="btn btn-primary btn-sm">Comment</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <br/>
+  <div class="text-center">{{ pagination }}</div>
+{% else %}
+  <div class="text-center">{{ text_no_results }}</div>
+{% endif %}

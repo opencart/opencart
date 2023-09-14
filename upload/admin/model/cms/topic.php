@@ -32,6 +32,8 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		$this->cache->delete('topic');
+
 		return $topic_id;
 	}
 
@@ -65,6 +67,8 @@ class Topic extends \Opencart\System\Engine\Model {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'topic_id', `value` = '" . (int)$topic_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 			}
 		}
+
+		$this->cache->delete('topic');
 	}
 
 	/**
@@ -77,6 +81,8 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `topic_id` = '" . (int)$topic_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_store` WHERE `topic_id` = '" . (int)$topic_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'topic_id' AND `value` = '" . (int)$topic_id . "'");
+
+		$this->cache->delete('topic');
 	}
 
 	/**
@@ -85,9 +91,19 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getTopic(int $topic_id): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`) WHERE `t`.`topic_id` = '" . (int)$topic_id . "' AND `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`) WHERE `t`.`topic_id` = '" . (int)$topic_id . "' AND `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		return $query->row;
+		$topic_data = $this->cache->get('topic.'. md5($sql));
+
+		if (!$topic_data) {
+			$query = $this->db->query($sql);
+
+			$topic_data = $query->row;
+
+			$this->cache->set('topic.'. md5($sql), $topic_data);
+		}
+
+		return $topic_data;
 	}
 
 	/**
@@ -127,9 +143,17 @@ class Topic extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$query = $this->db->query($sql);
+		$topic_data = $this->cache->get('topic.'. md5($sql));
 
-		return $query->rows;
+		if (!$topic_data) {
+			$query = $this->db->query($sql);
+
+			$topic_data = $query->rows;
+
+			$this->cache->set('topic.'. md5($sql), $topic_data);
+		}
+
+		return $topic_data;
 	}
 
 	/**

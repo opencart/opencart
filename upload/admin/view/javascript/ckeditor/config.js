@@ -37,7 +37,7 @@ CKEDITOR.editorConfig = function( config ) {
 		['SpecialChar'],
 		'/',
 		['Undo','Redo'],
-		['Font','FontSize'],
+		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['Link','Unlink','Anchor'],
 		['Image','OpenCart','Table','HorizontalRule']

@@ -190,6 +190,13 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			}
 
 			$missing[] = [
+				'key'        => 'config_article_description_length',
+				'value'      => 100,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
 				'key'        => 'config_image_blog_width',
 				'value'      => 90,
 				'code'       => 'config',

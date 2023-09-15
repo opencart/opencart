@@ -144,7 +144,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$data['articles'][] = [
 				'article_id'    => $result['article_id'],
-				'thumb'         => $image,
+				'image'         => $image,
 				'name'          => $result['name'],
 				'description'   => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_article_description_length')) . '..',
 				'author'        => $result['author'],

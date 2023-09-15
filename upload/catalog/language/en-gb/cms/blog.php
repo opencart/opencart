@@ -15,8 +15,11 @@ $_['text_success']    = 'Thank you for your comment. It has been submitted to th
 $_['entry_author']    = 'Your Name';
 $_['entry_comment']   = 'Comment';
 
+// Button
+$_['button_continue'] = 'Continue Reading';
+
 // Error
-$_['error_token']      = 'Warning: Comment token invalid!';
-$_['error_article']    = 'Warning: Article could not be found!';
-$_['error_comment']    = 'Comment must be between 25 and 1000 characters!';
-$_['error_guest']      = 'You must login to comment on the article!';
+$_['error_token']     = 'Warning: Comment token invalid!';
+$_['error_article']   = 'Warning: Article could not be found!';
+$_['error_comment']   = 'Comment must be between 25 and 1000 characters!';
+$_['error_guest']     = 'You must login to comment on the article!';

@@ -17,8 +17,7 @@
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
             {% endfor %}
-          </select>
-          <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
+          </select> <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
         </div>
       {% endif %}
 
@@ -26,9 +25,9 @@
 
         {% for article in articles %}
 
-          <div class="article-item">
+          <div class="mb-3">
 
-            <h2 class="article-title"><a href="{{ article.href }}">{{ article.name }}</a></h2>
+            <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
 
             {% if article.image %}
               <div class="article-image"><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-responsive"/></a></div>
@@ -40,9 +39,9 @@
               <li class="list-inline-item">{{ article.comment_total }} Comments</li>
             </ul>
 
-            <div class="article-excerpt">{{ article.description }}</div>
+            <div class="mb-3">{{ article.description }}</div>
 
-            <a href="{{ article.href }}" class="btn btn-primary">Continue Reading</a>
+            <a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a>
 
           </div>
 

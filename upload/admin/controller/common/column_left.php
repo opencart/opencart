@@ -170,16 +170,16 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'children' => []
 				];
 			}
-
-			if ($cms) {
-				$data['menus'][] = [
-					'id'       => 'menu-cms',
-					'icon'	   => 'fa-regular fa-newspaper',
-					'name'	   => $this->language->get('text_cms'),
-					'href'     => '',
-					'children' => $cms
-				];
-			}
+			// Still in development
+			//if ($cms) {
+			//	$data['menus'][] = [
+			//		'id'       => 'menu-cms',
+			//		'icon'	   => 'fa-regular fa-newspaper',
+			//		'name'	   => $this->language->get('text_cms'),
+			//		'href'     => '',
+			//		'children' => $cms
+			//	];
+			//}
 
 			// Extension
 			$marketplace = [];

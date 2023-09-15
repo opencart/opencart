@@ -104,7 +104,7 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->load->language('tool/log');
 
 		if (isset($this->request->get['filename'])) {
-			$filename = (string)basename($this->request->get['filename']);
+			$filename = (string)basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}
@@ -140,7 +140,7 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->load->language('tool/log');
 
 		if (isset($this->request->get['filename'])) {
-			$filename = (string)$this->request->get['filename'];
+			$filename = (string)basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}

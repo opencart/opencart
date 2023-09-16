@@ -22,7 +22,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.codemirror_theme = 'monokai';
 	config.toolbar = 'Custom';
 	config.allowedContent = true;
-	config.startupOutlineBlocks = true;
+	config.startupOutlineBlocks = false;
 	config.disableNativeSpellChecker = false;
 	config.browserContextMenuOnCtrl = true;
 	config.resize_enabled = true;
@@ -30,6 +30,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.toolbar_Custom = [
 		['Source'],
+		['ShowBlocks'],
 		['Maximize'],
 		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
 		['NumberedList','BulletedList','-','Outdent','Indent'],

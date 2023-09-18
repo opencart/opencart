@@ -59,7 +59,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getZones(array $data = []): array {
-		$sql = "SELECT *, z.`name`, c.`name` AS country FROM `" . DB_PREFIX . "zone` z LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
+		$sql = "SELECT *, z.`name`, z.`status`, c.`name` AS country FROM `" . DB_PREFIX . "zone` z LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
 
 		$implode = [];
 

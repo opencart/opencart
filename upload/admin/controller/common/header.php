@@ -67,10 +67,6 @@ class Header extends \Opencart\System\Engine\Controller {
 
 			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
 
-			$this->load->model('tool/image');
-
-			$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
-
 			$this->load->model('user/user');
 
 			$user_info = $this->model_user_user->getUser($this->user->getId());
@@ -78,16 +74,17 @@ class Header extends \Opencart\System\Engine\Controller {
 			if ($user_info) {
 				$data['firstname'] = $user_info['firstname'];
 				$data['lastname'] = $user_info['lastname'];
-				$data['username']  = $user_info['username'];
-				$data['user_group'] = $user_info['user_group'];
-
-				if (is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {
-					$data['image'] = $this->model_tool_image->resize(html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'), 45, 45);
-				}
 			}  else {
 				$data['firstname'] = '';
 				$data['lastname'] = '';
-				$data['user_group'] = '';
+			}
+
+			$this->load->model('tool/image');
+
+			if ($user_info && is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {
+				$data['image'] = $this->model_tool_image->resize(html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'), 45, 45);
+			} else {
+				$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
 			}
 
 			// Stores

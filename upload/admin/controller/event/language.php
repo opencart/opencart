@@ -6,9 +6,12 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Language extends \Opencart\System\Engine\Controller {
-	// view/*/before
-	// Dump all the language vars into the template.
+
 	/**
+	 * Dump all the language vars into the template.
+	 *
+	 * view/ * /before
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
@@ -22,9 +25,11 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// controller/*/before
-	// 1. Before controller load store all current loaded language data.
 	/**
+	 * 1. Before controller load store all current loaded language data.
+	 *
+	 * controller/ * /before
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
@@ -38,9 +43,11 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// controller/*/after
-	// 2. After controller load restore old language data.
 	/**
+	 *  // 2. After controller load restore old language data.
+	 *
+	 * // controller/ * / * /after
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

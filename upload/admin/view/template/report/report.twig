@@ -35,6 +35,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#report').on('click', 'thead a, .pagination a', function (e) {
+    e.preventDefault();
+
+    $('#report').load(this.href);
+  });
 $('#input-report').on('change', function (e) {
     if ($(this).val()) {
         $('#report').load(this.value);

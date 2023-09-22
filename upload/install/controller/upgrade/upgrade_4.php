@@ -197,14 +197,28 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			];
 
 			$missing[] = [
-				'key'        => 'config_image_blog_width',
+				'key'        => 'config_image_article_width',
 				'value'      => 90,
 				'code'       => 'config',
 				'serialized' => 0
 			];
 
 			$missing[] = [
-				'key'        => 'config_image_blog_height',
+				'key'        => 'config_image_article_height',
+				'value'      => 90,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_topic_width',
+				'value'      => 90,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_topic_height',
 				'value'      => 90,
 				'code'       => 'config',
 				'serialized' => 0

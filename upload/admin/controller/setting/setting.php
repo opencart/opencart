@@ -533,6 +533,18 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_image_article_height'] = 90;
 		}
 
+		if ($this->config->get('config_image_topic_width')) {
+			$data['config_image_topic_width'] = $this->config->get('config_image_topic_width');
+		} else {
+			$data['config_image_topic_width'] = 90;
+		}
+
+		if ($this->config->get('config_image_topic_height')) {
+			$data['config_image_topic_height'] = $this->config->get('config_image_topic_height');
+		} else {
+			$data['config_image_topic_height'] = 90;
+		}
+
 		if ($this->config->get('config_image_wishlist_width')) {
 			$data['config_image_wishlist_width'] = $this->config->get('config_image_wishlist_width');
 		} else {

@@ -191,7 +191,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = array();
 
 		if (isset($this->request->get['article_comment_id'])) {
-			$article_comment_id = $this->request->get['article_comment_id'];
+			$article_comment_id = (int)$this->request->get['article_comment_id'];
 		} else {
 			$article_comment_id = 0;
 		}
@@ -267,7 +267,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = array();
 
 		if (isset($this->request->get['comment_id'])) {
-			$comment_id = $this->request->get['comment_id'];
+			$comment_id = (int)$this->request->get['comment_id'];
 		} else {
 			$comment_id = 0;
 		}
@@ -339,7 +339,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = array();
 
 		if (isset($this->request->get['comment_id'])) {
-			$comment_id = $this->request->get['comment_id'];
+			$comment_id = (int)$this->request->get['comment_id'];
 		} else {
 			$comment_id = 0;
 		}

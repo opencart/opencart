@@ -368,7 +368,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 	public function addComment(): void {
 		$this->load->language('cms/article');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['article_id'])) {
 			$article_id = (int)$this->request->get['article_id'];

@@ -326,7 +326,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 	 */
 	public function getComments(): string {
 		if (isset($this->request->get['article_id'])) {
-			$article_id = $this->request->get['article_id'];
+			$article_id = (int)$this->request->get['article_id'];
 		} else {
 			$article_id = 0;
 		}
@@ -371,7 +371,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$json = array();
 
 		if (isset($this->request->get['article_id'])) {
-			$article_id = $this->request->get['article_id'];
+			$article_id = (int)$this->request->get['article_id'];
 		} else {
 			$article_id = 0;
 		}

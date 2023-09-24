@@ -5,7 +5,7 @@ namespace Opencart\System\Library\Cache;
  *
  * @package
  */
-class APCU {
+class Apcu {
 	/**
 	 * @var int
 	 */

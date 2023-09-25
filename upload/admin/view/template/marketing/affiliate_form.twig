@@ -342,7 +342,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -491,5 +491,5 @@ $('input[name=\'payment_method\']').on('change', function() {
 });
 
 $('input[name=\'payment_method\']:checked').trigger('change');
-//--></script>
+</script>
 {{ footer }}

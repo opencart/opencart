@@ -71,7 +71,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#report').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
@@ -154,5 +154,5 @@ $('#button-download').on('click', function (e) {
     
     location = 'index.php?route=catalog/download.download&user_token=' + getURLVar('user_token') + '&filename=' + $('#input-filename').val();
 });
-//--></script>
+</script>
 {{ footer }}

@@ -52,7 +52,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#upload').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
@@ -88,5 +88,5 @@ $('#button-filter').on('click', function () {
 
     $('#upload').load('index.php?route=tool/upload.list&user_token={{ user_token }}' + url);
 });
-//--></script>
+</script>
 {{ footer }}

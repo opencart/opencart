@@ -34,7 +34,7 @@
     <div id="report"></div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#input-report').on('change', function (e) {
     if ($(this).val()) {
         $('#report').load(this.value);
@@ -42,5 +42,5 @@ $('#input-report').on('change', function (e) {
 });
 
 $('#input-report').trigger('change');
-//--></script>
+</script>
 {{ footer }}

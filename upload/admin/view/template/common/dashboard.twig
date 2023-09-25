@@ -32,7 +32,7 @@
   </div>
   {{ security }}
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#button-setting').on('click', function () {
     $.ajax({
         url: 'index.php?route=common/developer&user_token={{ user_token }}',
@@ -112,5 +112,5 @@ $('#modal-developer table button').on('click', function () {
         }
     });
 });
-//--></script>
+</script>
 {{ footer }}

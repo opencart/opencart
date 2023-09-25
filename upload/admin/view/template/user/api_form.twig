@@ -118,7 +118,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#button-generate').on('click', function () {
     rand = '';
 
@@ -130,8 +130,8 @@ $('#button-generate').on('click', function () {
 
     $('#input-key').val(rand);
 });
-//--></script>
-<script type="text/javascript"><!--
+</script>
+<script>
 var ip_row = {{ ip_row }};
 
 $('#button-ip').on('click', function () {
@@ -144,8 +144,8 @@ $('#button-ip').on('click', function () {
 
     ip_row++;
 });
-//--></script>
-<script type="text/javascript"><!--
+</script>
+<script>
 $('#session button').on('click', function (e) {
     e.preventDefault();
 
@@ -179,5 +179,5 @@ $('#session button').on('click', function (e) {
         }
     });
 });
-//--></script>
+</script>
 {{ footer }}

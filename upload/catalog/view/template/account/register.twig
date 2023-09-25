@@ -218,7 +218,7 @@
     {{ column_right }}
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=account/custom_field&customer_group_id=' + this.value + '&language={{ language }}',
@@ -244,5 +244,5 @@ $('#input-customer-group').on('change', function() {
 });
 
 $('#input-customer-group').trigger('change');
-//--></script>
+</script>
 {{ footer }}

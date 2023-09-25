@@ -236,7 +236,7 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('input[name=\'payment_method\']').on('change', function() {
     $('.payment').hide();
 
@@ -244,5 +244,5 @@ $('input[name=\'payment_method\']').on('change', function() {
 });
 
 $('input[name=\'payment_method\']:checked').trigger('change');
-//--></script>
+</script>
 {{ footer }}

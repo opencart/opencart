@@ -91,12 +91,12 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('table tbody label').on('click', function () {
     var checked = $(this).parent().parent().find(':checkbox:first').prop('checked');
 
     $(this).parent().parent().find(':checkbox').prop('checked', !checked);
     $(this).parent().parent().find(':checkbox').prop('checked', !checked);
 });
-//--></script>
+</script>
 {{ footer }}

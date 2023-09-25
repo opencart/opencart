@@ -45,7 +45,7 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#zone').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
@@ -77,5 +77,5 @@ $('#button-filter').on('click', function () {
 
     $('#zone').load('index.php?route=localisation/zone.list&user_token={{ user_token }}' + url);
 });
-//--></script>
+</script>
 {{ footer }}

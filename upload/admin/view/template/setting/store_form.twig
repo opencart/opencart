@@ -609,7 +609,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#input-theme').on('change', function () {
     $.ajax({
         url: 'index.php?route=setting/setting.theme&user_token={{ user_token }}&theme=' + this.value,
@@ -630,8 +630,8 @@ $('#input-theme').on('change', function () {
 });
 
 $('#input-theme').trigger('change');
-//--></script>
-<script type="text/javascript"><!--
+</script>
+<script>
 $('#input-country').on('change', function () {
     var element = this;
 
@@ -672,5 +672,5 @@ $('#input-country').on('change', function () {
 });
 
 $('#input-country').trigger('change');
-//--></script>
+</script>
 {{ footer }} 

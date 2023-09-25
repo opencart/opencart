@@ -7,7 +7,7 @@
   <input type="hidden" name="code" value="{{ code }}" id="input-shipping-code"/>
   <div id="error-shipping-method" class="invalid-feedback"></div>
 </fieldset>
-<script type="text/javascript"><!--
+<script>
 $('#button-shipping-methods').on('click', function() {
     var element = this;
 
@@ -139,4 +139,4 @@ $(document).on('submit', '#form-shipping-method', function(e) {
         });
     });
 });
-//--></script>
+</script>

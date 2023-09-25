@@ -85,9 +85,9 @@ class Review extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('product/product');
+		$this->load->model('catalog/product');
 
-		$product_info = $this->model_product_product->getProduct($product_id);
+		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if (!$product_info) {
 			$json['error']['warning'] = $this->language->get('error_product');

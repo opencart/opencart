@@ -12,10 +12,6 @@ class Search extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('product/search');
 
-		$this->load->model('catalog/category');
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
-
 		if (isset($this->request->get['search'])) {
 			$search = $this->request->get['search'];
 		} else {
@@ -24,8 +20,6 @@ class Search extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['tag'])) {
 			$tag = $this->request->get['tag'];
-		} elseif (isset($this->request->get['search'])) {
-			$tag = $this->request->get['search'];
 		} else {
 			$tag = '';
 		}
@@ -145,6 +139,8 @@ class Search extends \Opencart\System\Engine\Controller {
 		// 3 Level Category Search
 		$data['categories'] = [];
 
+		$this->load->model('catalog/category');
+
 		$categories_1 = $this->model_catalog_category->getCategories(0);
 
 		foreach ($categories_1 as $category_1) {
@@ -193,7 +189,8 @@ class Search extends \Opencart\System\Engine\Controller {
 				'limit'               => $limit
 			];
 
-			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+			$this->load->model('catalog/product');
+			$this->load->model('tool/image');
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
@@ -399,6 +396,8 @@ class Search extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
+
+			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$data['pagination'] = $this->load->controller('common/pagination', [
 				'total' => $product_total,

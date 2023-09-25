@@ -1060,8 +1060,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['comments'] = [];
 
-		$comment_total = $json['comment_total'];
-
 		if ($json['comments']) {
 			$results = $json['comments'];
 
@@ -1085,6 +1083,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
+
+		$comment_total = $json['comment_total'];
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,

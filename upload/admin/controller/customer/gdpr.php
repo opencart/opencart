@@ -133,8 +133,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->load->model('customer/gdpr');
 		$this->load->model('customer/customer');
 
-		$gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);
-
 		$results = $this->model_customer_gdpr->getGdprs($filter_data);
 
 		foreach ($results as $result) {
@@ -180,6 +178,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_date_to'])) {
 			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
+
+		$gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $gdpr_total,

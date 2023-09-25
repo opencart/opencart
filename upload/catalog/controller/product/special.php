@@ -12,10 +12,6 @@ class Special extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('product/special');
 
-		$this->load->model('catalog/product');
-
-		$this->load->model('tool/image');
-
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -85,7 +81,8 @@ class Special extends \Opencart\System\Engine\Controller {
 			'limit' => $limit
 		];
 
-		$product_total = $this->model_catalog_product->getTotalSpecials();
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
 
 		$results = $this->model_catalog_product->getSpecials($filter_data);
 
@@ -231,6 +228,8 @@ class Special extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['limit'])) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
+
+		$product_total = $this->model_catalog_product->getTotalSpecials();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,

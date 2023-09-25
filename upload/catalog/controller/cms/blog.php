@@ -131,8 +131,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
-
 		$results = $this->model_cms_article->getArticles($filter_data);
 
 		foreach ($results as $result) {
@@ -167,6 +165,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['author'])) {
 			$url .= '&author=' . (string)$this->request->get['author'];
 		}
+
+		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $article_total,
@@ -341,8 +341,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$comment_total = $this->model_cms_article->getTotalComments($article_id);
-
 		$results = $this->model_cms_article->getComments($article_id, ($page - 1) * (int)$this->config->get('config_pagination_admin'), (int)$this->config->get('config_pagination_admin'));
 
 		foreach ($results as $result) {
@@ -352,6 +350,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
+
+		$comment_total = $this->model_cms_article->getTotalComments($article_id);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,

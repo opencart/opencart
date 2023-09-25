@@ -112,8 +112,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/tax_rate');
 
-		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
-
 		$results = $this->model_localisation_tax_rate->getTaxRates($filter_data);
 
 		foreach ($results as $result) {
@@ -153,6 +151,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $tax_rate_total,

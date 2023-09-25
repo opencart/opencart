@@ -112,8 +112,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
-
 		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $manufacturer_total,

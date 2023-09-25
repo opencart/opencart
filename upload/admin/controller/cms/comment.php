@@ -127,8 +127,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
-
 		$results = $this->model_cms_article->getComments($filter_data);
 
 		foreach ($results as $result) {
@@ -172,6 +170,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
+
+		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $comment_total,

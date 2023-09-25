@@ -111,8 +111,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/startup');
 
-		$startup_total = $this->model_setting_startup->getTotalStartups();
-
 		$results = $this->model_setting_startup->getStartups($filter_data);
 
 		foreach ($results as $result) {
@@ -148,6 +146,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$startup_total = $this->model_setting_startup->getTotalStartups();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $startup_total,

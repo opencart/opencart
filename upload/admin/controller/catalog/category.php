@@ -113,8 +113,6 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/category');
 
-		$category_total = $this->model_catalog_category->getTotalCategories();
-
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
 		foreach ($results as $result) {
@@ -147,6 +145,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$category_total = $this->model_catalog_category->getTotalCategories();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $category_total,

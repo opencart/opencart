@@ -114,8 +114,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/translation');
 
-		$translation_total = $this->model_design_translation->getTotalTranslations();
-
 		$results = $this->model_design_translation->getTranslations($filter_data);
 
 		foreach ($results as $result) {
@@ -154,6 +152,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['sort_route'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=route' . $url);
 		$data['sort_key'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
 		$data['sort_value'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
+
+		$translation_total = $this->model_design_translation->getTotalTranslations();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $translation_total,

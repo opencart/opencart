@@ -12,11 +12,6 @@ class Compare extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('product/compare');
 
-		$this->load->model('catalog/product');
-		$this->load->model('catalog/manufacturer');
-		$this->load->model('localisation/stock_status');
-		$this->load->model('tool/image');
-
 		if (!isset($this->session->data['compare'])) {
 			$this->session->data['compare'] = [];
 		}
@@ -61,6 +56,11 @@ class Compare extends \Opencart\System\Engine\Controller {
 		$data['products'] = [];
 
 		$data['attribute_groups'] = [];
+
+		$this->load->model('catalog/product');
+		$this->load->model('catalog/manufacturer');
+		$this->load->model('localisation/stock_status');
+		$this->load->model('tool/image');
 
 		foreach ($this->session->data['compare'] as $key => $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);

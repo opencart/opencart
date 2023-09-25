@@ -336,9 +336,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('marketing/affiliate');
-		$this->load->model('customer/customer');
-
-		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 
 		$results = $this->model_marketing_affiliate->getAffiliates($filter_data);
 
@@ -442,6 +439,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['limit'])) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
+
+		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $affiliate_total,

@@ -171,8 +171,6 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/review');
 
-		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
-
 		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * 5, 5);
 
 		foreach ($results as $result) {
@@ -183,6 +181,8 @@ class Review extends \Opencart\System\Engine\Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
+
+		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $review_total,

@@ -222,8 +222,6 @@ class Category extends \Opencart\System\Engine\Controller {
 				'limit'               => $limit
 			];
 
-			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
-
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
@@ -392,6 +390,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
+
+			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$data['pagination'] = $this->load->controller('common/pagination', [
 				'total' => $product_total,

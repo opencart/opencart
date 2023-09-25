@@ -112,8 +112,6 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$article_total = $this->model_cms_article->getTotalArticles();
-
 		$results = $this->model_cms_article->getArticles($filter_data);
 
 		foreach ($results as $result) {
@@ -148,6 +146,8 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$article_total = $this->model_cms_article->getTotalArticles();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $article_total,

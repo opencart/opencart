@@ -82,8 +82,6 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/address_format');
 
-		$address_format_total = $this->model_localisation_address_format->getTotalAddressFormats($filter_data);
-
 		$results = $this->model_localisation_address_format->getAddressFormats($filter_data);
 
 		foreach ($results as $result) {
@@ -94,6 +92,8 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 				'edit'              => $this->url->link('localisation/address_format.form', 'user_token=' . $this->session->data['user_token'] . '&address_format_id=' . $result['address_format_id'] . $url)
 			];
 		}
+
+		$address_format_total = $this->model_localisation_address_format->getTotalAddressFormats($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $address_format_total,

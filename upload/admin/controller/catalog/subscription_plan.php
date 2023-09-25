@@ -113,8 +113,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/subscription_plan');
 
-		$subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
-
 		$results = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
 
 		foreach ($results as $result) {
@@ -147,6 +145,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_plan_total,

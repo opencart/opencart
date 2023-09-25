@@ -112,8 +112,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer_group');
 
-		$customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
-
 		$results = $this->model_customer_customer_group->getCustomerGroups($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_group_total,

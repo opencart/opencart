@@ -64,14 +64,12 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		$data['notifications'] = [];
 
-		$this->load->model('tool/notification');
-
-		$notification_total = $this->model_tool_notification->getTotalNotifications();
-
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('tool/notification');
 
 		$results = $this->model_tool_notification->getNotifications($filter_data);
 
@@ -79,13 +77,13 @@ class Notification extends \Opencart\System\Engine\Controller {
 			$second = time() - strtotime($result['date_added']);
 			
 			$ranges = [
-				'second'	=> $second,
-				'minute'	=> floor($second / 60),
-				'hour'		=> floor($second / 3600),
-				'day'		=> floor($second / 86400),
-				'week'		=> floor($second / 604800),
-				'month'		=> floor($second / 2629743),
-				'year'		=> floor($second / 31556926)
+				'second' => $second,
+				'minute' => floor($second / 60),
+				'hour'	 => floor($second / 3600),
+				'day'	 => floor($second / 86400),
+				'week'	 => floor($second / 604800),
+				'month'	 => floor($second / 2629743),
+				'year'	 => floor($second / 31556926)
 			];
 
 			foreach ($ranges as $range => $value) {
@@ -104,6 +102,8 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'delete'          => $this->url->link('tool/notification.delete', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'] . $url)
 			];
 		}
+
+		$notification_total = $this->model_tool_notification->getTotalNotifications();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $notification_total,

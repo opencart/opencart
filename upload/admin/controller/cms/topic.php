@@ -112,8 +112,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/topic');
 
-		$topic_total = $this->model_cms_topic->getTotalTopics();
-
 		$results = $this->model_cms_topic->getTopics($filter_data);
 
 		foreach ($results as $result) {
@@ -146,6 +144,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$topic_total = $this->model_cms_topic->getTotalTopics();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $topic_total,

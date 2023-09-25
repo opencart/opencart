@@ -145,8 +145,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/upload');
 
-		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
-
 		$results = $this->model_tool_upload->getUploads($filter_data);
 
 		foreach ($results as $result) {
@@ -208,6 +206,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $upload_total,

@@ -112,8 +112,6 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/option');
 
-		$option_total = $this->model_catalog_option->getTotalOptions();
-
 		$results = $this->model_catalog_option->getOptions($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$option_total = $this->model_catalog_option->getTotalOptions();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $option_total,

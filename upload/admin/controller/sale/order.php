@@ -335,8 +335,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/order');
 
-		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
-
 		$results = $this->model_sale_order->getOrders($filter_data);
 
 		foreach ($results as $result) {
@@ -450,6 +448,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,

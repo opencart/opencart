@@ -112,8 +112,6 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/download');
 
-		$download_total = $this->model_catalog_download->getTotalDownloads();
-
 		$results = $this->model_catalog_download->getDownloads($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class Download extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$download_total = $this->model_catalog_download->getTotalDownloads();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,

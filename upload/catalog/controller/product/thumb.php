@@ -14,6 +14,10 @@ class Thumb extends \Opencart\System\Engine\Controller {
 	public function index(array $data): string {
 		$this->load->language('product/thumb');
 
+
+
+
+
 		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
 
 		$data['add_to_cart'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));

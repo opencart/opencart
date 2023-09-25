@@ -112,8 +112,6 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/attribute_group');
 
-		$attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
-
 		$results = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $attribute_group_total,

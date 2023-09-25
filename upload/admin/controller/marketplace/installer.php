@@ -135,8 +135,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'limit'                        => $this->config->get('config_pagination_admin')
 		];
 
-		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
-
 		$results = $this->model_setting_extension->getInstalls($filter_data);
 
 		foreach ($results as $result) {
@@ -161,8 +159,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($extension_total - $this->config->get('config_pagination_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $extension_total, ceil($extension_total / $this->config->get('config_pagination_admin')));
-
 		$url = '';
 
 		if (isset($this->request->get['filter_extension_id'])) {
@@ -179,12 +175,16 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['sort_version'] = $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
 		$data['sort_date_added'] = $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
+		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
+
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($extension_total - $this->config->get('config_pagination_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $extension_total, ceil($extension_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

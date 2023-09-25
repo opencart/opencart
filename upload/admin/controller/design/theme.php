@@ -67,8 +67,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->load->model('design/theme');
 		$this->load->model('setting/store');
 
-		$history_total = $this->model_design_theme->getTotalThemes();
-
 		$results = $this->model_design_theme->getThemes(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
@@ -89,6 +87,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 				'delete'     => $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'])
 			];
 		}
+
+		$history_total = $this->model_design_theme->getTotalThemes();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,

@@ -112,8 +112,6 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$information_total = $this->model_catalog_information->getTotalInformations();
-
 		$results = $this->model_catalog_information->getInformations($filter_data);
 
 		foreach ($results as $result) {
@@ -146,6 +144,8 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$information_total = $this->model_catalog_information->getTotalInformations();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $information_total,

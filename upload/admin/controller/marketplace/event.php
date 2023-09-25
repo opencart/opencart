@@ -111,8 +111,6 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/event');
 
-		$event_total = $this->model_setting_event->getTotalEvents();
-
 		$results = $this->model_setting_event->getEvents($filter_data);
 
 		foreach ($results as $result) {
@@ -149,6 +147,8 @@ class Event extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$event_total = $this->model_setting_event->getTotalEvents();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $event_total,

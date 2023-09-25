@@ -112,8 +112,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/banner');
 
-		$banner_total = $this->model_design_banner->getTotalBanners();
-
 		$results = $this->model_design_banner->getBanners($filter_data);
 
 		foreach ($results as $result) {
@@ -144,6 +142,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$banner_total = $this->model_design_banner->getTotalBanners();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $banner_total,

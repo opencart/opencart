@@ -94,8 +94,6 @@ class Online extends \Opencart\System\Engine\Controller {
 		$this->load->model('report/online');
 		$this->load->model('customer/customer');
 
-		$customer_total = $this->model_report_online->getTotalOnline($filter_data);
-
 		$results = $this->model_report_online->getOnline($filter_data);
 
 		foreach ($results as $result) {
@@ -127,6 +125,8 @@ class Online extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
+
+		$customer_total = $this->model_report_online->getTotalOnline($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,

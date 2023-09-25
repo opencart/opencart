@@ -112,8 +112,6 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher_theme');
 
-		$voucher_theme_total = $this->model_sale_voucher_theme->getTotalVoucherThemes();
-
 		$results = $this->model_sale_voucher_theme->getVoucherThemes($filter_data);
 
 		foreach ($results as $result) {
@@ -143,6 +141,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$voucher_theme_total = $this->model_sale_voucher_theme->getTotalVoucherThemes();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $voucher_theme_total,

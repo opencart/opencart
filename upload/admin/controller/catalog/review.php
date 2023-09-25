@@ -216,9 +216,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('catalog/review');
-
-		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
-
+		
 		$results = $this->model_catalog_review->getReviews($filter_data);
 
 		foreach ($results as $result) {
@@ -296,6 +294,8 @@ class Review extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
+		
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $review_total,
 			'page'  => $page,

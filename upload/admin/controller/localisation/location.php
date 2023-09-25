@@ -112,8 +112,6 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/location');
 
-		$location_total = $this->model_localisation_location->getTotalLocations();
-
 		$results = $this->model_localisation_location->getLocations($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class Location extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$location_total = $this->model_localisation_location->getTotalLocations();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $location_total,

@@ -90,10 +90,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$this->load->model('setting/setting');
-
-		$store_total += $this->model_setting_store->getTotalStores();
-
 		$results = $this->model_setting_store->getStores();
 
 		foreach ($results as $result) {
@@ -104,6 +100,8 @@ class Store extends \Opencart\System\Engine\Controller {
 				'edit'     => $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
 			];
 		}
+
+		$store_total += $this->model_setting_store->getTotalStores();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $store_total,

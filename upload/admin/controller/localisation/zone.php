@@ -167,8 +167,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/zone');
 
-		$zone_total = $this->model_localisation_zone->getTotalZones($filter_data);
-
 		$results = $this->model_localisation_zone->getZones($filter_data);
 
 		foreach ($results as $result) {
@@ -227,6 +225,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$zone_total = $this->model_localisation_zone->getTotalZones($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $zone_total,

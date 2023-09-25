@@ -232,7 +232,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->load->model('design/seo_url');
 		$this->load->model('localisation/language');
 
-		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
 		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
 
@@ -324,6 +323,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . (string)$this->request->get['order'];
 		}
+
+		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $seo_url_total,

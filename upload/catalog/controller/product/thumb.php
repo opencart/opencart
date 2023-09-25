@@ -15,6 +15,7 @@ class Thumb extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/thumb');
 
 		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
+		$data['wishlist'] = $this->url->link('common/wishlist.info', 'language=' . $this->config->get('config_language'));
 
 		$data['add_to_cart'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
 		$data['add_to_wishlist'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));

@@ -355,8 +355,13 @@ $(document).on('submit', 'form', function (e) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     // Refresh
-                    var url = $(form).attr('data-oc-load');
-                    var target = $(form).attr('data-oc-target');
+                    var url = $(button).attr('data-oc-load');
+                    var target = $(button).attr('data-oc-target');
+
+                    if (url === undefined || target === undefined) {
+                        var url = $(form).attr('data-oc-load');
+                        var target = $(form).attr('data-oc-target');
+                    }
 
                     if (url !== undefined && target !== undefined) {
                         $(target).load(url);

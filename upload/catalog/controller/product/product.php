@@ -285,6 +285,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['review'] = $this->load->controller('product/review');
 
+			$data['wishlist'] = $this->url->link('common/wishlist.info', 'language=' . $this->config->get('config_language'));
 			$data['add_to_wishlist'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
 			$data['add_to_compare'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
 

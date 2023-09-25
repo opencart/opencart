@@ -10,6 +10,8 @@ class Header extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
+		$this->load->language('common/header');
+
 		// Analytics
 		$data['analytics'] = [];
 
@@ -53,19 +55,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
-		$this->load->language('common/header');
-
-		// Wishlist
-		if ($this->customer->isLogged()) {
-			$this->load->model('account/wishlist');
-
-			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
-		} else {
-			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
-		}
-
 		$data['home'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		$data['logged'] = $this->customer->isLogged();
 
 		if (!$this->customer->isLogged()) {
@@ -89,6 +79,7 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
+		$data['wishlist'] = $this->load->controller('common/wishlist');
 
 		return $this->load->view('common/header', $data);
 	}

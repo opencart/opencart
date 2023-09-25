@@ -37,8 +37,6 @@ class Download extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
-		$this->load->model('account/download');
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -49,7 +47,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['downloads'] = [];
 
-		$download_total = $this->model_account_download->getTotalDownloads();
+		$this->load->model('account/download');
 
 		$results = $this->model_account_download->getDownloads(($page - 1) * $limit, $limit);
 
@@ -86,6 +84,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$download_total = $this->model_account_download->getTotalDownloads();
+
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,
 			'page'  => $page,
@@ -117,13 +117,13 @@ class Download extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->load->model('account/download');
-
 		if (isset($this->request->get['download_id'])) {
 			$download_id = (int)$this->request->get['download_id'];
 		} else {
 			$download_id = 0;
 		}
+
+		$this->load->model('account/download');
 
 		$download_info = $this->model_account_download->getDownload($download_id);
 

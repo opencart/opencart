@@ -37,8 +37,6 @@ class Transaction extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/transaction', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
-		$this->load->model('account/transaction');
-		
 		$data['column_amount'] = sprintf($this->language->get('column_amount'), $this->config->get('config_currency'));
 
 		if (isset($this->request->get['page'])) {
@@ -58,7 +56,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 			'limit' => $limit
 		];
 
-		$transaction_total = $this->model_account_transaction->getTotalTransactions();
+		$this->load->model('account/transaction');
 
 		$results = $this->model_account_transaction->getTransactions($filter_data);
 
@@ -69,6 +67,8 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
+
+		$transaction_total = $this->model_account_transaction->getTotalTransactions();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $transaction_total,

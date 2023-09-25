@@ -55,8 +55,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/returns');
 
-		$return_total = $this->model_account_returns->getTotalReturns();
-
 		$results = $this->model_account_returns->getReturns(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
@@ -69,6 +67,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'href'       => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)
 			];
 		}
+
+		$return_total = $this->model_account_returns->getTotalReturns();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,

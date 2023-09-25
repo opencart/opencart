@@ -59,8 +59,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/currency');
 		$this->load->model('localisation/subscription_status');
 
-		$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
-
 		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
@@ -117,6 +115,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
+
+		$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_total,

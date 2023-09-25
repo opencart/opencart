@@ -171,7 +171,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
-
 		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [

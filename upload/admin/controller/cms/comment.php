@@ -15,17 +15,17 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['list'] = $this->getList();
 
@@ -82,7 +82,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -113,9 +113,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['comments'] = array();
+		$data['comments'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_keyword'    => $filter_keyword,
 			'filter_title'      => $filter_title,
 			'filter_customer'   => $filter_customer,
@@ -123,7 +123,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'filter_date_added' => $filter_date_added,
 			'start'             => ($page - 1) * 10,
 			'limit'             => 10
-		);
+		];
 
 		$this->load->model('cms/article');
 
@@ -138,7 +138,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$approve = '';
 			}
 
-			$data['comments'][] = array(
+			$data['comments'][] = [
 				'article'       => $result['article'],
 				'article_edit'  => $this->url->link('cms/article.edit', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
 				'customer'      => $result['customer'],
@@ -148,7 +148,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'approve'       => $approve,
 				'spam'          => $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token'] . '&comment_id=' . $result['comment_id'] . $url),
 				'delete'        => $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token'] . '&comment_id=' . $result['comment_id'] . $url)
-			);
+			];
 		}
 
 		$url = '';
@@ -173,12 +173,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($comment_total - $this->config->get('config_pagination_admin'))) ? $comment_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $comment_total, ceil($comment_total / $this->config->get('config_pagination_admin')));
 
@@ -188,10 +188,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function approve() {
 		$this->load->language('cms/comment');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['article_comment_id'])) {
-			$article_comment_id = $this->request->get['article_comment_id'];
+			$article_comment_id = (int)$this->request->get['article_comment_id'];
 		} else {
 			$article_comment_id = 0;
 		}
@@ -215,10 +215,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$this->model_customer_customer->editCommentor($comment_info['customer_id'], 1);
 
 			// Approve all past comments
-			$filter_data = array(
+			$filter_data = [
 				'filter_customer_id' => $comment_info['customer_id'],
 				'filter_status'      => 0
-			);
+			];
 
 			$results = $this->model_cms_comment->getComments($filter_data);
 
@@ -264,10 +264,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function spam() {
 		$this->load->language('cms/comment');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['comment_id'])) {
-			$comment_id = $this->request->get['comment_id'];
+			$comment_id = (int)$this->request->get['comment_id'];
 		} else {
 			$comment_id = 0;
 		}
@@ -292,7 +292,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
 
 			// Delete all customer comments
-			$results = $this->model_cms_comment->getComments(array('filter_customer_id' => $comment_info['customer_id']));
+			$results = $this->model_cms_comment->getComments(['filter_customer_id' => $comment_info['customer_id']]);
 
 			foreach ($results as $result) {
 				$this->model_cms_comment->deleteCommentsByCustomerId($result['comment_id']);
@@ -336,10 +336,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function delete() {
 		$this->load->language('cms/comment');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['comment_id'])) {
-			$comment_id = $this->request->get['comment_id'];
+			$comment_id = (int)$this->request->get['comment_id'];
 		} else {
 			$comment_id = 0;
 		}

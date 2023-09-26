@@ -72,6 +72,12 @@ class Compare extends \Opencart\System\Engine\Controller {
 					$image = false;
 				}
 
+				$description = trim(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')));
+
+				if (oc_strlen($description) > $this->config->get('config_product_description_length')) {
+					$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
+				}
+
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
@@ -122,7 +128,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 					'thumb'        => $image,
 					'price'        => $price,
 					'special'      => $special,
-					'description'  => oc_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, 200) . '..',
+					'description'  => $description,
 					'model'        => $product_info['model'],
 					'manufacturer' => $manufacturer,
 					'availability' => $availability,

@@ -168,6 +168,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 				}
 
+				$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
+
+				if (oc_strlen($description) > $this->config->get('config_product_description_length')) {
+					$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
+				}
+
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
@@ -190,7 +196,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => $description,
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,

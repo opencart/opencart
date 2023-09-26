@@ -49,6 +49,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$parts = explode('_', $path);
+		$parts1 = explode('_', $path);
 
 		$category_id = (int)array_pop($parts);
 
@@ -84,7 +85,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$path = '';
 
-			foreach ($parts as $path_id) {
+			foreach ($parts1 as $path_id) {
 				if (!$path) {
 					$path = (int)$path_id;
 				} else {

@@ -50,7 +50,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$parts = explode('_', $path);
 
-		$category_id = (int)array_pop($parts);
+		$category_id = (int) $parts[array_key_last($parts)];
 
 		$this->load->model('catalog/category');
 
@@ -126,12 +126,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-
-			// Set the last category breadcrumb
-			$data['breadcrumbs'][] = [
-				'text' => $category_info['name'],
-				'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . $url)
-			];
 
 			$data['heading_title'] = $category_info['name'];
 

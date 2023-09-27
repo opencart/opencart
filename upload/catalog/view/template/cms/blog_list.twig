@@ -9,11 +9,7 @@
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-
-
-
       <h2>{{ heading_title }}</h2>
-
       {% if image %}
         <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-3"/>
       {% endif %}
@@ -21,11 +17,10 @@
       <div class="mb-3">{{ description }}</div>
       {% endif %}
       <hr/>
-
       {% if topics %}
         <h3>{{ text_refine }}</h3>
         <div class="input-group dropdown mb-3">
-          <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
+          <input type="text" name="search" value="{{ filter_search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
           <select name="topic_id" id="input-topic" class="form-select">
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
@@ -34,7 +29,6 @@
           <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
         </div>
       {% endif %}
-
       {% if articles %}
         {% for article in articles %}
           <div class="mb-4">
@@ -45,7 +39,7 @@
             <ul class="list-inline">
               <li class="list-inline-item">{{ text_by }} <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
               <li class="list-inline-item">{{ article.date_added }}</li>
-              <li class="list-inline-item">{{ article.comment_total }} {{ text_comments }}</li>
+              <li class="list-inline-item">{{ article.comment_total }} {{ text_comment }}</li>
             </ul>
             <p class="mb-3">{{ article.description }}</p>
             <a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a>
@@ -63,4 +57,29 @@
     {{ column_right }}
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#button-search').bind('click', function() {
+    url = 'index.php?route=cms/blog&language={{ language }}';
+
+    var search = $('#input-search').val();
+
+    if (search) {
+        url += '&search=' + encodeURIComponent(search);
+    }
+
+    var topic_id = $('#input-topic').prop('value');
+
+    if (topic_id > 0) {
+        url += '&topic_id=' + encodeURIComponent(topic_id);
+    }
+
+    location = url;
+});
+
+$('#input-search').bind('keydown', function(e) {
+    if (e.keyCode == 13) {
+        $('#button-search').trigger('click');
+    }
+});
+//--></script>
 {{ footer }}

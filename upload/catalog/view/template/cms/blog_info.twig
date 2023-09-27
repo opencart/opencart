@@ -16,9 +16,18 @@
       <ul class="list-inline">
         <li class="list-inline-item">{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a></li>
         <li class="list-inline-item">{{ date_added }}</li>
-        <li class="list-inline-item">{{ comment_total }} {{ text_comments }}</li>
+        <li class="list-inline-item">{{ comment_total }} {{ text_comment }}</li>
       </ul>
       {{ description }}
+
+      {% if tags %}
+        <p>{{ text_tags }}
+          {% for tag in tags %}
+            <a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.end %},{% endif %}
+          {% endfor %}
+        </p>
+      {% endif %}
+
       <hr/>
       <div id="comment">{{ comment }}</div
       {{ content_bottom }}

@@ -318,8 +318,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$data['heading_title'] = $article_info['name'];
 
-			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
-
 			$this->load->model('tool/image');
 
 			if (is_file(DIR_IMAGE . html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -328,9 +326,23 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$data['image'] = '';
 			}
 
+			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
+
 			$data['author'] = $article_info['author'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($article_info['date_added']));
-			$data['tag'] = $article_info['tag'];
+
+			$data['tags'] = [];
+
+			if ($article_info['tag']) {
+				$tags = explode(',', trim($article_info['tag'], ''));
+
+				foreach ($tags as $tag) {
+					$data['tags'][] = [
+						'tag'  => trim($tag),
+						'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&tag=' . trim($tag))
+					];
+				}
+			}
 
 			$data['comment'] = $this->getComments();
 			$data['comment_total'] = $this->model_cms_article->getTotalComments($article_id);

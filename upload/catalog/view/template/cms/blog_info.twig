@@ -23,7 +23,7 @@
       {% if tags %}
         <p>{{ text_tags }}
           {% for tag in tags %}
-            <a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.end %},{% endif %}
+            <a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.last %},{% endif %}
           {% endfor %}
         </p>
       {% endif %}

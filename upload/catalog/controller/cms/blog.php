@@ -45,16 +45,20 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . (string)$this->request->get['search'];
+		if ($search) {
+			$url .= '&search=' . $search;
 		}
 
-		if (isset($this->request->get['author'])) {
-			$url .= '&author=' . (string)$this->request->get['author'];
+		if ($topic_id) {
+			$url .= '&topic_id=' . $topic_id;
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+		if ($author) {
+			$url .= '&author=' . $author;
+		}
+
+		if ($page) {
+			$url .= '&page=' . $page;
 		}
 
 		$data['breadcrumbs'][] = [
@@ -69,20 +73,20 @@ class Blog extends \Opencart\System\Engine\Controller {
 		if ($topic_info) {
 			$url = '';
 
-			if (isset($this->request->get['search'])) {
-				$url .= '&search=' . (string)$this->request->get['search'];
+			if ($search) {
+				$url .= '&search=' . $search;
 			}
 
-			if (isset($this->request->get['topic_id'])) {
-				$url .= '&topic_id=' . (int)$this->request->get['topic_id'];
+			if ($topic_id) {
+				$url .= '&topic_id=' . $topic_id;
 			}
 
-			if (isset($this->request->get['author'])) {
-				$url .= '&author=' . (string)$this->request->get['author'];
+			if ($author) {
+				$url .= '&author=' . $author;
 			}
 
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
+			if ($page) {
+				$url .= '&page=' . $page;
 			}
 
 			$data['breadcrumbs'][] = [
@@ -134,16 +138,16 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_article->getArticles($filter_data);
 
 		foreach ($results as $result) {
-			$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
-
-			if (oc_strlen($description) > $this->config->get('config_article_description_length')) {
-				$description = oc_substr($description, 0, $this->config->get('config_article_description_length')) . '..';
-			}
-
 			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_blog_width'), $this->config->get('config_image_blog_height'));
 			} else {
 				$image = '';
+			}
+
+			$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
+
+			if (oc_strlen($description) > $this->config->get('config_article_description_length')) {
+				$description = oc_substr($description, 0, $this->config->get('config_article_description_length')) . '..';
 			}
 
 			$data['articles'][] = [

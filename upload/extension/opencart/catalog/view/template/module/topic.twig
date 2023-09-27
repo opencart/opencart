@@ -1,5 +1,4 @@
 <div class="list-group mb-3">
-    <a href="{{ all }}" class="list-group-item{% if topic.topic_id == topic_id %} active{% endif %}">{{ text_all }}</a>
     {% for topic in topics %}
     <a href="{{ topic.href }}" class="list-group-item{% if topic.topic_id == topic_id %} active{% endif %}">{{ topic.name }}</a>
   {% endfor %}

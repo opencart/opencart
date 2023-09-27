@@ -606,11 +606,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					// Create customer token
 					$this->session->data['customer_token'] = oc_token(26);
 
-					$json['success'] = $this->language->get('text_success_add');
+					$json['success'] = $this->language->get('text_add_success');
 				} elseif ($this->customer->isLogged()) {
-					$json['success'] = $this->language->get('text_success_edit');
+					$json['success'] = $this->language->get('text_edit_success');
 				} else {
-					$json['success'] = $this->language->get('text_success_guest');
+					$json['success'] = $this->language->get('text_guest_success');
 				}
 			} else {
 				// If account needs approval we redirect to the account success / requires approval page.

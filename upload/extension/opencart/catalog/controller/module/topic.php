@@ -20,6 +20,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['topics'] = [];
 
+		$data['topics'][] = [
+			'topic_id' => 0,
+			'name'     => $this->language->get('text_all') . ($this->config->get('config_article_count') ? ' (' . $this->model_cms_article->getTotalArticles() . ')' : ''),
+			'href'     => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'))
+		];
+
 		$this->load->model('cms/topic');
 		$this->load->model('cms/article');
 

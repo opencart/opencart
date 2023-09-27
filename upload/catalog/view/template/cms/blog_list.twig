@@ -23,6 +23,16 @@
         </div>
       {% endif %}
 
+      <h2>{{ heading_title }}</h2>
+
+      {% if image %}
+        <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/>
+      {% endif %}
+
+      {% if description %}
+      <div class="mb-4">{{ description }}</div>
+      {% endif %}
+
       {% if articles %}
         {% for article in articles %}
           <div class="mb-4">
@@ -31,17 +41,13 @@
             {% if article.image %}
               <div class="article-image"><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-responsive"/></a></div>
             {% endif %}
-
             <ul class="list-inline">
               <li class="list-inline-item">By <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
               <li class="list-inline-item">{{ article.date_added }}</li>
               <li class="list-inline-item">{{ article.comment_total }} comments</li>
             </ul>
-
-            <div class="mb-3">{{ article.description }}</div>
-
+            <p class="mb-3">{{ article.description }}</p>
             <a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a>
-
           </div>
         {% endfor %}
         <div class="row">

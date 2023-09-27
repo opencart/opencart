@@ -81,8 +81,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$topic_info = $this->model_cms_topic->getTopic($filter_topic_id);
 
 		if ($topic_info) {
-			print_r($topic_info);
-
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
@@ -132,9 +130,9 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if ($topic_info && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+			$data['image'] = $this->model_tool_image->resize(html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
 		} else {
-			$data['thumb'] = '';
+			$data['image'] = '';
 		}
 
 		$limit = 20;
@@ -237,8 +235,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['topics'][] = [
-				'name' => $result['name'],
-				'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&topic_id='. $result['topic_id'])
+				'topic_id' => $result['topic_id'],
+				'name'     => $result['name']
 			];
 		}
 
@@ -321,6 +319,15 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['heading_title'] = $article_info['name'];
 
 			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
+
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'))) {
+				$data['image'] = $this->model_tool_image->resize(html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+			} else {
+				$data['image'] = '';
+			}
+
 			$data['author'] = $article_info['author'];
 			$data['date_added'] = $article_info['date_added'];
 			$data['tag'] = $article_info['tag'];

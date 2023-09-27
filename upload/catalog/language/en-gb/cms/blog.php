@@ -7,6 +7,7 @@ $_['text_refine']     = 'Refine Search';
 $_['text_all']        = 'All';
 $_['text_blog']       = 'Blog';
 $_['text_by']         = 'By';
+$_['text_tags']       = 'Tags:';
 $_['text_comment']    = 'comments';
 $_['text_write']      = 'Write a comment';
 $_['text_login']      = 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment';

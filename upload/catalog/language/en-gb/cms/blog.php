@@ -3,6 +3,7 @@
 $_['heading_title']   = 'Blog';
 
 // Text
+$_['text_all']        = 'All';
 $_['text_blog']       = 'Blog';
 $_['text_comments']   = '%s comments';
 $_['text_write']      = 'Write a comment';

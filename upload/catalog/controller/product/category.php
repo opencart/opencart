@@ -91,11 +91,11 @@ class Category extends \Opencart\System\Engine\Controller {
 					$path .= '_' . (int)$path_id;
 				}
 
-				$category_info = $this->model_catalog_category->getCategory($path_id);
+				$parent_info = $this->model_catalog_category->getCategory($path_id);
 
-				if ($category_info) {
+				if ($parent_info) {
 					$data['breadcrumbs'][] = [
-						'text' => $category_info['name'],
+						'text' => $parent_info['name'],
 						'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $path . $url)
 					];
 				}

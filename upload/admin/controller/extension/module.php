@@ -19,23 +19,19 @@ class Module extends \Opencart\System\Engine\Controller {
 	public function getList(): string {
 		$this->load->language('extension/module');
 
-		$this->load->model('setting/module');
-
-		$this->load->language('extension/module');
-
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
 
 		$available = [];
 
-		$this->load->model('setting/extension');
-
-		$results = $this->model_setting_extension->getPaths('%/admin/controller/module/%.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/module/*.php');
 
 		foreach ($results as $result) {
-			$available[] = basename($result['path'], '.php');
+			$available[] = basename($result, '.php');
 		}
 
 		$installed = [];
+
+		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('module');
 
@@ -47,15 +43,17 @@ class Module extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/module');
-
 		$data['extensions'] = [];
 
 		if ($results) {
-			foreach ($results as $result) {
-				$extension = substr($result['path'], 0, strpos($result['path'], '/'));
+			$this->load->model('setting/module');
 
-				$code = basename($result['path'], '.php');
+			foreach ($results as $result) {
+				$path = substr($result, strlen(DIR_EXTENSION));
+
+				$extension = substr($path, 0, strpos($path, '/'));
+
+				$code = basename($result, '.php');
 
 				$this->load->language('extension/' . $extension . '/module/' . $code, $code);
 

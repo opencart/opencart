@@ -290,12 +290,12 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Extension permissions
-		$this->load->model('setting/extension');
-
-		$results = $this->model_setting_extension->getPaths('%/admin/controller/%.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/*/*.php');
 
 		foreach ($results as $result) {
-			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($result['path'], 0, strrpos($result['path'], '.')));
+			$path = substr($result, strlen(DIR_EXTENSION));
+
+			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($path, 0, strrpos($path, '.')));
 		}
 
 		if (isset($user_group_info['permission']['access'])) {

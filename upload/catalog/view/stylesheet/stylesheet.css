@@ -521,6 +521,7 @@ footer h5 {
 }
 .product-thumb .description {
   padding: 15px;
+  min-height: 180px;
 }
 .product-thumb .button-group {
   display: flex;

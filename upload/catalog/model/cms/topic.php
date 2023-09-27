@@ -19,7 +19,7 @@ class Topic extends \Opencart\System\Engine\Model {
 		if (!$topic_data) {
 			$query = $this->db->query($sql);
 
-			$topic_data = $query->rows;
+			$topic_data = $query->row;
 
 			$this->cache->set('topic.'. md5($sql), $topic_data);
 		}

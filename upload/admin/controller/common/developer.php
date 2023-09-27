@@ -36,7 +36,37 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_setting->editSetting('developer', $this->request->post, 0);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_developer_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function cache(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$files = glob(DIR_CACHE . 'cache.*');
+
+			if ($files) {
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					}
+				}
+			}
+
+			$json['success'] = $this->language->get('text_cache_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -74,7 +104,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 				}
 			}
 						
-			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_theme'));
+			$json['success'] = $this->language->get('text_theme_success');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -121,7 +151,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_sass'));
+			$json['success'] = $this->language->get('text_sass_success');
 		}	
 		
 		$this->response->addHeader('Content-Type: application/json');

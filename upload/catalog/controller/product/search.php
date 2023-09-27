@@ -18,28 +18,28 @@ class Search extends \Opencart\System\Engine\Controller {
 			$filter_search = '';
 		}
 
-		if (isset($this->request->get['filter_description'])) {
-			$filter_description = $this->request->get['filter_description'];
+		if (isset($this->request->get['description'])) {
+			$filter_description = $this->request->get['description'];
 		} else {
 			$filter_description = '';
 		}
 
-		if (isset($this->request->get['filter_tag'])) {
-			$filter_tag = $this->request->get['filter_tag'];
+		if (isset($this->request->get['tag'])) {
+			$filter_tag = $this->request->get['tag'];
 		} else {
 			$filter_tag = '';
 		}
 
 		if (isset($this->request->get['category_id'])) {
-			$category_id = (int)$this->request->get['category_id'];
+			$filter_category_id = (int)$this->request->get['category_id'];
 		} else {
-			$category_id = 0;
+			$filter_category_id = 0;
 		}
 
 		if (isset($this->request->get['sub_category'])) {
-			$sub_category = $this->request->get['sub_category'];
+			$filter_sub_category = $this->request->get['sub_category'];
 		} else {
-			$sub_category = 0;
+			$filter_sub_category = 0;
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -181,8 +181,8 @@ class Search extends \Opencart\System\Engine\Controller {
 				'filter_search'       => $filter_search,
 				'filter_description'  => $filter_description,
 				'filter_tag'          => $filter_tag ? $filter_tag : $filter_search,
-				'filter_category_id'  => $category_id,
-				'filter_sub_category' => $sub_category,
+				'filter_category_id'  => $filter_category_id,
+				'filter_sub_category' => $filter_sub_category,
 				'sort'                => $sort,
 				'order'               => $order,
 				'start'               => ($page - 1) * $limit,
@@ -430,10 +430,10 @@ class Search extends \Opencart\System\Engine\Controller {
 				}
 
 				$search_data = [
-					'keyword'      => $filter_search,
+					'keyword'      => $filter_tag ? $filter_tag : $filter_search,
 					'description'  => $filter_description,
-					'category_id'  => $category_id,
-					'sub_category' => $sub_category,
+					'category_id'  => $filter_category_id,
+					'sub_category' => $filter_sub_category,
 					'products'     => $product_total,
 					'customer_id'  => $customer_id,
 					'ip'           => $ip
@@ -445,8 +445,8 @@ class Search extends \Opencart\System\Engine\Controller {
 
 		$data['search'] = $filter_search;
 		$data['description'] = $filter_description;
-		$data['category_id'] = $category_id;
-		$data['sub_category'] = $sub_category;
+		$data['category_id'] = $filter_category_id;
+		$data['sub_category'] = $filter_sub_category;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

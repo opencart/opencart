@@ -18,32 +18,30 @@
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
             {% endfor %}
-          </select> <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
+          </select>
+          <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
         </div>
-      {% endif %}
-
-      {% if topics %}
-        <ul class="nav nav-tabs">
-          {% for topic in topics %}
-            <li class="nav-item"><a href="#tab-topic-{{ topic.topic_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}">{{ topic.name }}</a></li>
-          {% endfor %}
-        </ul>
       {% endif %}
 
       {% if articles %}
         {% for article in articles %}
           <div class="mb-4">
             <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
+
             {% if article.image %}
               <div class="article-image"><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-responsive"/></a></div>
             {% endif %}
+
             <ul class="list-inline">
               <li class="list-inline-item">By <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
               <li class="list-inline-item">{{ article.date_added }}</li>
               <li class="list-inline-item">{{ article.comment_total }} comments</li>
             </ul>
+
             <div class="mb-3">{{ article.description }}</div>
+
             <a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a>
+
           </div>
         {% endfor %}
         <div class="row">
@@ -53,7 +51,6 @@
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}
-
       {{ content_bottom }}
     </div>
     {{ column_right }}

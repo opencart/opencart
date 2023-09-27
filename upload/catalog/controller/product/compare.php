@@ -66,16 +66,16 @@ class Compare extends \Opencart\System\Engine\Controller {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
 			if ($product_info) {
-				if (is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
-				} else {
-					$image = false;
-				}
-
 				$description = trim(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')));
 
 				if (oc_strlen($description) > $this->config->get('config_product_description_length')) {
 					$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
+				}
+
+				if (is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {
+					$image = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
+				} else {
+					$image = false;
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -125,10 +125,10 @@ class Compare extends \Opencart\System\Engine\Controller {
 				$data['products'][$product_id] = [
 					'product_id'   => $product_info['product_id'],
 					'name'         => $product_info['name'],
+					'description'  => $description,
 					'thumb'        => $image,
 					'price'        => $price,
 					'special'      => $special,
-					'description'  => $description,
 					'model'        => $product_info['model'],
 					'manufacturer' => $manufacturer,
 					'availability' => $availability,

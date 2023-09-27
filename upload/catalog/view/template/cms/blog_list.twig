@@ -10,10 +10,22 @@
     <div id="content" class="col">
       {{ content_top }}
 
+
+
+      <h2>{{ heading_title }}</h2>
+
+      {% if image %}
+        <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-3"/>
+      {% endif %}
+      {% if description %}
+      <div class="mb-3">{{ description }}</div>
+      {% endif %}
+      <hr/>
+
       {% if topics %}
         <h3>{{ text_refine }}</h3>
         <div class="input-group dropdown mb-3">
-          <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
+          <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
           <select name="topic_id" id="input-topic" class="form-select">
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
@@ -23,28 +35,17 @@
         </div>
       {% endif %}
 
-      <h2>{{ heading_title }}</h2>
-
-      {% if image %}
-        <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/>
-      {% endif %}
-
-      {% if description %}
-      <div class="mb-4">{{ description }}</div>
-      {% endif %}
-
       {% if articles %}
         {% for article in articles %}
           <div class="mb-4">
             <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
-
             {% if article.image %}
-              <div class="article-image"><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-responsive"/></a></div>
+              <div><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
             {% endif %}
             <ul class="list-inline">
-              <li class="list-inline-item">By <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
+              <li class="list-inline-item">{{ text_by }} <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
               <li class="list-inline-item">{{ article.date_added }}</li>
-              <li class="list-inline-item">{{ article.comment_total }} comments</li>
+              <li class="list-inline-item">{{ article.comment_total }} {{ text_comments }}</li>
             </ul>
             <p class="mb-3">{{ article.description }}</p>
             <a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a>

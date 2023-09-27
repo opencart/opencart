@@ -531,25 +531,25 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (isset($store_info['config_image_article_width'])) {
 			$data['config_image_article_width'] = $store_info['config_image_article_width'];
 		} else {
-			$data['config_image_article_width'] = 80;
+			$data['config_image_article_width'] = 1140;
 		}
 
 		if (isset($store_info['config_image_article_height'])) {
 			$data['config_image_article_height'] = $store_info['config_image_article_height'];
 		} else {
-			$data['config_image_article_height'] = 80;
+			$data['config_image_article_height'] = 380;
 		}
 
 		if (isset($store_info['config_image_topic_width'])) {
 			$data['config_image_topic_width'] = $store_info['config_image_topic_width'];
 		} else {
-			$data['config_image_topic_width'] = 80;
+			$data['config_image_topic_width'] = 1140;
 		}
 
 		if (isset($store_info['config_image_topic_height'])) {
 			$data['config_image_topic_height'] = $store_info['config_image_topic_height'];
 		} else {
-			$data['config_image_topic_height'] = 80;
+			$data['config_image_topic_height'] = 380;
 		}
 
 		if (isset($store_info['config_image_compare_width'])) {

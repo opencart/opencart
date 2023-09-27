@@ -130,7 +130,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if ($topic_info && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['image'] = $this->model_tool_image->resize(html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+			$data['image'] = $this->model_tool_image->resize(html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_topic_width'), $this->config->get('config_image_topic_height'));
 		} else {
 			$data['image'] = '';
 		}
@@ -153,16 +153,16 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_article->getArticles($filter_data);
 
 		foreach ($results as $result) {
-			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
-			} else {
-				$image = '';
-			}
-
 			$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
 
 			if (oc_strlen($description) > $this->config->get('config_article_description_length')) {
 				$description = oc_substr($description, 0, $this->config->get('config_article_description_length')) . '..';
+			}
+
+			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+			} else {
+				$image = '';
 			}
 
 			$data['articles'][] = [
@@ -329,10 +329,11 @@ class Blog extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['author'] = $article_info['author'];
-			$data['date_added'] = $article_info['date_added'];
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($article_info['date_added']));
 			$data['tag'] = $article_info['tag'];
 
 			$data['comment'] = $this->getComments();
+			$data['comment_total'] = $this->model_cms_article->getTotalComments($article_id);
 
 			$data['continue'] = $this->url->link('cms/article', 'language=' . $this->config->get('config_language') . $url);
 

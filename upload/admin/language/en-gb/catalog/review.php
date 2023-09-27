@@ -24,6 +24,7 @@ $_['entry_author']      = 'Author';
 $_['entry_rating']      = 'Rating';
 $_['entry_status']      = 'Status';
 $_['entry_text']        = 'Text';
+$_['entry_date_added']  = 'Date Added';
 $_['entry_date_from']   = 'Date From';
 $_['entry_date_to']     = 'Date To';
 

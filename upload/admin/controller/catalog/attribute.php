@@ -87,16 +87,16 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+		if ($sort) {
+			$url .= '&sort=' . $sort;
 		}
 
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
+		if ($order) {
+			$url .= '&order=' . $order;
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+		if ($page) {
+			$url .= '&page=' . $page;
 		}
 
 		$data['action'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -138,8 +138,8 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+		if ($sort) {
+			$url .= '&sort=' . $sort;
 		}
 
 		if (isset($this->request->get['order'])) {

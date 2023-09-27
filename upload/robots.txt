@@ -1,3 +1,4 @@
+user-agent: *
 Disallow: /*?page=$
 Disallow: /*&page=$
 Disallow: /*?sort=

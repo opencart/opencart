@@ -635,7 +635,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Security
 		$data['config_security'] = $this->config->get('config_security');
 		$data['config_shared'] = $this->config->get('config_shared');
-		$data['config_encryption'] = $this->config->get('config_encryption');
 
 		// Uploads
 		if ($this->config->get('config_file_max_size')) {

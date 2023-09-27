@@ -7,23 +7,18 @@
   </ul>
   <div class="row">
     {{ column_left }}
-
     <div id="content" class="col">
       {{ content_top }}
       <h2>{{ heading_title }}</h2>
-
+      <div class="row">
       {% if thumb %}
         <img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/>
       {% endif %}
-
       <div>{{ description }}</div>
-
       <hr/>
       <div id="comment">{{ comment }}</div>
-
       {{ content_bottom }}
     </div>
-
     {{ column_right }}
   </div>
 </div>

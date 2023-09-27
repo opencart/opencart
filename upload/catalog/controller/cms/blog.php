@@ -134,6 +134,12 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_article->getArticles($filter_data);
 
 		foreach ($results as $result) {
+			$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
+
+			if (oc_strlen($description) > $this->config->get('config_article_description_length')) {
+				$description = oc_substr($description, 0, $this->config->get('config_article_description_length')) . '..';
+			}
+
 			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_blog_width'), $this->config->get('config_image_blog_height'));
 			} else {
@@ -142,9 +148,9 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$data['articles'][] = [
 				'article_id'    => $result['article_id'],
-				'image'         => $image,
 				'name'          => $result['name'],
-				'description'   => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_article_description_length')) . '..',
+				'description'   => $description,
+				'image'         => $image,
 				'author'        => $result['author'],
 				'comment_total' => $this->model_cms_article->getTotalComments($result['article_id']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -326,7 +332,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 	 */
 	public function getComments(): string {
 		if (isset($this->request->get['article_id'])) {
-			$article_id = $this->request->get['article_id'];
+			$article_id = (int)$this->request->get['article_id'];
 		} else {
 			$article_id = 0;
 		}
@@ -381,8 +387,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		$keys = [
-			'comment',
-			'author'
+			'author',
+			'comment'
 		];
 
 		foreach ($keys as $key) {

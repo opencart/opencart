@@ -168,7 +168,6 @@ $_['entry_session_expire']                = 'Session Lifetime';
 $_['entry_session_samesite']              = 'Session Samesite Cookie';
 $_['entry_compression']                   = 'Output Compression Level';
 $_['entry_security']                      = 'Two-factor Security';
-$_['entry_encryption']                    = 'Encryption Key';
 $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
 $_['entry_error_filename']                = 'Error Log Filename';

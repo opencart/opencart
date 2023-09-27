@@ -68,7 +68,7 @@ class Special extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . $url)
 		];
 
-		$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
+		$data['text_compare'] = sprintf($this->language->get('text_compare'), isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0);
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 

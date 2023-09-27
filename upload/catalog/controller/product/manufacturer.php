@@ -142,7 +142,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			$data['heading_title'] = $manufacturer_info['name'];
 
-			$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
+			$data['text_compare'] = sprintf($this->language->get('text_compare'), isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0);
 
 			$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 

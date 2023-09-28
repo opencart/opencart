@@ -42,7 +42,7 @@
   {% for image in images %}
     <div class="mb-3">
       <div class="mb-1" style="min-height: 140px;">
-        <a href="{{ image.href }}" class="thumbnail mb-1"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-thumbnail"/></a>
+        <a href="{{ image.href }}" class="thumbnail mb-1"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-fluid"/></a>
       </div>
       <div class="form-check">
         <label for="input-path-{{ path_row }}" class="form-check-label">{{ image.name }}</label>

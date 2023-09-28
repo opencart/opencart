@@ -165,8 +165,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 				$output .= 'TRUNCATE TABLE `' . $this->db->escape($table) . '`;' . "\n\n";
 			}
 
-			$record_total = $this->model_tool_backup->getTotalRecords($table);
-
 			$results = $this->model_tool_backup->getRecords($table, ($page - 1) * 200, 200);
 
 			foreach ($results as $result) {
@@ -198,6 +196,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 
 			$position = array_search($table, $backup);
+
+			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
 			if (($page * 200) >= $record_total) {
 				$output .= "\n";

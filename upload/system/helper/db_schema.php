@@ -686,11 +686,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'image',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -698,6 +693,11 @@ function oc_db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[
@@ -869,11 +869,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'image',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -881,6 +876,11 @@ function oc_db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[

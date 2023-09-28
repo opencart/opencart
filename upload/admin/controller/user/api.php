@@ -112,8 +112,6 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/api');
 
-		$user_total = $this->model_user_api->getTotalApis();
-
 		$results = $this->model_user_api->getApis($filter_data);
 
 		foreach ($results as $result) {
@@ -149,6 +147,8 @@ class Api extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$user_total = $this->model_user_api->getTotalApis();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $user_total,

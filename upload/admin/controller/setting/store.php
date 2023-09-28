@@ -90,10 +90,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$this->load->model('setting/setting');
-
-		$store_total += $this->model_setting_store->getTotalStores();
-
 		$results = $this->model_setting_store->getStores();
 
 		foreach ($results as $result) {
@@ -104,6 +100,8 @@ class Store extends \Opencart\System\Engine\Controller {
 				'edit'     => $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
 			];
 		}
+
+		$store_total += $this->model_setting_store->getTotalStores();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $store_total,
@@ -264,10 +262,10 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), 750, 90);
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
@@ -450,10 +448,10 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['logo'] = $data['placeholder'];
 		}
@@ -527,15 +525,31 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (isset($store_info['config_image_related_height'])) {
 			$data['config_image_related_height'] = $store_info['config_image_related_height'];
 		} else {
-			$data['config_image_related_height'] = 80;
+			$data['config_image_related_height'] = 74;
 		}
 
-		if (!$this->request->post['config_image_article_width'] || !$this->request->post['config_image_article_height']) {
-			$json['error']['image_article'] = $this->language->get('error_image_article');
+		if (isset($store_info['config_image_article_width'])) {
+			$data['config_image_article_width'] = $store_info['config_image_article_width'];
+		} else {
+			$data['config_image_article_width'] = 1140;
 		}
 
-		if (!$this->request->post['config_image_topic_width'] || !$this->request->post['config_image_topic_height']) {
-			$json['error']['image_topic'] = $this->language->get('error_image_topic');
+		if (isset($store_info['config_image_article_height'])) {
+			$data['config_image_article_height'] = $store_info['config_image_article_height'];
+		} else {
+			$data['config_image_article_height'] = 380;
+		}
+
+		if (isset($store_info['config_image_topic_width'])) {
+			$data['config_image_topic_width'] = $store_info['config_image_topic_width'];
+		} else {
+			$data['config_image_topic_width'] = 1140;
+		}
+
+		if (isset($store_info['config_image_topic_height'])) {
+			$data['config_image_topic_height'] = $store_info['config_image_topic_height'];
+		} else {
+			$data['config_image_topic_height'] = 380;
 		}
 
 		if (isset($store_info['config_image_compare_width'])) {
@@ -669,6 +683,14 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_related_height']) {
 			$json['error']['image_related'] = $this->language->get('error_image_related');
+		}
+
+		if (!$this->request->post['config_image_article_width'] || !$this->request->post['config_image_article_height']) {
+			$json['error']['image_article'] = $this->language->get('error_image_article');
+		}
+
+		if (!$this->request->post['config_image_topic_width'] || !$this->request->post['config_image_topic_height']) {
+			$json['error']['image_topic'] = $this->language->get('error_image_topic');
 		}
 
 		if (!$this->request->post['config_image_compare_width'] || !$this->request->post['config_image_compare_height']) {

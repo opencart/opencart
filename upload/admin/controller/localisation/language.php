@@ -112,8 +112,6 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$language_total = $this->model_localisation_language->getTotalLanguages();
-
 		$results = $this->model_localisation_language->getLanguages($filter_data);
 
 		foreach ($results as $result) {
@@ -148,6 +146,8 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$language_total = $this->model_localisation_language->getTotalLanguages();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $language_total,

@@ -112,8 +112,6 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher_theme');
 
-		$voucher_theme_total = $this->model_sale_voucher_theme->getTotalVoucherThemes();
-
 		$results = $this->model_sale_voucher_theme->getVoucherThemes($filter_data);
 
 		foreach ($results as $result) {
@@ -143,6 +141,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$voucher_theme_total = $this->model_sale_voucher_theme->getTotalVoucherThemes();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $voucher_theme_total,
@@ -228,10 +228,10 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}

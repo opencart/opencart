@@ -112,8 +112,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/filter');
 
-		$filter_total = $this->model_catalog_filter->getTotalGroups();
-
 		$results = $this->model_catalog_filter->getGroups($filter_data);
 
 		foreach ($results as $result) {
@@ -149,6 +147,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$filter_total = $this->model_catalog_filter->getTotalGroups();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $filter_total,

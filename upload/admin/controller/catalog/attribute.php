@@ -112,8 +112,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/attribute');
 
-		$attribute_total = $this->model_catalog_attribute->getTotalAttributes();
-
 		$results = $this->model_catalog_attribute->getAttributes($filter_data);
 
 		foreach ($results as $result) {
@@ -140,13 +138,15 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+		if ($sort) {
+			$url .= '&sort=' . $sort;
 		}
 
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$attribute_total = $this->model_catalog_attribute->getTotalAttributes();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $attribute_total,

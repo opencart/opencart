@@ -91,11 +91,11 @@ class Category extends \Opencart\System\Engine\Controller {
 					$path .= '_' . (int)$path_id;
 				}
 
-				$category_info = $this->model_catalog_category->getCategory($path_id);
+				$parent_info = $this->model_catalog_category->getCategory($path_id);
 
-				if ($category_info) {
+				if ($parent_info) {
 					$data['breadcrumbs'][] = [
-						'text' => $category_info['name'],
+						'text' => $parent_info['name'],
 						'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $path . $url)
 					];
 				}
@@ -135,14 +135,14 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$data['heading_title'] = $category_info['name'];
 
-			$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
+			$data['text_compare'] = sprintf($this->language->get('text_compare'), isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0);
 
 			$this->load->model('tool/image');
 
 			if (is_file(DIR_IMAGE . html_entity_decode($category_info['image'], ENT_QUOTES, 'UTF-8'))) {
-				$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($category_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+				$data['image'] = $this->model_tool_image->resize(html_entity_decode($category_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
 			} else {
-				$data['thumb'] = '';
+				$data['image'] = '';
 			}
 
 			$data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
@@ -222,11 +222,15 @@ class Category extends \Opencart\System\Engine\Controller {
 				'limit'               => $limit
 			];
 
-			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
-
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
+				$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
+
+				if (oc_strlen($description) > $this->config->get('config_product_description_length')) {
+					$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
+				}
+
 				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 				} else {
@@ -253,9 +257,9 @@ class Category extends \Opencart\System\Engine\Controller {
 
 				$product_data = [
 					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => $description,
+					'thumb'       => $image,
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -392,6 +396,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
+
+			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$data['pagination'] = $this->load->controller('common/pagination', [
 				'total' => $product_total,

@@ -75,10 +75,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
@@ -417,12 +417,24 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['logo'] = $data['placeholder'];
+		}
+
+		if ($this->config->get('config_image_default_width')) {
+			$data['config_image_default_width'] = $this->config->get('config_image_default_width');
+		} else {
+			$data['config_image_default_width'] = 300;
+		}
+
+		if ($this->config->get('config_image_default_height')) {
+			$data['config_image_default_height'] = $this->config->get('config_image_default_height');
+		} else {
+			$data['config_image_default_height'] = 300;
 		}
 
 		if ($this->config->get('config_image_category_width')) {
@@ -512,13 +524,25 @@ class Setting extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_image_article_width')) {
 			$data['config_image_article_width'] = $this->config->get('config_image_article_width');
 		} else {
-			$data['config_image_article_width'] = 90;
+			$data['config_image_article_width'] = 1140;
 		}
 
 		if ($this->config->get('config_image_article_height')) {
 			$data['config_image_article_height'] = $this->config->get('config_image_article_height');
 		} else {
-			$data['config_image_article_height'] = 90;
+			$data['config_image_article_height'] = 380;
+		}
+
+		if ($this->config->get('config_image_topic_width')) {
+			$data['config_image_topic_width'] = $this->config->get('config_image_topic_width');
+		} else {
+			$data['config_image_topic_width'] = 1140;
+		}
+
+		if ($this->config->get('config_image_topic_height')) {
+			$data['config_image_topic_height'] = $this->config->get('config_image_topic_height');
+		} else {
+			$data['config_image_topic_height'] = 380;
 		}
 
 		if ($this->config->get('config_image_wishlist_width')) {
@@ -623,7 +647,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Security
 		$data['config_security'] = $this->config->get('config_security');
 		$data['config_shared'] = $this->config->get('config_shared');
-		$data['config_encryption'] = $this->config->get('config_encryption');
 
 		// Uploads
 		if ($this->config->get('config_file_max_size')) {
@@ -729,6 +752,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['complete_status'] = $this->language->get('error_complete_status');
 		}
 
+		if (!$this->request->post['config_image_default_width'] || !$this->request->post['config_image_default_height']) {
+			$json['error']['image_default'] = $this->language->get('error_image_category');
+		}
+
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {
 			$json['error']['image_category'] = $this->language->get('error_image_category');
 		}
@@ -779,10 +806,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if ($this->request->post['config_security'] && !$this->request->post['config_mail_engine']) {
 			$json['error']['warning'] = $this->language->get('error_security');
-		}
-
-		if ((oc_strlen($this->request->post['config_encryption']) < 32) || (oc_strlen($this->request->post['config_encryption']) > 1024)) {
-			$json['error']['encryption'] = $this->language->get('error_encryption');
 		}
 
 		if (!$this->request->post['config_file_max_size']) {

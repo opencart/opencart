@@ -112,8 +112,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/subscription_status');
 
-		$subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
-
 		$results = $this->model_localisation_subscription_status->getSubscriptionStatuses($filter_data);
 
 		foreach ($results as $result) {
@@ -143,6 +141,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_status_total,

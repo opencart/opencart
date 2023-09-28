@@ -167,8 +167,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
-
 		$results = $this->model_localisation_country->getCountries($filter_data);
 
 		foreach ($results as $result) {
@@ -227,6 +225,8 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $country_total,

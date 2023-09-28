@@ -229,6 +229,8 @@ $('#path').on('click', 'a.file', function (e) {
 $('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function (e) {
     e.preventDefault();
 
+
+
     // 1. Remove tab functionality
     $(this).parent().removeAttr('data-bs-toggle');
 
@@ -253,6 +255,8 @@ $('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function (e) {
         $('#code').hide();
         $('#recent').show();
     }
+
+
 });
 
 $('.tab-content').on('click', '.btn-primary', function (e) {

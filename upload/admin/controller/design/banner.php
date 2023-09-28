@@ -112,8 +112,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/banner');
 
-		$banner_total = $this->model_design_banner->getTotalBanners();
-
 		$results = $this->model_design_banner->getBanners($filter_data);
 
 		foreach ($results as $result) {
@@ -144,6 +142,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$banner_total = $this->model_design_banner->getTotalBanners();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $banner_total,
@@ -251,13 +251,13 @@ class Banner extends \Opencart\System\Engine\Controller {
 					'title'      => $value['title'],
 					'link'       => $value['link'],
 					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
+					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
 					'sort_order' => $value['sort_order']
 				];
 			}
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		$data['user_token'] = $this->session->data['user_token'];
 

@@ -12,10 +12,6 @@ class Special extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('product/special');
 
-		$this->load->model('catalog/product');
-
-		$this->load->model('tool/image');
-
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -72,7 +68,7 @@ class Special extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . $url)
 		];
 
-		$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
+		$data['text_compare'] = sprintf($this->language->get('text_compare'), isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0);
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
@@ -85,11 +81,18 @@ class Special extends \Opencart\System\Engine\Controller {
 			'limit' => $limit
 		];
 
-		$product_total = $this->model_catalog_product->getTotalSpecials();
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
 
 		$results = $this->model_catalog_product->getSpecials($filter_data);
 
 		foreach ($results as $result) {
+			$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
+
+			if (oc_strlen($description) > $this->config->get('config_product_description_length')) {
+				$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
+			}
+
 			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 			} else {
@@ -118,7 +121,7 @@ class Special extends \Opencart\System\Engine\Controller {
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
-				'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
+				'description' => $description,
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
@@ -231,6 +234,8 @@ class Special extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['limit'])) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
+
+		$product_total = $this->model_catalog_product->getTotalSpecials();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,

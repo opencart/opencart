@@ -125,8 +125,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/currency');
 
-		$currency_total = $this->model_localisation_currency->getTotalCurrencies();
-
 		$results = $this->model_localisation_currency->getCurrencies($filter_data);
 
 		foreach ($results as $result) {
@@ -164,6 +162,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$currency_total = $this->model_localisation_currency->getTotalCurrencies();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $currency_total,

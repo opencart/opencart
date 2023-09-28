@@ -275,8 +275,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
-
 		$results = $this->model_customer_customer->getCustomers($filter_data);
 
 		foreach ($results as $result) {
@@ -397,6 +395,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,

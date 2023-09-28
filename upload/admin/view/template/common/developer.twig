@@ -14,40 +14,47 @@
               <td class="text-end" style="width: 1px;">{{ column_action }}</td>
             </tr>
           </thead>
-          <tr>
-            <td>{{ entry_theme }}</td>
-            <td></td>
-            <td class="text-end"><button type="button" value="theme" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-          </tr>
-          <tr>
-            <td>{{ entry_sass }}</td>
-            <td>
-              <div class="form-check form-switch form-switch-lg">
-                <input type="hidden" name="developer_sass" value="0"/>
-                <input type="checkbox" name="developer_sass" value="1" id="input-developer-sass" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
-              </div>
-            </td>
-            <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>{{ text_cache }}</td>
+              <td></td>
+              <td class="text-end"><button type="button" value="cache" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+            </tr>
+            <tr>
+              <td>{{ text_theme }}</td>
+              <td></td>
+              <td class="text-end"><button type="button" value="theme" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+            </tr>
+            <tr>
+              <td>{{ text_sass }}</td>
+              <td>
+                <div class="form-check form-switch form-switch-lg">
+                  <input type="hidden" name="developer_sass" value="0"/>
+                  <input type="checkbox" name="developer_sass" value="1" id="input-developer-sass" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
+                </div>
+              </td>
+              <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'developer_sass\']').on('change', function () {
+$('input[name=\'developer_sass\']').on('change', function() {
     $.ajax({
         url: 'index.php?route=common/developer.edit&user_token={{ user_token }}',
         type: 'post',
         data: $('input[name=\'developer_sass\']:checked'),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('input[name=\'developer_sass\']').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $('input[name=\'developer_sass\']').prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -58,25 +65,25 @@ $('input[name=\'developer_sass\']').on('change', function () {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#modal-developer table button').on('click', function () {
+$('#modal-developer table button').on('click', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=common/developer.' + $(element).attr('value') + '&user_token={{ user_token }}',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -87,7 +94,7 @@ $('#modal-developer table button').on('click', function () {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

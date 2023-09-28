@@ -112,8 +112,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher');
 
-		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
-
 		$results = $this->model_sale_voucher->getVouchers($filter_data);
 
 		foreach ($results as $result) {
@@ -162,6 +160,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $voucher_total,

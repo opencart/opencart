@@ -12,6 +12,12 @@ class Reward extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/reward');
 
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
 			$this->session->data['redirect'] = $this->url->link('account/reward', 'language=' . $this->config->get('config_language'));
 
@@ -37,14 +43,6 @@ class Reward extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/reward', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
-		$this->load->model('account/reward');
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
 		$limit = 10;
 
 		$data['rewards'] = [];
@@ -56,7 +54,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			'limit' => $limit
 		];
 
-		$reward_total = $this->model_account_reward->getTotalRewards();
+		$this->load->model('account/reward');
 
 		$results = $this->model_account_reward->getRewards($filter_data);
 
@@ -69,6 +67,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 				'href'        => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id'])
 			];
 		}
+
+		$reward_total = $this->model_account_reward->getTotalRewards();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $reward_total,

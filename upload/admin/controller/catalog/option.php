@@ -112,8 +112,6 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/option');
 
-		$option_total = $this->model_catalog_option->getTotalOptions();
-
 		$results = $this->model_catalog_option->getOptions($filter_data);
 
 		foreach ($results as $result) {
@@ -145,6 +143,8 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$option_total = $this->model_catalog_option->getTotalOptions();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $option_total,
@@ -257,12 +257,12 @@ class Option extends \Opencart\System\Engine\Controller {
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
+				'thumb'                    => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
 				'sort_order'               => $option_value['sort_order']
 			];
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		$data['user_token'] = $this->session->data['user_token'];
 

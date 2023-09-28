@@ -131,8 +131,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/antispam');
 
-		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
-
 		$results = $this->model_cms_antispam->getAntispams($filter_data);
 
 		foreach ($results as $result) {
@@ -170,6 +168,8 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $antispam_total,

@@ -112,8 +112,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/custom_field');
 
-		$custom_field_total = $this->model_customer_custom_field->getTotalCustomFields();
-
 		$results = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($results as $result) {
@@ -186,6 +184,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$custom_field_total = $this->model_customer_custom_field->getTotalCustomFields();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $custom_field_total,

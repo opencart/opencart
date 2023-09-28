@@ -112,8 +112,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('marketing/coupon');
 
-		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
-
 		$results = $this->model_marketing_coupon->getCoupons($filter_data);
 
 		foreach ($results as $result) {
@@ -153,6 +151,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $coupon_total,

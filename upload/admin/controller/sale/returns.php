@@ -293,8 +293,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/returns');
 
-		$return_total = $this->model_sale_returns->getTotalReturns($filter_data);
-
 		$results = $this->model_sale_returns->getReturns($filter_data);
 
 		foreach ($results as $result) {
@@ -401,6 +399,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$return_total = $this->model_sale_returns->getTotalReturns($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,

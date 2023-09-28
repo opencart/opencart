@@ -36,14 +36,14 @@ class Cookie extends \Opencart\System\Engine\Controller {
 	public function confirm(): void {
 		$json = [];
 
+		if (isset($this->request->get['agree'])) {
+			$agree = (int)$this->request->get['agree'];
+		} else {
+			$agree = 0;
+		}
+
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->language('common/cookie');
-
-			if (isset($this->request->get['agree'])) {
-				$agree = (int)$this->request->get['agree'];
-			} else {
-				$agree = 0;
-			}
 
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 365,

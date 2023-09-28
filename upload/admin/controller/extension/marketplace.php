@@ -21,10 +21,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = $this->model_setting_extension->getPaths('%/admin/controller/marketplace/%.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/marketplace/*.php');
 
 		foreach ($results as $result) {
-			$available[] = basename($result['path'], '.php');
+			$available[] = basename($result, '.php');
 		}
 
 		$installed = [];
@@ -45,9 +45,11 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$extension = substr($result['path'], 0, strpos($result['path'], '/'));
+				$path = substr($result, strlen(DIR_EXTENSION));
 
-				$code = basename($result['path'], '.php');
+				$extension = substr($path, 0, strpos($path, '/'));
+
+				$code = basename($result, '.php');
 
 				$this->load->language('extension/' . $extension . '/marketplace/' . $code, $code);
 

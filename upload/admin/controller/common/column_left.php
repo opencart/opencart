@@ -277,8 +277,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$seo = [];
-
 			if ($this->user->hasPermission('access', 'design/seo_url')) {
 				$design[] = [
 					'name'	   => $this->language->get('text_seo_url'),

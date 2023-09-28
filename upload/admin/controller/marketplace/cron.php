@@ -114,8 +114,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/cron');
 
-		$cron_total = $this->model_setting_cron->getTotalCrons();
-
 		$results = $this->model_setting_cron->getCrons($filter_data);
 
 		foreach ($results as $result) {
@@ -157,6 +155,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$cron_total = $this->model_setting_cron->getTotalCrons();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $cron_total,

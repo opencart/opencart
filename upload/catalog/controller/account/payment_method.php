@@ -94,12 +94,11 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 				//$payment_method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethods($payment_address);
 
-				if ($payment_method) {
-					$method_data[$result['code']] = $payment_method;
-				}
+				//if ($payment_method) {
+				//	$method_data[$result['code']] = $payment_method;
+				//}
 			}
 		}
-
 
 		foreach ($results as $result) {
 			$data['payment_methods'][] = [

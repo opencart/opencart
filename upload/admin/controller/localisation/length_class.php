@@ -112,8 +112,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/length_class');
 
-		$length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
-
 		$results = $this->model_localisation_length_class->getLengthClasses($filter_data);
 
 		foreach ($results as $result) {
@@ -147,6 +145,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $length_class_total,

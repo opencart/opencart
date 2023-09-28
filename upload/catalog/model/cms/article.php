@@ -43,19 +43,19 @@ class Article extends \Opencart\System\Engine\Model {
 			$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
 
 			foreach ($words as $word) {
-				$implode[] = "`bd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 			}
 
 			if ($implode) {
 				$sql .= " (" . implode(" OR ", $implode) . ")";
 			}
 
-			$sql .= " OR `bd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+			$sql .= " OR `ad`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
 
 			$implode = [];
 
 			foreach ($words as $word) {
-				$implode[] = "`bd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				$implode[] = "`ad`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 			}
 
 			if ($implode) {

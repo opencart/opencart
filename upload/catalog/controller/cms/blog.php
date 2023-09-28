@@ -222,6 +222,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['search'] = $filter_search;
+		$data['language'] = $this->config->get('config_language');
 		$data['topic_id'] = $filter_topic_id;
 
 		$data['topics'] = [];

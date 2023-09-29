@@ -307,13 +307,13 @@ class Blog extends \Opencart\System\Engine\Controller {
 			if ($topic_info) {
 				$data['breadcrumbs'][] = [
 					'text' => $topic_info['name'],
-					'href' => $this->url->link('cms/article', 'language=' . $this->config->get('config_language') . $url)
+					'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
 				];
 			}
 
 			$data['breadcrumbs'][] = [
 				'text' => $article_info['name'],
-				'href' => $this->url->link('cms/article.info', 'language=' . $this->config->get('config_language') . '&article_id=' .  $article_id . $url)
+				'href' => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' .  $article_id . $url)
 			];
 
 			$data['heading_title'] = $article_info['name'];
@@ -347,7 +347,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['comment'] = $this->config->get('config_comment_status') ? $this->load->controller('cms/comment') : '';
 			$data['comment_total'] = $this->model_cms_article->getTotalComments($article_id);
 
-			$data['continue'] = $this->url->link('cms/article', 'language=' . $this->config->get('config_language') . $url);
+			$data['continue'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

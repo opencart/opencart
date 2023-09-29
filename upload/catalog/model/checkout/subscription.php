@@ -205,4 +205,88 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function editDateNext(int $subscription_id, string $date_next): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `date_next` = '" . $this->db->escape($date_next) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
+	
+	/**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function getSubscriptions(array $data): array {
+        $sql = "SELECT `s`.`subscription_id`, `s`.*, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer, (SELECT ss.`name` FROM `" . DB_PREFIX . "subscription_status` ss WHERE ss.`subscription_status_id` = s.`subscription_status_id` AND ss.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS subscription_status FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
+
+        $implode = [];
+
+        if (!empty($data['filter_subscription_id'])) {
+            $implode[] = "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
+        }
+
+        if (!empty($data['filter_order_id'])) {
+            $implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+        }
+
+        if (!empty($data['filter_order_product_id'])) {
+            $implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
+        }
+
+        if (!empty($data['filter_customer'])) {
+            $implode[] = "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer'] . '%') . "'";
+        }
+
+        if (!empty($data['filter_date_next'])) {
+            $implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
+        }
+
+        if (!empty($data['filter_subscription_status_id'])) {
+            $implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
+        }
+
+        if (!empty($data['filter_date_from'])) {
+            $implode[] = "DATE(s.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+        }
+
+        if (!empty($data['filter_date_to'])) {
+            $implode[] = "DATE(s.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+        }
+
+        if ($implode) {
+            $sql .= " WHERE " . implode(" AND ", $implode);
+        }
+
+        $sort_data = [
+            's.subscription_id',
+            's.order_id',
+            's.reference',
+            'customer',
+            's.subscription_status',
+            's.date_added'
+        ];
+
+        if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+            $sql .= " ORDER BY " . $data['sort'];
+        } else {
+            $sql .= " ORDER BY `s`.`subscription_id`";
+        }
+
+        if (isset($data['order']) && ($data['order'] == 'DESC')) {
+            $sql .= " DESC";
+        } else {
+            $sql .= " ASC";
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+
+            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+        }
+
+        $query = $this->db->query($sql);
+
+        return $query->rows;
+    }
 }

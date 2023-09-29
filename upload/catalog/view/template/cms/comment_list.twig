@@ -1,18 +1,18 @@
 {% if comments %}
+
   {% for comment in comments %}
+
+
     <div id="comment{{ comment.blog_comment_id }}" class="media">
-      <div class="media-left"><img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="media-object"/></div>
+      <div class="media-left"><img src="{{ comment.image }}" alt="{{ comment.author }}" title="{{ comment.author }}" class="media-object"/></div>
       <div class="media-body">
 
-
-        {% if comment.remove %}
-          <div class="pull-right"><a href="{{ comment.remove }}" class="btn btn-link btn-xs comment-remove">Remove</a></div>
-        {% endif %}
-
-        <p class="media-heading">{{ comment.member }} <span>{{ comment.date_added }}</span></p>
+        <p class="media-heading">{{ comment.author }} <span>{{ comment.date_added }}</span></p>
         <p>{{ comment.comment }}</p>
+
         <div class="reply">
           <div class="reply-box">
+
             <div>
               {% if comment.reply %}
 
@@ -34,17 +34,16 @@
 
               {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a>
             </div>
+
           </div>
 
-          {% if logged %}
           <p class="text-right">
+            {% if logged %}
             <button type="button" data-toggle="tooltip" data-title="Reply" class="btn btn-link btn-sm">Reply</button>
             {% else %}
               <button type="button" class="btn btn-link btn-xs" disabled="disabled">Reply</button>
             {% endif %}
           </p>
-
-
 
           <div class="reply-input-box" style="display: none;">
             <div class="media">
@@ -60,10 +59,12 @@
           </div>
         </div>
       </div>
+
     </div>
   {% endfor %}
-  <br/>
-  <div class="text-center">{{ pagination }}</div>
+
+  <div class="text-end">{{ pagination }}</div>
 {% else %}
-  <div class="text-center">{{ text_no_results }}</div>
+
+  <p class="text-center">{{ text_no_results }}</p>
 {% endif %}

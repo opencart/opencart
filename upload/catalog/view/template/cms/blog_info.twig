@@ -11,15 +11,14 @@
       {{ content_top }}
       <h2>{{ heading_title }}</h2>
       {% if image %}
-        <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-3"/>
+        <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-2"/>
       {% endif %}
       <ul class="list-inline">
         <li class="list-inline-item">{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a></li>
         <li class="list-inline-item">{{ date_added }}</li>
         <li class="list-inline-item">{{ comment_total }} {{ text_comment }}</li>
       </ul>
-      {{ description }}
-
+      <div>{{ description }}</div>
       {% if tags %}
         <p>{{ text_tags }}
           {% for tag in tags %}
@@ -27,19 +26,13 @@
           {% endfor %}
         </p>
       {% endif %}
-
-      <hr/>
-      <div id="comment">{{ comment }}</div
+      {% if comment %}
+        <hr/>
+        <div>{{ comment }}</div>
+      {% endif %}
       {{ content_bottom }}
     </div>
     {{ column_right }}
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#comment').on('click', '.pagination a', function(e) {
-    e.preventDefault();
-
-    $('#comment').load(this.href);
-});
-//--></script>
 {{ footer }}

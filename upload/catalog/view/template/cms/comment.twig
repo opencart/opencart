@@ -1,7 +1,9 @@
 <form id="form-comment">
   <div id="comment">{{ list }}</div>
+
   <h2>{{ text_write }}</h2>
-  {% if review_guest %}
+
+  {% if comment_guest %}
     <div class="mb-3 required">
       <label for="input-author" class="form-label">{{ entry_author }}</label>
       <input type="text" name="author" value="{{ author }}" id="input-author" class="form-control"/>
@@ -9,7 +11,7 @@
     </div>
     <div class="mb-3 required">
       <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-      <textarea name="text" rows="5" id="input-comment" class="form-control"></textarea>
+      <textarea name="comment" rows="5" id="input-comment" class="form-control"></textarea>
       <div id="error-comment" class="invalid-feedback"></div>
     </div>
     {{ captcha }}
@@ -18,13 +20,16 @@
         <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
       </div>
       <div class="col text-end">
-        <button type="submit" id="button-comment" class="btn btn-primary">{{ button_continue }}</button>
+        <button type="submit" id="button-comment" class="btn btn-primary">{{ button_submit }}</button>
       </div>
     </div>
   {% else %}
     {{ text_login }}
   {% endif %}
+
+
 </form>
+
 <script type="text/javascript"><!--
 $('#comment').on('click', '.pagination a', function(e) {
     e.preventDefault();
@@ -39,7 +44,7 @@ $('#form-comment').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=cms/comment.addComment&language={{ language }}&comment_token={{ comment_token }}&article_id={{ article_id }}',
+        url: 'index.php?route=cms/comment.write&language={{ language }}&comment_token={{ comment_token }}&article_id={{ article_id }}',
         type: 'post',
         data: $('#form-comment').serialize(),
         dataType: 'json',

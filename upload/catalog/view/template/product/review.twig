@@ -3,11 +3,13 @@
   <h2>{{ text_write }}</h2>
   {% if review_guest %}
     <div class="mb-3 required">
-      <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
-      <div id="error-name" class="invalid-feedback"></div>
+      <label for="input-author" class="form-label">{{ entry_author }}</label>
+      <input type="text" name="author" value="{{ customer }}" id="input-author" class="form-control"/>
+      <div id="error-author" class="invalid-feedback"></div>
     </div>
     <div class="mb-3 required">
-      <label for="input-text" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
+      <label for="input-text" class="form-label">{{ entry_review }}</label>
+      <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
       <div id="error-text" class="invalid-feedback"></div>
       <div class="invalid-feedback">{{ text_note }}</div>
     </div>

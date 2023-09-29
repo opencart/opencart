@@ -629,6 +629,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'author',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
@@ -1784,8 +1789,12 @@ function oc_db_schema() {
 			[
 				'name' => 'newsletter',
 				'type' => 'tinyint(1)',
-				'not_null' => true,
-				'default' => '0'
+				'not_null' => true
+			],
+			[
+				'name' => 'commenter',
+				'type' => 'tinyint(1)',
+				'not_null' => true
 			],
 			[
 				'name' => 'ip',

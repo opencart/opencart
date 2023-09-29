@@ -156,7 +156,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if ((utf8_strlen($this->request->post['comment']) < 2) || (utf8_strlen($this->request->post['comment']) > 1000)) {
+		if ((oc_strlen($this->request->post['comment']) < 2) || (oc_strlen($this->request->post['comment']) > 1000)) {
 			$json['error']['comment'] = $this->language->get('error_comment');
 		}
 
@@ -181,7 +181,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 			$spam = $this->model_cms_antispam->getSpam($comment);
 
-			if (!$this->customer->isCommentor() || $spam) {
+			if (!$this->customer->isCommenter() || $spam) {
 				$status = 0;
 			} else {
 				$status = 1;

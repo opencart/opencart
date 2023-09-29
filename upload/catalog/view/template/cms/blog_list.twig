@@ -10,13 +10,16 @@
     <div id="content" class="col">
       {{ content_top }}
       <h2>{{ heading_title }}</h2>
+
       {% if image %}
         <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-3"/>
       {% endif %}
+
       {% if description %}
         <div class="mb-3">{{ description }}</div>
       {% endif %}
       <hr/>
+
       {% if topics %}
         <h3>{{ text_refine }}</h3>
         <div class="input-group dropdown mb-3">
@@ -27,6 +30,7 @@
           </select> <a href="{{ continue }}" class="btn btn-primary">{{ button_search }}</a>
         </div>
       {% endif %}
+
       {% if articles %}
         {% for article in articles %}
           <div class="mb-4">

@@ -50,6 +50,14 @@ class Customer {
 	 * @var bool|mixed
 	 */
 	private bool $newsletter = false;
+	/**
+	 * @var bool|mixed
+	 */
+	private bool $safe = false;
+	/**
+	 * @var bool|mixed
+	 */
+	private bool $commenter = false;
 
 	/**
 	 * Constructor
@@ -73,6 +81,8 @@ class Customer {
 				$this->email = $customer_query->row['email'];
 				$this->telephone = $customer_query->row['telephone'];
 				$this->newsletter = $customer_query->row['newsletter'];
+				$this->safe = $customer_query->row['safe'];
+				$this->commenter = $customer_query->row['commenter'];
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `language_id` = '" . (int)$this->config->get('config_language_id') . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `customer_id` = '" . (int)$this->customer_id . "'");
 			} else {
@@ -119,6 +129,8 @@ class Customer {
 			$this->email = $customer_query->row['email'];
 			$this->telephone = $customer_query->row['telephone'];
 			$this->newsletter = $customer_query->row['newsletter'];
+			$this->safe = $customer_query->row['safe'];
+			$this->commenter = $customer_query->row['commenter'];
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `language_id` = '" . (int)$this->config->get('config_language_id') . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `customer_id` = '" . (int)$this->customer_id . "'");
 
@@ -143,6 +155,8 @@ class Customer {
 		$this->email = '';
 		$this->telephone = '';
 		$this->newsletter = false;
+		$this->safe = 0;
+		$this->commenter = 0;
 	}
 
 	/**
@@ -215,6 +229,24 @@ class Customer {
 	 */
 	public function getNewsletter(): bool {
 		return $this->newsletter;
+	}
+
+	/**
+	 * isSafe
+	 *
+	 * @return   bool
+	 */
+	public function isSafe(): bool {
+		return $this->safe;
+	}
+
+	/**
+	 * isCommenter
+	 *
+	 * @return   bool
+	 */
+	public function isCommenter(): bool {
+		return $this->commenter;
 	}
 
 	/**

@@ -22,8 +22,6 @@ $('#button-shipping-methods').on('click', function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 $('#input-shipping-method').removeClass('is-invalid');
                 $('#error-shipping-method').removeClass('d-block');
 
@@ -110,8 +108,6 @@ $(document).on('submit', '#form-shipping-method', function(e) {
                 $('#button-shipping-method').button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

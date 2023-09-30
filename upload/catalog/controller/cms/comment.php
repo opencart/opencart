@@ -116,7 +116,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['article_id'])) {
-			$article_id = $this->request->get['article_id'];
+			$article_id = (int)$this->request->get['article_id'];
 		} else {
 			$article_id = 0;
 		}

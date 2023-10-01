@@ -1415,7 +1415,8 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 (10, 'Affiliate'),
 (11, 'Information'),
 (12, 'Compare'),
-(13, 'Search');
+(13, 'Search'),
+(14, 'Blog');
 
 -----------------------------------------------------------
 
@@ -1426,11 +1427,12 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
 (1, 10, 'opencart.account', 'column_right', 1),
 (2, 6, 'opencart.account', 'column_right', 1),
-(3, 1, 'opencart.banner.3', 'content_top', 1),
-(4, 1, 'opencart.featured.2', 'content_top', 2),
-(5, 1, 'opencart.banner.4', 'content_bottom', 1),
-(6, 3, 'opencart.category', 'column_left', 1),
-(7, 3, 'opencart.banner.1', 'column_left', 2);
+(3, 1, 'opencart.featured.2', 'content_top', 2),
+(4, 3, 'opencart.banner.1', 'column_left', 2),
+(5, 1, 'opencart.banner.3', 'content_top', 1),
+(6, 1, 'opencart.banner.4', 'content_bottom', 1),
+(7, 3, 'opencart.category', 'column_left', 1),
+(8, 14, 'opencart.topic', 'column_left', 1)
 
 -----------------------------------------------------------
 
@@ -1452,7 +1454,9 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (11, 4, 0, ''),
 (12, 5, 0, 'product/manufacturer'),
 (13, 12, 0, 'product/compare'),
-(14, 13, 0, 'product/search');
+(14, 13, 0, 'product/search'),
+(15, 14, 0, 'cms/blog'),
+(16, 14, 0, 'cms/blog.info');
 
 -----------------------------------------------------------
 

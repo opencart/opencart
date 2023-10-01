@@ -302,7 +302,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				'serialized' => 0
 			];
 
-
 			$missing[] = [
 				'key'        => 'config_subscription_denied_status_id',
 				'value'      => 5,

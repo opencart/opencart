@@ -20,20 +20,22 @@
       {% endif %}
       <hr/>
 
-      {% if topics %}
-        <h3>{{ text_refine }}</h3>
-        <div class="input-group dropdown mb-3">
-          <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
+      <h3>{{ text_refine }}</h3>
+      <div class="input-group dropdown mb-3">
+        <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
+        {% if topics %}
           <select name="topic_id" id="input-topic" class="form-select">
+            <option value="">{{ text_all }}</option>
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
             {% endfor %}
           </select>
-          <button id="button-search" class="btn btn-primary">{{ button_search }}</button>
-        </div>
-      {% endif %}
+        {% endif %}
+        <button id="button-search" class="btn btn-primary">{{ button_search }}</button>
+      </div>
 
       {% if articles %}
+
         {% for article in articles %}
           <div class="mb-4">
             <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
@@ -51,6 +53,7 @@
             </div>
           </div>
         {% endfor %}
+
         <div class="row">
           <div class="col-sm-6 text-start">{{ pagination }}</div>
           <div class="col-sm-6 text-end">{{ results }}</div>

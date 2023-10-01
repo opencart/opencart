@@ -7437,16 +7437,6 @@ function oc_db_schema() {
 				'name' => 'type',
 				'type' => 'char(1)',
 				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_modified',
-				'type' => 'datetime',
-				'not_null' => true
 			]
 		],
 		'primary' => [

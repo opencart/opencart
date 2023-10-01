@@ -226,11 +226,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['topics'] = [];
 
-		$data['topics'][] = [
-			'name' => $this->language->get('text_all'),
-			'href' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'))
-		];
-
 		$results = $this->model_cms_topic->getTopics();
 
 		foreach ($results as $result) {

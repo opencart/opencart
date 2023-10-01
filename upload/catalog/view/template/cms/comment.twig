@@ -1,8 +1,6 @@
 <form id="form-comment">
   <div id="comment">{{ list }}</div>
-
   <h2>{{ text_write }}</h2>
-
   {% if comment_guest %}
     <div class="mb-3 required">
       <label for="input-author" class="form-label">{{ entry_author }}</label>
@@ -26,10 +24,7 @@
   {% else %}
     {{ text_login }}
   {% endif %}
-
-
 </form>
-
 <script type="text/javascript"><!--
 $('#comment').on('click', '.pagination a', function(e) {
     e.preventDefault();

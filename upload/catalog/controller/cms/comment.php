@@ -82,17 +82,18 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['articles'] = [];
+		$data['comments'] = [];
 
 		$this->load->model('cms/article');
 
 		$results = $this->model_cms_article->getComments($article_id, ($page - 1) * (int)$this->config->get('config_pagination_admin'), (int)$this->config->get('config_pagination_admin'));
 
 		foreach ($results as $result) {
-			$data['articles'][] = [
-				'text'       => nl2br($result['text']),
-				'author'     => $result['author'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			$data['comments'][] = [
+				'article_comment_id' => $result['article_comment_id'],
+				'comment'            => nl2br($result['comment']),
+				'author'             => $result['author'],
+				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
 

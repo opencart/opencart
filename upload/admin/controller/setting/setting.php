@@ -440,13 +440,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_image_category_width')) {
 			$data['config_image_category_width'] = $this->config->get('config_image_category_width');
 		} else {
-			$data['config_image_category_width'] = 80;
+			$data['config_image_category_width'] = 160;
 		}
 
 		if ($this->config->get('config_image_category_height')) {
 			$data['config_image_category_height'] = $this->config->get('config_image_category_height');
 		} else {
-			$data['config_image_category_height'] = 80;
+			$data['config_image_category_height'] = 160;
 		}
 
 		if ($this->config->get('config_image_thumb_width')) {

@@ -565,9 +565,6 @@ footer h5 {
     border-left: 1px solid #ddd;
   }
 }
-.rating {
-  padding-bottom: 10px;
-}
 .rating .fa-stack {
   width: 20px;
 }

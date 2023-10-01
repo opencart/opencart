@@ -1,12 +1,15 @@
 {% if comments %}
+
   {% for comment in comments %}
     <table class="table table-bordered">
 
       <tr>
         <td class="align-text-top">
 
-          <h4><a href="{{ comment.filter_blog }}" target="_blank">{{ comment.title }}</a></h4>
-          <p><a href="{{ comment.filter_member }}" target="_blank">{{ comment.customer }}</a> - {{ comment.date_added }}</p>
+          <h4><a href="{{ comment.filter_name }}" target="_blank">{{ comment.name }}</a></h4>
+
+          <p><a href="{{ comment.filter_author }}" target="_blank">{{ comment.author }}</a> - {{ comment.date_added }}</p>
+
           <p>{{ comment.comment }}</p>
 
         </td>
@@ -23,17 +26,22 @@
           <button type="button" value="{{ comment.delete }}" class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i> {{ button_delete }}</button>
 
         </td>
+
       </tr>
     </table>
   {% endfor %}
+
   <div class="row">
     <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
+
 {% else %}
+
   <table class="table">
     <tr>
       <td class="text-center">No results!</td>
     </tr>
   </table>
+
 {% endif %}

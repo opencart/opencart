@@ -27,13 +27,21 @@ class User {
 	 */
 	private string $username = '';
 	/**
-	 * @var int|mixed
+	 * @var string|mixed
 	 */
-	private int $user_group_id = 0;
+	private string $firstname = '';
+	/**
+	 * @var string|mixed
+	 */
+	private string $lastname = '';
 	/**
 	 * @var string|mixed
 	 */
 	private string $email = '';
+	/**
+	 * @var int|mixed
+	 */
+	private int $user_group_id = 0;
 	/**
 	 * @var array
 	 */

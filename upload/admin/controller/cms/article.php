@@ -242,10 +242,20 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+
+		if ($user_info) {
+			$data['author_username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
+		} else {
+			$data['author_username'] = '';
+		}
+
 		if (!empty($article_info)) {
 			$data['author'] = $article_info['author'];
 		} else {
-			$data['author'] = '';
+			$data['author'] = $data['author_username'];
 		}
 
 		$this->load->model('cms/topic');

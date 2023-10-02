@@ -41,8 +41,13 @@ $_['text_captcha']                        = 'Captcha';
 $_['text_comment']                        = 'Comment';
 $_['text_hour']                           = 'Hour(s)';
 $_['text_none']                           = 'None';
-$_['text_lax']                            = 'Lax' ;
+$_['text_lax']                            = 'Lax';
 $_['text_strict']                         = 'Strict';
+$_['text_region']                         = 'Region';
+$_['text_language']                       = 'Language';
+$_['text_currency']                       = 'Currency';
+$_['text_measurement']                    = 'Measurement';
+
 
 // Entry
 $_['entry_meta_title']                    = 'Meta Title';

@@ -169,102 +169,116 @@
               {% endif %}
             </div>
             <div id="tab-local" class="tab-pane">
-              <div class="row mb-3">
-                <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
-                <div class="col-sm-10">
-                  <select name="config_country_id" id="input-country" class="form-select">
-                    {% for country in countries %}
-                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
-                <div class="col-sm-10">
-                  <select name="config_zone_id" id="input-zone" class="form-select"></select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-timezone" class="col-sm-2 col-form-label">{{ entry_timezone }}</label>
-                <div class="col-sm-10">
-                  <select name="config_timezone" id="input-timezone" class="form-select">
-                    {% for timezone in timezones %}
-                      <option value="{{ timezone.value }}"{% if timezone.value == config_timezone %} selected{% endif %}>{{ timezone.text }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
-                <div class="col-sm-10">
-                  <select name="config_language" id="input-language" class="form-select">
-                    {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
-                <div class="col-sm-10">
-                  <select name="config_language_admin" id="input-language-admin" class="form-select">
-                    {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == config_language_admin %} selected{% endif %}>{{ language.name }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
-                <div class="col-sm-10">
-                  <select name="config_currency" id="input-currency" class="form-select">
-                    {% for currency in currencies %}
-                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
-                    {% endfor %}
-                  </select>
-                  <div class="form-text">{{ help_currency }}</div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-currency-engine" class="col-sm-2 col-form-label">{{ entry_currency_engine }}</label>
-                <div class="col-sm-10">
-                  <select name="config_currency_engine" id="input-currency-engine" class="form-select">
-                    {% for currency_engine in currency_engines %}
-                      <option value="{{ currency_engine.value }}"{% if currency_engine.value == config_currency_engine %} selected{% endif %}>{{ currency_engine.text }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
-                <div class="col-sm-10">
-                  <div class="form-check form-switch form-switch-lg">
-                    <input type="hidden" name="config_currency_auto" value="0"/> <input type="checkbox" name="config_currency_auto" value="1" id="input-currency-auto" class="form-check-input"{% if config_currency_auto %} checked{% endif %}/>
+              <fieldset>
+                <legend>{{ text_region }}</legend>
+                <div class="row mb-3">
+                  <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_country_id" id="input-country" class="form-select">
+                      {% for country in countries %}
+                        <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
-                  <div class="form-text">{{ help_currency_auto }}</div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
-                <div class="col-sm-10">
-                  <select name="config_length_class_id" id="input-length-class" class="form-select">
-                    {% for length_class in length_classes %}
-                      <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == config_length_class_id %} selected{% endif %}>{{ length_class.title }}</option>
-                    {% endfor %}
-                  </select>
+                <div class="row mb-3">
+                  <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_zone_id" id="input-zone" class="form-select"></select>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-weight-class" class="col-sm-2 col-form-label">{{ entry_weight_class }}</label>
-                <div class="col-sm-10">
-                  <select name="config_weight_class_id" id="input-weight-class" class="form-select">
-                    {% for weight_class in weight_classes %}
-                      <option value="{{ weight_class.weight_class_id }}"{% if weight_class.weight_class_id == config_weight_class_id %} selected{% endif %}>{{ weight_class.title }}</option>
-                    {% endfor %}
-                  </select>
+                <div class="row mb-3">
+                  <label for="input-timezone" class="col-sm-2 col-form-label">{{ entry_timezone }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_timezone" id="input-timezone" class="form-select">
+                      {% for timezone in timezones %}
+                        <option value="{{ timezone.value }}"{% if timezone.value == config_timezone %} selected{% endif %}>{{ timezone.text }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>{{ text_language }}</legend>
+                <div class="row mb-3">
+                  <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_language" id="input-language" class="form-select">
+                      {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_language_admin" id="input-language-admin" class="form-select">
+                      {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == config_language_admin %} selected{% endif %}>{{ language.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_currency }}</legend>
+                <div class="row mb-3">
+                  <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_currency" id="input-currency" class="form-select">
+                      {% for currency in currencies %}
+                        <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="form-text">{{ help_currency }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-currency-engine" class="col-sm-2 col-form-label">{{ entry_currency_engine }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_currency_engine" id="input-currency-engine" class="form-select">
+                      {% for currency_engine in currency_engines %}
+                        <option value="{{ currency_engine.value }}"{% if currency_engine.value == config_currency_engine %} selected{% endif %}>{{ currency_engine.text }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="config_currency_auto" value="0"/> <input type="checkbox" name="config_currency_auto" value="1" id="input-currency-auto" class="form-check-input"{% if config_currency_auto %} checked{% endif %}/>
+                    </div>
+                    <div class="form-text">{{ help_currency_auto }}</div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>{{ text_measurement }}</legend>
+                <div class="row mb-3">
+                  <label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_length_class_id" id="input-length-class" class="form-select">
+                      {% for length_class in length_classes %}
+                        <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == config_length_class_id %} selected{% endif %}>{{ length_class.title }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-weight-class" class="col-sm-2 col-form-label">{{ entry_weight_class }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_weight_class_id" id="input-weight-class" class="form-select">
+                      {% for weight_class in weight_classes %}
+                        <option value="{{ weight_class.weight_class_id }}"{% if weight_class.weight_class_id == config_weight_class_id %} selected{% endif %}>{{ weight_class.title }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
 
             <div id="tab-option" class="tab-pane">

@@ -21,7 +21,7 @@ class Report extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/payment/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/report/*.php');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

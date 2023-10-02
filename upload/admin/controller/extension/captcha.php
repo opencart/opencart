@@ -46,7 +46,9 @@ class Captcha extends \Opencart\System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$extension = substr($result, 0, strpos($result, '/'));
+				$path = substr($result, strlen(DIR_EXTENSION));
+
+				$extension = substr($path, 0, strpos($path, '/'));
 
 				$code = basename($result, '.php');
 

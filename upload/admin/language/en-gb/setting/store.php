@@ -18,6 +18,9 @@ $_['text_account']                     = 'Account';
 $_['text_checkout']                    = 'Checkout';
 $_['text_stock']                       = 'Stock';
 $_['text_image']                       = 'Image Sizes';
+$_['text_region']                      = 'Region';
+$_['text_language']                    = 'Language';
+$_['text_currency']                    = 'Currency';
 
 // Column
 $_['column_name']                      = 'Store Name';

@@ -58,8 +58,7 @@
                 <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
                 <div class="col-sm-10">
                   <div class="border rounded d-block" style="max-width: 300px;">
-                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                    <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
                     <div class="d-grid">
                       <button type="button" data-oc-toggle="image" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                       <button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -135,17 +134,13 @@
               <div class="row mb-3">
                 <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                 <div class="col-sm-10">
-
                   <div class="border rounded d-block" style="max-width: 300px;">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                    <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
                     <div class="d-grid">
                       <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                       <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                     </div>
                   </div>
-
-
                 </div>
               </div>
               <div class="row mb-3">
@@ -179,43 +174,52 @@
               {% endif %}
             </div>
             <div id="tab-local" class="tab-pane">
-              <div class="row mb-3">
-                <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
-                <div class="col-sm-10">
-                  <select name="config_country_id" id="input-country" class="form-select">
-                    {% for country in countries %}
-                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
-                    {% endfor %}
-                  </select>
+              <fieldset>
+                <legend>{{ text_region }}</legend>
+                <div class="row mb-3">
+                  <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_country_id" id="input-country" class="form-select">
+                      {% for country in countries %}
+                        <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
-                <div class="col-sm-10">
-                  <select name="config_zone_id" id="input-zone" class="form-select"></select>
+                <div class="row mb-3">
+                  <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_zone_id" id="input-zone" class="form-select"></select>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
-                <div class="col-sm-10">
-                  <select name="config_language" id="input-language" class="form-select">
-                    {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
-                    {% endfor %}
-                  </select>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_language }}</legend>
+                <div class="row mb-3">
+                  <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_language" id="input-language" class="form-select">
+                      {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
-                <div class="col-sm-10">
-                  <select name="config_currency" id="input-currency" class="form-select">
-                    {% for currency in currencies %}
-                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
-                    {% endfor %}
-                  </select>
-                  <div class="form-text">{{ help_currency }}</div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_currency }}</legend>
+                <div class="row mb-3">
+                  <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_currency" id="input-currency" class="form-select">
+                      {% for currency in currencies %}
+                        <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="form-text">{{ help_currency }}</div>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
             <div id="tab-option" class="tab-pane">
               <div class="accordion" id="accordion-option">
@@ -243,8 +247,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_product_count" value="0"/>
-                            <input type="checkbox" name="config_product_count" value="1" id="input-product-count" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
+                            <input type="hidden" name="config_product_count" value="0"/> <input type="checkbox" name="config_product_count" value="1" id="input-product-count" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_product_count }}</div>
                         </div>
@@ -279,8 +282,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_tax" value="0"/>
-                            <input type="checkbox" name="config_tax" value="1" id="input-tax" class="form-check-input"{% if config_tax %} checked{% endif %}/>
+                            <input type="hidden" name="config_tax" value="0"/> <input type="checkbox" name="config_tax" value="1" id="input-tax" class="form-check-input"{% if config_tax %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
@@ -342,8 +344,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_customer_price" value="0"/>
-                            <input type="checkbox" name="config_customer_price" value="1" id="input-customer-price" class="form-check-input"{% if config_customer_price %} checked{% endif %}/>
+                            <input type="hidden" name="config_customer_price" value="0"/> <input type="checkbox" name="config_customer_price" value="1" id="input-customer-price" class="form-check-input"{% if config_customer_price %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_customer_price }}</div>
                         </div>
@@ -371,8 +372,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_cart_weight" value="0"/>
-                            <input type="checkbox" name="config_cart_weight" value="1" id="input-cart-weight" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
+                            <input type="hidden" name="config_cart_weight" value="0"/> <input type="checkbox" name="config_cart_weight" value="1" id="input-cart-weight" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
@@ -380,8 +380,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_checkout_guest" value="0"/>
-                            <input type="checkbox" name="config_checkout_guest" value="1" id="input-checkout-guest" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
+                            <input type="hidden" name="config_checkout_guest" value="0"/> <input type="checkbox" name="config_checkout_guest" value="1" id="input-checkout-guest" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_guest }}</div>
                         </div>
@@ -409,8 +408,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_stock_display" value="0"/>
-                            <input type="checkbox" name="config_stock_display" value="1" id="input-stock-display" class="form-check-input"{% if config_stock_display %} checked{% endif %}/>
+                            <input type="hidden" name="config_stock_display" value="0"/> <input type="checkbox" name="config_stock_display" value="1" id="input-stock-display" class="form-check-input"{% if config_stock_display %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_display }}</div>
                         </div>
@@ -419,8 +417,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_stock_checkout" value="0"/>
-                            <input type="checkbox" name="config_stock_checkout" value="1" id="input-stock-checkout" class="form-check-input"{% if config_stock_checkout %} checked{% endif %}/>
+                            <input type="hidden" name="config_stock_checkout" value="0"/> <input type="checkbox" name="config_stock_checkout" value="1" id="input-stock-checkout" class="form-check-input"{% if config_stock_checkout %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_checkout }}</div>
                         </div>
@@ -610,20 +607,20 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-theme').on('change', function () {
+$('#input-theme').on('change', function() {
     $.ajax({
         url: 'index.php?route=setting/setting.theme&user_token={{ user_token }}&theme=' + this.value,
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#input-theme').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $('#input-theme').prop('disabled', false);
         },
-        success: function (html) {
+        success: function(html) {
             $('#theme').attr('src', html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -632,21 +629,21 @@ $('#input-theme').on('change', function () {
 $('#input-theme').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('#input-country').on('change', function () {
+$('#input-country').on('change', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + this.value,
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
             $('#input-zone').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
             $('#input-zone').prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             html = '<option value="">{{ text_select|escape('js') }}</option>';
 
             if (json['zone'] && json['zone'] != '') {
@@ -665,7 +662,7 @@ $('#input-country').on('change', function () {
 
             $('#input-zone').html(html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

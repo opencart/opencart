@@ -180,15 +180,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if (isset($settings['config_smtp_timeout'])) {
-				$missing[] = [
-					'key'        => 'config_mail_smtp_timeout',
-					'value'      => $settings['config_smtp_timeout'],
-					'code'       => 'config',
-					'serialized' => 0
-				];
-			}
-
 			$missing[] = [
 				'key'        => 'config_article_description_length',
 				'value'      => 100,

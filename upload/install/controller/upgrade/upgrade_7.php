@@ -113,6 +113,26 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				'field' => 'date_added'
 			];
 
+			$remove[] = [
+				'table' => 'tax_class',
+				'field' => 'date_added'
+			];
+
+			$remove[] = [
+				'table' => 'tax_class',
+				'field' => 'date_modified'
+			];
+
+			$remove[] = [
+				'table' => 'tax_rate',
+				'field' => 'date_added'
+			];
+
+			$remove[] = [
+				'table' => 'tax_rate',
+				'field' => 'date_modified'
+			];
+
 			foreach ($remove as $result) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
 

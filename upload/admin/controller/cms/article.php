@@ -245,7 +245,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (!empty($article_info)) {
 			$data['author'] = $article_info['author'];
 		} else {
-			$data['author'] = '';
+			$data['author'] = $this->user->getUsername();
 		}
 
 		$this->load->model('cms/topic');

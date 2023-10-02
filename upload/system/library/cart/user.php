@@ -55,8 +55,10 @@ class User {
 			if ($user_query->num_rows) {
 				$this->user_id = $user_query->row['user_id'];
 				$this->username = $user_query->row['username'];
-				$this->user_group_id = $user_query->row['user_group_id'];
+				$this->firstname = $user_query->row['firstname'];
+				$this->lastname = $user_query->row['lastname'];
 				$this->email = $user_query->row['email'];
+				$this->user_group_id = $user_query->row['user_group_id'];
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `user_id` = '" . (int)$this->session->data['user_id'] . "'");
 
@@ -105,8 +107,10 @@ class User {
 
 			$this->user_id = $user_query->row['user_id'];
 			$this->username = $user_query->row['username'];
-			$this->user_group_id = $user_query->row['user_group_id'];
+			$this->firstname = $user_query->row['firstname'];
+			$this->lastname = $user_query->row['lastname'];
 			$this->email = $user_query->row['email'];
+			$this->user_group_id = $user_query->row['user_group_id'];
 
 			$user_group_query = $this->db->query("SELECT `permission` FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_query->row['user_group_id'] . "'");
 
@@ -134,8 +138,10 @@ class User {
 
 		$this->user_id = 0;
 		$this->username = '';
-		$this->user_group_id = 0;
+		$this->firstname = '';
+		$this->lastname = '';
 		$this->email = '';
+		$this->user_group_id = 0;
 	}
 	
 	/**
@@ -180,16 +186,25 @@ class User {
 	public function getUserName(): string {
 		return $this->username;
 	}
-	
+
 	/**
-	 * getGroupId
+	 * getFirstName
 	 *
-	 * @return   int
+	 * @return   string
 	 */
-	public function getGroupId(): int {
-		return $this->user_group_id;
+	public function getFirstName(): string {
+		return $this->firstname;
 	}
-	
+
+	/**
+	 * getLastName
+	 *
+	 * @return   string
+	 */
+	public function getLastName(): string {
+		return $this->lastname;
+	}
+
 	/**
 	 * getEmail
 	 *
@@ -197,5 +212,14 @@ class User {
 	 */
 	public function getEmail(): string {
 		return $this->email;
+	}
+
+	/**
+	 * getGroupId
+	 *
+	 * @return   int
+	 */
+	public function getGroupId(): int {
+		return $this->user_group_id;
 	}
 }

@@ -70,7 +70,7 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_author'])) {
-			$sql .= " AND `a`.`author` = '" . (int)$data['filter_author'] . "'";
+			$sql .= " AND `a`.`author` = '" . $this->db->escape($data['filter_author']) . "'";
 		}
 
 		$sql .= " ORDER BY `a`.`date_added` DESC";
@@ -141,7 +141,7 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_author'])) {
-			$sql .= " AND `a`.`author` = '" . (int)$data['filter_author'] . "'";
+			$sql .= " AND `a`.`author` = '" . $this->db->escape($data['filter_author']) . "'";
 		}
 
 		$query = $this->db->query($sql);

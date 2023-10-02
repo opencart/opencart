@@ -171,7 +171,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 				'description'   => $description,
 				'image'         => $image,
 				'author'        => $result['author'],
-				'filter_author' => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $result['article_id'] . $url),
+				'filter_author' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&author=' . $result['author'] . $url),
 				'comment_total' => $this->model_cms_article->getTotalComments($result['article_id']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'href'          => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $result['article_id'] . $url)

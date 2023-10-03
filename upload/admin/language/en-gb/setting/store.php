@@ -113,7 +113,6 @@ $_['error_name']                       = 'Store Name must be between 3 and 32 ch
 $_['error_owner']                      = 'Store Owner must be between 3 and 64 characters!';
 $_['error_address']                    = 'Store Address must be between 10 and 256 characters!';
 $_['error_email']                      = 'E-Mail Address does not appear to be valid!';
-$_['error_telephone']                  = 'Telephone must be between 3 and 32 characters!';
 $_['error_product_description_length'] = 'Product description length required!';
 $_['error_pagination']                 = 'Pagination required!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';

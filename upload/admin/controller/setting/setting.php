@@ -133,13 +133,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['config_language'] = $this->config->get('config_language');
-
 		$data['config_language_admin'] = $this->config->get('config_language_admin');
 
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
 		$data['config_currency'] = $this->config->get('config_currency');
 
 		$data['currency_engines'] = [];
@@ -171,18 +169,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
-
 		$data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
 
 		// Options
 		$data['config_product_description_length'] = $this->config->get('config_product_description_length');
-
-		if ($this->config->get('config_pagination')) {
-			$data['config_pagination'] = $this->config->get('config_pagination');
-		} else {
-			$data['config_pagination'] = 15;
-		}
-
+		$data['config_pagination'] = $this->config->get('config_pagination');
 		$data['config_product_count'] = $this->config->get('config_product_count');
 
 		if ($this->config->get('config_pagination_admin')) {
@@ -425,161 +416,33 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['logo'] = $data['placeholder'];
 		}
 
-		if ($this->config->get('config_image_default_width')) {
-			$data['config_image_default_width'] = $this->config->get('config_image_default_width');
-		} else {
-			$data['config_image_default_width'] = 300;
-		}
-
-		if ($this->config->get('config_image_default_height')) {
-			$data['config_image_default_height'] = $this->config->get('config_image_default_height');
-		} else {
-			$data['config_image_default_height'] = 300;
-		}
-
-		if ($this->config->get('config_image_category_width')) {
-			$data['config_image_category_width'] = $this->config->get('config_image_category_width');
-		} else {
-			$data['config_image_category_width'] = 160;
-		}
-
-		if ($this->config->get('config_image_category_height')) {
-			$data['config_image_category_height'] = $this->config->get('config_image_category_height');
-		} else {
-			$data['config_image_category_height'] = 160;
-		}
-
-		if ($this->config->get('config_image_thumb_width')) {
-			$data['config_image_thumb_width'] = $this->config->get('config_image_thumb_width');
-		} else {
-			$data['config_image_thumb_width'] = 228;
-		}
-
-		if ($this->config->get('config_image_thumb_height')) {
-			$data['config_image_thumb_height'] = $this->config->get('config_image_thumb_height');
-		} else {
-			$data['config_image_thumb_height'] = 228;
-		}
-
-		if ($this->config->get('config_image_popup_width')) {
-			$data['config_image_popup_width'] = $this->config->get('config_image_popup_width');
-		} else {
-			$data['config_image_popup_width'] = 500;
-		}
-
-		if ($this->config->get('config_image_popup_height')) {
-			$data['config_image_popup_height'] = $this->config->get('config_image_popup_height');
-		} else {
-			$data['config_image_popup_height'] = 500;
-		}
-
-		if ($this->config->get('config_image_product_width')) {
-			$data['config_image_product_width'] = $this->config->get('config_image_product_width');
-		} else {
-			$data['config_image_product_width'] = 228;
-		}
-
-		if ($this->config->get('config_image_product_height')) {
-			$data['config_image_product_height'] = $this->config->get('config_image_product_height');
-		} else {
-			$data['config_image_product_height'] = 228;
-		}
-
-		if ($this->config->get('config_image_additional_width')) {
-			$data['config_image_additional_width'] = $this->config->get('config_image_additional_width');
-		} else {
-			$data['config_image_additional_width'] = 74;
-		}
-
-		if ($this->config->get('config_image_additional_height')) {
-			$data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
-		} else {
-			$data['config_image_additional_height'] = 74;
-		}
-
-		if ($this->config->get('config_image_related_width')) {
-			$data['config_image_related_width'] = $this->config->get('config_image_related_width');
-		} else {
-			$data['config_image_related_width'] = 80;
-		}
-
-		if ($this->config->get('config_image_related_height')) {
-			$data['config_image_related_height'] = $this->config->get('config_image_related_height');
-		} else {
-			$data['config_image_related_height'] = 80;
-		}
-
-		if ($this->config->get('config_image_compare_width')) {
-			$data['config_image_compare_width'] = $this->config->get('config_image_compare_width');
-		} else {
-			$data['config_image_compare_width'] = 90;
-		}
-
-		if ($this->config->get('config_image_compare_height')) {
-			$data['config_image_compare_height'] = $this->config->get('config_image_compare_height');
-		} else {
-			$data['config_image_compare_height'] = 90;
-		}
-
-		if ($this->config->get('config_image_article_width')) {
-			$data['config_image_article_width'] = $this->config->get('config_image_article_width');
-		} else {
-			$data['config_image_article_width'] = 1140;
-		}
-
-		if ($this->config->get('config_image_article_height')) {
-			$data['config_image_article_height'] = $this->config->get('config_image_article_height');
-		} else {
-			$data['config_image_article_height'] = 380;
-		}
-
-		if ($this->config->get('config_image_topic_width')) {
-			$data['config_image_topic_width'] = $this->config->get('config_image_topic_width');
-		} else {
-			$data['config_image_topic_width'] = 1140;
-		}
-
-		if ($this->config->get('config_image_topic_height')) {
-			$data['config_image_topic_height'] = $this->config->get('config_image_topic_height');
-		} else {
-			$data['config_image_topic_height'] = 380;
-		}
-
-		if ($this->config->get('config_image_wishlist_width')) {
-			$data['config_image_wishlist_width'] = $this->config->get('config_image_wishlist_width');
-		} else {
-			$data['config_image_wishlist_width'] = 47;
-		}
-
-		if ($this->config->get('config_image_wishlist_height')) {
-			$data['config_image_wishlist_height'] = $this->config->get('config_image_wishlist_height');
-		} else {
-			$data['config_image_wishlist_height'] = 47;
-		}
-
-		if ($this->config->get('config_image_cart_width')) {
-			$data['config_image_cart_width'] = $this->config->get('config_image_cart_width');
-		} else {
-			$data['config_image_cart_width'] = 47;
-		}
-
-		if ($this->config->get('config_image_cart_height')) {
-			$data['config_image_cart_height'] =$this->config->get('config_image_cart_height');
-		} else {
-			$data['config_image_cart_height'] = 47;
-		}
-
-		if ($this->config->get('config_image_location_width')) {
-			$data['config_image_location_width'] = $this->config->get('config_image_location_width');
-		} else {
-			$data['config_image_location_width'] = 268;
-		}
-
-		if ($this->config->get('config_image_location_height')) {
-			$data['config_image_location_height'] = $this->config->get('config_image_location_height');
-		} else {
-			$data['config_image_location_height'] = 50;
-		}
+		// Image
+		$data['config_image_default_width'] = $this->config->get('config_image_default_width');
+		$data['config_image_default_height'] = $this->config->get('config_image_default_height');
+		$data['config_image_category_width'] = $this->config->get('config_image_category_width');
+		$data['config_image_category_height'] = $this->config->get('config_image_category_height');
+		$data['config_image_thumb_width'] = $this->config->get('config_image_thumb_width');
+		$data['config_image_thumb_height'] = $this->config->get('config_image_thumb_height');
+		$data['config_image_popup_width'] = $this->config->get('config_image_popup_width');
+		$data['config_image_popup_height'] = $this->config->get('config_image_popup_height');
+		$data['config_image_product_width'] = $this->config->get('config_image_product_width');
+		$data['config_image_product_height'] = $this->config->get('config_image_product_height');
+		$data['config_image_additional_width'] = $this->config->get('config_image_additional_width');
+		$data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
+		$data['config_image_related_width'] = $this->config->get('config_image_related_width');
+		$data['config_image_related_height'] = $this->config->get('config_image_related_height');
+		$data['config_image_compare_width'] = $this->config->get('config_image_compare_width');
+		$data['config_image_compare_height'] = $this->config->get('config_image_compare_height');
+		$data['config_image_article_width'] = $this->config->get('config_image_article_width');
+		$data['config_image_article_height'] = $this->config->get('config_image_article_height');
+		$data['config_image_topic_width'] = $this->config->get('config_image_topic_width');
+		$data['config_image_topic_height'] = $this->config->get('config_image_topic_height');
+		$data['config_image_wishlist_width'] = $this->config->get('config_image_wishlist_width');
+		$data['config_image_wishlist_height'] = $this->config->get('config_image_wishlist_height');
+		$data['config_image_cart_width'] = $this->config->get('config_image_cart_width');
+		$data['config_image_cart_height'] =$this->config->get('config_image_cart_height');
+		$data['config_image_location_width'] = $this->config->get('config_image_location_width');
+		$data['config_image_location_height'] = $this->config->get('config_image_location_height');
 
 		// Mail
 		$data['config_mail_engine'] = $this->config->get('config_mail_engine');
@@ -702,10 +565,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if ((oc_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
-		}
-
-		if ((oc_strlen($this->request->post['config_telephone']) < 3) || (oc_strlen($this->request->post['config_telephone']) > 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		if (!$this->request->post['config_product_description_length']) {

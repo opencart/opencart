@@ -645,10 +645,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ((oc_strlen($this->request->post['config_telephone']) < 3) || (oc_strlen($this->request->post['config_telephone']) > 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
-		}
-
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
 			$json['error']['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}

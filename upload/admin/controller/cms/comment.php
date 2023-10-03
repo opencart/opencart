@@ -277,14 +277,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 				if ($comment_info) {
 					$this->model_customer_customer->editCommenter($comment_info['customer_id'], 0);
-					$this->model_customer_customer->editStatus($comment_info['customer_id'], 0);
 					$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
 
+					$this->model_cms_article->editCommentStatus($article_comment_id, 0);
+
 					// Delete all customer comments
-					$results = $this->model_cms_comment->getComments(['filter_customer_id' => $comment_info['customer_id']]);
+					$results = $this->model_cms_article->getComments(['filter_customer_id' => $comment_info['customer_id']]);
 
 					foreach ($results as $result) {
-						$this->model_cms_comment->deleteCommentsByCustomerId($result['article_comment_id']);
+						$this->model_cms_article->deleteComment($result['article_comment_id']);
 					}
 				}
 			}
@@ -321,7 +322,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$this->model_cms_article->deleteComment($article_comment_id);
 			}
 
-			$json['success'] = $this->language->get('error_success');
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

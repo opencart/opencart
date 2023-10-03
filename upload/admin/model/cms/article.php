@@ -285,12 +285,12 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $customer_id
+	 * @param int $article_comment_id
 	 *
 	 * @return void
 	 */
-	public function deleteCommentsByCustomerId(int $customer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	public function deleteComment(int $article_comment_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
 	}
 
 	/**

@@ -114,7 +114,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " WHERE `name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$sql .= " WHERE LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		$sort_data = [

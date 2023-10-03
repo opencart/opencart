@@ -57,7 +57,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
+			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		if ($implode) {
@@ -106,7 +106,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
+			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		if ($implode) {

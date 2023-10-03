@@ -69,7 +69,7 @@ class Download extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "download` d LEFT JOIN `" . DB_PREFIX . "download_description` dd ON (d.`download_id` = dd.`download_id`) WHERE dd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND dd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$sql .= " AND LCASE(`dd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		$sort_data = [
@@ -80,7 +80,7 @@ class Download extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY dd.`name`";
+			$sql .= " ORDER BY `dd`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

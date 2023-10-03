@@ -54,28 +54,28 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getReturns(array $data = []): array {
-		$sql = "SELECT *, CONCAT(r.`firstname`, ' ', r.`lastname`) AS customer, (SELECT rs.`name` FROM `" . DB_PREFIX . "return_status` rs WHERE rs.`return_status_id` = r.`return_status_id` AND rs.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS return_status FROM `" . DB_PREFIX . "return` r";
+		$sql = "SELECT *, CONCAT(`r`.`firstname`, ' ', `r`.`lastname`) AS customer, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r`";
 
 		$implode = [];
 
 		if (!empty($data['filter_return_id'])) {
-			$implode[] = "r.`return_id` = '" . (int)$data['filter_return_id'] . "'";
+			$implode[] = "`r`.`return_id` = '" . (int)$data['filter_return_id'] . "'";
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] = "r.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+			$implode[] = "`r`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(r.`firstname`, ' ', r.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer'] . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`r`.`firstname`, ' ', `r`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_product'])) {
-			$implode[] = "r.`product` = '" . $this->db->escape((string)$data['filter_product']) . "'";
+			$implode[] = "LCASE(`r`.`product` = '" . $this->db->escape(oc_strtolower($data['filter_product'])) . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$implode[] = "r.`model` = '" . $this->db->escape((string)$data['filter_model']) . "'";
+			$implode[] = "LCASE(`r`.`model` = '" . $this->db->escape(oc_strtolower($data['filter_model'])) . "'";
 		}
 
 		if (!empty($data['filter_return_status_id'])) {
@@ -140,7 +140,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalReturns(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` r";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` `r`";
 
 		$implode = [];
 
@@ -149,31 +149,31 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(r.`firstname`, ' ', r.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer'] . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`r`.`firstname`, ' ', r.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] = "r.`order_id` = '" . $this->db->escape((string)$data['filter_order_id']) . "'";
+			$implode[] = "`r`.`order_id` = '" . $this->db->escape((string)$data['filter_order_id']) . "'";
 		}
 
 		if (!empty($data['filter_product'])) {
-			$implode[] = "r.`product` = '" . $this->db->escape((string)$data['filter_product']) . "'";
+			$implode[] = "`r`.`product` = '" . $this->db->escape((string)$data['filter_product']) . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$implode[] = "r.`model` = '" . $this->db->escape((string)$data['filter_model']) . "'";
+			$implode[] = "`r`.`model` = '" . $this->db->escape((string)$data['filter_model']) . "'";
 		}
 
 		if (!empty($data['filter_return_status_id'])) {
-			$implode[] = "r.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
+			$implode[] = "`r`.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`r`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`r`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

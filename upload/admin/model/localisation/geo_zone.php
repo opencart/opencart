@@ -12,7 +12,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addGeoZone(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "'");
 
 		$geo_zone_id = $this->db->getLastId();
 
@@ -36,7 +36,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editGeoZone(int $geo_zone_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_modified` = NOW() WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "' WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 

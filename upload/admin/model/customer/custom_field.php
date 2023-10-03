@@ -125,11 +125,11 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND cfd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$sql .= " AND LCASE(`cfd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (isset($data['filter_status'])) {
-			$sql .= " AND cf.`status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " AND cf.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (isset($data['filter_location'])) {

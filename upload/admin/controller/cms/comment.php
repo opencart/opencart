@@ -27,6 +27,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		$data['approve'] = $this->url->link('cms/comment.approve', 'user_token=' . $this->session->data['user_token']);
+		$data['spam'] = $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token']);
+
 		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -72,7 +76,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = (int)$this->request->get['filter_status'];
 		} else {
-			$filter_status = 0;
+			$filter_status = '';
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
@@ -113,6 +117,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['comments'] = [];
 
 		$filter_data = [
@@ -126,8 +132,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('cms/article');
-		$this->load->model('customer/customer');
-		$this->load->model('cms/topic');
 
 		$results = $this->model_cms_article->getComments($filter_data);
 
@@ -140,14 +144,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$article = '';
 			}
 
-			$customer_info = $this->model_customer_customer->getCustomer($result['customer_id']);
-
-			if ($customer_info) {
-				$customer = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
-			} else {
-				$customer = '';
-			}
-
 			if (!$result['status']) {
 				$approve = $this->url->link('cms/comment.approve', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url);
 			} else {
@@ -155,16 +151,17 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['comments'][] = [
-				'author'        => $result['author'],
-				'article'       => $article,
-				'article_edit'  => $this->url->link('cms/article.edit', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
-				'customer'      => $customer,
-				'customer_edit' => $this->url->link('customer/customer.edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
-				'comment'       => nl2br($result['comment']),
-				'date_added'    => date('d/m/Y', strtotime($result['date_added'])),
-				'approve'       => $approve,
-				'spam'          => $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),
-				'delete'        => $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url)
+				'article_comment_id' => $result['article_comment_id'],
+				'article'            => $article,
+				'article_edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
+				'author'             => $result['author'],
+				'customer_edit'      => $result['customer_id'] ? $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']) : '',
+				'comment'            => nl2br($result['comment']),
+				'status'             => $result['status'],
+				'date_added'         => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'approve'            => $approve,
+				'spam'               => $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),
+				'delete'             => $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url)
 			];
 		}
 
@@ -204,209 +201,129 @@ class Comment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('cms/comment_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function approve() {
 		$this->load->language('cms/comment');
 
 		$json = [];
 
-		if (isset($this->request->get['article_comment_id'])) {
-			$article_comment_id = (int)$this->request->get['article_comment_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
 		} else {
-			$article_comment_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/comment')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('cms/article');
-
-		$comment_info = $this->model_cms_article->getComment($article_comment_id);
-
-		if (!$comment_info) {
-			$json['error'] = $this->language->get('error_comment');
-		}
+		print_r($selected);
 
 		if (!$json) {
-			// Approve Commentor
+			$this->load->model('cms/article');
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->editCommentor($comment_info['customer_id'], 1);
+			foreach ($selected as $article_comment_id) {
+				$comment_info = $this->model_cms_article->getComment($article_comment_id);
 
-			// Approve all past comments
-			$filter_data = [
-				'filter_customer_id' => $comment_info['customer_id'],
-				'filter_status'      => 0
-			];
+				if ($comment_info) {
+					$this->model_customer_customer->editCommenter($comment_info['customer_id'], 1);
 
-			$results = $this->model_cms_comment->getComments($filter_data);
+					// Approve all past comments
+					$filter_data = [
+						'filter_customer_id' => $comment_info['customer_id'],
+						'filter_status'      => 0
+					];
 
-			foreach ($results as $result) {
-				$this->model_cms_comment->editStatus($result['customer_id'], 1);
+					$results = $this->model_cms_article->getComments($filter_data);
+
+					foreach ($results as $result) {
+						$this->model_cms_article->editCommentStatus($result['customer_id'], 1);
+					}
+				}
 			}
 
 			$json['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_keyword'])) {
-				$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_title'])) {
-				$url .= '&filter_title=' . urlencode(html_entity_decode($this->request->get['filter_title'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$json['redirect'] = $this->url->link('cms/comment.comment', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function spam() {
 		$this->load->language('cms/comment');
 
 		$json = [];
 
-		if (isset($this->request->get['article_comment_id'])) {
-			$article_comment_id = (int)$this->request->get['article_comment_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
 		} else {
-			$article_comment_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/comment')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('cms/article');
-
-		$comment_info = $this->model_cms_article->getComment($article_comment_id);
-
-		if (!$comment_info) {
-			$json['error'] = $this->language->get('error_comment');
-		}
-
 		if (!$json) {
+			$this->load->model('cms/article');
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->editCommentor($comment_info['customer_id'], 0);
-			$this->model_customer_customer->editStatus($comment_info['customer_id'], 0);
-			$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
+			foreach ($selected as $article_comment_id) {
+				$comment_info = $this->model_cms_article->getComment($article_comment_id);
 
-			// Delete all customer comments
-			$results = $this->model_cms_comment->getComments(['filter_customer_id' => $comment_info['customer_id']]);
+				if ($comment_info) {
+					$this->model_customer_customer->editCommenter($comment_info['customer_id'], 0);
+					$this->model_customer_customer->editStatus($comment_info['customer_id'], 0);
+					$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
 
-			foreach ($results as $result) {
-				$this->model_cms_comment->deleteCommentsByCustomerId($result['article_comment_id']);
+					// Delete all customer comments
+					$results = $this->model_cms_comment->getComments(['filter_customer_id' => $comment_info['customer_id']]);
+
+					foreach ($results as $result) {
+						$this->model_cms_comment->deleteCommentsByCustomerId($result['article_comment_id']);
+					}
+				}
 			}
 
 			$json['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_keyword'])) {
-				$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_title'])) {
-				$url .= '&filter_title=' . urlencode(html_entity_decode($this->request->get['filter_title'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$json['redirect'] = $this->url->link('cms/comment/comment', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete() {
 		$this->load->language('cms/comment');
 
 		$json = [];
 
-		if (isset($this->request->get['article_comment_id'])) {
-			$article_comment_id = (int)$this->request->get['article_comment_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
 		} else {
-			$article_comment_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/comment')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('cms/article');
-
-		$comment_info = $this->model_cms_article->getComment($article_comment_id);
-
-		if (!$comment_info) {
-			$json['error'] = $this->language->get('error_comment');
-		}
-
 		if (!$json) {
-			$this->model_cms_article->deleteComment($article_comment_id);
+			$this->load->model('cms/article');
+
+			foreach ($selected as $article_comment_id) {
+				$this->model_cms_article->deleteComment($article_comment_id);
+			}
 
 			$json['success'] = $this->language->get('error_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_keyword'])) {
-				$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_title'])) {
-				$url .= '&filter_title=' . urlencode(html_entity_decode($this->request->get['filter_title'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$json['redirect'] = $this->url->link('cms/comment.comment', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

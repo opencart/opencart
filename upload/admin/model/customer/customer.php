@@ -59,6 +59,16 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * @param int $customer_id
+	 * @param bool $status
+	 *
+	 * @return void
+	 */
+	public function editCommenter(int $customer_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `commenter` = '" . (bool)$status . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * @param int $customer_id
 	 *
 	 * @return void
 	 */
@@ -104,40 +114,38 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getCustomers(array $data = []): array {
-		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `name`, cgd.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` c LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
-
-		$sql .= " WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `name`, `cgd`.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` `c` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`c`.`customer_group_id` = cgd.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '" . $this->db->escape('%' . (string)$data['filter_name'] . '%') . "'";
+			$sql .= " AND LCASE(CONCAT(`c`.`firstname`, ' ', `c`.`lastname`)) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_email'])) {
-			$sql .= " AND c.`email` LIKE '" . $this->db->escape((string)$data['filter_email'] . '%') . "'";
+			$sql .= " AND LCASE(`c`.`email`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_email']) . '%') . "'";
 		}
 
 		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== '') {
-			$sql .= " AND c.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
+			$sql .= " AND `c`.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
 		if (!empty($data['filter_customer_group_id'])) {
-			$sql .= " AND c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
+			$sql .= " AND `c`.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
 
 		if (!empty($data['filter_ip'])) {
-			$sql .= " AND c.`customer_id` IN (SELECT `customer_id` FROM `" . DB_PREFIX . "customer_ip` WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
+			$sql .= " AND `c`.`customer_id` IN (SELECT `customer_id` FROM `" . DB_PREFIX . "customer_ip` WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND c.`status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " AND `c`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$sql .= " AND DATE(c.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$sql .= " AND DATE(`c`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$sql .= " AND DATE(c.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$sql .= " AND DATE(`c`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$sort_data = [
@@ -152,7 +160,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY `c`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -189,35 +197,35 @@ class Customer extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '" . $this->db->escape('%' . (string)$data['filter_name'] . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`c`.`firstname`, ' ', `c`.`lastname`)) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_email'])) {
-			$implode[] = "c.`email` LIKE '" . $this->db->escape((string)$data['filter_email'] . '%') . "'";
+			$implode[] = "LCASE(`c`.`email`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_email']) . '%') . "'";
 		}
 
 		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== '') {
-			$implode[] = "c.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
+			$implode[] = "`c`.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
 		if (!empty($data['filter_customer_group_id'])) {
-			$implode[] = "c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
+			$implode[] = "`c`.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
 
 		if (!empty($data['filter_ip'])) {
-			$implode[] = "c.`customer_id` IN (SELECT `customer_id` FROM " . DB_PREFIX . "customer_ip WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
+			$implode[] = "`c`.`customer_id` IN (SELECT `customer_id` FROM " . DB_PREFIX . "customer_ip WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "c.`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`c`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(c.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`c`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(c.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`c`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

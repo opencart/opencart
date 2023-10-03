@@ -640,7 +640,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'varchar(255)',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			],
 			[
@@ -3365,16 +3365,6 @@ function oc_db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_modified',
-				'type' => 'datetime',
 				'not_null' => true
 			]
 		],

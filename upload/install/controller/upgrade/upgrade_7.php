@@ -69,12 +69,6 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 			// Drop Fields
 			$remove = [];
 
-			// product_option
-			$remove[] = [
-				'table' => 'product_option',
-				'field' => 'option_value'
-			];
-
 			// custom_field
 			$remove[] = [
 				'table' => 'custom_field',
@@ -107,10 +101,24 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				'field' => 'title'
 			];
 
-			// Drop date_added field from extension_path
 			$remove[] = [
 				'table' => 'extension_path',
 				'field' => 'date_added'
+			];
+
+			$remove[] = [
+				'table' => 'geo_zone',
+				'field' => 'date_added'
+			];
+
+			$remove[] = [
+				'table' => 'geo_zone',
+				'field' => 'date_modified'
+			];
+
+			$remove[] = [
+				'table' => 'product_option',
+				'field' => 'option_value'
 			];
 
 			$remove[] = [

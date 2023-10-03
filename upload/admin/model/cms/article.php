@@ -133,7 +133,7 @@ class Article extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND `ad`.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "'";
+			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
 		$sort_data = [
@@ -276,11 +276,12 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * @param int $article_comment_id
+	 * @param bool $status
 	 *
 	 * @return void
 	 */
-	public function deleteComment(int $article_comment_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+	public function editCommentStatus(int $article_comment_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (bool)$status . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
 	}
 
 	/**
@@ -309,16 +310,16 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getComments(array $data = []): array {
-		$sql = "SELECT *, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`)";
+		$sql = "SELECT *, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`)";
 
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . $data['filter_keyword'] . '%') . "'";
+			$implode[] = "LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_keyword']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_article'])) {
-			$implode[] = "LCASE(`ad`.`name`) LIKE '" . $this->db->escape($data['filter_article'] . '%') . "'";
+			$implode[] = "LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_article']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_customer_id'])) {
@@ -326,15 +327,15 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_author'])) {
-			$implode[] = "LCASE(`ac`.`author`) LIKE '" . $this->db->escape($data['filter_author'] . '%') . "'";
+			$implode[] = "LCASE(`ac`.`author`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_author']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`ac`.`status` = '" . (string)$data['filter_status'] . "'";
+			$implode[] = "`ac`.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "`ac`.`date_added` = '" . $this->db->escape($data['filter_date_added']) . "'";
+			$implode[] = "DATE(`ac`.`date_added`) =  DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -371,11 +372,11 @@ class Article extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . $data['filter_keyword'] . '%') . "'";
+			$implode[] = "LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' .oc_strtolower($data['filter_keyword']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_article'])) {
-			$implode[] = "LCASE(`ad`.`name`) LIKE '" . $this->db->escape($data['filter_article'] . '%') . "'";
+			$implode[] = "LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_article']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_customer_id'])) {
@@ -383,15 +384,15 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_author'])) {
-			$implode[] = "LCASE(`ac`.`author`) LIKE '" . $this->db->escape($data['filter_author'] . '%') . "'";
+			$implode[] = "LCASE(`ac`.`author`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_author']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`ac`.`status` = '" . (string)$data['filter_status'] . "'";
+			$implode[] = "`ac`.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "`ac`.`date_added` = '" . $this->db->escape($data['filter_date_added']) . "'";
+			$implode[] = "DATE(`ac`.`date_added`) =  DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {

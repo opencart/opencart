@@ -36,15 +36,15 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_email'])) {
-			$implode[] = "`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "'";
+			$implode[] = "LCASE(`email`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_email'])) . "'";
 		}
 
 		if (!empty($data['filter_action'])) {
-			$implode[] = "`action` = '" . $this->db->escape((string)$data['filter_action']) . "'";
+			$implode[] = "`action` = '" . $this->db->escape($data['filter_action']) . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
@@ -100,15 +100,15 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_email'])) {
-			$implode[] = "`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "'";
+			$implode[] = "LCASE(`email`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_email'])) . "'";
 		}
 
 		if (!empty($data['filter_action'])) {
-			$implode[] = "`action` = '" . $this->db->escape((string)$data['filter_action']) . "'";
+			$implode[] = "`action` = '" . $this->db->escape($data['filter_action']) . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {

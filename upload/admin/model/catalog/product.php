@@ -857,26 +857,26 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model'] . '%') . "'";
+			$sql .= " AND LCASE(``p``.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_price'])) {
-			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price'] . '%') . "'";
+			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . "'";
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
-			$sql .= " AND p.`quantity` = '" . (int)$data['filter_quantity'] . "'";
+			$sql .= " AND `p`.`quantity` = '" . (int)$data['filter_quantity'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND p.`status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		$sql .= " GROUP BY p.`product_id`";
+		$sql .= " GROUP BY `p`.`product_id`";
 
 		$sort_data = [
 			'pd.name',
@@ -890,7 +890,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY pd.`name`";
+			$sql .= " ORDER BY `pd`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -1053,7 +1053,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getOptionValue(int $product_id, int $product_option_value_id): array {
-		$query = $this->db->query("SELECT pov.`option_value_id`, ovd.`name`, pov.`quantity`, pov.`subtract`, pov.`price`, pov.`price_prefix`, pov.`points`, pov.`points_prefix`, pov.`weight`, pov.`weight_prefix` FROM `" . DB_PREFIX . "product_option_value` pov LEFT JOIN `" . DB_PREFIX . "option_value` ov ON (pov.`option_value_id` = ov.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.`option_value_id` = ovd.`option_value_id`) WHERE pov.`product_id` = '" . (int)$product_id . "' AND pov.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND ovd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT `pov`.`option_value_id`, `ovd`.`name`, `pov`.`quantity`, `pov`.`subtract`, `pov`.`price`, `pov`.`price_prefix`, `pov`.`points`, `pov`.`points_prefix`, `pov`.`weight`, `pov`.`weight_prefix` FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
@@ -1228,23 +1228,23 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model'] . '%') . "'";
+			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
 		}
 
 		if (isset($data['filter_price']) && $data['filter_price'] !== '') {
-			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price'] . '%') . "'";
+			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . "'";
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
-			$sql .= " AND p.`quantity` = '" . (int)$data['filter_quantity'] . "'";
+			$sql .= " AND `p`.`quantity` = '" . (int)$data['filter_quantity'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND p.`status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		$query = $this->db->query($sql);

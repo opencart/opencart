@@ -64,15 +64,15 @@ class Zone extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$implode[] = "LCASE(`z`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country'] . '%') . "'";
+			$implode[] = "LCASE(`c`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code'] . '%') . "'";
+			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
 		}
 
 		if ($implode) {
@@ -88,7 +88,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY c.`name`";
+			$sql .= " ORDER BY `c`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -150,15 +150,15 @@ class Zone extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$implode[] = "LCASE(`z`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country'] . '%') . "'";
+			$implode[] = "LCASE(`c`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code'] . '%') . "'";
+			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
 		}
 
 		if ($implode) {

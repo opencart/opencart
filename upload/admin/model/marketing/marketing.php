@@ -72,24 +72,24 @@ class Marketing extends \Opencart\System\Engine\Model {
 			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";
 		}
 
-		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE (" . implode(" OR ", $implode) . ") AND o.`marketing_id` = m.`marketing_id`) AS `orders` FROM `" . DB_PREFIX . "marketing` m";
+		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` `o` WHERE (" . implode(" OR ", $implode) . ") AND o.`marketing_id` = m.`marketing_id`) AS `orders` FROM `" . DB_PREFIX . "marketing` `m`";
 
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "m.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$implode[] = "LCASE(`m`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "m.`code` = '" . $this->db->escape((string)$data['filter_code']) . "'";
+			$implode[] = "LCASE(`m`.`code`) = '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(m.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`m`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(m.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`m`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -142,11 +142,11 @@ class Marketing extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "'";
+			$implode[] = "LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "`code` = '" . $this->db->escape((string)$data['filter_code']) . "'";
+			$implode[] = "LCASE(`code`) = '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {

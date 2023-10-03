@@ -58,15 +58,15 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
+			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		if (!empty($data['filter_key'])) {
-			$implode[] = "`key` = '" . $this->db->escape((string)$data['filter_key']) . "'";
+			$implode[] = "LCASE(`key`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_key'])) . "'";
 		}
 
 		if (!empty($data['filter_value'])) {
-			$implode[] = "`value` LIKE '" . $this->db->escape((string)$data['filter_value']) . "'";
+			$implode[] = "LCASE(`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_value'])) . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
@@ -130,15 +130,15 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
+			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		if (!empty($data['filter_key'])) {
-			$implode[] = "`key` = '" . $this->db->escape((string)$data['filter_key']) . "'";
+			$implode[] = "LCASE(`key`) = '" . $this->db->escape(oc_strtolower($data['filter_key'])) . "'";
 		}
 
 		if (!empty($data['filter_value'])) {
-			$implode[] = "`value` LIKE '" . $this->db->escape((string)$data['filter_value']) . "'";
+			$implode[] = "LCASE(`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_value'])) . "'";
 		}
 
 		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
@@ -180,7 +180,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getSeoUrlByKeyword(string $keyword, int $store_id, int $language_id = 0): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE (`keyword` = '" . $this->db->escape($keyword) . "' OR `keyword` LIKE '" . $this->db->escape('%/' . $keyword) . "') AND `store_id` = '" . (int)$store_id . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE (`keyword` = '" . $this->db->escape($keyword) . "' OR LCASE(`keyword`) LIKE '" . $this->db->escape('%/' . oc_strtolower($keyword)) . "') AND `store_id` = '" . (int)$store_id . "'";
 
 		if ($language_id) {
 			$sql .= " AND `language_id` = '" . (int)$language_id . "'";

@@ -6,6 +6,7 @@ $_['heading_title']     = 'Article Comments';
 $_['text_success']      = 'Success: You have modified article comments!';
 $_['text_list']         = 'Article Comments List';
 $_['text_filter']       = 'Filter';
+$_['text_by']           = 'by';
 
 // Column
 $_['column_comment']    = 'Comment';
@@ -21,7 +22,8 @@ $_['entry_customer']    = 'Customer';
 $_['entry_status']      = 'Status';
 $_['entry_date_added']  = 'Date Added';
 
+// Button
+$_['button_spam']       = 'Spam';
+
 // Error
-$_['error_warning']     = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']  = 'Warning: You do not have permission to modify article comments!';
-$_['error_keyword']     = 'Keyword must be between 1 and 64 characters!';

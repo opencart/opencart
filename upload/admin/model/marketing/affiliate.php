@@ -78,15 +78,15 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_tracking'])) {
-			$implode[] = "`ca`.`tracking` = '" . $this->db->escape((string)$data['filter_tracking']) . "'";
+			$implode[] = "LCASE(`ca`.`tracking`) = '" . $this->db->escape(oc_strtolower($data['filter_tracking'])) . "'";
 		}
 
 		if (!empty($data['filter_payment_method'])) {
-			$implode[] = "`ca`.`payment_method` = '" . $this->db->escape($data['filter_payment_method']) . "'";
+			$implode[] = "LCASE(`ca`.`payment_method`) = '" . $this->db->escape(oc_strtolower($data['filter_payment_method'])) . "'";
 		}
 
 		if (!empty($data['filter_commission'])) {
@@ -102,7 +102,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`ca`.`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`ca`.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {
@@ -157,15 +157,15 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`c`.`firstname`, ' ', `c`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_tracking'])) {
-			$implode[] = "`ca`.`tracking` = '" . $this->db->escape((string)$data['filter_tracking']) . "'";
+			$implode[] = "LCASE(`ca`.`tracking`) = '" . $this->db->escape(oc_strtolower($data['filter_tracking'])) . "'";
 		}
 
 		if (!empty($data['filter_payment_method'])) {
-			$implode[] = "`ca`.`payment_method` = '" . $this->db->escape($data['filter_payment_method']) . "'";
+			$implode[] = "LCASE(`ca`.`payment_method`) = '" . $this->db->escape(oc_strtolower($data['filter_payment_method'])) . "'";
 		}
 
 		if (!empty($data['filter_commission'])) {
@@ -181,7 +181,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`ca`.`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`ca`.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {

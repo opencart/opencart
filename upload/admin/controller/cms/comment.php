@@ -219,8 +219,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		print_r($selected);
-
 		if (!$json) {
 			$this->load->model('cms/article');
 			$this->load->model('customer/customer');
@@ -240,7 +238,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 					$results = $this->model_cms_article->getComments($filter_data);
 
 					foreach ($results as $result) {
-						$this->model_cms_article->editCommentStatus($result['customer_id'], 1);
+						$this->model_cms_article->editCommentStatus($result['article_comment_id'], 1);
 					}
 				}
 			}

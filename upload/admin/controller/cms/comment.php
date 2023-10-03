@@ -210,7 +210,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -227,18 +227,21 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$comment_info = $this->model_cms_article->getComment($article_comment_id);
 
 				if ($comment_info) {
-					$this->model_customer_customer->editCommenter($comment_info['customer_id'], 1);
+					$this->model_cms_article->editCommentStatus($article_comment_id, 1);
 
-					// Approve all past comments
-					$filter_data = [
-						'filter_customer_id' => $comment_info['customer_id'],
-						'filter_status'      => 0
-					];
+					if ($comment_info['customer_id']) {
+						$this->model_customer_customer->editCommenter($comment_info['customer_id'], 1);
 
-					$results = $this->model_cms_article->getComments($filter_data);
+						$filter_data = [
+							'filter_customer_id' => $comment_info['customer_id'],
+							'filter_status'      => 0
+						];
 
-					foreach ($results as $result) {
-						$this->model_cms_article->editCommentStatus($result['article_comment_id'], 1);
+						$results = $this->model_cms_article->getComments($filter_data);
+
+						foreach ($results as $result) {
+							$this->model_cms_article->editCommentStatus($result['article_comment_id'], 1);
+						}
 					}
 				}
 			}
@@ -259,7 +262,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -276,16 +279,18 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$comment_info = $this->model_cms_article->getComment($article_comment_id);
 
 				if ($comment_info) {
-					$this->model_customer_customer->editCommenter($comment_info['customer_id'], 0);
-					$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
-
 					$this->model_cms_article->editCommentStatus($article_comment_id, 0);
 
-					// Delete all customer comments
-					$results = $this->model_cms_article->getComments(['filter_customer_id' => $comment_info['customer_id']]);
+					if ($comment_info['customer_id']) {
+						$this->model_customer_customer->editCommenter($comment_info['customer_id'], 0);
+						$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
 
-					foreach ($results as $result) {
-						$this->model_cms_article->deleteComment($result['article_comment_id']);
+						// Delete all customer comments
+						$results = $this->model_cms_article->getComments(['filter_customer_id' => $comment_info['customer_id']]);
+
+						foreach ($results as $result) {
+							$this->model_cms_article->deleteComment($result['article_comment_id']);
+						}
 					}
 				}
 			}
@@ -306,7 +311,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

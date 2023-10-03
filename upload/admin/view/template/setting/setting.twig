@@ -386,7 +386,8 @@
                         <label class="col-sm-2 col-form-label">{{ entry_comment_status }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_comment_status" value="0"/> <input type="checkbox" name="config_comment_status" value="1" id="input-comment-status" class="form-check-input"{% if config_comment_status %} checked{% endif %}/>
+                            <input type="hidden" name="config_comment_status" value="0"/>
+                            <input type="checkbox" name="config_comment_status" value="1" id="input-comment-status" class="form-check-input"{% if config_comment_status %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_comment }}</div>
                         </div>
@@ -395,11 +396,24 @@
                         <label class="col-sm-2 col-form-label">{{ entry_comment_guest }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_comment_guest" value="0"/> <input type="checkbox" name="config_comment_guest" value="1" id="input-comment-guest" class="form-check-input"{% if config_comment_guest %} checked{% endif %}/>
+                            <input type="hidden" name="config_comment_guest" value="0"/>
+                            <input type="checkbox" name="config_comment_guest" value="1" id="input-comment-guest" class="form-check-input"{% if config_comment_guest %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_comment_guest }}</div>
                         </div>
                       </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_comment_approve }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="hidden" name="config_comment_approve" value="0"/>
+                            <input type="checkbox" name="config_comment_approve" value="1" id="input-comment-approve" class="form-check-input"{% if config_comment_approve %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_comment_approve }}</div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>

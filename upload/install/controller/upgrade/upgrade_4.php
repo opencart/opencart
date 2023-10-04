@@ -187,6 +187,21 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				'serialized' => 0
 			];
 
+
+			$missing[] = [
+				'key'        => 'config_image_default_width',
+				'value'      => 300,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_default_height',
+				'value'      => 300,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
 			$missing[] = [
 				'key'        => 'config_image_article_width',
 				'value'      => 1140,

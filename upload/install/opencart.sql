@@ -2054,7 +2054,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_image_category_height', '80', 0),
 (0, 'config', 'config_image_article_width', '1140', 0),
 (0, 'config', 'config_image_article_height', '380', 0),
-(0, 'config', 'config_image_topic_width', 'D', 0),
+(0, 'config', 'config_image_topic_width', '1140', 0),
 (0, 'config', 'config_image_topic_height', '380', 0),
 (0, 'config', 'config_image_product_width', '250', 0),
 (0, 'config', 'config_image_product_height', '250', 0),

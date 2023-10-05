@@ -4,7 +4,7 @@ jmespath.php
 
 JMESPath (pronounced "jaymz path") allows you to declaratively specify how to
 extract elements from a JSON document. *jmespath.php* allows you to use
-JMESPath in PHP applications with PHP data structures. It requires PHP 5.4 or
+JMESPath in PHP applications with PHP data structures. It requires PHP 7.2.5 or
 greater and can be installed through `Composer <http://getcomposer.org/doc/00-intro.md>`_
 using the ``mtdowling/jmespath.php`` package.
 

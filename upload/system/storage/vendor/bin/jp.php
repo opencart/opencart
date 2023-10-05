@@ -66,6 +66,16 @@ if (PHP_VERSION_ID < 80000) {
                 return $operation ? flock($this->handle, $operation) : true;
             }
 
+            public function stream_seek($offset, $whence)
+            {
+                if (0 === fseek($this->handle, $offset, $whence)) {
+                    $this->position = ftell($this->handle);
+                    return true;
+                }
+
+                return false;
+            }
+
             public function stream_tell()
             {
                 return $this->position;
@@ -98,10 +108,12 @@ if (PHP_VERSION_ID < 80000) {
         }
     }
 
-    if (function_exists('stream_wrapper_register') && stream_wrapper_register('phpvfscomposer', 'Composer\BinProxyWrapper')) {
-        include("phpvfscomposer://" . __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php');
-        exit(0);
+    if (
+        (function_exists('stream_get_wrappers') && in_array('phpvfscomposer', stream_get_wrappers(), true))
+        || (function_exists('stream_wrapper_register') && stream_wrapper_register('phpvfscomposer', 'Composer\BinProxyWrapper'))
+    ) {
+        return include("phpvfscomposer://" . __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php');
     }
 }
 
-include __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php';
+return include __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php';

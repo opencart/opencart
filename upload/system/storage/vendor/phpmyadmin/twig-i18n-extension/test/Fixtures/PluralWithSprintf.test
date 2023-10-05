@@ -1,0 +1,14 @@
+--TEST--
+Test a plural example without variables in the content
+--CONFIG--
+return []
+--TEMPLATE--
+{% trans %}%s table{% plural num_tables %}%s tables{% endtrans %}
+--DATA--
+return [ 'num_tables' => 1]
+--EXPECT--
+%s table
+--DATA--
+return [ 'num_tables' => 2]
+--EXPECT--
+%s tables

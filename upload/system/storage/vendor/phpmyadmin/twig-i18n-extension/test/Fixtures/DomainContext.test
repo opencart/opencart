@@ -1,0 +1,10 @@
+--TEST--
+A simple trans with context and a domain
+--TEMPLATE--
+{% trans from "core" %}Some text{% context %}This text is all about bla, foo, bar, blog{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Some text

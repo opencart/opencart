@@ -158,7 +158,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         return function () {
             return Promise\Create::promiseFor(
-                new Configuration(self::DEFAULT_ENDPOINTS_TYPE)
+                new Configuration(self::DEFAULT_ENDPOINTS_TYPE, true)
             );
         };
     }

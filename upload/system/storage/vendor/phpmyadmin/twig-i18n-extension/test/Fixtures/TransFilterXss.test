@@ -1,0 +1,10 @@
+--TEST--
+Test a simple trans filter against XSS injection
+--TEMPLATE--
+{{ '<script>alert(1);</script>'|trans }}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+&lt;script&gt;alert(1);&lt;/script&gt;

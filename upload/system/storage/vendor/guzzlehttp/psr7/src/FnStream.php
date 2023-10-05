@@ -18,7 +18,7 @@ final class FnStream implements StreamInterface
     private const SLOTS = [
         '__toString', 'close', 'detach', 'rewind',
         'getSize', 'tell', 'eof', 'isSeekable', 'seek', 'isWritable', 'write',
-        'isReadable', 'read', 'getContents', 'getMetadata'
+        'isReadable', 'read', 'getContents', 'getMetadata',
     ];
 
     /** @var array<string, callable> */
@@ -33,7 +33,7 @@ final class FnStream implements StreamInterface
 
         // Create the functions on the class
         foreach ($methods as $name => $fn) {
-            $this->{'_fn_' . $name} = $fn;
+            $this->{'_fn_'.$name} = $fn;
         }
     }
 
@@ -45,7 +45,7 @@ final class FnStream implements StreamInterface
     public function __get(string $name): void
     {
         throw new \BadMethodCallException(str_replace('_fn_', '', $name)
-            . '() is not implemented in the FnStream');
+            .'() is not implemented in the FnStream');
     }
 
     /**
@@ -99,6 +99,7 @@ final class FnStream implements StreamInterface
                 throw $e;
             }
             trigger_error(sprintf('%s::__toString exception: %s', self::class, (string) $e), E_USER_ERROR);
+
             return '';
         }
     }
@@ -169,8 +170,6 @@ final class FnStream implements StreamInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return mixed
      */
     public function getMetadata($key = null)

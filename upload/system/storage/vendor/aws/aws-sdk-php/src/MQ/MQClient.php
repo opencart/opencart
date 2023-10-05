@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsAsync(array $args = [])
  * @method \Aws\Result listUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listUsersAsync(array $args = [])
+ * @method \Aws\Result promote(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise promoteAsync(array $args = [])
  * @method \Aws\Result rebootBroker(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rebootBrokerAsync(array $args = [])
  * @method \Aws\Result updateBroker(array $args = [])

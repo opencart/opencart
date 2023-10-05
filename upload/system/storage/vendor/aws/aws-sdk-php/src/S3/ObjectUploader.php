@@ -27,6 +27,7 @@ class ObjectUploader implements PromisorInterface
         'params'        => [],
         'part_size'     => null,
     ];
+    private $addContentMD5;
 
     /**
      * @param S3ClientInterface $client         The S3 Client used to execute
@@ -59,12 +60,15 @@ class ObjectUploader implements PromisorInterface
         $this->body = Psr7\Utils::streamFor($body);
         $this->acl = $acl;
         $this->options = $options + self::$defaults;
+        // Handle "add_content_md5" option.
+        $this->addContentMD5 = isset($options['add_content_md5'])
+            && $options['add_content_md5'] === true;
     }
 
     /**
      * @return PromiseInterface
      */
-    public function promise()
+    public function promise(): PromiseInterface
     {
         /** @var int $mup_threshold */
         $mup_threshold = $this->options['mup_threshold'];
@@ -83,6 +87,7 @@ class ObjectUploader implements PromisorInterface
                 'Key'    => $this->key,
                 'Body'   => $this->body,
                 'ACL'    => $this->acl,
+                'AddContentMD5' => $this->addContentMD5
             ] + $this->options['params']);
         if (is_callable($this->options['before_upload'])) {
             $this->options['before_upload']($command);

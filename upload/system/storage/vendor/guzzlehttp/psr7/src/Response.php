@@ -138,6 +138,7 @@ class Response implements ResponseInterface
             $reasonPhrase = self::PHRASES[$new->statusCode];
         }
         $new->reasonPhrase = (string) $reasonPhrase;
+
         return $new;
     }
 

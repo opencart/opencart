@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deregisterInstanceAsync(array $args = [])
  * @method \Aws\Result discoverInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise discoverInstancesAsync(array $args = [])
+ * @method \Aws\Result discoverInstancesRevision(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise discoverInstancesRevisionAsync(array $args = [])
  * @method \Aws\Result getInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getInstanceAsync(array $args = [])
  * @method \Aws\Result getInstancesHealthStatus(array $args = [])

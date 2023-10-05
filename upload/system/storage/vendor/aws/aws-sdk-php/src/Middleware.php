@@ -4,7 +4,10 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\AwsException;
+use Aws\Token\TokenAuthorization;
+use Aws\Token\TokenInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;
@@ -71,6 +74,12 @@ final class Middleware
                 CommandInterface $command,
                 RequestInterface $request = null
             ) use ($api, $validator, $handler) {
+                if ($api->isModifiedModel()) {
+                    $api = new Service(
+                        $api->getDefinition(),
+                        $api->getProvider()
+                    );
+                }
                 $operation = $api->getOperation($command->getName());
                 $validator->validate(
                     $command->getName(),
@@ -87,13 +96,19 @@ final class Middleware
      *
      * @param callable $serializer Function used to serialize a request for a
      *                             command.
+     * @param EndpointProviderV2 | null $endpointProvider
+     * @param array $providerArgs
      * @return callable
      */
-    public static function requestBuilder(callable $serializer)
+    public static function requestBuilder(
+        $serializer,
+        $endpointProvider = null,
+        array $providerArgs = null
+    )
     {
-        return function (callable $handler) use ($serializer) {
-            return function (CommandInterface $command) use ($serializer, $handler) {
-                return $handler($command, $serializer($command));
+        return function (callable $handler) use ($serializer, $endpointProvider, $providerArgs) {
+            return function (CommandInterface $command) use ($serializer, $handler, $endpointProvider, $providerArgs) {
+                return $handler($command, $serializer($command, $endpointProvider, $providerArgs));
             };
         };
     }
@@ -110,23 +125,35 @@ final class Middleware
      *
      * @return callable
      */
-    public static function signer(callable $credProvider, callable $signatureFunction)
+    public static function signer(callable $credProvider, callable $signatureFunction, $tokenProvider = null)
     {
-        return function (callable $handler) use ($signatureFunction, $credProvider) {
+        return function (callable $handler) use ($signatureFunction, $credProvider, $tokenProvider) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler, $signatureFunction, $credProvider) {
+            ) use ($handler, $signatureFunction, $credProvider, $tokenProvider) {
                 $signer = $signatureFunction($command);
-                return $credProvider()->then(
-                    function (CredentialsInterface $creds)
-                    use ($handler, $command, $signer, $request) {
-                        return $handler(
-                            $command,
-                            $signer->signRequest($request, $creds)
-                        );
-                    }
-                );
+                if ($signer instanceof TokenAuthorization) {
+                    return $tokenProvider()->then(
+                        function (TokenInterface $token)
+                        use ($handler, $command, $signer, $request) {
+                            return $handler(
+                                $command,
+                                $signer->authorizeRequest($request, $token)
+                            );
+                        }
+                    );
+                } else {
+                    return $credProvider()->then(
+                        function (CredentialsInterface $creds)
+                        use ($handler, $command, $signer, $request) {
+                            return $handler(
+                                $command,
+                                $signer->signRequest($request, $creds)
+                            );
+                        }
+                    );
+                }
             };
         };
     }

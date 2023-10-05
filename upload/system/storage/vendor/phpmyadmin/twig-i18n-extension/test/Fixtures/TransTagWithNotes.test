@@ -1,0 +1,10 @@
+--TEST--
+Test with notes
+--TEMPLATE--
+{% trans %}calendar-month-year{% notes %}Month-year order for calendar, use either "calendar-month-year" or "calendar-year-month".{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+calendar-month-year

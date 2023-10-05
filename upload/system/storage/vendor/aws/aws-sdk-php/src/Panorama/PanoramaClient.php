@@ -65,6 +65,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise registerPackageVersionAsync(array $args = [])
  * @method \Aws\Result removeApplicationInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeApplicationInstanceAsync(array $args = [])
+ * @method \Aws\Result signalApplicationInstanceNodeInstances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise signalApplicationInstanceNodeInstancesAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

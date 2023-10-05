@@ -1,0 +1,10 @@
+--TEST--
+Test with a too complex string
+--TEMPLATE--
+{% trans %}{{ items.current }}{% endtrans %}
+--DATA--
+return ['b' => 18]
+--CONFIG--
+return []
+--EXCEPTION--
+Twig\Error\SyntaxError: The text to be translated with "trans" can only contain references to simple variables in "index.twig" at line 2.

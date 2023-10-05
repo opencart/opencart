@@ -17,11 +17,12 @@ trait CalculatesChecksumTrait
         $requestedAlgorithm = strtolower($requestedAlgorithm);
         $useCrt = extension_loaded('awscrt');
         if ($useCrt) {
+            $crt = new Crt();
             switch ($requestedAlgorithm) {
                 case 'crc32c':
-                    return CRT::crc32c($value);
+                    return base64_encode(pack('N*',($crt->crc32c($value))));
                 case 'crc32':
-                    return CRT::crc32($value);
+                    return base64_encode(pack('N*',($crt->crc32($value))));
                 case 'sha256':
                 case 'sha1':
                     return base64_encode(Psr7\Utils::hash($value, $requestedAlgorithm, true));

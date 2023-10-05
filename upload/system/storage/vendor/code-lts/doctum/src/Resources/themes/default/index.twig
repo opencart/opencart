@@ -1,0 +1,9 @@
+{% if has_namespaces %}
+    {% set extension = 'namespaces.twig' %}
+{% else %}
+    {% set extension = 'classes.twig' %}
+{% endif %}
+
+{% extends extension %}
+
+{% block body_class 'index' %}

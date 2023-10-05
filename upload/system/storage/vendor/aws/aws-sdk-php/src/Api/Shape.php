@@ -18,19 +18,19 @@ class Shape extends AbstractModel
     public static function create(array $definition, ShapeMap $shapeMap)
     {
         static $map = [
-            'structure' => 'Aws\Api\StructureShape',
-            'map'       => 'Aws\Api\MapShape',
-            'list'      => 'Aws\Api\ListShape',
-            'timestamp' => 'Aws\Api\TimestampShape',
-            'integer'   => 'Aws\Api\Shape',
-            'double'    => 'Aws\Api\Shape',
-            'float'     => 'Aws\Api\Shape',
-            'long'      => 'Aws\Api\Shape',
-            'string'    => 'Aws\Api\Shape',
-            'byte'      => 'Aws\Api\Shape',
-            'character' => 'Aws\Api\Shape',
-            'blob'      => 'Aws\Api\Shape',
-            'boolean'   => 'Aws\Api\Shape'
+            'structure' => StructureShape::class,
+            'map'       => MapShape::class,
+            'list'      => ListShape::class,
+            'timestamp' => TimestampShape::class,
+            'integer'   => Shape::class,
+            'double'    => Shape::class,
+            'float'     => Shape::class,
+            'long'      => Shape::class,
+            'string'    => Shape::class,
+            'byte'      => Shape::class,
+            'character' => Shape::class,
+            'blob'      => Shape::class,
+            'boolean'   => Shape::class
         ];
 
         if (isset($definition['shape'])) {
@@ -65,5 +65,13 @@ class Shape extends AbstractModel
     public function getName()
     {
         return $this->definition['name'];
+    }
+
+    /**
+     * Get a context param definition.
+     */
+    public function getContextParam()
+    {
+        return $this->contextParam;
     }
 }

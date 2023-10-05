@@ -1,0 +1,12 @@
+{% extends "layout/layout.twig" %}
+{% from "macros.twig" import render_classes %}
+{% block title %}{% trans 'All Classes' %} | {{ parent() }}{% endblock %}
+{% block body_class 'classes' %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>{% trans 'Classes' %}</h1>
+    </div>
+
+    {{ render_classes(classes) }}
+{% endblock %}

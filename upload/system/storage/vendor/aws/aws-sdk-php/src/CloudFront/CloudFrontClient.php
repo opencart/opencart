@@ -100,8 +100,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updatePublicKeyAsync(array $args = []) (supported in versions 2017-10-30, 2018-06-18, 2018-11-05, 2019-03-26, 2020-05-31)
  * @method \Aws\Result associateAlias(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise associateAliasAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result copyDistribution(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise copyDistributionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result createCachePolicy(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise createCachePolicyAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result createContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise createContinuousDeploymentPolicyAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result createFunction(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise createFunctionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result createKeyGroup(array $args = []) (supported in versions 2020-05-31)
@@ -118,6 +122,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createResponseHeadersPolicyAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result deleteCachePolicy(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise deleteCachePolicyAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result deleteContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise deleteContinuousDeploymentPolicyAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result deleteFunction(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise deleteFunctionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result deleteKeyGroup(array $args = []) (supported in versions 2020-05-31)
@@ -138,6 +144,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCachePolicyAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result getCachePolicyConfig(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise getCachePolicyConfigAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result getContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise getContinuousDeploymentPolicyAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result getContinuousDeploymentPolicyConfig(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise getContinuousDeploymentPolicyConfigAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result getFunction(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise getFunctionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result getKeyGroup(array $args = []) (supported in versions 2020-05-31)
@@ -164,6 +174,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listCachePoliciesAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result listConflictingAliases(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise listConflictingAliasesAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result listContinuousDeploymentPolicies(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise listContinuousDeploymentPoliciesAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result listDistributionsByCachePolicyId(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise listDistributionsByCachePolicyIdAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result listDistributionsByKeyGroup(array $args = []) (supported in versions 2020-05-31)
@@ -192,6 +204,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise testFunctionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result updateCachePolicy(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise updateCachePolicyAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result updateContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise updateContinuousDeploymentPolicyAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result updateDistributionWithStagingConfig(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise updateDistributionWithStagingConfigAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result updateFunction(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise updateFunctionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result updateKeyGroup(array $args = []) (supported in versions 2020-05-31)
@@ -221,7 +237,7 @@ class CloudFrontClient extends AwsClient
      *   policy. Not required when passing a custom 'policy' option.
      * - key_pair_id: (string) The ID of the key pair used to sign CloudFront
      *   URLs for private distributions.
-     * - private_key: (string) The filepath ot the private key used to sign
+     * - private_key: (string) The filepath to the private key used to sign
      *   CloudFront URLs for private distributions.
      *
      * @param array $options Array of configuration options used when signing

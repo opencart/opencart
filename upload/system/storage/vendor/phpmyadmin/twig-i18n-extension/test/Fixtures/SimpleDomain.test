@@ -1,0 +1,11 @@
+--TEST--
+Test a simple domain example
+--TEMPLATE--
+{# With specific domain #}
+{% trans from "core" %}Castle Quote{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Castle Quote

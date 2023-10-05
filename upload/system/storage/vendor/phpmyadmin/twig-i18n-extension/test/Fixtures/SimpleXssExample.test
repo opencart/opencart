@@ -1,0 +1,10 @@
+--TEST--
+Test a simple trans tag against XSS injection
+--TEMPLATE--
+{% trans %}<script>alert(1);</script>{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+<script>alert(1);</script>

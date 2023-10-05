@@ -5,7 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 2.6.1 - 2023-08-27
+
+### Fixed
+
+- Properly handle the fact that PHP transforms numeric strings in array keys to ints
+
+## 2.6.0 - 2023-08-03
+
+### Changed
+
+- Updated the mime type map to add some new entries, fix a couple of invalid entries, and remove an invalid entry
+- Fallback to `application/octet-stream` if we are unable to guess the content type for a multipart file upload
+
+## 2.5.1 - 2023-08-03
+
+### Fixed
+
+- Corrected mime type for `.acc` files to `audio/aac`
+
+### Changed
+
+- PHP 8.3 support
+
+## 2.5.0 - 2023-04-17
+
+### Changed
+
+- Adjusted `psr/http-message` version constraint to `^1.1 || ^2.0`
+
+## 2.4.5 - 2023-04-17
+
+### Fixed
+
+- Prevent possible warnings on unset variables in `ServerRequest::normalizeNestedFileSpec`
+- Fixed `Message::bodySummary` when `preg_match` fails
+- Fixed header validation issue
+
+## 2.4.4 - 2023-03-09
+
+### Changed
+
+- Removed the need for `AllowDynamicProperties` in `LazyOpenStream`
+
+## 2.4.3 - 2022-10-26
+
+### Changed
+
+- Replaced `sha1(uniqid())` by `bin2hex(random_bytes(20))`
+
+## 2.4.2 - 2022-10-25
+
+### Fixed
+
+- Fixed erroneous behaviour when combining host and relative path
 
 ## 2.4.1 - 2022-08-28
 
@@ -103,7 +156,7 @@ Identical to the RC release.
 ### Removed
 
 - PHP < 7.2 support
-- All functions in the Guzzle\Psr7 namespace
+- All functions in the `GuzzleHttp\Psr7` namespace
 
 ## 1.8.1 - 2021-03-21
 

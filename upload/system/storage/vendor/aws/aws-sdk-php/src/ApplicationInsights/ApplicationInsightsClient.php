@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CloudWatch Application Insights** service.
+ * @method \Aws\Result addWorkload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addWorkloadAsync(array $args = [])
  * @method \Aws\Result createApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationAsync(array $args = [])
  * @method \Aws\Result createComponent(array $args = [])
@@ -33,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeProblemAsync(array $args = [])
  * @method \Aws\Result describeProblemObservations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeProblemObservationsAsync(array $args = [])
+ * @method \Aws\Result describeWorkload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeWorkloadAsync(array $args = [])
  * @method \Aws\Result listApplications(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result listComponents(array $args = [])
@@ -47,6 +51,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listProblemsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result listWorkloads(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listWorkloadsAsync(array $args = [])
+ * @method \Aws\Result removeWorkload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeWorkloadAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
@@ -59,5 +67,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateComponentConfigurationAsync(array $args = [])
  * @method \Aws\Result updateLogPattern(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLogPatternAsync(array $args = [])
+ * @method \Aws\Result updateProblem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateProblemAsync(array $args = [])
+ * @method \Aws\Result updateWorkload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWorkloadAsync(array $args = [])
  */
 class ApplicationInsightsClient extends AwsClient {}

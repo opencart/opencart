@@ -1,0 +1,17 @@
+--TEST--
+Test a plural example
+--TEMPLATE--
+{# Plural tag with domain #}
+{% set name = 'Jim' %}
+{% set apple_count = 2 %}
+{% trans from 'core' %}
+    Hey {{ name }}, I have one apple.
+{% plural apple_count %}
+    Hey {{ name }}, I have {{ count }} apples.
+{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Hey Jim, I have 2 apples.

@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Global Accelerator** service.
  * @method \Aws\Result addCustomRoutingEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addCustomRoutingEndpointsAsync(array $args = [])
+ * @method \Aws\Result addEndpoints(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addEndpointsAsync(array $args = [])
  * @method \Aws\Result advertiseByoipCidr(array $args = [])
  * @method \GuzzleHttp\Promise\Promise advertiseByoipCidrAsync(array $args = [])
  * @method \Aws\Result allowCustomRoutingTraffic(array $args = [])
@@ -79,6 +81,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise provisionByoipCidrAsync(array $args = [])
  * @method \Aws\Result removeCustomRoutingEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeCustomRoutingEndpointsAsync(array $args = [])
+ * @method \Aws\Result removeEndpoints(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeEndpointsAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

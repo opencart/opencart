@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **AWS CloudFormation** service.
  *
+ * @method \Aws\Result activateOrganizationsAccess(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise activateOrganizationsAccessAsync(array $args = [])
  * @method \Aws\Result activateType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise activateTypeAsync(array $args = [])
  * @method \Aws\Result batchDescribeTypeConfigurations(array $args = [])
@@ -22,6 +24,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createStackInstancesAsync(array $args = [])
  * @method \Aws\Result createStackSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createStackSetAsync(array $args = [])
+ * @method \Aws\Result deactivateOrganizationsAccess(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deactivateOrganizationsAccessAsync(array $args = [])
  * @method \Aws\Result deactivateType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deactivateTypeAsync(array $args = [])
  * @method \Aws\Result deleteChangeSet(array $args = [])
@@ -40,6 +44,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeChangeSetAsync(array $args = [])
  * @method \Aws\Result describeChangeSetHooks(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeChangeSetHooksAsync(array $args = [])
+ * @method \Aws\Result describeOrganizationsAccess(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeOrganizationsAccessAsync(array $args = [])
  * @method \Aws\Result describePublisher(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePublisherAsync(array $args = [])
  * @method \Aws\Result describeStackDriftDetectionStatus(array $args = [])
@@ -88,6 +94,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listExportsAsync(array $args = [])
  * @method \Aws\Result listImports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImportsAsync(array $args = [])
+ * @method \Aws\Result listStackInstanceResourceDrifts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listStackInstanceResourceDriftsAsync(array $args = [])
  * @method \Aws\Result listStackInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStackInstancesAsync(array $args = [])
  * @method \Aws\Result listStackResources(array $args = [])

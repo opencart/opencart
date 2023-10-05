@@ -56,7 +56,9 @@ class Configuration implements ConfigurationInterface
                     }
                 } else {
                     if (isset($settingValue['override'])) {
-                        $this->$settingName = $settingValue['override'];
+                        if (property_exists($this, $settingName)) {
+                            $this->$settingName = $settingValue['override'];
+                        }
                     }
                 }
             }

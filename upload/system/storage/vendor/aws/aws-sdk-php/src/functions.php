@@ -504,6 +504,67 @@ function boolean_value($input)
 }
 
 /**
+ * Parses ini sections with subsections (i.e. the service section)
+ *
+ * @param $filename
+ * @param $filename
+ * @return array
+ */
+function parse_ini_section_with_subsections($filename, $section_name) {
+    $config = [];
+    $stream = fopen($filename, 'r');
+
+    if (!$stream) {
+        return $config;
+    }
+
+    $current_subsection = '';
+
+    while (!feof($stream)) {
+        $line = trim(fgets($stream));
+
+        if (empty($line) || in_array($line[0], [';', '#'])) {
+            continue;
+        }
+
+        if (preg_match('/^\[.*\]$/', $line)
+            && trim($line, '[]') === $section_name)
+        {
+            while (!feof($stream)) {
+                $line = trim(fgets($stream));
+
+                if (empty($line) || in_array($line[0], [';', '#'])) {
+                    continue;
+                }
+
+                if (preg_match('/^\[.*\]$/', $line)
+                    && trim($line, '[]') === $section_name)
+                {
+                    continue;
+                } elseif (strpos($line, '[') === 0) {
+                    break;
+                }
+
+                if (strpos($line, ' = ') !== false) {
+                    list($key, $value) = explode(' = ', $line, 2);
+                    if (empty($current_subsection)) {
+                        $config[$key] = $value;
+                    } else {
+                        $config[$current_subsection][$key] = $value;
+                    }
+                } else {
+                    $current_subsection = trim(str_replace('=', '', $line));
+                    $config[$current_subsection] = [];
+                }
+            }
+        }
+    }
+
+    fclose($stream);
+    return $config;
+}
+
+/**
  * Checks if an input is a valid epoch time
  *
  * @param $input

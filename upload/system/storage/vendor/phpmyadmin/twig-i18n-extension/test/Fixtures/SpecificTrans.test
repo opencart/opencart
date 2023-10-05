@@ -1,0 +1,10 @@
+--TEST--
+Test a specific trans syntax
+--TEMPLATE--
+{% trans from 'foo' 'Hey Matthieu, why so many bugs ?' %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Hey Matthieu, why so many bugs ?

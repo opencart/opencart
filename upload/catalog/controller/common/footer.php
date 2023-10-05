@@ -14,9 +14,9 @@ class Footer extends \Opencart\System\Engine\Controller {
 
 		$data['blog'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'));
 
-		$this->load->model('catalog/information');
-
 		$data['informations'] = [];
+
+		$this->load->model('catalog/information');
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
 			if ($result['bottom']) {

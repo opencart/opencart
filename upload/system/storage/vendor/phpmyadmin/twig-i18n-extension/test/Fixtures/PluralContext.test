@@ -1,0 +1,18 @@
+--TEST--
+Test a plural example with context
+--TEMPLATE--
+{# Plural tag with domain #}
+{% set name = 'Jim' %}
+{% set apple_count = 1 %}
+{% trans %}
+    Hey {{ name }}, I have one apple.
+{% plural apple_count %}
+    Hey {{ name }}, I have {{ count }} apples.
+{% context %}Context for the plural block
+{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Hey Jim, I have one apple.

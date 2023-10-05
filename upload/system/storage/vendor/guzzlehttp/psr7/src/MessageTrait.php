@@ -12,11 +12,11 @@ use Psr\Http\Message\StreamInterface;
  */
 trait MessageTrait
 {
-    /** @var array<string, string[]> Map of all registered headers, as original name => array of values */
+    /** @var string[][] Map of all registered headers, as original name => array of values */
     private $headers = [];
 
-    /** @var array<string, string> Map of lowercase header name => original name at registration */
-    private $headerNames  = [];
+    /** @var string[] Map of lowercase header name => original name at registration */
+    private $headerNames = [];
 
     /** @var string */
     private $protocol = '1.1';
@@ -37,6 +37,7 @@ trait MessageTrait
 
         $new = clone $this;
         $new->protocol = $version;
+
         return $new;
     }
 
@@ -135,6 +136,7 @@ trait MessageTrait
 
         $new = clone $this;
         $new->stream = $body;
+
         return $new;
     }
 
@@ -224,12 +226,9 @@ trait MessageTrait
             ));
         }
 
-        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/', $header)) {
+        if (!preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $header)) {
             throw new \InvalidArgumentException(
-                sprintf(
-                    '"%s" is not valid header name',
-                    $header
-                )
+                sprintf('"%s" is not valid header name.', $header)
             );
         }
     }
@@ -257,8 +256,10 @@ trait MessageTrait
         // Clients must not send a request with line folding and a server sending folded headers is
         // likely very rare. Line folding is a fairly obscure feature of HTTP/1.1 and thus not accepting
         // folding is not likely to break any legitimate use case.
-        if (! preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/', $value)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not valid header value', $value));
+        if (!preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/D', $value)) {
+            throw new \InvalidArgumentException(
+                sprintf('"%s" is not valid header value.', $value)
+            );
         }
     }
 }

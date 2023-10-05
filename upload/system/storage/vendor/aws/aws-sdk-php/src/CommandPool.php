@@ -75,7 +75,7 @@ class CommandPool implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function promise()
+    public function promise(): PromiseInterface
     {
         return $this->each->promise();
     }

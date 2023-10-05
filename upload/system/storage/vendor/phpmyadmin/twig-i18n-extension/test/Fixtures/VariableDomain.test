@@ -1,0 +1,12 @@
+--TEST--
+Test a simple domain example
+--TEMPLATE--
+{# With domain variable #}
+{% set var = 'core' %}
+{% trans from var %}Castle Quote{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Castle Quote

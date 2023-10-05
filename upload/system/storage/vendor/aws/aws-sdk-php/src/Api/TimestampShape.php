@@ -24,7 +24,7 @@ class TimestampShape extends Shape
      */
     public static function format($value, $format)
     {
-        if ($value instanceof \DateTime) {
+        if ($value instanceof \DateTimeInterface) {
             $value = $value->getTimestamp();
         } elseif (is_string($value)) {
             $value = strtotime($value);

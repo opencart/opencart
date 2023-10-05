@@ -122,21 +122,24 @@ class EventBridgeClient extends AwsClient {
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $stack = $this->getHandlerList();
-        $isCustomEndpoint = isset($args['endpoint']);
-        $stack->appendBuild(
-            EventBridgeEndpointMiddleware::wrap(
-                $this->getRegion(),
-                [
-                    'use_fips_endpoint' =>
-                        $this->getConfig('use_fips_endpoint')->isUseFipsEndpoint(),
-                    'dual_stack' =>
-                        $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
-                ],
-                $this->getConfig('endpoint_provider'),
-                $isCustomEndpoint
-            ),
-            'eventbridge.endpoint_middleware'
-        );
+
+        if ($this->isUseEndpointV2()) {
+            $stack = $this->getHandlerList();
+            $isCustomEndpoint = isset($args['endpoint']);
+            $stack->appendBuild(
+                EventBridgeEndpointMiddleware::wrap(
+                    $this->getRegion(),
+                    [
+                        'use_fips_endpoint' =>
+                            $this->getConfig('use_fips_endpoint')->isUseFipsEndpoint(),
+                        'dual_stack' =>
+                            $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
+                    ],
+                    $this->getConfig('endpoint_provider'),
+                    $isCustomEndpoint
+                ),
+                'eventbridge.endpoint_middleware'
+            );
+        }
     }
 }

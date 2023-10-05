@@ -1,0 +1,10 @@
+--TEST--
+Test a simple trans tag
+--TEMPLATE--
+{% trans %}Castle Quote{% endtrans %}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Castle Quote

@@ -14,6 +14,7 @@ final class InputStream extends NativeResource {
     const SEEK_END = 2;
 
     public function __construct($stream) {
+        parent::__construct();
         $this->stream = $stream;
         $options = self::$crt->input_stream_options_new();
         // The stream implementation in native just converts the PHP stream into
@@ -24,7 +25,7 @@ final class InputStream extends NativeResource {
     }
 
     public function __destruct() {
-        self::$crt->input_stream_release($this->release());
+        $this->release();
         parent::__destruct();
     }
 

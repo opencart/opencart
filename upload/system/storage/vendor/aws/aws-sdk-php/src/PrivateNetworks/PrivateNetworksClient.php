@@ -47,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result ping(array $args = [])
  * @method \GuzzleHttp\Promise\Promise pingAsync(array $args = [])
+ * @method \Aws\Result startNetworkResourceUpdate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startNetworkResourceUpdateAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

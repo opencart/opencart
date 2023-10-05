@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDeploymentAsync(array $args = [])
  * @method \Aws\Result getEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnvironmentAsync(array $args = [])
+ * @method \Aws\Result getSignedBluinsightsUrl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSignedBluinsightsUrlAsync(array $args = [])
  * @method \Aws\Result listApplicationVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationVersionsAsync(array $args = [])
  * @method \Aws\Result listApplications(array $args = [])

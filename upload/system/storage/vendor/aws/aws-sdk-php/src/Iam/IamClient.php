@@ -132,6 +132,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getInstanceProfileAsync(array $args = [])
  * @method \Aws\Result getLoginProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLoginProfileAsync(array $args = [])
+ * @method \Aws\Result getMFADevice(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMFADeviceAsync(array $args = [])
  * @method \Aws\Result getOpenIDConnectProvider(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getOpenIDConnectProviderAsync(array $args = [])
  * @method \Aws\Result getOrganizationsAccessReport(array $args = [])

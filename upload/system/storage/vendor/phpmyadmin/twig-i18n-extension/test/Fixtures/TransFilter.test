@@ -1,0 +1,13 @@
+--TEST--
+Test a simple trans filter
+--TEMPLATE--
+{{ 'Castle Quote'|trans }}
+{# Filter before (default domain) #}
+{{ 'Castle Quote'|trans }}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Castle Quote
+Castle Quote

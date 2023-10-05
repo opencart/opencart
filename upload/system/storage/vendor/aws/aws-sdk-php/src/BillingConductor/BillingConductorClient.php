@@ -39,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listBillingGroupCostReportsAsync(array $args = [])
  * @method \Aws\Result listBillingGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBillingGroupsAsync(array $args = [])
+ * @method \Aws\Result listCustomLineItemVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCustomLineItemVersionsAsync(array $args = [])
  * @method \Aws\Result listCustomLineItems(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCustomLineItemsAsync(array $args = [])
  * @method \Aws\Result listPricingPlans(array $args = [])

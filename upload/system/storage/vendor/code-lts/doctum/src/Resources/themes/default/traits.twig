@@ -1,0 +1,25 @@
+{% extends "layout/layout.twig" %}
+{% from "macros.twig" import class_link %}
+{% block title %}{% trans 'Traits' %} | {{ parent() }}{% endblock %}
+{% block body_class 'traits' %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>{% trans 'Traits' %}</h1>
+    </div>
+
+    <div class="container-fluid underlined">
+        {% for class in classes %}
+            {% if class.trait %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ class_link(class, true) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ class.shortdesc|desc(class)|md_to_html }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

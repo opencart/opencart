@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeAffectedEntitiesForOrganizationAsync(array $args = [])
  * @method \Aws\Result describeEntityAggregates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEntityAggregatesAsync(array $args = [])
+ * @method \Aws\Result describeEntityAggregatesForOrganization(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeEntityAggregatesForOrganizationAsync(array $args = [])
  * @method \Aws\Result describeEventAggregates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEventAggregatesAsync(array $args = [])
  * @method \Aws\Result describeEventDetails(array $args = [])

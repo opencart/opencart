@@ -3,6 +3,7 @@ namespace Aws;
 
 use Aws\Exception\AwsException;
 use GuzzleHttp\Promise\Coroutine;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 
@@ -89,7 +90,7 @@ class Waiter implements PromisorInterface
     /**
      * @return Coroutine
      */
-    public function promise()
+    public function promise(): PromiseInterface
     {
         return Coroutine::of(function () {
             $name = $this->config['operation'];

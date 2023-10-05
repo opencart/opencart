@@ -14,6 +14,9 @@ class Command implements CommandInterface
     /** @var HandlerList */
     private $handlerList;
 
+    /** @var Array */
+    private $authSchemes;
+
     /**
      * Accepts an associative array of command options, including:
      *
@@ -55,6 +58,30 @@ class Command implements CommandInterface
     public function getHandlerList()
     {
         return $this->handlerList;
+    }
+
+    /**
+     * For overriding auth schemes on a per endpoint basis when using
+     * EndpointV2 provider. Intended for internal use only.
+     *
+     * @param array $authSchemes
+     *
+     * @internal
+     */
+    public function setAuthSchemes(array $authSchemes)
+    {
+        $this->authSchemes = $authSchemes;
+    }
+
+    /**
+     * Get auth schemes added to command as required
+     * for endpoint resolution
+     *
+     * @returns array | null
+     */
+    public function getAuthSchemes()
+    {
+        return $this->authSchemes;
     }
 
     /** @deprecated */

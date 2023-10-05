@@ -229,7 +229,7 @@ trait DecryptionTraitV2
                     $cipherOptions['Tag'],
                     $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
                         ? $cipherOptions['Aad']
-                        : null,
+                        : '',
                     $cipherOptions['TagLength'] ?: null,
                     $cipherOptions['KeySize']
                 );

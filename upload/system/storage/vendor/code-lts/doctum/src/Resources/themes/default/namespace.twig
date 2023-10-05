@@ -1,0 +1,84 @@
+{% extends "layout/layout.twig" %}
+{% from "macros.twig" import breadcrumbs, render_classes, class_link, namespace_link, hint_link, deprecated, function_parameters_signature, method_source_link %}
+{% block title %}{{ namespace == '' ? global_namespace_name() : namespace|raw }} | {{ parent() }}{% endblock %}
+{% block body_class 'namespace' %}
+{% block page_id 'namespace:' ~ ((namespace == '' ? global_namespace_page_name() : namespace)|replace({'\\': '_'})) %}
+
+{% block below_menu %}
+    <div class="namespace-breadcrumbs">
+        <ol class="breadcrumb">
+            <li><span class="label label-default">{% trans 'Namespace' %}</span></li>
+            {{ breadcrumbs(namespace) }}
+        </ol>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="page-header">
+        <h1>{{ namespace == '' ? global_namespace_name() : namespace|raw }}</h1>
+    </div>
+
+    {% if subnamespaces %}
+        <h2>{% trans 'Namespaces' %}</h2>
+        <div class="namespace-list">
+            {% for ns in subnamespaces %}{{ namespace_link(ns) }}{% endfor %}
+        </div>
+    {% endif %}
+
+    {% if classes %}
+        <h2>{% trans 'Classes' %}</h2>
+        {{- render_classes(classes) -}}
+    {% endif %}
+
+    {% if interfaces %}
+        <h2>{% trans 'Interfaces' %}</h2>
+        {{- render_classes(interfaces) -}}
+    {% endif %}
+
+    {% if functions %}
+        <h2>{% trans 'Functions' %}</h2>
+
+        <div class="container-fluid underlined">
+            {% for function in functions %}
+                <div class="row" id="function_{{ function.name|raw }}">
+                    <div class="col-md-2 type">
+                        {% if function.isStatic() %}static{% endif %}
+                        {% if function.isProtected() %}protected{% endif %}
+                        {% if function.isPrivate() %}private{% endif %}
+                        {{ hint_link(function.hint) }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ function.name|raw }}
+                        {{- function_parameters_signature(function) -}}
+                        <br>
+                        {% if function.isInternal() %}<span class="label label-warning">{% trans 'internal' %}</span>{% endif %}
+                        {% if function.isDeprecated() %}<span class="label label-danger">{% trans 'deprecated' %}</span>{% endif %}
+                        {% if function.hasSince() %}
+                            <i>{{ 'Since:'|trans }} {{ function.getSince() }}</i>
+                            <br>
+                        {% endif %}
+                        {% if not function.shortdesc %}
+                            <p class="no-description">{% trans 'No description' %}</p>
+                        {% else %}
+                            <p>{{ function.shortdesc|desc(function)|md_to_html }}</p>
+                        {%- endif %}
+                    </div>
+                    <div class="col-md-2">
+                        <div class="location">
+                        {%- if function.namespace is not same as(namespace) -%}
+                            <em><a href="{{ function_path(function) }}">{{ function|raw }}</a></em>
+                        {%- endif -%}{{ method_source_link(function) }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if exceptions %}
+        <h2>{% trans 'Exceptions' %}</h2>
+        {{- render_classes(exceptions) -}}
+    {% endif %}
+
+{% endblock %}

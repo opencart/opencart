@@ -19,11 +19,17 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDocumentTextDetectionAsync(array $args = [])
  * @method \Aws\Result getExpenseAnalysis(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getExpenseAnalysisAsync(array $args = [])
+ * @method \Aws\Result getLendingAnalysis(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLendingAnalysisAsync(array $args = [])
+ * @method \Aws\Result getLendingAnalysisSummary(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLendingAnalysisSummaryAsync(array $args = [])
  * @method \Aws\Result startDocumentAnalysis(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDocumentAnalysisAsync(array $args = [])
  * @method \Aws\Result startDocumentTextDetection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDocumentTextDetectionAsync(array $args = [])
  * @method \Aws\Result startExpenseAnalysis(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startExpenseAnalysisAsync(array $args = [])
+ * @method \Aws\Result startLendingAnalysis(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startLendingAnalysisAsync(array $args = [])
  */
 class TextractClient extends AwsClient {}

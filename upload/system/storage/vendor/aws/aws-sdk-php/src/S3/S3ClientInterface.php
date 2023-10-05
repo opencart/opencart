@@ -63,7 +63,7 @@ interface S3ClientInterface extends AwsClientInterface
      *                        cause an exception to be thrown instead.
      *
      * @return bool
-     * @throws S3Exception|Exception if there is an unhandled exception
+     * @throws S3Exception|\Exception if there is an unhandled exception
      */
     public function doesBucketExistV2($bucket, $accept403);
 
@@ -95,9 +95,9 @@ interface S3ClientInterface extends AwsClientInterface
      *                        operation (e.g., VersionId).
      *
      * @return bool
-     * @throws S3Exception|Exception if there is an unhandled exception
+     * @throws S3Exception|\Exception if there is an unhandled exception
      */
-    public function doesObjectExistV2($bucket, $key, $includeDeleteMarkers, array $options = []);
+    public function doesObjectExistV2($bucket, $key, $includeDeleteMarkers = false, array $options = []);
 
     /**
      * Register the Amazon S3 stream wrapper with this client instance.

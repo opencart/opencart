@@ -1,3 +1,42 @@
+# 3.7.1 (2023-08-28)
+
+ * Fix some phpdocs
+
+# 3.7.0 (2023-07-26)
+
+ * Add support for the ...spread operator on arrays and hashes
+
+# 3.6.1 (2023-06-08)
+
+ * Suppress some native return type deprecation messages
+
+# 3.6.0 (2023-05-03)
+
+ * Allow psr/container 2.0
+ * Add the new PHP 8.0 IntlDateFormatter::RELATIVE_* constants for date formatting
+ * Make the Lexer initialize itself lazily
+
+# 3.5.1 (2023-02-08)
+
+ * Arrow functions passed to the "reduce" filter now accept the current key as a third argument
+ * Restores the leniency of the matches twig comparison
+ * Fix error messages in sandboxed mode for "has some" and "has every"
+
+# 3.5.0 (2022-12-27)
+
+ * Make Twig\ExpressionParser non-internal
+ * Add "has some" and "has every" operators
+ * Add Compile::reset()
+ * Throw a better runtime error when the "matches" regexp is not valid
+ * Add "twig *_names" intl functions
+ * Fix optimizing closures callbacks
+ * Add a better exception when getting an undefined constant via `constant`
+ * Fix `if` nodes when outside of a block and with an empty body
+
+# 3.4.3 (2022-09-28)
+
+ * Fix a security issue on filesystem loader (possibility to load a template outside a configured directory)
+
 # 3.4.2 (2022-08-12)
 
  * Allow inherited magic method to still run with calling class

@@ -1,0 +1,33 @@
+name: default
+
+static:
+    'css/doctum.css': 'css/doctum.css'
+    'css/bootstrap.min.css': 'css/bootstrap.min.css'
+    'css/bootstrap-theme.min.css': 'css/bootstrap-theme.min.css'
+    'fonts/doctum-font.css': 'fonts/doctum-font.css'
+    'fonts/doctum.woff': 'fonts/doctum.woff'
+    'fonts/doctum.woff2': 'fonts/doctum.woff2'
+    'fonts/doctum.ttf': 'fonts/doctum.ttf'
+    'fonts/doctum.svg': 'fonts/doctum.svg'
+    'fonts/doctum.eot': 'fonts/doctum.eot'
+    'js/jquery-3.5.1.slim.min.js': 'js/jquery-3.5.1.slim.min.js'
+    'js/bootstrap.min.js': 'js/bootstrap.min.js'
+    'js/autocomplete.min.js': 'js/autocomplete.min.js'
+
+global:
+    'index.twig':      'index.html'
+    'doc-index.twig':  'doc-index.html'
+    'namespaces.twig': 'namespaces.html'
+    'classes.twig':    'classes.html'
+    'interfaces.twig': 'interfaces.html'
+    'traits.twig':     'traits.html'
+    'opensearch.twig': 'opensearch.xml'
+    'search.twig':     'search.html'
+    'doctum.js.twig':  'doctum.js'
+    'doctum-search.json.twig':  'doctum-search.json'
+
+namespace:
+    'namespace.twig': '%s.html'
+
+class:
+    'class.twig': '%s.html'

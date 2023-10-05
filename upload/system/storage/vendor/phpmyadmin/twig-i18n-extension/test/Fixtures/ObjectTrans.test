@@ -1,0 +1,28 @@
+--TEST--
+Test a plural example with "exotic" code
+--TEMPLATE--
+{# Plural tag without domain #}
+{% set name = 'Jim' %}
+{% set apple_count = 2 %}
+{% trans from obj %}
+    Hey {{ name }}, I have one apple.
+{% plural [a][0] %}
+    Hey {{ name }}, I have {{ count }} apples.
+{% context %}
+{{ obj|upper }} {{ obj }}
+{% endtrans %}
+--DATA--
+if (! class_exists('CustomObj')) {
+    class CustomObj {
+        public $count = 2;
+        public function __toString()
+        {
+            return 'Jim';
+        }
+    }
+}
+return ['obj' => new CustomObj(), 'a' => 2]
+--CONFIG--
+return []
+--EXPECT--
+Hey Jim, I have 2 apples.

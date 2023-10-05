@@ -12,11 +12,12 @@ require_once(DIR_STORAGE . 'vendor/aws/aws-sdk-php/src/functions.php');
 
 // guzzlehttp/guzzle
 $autoloader->register('GuzzleHttp', DIR_STORAGE . 'vendor/guzzlehttp/guzzle/src/', true);
-require_once(DIR_STORAGE . 'vendor/guzzlehttp/guzzle/src/functions_include.php');
+
+// guzzlehttp/guzzle
+$autoloader->register('GuzzleHttp', DIR_STORAGE . 'vendor/guzzlehttp/guzzle/src/', true);
 
 // guzzlehttp/promises
 $autoloader->register('GuzzleHttp\Promise', DIR_STORAGE . 'vendor/guzzlehttp/promises/src/', true);
-require_once(DIR_STORAGE . 'vendor/guzzlehttp/promises/src/functions_include.php');
 
 // guzzlehttp/psr7
 $autoloader->register('GuzzleHttp\Psr7', DIR_STORAGE . 'vendor/guzzlehttp/psr7/src/', true);

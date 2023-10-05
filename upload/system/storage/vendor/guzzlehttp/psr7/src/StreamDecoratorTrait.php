@@ -31,6 +31,7 @@ trait StreamDecoratorTrait
     {
         if ($name === 'stream') {
             $this->stream = $this->createStream();
+
             return $this->stream;
         }
 
@@ -43,12 +44,14 @@ trait StreamDecoratorTrait
             if ($this->isSeekable()) {
                 $this->seek(0);
             }
+
             return $this->getContents();
         } catch (\Throwable $e) {
             if (\PHP_VERSION_ID >= 70400) {
                 throw $e;
             }
             trigger_error(sprintf('%s::__toString exception: %s', self::class, (string) $e), E_USER_ERROR);
+
             return '';
         }
     }
@@ -79,8 +82,6 @@ trait StreamDecoratorTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return mixed
      */
     public function getMetadata($key = null)

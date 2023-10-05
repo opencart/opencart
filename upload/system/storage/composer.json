@@ -26,6 +26,6 @@
     "scssphp/scssphp": "^1.10.0",
     "twig/twig": "^3.3.7",
     "aws/aws-sdk-php": "^3.142.1",
-    "phpdocumentor/phpdocumentor": "3.3.1"
+    "code-lts/doctum": "^5.5.2"
   }
 }

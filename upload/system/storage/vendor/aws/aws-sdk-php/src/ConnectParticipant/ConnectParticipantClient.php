@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise completeAttachmentUploadAsync(array $args = [])
  * @method \Aws\Result createParticipantConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createParticipantConnectionAsync(array $args = [])
+ * @method \Aws\Result describeView(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeViewAsync(array $args = [])
  * @method \Aws\Result disconnectParticipant(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disconnectParticipantAsync(array $args = [])
  * @method \Aws\Result getAttachment(array $args = [])

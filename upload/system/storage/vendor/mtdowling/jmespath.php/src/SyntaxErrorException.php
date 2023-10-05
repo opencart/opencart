@@ -16,7 +16,7 @@ class SyntaxErrorException extends \InvalidArgumentException
         array $token,
         $expression
     ) {
-        $message = "Syntax error at character {$token['pos']}\n"
+        $message = sprintf("Syntax error at character %d\n", max($token['pos'], 0))
             . $expression . "\n" . str_repeat(' ', max($token['pos'], 0)) . "^\n";
         $message .= !is_array($expectedTypesOrMessage)
             ? $expectedTypesOrMessage

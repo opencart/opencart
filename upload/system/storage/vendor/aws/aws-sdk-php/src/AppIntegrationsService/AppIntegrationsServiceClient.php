@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon AppIntegrations Service** service.
+ * @method \Aws\Result createApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createApplicationAsync(array $args = [])
  * @method \Aws\Result createDataIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createDataIntegrationAsync(array $args = [])
  * @method \Aws\Result createEventIntegration(array $args = [])
@@ -13,10 +15,14 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteDataIntegrationAsync(array $args = [])
  * @method \Aws\Result deleteEventIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventIntegrationAsync(array $args = [])
+ * @method \Aws\Result getApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getApplicationAsync(array $args = [])
  * @method \Aws\Result getDataIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataIntegrationAsync(array $args = [])
  * @method \Aws\Result getEventIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEventIntegrationAsync(array $args = [])
+ * @method \Aws\Result listApplications(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result listDataIntegrationAssociations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDataIntegrationAssociationsAsync(array $args = [])
  * @method \Aws\Result listDataIntegrations(array $args = [])
@@ -31,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
  * @method \Aws\Result updateDataIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDataIntegrationAsync(array $args = [])
  * @method \Aws\Result updateEventIntegration(array $args = [])

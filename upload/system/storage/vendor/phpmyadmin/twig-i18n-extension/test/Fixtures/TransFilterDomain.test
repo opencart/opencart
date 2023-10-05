@@ -1,0 +1,11 @@
+--TEST--
+Test a simple trans filter
+--TEMPLATE--
+{# Filter with domain #}
+{{ 'Castle Quote'|trans('core') }}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+Castle Quote

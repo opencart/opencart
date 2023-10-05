@@ -1,0 +1,87 @@
+{
+    "name": "code-lts/doctum",
+    "type": "application",
+    "description": "Doctum, a PHP API documentation generator. Fork of Sami",
+    "keywords": [
+        "phpdoc",
+        "generator"
+    ],
+    "homepage": "https://github.com/code-lts/doctum",
+    "readme": "https://github.com/code-lts/doctum#readme",
+    "license": "MIT",
+    "funding": [
+        {
+            "type": "tidelift",
+            "url": "https://tidelift.com/funding/github/packagist/code-lts/doctum"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/williamdes"
+        }
+    ],
+    "support": {
+        "email": "williamdes@wdes.fr",
+        "issues": "https://github.com/code-lts/doctum/issues",
+        "source": "https://github.com/code-lts/doctum"
+    },
+    "authors": [
+        {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com"
+        },
+        {
+            "name": "William Desportes",
+            "email": "williamdes@wdes.fr"
+        }
+    ],
+    "require": {
+        "php": "^7.2.20 || ^8.0",
+        "twig/twig": "^3.0",
+        "nikic/php-parser": "^4.10",
+        "symfony/console": "~3.4|~4.3|^5|^6",
+        "symfony/finder": "~3.4|~4.3|^5|^6",
+        "symfony/filesystem": "~3.4|~4.3|^5|^6",
+        "symfony/yaml": "~3.4|~4.3|^5|^6",
+        "symfony/process": "~3.4|~4.3|^5|^6",
+        "phpdocumentor/reflection-docblock": "~5.3",
+        "wdes/php-i18n-l10n": "^4.0",
+        "code-lts/cli-tools": "^1.4.0",
+        "erusev/parsedown": "^1.7"
+    },
+    "scripts": {
+        "phpunit": "./vendor/bin/phpunit",
+        "phpstan": "./vendor/bin/phpstan analyse",
+        "phpcs": "./vendor/bin/phpcs",
+        "phpcbf": "./vendor/bin/phpcbf"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7 || ^8 || ^9",
+        "phpstan/phpstan": "^1.4.6",
+        "wdes/coding-standard": "^3.3.1",
+        "phpstan/phpstan-phpunit": "^1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Doctum\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Doctum\\Tests\\": "tests/"
+        }
+    },
+    "prefer-stable": true,
+    "bin": [
+        "bin/doctum.php"
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

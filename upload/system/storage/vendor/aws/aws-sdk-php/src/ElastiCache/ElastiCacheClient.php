@@ -136,5 +136,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startMigrationAsync(array $args = [])
  * @method \Aws\Result testFailover(array $args = [])
  * @method \GuzzleHttp\Promise\Promise testFailoverAsync(array $args = [])
+ * @method \Aws\Result testMigration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise testMigrationAsync(array $args = [])
  */
 class ElastiCacheClient extends AwsClient {}

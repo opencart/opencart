@@ -1,0 +1,30 @@
+{% extends "layout/layout.twig" %}
+{% from "macros.twig" import namespace_link %}
+{% block title %}{% trans 'Namespaces' %} | {{ parent() }}{% endblock %}
+{% block body_class 'namespaces' %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>{% trans 'Namespaces' %}</h1>
+    </div>
+
+    {% if namespaces %}
+        <div class="namespaces clearfix">
+            {% set last_name = '' %}
+            {% for namespace in namespaces %}
+                {% set top_level = namespace|split('\\')|first %}
+                {% if top_level != last_name %}
+                    {% if last_name %}</ul></div>{% endif %}
+                    <div class="namespace-container">
+                        <h2>{{ top_level|raw }}</h2>
+                        <ul>
+                    {% set last_name = top_level %}
+                {% endif %}
+                <li>{{ namespace_link(namespace) }}</li>
+            {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -95,7 +95,7 @@ class CredentialProvider
             || $config['use_aws_shared_config_files'] !== false
         ) {
             $defaultChain['sso'] = self::sso(
-                'profile '. $profileName,
+                $profileName,
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
@@ -321,8 +321,10 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function sso($ssoProfileName, $filename = null, $config = [])
-    {
+    public static function sso($ssoProfileName = 'default',
+                               $filename = null,
+                               $config = []
+    ) {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
 
         return function () use ($ssoProfileName, $filename, $config) {
@@ -330,71 +332,21 @@ class CredentialProvider
                 return self::reject("Cannot read credentials from $filename");
             }
             $profiles = self::loadProfiles($filename);
-            if (!isset($profiles[$ssoProfileName])) {
+
+            if (isset($profiles[$ssoProfileName])) {
+                $ssoProfile = $profiles[$ssoProfileName];
+            } elseif (isset($profiles['profile ' . $ssoProfileName])) {
+                $ssoProfileName = 'profile ' . $ssoProfileName;
+                $ssoProfile = $profiles[$ssoProfileName];
+            } else {
                 return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
             }
-            $ssoProfile = $profiles[$ssoProfileName];
-            if (empty($ssoProfile['sso_start_url'])
-                || empty($ssoProfile['sso_region'])
-                || empty($ssoProfile['sso_account_id'])
-                || empty($ssoProfile['sso_role_name'])
-            ) {
-                return self::reject(
-                    "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
-                    . "sso_start_url, sso_region, sso_account_id, and sso_role_name."
-                );
-            }
 
-            $tokenLocation = self::getHomeDir()
-                . '/.aws/sso/cache/'
-                . utf8_encode(sha1($ssoProfile['sso_start_url']))
-                . ".json";
-
-            if (!@is_readable($tokenLocation)) {
-                return self::reject("Unable to read token file at $tokenLocation");
-            }
-
-            $tokenData = json_decode(file_get_contents($tokenLocation), true);
-            if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
-                return self::reject(
-                    "Token file at {$tokenLocation} must contain an access token and an expiration"
-                );
-            }
-            try {
-                $expiration = (new DateTimeResult($tokenData['expiresAt']))->getTimestamp();
-            } catch (\Exception $e) {
-                return self::reject("Cached SSO credentials returned an invalid expiration");
-            }
-            $now = time();
-            if ($expiration < $now) {
-                return self::reject("Cached SSO credentials returned expired credentials");
-            }
-
-            $ssoClient = null;
-            if (empty($config['ssoClient'])) {
-                $ssoClient = new Aws\SSO\SSOClient([
-                    'region' => $ssoProfile['sso_region'],
-                    'version' => '2019-06-10',
-                    'credentials' => false
-                ]);
+            if (!empty($ssoProfile['sso_session'])) {
+                return CredentialProvider::getSsoCredentials($profiles, $ssoProfileName, $filename, $config);
             } else {
-                $ssoClient = $config['ssoClient'];
+                return CredentialProvider::getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config);
             }
-            $ssoResponse = $ssoClient->getRoleCredentials([
-                'accessToken' => $tokenData['accessToken'],
-                'accountId' => $ssoProfile['sso_account_id'],
-                'roleName' => $ssoProfile['sso_role_name']
-            ]);
-
-            $ssoCredentials = $ssoResponse['roleCredentials'];
-            return Promise\Create::promiseFor(
-                new Credentials(
-                    $ssoCredentials['accessKeyId'],
-                    $ssoCredentials['secretAccessKey'],
-                    $ssoCredentials['sessionToken'],
-                    $expiration
-                )
-            );
         };
     }
 
@@ -581,8 +533,8 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
-                        : null;
+                    ? $data[$profile]['aws_security_token']
+                    : null;
             }
 
             return Promise\Create::promiseFor(
@@ -895,8 +847,145 @@ class CredentialProvider
         //Check for relative uri. if not, then full uri.
         //fall back to server for each as getenv is not thread-safe.
         return !empty(getenv(EcsCredentialProvider::ENV_URI))
-        || !empty($_SERVER[EcsCredentialProvider::ENV_URI])
-        || !empty(getenv(EcsCredentialProvider::ENV_FULL_URI))
-        || !empty($_SERVER[EcsCredentialProvider::ENV_FULL_URI]);
+            || !empty($_SERVER[EcsCredentialProvider::ENV_URI])
+            || !empty(getenv(EcsCredentialProvider::ENV_FULL_URI))
+            || !empty($_SERVER[EcsCredentialProvider::ENV_FULL_URI]);
+    }
+
+    /**
+     * @param $profiles
+     * @param $ssoProfileName
+     * @param $filename
+     * @param $config
+     * @return Promise\PromiseInterface
+     */
+    private static function getSsoCredentials($profiles, $ssoProfileName, $filename, $config)
+    {
+        if (empty($config['ssoOidcClient'])) {
+            $ssoProfile = $profiles[$ssoProfileName];
+            $sessionName = $ssoProfile['sso_session'];
+            if (empty($profiles['sso-session ' . $sessionName])) {
+                return self::reject(
+                    "Could not find sso-session {$sessionName} in {$filename}"
+                );
+            }
+            $ssoSession = $profiles['sso-session ' . $ssoProfile['sso_session']];
+            $ssoOidcClient = new Aws\SSOOIDC\SSOOIDCClient([
+                'region' => $ssoSession['sso_region'],
+                'version' => '2019-06-10',
+                'credentials' => false
+            ]);
+        } else {
+            $ssoOidcClient = $config['ssoClient'];
+        }
+
+        $tokenPromise = new Aws\Token\SsoTokenProvider(
+            $ssoProfileName,
+            $filename,
+            $ssoOidcClient
+        );
+        $token = $tokenPromise()->wait();
+        $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
+            $ssoProfile,
+            $ssoSession['sso_region'],
+            $token->getToken(),
+            $config
+        );
+        $expiration = $ssoCredentials['expiration'];
+        return Promise\Create::promiseFor(
+            new Credentials(
+                $ssoCredentials['accessKeyId'],
+                $ssoCredentials['secretAccessKey'],
+                $ssoCredentials['sessionToken'],
+                $expiration
+            )
+        );
+    }
+
+    /**
+     * @param $profiles
+     * @param $ssoProfileName
+     * @param $filename
+     * @param $config
+     * @return Promise\PromiseInterface
+     */
+    private static function getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config)
+    {
+        $ssoProfile = $profiles[$ssoProfileName];
+        if (empty($ssoProfile['sso_start_url'])
+            || empty($ssoProfile['sso_region'])
+            || empty($ssoProfile['sso_account_id'])
+            || empty($ssoProfile['sso_role_name'])
+        ) {
+            return self::reject(
+                "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
+                . "sso_start_url, sso_region, sso_account_id, and sso_role_name."
+            );
+        }
+        $tokenLocation = self::getHomeDir()
+            . '/.aws/sso/cache/'
+            . sha1($ssoProfile['sso_start_url'])
+            . ".json";
+
+        if (!@is_readable($tokenLocation)) {
+            return self::reject("Unable to read token file at $tokenLocation");
+        }
+        $tokenData = json_decode(file_get_contents($tokenLocation), true);
+        if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
+            return self::reject(
+                "Token file at {$tokenLocation} must contain an access token and an expiration"
+            );
+        }
+        try {
+            $expiration = (new DateTimeResult($tokenData['expiresAt']))->getTimestamp();
+        } catch (\Exception $e) {
+            return self::reject("Cached SSO credentials returned an invalid expiration");
+        }
+        $now = time();
+        if ($expiration < $now) {
+            return self::reject("Cached SSO credentials returned expired credentials");
+        }
+        $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
+            $ssoProfile,
+            $ssoProfile['sso_region'],
+            $tokenData['accessToken'],
+            $config
+        );
+        return Promise\Create::promiseFor(
+            new Credentials(
+                $ssoCredentials['accessKeyId'],
+                $ssoCredentials['secretAccessKey'],
+                $ssoCredentials['sessionToken'],
+                $expiration
+            )
+        );
+    }
+    /**
+     * @param array $ssoProfile
+     * @param string $clientRegion
+     * @param string $accessToken
+     * @param array $config
+     * @return array|null
+     */
+    private static function getCredentialsFromSsoService($ssoProfile, $clientRegion, $accessToken, $config)
+    {
+        if (empty($config['ssoClient'])) {
+            $ssoClient = new Aws\SSO\SSOClient([
+                'region' => $clientRegion,
+                'version' => '2019-06-10',
+                'credentials' => false
+            ]);
+        } else {
+            $ssoClient = $config['ssoClient'];
+        }
+        $ssoResponse = $ssoClient->getRoleCredentials([
+            'accessToken' => $accessToken,
+            'accountId' => $ssoProfile['sso_account_id'],
+            'roleName' => $ssoProfile['sso_role_name']
+        ]);
+
+        $ssoCredentials = $ssoResponse['roleCredentials'];
+        return $ssoCredentials;
     }
 }
+

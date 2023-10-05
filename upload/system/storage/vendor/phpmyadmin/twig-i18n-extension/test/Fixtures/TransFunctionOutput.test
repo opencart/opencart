@@ -1,0 +1,10 @@
+--TEST--
+Test with a function output
+--TEMPLATE--
+{{ max({2: "e", 1: "a", 3: "b", 5: "d", 4: "c"})|trans }}
+--DATA--
+return []
+--CONFIG--
+return []
+--EXPECT--
+e

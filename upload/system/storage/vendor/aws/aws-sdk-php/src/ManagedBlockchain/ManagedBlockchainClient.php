@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Managed Blockchain** service.
+ * @method \Aws\Result createAccessor(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAccessorAsync(array $args = [])
  * @method \Aws\Result createMember(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createMemberAsync(array $args = [])
  * @method \Aws\Result createNetwork(array $args = [])
@@ -13,10 +15,14 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createNodeAsync(array $args = [])
  * @method \Aws\Result createProposal(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createProposalAsync(array $args = [])
+ * @method \Aws\Result deleteAccessor(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAccessorAsync(array $args = [])
  * @method \Aws\Result deleteMember(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMemberAsync(array $args = [])
  * @method \Aws\Result deleteNode(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteNodeAsync(array $args = [])
+ * @method \Aws\Result getAccessor(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAccessorAsync(array $args = [])
  * @method \Aws\Result getMember(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMemberAsync(array $args = [])
  * @method \Aws\Result getNetwork(array $args = [])
@@ -25,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getNodeAsync(array $args = [])
  * @method \Aws\Result getProposal(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getProposalAsync(array $args = [])
+ * @method \Aws\Result listAccessors(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAccessorsAsync(array $args = [])
  * @method \Aws\Result listInvitations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInvitationsAsync(array $args = [])
  * @method \Aws\Result listMembers(array $args = [])

@@ -262,7 +262,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 
 		try {
 			// Database
-			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port,$db_ssl_key,$db_ssl_cert,$db_ssl_ca);
+			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);
 		} catch (\Exception $e) {
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
@@ -394,15 +394,19 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
-		if((isset($option['db_ssl_key']) && $option['db_ssl_key'] !== '')){
+		
+		if ((isset($option['db_ssl_key']) && $option['db_ssl_key'] !== '')) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
-		if((isset($option['db_ssl_cert']) && $option['db_ssl_cert'] !== '')){
+		
+		if ((isset($option['db_ssl_cert']) && $option['db_ssl_cert'] !== '')) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
-		if((isset($option['db_ssl_ca']) && $option['db_ssl_ca'] !== '')){
+		
+		if ((isset($option['db_ssl_ca']) && $option['db_ssl_ca'] !== '')) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
+		
 		$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
 		fwrite($file, $output);
@@ -443,13 +447,16 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
-		if((isset($option['db_ssl_key']) && $option['db_ssl_key'] !== '')){
+		
+		if ((isset($option['db_ssl_key']) && $option['db_ssl_key'] !== '')) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
-		if((isset($option['db_ssl_cert']) && $option['db_ssl_cert'] !== '')){
+		
+		if ((isset($option['db_ssl_cert']) && $option['db_ssl_cert'] !== '')) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
-		if((isset($option['db_ssl_ca']) && $option['db_ssl_ca'] !== '')){
+		
+		if ((isset($option['db_ssl_ca']) && $option['db_ssl_ca'] !== '')) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
 

@@ -28,7 +28,7 @@ class PDO {
 	 * @param    string  $database
 	 * @param    string  $port
 	 */
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey='', string $sslCert='', string $sslCa='') {
 		if (!$port) {
 			$port = '3306';
 		}

@@ -17,7 +17,7 @@ class Database extends \Opencart\System\Engine\Controller {
 			$lines = file(DIR_OPENCART . 'config.php');
 
 			foreach ($lines as $number => $line) {
-				if (strpos(strtoupper($line), 'DB_') !== false && preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				if (strpos(strtoupper($line), 'DB_') !== false && preg_match('/define\(\'(.*)\',\s+["\'](.*)["\']\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 					define($match[1][0], $match[2][0]);
 				}
 			}
@@ -28,7 +28,7 @@ class Database extends \Opencart\System\Engine\Controller {
 				$port = ini_get('mysqli.default_port');
 			}
 			
-			$this->registry->set('db', new \Opencart\System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
+			$this->registry->set('db', new \Opencart\System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port, DB_SSL_KEY, DB_SSL_CERT, DB_SSL_CA));
 		}
 	}
 }

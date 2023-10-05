@@ -1,8 +1,8 @@
 <?php
-function oc_db_create($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_prefix) {
+function oc_db_create($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_prefix, $db_ssl_key, $db_ssl_cert, $db_ssl_ca) {
 	try {
 		// Database
-		$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
+		$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);
 	} catch (\Exception $e) {
 		return false;
 	}

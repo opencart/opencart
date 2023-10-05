@@ -24,40 +24,44 @@ class MySQLi {
 		if (!$port) {
 			$port = '3306';
 		}
+		
 		$tempSSLKeyFile = null;
 		$tempSSLCertFile = null;
 		$tempSSLCaFile = null;
-		if($sslKey){
+		
+		if ($sslKey) {
 			$tempSSLKeyFile = tempnam(sys_get_temp_dir(), 'mysqli_key_');
 			$fileHandle = fopen($tempSSLKeyFile, 'w');
 			fwrite($fileHandle, $sslKey);
 			fclose($fileHandle);
 		}
-		if($sslCert){
+		
+		if ($sslCert) {
 			$tempSSLCertFile = tempnam(sys_get_temp_dir(), 'mysqli_cert_');
 			$fileHandle = fopen($tempSSLCertFile, 'w');
 			fwrite($fileHandle, $sslCert);
 			fclose($fileHandle);
 		}
-		if($sslCa){
+		
+		if ($sslCa) {
 			$tempSSLCaFile = tempnam(sys_get_temp_dir(), 'mysqli_ca_');
 			$fileHandle = fopen($tempSSLCaFile, 'w');
 			fwrite($fileHandle,'-----BEGIN CERTIFICATE-----' . PHP_EOL . $sslCa . PHP_EOL . '-----END CERTIFICATE-----');
 			fclose($fileHandle);
-		}
-		
+		}	
 
-		try {
-			
+		try {			
 			$this->connection =  mysqli_init();
 			$this->connection->ssl_set($tempSSLKeyFile, $tempSSLCertFile, $tempSSLCaFile, null, null);
-			if($tempSSLCaFile || $tempSSLCertFile || $tempSSLKeyFile){
+			
+			if ($tempSSLCaFile || $tempSSLCertFile || $tempSSLKeyFile) {
 				$this->connection->real_connect($hostname, $username, $password, $database, $port,null,MYSQLI_CLIENT_SSL);
-			}else{
+			} else {
 				$this->connection->real_connect($hostname, $username, $password, $database, $port,null);
 			}
+
 			$this->connection->set_charset('utf8mb4');
-			
+
 			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
 			$this->query("SET FOREIGN_KEY_CHECKS = 0");
 

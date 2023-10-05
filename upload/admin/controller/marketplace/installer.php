@@ -647,7 +647,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$files = $output['autoload']['files'];
 
 						foreach ($files as $file) {
-							$code .= 'require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\');' . "\n";
+							$code .= 'if (is_file(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\')) {' . "\n";
+							$code .= '	require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\');' . "\n";
+							$code .= '}' . "\n";
 						}
 					}
 				}

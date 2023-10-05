@@ -20,46 +20,53 @@ class MySQLi {
 	 * @param    string  $database
 	 * @param    string  $port
 	 */
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey='', string $sslCert='', string $sslCa='') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
 		if (!$port) {
 			$port = '3306';
 		}
-		$tempSSLKeyFile = null;
-		$tempSSLCertFile = null;
-		$tempSSLCaFile = null;
-		if($sslKey){
-			$tempSSLKeyFile = tempnam(sys_get_temp_dir(), 'mysqli_key_');
-			$fileHandle = fopen($tempSSLKeyFile, 'w');
-			fwrite($fileHandle, $sslKey);
-			fclose($fileHandle);
-		}
-		if($sslCert){
-			$tempSSLCertFile = tempnam(sys_get_temp_dir(), 'mysqli_cert_');
-			$fileHandle = fopen($tempSSLCertFile, 'w');
-			fwrite($fileHandle, $sslCert);
-			fclose($fileHandle);
-		}
-		if($sslCa){
-			$tempSSLCaFile = tempnam(sys_get_temp_dir(), 'mysqli_ca_');
-			$fileHandle = fopen($tempSSLCaFile, 'w');
-			fwrite($fileHandle,'-----BEGIN CERTIFICATE-----' . PHP_EOL . $sslCa . PHP_EOL . '-----END CERTIFICATE-----');
-			fclose($fileHandle);
+
+		if ($ssl_key) {
+			$temp_ssl_key_file = tempnam(sys_get_temp_dir(), 'mysqli_key_');
+
+			$handle = fopen($temp_ssl_key_file, 'w');
+
+			fwrite($handle, $ssl_key);
+
+			fclose($handle);
 		}
 		
+		if ($ssl_cert) {
+			$temp_ssl_cert_file = tempnam(sys_get_temp_dir(), 'mysqli_cert_');
 
-		try {
-			
+			$handle = fopen($temp_ssl_cert_file, 'w');
+
+			fwrite($handle, $ssl_cert);
+
+			fclose($handle);
+		}
+		
+		if ($ssl_ca) {
+			$temp_ssl_ca_file = tempnam(sys_get_temp_dir(), 'mysqli_ca_');
+
+			$handle = fopen($temp_ssl_ca_file, 'w');
+
+			fwrite($handle,'-----BEGIN CERTIFICATE-----' . PHP_EOL . $ssl_ca . PHP_EOL . '-----END CERTIFICATE-----');
+
+			fclose($handle);
+		}	
+
+		try {			
 			$this->connection =  mysqli_init();
-			$this->connection->ssl_set($tempSSLKeyFile, $tempSSLCertFile, $tempSSLCaFile, null, null);
+			$this->connection->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
 
-			if ($tempSSLCaFile || $tempSSLCertFile || $tempSSLKeyFile) {
-				$this->connection->real_connect($hostname, $username, $password, $database, $port,null,MYSQLI_CLIENT_SSL);
-			}else{
-				$this->connection->real_connect($hostname, $username, $password, $database, $port,null);
+			if ($temp_ssl_cert_file || $temp_ssl_key_file || $temp_ssl_ca_file) {
+				$this->connection->real_connect($hostname, $username, $password, $database, $port, null, MYSQLI_CLIENT_SSL);
+			} else {
+				$this->connection->real_connect($hostname, $username, $password, $database, $port, null);
 			}
 
 			$this->connection->set_charset('utf8mb4');
-			
+
 			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
 			$this->query("SET FOREIGN_KEY_CHECKS = 0");
 

@@ -232,7 +232,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->load->model('design/seo_url');
 		$this->load->model('localisation/language');
 
-
 		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
 
 		foreach ($results as $result) {

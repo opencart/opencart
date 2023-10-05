@@ -22,6 +22,7 @@ $_['text_transaction_add']  = 'Add Transaction';
 $_['text_reward']           = 'Reward Points';
 $_['text_reward_add']       = 'Add Reward Points';
 $_['text_ip']               = 'IP History';
+$_['text_authorize']        = 'Authorize History';
 $_['text_option']           = 'Options';
 $_['text_login']            = 'Login into Store';
 $_['text_unlock']           = 'Unlock Account';
@@ -45,6 +46,7 @@ $_['column_payment_method'] = 'Payment Name';
 $_['column_image']          = 'Image';
 $_['column_type']           = 'Type';
 $_['column_date_expire']    = 'Date Expires';
+$_['column_user_agent']     = 'User Agent';
 $_['column_action']         = 'Action';
 
 // Entry
@@ -75,6 +77,9 @@ $_['entry_name']            = 'Customer Name';
 $_['entry_ip']              = 'IP';
 $_['entry_date_from']       = 'Date From';
 $_['entry_date_to']         = 'Date To';
+
+// Tab
+$_['tab_authorize']         = 'Authorize';
 
 // Button
 $_['button_order']          = 'Orders';

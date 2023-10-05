@@ -629,6 +629,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['transaction'] = $this->getTransaction();
 		$data['reward'] = $this->getReward();
 		$data['ip'] = $this->getIp();
+		$data['authorize'] = $this->getAuthorize();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -1309,6 +1310,114 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($ip_total - $limit)) ? $ip_total : ((($page - 1) * $limit) + $limit), $ip_total, ceil($ip_total / $limit));
 
 		return $this->load->view('customer/customer_ip', $data);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function authorize(): void {
+		$this->load->language('customer/customer');
+
+		$this->response->setOutput($this->getAuthorize());
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAuthorize(): string {
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.login') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['authorizes'] = [];
+
+		$this->load->model('customer/customer');
+
+		$results = $this->model_customer_customer->getAuthorizes($customer_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['authorizes'][] = [
+				'token'      => $result['token'],
+				'ip'         => $result['ip'],
+				'user_agent' => $result['user_agent'],
+				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'total'      => $result['total'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'delete'     => $this->url->link('customer/customer.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])
+			];
+		}
+
+		$authorize_total = $this->model_customer_customer->getTotalAuthorizes($customer_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $authorize_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('customer/customer.authorize', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($authorize_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($authorize_total - $limit)) ? $authorize_total : ((($page - 1) * $limit) + $limit), $authorize_total, ceil($authorize_total / $limit));
+
+		return $this->load->view('customer/customer_authorize', $data);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function deleteAuthorize(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['customer_authorize_id'])) {
+			$customer_authorize_id = (int)$this->request->get['customer_authorize_id'];
+		} else {
+			$customer_authorize_id = 0;
+		}
+
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
+		} else {
+			$token = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('customer/customer');
+
+		$login_info = $this->model_customer_customer->getAuthorize($customer_authorize_id);
+
+		if (!$login_info) {
+			$json['error'] = $this->language->get('error_authorize');
+		}
+
+		if (!$json) {
+			$this->model_customer_customer->deleteAuthorize($customer_authorize_id);
+
+			// If the token is still present, then we enforce the customer to log out automatically.
+			if ($login_info['token'] == $token) {
+				$this->session->data['success'] = $this->language->get('text_success');
+
+				$json['redirect'] = $this->url->link('common/login', '', true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

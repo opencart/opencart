@@ -29,11 +29,15 @@
               <td>{{ text_sass }}</td>
               <td>
                 <div class="form-check form-switch form-switch-lg">
-                  <input type="hidden" name="developer_sass" value="0"/>
-                  <input type="checkbox" name="developer_sass" value="1" id="input-developer-sass" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
+                  <input type="hidden" name="developer_sass" value="0"/> <input type="checkbox" name="developer_sass" value="1" id="input-developer-sass" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
                 </div>
               </td>
               <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+            </tr>
+            <tr>
+              <td>{{ text_vendor }}</td>
+              <td></td>
+              <td class="text-end"><button type="button" value="vendor" data-bs-toggle="tooltip" title="{{ button_vendor }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
             </tr>
           </tbody>
         </table>

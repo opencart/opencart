@@ -51,11 +51,13 @@ class MySQLi {
 			
 			$this->connection =  mysqli_init();
 			$this->connection->ssl_set($tempSSLKeyFile, $tempSSLCertFile, $tempSSLCaFile, null, null);
-			if($tempSSLCaFile || $tempSSLCertFile || $tempSSLKeyFile){
+
+			if ($tempSSLCaFile || $tempSSLCertFile || $tempSSLKeyFile) {
 				$this->connection->real_connect($hostname, $username, $password, $database, $port,null,MYSQLI_CLIENT_SSL);
 			}else{
 				$this->connection->real_connect($hostname, $username, $password, $database, $port,null);
 			}
+
 			$this->connection->set_charset('utf8mb4');
 			
 			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");

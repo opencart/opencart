@@ -78,6 +78,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -617,5 +618,105 @@ class Customer extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteLoginAttempts(string $email): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape(oc_strtolower($email)) . "'");
+	}
+
+	/**
+	 * @param int   $customer_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	public function addAuthorize(int $customer_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_authorize` SET `customer_id` = '" . (int)$customer_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * @param int  $customer_authorize_id
+	 * @param bool $status
+	 *
+	 * @return void
+	 */
+	public function editAuthorizeStatus(int $customer_authorize_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `status` = '" . (bool)$status . "' WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
+	}
+
+	/**
+	 * @param int $customer_authorize_id
+	 * @param int $total
+	 *
+	 * @return void
+	 */
+	public function editAuthorizeTotal(int $customer_authorize_id, int $total): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '" . (int)$total . "' WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
+	}
+
+	/**
+	 * @param int $customer_authorize_id
+	 *
+	 * @return void
+	 */
+	public function deleteAuthorize(int $customer_authorize_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
+	}
+
+	/**
+	 * @param int    $customer_id
+	 * @param string $token
+	 *
+	 * @return array
+	 */
+	public function getAuthorizeByToken(int $customer_id, string $token): array {
+		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "') AS `attempts` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
+	public function resetAuthorizes(int $customer_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * @param int $customer_id
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
+	public function getAuthorizes(int $customer_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' LIMIT " . (int)$start . "," . (int)$limit);
+
+		if ($query->num_rows) {
+			return $query->rows;
+		} else {
+			return [];
+		}
+	}
+
+	/**
+	 * @param int $customer_id
+	 *
+	 * @return int
+	 */
+	public function getTotalAuthorizes(int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 }

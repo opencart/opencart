@@ -29,6 +29,7 @@
             <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
             <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
             <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
+            <li class="nav-item"><a href="#tab-authorize" data-bs-toggle="tab" class="nav-link">{{ tab_authorize }}</a></li>
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
@@ -556,6 +557,14 @@
                 <div id="ip">{{ ip }}</div>
               </fieldset>
             </div>
+
+            <div id="tab-authorize" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_authorize }}</legend>
+                <div id="authorize">{{ authorize }}</div>
+              </fieldset>
+            </div>
+
           </div>
         </form>
       </div>
@@ -1111,6 +1120,51 @@ $('#ip').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#ip').load(this.href);
+});
+
+$('#authorize').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#authorize').load(this.href);
+});
+
+$('#authorize').on('click', '.btn', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: $(element).attr('href'),
+            dataType: 'json',
+            beforeSend: function () {
+                $(element).button('loading');
+            },
+            complete: function () {
+                $(element).button('reset');
+            },
+            success: function (json) {
+                $('.alert-dismissible').remove();
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#authorize').load('index.php?route=customer/customer.authorize&user_token={{ user_token }}&customer_id={{ customer_id }}');
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
 });
 //--></script>
 {{ footer }}

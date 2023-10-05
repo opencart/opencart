@@ -15,9 +15,15 @@ $_['text_plesk']             = 'Plesk DB Setup';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
+$_['entry_db_driver_select'] = 'Select a DB driver';
 $_['entry_db_hostname']      = 'Hostname';
 $_['entry_db_username']      = 'Username';
 $_['entry_db_password']      = 'Password';
+$_['entry_db_advanced']      = 'Advanced';
+$_['entry_db_ssl_key']       = 'SSL Key';
+$_['entry_db_ssl_cert']      = 'SSL Cert';
+$_['entry_db_ssl_ca']        = 'SSL CA';
+$_['entry_db_ssl_info']      = 'Certificate inputs should be certificate content as a single line like "MIIDrzCCApegAwIBAgIQ....=="';
 $_['entry_db_database']      = 'Database';
 $_['entry_db_port']          = 'Port';
 $_['entry_db_prefix']        = 'Prefix';

@@ -27,11 +27,11 @@ class DB {
 	 * @param int    $port
 	 *
 	 */
-	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '') {
+	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey='', string $sslCert='', string $sslCa='') {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
+			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $sslKey, $sslCert, $sslCa);
 		} else {
 			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}

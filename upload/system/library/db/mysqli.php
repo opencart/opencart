@@ -24,13 +24,16 @@ class MySQLi {
 		if (!$port) {
 			$port = '3306';
 		}
+		$tempSSLKeyFile = null;
+		$tempSSLCertFile = null;
+		$tempSSLCaFile = null;
 
 		if ($ssl_key) {
 			$temp_ssl_key_file = tempnam(sys_get_temp_dir(), 'mysqli_key_');
 
 			$handle = fopen($temp_ssl_key_file, 'w');
 
-			fwrite($handle, $ssl_key);
+			fwrite($handle,'-----BEGIN CERTIFICATE-----' . PHP_EOL . $ssl_key . PHP_EOL . '-----END CERTIFICATE-----');
 
 			fclose($handle);
 		}
@@ -40,8 +43,8 @@ class MySQLi {
 
 			$handle = fopen($temp_ssl_cert_file, 'w');
 
-			fwrite($handle, $ssl_cert);
-
+			fwrite($handle,'-----BEGIN CERTIFICATE-----' . PHP_EOL . $ssl_cert . PHP_EOL . '-----END CERTIFICATE-----');
+			
 			fclose($handle);
 		}
 		
@@ -57,9 +60,9 @@ class MySQLi {
 
 		try {			
 			$this->connection =  mysqli_init();
-			$this->connection->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
 
 			if ($temp_ssl_cert_file || $temp_ssl_key_file || $temp_ssl_ca_file) {
+				$this->connection->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
 				$this->connection->real_connect($hostname, $username, $password, $database, $port, null, MYSQLI_CLIENT_SSL);
 			} else {
 				$this->connection->real_connect($hostname, $username, $password, $database, $port, null);

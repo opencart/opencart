@@ -10,9 +10,9 @@ $_['db_username']        = DB_USERNAME;
 $_['db_password']        = DB_PASSWORD;
 $_['db_database']        = DB_DATABASE;
 $_['db_port']            = DB_PORT;
-//$_['db_ssl_key']         = DB_SSL_KEY;
-//$_['db_ssl_cert']        = DB_SSL_CERT;
-//$_['db_ssl_ca']          = DB_SSL_CA;
+$_['db_ssl_key']         = DB_SSL_KEY;
+$_['db_ssl_cert']        = DB_SSL_CERT;
+$_['db_ssl_ca']          = DB_SSL_CA;
 
 // Session
 $_['session_autostart']  = false;

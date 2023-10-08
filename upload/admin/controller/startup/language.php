@@ -15,15 +15,15 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		if (isset($this->request->cookie['language'])) {
+		$this->load->model('localisation/language');
+
+		self::$languages = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->cookie['language']) && isset(self::$languages[$code])) {
 			$code = (string)$this->request->cookie['language'];
 		} else {
 			$code = $this->config->get('config_language_admin');
 		}
-
-		$this->load->model('localisation/language');
-
-		self::$languages = $this->model_localisation_language->getLanguages();
 
 		if (isset(self::$languages[$code])) {
 			$language_info = self::$languages[$code];

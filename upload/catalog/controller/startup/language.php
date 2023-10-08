@@ -15,15 +15,15 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		if (isset($this->request->get['language'])) {
+		$this->load->model('localisation/language');
+
+		self::$languages = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->get['language']) && isset(self::$languages[$code])) {
 			$code = (string)$this->request->get['language'];
 		} else {
 			$code = $this->config->get('config_language');
 		}
-
-		$this->load->model('localisation/language');
-
-		self::$languages = $this->model_localisation_language->getLanguages();
 
 		if (isset(self::$languages[$code])) {
 			$language_info = self::$languages[$code];
@@ -40,7 +40,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->language('default');
 		}
 	}
-	
+
 	// Override the language default values
 
 	/**

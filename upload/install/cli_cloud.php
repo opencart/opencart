@@ -181,12 +181,13 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		$db_hostname = getenv('DB_HOSTNAME', true);
 		$db_username = getenv('DB_USERNAME', true);
 		$db_password = getenv('DB_PASSWORD', true);
-		$db_ssl_key  = getenv('DB_SSL_KEY', true);
-		$db_ssl_cert = getenv('DB_SSL_CERT', true);
-		$db_ssl_ca   = getenv('DB_SSL_CA', true);
 		$db_database = getenv('DB_DATABASE', true);
 		$db_port     = getenv('DB_PORT', true);
 		$db_prefix   = getenv('DB_PREFIX', true);
+
+		$db_ssl_key  = getenv('DB_SSL_KEY', true);
+		$db_ssl_cert = getenv('DB_SSL_CERT', true);
+		$db_ssl_ca   = getenv('DB_SSL_CA', true);
 
 		try {
 			// Database

@@ -18,6 +18,10 @@
 //								 --db_port     3306
 //                               --db_prefix   oc_
 //
+//                               --db_ssl_key
+//                               --db_ssl_cert
+//                               --db_ssl_ca
+//
 // Example:
 //
 // php c://xampp/htdocs/opencart-master/upload/install/cli_install.php install --username admin --password mexico --email email@example.com --http_server http://localhost/opencart-master/upload/ --db_driver mysqli --db_hostname localhost --db_username root --db_database opencart-master --db_port 3306 --db_prefix oc_
@@ -119,7 +123,10 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			'db_hostname' => 'localhost',
 			'db_password' => '',
 			'db_port'     => '3306',
-			'db_prefix'   => 'oc_'
+			'db_prefix'   => 'oc_',
+			'db_ssl_key'  => '',
+			'db_ssl_cert' => '',
+			'db_ssl_ca'   => ''
 		];
 
 		// Turn args into an array
@@ -253,12 +260,13 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$db_hostname = html_entity_decode($option['db_hostname'], ENT_QUOTES, 'UTF-8');
 		$db_username = html_entity_decode($option['db_username'], ENT_QUOTES, 'UTF-8');
 		$db_password = html_entity_decode($option['db_password'], ENT_QUOTES, 'UTF-8');
-		$db_ssl_key = html_entity_decode($option['db_ssl_key'], ENT_QUOTES, 'UTF-8');
-		$db_ssl_cert = html_entity_decode($option['db_ssl_cert'], ENT_QUOTES, 'UTF-8');
-		$db_ssl_ca = html_entity_decode($option['db_ssl_ca'], ENT_QUOTES, 'UTF-8');
 		$db_database = html_entity_decode($option['db_database'], ENT_QUOTES, 'UTF-8');
 		$db_port = $option['db_port'];
 		$db_prefix = $option['db_prefix'];
+
+		$db_ssl_key = html_entity_decode($option['db_ssl_key'], ENT_QUOTES, 'UTF-8');
+		$db_ssl_cert = html_entity_decode($option['db_ssl_cert'], ENT_QUOTES, 'UTF-8');
+		$db_ssl_ca = html_entity_decode($option['db_ssl_ca'], ENT_QUOTES, 'UTF-8');
 
 		try {
 			// Database

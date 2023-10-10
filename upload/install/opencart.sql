@@ -6582,7 +6582,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 -- Dumping data for table `oc_zone_to_geo_zone`
 --
 
-INSERT INTO `oc_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
+INSERT INTO `oc_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`) VALUES
 (1, 222, 0, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 222, 3513, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (3, 222, 3514, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

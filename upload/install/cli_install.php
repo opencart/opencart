@@ -179,7 +179,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if (version_compare(phpversion(), '8.0.0', '<')) {
+		if (version_compare(phpversion(), '8.2.0', '<')) {
 			$error .= 'ERROR: You need to use PHP8+ or above for OpenCart to work!' . "\n";
 		}
 
@@ -403,15 +403,15 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
 		
-		if ((isset($option['db_ssl_key']) && $option['db_ssl_key'] !== '')) {
+		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
 		
-		if ((isset($option['db_ssl_cert']) && $option['db_ssl_cert'] !== '')) {
+		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
 		
-		if ((isset($option['db_ssl_ca']) && $option['db_ssl_ca'] !== '')) {
+		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
 		
@@ -456,15 +456,15 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
 		
-		if ((isset($option['db_ssl_key']) && $option['db_ssl_key'] !== '')) {
+		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
 		
-		if ((isset($option['db_ssl_cert']) && $option['db_ssl_cert'] !== '')) {
+		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
 		
-		if ((isset($option['db_ssl_ca']) && $option['db_ssl_ca'] !== '')) {
+		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
 

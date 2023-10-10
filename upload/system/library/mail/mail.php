@@ -29,7 +29,7 @@ class Mail {
 			$to = $this->option['to'];
 		}
 
-		if (version_compare(phpversion(), '8.0', '>=') || substr(PHP_OS, 0, 3) == 'WIN') {
+		if (version_compare(phpversion(), '8.2', '>=') || substr(PHP_OS, 0, 3) == 'WIN') {
 			$eol = "\r\n";
 		} else {
 			$eol = PHP_EOL;

@@ -2153,7 +2153,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'user_authorize_id'
+			'customer_authorize_id'
 		],
 		'foreign' => [
 			[

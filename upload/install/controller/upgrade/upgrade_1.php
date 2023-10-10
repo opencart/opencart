@@ -133,9 +133,24 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			}
 
 			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n\n";
-			$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
-			$output .= 'define(\'DB_SSL_CERT\', \'' . DB_SSL_CERT . '\');' . "\n";
-			$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n";
+
+			if (defined('DB_SSL_KEY')) {
+				$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
+			}
+
+			if (defined('DB_SSL_CERT')) {
+				$output .= 'define(\'DB_SSL_CERT\', \'' . DB_SSL_CERT . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
+			}
+
+			if (defined('DB_SSL_CA')) {
+				$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
+			}
 
 			// Save file
 			file_put_contents($file, $output);
@@ -302,9 +317,24 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			}
 
 			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n\n";
-			$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
-			$output .= 'define(\'DB_SSL_CERT\', \'' . DB_SSL_CERT . '\');' . "\n";
-			$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n";
+
+			if (defined('DB_SSL_KEY')) {
+				$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
+			}
+
+			if (defined('DB_SSL_CERT')) {
+				$output .= 'define(\'DB_SSL_CERT\', \'' . DB_SSL_CERT . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
+			}
+
+			if (defined('DB_SSL_CA')) {
+				$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
+			}
 
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";

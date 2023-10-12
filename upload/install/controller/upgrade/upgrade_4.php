@@ -101,13 +101,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			}
 
 			$missing[] = [
-				'key'        => 'config_encryption',
-				'value'      => hash('sha512', oc_token(32)),
-				'code'       => 'config',
-				'serialized' => 0
-			];
-
-			$missing[] = [
 				'key'        => 'config_voucher_min',
 				'value'      => 1,
 				'code'       => 'config',

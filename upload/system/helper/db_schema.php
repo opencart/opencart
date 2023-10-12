@@ -1847,6 +1847,14 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
+		'index'   => [
+			[
+				'name' => 'email',
+				'key'  => [
+					'email'
+				]
+			]
+		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4727,6 +4735,14 @@ function oc_db_schema() {
 				'key'   => 'currency_id',
 				'table' => 'currency',
 				'field' => 'currency_id'
+			]
+		],
+		'index'   => [
+			[
+				'name' => 'email',
+				'key'  => [
+					'email'
+				]
 			]
 		],
 		'engine'  => 'InnoDB',

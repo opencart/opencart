@@ -70,7 +70,7 @@ set_error_handler(/**
 });
 
 /**
- *
+ * CliCloud
  */
 class CliCloud extends \Opencart\System\Engine\Controller {
 	/**

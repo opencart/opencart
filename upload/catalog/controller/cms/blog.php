@@ -342,7 +342,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['tags'] = [];
 
 			if ($article_info['tag']) {
-				$tags = explode(',', trim($article_info['tag'], ''));
+				$tags = explode(',', trim($article_info['tag'], ','));
 
 				foreach ($tags as $tag) {
 					$data['tags'][] = [

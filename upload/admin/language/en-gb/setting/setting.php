@@ -48,7 +48,6 @@ $_['text_language']                       = 'Language';
 $_['text_currency']                       = 'Currency';
 $_['text_measurement']                    = 'Measurement';
 
-
 // Entry
 $_['entry_meta_title']                    = 'Meta Title';
 $_['entry_meta_description']              = 'Meta Tag Description';

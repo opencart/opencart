@@ -55,9 +55,9 @@ class PDO {
 	 *
 	 * @param    string  $sql
 	 *
-	 * @return   bool|object
+	 * @return   mixed
 	 */
-	public function query(string $sql): bool|object {
+	public function query(string $sql) {
 		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
 
 		$statement = $this->connection->prepare($sql);

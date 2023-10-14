@@ -9,7 +9,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): \Opencart\System\Engine\Action|null {
+	public function index(): ?\Opencart\System\Engine\Action {
 		$this->load->language('product/product');
 
 		if (isset($this->request->get['product_id'])) {

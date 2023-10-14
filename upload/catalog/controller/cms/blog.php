@@ -248,7 +248,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('cms/blog_list', $data));
 	}
 
-	public function info(): object|null {
+	public function info(): ?object {
 		$this->load->language('cms/blog');
 
 		if (isset($this->request->get['article_id'])) {

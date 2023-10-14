@@ -94,7 +94,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function info(): object|null {
+	public function info(): ?object {
 		$this->load->language('account/returns');
 
 		if (isset($this->request->get['return_id'])) {

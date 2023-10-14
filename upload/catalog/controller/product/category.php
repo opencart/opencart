@@ -9,7 +9,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): object|null {
+	public function index(): ?object {
 		$this->load->language('product/category');
 
 		if (isset($this->request->get['path'])) {

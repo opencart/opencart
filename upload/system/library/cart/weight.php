@@ -7,11 +7,11 @@ namespace Opencart\System\Library\Cart;
  */
 class Weight {
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $config;
 	/**

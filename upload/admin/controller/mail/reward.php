@@ -14,7 +14,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function index(string $route, array $args, mixed $output): void {
+	public function index(string $route, array $args, $output): void {
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];
 		} else {

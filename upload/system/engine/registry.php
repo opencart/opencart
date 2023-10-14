@@ -25,7 +25,7 @@ class Registry {
 	 *
 	 * @return   object
 	 */
-	public function __get(string $key): object|null {
+	public function __get(string $key): object {
 		return $this->get($key);
 	}
 
@@ -48,9 +48,9 @@ class Registry {
      *
      * @param	string	$key
 	 * 
-	 * @return	object
+	 * @return	mixed
      */
-	public function get(string $key): object|null {
+	public function get(string $key) {
 		return isset($this->data[$key]) ? $this->data[$key] : null;
 	}
 

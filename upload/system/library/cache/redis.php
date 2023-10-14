@@ -18,7 +18,7 @@ class Redis {
 	/**
 	 * Constructor
 	 *
-	 * @param    int  $expire
+	 * @param int $expire
 	 */
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
@@ -30,11 +30,11 @@ class Redis {
 	/**
 	 * Get
 	 *
-	 * @param    string  $key
+	 * @param string $key
 	 *
-	 * @return	 array|string|null
+	 * @return     mixed
 	 */
-	public function get(string $key): array|string|null {
+	public function get(string $key) {
 		$data = $this->redis->get(CACHE_PREFIX . $key);
 
 		return json_decode($data, true);
@@ -43,11 +43,11 @@ class Redis {
 	/**
 	 * Set
 	 *
-	 * @param    string  $key
-	 * @param    array|string|null  $value
-	 * @param	 int  $expire
+	 * @param string $key
+	 * @param mixed  $value
+	 * @param int    $expire
 	 */
-	public function set(string $key, array|string|null $value, int $expire = 0) {
+	public function set(string $key, $value, int $expire = 0) {
 		if (!$expire) {
 			$expire = $this->expire;
 		}
@@ -62,7 +62,7 @@ class Redis {
 	/**
 	 * Delete
 	 *
-	 * @param    string  $key
+	 * @param string $key
 	 */
 	public function delete(string $key): void {
 		$this->redis->del(CACHE_PREFIX . $key);

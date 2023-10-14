@@ -14,7 +14,7 @@ namespace Opencart\System\Library;
  */
 class DB {
 	/**
-	 * @var object|mixed
+	 * @var object
 	 */
 	private object $adaptor;
 
@@ -46,9 +46,9 @@ class DB {
 	 *
 	 * @param string $sql SQL statement to be executed
 	 *
-	 * @return    array
+	 * @return    mixed
 	 */
-	public function query(string $sql): bool|object {
+	public function query(string $sql) {
 		return $this->adaptor->query($sql);
 	}
 

@@ -15,7 +15,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function history(string &$route, array &$args, mixed &$output): void {
+	public function history(string &$route, array &$args, &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
         } else {
@@ -167,7 +167,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function transaction(string &$route, array &$args, mixed &$output): void {
+	public function transaction(string &$route, array &$args, &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
         } else {

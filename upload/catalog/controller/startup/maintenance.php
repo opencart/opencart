@@ -9,7 +9,7 @@ class Maintenance extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
-	public function index(): object|null {
+	public function index(): ?object {
 		if ($this->config->get('config_maintenance')) {
 			// Route
 			if (isset($this->request->get['route'])) {

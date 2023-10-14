@@ -7,9 +7,9 @@ namespace Opencart\System\Library\DB;
  */
 class MySQLi {
 	/**
-	 * @var object|\mysqli|null
+	 * @var object
 	 */
-	private object|null $connection;
+	private ?object $connection;
 
 	/**
 	 * Constructor
@@ -92,9 +92,9 @@ class MySQLi {
 	 *
 	 * @param string $sql
 	 *
-	 * @return   bool|object
+	 * @return   mixed
 	 */
-	public function query(string $sql): bool|object {
+	public function query(string $sql) {
 		try {
 			$query = $this->connection->query($sql);
 

@@ -32,7 +32,7 @@ class Log {
 	 *
 	 * @return  void
      */
-	public function write(string|array $message): void {
+	public function write(string $message): void {
 		file_put_contents($this->file, date('Y-m-d H:i:s') . ' - ' . print_r($message, true) . "\n", FILE_APPEND);
 	}
 }

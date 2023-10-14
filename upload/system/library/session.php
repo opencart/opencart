@@ -12,7 +12,7 @@ namespace Opencart\System\Library;
  */
 class Session {
 	/**
-	 * @var object|mixed
+	 * @var object
 	 */
 	protected object $adaptor;
 	/**

@@ -20,7 +20,7 @@ class Image {
 	 */
 	private object $image;
 	/**
-	 * @var int|mixed
+	 * @var int
 	 */
 	private int $width;
 	/**

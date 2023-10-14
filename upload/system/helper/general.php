@@ -28,3 +28,16 @@ function oc_strtolower(string $string) {
 function oc_token(int $length = 32): string {
 	return substr(bin2hex(random_bytes($length)), 0, $length);
 }
+
+// Pre PHP8 compatibility
+if (!function_exists('str_starts_with')) {
+	function str_starts_with(string $string, string $find): bool {
+		$substring = substr($string, strlen($find));
+
+		if ($substring === $find) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}

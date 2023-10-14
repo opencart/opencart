@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableControlAsync(array $args = [])
  * @method \Aws\Result getControlOperation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getControlOperationAsync(array $args = [])
+ * @method \Aws\Result getEnabledControl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getEnabledControlAsync(array $args = [])
  * @method \Aws\Result listEnabledControls(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnabledControlsAsync(array $args = [])
  */

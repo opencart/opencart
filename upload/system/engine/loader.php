@@ -58,11 +58,11 @@ class Loader {
 	 * https://wiki.php.net/rfc/variadics
 	 *
 	 * @param string $route
-	 * @param array  $data
+	 * @param mixed  $args
 	 *
 	 * @return    mixed
 	 */
-	public function controller(string $route, mixed ...$args): mixed {
+	public function controller(string $route, ...$args) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $route));
 
@@ -137,7 +137,7 @@ class Loader {
 						// Grab args using function because we don't know the number of args being passed.
 						// https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 						// https://wiki.php.net/rfc/variadics
-						$proxy->{$method} = function (mixed &...$args) use ($route, $model, $method): mixed {
+						$proxy->{$method} = function (&...$args) use ($route, $model, $method) {
 							$route = $route . '/' . $method;
 
 							$output = '';

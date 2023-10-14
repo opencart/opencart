@@ -179,7 +179,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if (version_compare(phpversion(), '8.2.0', '<')) {
+		if (version_compare(phpversion(), '7.4', '<')) {
 			$error .= 'ERROR: You need to use PHP8+ or above for OpenCart to work!' . "\n";
 		}
 

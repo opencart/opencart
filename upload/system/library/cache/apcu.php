@@ -30,9 +30,9 @@ class Apcu {
      *
      * @param	 string	 $key
 	 * 
-	 * @return	 array|string|null
+	 * @return	 mixed
      */
-	public function get(string $key): array|string|null {
+	public function get(string $key) {
 		return $this->active ? apcu_fetch(CACHE_PREFIX . $key) : [];
 	}
 

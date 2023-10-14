@@ -7,27 +7,27 @@ namespace Opencart\System\Library\Cart;
  */
 class Cart {
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $config;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $customer;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $session;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $tax;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $weight;
 	/**
@@ -183,40 +183,42 @@ class Cart {
 											$stock = false;
 										}
 
-										$option_data[] = ['product_option_id'       => $product_option_id,
-														  'product_option_value_id' => $product_option_value_id,
-														  'option_id'               => $option_query->row['option_id'],
-														  'option_value_id'         => $option_value_query->row['option_value_id'],
-														  'name'                    => $option_query->row['name'],
-														  'value'                   => $option_value_query->row['name'],
-														  'type'                    => $option_query->row['type'],
-														  'quantity'                => $option_value_query->row['quantity'],
-														  'subtract'                => $option_value_query->row['subtract'],
-														  'price'                   => $option_value_query->row['price'],
-														  'price_prefix'            => $option_value_query->row['price_prefix'],
-														  'points'                  => $option_value_query->row['points'],
-														  'points_prefix'           => $option_value_query->row['points_prefix'],
-														  'weight'                  => $option_value_query->row['weight'],
-														  'weight_prefix'           => $option_value_query->row['weight_prefix']
+										$option_data[] = [
+											'product_option_id'       => $product_option_id,
+											'product_option_value_id' => $product_option_value_id,
+											'option_id'               => $option_query->row['option_id'],
+											'option_value_id'         => $option_value_query->row['option_value_id'],
+											'name'                    => $option_query->row['name'],
+											'value'                   => $option_value_query->row['name'],
+											'type'                    => $option_query->row['type'],
+											'quantity'                => $option_value_query->row['quantity'],
+											'subtract'                => $option_value_query->row['subtract'],
+											'price'                   => $option_value_query->row['price'],
+											'price_prefix'            => $option_value_query->row['price_prefix'],
+											'points'                  => $option_value_query->row['points'],
+											'points_prefix'           => $option_value_query->row['points_prefix'],
+											'weight'                  => $option_value_query->row['weight'],
+											'weight_prefix'           => $option_value_query->row['weight_prefix']
 										];
 									}
 								}
 							} elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
-								$option_data[] = ['product_option_id'       => $product_option_id,
-												  'product_option_value_id' => '',
-												  'option_id'               => $option_query->row['option_id'],
-												  'option_value_id'         => '',
-												  'name'                    => $option_query->row['name'],
-												  'value'                   => $value,
-												  'type'                    => $option_query->row['type'],
-												  'quantity'                => '',
-												  'subtract'                => '',
-												  'price'                   => '',
-												  'price_prefix'            => '',
-												  'points'                  => '',
-												  'points_prefix'           => '',
-												  'weight'                  => '',
-												  'weight_prefix'           => ''
+								$option_data[] = [
+									'product_option_id'       => $product_option_id,
+									'product_option_value_id' => '',
+									'option_id'               => $option_query->row['option_id'],
+									'option_value_id'         => '',
+									'name'                    => $option_query->row['name'],
+									'value'                   => $value,
+									'type'                    => $option_query->row['type'],
+									'quantity'                => '',
+									'subtract'                => '',
+									'price'                   => '',
+									'price_prefix'            => '',
+									'points'                  => '',
+									'points_prefix'           => '',
+									'weight'                  => '',
+									'weight_prefix'           => ''
 								];
 							}
 						}

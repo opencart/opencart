@@ -94,7 +94,7 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function editValue(string $code = '', string $key = '', string|array $value = '', int $store_id = 0): void {
+	public function editValue(string $code = '', string $key = '', $value = '', int $store_id = 0): void {
 		if (!is_array($value)) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($value) . "', `serialized` = '0'  WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND `store_id` = '" . (int)$store_id . "'");
 		} else {

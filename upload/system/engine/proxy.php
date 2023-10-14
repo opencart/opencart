@@ -21,9 +21,9 @@ class Proxy {
 	 *
 	 * @param string $key
 	 *
-	 * @return object|null
+	 * @return mixed
 	 */
-	public function &__get(string $key): object|null {
+	public function &__get(string $key) {
 		if (isset($this->data[$key])) {
 			return $this->data[$key];
 		} else {
@@ -48,9 +48,9 @@ class Proxy {
 	 *
 	 * @param string $key
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function __isset(string $key) {
+	public function __isset(string $key): bool {
 		return isset($this->data[$key]);
 	}
 
@@ -61,7 +61,7 @@ class Proxy {
 	 *
 	 * @return void
 	 */
-	public function __unset(string $key) {
+	public function __unset(string $key): void {
 		unset($this->data[$key]);
 	}
 
@@ -73,7 +73,7 @@ class Proxy {
 	 *
 	 * @return mixed
 	 */
-	public function __call(string $method, array $args): mixed {
+	public function __call(string $method, array $args) {
 		// Hack for pass-by-reference
 		foreach ($args as $key => &$value) ;
 

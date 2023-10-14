@@ -7,39 +7,39 @@ namespace Opencart\System\Library\Cart;
  */
 class User {
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $request;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $session;
 	/**
-	 * @var int|mixed
+	 * @var int
 	 */
 	private int $user_id = 0;
 	/**
-	 * @var string|mixed
+	 * @var string
 	 */
 	private string $username = '';
 	/**
-	 * @var string|mixed
+	 * @var string
 	 */
 	private string $firstname = '';
 	/**
-	 * @var string|mixed
+	 * @var string
 	 */
 	private string $lastname = '';
 	/**
-	 * @var string|mixed
+	 * @var string
 	 */
 	private string $email = '';
 	/**
-	 * @var int|mixed
+	 * @var int
 	 */
 	private int $user_group_id = 0;
 	/**
@@ -156,11 +156,11 @@ class User {
 	 * hasPermission
 	 *
 	 * @param    string  $key
-	 * @param    mixed  $value
+	 * @param    string  $value
 	 *
 	 * @return   bool
 	 */
-	public function hasPermission(string $key, mixed $value): bool {
+	public function hasPermission(string $key, string $value): bool {
 		if (isset($this->permission[$key])) {
 			return in_array($value, $this->permission[$key]);
 		} else {

@@ -8352,16 +8352,6 @@ function oc_db_schema() {
 				'name'     => 'geo_zone_id',
 				'type'     => 'int(11)',
 				'not_null' => true
-			],
-			[
-				'name'     => 'date_added',
-				'type'     => 'datetime',
-				'not_null' => true
-			],
-			[
-				'name'     => 'date_modified',
-				'type'     => 'datetime',
-				'not_null' => true
 			]
 		],
 		'primary' => [

@@ -68,7 +68,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'minimum'      => $product['minimum'],
 				'reward'       => $product['reward'],
 				'price'        => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total'        => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+				'total'        => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency'])
 			];
 		}
 

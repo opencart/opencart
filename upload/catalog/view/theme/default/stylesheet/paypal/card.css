@@ -1,0 +1,130 @@
+#paypal_card_form {
+	color: #717171;
+	text-align: center;
+	transition: all 600ms cubic-bezier(0.2, 1.3, 0.7, 1);
+	-webkit-animation: cardIntro 500ms cubic-bezier(0.2, 1.3, 0.7, 1);
+    animation: cardIntro 500ms cubic-bezier(0.2, 1.3, 0.7, 1);
+	z-index: 1;
+}
+#paypal_card_form.visa {
+	color: #fff;
+	background-color: #0D4AA2;
+}
+#paypal_card_form.master-card {
+	color: #fff;
+	background-color: #363636;
+	background: linear-gradient(115deg, #d82332, #d82332 50%, #f1ad3d 50%, #f1ad3d);
+}
+#paypal_card_form.maestro {
+	color: #fff;
+	background-color: #363636;
+	background: linear-gradient(115deg, #009ddd, #009ddd 50%, #ed1c2e 50%, #ed1c2e);
+}
+#paypal_card_form.american-express {
+	color: #fff;
+	background-color: #007CC3;
+}
+#paypal_card_form.discover {
+	color: #fff;
+	background-color: #ff6000;
+	background: linear-gradient(#d14310, #f7961e);
+}
+#paypal_card_form.unionpay, #paypal_card_form.jcb, #paypal_card_form.diners-club {
+	color: #fff;
+	background-color: #363636;
+}
+#paypal_card_form .card-info-number,
+#paypal_card_form .card-info-date-cvv {
+	position: relative;
+	text-align: left;
+}
+#paypal_card_form .card-info-date {
+	width: 48%;
+	float: left;
+	margin-bottom: 0.5em;
+}
+#paypal_card_form .card-info-cvv {
+	width: 48%;
+	float: right;
+	margin-bottom: 0.5em;
+}
+#paypal_card_form .card-info-number,
+#paypal_card_form .card-info-date,
+#paypal_card_form .card-info-cvv {
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+#paypal_card_form .card-label {
+	display: block;
+	margin-bottom: 0.5em;
+	text-transform: uppercase;
+}
+#paypal_card_form .card-input-container {
+	position: relative;
+	height: 2.75em;
+	padding: 5px 10px;
+	margin-bottom: 1em;
+	background: rgba(255, 255, 255, 0.86);
+	border: 1px solid #eee;
+	border-radius: 2px;
+}
+#paypal_card_form #card_image {
+	position: absolute;
+	top: 0px;
+	right: 2px;
+	width: 44px;
+	height: 28px;
+	background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/346994/card_sprite.png);
+	background-size: 86px 458px;
+	border-radius: 4px;
+	background-position: -100px 0;
+	background-repeat: no-repeat;
+}
+#paypal_card_form #card_image.visa {
+	background-position: 0 -398px;
+}
+#paypal_card_form #card_image.master-card {
+	background-position: 0 -281px;
+}
+#paypal_card_form #card_image.american-express {
+	background-position: 0 -370px;
+}
+#paypal_card_form #card_image.discover {
+	background-position: 0 -163px;
+}
+#paypal_card_form #card_image.maestro {
+	background-position: 0 -251px;
+}
+#paypal_card_form #card_image.jcb {
+	background-position: 0 -221px;
+}
+#paypal_card_form #card_image.diners-club {
+	background-position: 0 -133px;
+}
+#paypal_card_form #paypal_button_submit {
+	width: 100%;	
+	padding: 1em 1em;
+	color: #fff;
+	background: #282c37;
+	font-size: 15px;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	border: 0;
+	z-index: 0;
+	opacity: 0.1;
+	outline: 0;
+	-webkit-appearance: none;
+}
+#paypal_card_form #paypal_button_submit:hover {
+	background: #535b72;
+}
+#paypal_card_form #paypal_button_submit:active {
+	-webkit-animation: cardIntro 200ms cubic-bezier(0.2, 1.3, 0.7, 1);
+    animation: cardIntro 200ms cubic-bezier(0.2, 1.3, 0.7, 1);
+}
+#paypal_card_form #paypal_button_submit.show-button {
+	opacity: 1;
+	cursor: pointer;
+}

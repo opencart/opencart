@@ -1,0 +1,66 @@
+.paypal-button {
+	position: relative;
+}
+@media (max-width: 476px) {
+	.paypal-button-container {
+		width: 100% !important;
+	}
+}
+.applepay-button {
+	position: relative;
+}
+@media (max-width: 476px) {
+	.applepay-button-container {
+		width: 100% !important;
+	}
+	.applepay-button #apple-pay-button {
+		width: 100% !important;
+	}
+}
+.paypal-card {
+	position: relative;
+}
+.paypal-card-container {
+	position: relative;
+}
+@media (max-width: 476px) {
+	.paypal-card-container {
+		width: 100% !important;
+	}
+}
+.paypal-message {
+	position: relative;
+}
+.paypal-spinner {
+	position: relative;
+	min-height: 20px;
+}
+.paypal-spinner:before {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 20px;
+	height: 20px;
+	top: 50%;
+	left: 50%;
+	margin-top: -10px;
+	margin-left: -10px;
+	border: 2.5px solid #545454;
+	border-right-color: #545454;
+	border-right-color: transparent;
+	border-radius: 50%;
+	-webkit-animation: paypal-spinner .75s linear infinite;
+	animation: paypal-spinner .75s linear infinite;
+	z-index: 1000;
+}
+.modal {
+    z-index: 960;
+}
+.modal-backdrop {
+	z-index: 940;
+}
+@keyframes paypal-spinner {
+	to {
+		transform: rotate(360deg); 
+	}
+}

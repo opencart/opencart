@@ -1,0 +1,253 @@
+{{ header }}{{ column_left }}
+<div id="content" class="payment-paypal">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary button-save"><i class="fa fa-save"></i></button>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+			</div>
+			<h1>{{ heading_title_main }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		{% endif %}
+		{% if text_version %}
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_version }}</div>
+		{% endif %}
+		<div class="panel panel-default panel-dashboard">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form_payment">
+					<div class="row">
+						<div class="col col-sm-6">
+							<div class="paypal-sale">
+								<span class="paypal-sale-title">{{ text_paypal_sales }}:</span> <span class="paypal-sale-total">{{ paypal_sale_total }}</span>
+							</div>
+						</div>
+						<div class="col col-sm-6">
+							<div class="form-group-status">
+								<label class="control-label" for="input_status">{{ entry_status }}</label>
+								<input type="hidden" name="payment_paypal_status" value="0" />
+								<input type="checkbox" name="payment_paypal_status" value="1" class="switch" {% if status %}checked="checked"{% endif %} />
+							</div>
+						</div>
+					</div>
+					<div class="row row-tab">
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_general }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-general"></i>
+								<span class="tab-title">{{ text_tab_general }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_button }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if button_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-button"></i>
+								<span class="tab-title">{{ text_tab_button }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_applepay_button }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if applepay_button_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-applepay-button"></i>
+								<span class="tab-title">{{ text_tab_applepay_button }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_card }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if card_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-card"></i>
+								<span class="tab-title">{{ text_tab_card }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_message }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if message_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-message"></i>
+								<span class="tab-title">{{ text_tab_message }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_order_status  }}" class="tab">
+								<i class="tab-icon tab-icon-order-status"></i>
+								<span class="tab-title">{{ text_tab_order_status }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_contact }}" class="tab">
+								<i class="tab-icon tab-icon-contact"></i>
+								<span class="tab-title">{{ text_tab_contact }}</span>
+							</a>
+						</div>
+					</div>
+					<div class="row flex-row">
+						<div class="col col-lg-3">
+							<div class="panel panel-default panel-statistic">
+								<div class="panel-heading">
+									<h3 class="panel-title"><i class="icon icon-panel-statistic"></i> {{ text_panel_statistic }}</h3>
+								</div>
+								<div class="panel-body">
+									<div class="statistic">
+										<i class="icon icon-statistic"></i>
+										<div class="statistic-title">{{ text_statistic_title }}</div>
+										<div class="statistic-description">{{ text_statistic_description }}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col col-lg-9">
+							<div class="panel panel-default panel-sale-analytics">
+								<div class="panel-heading">
+									<div class="pull-right">
+										<a href="#sale_analytics_range" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-calendar"></i> <i class="caret"></i></a>
+										<div id="#sale_analytics_range" class="dropdown-menu dropdown-menu-right">
+											{% for sale_analytics_range in setting['sale_analytics_range'] %}
+											{% if sale_analytics_range['code'] == setting['general']['sale_analytics_range'] %}
+											<a href="{{ sale_analytics_range['code'] }}" class="dropdown-item active">{{ attribute(_context, sale_analytics_range['name']) }}</a>
+											{% else %}
+											<a href="{{ sale_analytics_range['code'] }}" class="dropdown-item">{{ attribute(_context, sale_analytics_range['name']) }}</a>
+											{% endif %}
+											{% endfor %}
+										</div>
+									</div>
+									<h3 class="panel-title"><i class="icon icon-panel-sale-analytics"></i> {{ text_panel_sale_analytics }}</h3>
+								</div>
+								<div class="panel-body">
+									<div class="sale-analytics"></div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script>
+<script type="text/javascript">
+
+$('.payment-paypal .switch').bootstrapSwitch({
+    'onColor': 'success',
+    'onText': '{{ text_on }}',
+    'offText': '{{ text_off }}'
+});
+
+$('.payment-paypal .panel-sale-analytics').on('click', '.dropdown-item', function(event) {
+	event.preventDefault();
+	
+	$(this).parent().find('.dropdown-item').removeClass('active');
+
+	$(this).addClass('active');
+	
+	$.ajax({
+		type: 'get',
+		url: '{{ sale_analytics_url }}&range=' + $(this).attr('href'),
+		dataType: 'json',
+		success: function(json) {			
+			if (typeof json['all_sale'] == 'undefined') {
+				return false;
+			}
+			
+			var option = {	
+				shadowSize: 0,
+				colors: ['#9FD5F1', '#306EB9'],
+				bars: { 
+					show: true,
+					fill: true,
+					lineWidth: 1
+				},
+				grid: {
+					backgroundColor: '#FFFFFF',
+					hoverable: true
+				},
+				points: {
+					show: false
+				},
+				xaxis: {
+					show: true,
+            		ticks: json['xaxis']
+				}
+			}
+			
+			$.plot('.payment-paypal .sale-analytics', [json['all_sale'], json['paypal_sale']], option);	
+					
+			$('.payment-paypal .sale-analytics').bind('plothover', function(event, pos, item) {
+				$('.tooltip').remove();
+			  
+				if (item) {
+					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+					
+					$('#tooltip').css({
+						position: 'absolute',
+						left: item.pageX - ($('#tooltip').outerWidth() / 2),
+						top: item.pageY - $('#tooltip').outerHeight(),
+						pointer: 'cusror'
+					}).fadeIn('slow');	
+					
+					$('.payment-paypal .sale-analytics').css('cursor', 'pointer');		
+			  	} else {
+					$('.payment-paypal .sale-analytics').css('cursor', 'auto');
+				}
+			});
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+});
+
+$('.payment-paypal .panel-sale-analytics .dropdown-item.active').trigger('click');
+
+$('.payment-paypal').on('click', '.button-save', function() {
+    $.ajax({
+		type: 'post',
+		url: $('#form_payment').attr('action'),
+		data: $('#form_payment').serialize(),
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert-success').remove();
+			
+			if (json['success']) {
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				
+				$('html, body').animate({ scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+    });  
+});
+
+$('.payment-paypal').on('click', '.button-agree', function() {
+	$.ajax({
+		type: 'post',
+		url: '{{ agree_url }}',
+		data: '',
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert').remove();
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+</script>
+{{ footer }}

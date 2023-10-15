@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="39" viewBox="0 0 50 39">
+  <g id="icon_General" data-name="icon General" transform="translate(-628 -395)">
+    <rect id="Rectangle_263" data-name="Rectangle 263" width="50" height="39" rx="3" transform="translate(628 395)" fill="#0070e0"/>
+    <g id="Group_514" data-name="Group 514" transform="translate(0 -2)">
+      <rect id="Rectangle_264" data-name="Rectangle 264" width="18" height="4" rx="1" transform="translate(633 404)" fill="#fff"/>
+      <rect id="Rectangle_265" data-name="Rectangle 265" width="18" height="4" rx="1" transform="translate(655 404)" fill="#fff"/>
+      <rect id="Rectangle_266" data-name="Rectangle 266" width="18" height="4" rx="1" transform="translate(655 411)" fill="#fff"/>
+      <rect id="Rectangle_267" data-name="Rectangle 267" width="18" height="4" rx="1" transform="translate(655 418)" fill="#fff"/>
+      <rect id="Rectangle_268" data-name="Rectangle 268" width="18" height="4" rx="1" transform="translate(655 425)" fill="#fff"/>
+      <rect id="Rectangle_269" data-name="Rectangle 269" width="18" height="4" rx="1" transform="translate(633 411)" fill="#fff"/>
+      <rect id="Rectangle_270" data-name="Rectangle 270" width="18" height="4" rx="1" transform="translate(633 425)" fill="#fff"/>
+      <g id="Group_513" data-name="Group 513">
+        <rect id="Rectangle_271" data-name="Rectangle 271" width="8" height="4" rx="1" transform="translate(633 418)" fill="#fff"/>
+        <path id="Rectangle_272" data-name="Rectangle 272" d="M0,0H3A1,1,0,0,1,4,1V3A1,1,0,0,1,3,4H0A0,0,0,0,1,0,4V0A0,0,0,0,1,0,0Z" transform="translate(637 418)" fill="#003087"/>
+      </g>
+    </g>
+  </g>
+</svg>

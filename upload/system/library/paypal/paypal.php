@@ -8,26 +8,31 @@ class PayPal {
 	private $partner_id = '';
 	private $client_id = '';
 	private $secret = '';
+	private $partner_attribution_id = '';
 	private $access_token = '';
 	private $errors = array();
 	private $last_response = array();
 		
 	//IN:  paypal info
 	public function __construct($paypal_info) {
-		if (isset($paypal_info['partner_id']) && $paypal_info['partner_id']) {
+		if (!empty($paypal_info['partner_id'])) {
 			$this->partner_id = $paypal_info['partner_id'];
 		}
 		
-		if (isset($paypal_info['client_id']) && $paypal_info['client_id']) {
+		if (!empty($paypal_info['client_id'])) {
 			$this->client_id = $paypal_info['client_id'];
 		}
 		
-		if (isset($paypal_info['secret']) && $paypal_info['secret']) {
+		if (!empty($paypal_info['secret'])) {
 			$this->secret = $paypal_info['secret'];
 		}
-
-		if (isset($paypal_info['environment']) && (($paypal_info['environment'] == 'production') || ($paypal_info['environment'] == 'sandbox'))) {
+		
+		if (!empty($paypal_info['environment']) && (($paypal_info['environment'] == 'production') || ($paypal_info['environment'] == 'sandbox'))) {
 			$this->environment = $paypal_info['environment'];
+		}
+		
+		if (!empty($paypal_info['partner_attribution_id'])) {
+			$this->partner_attribution_id = $paypal_info['partner_attribution_id'];
 		}
 	}
 	
@@ -40,13 +45,11 @@ class PayPal {
 								
 		$result = $this->execute('POST', $command, $params);
 		
-		if (isset($result['access_token']) && $result['access_token']) {
+		if (!empty($result['access_token'])) {
 			$this->access_token = $result['access_token'];
 			
 			return $this->access_token;
 		} else {
-			$this->errors[] = $result;
-						
 			return false;
 		}
 	}
@@ -62,11 +65,26 @@ class PayPal {
 										
 		$result = $this->execute('POST', $command);
 		
-		if (isset($result['client_token']) && $result['client_token']) {
+		if (!empty($result['client_token'])) {
 			return $result['client_token'];
 		} else {
-			$this->errors[] = $result;
-			
+			return false;
+		}
+	}
+	
+	//OUT: merchant info, if no return - check errors
+	public function getUserInfo() {
+		$command = '/v1/identity/oauth2/userinfo';
+		
+		$params = array(
+			'schema' => 'paypalv1.1'
+		);
+										
+		$result = $this->execute('GET', $command, $params);
+		
+		if (!empty($result['user_id'])) {
+			return $result;
+		} else {
 			return false;
 		}
 	}
@@ -75,18 +93,30 @@ class PayPal {
 	//OUT: merchant info, if no return - check errors
 	public function getSellerCredentials($partner_id) {
 		$command = '/v1/customer/partners/' . $partner_id . '/merchant-integrations/credentials';
-				
+						
 		$result = $this->execute('GET', $command);
 		
-		if (isset($result['client_id']) && $result['client_id']) {
+		if (!empty($result['client_id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
+	
+	//IN:  partner id, merchant id
+	//OUT: merchant info, if no return - check errors
+	public function getSellerStatus($partner_id, $merchant_id) {
+		$command = '/v1/customer/partners/' . $partner_id . '/merchant-integrations/' . $merchant_id;
+						
+		$result = $this->execute('GET', $command);
 		
+		if (!empty($result['merchant_id'])) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+			
 	//IN:  webhook info
 	public function createWebhook($webhook_info) {
 		$command = '/v1/notifications/webhooks';
@@ -95,11 +125,9 @@ class PayPal {
 				
 		$result = $this->execute('POST', $command, $params, true);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -113,11 +141,9 @@ class PayPal {
 				
 		$result = $this->execute('PATCH', $command, $params, true);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -138,11 +164,9 @@ class PayPal {
 				
 		$result = $this->execute('GET', $command);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -153,11 +177,36 @@ class PayPal {
 				
 		$result = $this->execute('GET', $command);
 		
-		if (isset($result['webhooks']) && $result['webhooks']) {
+		if (!empty($result['webhooks'])) {
 			return $result['webhooks'];
 		} else {
-			$this->errors[] = $result;
-			
+			return false;
+		}
+	}
+	
+	//IN:  webhook event id
+	//OUT: webhook event info, if no return - check errors
+	public function getWebhookEvent($webhook_event_id) {
+		$command = '/v1/notifications/webhooks-events/' . $webhook_event_id;
+				
+		$result = $this->execute('GET', $command);
+		
+		if (!empty($result['id'])) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+	
+	//OUT: webhook events info, if no return - check errors
+	public function getWebhookEvents() {
+		$command = '/v1/notifications/webhooks-events';
+				
+		$result = $this->execute('GET', $command);
+		
+		if (!empty($result['events'])) {
+			return $result['events'];
+		} else {
 			return false;
 		}
 	}
@@ -170,11 +219,9 @@ class PayPal {
 				
 		$result = $this->execute('POST', $command, $params, true);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -188,13 +235,7 @@ class PayPal {
 				
 		$result = $this->execute('PATCH', $command, $params, true);
 		
-		if (isset($result['id']) && $result['id']) {
-			return $result;
-		} else {
-			$this->errors[] = $result;
-			
-			return false;
-		}
+		return true;
 	}
 	
 	//IN:  order id
@@ -204,11 +245,9 @@ class PayPal {
 				
 		$result = $this->execute('GET', $command);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -219,11 +258,9 @@ class PayPal {
 						
 		$result = $this->execute('POST', $command);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -234,11 +271,9 @@ class PayPal {
 						
 		$result = $this->execute('POST', $command);
 		
-		if (isset($result['id']) && $result['id']) {
+		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			$this->errors[] = $result;
-			
 			return false;
 		}
 	}
@@ -277,7 +312,7 @@ class PayPal {
 			$curl_options[CURLOPT_HTTPHEADER][] = 'Accept-Language: en_US';
 			$curl_options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
 			$curl_options[CURLOPT_HTTPHEADER][] = 'PayPal-Request-Id: ' . $this->token(50);
-			$curl_options[CURLOPT_HTTPHEADER][] = 'PayPal-Partner-Attribution-Id: OPENCARTLIMITED_Cart_OpenCartPCP';
+			$curl_options[CURLOPT_HTTPHEADER][] = 'PayPal-Partner-Attribution-Id: ' . $this->partner_attribution_id;
 			
 			if ($this->access_token) {
 				$curl_options[CURLOPT_HTTPHEADER][] = 'Authorization: Bearer ' . $this->access_token;
@@ -333,11 +368,11 @@ class PayPal {
 				default:
 					$curl_options[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
 			}
-			
+						
 			$ch = curl_init();
 			curl_setopt_array($ch, $curl_options);
 			$response = curl_exec($ch);
-			
+						
 			if (curl_errno($ch)) {
 				$curl_code = curl_errno($ch);
 				
@@ -346,25 +381,7 @@ class PayPal {
 				
 				$this->errors[] = array('name' => $curl_constant[$curl_code], 'message' => curl_strerror($curl_code));
 			}
-	
-            /*$status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
-			if (($status_code >= 0) && ($status_code < 200)) {
-				$this->errors[] = 'Server Not Found (' . $status_code . ')';
-			}
-			
-			if (($status_code >= 300) && ($status_code < 400)) {
-				$this->errors[] = 'Page Redirect (' . $status_code . ')';
-			}
-			
-			if (($status_code >= 400) && ($status_code < 500)) {
-				$this->errors[] = 'Page not found (' . $status_code . ')';
-			}
-			
-			if ($status_code >= 500) {
-				$this->errors[] = 'Server Error (' . $status_code . ')';
-			}*/
-			
+				
 			$head = '';
 			$body = '';
 			
@@ -395,7 +412,11 @@ class PayPal {
 
 			$this->last_response = json_decode($body, true);
 			
-			return $this->last_response;		
+			if (!empty($this->last_response['message'])) {
+				$this->errors[] = (array)$this->last_response;
+			}
+			
+			return (array)$this->last_response;		
 		}
 	}
 	

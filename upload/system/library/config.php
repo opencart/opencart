@@ -28,7 +28,7 @@ class Config {
      * 
      *
      * @param	string	$key
-	 * @param	string	$value
+	 * @param	mixed	$value
      */
 	public function set($key, $value) {
 		$this->data[$key] = $value;
@@ -39,7 +39,7 @@ class Config {
      *
      * @param	string	$key
 	 *
-	 * @return	mixed
+	 * @return	bool
      */
 	public function has($key) {
 		return isset($this->data[$key]);

@@ -1,0 +1,210 @@
+{{ header }}{{ column_left }}
+<div id="content" class="payment-paypal">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary button-save"><i class="fa fa-save"></i></button>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+			</div>
+			<h1>{{ heading_title_main }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		{% endif %}
+		{% if text_version %}
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_version }}</div>
+		{% endif %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form_payment">
+					<a href="{{ href_dashboard }}" class="back-dashboard"><i class="icon icon-back-dashboard"></i>{{ text_tab_dashboard }}</a>
+					<ul class="nav nav-tabs">
+						<li class="nav-tab"><a href="{{ href_general }}" class="tab"><i class="tab-icon tab-icon-general"></i><span class="tab-title">{{ text_tab_general }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
+						<li class="nav-tab active"><a href="{{ href_contact }}" class="tab"><i class="tab-icon tab-icon-contact"></i><span class="tab-title">{{ text_tab_contact }}</span></a></li>
+					</ul>
+					<div class="section-content">
+						<div class="row">
+							<div class="col col-md-12">
+								<legend class="legend">{{ text_contact_business }}</legend>
+							</div>
+							<div class="col col-md-6">
+								<input type="hidden" name="payment_paypal_setting[contact][oid]" value="{{ setting['contact']['oid'] }}" />
+								<input type="hidden" name="payment_paypal_setting[contact][retURL]" value="{{ setting['contact']['retURL'] }}">
+								<input type="hidden" name="payment_paypal_setting[contact][Vendor_Partner_ID_VPID_MAM__c]" value="{{ setting['contact']['Vendor_Partner_ID_VPID_MAM__c'] }}" />
+								<input type="hidden" name="payment_paypal_setting[contact][Campaign_ID__c]" value="{{ setting['contact']['Campaign_ID__c'] }}" />
+								<input type="hidden" name="payment_paypal_setting[contact][lead_source]" value="{{ setting['contact']['lead_source'] }}" />
+								<input type="hidden" name="payment_paypal_setting[contact][recordType]" value="{{ setting['contact']['recordType'] }}" />
+								<div class="form-group">
+									<label class="control-label" for="input_contact_company">{{ entry_contact_company }}</label>
+									<input type="text" name="payment_paypal_setting[contact][company]" value="{{ setting['contact']['company'] }}" id="input_contact_company" class="form-control" maxlength="40" />
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_first_name">{{ entry_contact_first_name }}</label>
+									<input type="text" name="payment_paypal_setting[contact][first_name]" value="{{ setting['contact']['first_name'] }}" id="input_contact_first_name" class="form-control" maxlength="40" />
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_last_name">{{ entry_contact_last_name }}</label>
+									<input type="text" name="payment_paypal_setting[contact][last_name]" value="{{ setting['contact']['last_name'] }}" id="input_contact_last_name" class="form-control" maxlength="80" />
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_email">{{ entry_contact_email }}</label>
+									<input type="text" name="payment_paypal_setting[contact][email]" value="{{ setting['contact']['email'] }}" id="input_contact_email" class="form-control" maxlength="80" />
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_url">{{ entry_contact_url }}</label>
+									<input type="text" name="payment_paypal_setting[contact][url]" value="{{ setting['contact']['url'] }}" id="input_contact_url" class="form-control" maxlength="80" />
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_sales">{{ entry_contact_sales }}</label>
+									<select name="payment_paypal_setting[contact][00N30000000gJEZ]" id="input_contact_sales" class="form-control">
+										{% if (setting['contact']['00N30000000gJEZ'] == '') %}
+										<option value="" selected="selected">{{ text_none }}</option>
+										{% else %}
+										<option value="">{{ text_none }}</option>
+										{% endif %}
+										{% for contact_sales in setting['contact_sales'] %}
+										{% if (contact_sales == setting['contact']['00N30000000gJEZ']) %}
+										<option value="{{ contact_sales }}" selected="selected">{{ contact_sales }}</option>
+										{% else %}
+										<option value="{{ contact_sales }}">{{ contact_sales }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_phone">{{ entry_contact_phone }}</label>
+									<input type="text" name="payment_paypal_setting[contact][phone]" value="{{ setting['contact']['phone'] }}" id="input_contact_phone" class="form-control" maxlength="40" />
+								</div>
+							</div>
+							<div class="col col-md-6">
+								<div class="form-group">
+									<label class="control-label" for="input_contact_country">{{ entry_contact_country }}</label>
+									<select name="payment_paypal_setting[contact][country]" id="input_contact_country" class="form-control">
+										{% for country in countries %}
+										{% if country['iso_code_2'] == setting['contact']['country'] %}
+										<option value="{{ country['iso_code_2'] }}" selected="selected">{{ country['name'] }}</option>
+										{% else %}
+										<option value="{{ country['iso_code_2'] }}">{{ country['name'] }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_notes">{{ entry_contact_notes }}</label>
+									<textarea name="payment_paypal_setting[contact][00N2E00000II4xQ]" id="input_contact_notes" class="form-control">{{ setting['contact']['00N2E00000II4xQ'] }}</textarea>
+								</div>
+								<div class="form-group">
+									<div id="input_contact_merchant">
+										<input type="hidden" name="payment_paypal_setting[contact][00N2E00000II4xP]" value="0" />
+										<input type="checkbox" name="payment_paypal_setting[contact][00N2E00000II4xP]" value="1" class="form-check-input" {% if setting['contact']['00N2E00000II4xP'] %}checked="checked"{% endif %} /><label class="control-label">{{ entry_contact_merchant }}</label>
+									</div>									
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_merchant_name">{{ entry_contact_merchant_name }}</label>
+									<input type="text" name="payment_paypal_setting[contact][00N2E00000II4xO]" value="{{ setting['contact']['00N2E00000II4xO'] }}" id="input_contact_merchant_name" class="form-control" maxlength="55" />
+								</div>
+								<div class="form-group"></div>
+								<legend class="legend">{{ text_contact_product }}</legend>
+								<div class="form-group">
+									<label class="control-label" for="input_contact_product">{{ entry_contact_product }}</label>
+									<select name="payment_paypal_setting[contact][00N80000004IGsC]" id="input_contact_product" class="form-control" multiple="multiple">
+										{% for contact_product in setting['contact_product'] %}
+										{% if (contact_product['code'] == setting['contact']['00N80000004IGsC']) %}
+										<option value="{{ contact_product['code'] }}" selected="selected">{{ attribute(_context, contact_product['name']) }}</option>
+										{% else %}
+										<option value="{{ contact_product['code'] }}">{{ attribute(_context, contact_product['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group text-right">
+									<button type="button" class="btn btn-primary button-send">{{ button_send }}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+$('.payment-paypal').on('click', '.button-send', function() {
+	$.ajax({
+		type: 'post',
+		url: '{{ contact_url }}',
+		data: $('#form_payment').serialize(),
+		dataType: 'json',
+		success: function(json) {
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				
+				$('html, body').animate({ scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('.payment-paypal').on('click', '.button-save', function() {
+    $.ajax({
+		type: 'post',
+		url: $('#form_payment').attr('action'),
+		data: $('#form_payment').serialize(),
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert').remove();
+			
+			if (json['success']) {
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				
+				$('html, body').animate({ scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+    });  
+});
+
+$('.payment-paypal').on('click', '.button-agree', function() {
+	$('.alert').remove();
+	
+	$.ajax({
+		type: 'post',
+		url: '{{ agree_url }}',
+		data: '',
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert-success').remove();
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+</script>
+{{ footer }}

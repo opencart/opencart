@@ -1,0 +1,69 @@
+{
+    // ENFORCE
+    "curly"        : true,  // Require {} around one-line blocks
+    "eqeqeq"       : true,  // Require ===
+    "forin"        : true,  // Require hasOwnProperty inside forins
+    "immed"        : false, // Require immediate invocations to be wrapped in parenthesis
+                            // eg. (fun(){}())
+    "latedef"      : true,  // Prohibit undefined variables (undef?!)
+    "newcap"       : true,  // Require capitalized constructors
+    "noarg"        : true,  // Prohibit arguments.callee and .caller
+    "noempty"      : false, // Prohibit empty blocks "{}"
+    "nonew"        : false, // Prohibit new
+    "plusplus"     : false, // Prohibit ++ and --
+    "regexp"       : false, // Prohibit . in RegExp
+    "strict"       : true,  // Require 'use strict'
+    "trailing"     : true,  // Prohibit trailing spaces
+    "undef"        : true,  // Prohibit undeclared variables
+    "unused"       : "vars",// Prohibit unused variables
+
+    // RELAX
+    "asi"          : false, // Allow missing semicolons due to automatic insertion
+    "bitwise"      : false, // Allow bitwise operators
+    "boss"         : false, // Allow advanced usage of assignments
+    "debug"        : false, // Allow debugger statements
+    "eqnull"       : false, // Allow "== null"
+    "esnext"       : false, // Allow ES.next statements
+    "evil"         : false, // Allow eval
+    "expr"         : false, // Allow expressions instead of assignments/function calls
+    "funcscope"    : false, // Allow vars declared in blocks (ie. if)
+    "globalstrict" : false, // Allow global 'use strict'
+    "iterator"     : false, // Allow __iterator__
+    "lastsemic"    : false, // Allow one-line blocks with no semicolon
+    "laxbreak"     : false, // Allow unsafe line breaks
+    "loopfunc"     : false, // Allow function creation inside loops
+    "multistr"     : false, // Allow multiline strings
+    "nonstandard"  : false, // Allow (un)escape
+    "onecase"      : false, // Allow one-case switch statements (=if)
+    "proto"        : false, // Allow __proto__
+    "regexdash"    : false, // Allow RegExp to finish with a dash
+    "scripturl"    : false, // Allow script-targeted URLs
+    "shadow"       : false, // Allow variable shadowing (redeclaring in new scope)
+    "sub"          : false, // Allow object['name'], not just object.name
+    "supernew"     : false, // Allow "new function(){}" and "new Object"
+    "validthis"    : false, // Allow this even inside a non-constructor
+
+    // LEGACY
+    "nomen"        : false, // Enforce no dangling underscores
+    "onevar"       : true,  // Enforce one var per function scope
+    "passfail"     : false, // Stop on first error
+    "white"        : false, // Strict Douglas' whitespace rules
+
+    // MISC
+    "indent"       : 4,     // Check that indentation is X spaces
+    "maxlen"       : 100,   // Maximum characters/line
+
+    // ENVIRONMENT (GLOBALS)
+    "browser"      : true,  // Browser (setTimeout, document,..)
+    "couch"        : false, // CouchDB
+    "devel"        : false, // Development (console, alert,..)
+    "dojo"         : false,
+    "jquery"       : false,
+    "mootools"     : false,
+    "node"         : false,
+    "mocha"        : true,
+    "prototypejs"  : false,
+    "rhino"        : false,
+    "wsh"          : false // Window Scripting Host
+}
+

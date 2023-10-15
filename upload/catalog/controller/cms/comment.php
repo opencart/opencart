@@ -157,7 +157,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if ((oc_strlen($this->request->post['comment']) < 2) || (oc_strlen($this->request->post['comment']) > 1000)) {
+		if ((oc_strlen($this->request->post['comment']) < 25) || (oc_strlen($this->request->post['comment']) > 1000)) {
 			$json['error']['comment'] = $this->language->get('error_comment');
 		}
 

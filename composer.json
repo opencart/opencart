@@ -19,7 +19,7 @@
     "docs": "http://docs.opencart.com/"
   },
   "config": {
-    "vendor-dir": "vendor/"
+    "vendor-dir": "system/storage/vendor/"
   },
   "require": {
     "php": ">=8.0.0",

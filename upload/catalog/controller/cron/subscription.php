@@ -39,8 +39,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			// Check the there is an order and the order status is complete and subscription status is active
 			if ($order_info && in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status'))) {
-				$this->load->model('setting/store');
-
 				$error = '';
 
 				// 1. Language
@@ -63,6 +61,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				// 3. Create new instance of a store
 				if (!$error) {
+					$this->load->model('setting/store');
+
 					$store = $this->model_setting_store->createStoreInstance($result['store_id'], $language_info['code']);
 
 					// Login
@@ -72,15 +72,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
 						// Add customer details into session
-						$store->session->data['customer'] = [
-							'customer_id'       => $customer_info['customer_id'],
-							'customer_group_id' => $customer_info['customer_group_id'],
-							'firstname'         => $customer_info['firstname'],
-							'lastname'          => $customer_info['lastname'],
-							'email'             => $customer_info['email'],
-							'telephone'         => $customer_info['telephone'],
-							'custom_field'      => $customer_info['custom_field']
-						];
+						$store->session->data['customer'] = $customer_info;
 					} else {
 						$error = $this->language->get('error_customer');
 					}
@@ -90,7 +82,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if (!$error) {
 					$this->load->model('catalog/product');
 
-					$product_info = $this->model_checkout_order->getProduct($result['product_id']);
+					$product_info = $this->model_catalog_product->getProduct($result['product_id']);
 
 					if ($product_info) {
 						$option_data = [];
@@ -149,8 +141,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 
 				// 6. Payment Address
-				$payment_address = [];
-
 				if (!$error && $this->config->get('config_checkout_payment_address')) {
 					$this->load->model('account/address');
 
@@ -167,7 +157,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if (!$error) {
 					$this->load->model('checkout/payment_method');
 
-					$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
+					$payment_methods = $this->model_checkout_payment_method->getMethods($store->session->data['payment_address']);
 
 					// Validate payment methods
 					if (isset($order_info['payment_method']['code']) && $payment_methods) {
@@ -181,13 +171,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					} else {
 						$error = $this->language->get('error_payment_method');
 					}
-				}
-
-				if (!$error) {
-					$this->load->model('marketing/marketing');
-
-					$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->session->data['tracking']);
-					$order_data['language_id'] = $this->config->get('config_language_id');
 				}
 
 				if (!$error) {
@@ -261,7 +244,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$order_data['shipping_address_format'] = $shipping_address_info['address_format'];
 						$order_data['shipping_custom_field'] = $shipping_address_info['custom_field'];
 
-						$order_data['shipping_method'] = $payment_methods[$payment[0]]['option'][$payment[1]];
+						$order_data['shipping_method'] = $shipping_methods[$shipping[0]]['option'][$shipping[1]];
 					} else {
 						$order_data['shipping_address_id'] = 0;
 						$order_data['shipping_firstname'] = '';
@@ -362,7 +345,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['currency_id'] = $currency_info['currency_id'];
 					$order_data['currency_code'] = $currency_info['code'];
 					$order_data['currency_value'] = $currency_info['value'];
-
 
 					$order_data['ip'] = $result['ip'];
 					$order_data['forwarded_ip'] = $result['forwarded_ip'];
@@ -477,4 +459,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 		*/
     }
+
+	public function add() {
+
+	}
 }

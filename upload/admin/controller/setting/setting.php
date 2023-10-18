@@ -130,6 +130,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
+
 		$data['config_currency'] = $this->config->get('config_currency');
 
 		$data['currency_engines'] = [];
@@ -155,11 +156,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/length_class');
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
+
 		$data['config_length_class_id'] = $this->config->get('config_length_class_id');
 
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
+
 		$data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
 
 		// Options
@@ -210,7 +213,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_customer_price'] = $this->config->get('config_customer_price');
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
-
+		$data['config_customer_2fa'] = $this->config->get('config_customer_2fa');
 		$data['config_login_attempts'] = $this->config->get('config_login_attempts');
 
 		$this->load->model('catalog/information');
@@ -426,7 +429,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_compression'] = $this->config->get('config_compression');
 
 		// Security
-		$data['config_security'] = $this->config->get('config_security');
+		$data['config_user_2fa'] = $this->config->get('config_user_2fa');
 		$data['config_shared'] = $this->config->get('config_shared');
 
 		// Uploads
@@ -576,8 +579,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['image_location'] = $this->language->get('error_image_location');
 		}
 
-		if ($this->request->post['config_security'] && !$this->request->post['config_mail_engine']) {
-			$json['error']['warning'] = $this->language->get('error_security');
+		if ($this->request->post['config_user_2fa'] && !$this->request->post['config_mail_engine']) {
+			$json['error']['warning'] = $this->language->get('error_user_2fa');
 		}
 
 		if (!$this->request->post['config_file_max_size']) {

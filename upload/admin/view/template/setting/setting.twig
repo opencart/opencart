@@ -609,6 +609,16 @@
                         </div>
                       </div>
                       <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_customer_2fa }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="hidden" name="config_customer_2fa" value="0"/>
+                            <input type="checkbox" name="config_customer_2fa" value="1" id="input-customer-2fa" class="form-check-input"{% if config_customer_2fa %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_customer_2fa }}</div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
                         <label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
@@ -647,7 +657,8 @@
                         <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_cart_weight" value="0"/> <input type="checkbox" name="config_cart_weight" value="1" id="input-cart-weight" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
+                            <input type="hidden" name="config_cart_weight" value="0"/>
+                            <input type="checkbox" name="config_cart_weight" value="1" id="input-cart-weight" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_cart_weight }}</div>
                         </div>
@@ -656,32 +667,32 @@
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_checkout_guest" value="0"/> <input type="checkbox" name="config_checkout_guest" value="1" id="input-checkout-guest" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
+                            <input type="hidden" name="config_checkout_guest" value="0"/>
+                            <input type="checkbox" name="config_checkout_guest" value="1" id="input-checkout-guest" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_guest }}</div>
                         </div>
                       </div>
-
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_payment_address }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_checkout_payment_address" value="0"/> <input type="checkbox" name="config_checkout_payment_address" value="1" id="input-checkout-payment-address" class="form-check-input"{% if config_checkout_payment_address %} checked{% endif %}/>
+                            <input type="hidden" name="config_checkout_payment_address" value="0"/>
+                            <input type="checkbox" name="config_checkout_payment_address" value="1" id="input-checkout-payment-address" class="form-check-input"{% if config_checkout_payment_address %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_payment_address }}</div>
                         </div>
                       </div>
-
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_shipping_address }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_checkout_shipping_address" value="0"/> <input type="checkbox" name="config_checkout_shipping_address" value="1" id="input-checkout-shipping-address" class="form-check-input"{% if config_checkout_shipping_address %} checked{% endif %}/>
+                            <input type="hidden" name="config_checkout_shipping_address" value="0"/>
+                            <input type="checkbox" name="config_checkout_shipping_address" value="1" id="input-checkout-shipping-address" class="form-check-input"{% if config_checkout_shipping_address %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_shipping_address }}</div>
                         </div>
                       </div>
-
                       <div class="row mb-3">
                         <label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
                         <div class="col-sm-10">
@@ -906,7 +917,8 @@
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_approval }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_affiliate_approval" value="0"/> <input type="checkbox" name="config_affiliate_approval" value="1" id="input-affiliate-approval" class="form-check-input"{% if config_affiliate_approval %} checked{% endif %}/>
+                            <input type="hidden" name="config_affiliate_approval" value="0"/>
+                            <input type="checkbox" name="config_affiliate_approval" value="1" id="input-affiliate-approval" class="form-check-input"{% if config_affiliate_approval %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_affiliate_approval }}</div>
                         </div>
@@ -915,7 +927,8 @@
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_auto }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_affiliate_auto" value="0"/> <input type="checkbox" name="config_affiliate_auto" value="1" id="input-affiliate-auto" class="form-check-input"{% if config_affiliate_auto %} checked{% endif %}/>
+                            <input type="hidden" name="config_affiliate_auto" value="0"/>
+                            <input type="checkbox" name="config_affiliate_auto" value="1" id="input-affiliate-auto" class="form-check-input"{% if config_affiliate_auto %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_affiliate_auto }}</div>
                         </div>
@@ -1341,12 +1354,13 @@
               <fieldset>
                 <legend>{{ text_security }}</legend>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_security }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_user_2fa }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="config_security" value="0"/> <input type="checkbox" name="config_security" value="1" id="input-security" class="form-check-input"{% if config_security %} checked{% endif %}/>
+                      <input type="hidden" name="config_user_2fa" value="0"/>
+                      <input type="checkbox" name="config_user_2fa" value="1" id="input-user-2fa" class="form-check-input"{% if config_user_2fa %} checked{% endif %}/>
                     </div>
-                    <div class="form-text">{{ help_security }}</div>
+                    <div class="form-text">{{ help_user_2fa }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">

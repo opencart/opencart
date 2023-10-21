@@ -2561,7 +2561,7 @@ $('#button-payment-methods').on('click', function() {
             }
 
             if (json['payment_methods']) {
-                var html = '';
+                html = '';
 
                 for (i in json['payment_methods']) {
                     html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';

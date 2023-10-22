@@ -104,11 +104,13 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['reports'] = [];
 
 		$this->load->model('extension/oc_payment_example/payment/credit_card');
 
-		$results = $this->model_extension_oc_payment_example_payment_credit_card->getReports(($page - 1) * 10, 10);
+		$results = $this->model_extension_oc_payment_example_payment_credit_card->getReports(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$data['reports'][] = [
@@ -127,11 +129,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $report_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination_admin'),
+			'limit' => $limit,
 			'url'   => $this->url->link('extension/oc_payment_example/payment/credit_card.report', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
 
 		return $this->load->view('extension/oc_payment_example/payment/credit_card_report', $data);
 	}

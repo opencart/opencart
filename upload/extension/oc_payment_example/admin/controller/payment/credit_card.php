@@ -104,7 +104,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$limit = 10;
+		$limit = 10; 
 
 		$data['reports'] = [];
 

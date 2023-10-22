@@ -51,7 +51,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getTranslations(array $data = []): array {
-		$sql = "SELECT *, (SELECT s.`name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = t.`store_id`) AS store, (SELECT l.`name` FROM `" . DB_PREFIX . "language` l WHERE l.`language_id` = t.`language_id`) AS language FROM `" . DB_PREFIX . "translation` t";
+		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t`";
 
 		$sort_data = [
 			'store',

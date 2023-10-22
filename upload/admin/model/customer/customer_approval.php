@@ -79,7 +79,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "LCASE(CONCAT(`c`.`firstname`, ' ', c.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`c`.`firstname`, ' ', `c`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_email'])) {

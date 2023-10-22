@@ -127,8 +127,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'filter_customer'   => $filter_customer,
 			'filter_status'     => $filter_status,
 			'filter_date_added' => $filter_date_added,
-			'start'             => ($page - 1) * 10,
-			'limit'             => 10
+			'start'             => ($page - 1) * $limit,
+			'limit'             => $limit
 		];
 
 		$this->load->model('cms/article');
@@ -192,7 +192,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 

@@ -853,7 +853,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND p.`master_id` = '" . (int)$data['filter_master_id'] . "'";
+			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
 		}
 
 		if (!empty($data['filter_name'])) {
@@ -861,7 +861,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND LCASE(``p``.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
+			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_price'])) {
@@ -982,7 +982,7 @@ class Product extends \Opencart\System\Engine\Model {
 	public function getAttributes(int $product_id): array {
 		$product_attribute_data = [];
 
-		$product_attribute_query = $this->db->query("SELECT attribute_id FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' GROUP BY `attribute_id`");
+		$product_attribute_query = $this->db->query("SELECT `attribute_id` FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' GROUP BY `attribute_id`");
 
 		foreach ($product_attribute_query->rows as $product_attribute) {
 			$product_attribute_description_data = [];
@@ -1224,7 +1224,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql = "SELECT COUNT(DISTINCT p.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND p.`master_id` = '" . (int)$data['filter_master_id'] . "'";
+			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
 		}
 
 		if (!empty($data['filter_name'])) {

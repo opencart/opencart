@@ -135,7 +135,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['image'] = '';
 		}
 
-		$limit = 20;
+		$limit = $this->config->get('config_pagination');
 
 		$data['articles'] = [];
 

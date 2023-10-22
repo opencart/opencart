@@ -146,7 +146,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$limit = 200; 
+		$limit = 200;
 
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {
 			$json['error'] = $this->language->get('error_permission');

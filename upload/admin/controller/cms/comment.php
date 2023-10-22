@@ -91,8 +91,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$limit = 10;
-
 		$url = '';
 
 		if (isset($this->request->get['filter_keyword'])) {
@@ -129,8 +127,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'filter_customer'   => $filter_customer,
 			'filter_status'     => $filter_status,
 			'filter_date_added' => $filter_date_added,
-			'start'             => ($page - 1) * $limit,
-			'limit'             => $limit
+			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'             => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('cms/article');
@@ -194,11 +192,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
 			'page'  => $page,
-			'limit' => $limit,
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($comment_total - $limit)) ? $comment_total : ((($page - 1) * $limit) + $limit), $comment_total, ceil($comment_total / $limit));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($comment_total - $this->config->get('config_pagination_admin'))) ? $comment_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $comment_total, ceil($comment_total / $this->config->get('config_pagination_admin')));
 
 		return $this->load->view('cms/comment_list', $data);
 	}

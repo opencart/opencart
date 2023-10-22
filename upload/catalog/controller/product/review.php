@@ -173,7 +173,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$limit = 5;
+		$limit = 5; 
 
 		$data['reviews'] = [];
 

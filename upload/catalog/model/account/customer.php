@@ -328,7 +328,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getAuthorizeByToken(int $customer_id, string $token): array {
-		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "') AS `attempts` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "') AS `attempts` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
 		return $query->row;
 	}

@@ -462,13 +462,28 @@ class Order extends \Opencart\System\Engine\Model {
 					$order_subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
 
 					if ($order_subscription_info) {
+						// Add options for subscription
+						$option_data = [];
+
+						$options = $this->getOptions($order_id, $order_product['order_product_id']);
+
+						foreach ($options as $option) {
+							if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+								$option_data[$option['product_option_id']] = $option['value'];
+							} elseif ($option['type'] == 'select' || $option['type'] == 'radio') {
+								$option_data[$option['product_option_id']] = $option['product_option_value_id'];
+							} elseif ($option['type'] == 'checkbox') {
+								$option_data[$option['product_option_id']][] = $option['product_option_value_id'];
+							}
+						}
+
 						// Add subscription if one is not setup
 						$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
 
 						if ($subscription_info) {
 							$subscription_id = $subscription_info['subscription_id'];
 						} else {
-							$subscription_id = $this->model_checkout_subscription->addSubscription(array_merge($order_subscription_info, $order_product, $order_info));
+							$subscription_id = $this->model_checkout_subscription->addSubscription(array_merge($order_subscription_info, $order_product, $order_info, ['option' => $option_data]));
 						}
 
 						// Add history and set active subscription

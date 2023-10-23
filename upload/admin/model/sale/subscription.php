@@ -134,11 +134,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(s.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(s.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

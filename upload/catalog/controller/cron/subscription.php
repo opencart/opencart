@@ -341,78 +341,65 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['forwarded_ip'] = $result['forwarded_ip'];
 					$order_data['user_agent'] = $result['user_agent'];
 					$order_data['accept_language'] = $result['accept_language'];
-				}
+
+					$this->load->model('checkout/order');
+
+					$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+
+					// Get the payment method used by the subscription
+					$this->load->model('extension/' . $order_data['payment_method']['extension'] . '/payment/' . $order_data['payment_method']['code']);
 
 
-				$subscription_status_id = $this->config->get('config_subscription_status_id');
-
-				// Get the payment method used by the subscription
-				// Check payment status
-				//$this->load->model('extension/payment/' . $payment_info['code']);
-
-				if ($product['subscription']) {
+					//payment_method
 
 
-
-					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
-						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
-					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
-						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
-					}
-
-
-
-
-					$subscription_data = [
-						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-						'name'                 => $product['subscription']['name'],
-						'trial_price'          => $product['subscription']['trial_price'],
-						'trial_frequency'      => $product['subscription']['trial_frequency'],
-						'trial_cycle'          => $product['subscription']['trial_cycle'],
-						'trial_duration'       => $product['subscription']['trial_duration'],
-						'trial_remaining'      => $product['subscription']['trial_remaining'],
-						'trial_status'         => $product['subscription']['trial_status'],
-						'price'                => $product['subscription']['price'],
-						'frequency'            => $product['subscription']['frequency'],
-						'cycle'                => $product['subscription']['cycle'],
-						'duration'             => $product['subscription']['duration'],
-						'remaining'            => $product['subscription']['duration'],
-						'date_next'            => $date_next
-					];
-
+					$subscription_status_id = $this->config->get('config_subscription_status_id');
 
 
 				}
 			}
+		}
 
-		// Transaction
-		if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
-			if ($result['trial_duration'] && $result['trial_remaining']) {
-				$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
-			} elseif ($result['duration'] && $result['remaining']) {
-				$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
-			}
 
-			$filter_data = [
-				'filter_date_next'              => $date_next,
-				'filter_subscription_status_id' => $subscription_status_id,
-				'start'                         => 0,
-				'limit'                         => 1
-			];
 
-			$subscriptions = $this->model_account_subscription->getSubscriptions($filter_data);
 
-			if ($subscriptions) {
-				// Only match the latest order ID of the same customer ID
-				// since new subscriptions cannot be re-added with the same
-				// order ID; only as a new order ID added by an extension
-				foreach ($subscriptions as $subscription) {
-					if ($subscription['customer_id'] == $result['customer_id'] && ($subscription['subscription_id'] != $result['subscription_id']) && ($subscription['order_id'] != $result['order_id']) && ($subscription['order_product_id'] != $result['order_product_id'])) {
-						$subscription_info = $this->model_account_subscription->getSubscription($subscription['subscription_id']);
 
-						if ($subscription_info) {
-							//$this->model_account_subscription->addTransaction($subscription['subscription_id'], $subscription['order_id'], $this->language->get('text_success'), $amount, $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
-						}
+
+
+
+
+		if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
+			$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
+		} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
+			$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
+		}
+
+		if ($result['trial_duration'] && $result['trial_remaining']) {
+			$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
+		} elseif ($result['duration'] && $result['remaining']) {
+			$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
+		}
+
+
+		$filter_data = [
+			'filter_date_next'              => $date_next,
+			'filter_subscription_status_id' => $subscription_status_id,
+			'start'                         => 0,
+			'limit'                         => 1
+		];
+
+		$subscriptions = $this->model_account_subscription->getSubscriptions($filter_data);
+
+		if ($subscriptions) {
+			// Only match the latest order ID of the same customer ID
+			// since new subscriptions cannot be re-added with the same
+			// order ID; only as a new order ID added by an extension
+			foreach ($subscriptions as $subscription) {
+				if ($subscription['customer_id'] == $result['customer_id'] && ($subscription['subscription_id'] != $result['subscription_id']) && ($subscription['order_id'] != $result['order_id']) && ($subscription['order_product_id'] != $result['order_product_id'])) {
+					$subscription_info = $this->model_account_subscription->getSubscription($subscription['subscription_id']);
+
+					if ($subscription_info) {
+						//$this->model_account_subscription->addTransaction($subscription['subscription_id'], $subscription['order_id'], $this->language->get('text_success'), $amount, $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
 					}
 				}
 			}
@@ -421,7 +408,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		/*
 		// Failed if payment method does not have recurring payment method
-
 		$subscription_status_id = $this->config->get('config_subscription_failed_status_id');
 
 		$this->model_checkout_subscription->addHistory($result['subscription_id'], $subscription_status_id, $this->language->get('error_recurring'), true);
@@ -443,11 +429,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
 				if ($result['trial_duration'] && $result['trial_remaining']) {
 					$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $result['trial_remaining'] - 1);
+
+
 				}
 			} elseif (!$result['duration'] || $result['remaining']) {
 				// Subscription
 				if ($result['duration'] && $result['remaining']) {
 					$this->model_account_subscription->editRemaining($result['subscription_id'], $result['remaining'] - 1);
+
+
 				}
 			}
 		}

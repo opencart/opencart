@@ -625,6 +625,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['addresses'] = [];
 		}
 
+		$data['address'] = $this->getAddress();
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();
 		$data['reward'] = $this->getReward();
@@ -877,10 +878,126 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
+	public function address(): void {
+		$this->load->language('customer/customer');
+
+		$this->response->setOutput($this->getAddresses());
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAddresses(): string {
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.address') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['addresses'] = [];
+
+		$this->load->model('customer/customer');
+
+		$results = $this->model_customer_customer->getAddresses($customer_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['addresses'][] = [
+				'comment'    => nl2br($result['comment']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$history_total = $this->model_customer_customer->getTotalAddresses($customer_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $history_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('customer/customer.history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
+
+		return $this->load->view('customer/customer_history', $data);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function addAddress(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+
+
+			$this->load->model('customer/customer');
+
+			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function getAddress(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
+		}
+
+		$this->load->model('customer/customer');
+
+		$address_info = $this->model_customer_customer->getAddress($address_id);
+
+		if (!$address_info) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		if (!$json) {
+			$json = $address_info;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
 	public function payment(): void {
 		$this->load->language('customer/customer');
 
-		//$this->response->setOutput($this->getPayment());
+		$this->response->setOutput($this->getPayment());
 	}
 
 	/**
@@ -1473,36 +1590,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $json);
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * @return void
-	 */
-	public function address(): void {
-		$this->load->language('customer/customer');
-
-		$json = [];
-
-		if (isset($this->request->get['address_id'])) {
-			$address_id = (int)$this->request->get['address_id'];
-		} else {
-			$address_id = 0;
-		}
-
-		$this->load->model('customer/customer');
-
-		$address_info = $this->model_customer_customer->getAddress($address_id);
-
-		if (!$address_info) {
-			$json['error'] = $this->language->get('error_address');
-		}
-
-		if (!$json) {
-			$json = $address_info;
-		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

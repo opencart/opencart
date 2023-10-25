@@ -238,6 +238,10 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+
+
+
+
 	/**
 	 * @param int $address_id
 	 *

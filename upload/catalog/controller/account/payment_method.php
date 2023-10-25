@@ -90,16 +90,15 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-				if (is_callable($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'getStored')) {
+				if (is_callable([$this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'getStored'])) {
 					$payment_method_info = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getStored();
 
 					if ($payment_method_info) {
 						$data['payment_methods'][] = [
 							'code'        => $payment_method_info['code'],
 							'name'        => $payment_method_info['name'],
+							'description' => $payment_method_info['description'],
 							'image'       => $payment_method_info['image'],
-							'type'        => $result['type'],
-							'date_expire' => date('m-Y', strtotime($payment_method_info['date_expire'])),
 							'delete'      => $this->url->link('account/payment_method.delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&code=' . $payment_method_info['code'])
 						];
 					}
@@ -133,7 +132,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/payment_method');
 
-			$payment_method_info = $this->model_account_payment_method->getPaymentMethod($this->customer->getId(), $customer_payment_id);
+			$payment_method_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 
 			if (!$payment_method_info) {
 				$json['error'] = $this->language->get('error_payment_method');
@@ -143,12 +142,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('extension/' . $payment_method_info['extension'] . '/payment/' . $payment_method_info['code']);
 
-			if ($this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete($customer_payment_id)) {
-
+			if (is_callable([$this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}, 'delete'])) {
+				$this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete();
 			}
-
-			// Delete payment method from database.
-			$this->model_account_payment_method->deletePaymentMethod($customer_payment_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

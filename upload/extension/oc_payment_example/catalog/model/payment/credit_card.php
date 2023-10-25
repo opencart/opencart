@@ -23,12 +23,12 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$option_data = [];
 
+			$results = $this->getCreditCards($this->customer->getId());
+
 			$option_data['credit_card'] = [
 				'code' => 'credit_card.credit_card',
-				'name' => $this->language->get('text_card_use')
+				'name' => !$results ? $this->language->get('text_card_use') : $this->language->get('text_card_new')
 			];
-
-			$results = $this->getCreditCards($this->customer->getId());
 
 			foreach ($results as $result) {
 				$option_data[$result['credit_card_id']] = [

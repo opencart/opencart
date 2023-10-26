@@ -11,4 +11,5 @@ $_['error_shipping_method']  = 'Warning: Shipping method %s could not be found!'
 $_['error_payment_address']  = 'Warning: Payment method extension could not be found!';
 $_['error_payment_method']   = 'Warning: Payment method %s could not be found!';
 $_['error_extension']        = 'Warning: Payment method extension could not be found!';
+
 $_['error_recurring']        = 'Warning: Payment method does not have recurring payment method!';

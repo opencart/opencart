@@ -26,6 +26,8 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			if ($this->session->data['payment_method']['code'] == 'credit_card.credit_card') {
 				return $this->load->view('extension/oc_payment_example/payment/credit_card', $data);
 			} else {
+				$data['text_title'] = $this->session->data['payment_method']['name'];
+
 				return $this->load->view('extension/oc_payment_example/payment/stored', $data);
 			}
 		}

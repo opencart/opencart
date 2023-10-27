@@ -7067,6 +7067,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name'     => 'option',
+				'type'     => 'text',
+				'not_null' => true
+			],
+			[
 				'name'     => 'quantity',
 				'type'     => 'int(4)',
 				'not_null' => true

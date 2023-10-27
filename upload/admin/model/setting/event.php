@@ -46,6 +46,16 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int  $event_id
+	 * @param bool $status
+	 *
+	 * @return void
+	 */
+	public function editStatusByCode(string $code, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (bool)$status . "' WHERE `code` = '" . $this->db->escape($code) . "'");
+	}
+
+	/**
 	 * @param int $event_id
 	 *
 	 * @return array

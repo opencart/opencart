@@ -23,12 +23,12 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$option_data = [];
 
+			$results = $this->getCreditCards($this->customer->getId());
+
 			$option_data['credit_card'] = [
 				'code' => 'credit_card.credit_card',
-				'name' => $this->language->get('text_card_use')
+				'name' => !$results ? $this->language->get('text_card_use') : $this->language->get('text_card_new')
 			];
-
-			$results = $this->getCreditCards($this->customer->getId());
 
 			foreach ($results as $result) {
 				$option_data[$result['credit_card_id']] = [
@@ -68,9 +68,19 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
 	}
 
-	public function charge(int $customer_id, int $order_id, float $amount, int $credit_card_id = 0): string {
+	public function getStored(int $customer_id) {
+		return $this->getCreditCards($customer_id);
+	}
+
+	public function charge(int $customer_id, int $order_id, float $amount, string $code): int {
+		$part = explode('.', $code);
+
 		//$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card` SET `customer_id` = '" . (int)$customer_id . "', `card_name` = '" . $this->db->escape($data['card_name']) . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `card_expire_month` = '" . $this->db->escape($data['card_expire_month']) . "', `card_expire_year` = '" . $this->db->escape($data['card_expire_year']) . "', `card_cvv` = '" . $this->db->escape($data['card_cvv']) . "', `date_added` = NOW()");
 
-		return $this->config->get('payment_credit_card_response');
+		if ($this->config->get('payment_credit_card_response')) {
+			return $this->config->get('payment_credit_card_approved_status_id');
+		} else {
+			return $this->config->get('payment_credit_card_failed_status_id');
+		}
 	}
 }

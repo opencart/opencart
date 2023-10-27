@@ -58,7 +58,8 @@ class User extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteUser(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_history` WHERE `user_id` = '" . (int)$user_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
 
 	/**

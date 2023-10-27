@@ -238,9 +238,32 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param int $customer_id
+	 *
+	 * @return array
+	 */
+	public function addAddress(int $customer_id, array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "address` SET fgf= '' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
 
+	/**
+	 * @param int $address_id
+	 *
+	 * @return array
+	 */
+	public function editAddress(int $address_id): array {
+		$this->db->query("UPDATE `" . DB_PREFIX . "address` SET WHERE `address_id` = '" . (int)$address_id . "'");
+	}
 
-
+	/**
+	 * @param int $address_id
+	 *
+	 * @return array
+	 */
+	public function deleteAddress(int $address_id): array {
+		$this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
+	}
 
 	/**
 	 * @param int $address_id
@@ -327,7 +350,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function getTotalAddressesByCustomerId(int $customer_id): int {
+	public function getTotalAddresses(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];

@@ -57,18 +57,58 @@ class Cloud extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		if ((oc_strlen($this->request->post['other_cloud_key']) < 3) || (oc_strlen($this->request->post['other_cloud_key']) > 64)) {
+			$json['error']['key'] = $this->language->get('error_key');
+		}
 
-
+		if ((oc_strlen($this->request->post['other_cloud_secret']) < 3) || (oc_strlen($this->request->post['other_cloud_secret']) > 64)) {
+			$json['error']['secret'] = $this->language->get('error_secret');
+		}
 
 		if (!$json) {
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('other_cloud', $this->request->post);
 
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->editStatusByCode('other_cloud', $this->request->post['other_cloud_status']);
+
 			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function install(): void {
+		if ($this->user->hasPermission('modify', 'extension/opencart/other/cloud')) {
+			$event_data = [
+				'code'        => 'opencart_cloud',
+				'description' => '',
+				'trigger'     => 'extension/opencart/other/cloud',
+				'action'      => 'opencart/opencart/other/cloud',
+				'status'      => 0,
+				'sort_order'  => 1
+			];
+
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->addEvent($event_data);
+		}
+	}
+
+	/**
+	 * @return void
+	 */
+	public function uninstall(): void {
+		if ($this->user->hasPermission('modify', 'extension/opencart/other/cloud')) {
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->deleteEventByCode('opencart_cloud');
+		}
 	}
 }

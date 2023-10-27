@@ -1,11 +1,11 @@
 <?php
-namespace Opencart\Admin\Model\Extension\Opencart\Module;
+namespace Opencart\Admin\Model\Extension\Opencart\Other;
 /**
- * Class Bestseller
+ * Class Cloud
  *
- * @package Opencart\Admin\Model\Extension\Opencart\Module
+ * @package Opencart\Admin\Model\Extension\Opencart\Other
  */
-class Bestseller extends \Opencart\System\Engine\Model {
+class Cloud extends \Opencart\System\Engine\Model {
 	/**
 	 * @return void
 	 */

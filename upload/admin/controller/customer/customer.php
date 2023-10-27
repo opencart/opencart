@@ -625,7 +625,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['addresses'] = [];
 		}
 
-		$data['address'] = $this->getAddress();
+		$data['address'] = $this->getAddresses();
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();
 		$data['reward'] = $this->getReward();
@@ -878,10 +878,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function address(): void {
+	public function addresses(): void {
 		$this->load->language('customer/customer');
 
-		$this->response->setOutput($this->getAddresses());
+		$this->response->setOutput($this->getaddresses());
 	}
 
 	/**
@@ -910,8 +910,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['addresses'][] = [
-				'comment'    => nl2br($result['comment']),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				//'comment'    => nl2br($result['comment']),
+				//'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
 
@@ -947,12 +947,16 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$this->load->model('customer/customer');
+
+		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+		if (!$customer_info) {
+			$json['error'] = $this->language->get('error_customer');
+		}
+
 		if (!$json) {
-
-
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+			$this->model_customer_customer->addAddress($customer_id, $this->request->post);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -964,7 +968,79 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function getAddress(): void {
+	public function editAddress(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('customer/customer');
+
+		$address_info = $this->model_customer_customer->getAddress($address_id);
+
+		if (!$address_info) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		if (!$json) {
+			$this->model_customer_customer->editAddress($address_id, $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function deleteAddress(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('customer/customer');
+
+		$address_info = $this->model_customer_customer->getAddress($address_id);
+
+		if (!$address_info) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		if (!$json) {
+			$this->model_customer_customer->deleteAddress($address_id, $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function address(): void {
 		$this->load->language('customer/customer');
 
 		$json = [];
@@ -1158,9 +1234,15 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			$this->load->model('customer/customer');
+		$this->load->model('customer/customer');
 
+		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+		if (!$customer_info) {
+			$json['error'] = $this->language->get('error_customer');
+		}
+
+		if (!$json) {
 			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
 
 			$json['success'] = $this->language->get('text_success');

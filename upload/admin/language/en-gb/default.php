@@ -126,7 +126,7 @@ $_['button_calculate']              = 'Calculate Payments';
 $_['button_csv']                    = 'Download CSV';
 $_['button_complete']               = 'Complete Payments';
 
-// Tab
+// Tabs
 $_['tab_address']                   = 'Addresses';
 $_['tab_additional']                = 'Additional';
 $_['tab_attribute']                 = 'Attribute';

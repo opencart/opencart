@@ -98,7 +98,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`ca.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`ca`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {

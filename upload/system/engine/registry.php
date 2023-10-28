@@ -53,7 +53,7 @@ class Registry {
 	 *
 	 * @return   null
 	 */
-	public function __isset(string $key): void {
+	public function __isset(string $key): bool {
 		$this->has($key);
 	}
 

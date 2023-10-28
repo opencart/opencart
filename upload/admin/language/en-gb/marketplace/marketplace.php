@@ -56,7 +56,7 @@ $_['text_refresh']       = 'refresh';
 // Entry
 $_['entry_pin']          = 'PIN';
 
-// Tab
+// Tabs
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';
 $_['tab_download']       = 'Download';

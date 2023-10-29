@@ -268,7 +268,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
-			// Logged in
+			// Logged in, so add customer details
 			if ($this->customer->isLogged()) {
 				$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 

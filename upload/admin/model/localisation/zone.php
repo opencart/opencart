@@ -59,7 +59,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getZones(array $data = []): array {
-		$sql = "SELECT *, z.`name`, z.`status`, c.`name` AS country FROM `" . DB_PREFIX . "zone` z LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
+		$sql = "SELECT *, `z`.`name`, `z`.`status`, `c`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
 
 		$implode = [];
 
@@ -141,10 +141,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalZones(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` z";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
 
 		if (!empty($data['filter_country'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
 		}
 
 		$implode = [];

@@ -164,9 +164,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['wishlist'] = array_unique($this->session->data['wishlist']);
 
-			// Store the
+			// Logged in. We store the product ID into the wishlist
 			if ($this->customer->isLogged()) {
-				// Edit customers cart
+				// Edit the customer's cart
 				$this->load->model('account/wishlist');
 
 				$this->model_account_wishlist->addWishlist($product_id);
@@ -200,6 +200,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Logged in. We remove the product ID from the wishlist
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/wishlist');
 

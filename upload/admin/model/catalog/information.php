@@ -122,7 +122,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getInformations(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "information` i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = [
 			'id.title',
@@ -132,7 +132,7 @@ class Information extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY id.`title`";
+			$sql .= " ORDER BY `id`.`title`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

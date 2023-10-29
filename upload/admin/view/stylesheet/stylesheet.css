@@ -31,7 +31,7 @@ a {
     width: 100%;
     position: relative;
     background: #f6f6f6;
-    overflow: hidden;
+    overflow: clip;
 }
 
 .container-fluid {
@@ -852,4 +852,20 @@ div.required .col-form-label:not(span):before, td.required:before {
 
 td {
     position: relative;
+}
+
+.filter-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: calc(var(--bs-gutter-x) / 1);
+    bottom: calc(var(--bs-gutter-x) / 1);
+    max-height: calc(100vh - (var(--bs-gutter-x) * 2));
+    overflow-y: auto;
+    z-index: 100;
+}
+
+@media screen and (max-width: 992px) {
+    .filter-sticky {
+        position: unset;
+    }
 }

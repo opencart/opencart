@@ -200,7 +200,6 @@ class WishList extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Logged in. We remove the product ID from the wishlist
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/wishlist');
 

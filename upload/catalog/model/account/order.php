@@ -153,17 +153,6 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $subscription_id
-	 *
-	 * @return int
-	 */
-	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -314,5 +303,16 @@ class Order extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
+	}
+
+	/**
+	 * @param int $subscription_id
+	 *
+	 * @return int
+	 */
+	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		return (int)$query->row['total'];
 	}
 }

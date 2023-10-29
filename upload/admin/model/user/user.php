@@ -58,8 +58,8 @@ class User extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteUser(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_history` WHERE `user_id` = '" . (int)$user_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_history` WHERE `user_id` = '" . (int)$user_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
 
 	/**
@@ -276,7 +276,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getAuthorizeByToken(int $user_id, string $token): array {
-		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
 		return $query->row;
 	}
@@ -321,7 +321,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalAuthorizes(int $user_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

@@ -32,7 +32,7 @@ $_['entry_email']           = 'E-Mail';
 $_['entry_image']           = 'Image';
 $_['entry_status']          = 'Status';
 
-// Tab
+// Tabs
 $_['tab_authorize']         = 'Authorize';
 $_['tab_login']             = 'Login';
 

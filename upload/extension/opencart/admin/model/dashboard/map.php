@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Extension\Opencart\Dashboard;
 /**
  * Class Map
  *
- * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
+ * @package Opencart\Admin\Model\Extension\Opencart\Dashboard
  */
 class Map extends \Opencart\System\Engine\Model {
 	/**

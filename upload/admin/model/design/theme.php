@@ -15,7 +15,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 */
 	public function editTheme(int $store_id, string $route, string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
-		
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$store_id . "', `route` = '" . $this->db->escape($route) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
 	}
 
@@ -53,9 +53,9 @@ class Theme extends \Opencart\System\Engine\Model {
 
 		if ($limit < 1) {
 			$limit = 10;
-		}		
-		
-		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = t.`store_id`) AS `store` FROM `" . DB_PREFIX . "theme` t ORDER BY t.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		}
+
+		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "theme` `t` ORDER BY `t`.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
@@ -67,5 +67,5 @@ class Theme extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "theme`");
 
 		return (int)$query->row['total'];
-	}	
+	}
 }

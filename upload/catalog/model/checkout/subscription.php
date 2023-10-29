@@ -39,6 +39,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 			`shipping_address_id` = '" . (int)$data['shipping_address_id'] . "',
 			`shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "',
 			`product_id` = '" . (int)$data['product_id'] . "',
+			`option` = '" .  $this->db->escape($data['option'] ? json_encode($data['option']) :  '') . "',
 			`quantity` = '" . (int)$data['quantity'] . "',
 			`subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "',
 			`trial_price` = '" . (float)$data['trial_price'] . "',
@@ -95,8 +96,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET
-			`order_product_id` = '" . (int)$data['order_product_id'] . "',
 			`order_id` = '" . (int)$data['order_id'] . "',
+			`order_product_id` = '" . (int)$data['order_product_id'] . "',
 			`store_id` = '" . (int)$data['store_id'] . "',
 			`customer_id` = '" . (int)$data['customer_id'] . "',
 			`payment_address_id` = '" . (int)$data['payment_address_id'] . "',
@@ -104,6 +105,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 			`shipping_address_id` = '" . (int)$data['shipping_address_id'] . "',
 			`shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) :  '') . "',
 			`product_id` = '" . (int)$data['product_id'] . "',
+			`option` = '" .  $this->db->escape($data['option'] ? json_encode($data['option']) :  '') . "',
+			`quantity` = '" . (int)$data['quantity'] . "',
 			`subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "',
 			`trial_price` = '" . (float)$data['trial_price'] . "',
 			`trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "',
@@ -155,6 +158,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		if ($query->num_rows) {
 			$subscription_data = $query->row;
 
+			$subscription_data['option'] = ($query->row['option'] ? json_decode($query->row['option'], true) : '');
 			$subscription_data['payment_method'] = ($query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '');
 			$subscription_data['shipping_method'] = ($query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : '');
 		}
@@ -212,7 +216,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getSubscriptions(array $data): array {
-		$sql = "SELECT `s`.`subscription_id`, `s`.*, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`, (SELECT ss.`name` FROM `" . DB_PREFIX . "subscription_status` `ss` WHERE `ss`.`subscription_status_id` = `s`.`subscription_status_id` AND `ss`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `subscription_status` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
+		$sql = "SELECT `s`.`subscription_id`, `s`.*, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`, (SELECT `ss`.`name` FROM `" . DB_PREFIX . "subscription_status` `ss` WHERE `ss`.`subscription_status_id` = `s`.`subscription_status_id` AND `ss`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `subscription_status` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
 
 		$implode = [];
 

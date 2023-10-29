@@ -55,4 +55,17 @@ class Model {
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
 	}
+
+	/**
+	 * __isset
+	 *
+	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
+	 *
+	 * @param    string  $key
+	 *
+	 * @return   bool
+	 */
+	public function __isset(string $key): bool {
+		return $this->registry->has($key);
+	}
 }

@@ -341,7 +341,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if ($this->request->post['country_id'] == '') {
+			if (!$country_info || $this->request->post['country_id'] == '') {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 

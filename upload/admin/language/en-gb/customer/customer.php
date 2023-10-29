@@ -13,7 +13,9 @@ $_['text_customer']         = 'Customer Details';
 $_['text_password']         = 'Password';
 $_['text_other']            = 'Other';
 $_['text_balance']          = 'Balance';
-$_['text_address']          = 'Address';
+$_['text_address']          = 'Addresses';
+$_['text_address_add']      = 'Add Address';
+$_['text_address_edit']     = 'Edit Address';
 $_['text_payment_method']   = 'Payment Methods';
 $_['text_history']          = 'History';
 $_['text_history_add']      = 'Add History';
@@ -47,6 +49,7 @@ $_['column_image']          = 'Image';
 $_['column_type']           = 'Type';
 $_['column_date_expire']    = 'Date Expires';
 $_['column_user_agent']     = 'User Agent';
+$_['column_address']        = 'Address';
 $_['column_action']         = 'Action';
 
 // Entry

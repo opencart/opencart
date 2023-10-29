@@ -381,7 +381,7 @@ class Language extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$results = (array)$this->cache->get('language.' . md5($sql));
+		$results = $this->cache->get('language.' . md5($sql));
 
 		if (!$results) {
 			$query = $this->db->query($sql);

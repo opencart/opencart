@@ -203,7 +203,7 @@ $('#input-address-country').on('change', function() {
                 for (i = 0; i < json['zone'].length; i++) {
                     html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-                    if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+                    if (json['zone'][i]['zone_id'] == '{{ zone_id }}')
                         html += ' selected';
                     }
 

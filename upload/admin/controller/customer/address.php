@@ -12,7 +12,7 @@ class Address extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('customer/customer');
 
-		$this->response->setOutput($this->getaddress());
+		$this->response->setOutput($this->getAddress());
 	}
 
 	/**

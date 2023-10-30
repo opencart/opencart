@@ -27,7 +27,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
 
 		$data['addresses'] = [];
 
@@ -79,7 +79,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 		$data['save'] = $this->url->link('customer/address.save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
-		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
 		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['address_id'])) {
@@ -248,7 +248,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			if (!$country_info || $this->request->post['country_id'] == '') {
 				$json['error']['address_country'] = $this->language->get('error_country');
 			}
-
+			https://www.familylawweek.co.uk/site.Aspx?i=kw13
 			if ($this->request->post['zone_id'] == '') {
 				$json['error']['address_zone'] = $this->language->get('error_zone');
 			}
@@ -278,7 +278,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['address_id']) {
 				$this->model_customer_customer->addAddress($customer_id, $this->request->post);
 			} else {
-				$this->model_customer_customer->editAddress($this->request->post['address_id'], $this->request->post);
+				$this->model_customer_customer->editAddress($customer_id, $this->request->post['address_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

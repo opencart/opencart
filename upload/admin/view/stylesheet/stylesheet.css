@@ -31,7 +31,7 @@ a {
     width: 100%;
     position: relative;
     background: #f6f6f6;
-    overflow: hidden;
+    overflow: clip;
 }
 
 .container-fluid {
@@ -455,7 +455,7 @@ a {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-div.required .col-form-label:not(span):before, td.required:before {
+div.required .col-form-label:not(span):before, div.required .form-label:before, td.required:before {
     content: '* ';
     color: #F00;
     font-weight: bold;
@@ -852,4 +852,20 @@ div.required .col-form-label:not(span):before, td.required:before {
 
 td {
     position: relative;
+}
+
+.filter-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: calc(var(--bs-gutter-x) / 1);
+    bottom: calc(var(--bs-gutter-x) / 1);
+    max-height: calc(100vh - (var(--bs-gutter-x) * 2));
+    overflow-y: auto;
+    z-index: 100;
+}
+
+@media screen and (max-width: 992px) {
+    .filter-sticky {
+        position: unset;
+    }
 }

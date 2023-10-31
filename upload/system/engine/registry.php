@@ -49,12 +49,11 @@ class Registry {
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
 	 *
 	 * @param    string  $key
-	 * @param    object  $value
 	 *
-	 * @return   null
+	 * @return   bool
 	 */
-	public function __isset(string $key): void {
-		$this->has($key);
+	public function __isset(string $key): bool {
+		return $this->has($key);
 	}
 
 	/**

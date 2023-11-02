@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']           = 'Success: The subscription profile has been renewed successfully!';
+$_['text_success']           = 'Success: The subscription has been renewed successfully!';
 
 // Error
 $_['error_language']         = 'Warning: Payment method extension could not be found!';

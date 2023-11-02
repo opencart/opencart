@@ -251,7 +251,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalOrders(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` o WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND o.`order_status_id` > '0' AND o.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` `o` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `o`.`order_status_id` > '0' AND `o`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];
@@ -266,7 +266,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalOrdersByProductId(int $product_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.`order_id` = o.`order_id`) WHERE o.`customer_id` = '" . (int)$this->customer->getId() . "' AND op.`product_id` = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` `o` ON (op.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "' AND op.`product_id` = '" . (int)$product_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

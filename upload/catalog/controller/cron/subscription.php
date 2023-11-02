@@ -366,7 +366,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 
 					// If payment return status is active
-					if ( == $subscription_status_id) {
+					if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_complete_status'))) {
+
+
+
 
 						$this->config->get('config_subscription_active_status_id')
 
@@ -388,6 +391,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					} else {
 						$this->model_checkout_subscription->addHistory($result['subscription_id'], $subscription_status_id, $this->language->get('error_payment_process'), true);
 					}
+
+
+					$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $error, true);
 				}
 			} else {
 				// Errors add to

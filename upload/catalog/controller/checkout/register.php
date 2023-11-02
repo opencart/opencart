@@ -268,7 +268,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
-			// Logged
+			// Logged in, so add customer details
 			if ($this->customer->isLogged()) {
 				$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
@@ -429,7 +429,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$customer_data['customer_id'] = $this->model_account_customer->addCustomer($this->request->post);
 			}
 
-			// Logged so edit customer details
+			// Logged in, so edit customer details
 			if ($this->customer->isLogged()) {
 				$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
 			}

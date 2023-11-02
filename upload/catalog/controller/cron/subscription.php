@@ -361,9 +361,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					// Process payment
 					$response_info = $this->{'model_extension_' . $order_data['payment_method']['extension'] . '_payment_' . $order_data['payment_method']['code']}->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $order_data['payment_method']['code']);
 
-					$response_info
+					if ($response_info['order_status_id']) {
+						$order_status_id = $response_info['order_status_id'];
+					}
 
+					if () {
 
+					} else {
+
+					}
 
 					// If payment return status is active
 					if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_complete_status'))) {

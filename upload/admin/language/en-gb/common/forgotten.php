@@ -1,13 +1,13 @@
 <?php
 // Heading
-$_['heading_title'] = 'Forgot Your Password?';
-$_['heading_reset'] = 'Reset your password';
+$_['heading_title']  = 'Forgot Your Password?';
+$_['heading_reset']  = 'Reset your password';
 
 // Text
-$_['text_email']    = 'Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.';
-$_['text_success']  = 'An email with a confirmation link has been sent your admin email address.';
-$_['text_password'] = 'Enter the new password you wish to use.';
-$_['text_reset']    = 'Success: Your password has been successfully updated.';
+$_['text_email']     = 'Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.';
+$_['text_success']   = 'An email with a confirmation link has been sent your admin email address.';
+$_['text_password']  = 'Enter the new password you wish to use.';
+$_['text_reset']     = 'Success: Your password has been successfully updated.';
 
 // Entry
 $_['entry_password'] = 'Password';

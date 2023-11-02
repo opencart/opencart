@@ -248,7 +248,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			if (!$country_info || $this->request->post['country_id'] == '') {
 				$json['error']['address_country'] = $this->language->get('error_country');
 			}
-			https://www.familylawweek.co.uk/site.Aspx?i=kw13
+
 			if ($this->request->post['zone_id'] == '') {
 				$json['error']['address_zone'] = $this->language->get('error_zone');
 			}

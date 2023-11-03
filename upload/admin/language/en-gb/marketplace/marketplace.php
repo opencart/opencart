@@ -56,13 +56,13 @@ $_['text_refresh']       = 'refresh';
 // Entry
 $_['entry_pin']          = 'PIN';
 
-// Tab
+// Tabs
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';
 $_['tab_download']       = 'Download';
 $_['tab_comment']        = 'Comment';
 
-// Button
+// Buttons
 $_['button_api']         = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
 $_['button_view_all']    = 'View all extensions';

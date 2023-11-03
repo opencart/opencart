@@ -20,7 +20,7 @@ $_['entry_path_current']        = 'Current Path';
 $_['entry_path_new']            = 'New Path';
 $_['entry_name']                = 'Directory Name';
 
-// Button
+// Buttons
 $_['button_move']               = 'Move';
 $_['button_rename']             = 'Rename';
 

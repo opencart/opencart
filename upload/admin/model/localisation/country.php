@@ -59,7 +59,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getCountryByIsoCode2($iso_code_2): array {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE `iso_code_2` = '" . $this->db->escape($iso_code_2) . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($iso_code_2) . "' AND `status` = '1'");
 
 		return $query->row;
 	}
@@ -70,7 +70,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getCountryByIsoCode3($iso_code_3): array {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE `iso_code_3` = '" . $this->db->escape($iso_code_3) . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_3` = '" . $this->db->escape($iso_code_3) . "' AND `status` = '1'");
 
 		return $query->row;
 	}

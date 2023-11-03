@@ -127,11 +127,11 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if ($this->request->post['country_id'] == '') {
+			if (!$country_info || $this->request->post['country_id'] == '') {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if ($this->request->post['zone_id'] == '') {
+			if (!$country_info || $this->request->post['zone_id'] == '') {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 

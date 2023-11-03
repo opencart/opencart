@@ -75,12 +75,12 @@ $_['entry_date_to']              = 'Date To';
 $_['entry_subscription_status']  = 'Subscription Status';
 
 // Help
-$_['help_trial_duration']   = 'The duration is the number of times the user will make a payment.';
-$_['help_trial_cycle']      = 'Subscription amounts are calculated by the frequency and cycles.';
-$_['help_trial_frequency']  = 'If you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks.';
-$_['help_duration']         = 'The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are cancelled.';
-$_['help_cycle']            = 'Subscription amounts are calculated by the frequency and cycles.';
-$_['help_frequency']        = 'If you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks.';
+$_['help_trial_duration']        = 'The duration is the number of times the user will make a payment.';
+$_['help_trial_cycle']           = 'Subscription amounts are calculated by the frequency and cycles.';
+$_['help_trial_frequency']       = 'If you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks.';
+$_['help_duration']              = 'The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are cancelled.';
+$_['help_cycle']                 = 'Subscription amounts are calculated by the frequency and cycles.';
+$_['help_frequency']             = 'If you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks.';
 
 // Tab
 $_['tab_order']                  = 'Orders';
@@ -92,4 +92,3 @@ $_['error_subscription']         = 'Warning: Subscription does not exist!';
 $_['error_subscription_plan']    = 'Warning: Subscription plan does not exist!';
 $_['error_subscription_status']  = 'Warning: Subscription status needs to be selected!';
 $_['error_payment_method']       = 'Warning: Payment method does not exist!';
-$_['error_service_type']		 = 'The service status has not been included with this transaction. If you see this error message, please contact your extension developer that handles the subscription services to resolve this issue!';

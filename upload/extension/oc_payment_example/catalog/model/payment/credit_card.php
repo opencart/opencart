@@ -72,15 +72,23 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $this->getCreditCards($customer_id);
 	}
 
-	public function charge(int $customer_id, int $order_id, float $amount, string $code): int {
+	public function charge(int $customer_id, int $order_id, float $amount, string $code): array {
 		$part = explode('.', $code);
 
 		//$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card` SET `customer_id` = '" . (int)$customer_id . "', `card_name` = '" . $this->db->escape($data['card_name']) . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `card_expire_month` = '" . $this->db->escape($data['card_expire_month']) . "', `card_expire_year` = '" . $this->db->escape($data['card_expire_year']) . "', `card_cvv` = '" . $this->db->escape($data['card_cvv']) . "', `date_added` = NOW()");
 
 		if ($this->config->get('payment_credit_card_response')) {
-			return $this->config->get('payment_credit_card_approved_status_id');
+			$response_data = [
+				'order_status_id' => $this->config->get('payment_credit_card_approved_status_id'),
+				'message'         => ''
+			];
 		} else {
-			return $this->config->get('payment_credit_card_failed_status_id');
+			$response_data = [
+				'order_status_id' => $this->config->get('payment_credit_card_failed_status_id'),
+				'message'         => ''
+			];
 		}
+
+		return $response_data;
 	}
 }

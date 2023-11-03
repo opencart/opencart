@@ -307,7 +307,7 @@ class Order extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY o.`order_id`";
+			$sql .= " ORDER BY `o`.`order_id`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -392,7 +392,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && !$override && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (!$safe && !$override && in_array($order_status_id, (array)$this->config->get('config_processing_status'), + (array)$this->config->get('config_complete_status'))) {
 				// Anti-Fraud
 				$this->load->model('setting/extension');
 

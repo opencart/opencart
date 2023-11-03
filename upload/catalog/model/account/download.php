@@ -17,7 +17,7 @@ class Download extends \Opencart\System\Engine\Model {
 		$order_statuses = (array)$this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
-			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";
+			$implode[] = "`o`.`order_status_id` = '" . (int)$order_status_id . "'";
 		}
 
 		if ($implode) {

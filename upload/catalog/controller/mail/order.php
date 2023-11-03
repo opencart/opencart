@@ -48,7 +48,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// If the order status does not return 0, we send the update as a text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
-				$this->edit($order_info, $order_status_id, $comment, $notify);
+				$this->history($order_info, $order_status_id, $comment, $notify);
 			}
 		}
 	}
@@ -200,7 +200,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			'country'   => $order_info['payment_country']
 		];
 
-		$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+		$data['payment_address'] = str_replace([
+			"\r\n",
+			"\r",
+			"\n"
+		], '<br/>', preg_replace([
+			"/\s\s+/",
+			"/\r\r+/",
+			"/\n\n+/"
+		], '<br/>', trim(str_replace($find, $replace, $format))));
 
 		// Shipping Address
 		if ($order_info['shipping_address_format']) {
@@ -235,7 +243,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			'country'   => $order_info['shipping_country']
 		];
 
-		$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+		$data['shipping_address'] = str_replace([
+			"\r\n",
+			"\r",
+			"\n"
+		], '<br/>', preg_replace([
+			"/\s\s+/",
+			"/\r\r+/",
+			"/\n\n+/"
+		], '<br/>', trim(str_replace($find, $replace, $format))));
 
 		$this->load->model('tool/upload');
 
@@ -367,7 +383,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function edit(array $order_info, int $order_status_id, string $comment, bool $notify): void {
+	public function history(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		if (!defined('HTTP_CATALOG')) {
@@ -458,11 +474,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/checkout/order/addHistory/before
-
 	/**
 	 * @param string $route
 	 * @param array  $args
+	 *
+	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
 	 * @return void
 	 * @throws \Exception

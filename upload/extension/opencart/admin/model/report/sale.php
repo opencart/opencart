@@ -347,7 +347,7 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		switch ($group) {
 			case 'day';
-				$sql = "SELECT COUNT(DISTINCT YEAR(o.`date_added`), MONTH(`o`.`date_added`), DAY(`o`.`date_added`), `ot`.`title`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), DAY(`o`.`date_added`), `ot`.`title`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
 				break;
 			default:
 			case 'week':

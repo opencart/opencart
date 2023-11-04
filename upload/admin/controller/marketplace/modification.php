@@ -169,7 +169,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/modification_list', $data);
 	}
 
-	public function refresh($data = array()) {
+	public function refresh($data = []) {
 		$this->load->language('marketplace/modification');
 
 		$this->load->model('setting/modification');
@@ -188,13 +188,13 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
 
 			//Log
-			$log = array();
+			$log = [];
 
 			// Clear all modification files
-			$files = array();
+			$files = [];
 
 			// Make path into an array
-			$path = array(DIR_MODIFICATION . '*');
+			$path = [DIR_MODIFICATION . '*'];
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {
@@ -229,7 +229,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			}
 
 			// Begin
-			$xml = array();
+			$xml = [];
 
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
@@ -252,7 +252,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$modification = array();
+			$modification = [];
 
 			foreach ($xml as $xml) {
 				if (empty($xml)){
@@ -267,7 +267,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
 				// Wipe the past modification store in the backup array
-				$recovery = array();
+				$recovery = [];
 
 				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
 				if (isset($modification)) {
@@ -385,7 +385,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 											if ($index !== '') {
 												$indexes = explode(',', $index);
 											} else {
-												$indexes = array();
+												$indexes = [];
 											}
 
 											// Get all the matches
@@ -419,11 +419,11 @@ class Modification extends \Opencart\System\Engine\Controller {
 															$new_lines = explode("\n", $add);
 
 															if ($offset < 0) {
-																array_splice($lines, $line_id + $offset, abs($offset) + 1, array(str_replace($search, $add, $line)));
+																array_splice($lines, $line_id + $offset, abs($offset) + 1, [str_replace($search, $add, $line)]);
 
 																$line_id -= $offset;
 															} else {
-																array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
+																array_splice($lines, $line_id, $offset + 1, [str_replace($search, $add, $line)]);
 															}
 															break;
 														case 'before':
@@ -461,7 +461,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 											}
 
 											// Log
-											$match = array();
+											$match = [];
 
 											preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
 
@@ -563,10 +563,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/modification');
 
 		if ($this->validate()) {
-			$files = array();
+			$files = [];
 
 			// Make path into an array
-			$path = array(DIR_MODIFICATION . '*');
+			$path = [DIR_MODIFICATION . '*'];
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {

@@ -79,7 +79,7 @@ class Language extends \Opencart\System\Engine\Model {
 	public function getLanguages(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`";
 
-		$results = (array)$this->cache->get('language.' . md5($sql));
+		$results = $this->cache->get('language.' . md5($sql));
 
 		if (!$results) {
 			$query = $this->db->query($sql);

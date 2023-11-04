@@ -26,7 +26,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getUploadByCode(string $code): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE code = '" . $this->db->escape($code) . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}

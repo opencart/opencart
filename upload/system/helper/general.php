@@ -41,3 +41,9 @@ if (!function_exists('str_starts_with')) {
 		}
 	}
 }
+
+if (!function_exists('str_ends_with')) {
+	function str_ends_with(string $string, string $find): bool {
+		return substr($string, -strlen($find)) === $find;
+	}
+}

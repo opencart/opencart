@@ -48,7 +48,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $method_data;
 	}
 
-	public function getCreditCard(int $customer_id, int $credit_card_id) {
+	public function getCreditCard(int $customer_id, int $credit_card_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
 
 		return $query->row;
@@ -68,7 +68,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
 	}
 
-	public function getStored(int $customer_id) {
+	public function getStored(int $customer_id): array {
 		return $this->getCreditCards($customer_id);
 	}
 

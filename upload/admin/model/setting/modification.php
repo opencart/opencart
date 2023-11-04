@@ -31,13 +31,13 @@ class Modification extends \Opencart\System\Engine\Model {
 	public function getModifications(array $data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "modification`";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'author',
 			'version',
 			'status',
 			'date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -71,7 +71,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	public function getTotalModifications(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "modification`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getModificationByCode(string $code): array {

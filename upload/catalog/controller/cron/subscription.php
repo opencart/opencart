@@ -18,7 +18,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
-        $this->load->language('cron/subscription');
+		$this->load->language('cron/subscription');
 
 		// Check the there is an order and the order status is complete and subscription status is active
 		$filter_data = [
@@ -32,7 +32,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('checkout/subscription');
 		$this->load->model('checkout/order');
 
-        $results = $this->model_checkout_subscription->getSubscriptions($filter_data);
+		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
 			if (($result['trial_status'] && $result['trial_remaining']) || ($result['duration'] && $result['remaining'])) {
@@ -262,19 +262,19 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					foreach ($products as $product) {
 						$order_data['products'][] = [
-							'product_id' => $product['product_id'],
-							'master_id' => $product['master_id'],
-							'name' => $product['name'],
-							'model' => $product['model'],
-							'option' => $product['option'],
+							'product_id'   => $product['product_id'],
+							'master_id'    => $product['master_id'],
+							'name'         => $product['name'],
+							'model'        => $product['model'],
+							'option'       => $product['option'],
 							'subscription' => [],
-							'download' => $product['download'],
-							'quantity' => $product['quantity'],
-							'subtract' => $product['subtract'],
-							'price' => $product['price'],
-							'total' => $product['total'],
-							'tax' => $this->tax->getTax($price, $product['tax_class_id']),
-							'reward' => $product['reward']
+							'download'     => $product['download'],
+							'quantity'     => $product['quantity'],
+							'subtract'     => $product['subtract'],
+							'price'        => $product['price'],
+							'total'        => $product['total'],
+							'tax'          => $this->tax->getTax($price, $product['tax_class_id']),
+							'reward'       => $product['reward']
 						];
 					}
 
@@ -376,43 +376,32 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id, $message, false);
 						$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id);
 
-						// If payment return status is active
+						// If payment order status is active or processing
 						if (!in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
+							$remaining = 0;
+							$date_next = '';
 
-
-							if ($result['trial_status'] && $result['trial_remaining']) {
+							if ($result['trial_status'] && $result['trial_remaining'] > 1) {
 								$remaining = $result['trial_remaining'] - 1;
+								$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
 
-								// If has trial
-
-
-
-								$this->model_account_subscription->editDateNext($result['subscription_id'], date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency'])));
-
-
-								$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $result['trial_remaining'] - 1);
-
-
-
+								$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $remaining);
 							} elseif ($result['duration']) {
-								// If has duration make sure there is remaining
-								$this->model_account_subscription->editDateNext($result['subscription_id'], date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency'])));
+								$remaining = $result['remaining'] - 1;
+								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
 
-								$this->model_account_subscription->editRemaining($result['subscription_id'], $result['remaining'] - 1);
+								// If has duration make sure there is remaining
+								$this->model_account_subscription->editRemaining($result['subscription_id'], $remaining);
 							} else {
 								// If duration is unlimited
-								$this->model_account_subscription->editDateNext($result['subscription_id'], date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency'])));
+								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
 							}
 
-							$subscription_status_id = $this->config->get('config_subscription_active_status_id');
-
-
-							if ($remaining) {
-
+							if ($date_next) {
+								$this->model_account_subscription->editDateNext($result['subscription_id'], $date_next);
 							}
 
-
-							$this->model_checkout_subscription->addHistory($result['subscription_id'], $subscription_status_id, $this->language->get('text_success'), true);
+							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'), true);
 						} else {
 							// If payment failed change subscription history to failed
 							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message, true);
@@ -427,5 +416,5 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
-    }
+	}
 }

@@ -261,6 +261,16 @@
                     <div class="form-text">{{ help_safe }}</div>
                   </div>
                 </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_commenter }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="commenter" value="0"/>
+                      <input type="checkbox" name="commenter" value="1" id="input-commenter" class="form-check-input"{% if commenter %} checked{% endif %}/>
+                    </div>
+                    <div class="form-text">{{ help_commenter }}</div>
+                  </div>
+                </div>
               </fieldset>
               <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             </form>

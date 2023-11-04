@@ -23,7 +23,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			$this->document->setTitle($product_info['meta_title']);
+			$this->document->setTitle($product_info['meta_title'] ? $product_info['meta_title'] : $product_info['name']);
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), 'canonical');
@@ -226,7 +226,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . $url . '&product_id=' . $product_id)
 			];
 
-			$this->document->setTitle($product_info['meta_title']);
+			$this->document->setTitle($product_info['meta_title'] ? $product_info['meta_title'] : $product_info['name']);
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), 'canonical');

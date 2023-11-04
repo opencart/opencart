@@ -309,10 +309,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			if ((oc_strlen(trim($value['title'])) < 1) || (oc_strlen($value['title']) > 64)) {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
-
-			if ((oc_strlen(trim($value['meta_title'])) < 1) || (oc_strlen($value['meta_title']) > 255)) {
-				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
-			}
 		}
 
 		if ($this->request->post['information_seo_url']) {

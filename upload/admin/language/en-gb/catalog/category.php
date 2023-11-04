@@ -42,7 +42,6 @@ $_['help_column']             = 'Number of columns to use for the bottom 3 categ
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']        = 'Warning: You do not have permission to modify categories!';
 $_['error_name']              = 'Category Name must be between 1 and 255 characters!';
-$_['error_meta_title']        = 'Meta Title must be greater than 1 and less than 255 characters!';
 $_['error_parent']            = 'The parent category you have chosen is a child of the current one!';
 $_['error_keyword']           = 'SEO URL must be between 1 and 64 characters!';
 $_['error_keyword_exists']    = 'SEO URL must be unique!';

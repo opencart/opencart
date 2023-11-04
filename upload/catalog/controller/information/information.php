@@ -23,7 +23,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {
-			$this->document->setTitle($information_info['meta_title']);
+			$this->document->setTitle($information_info['meta_title'] ? $information_info['meta_title'] : $information_info['title']);
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
 

@@ -110,7 +110,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($topic_info) {
-			$this->document->setTitle($topic_info['meta_title']);
+			$this->document->setTitle($topic_info['meta_title'] ? $topic_info['meta_title'] : $topic_info['name']);
 			$this->document->setDescription($topic_info['meta_description']);
 			$this->document->setKeywords($topic_info['meta_keyword']);
 
@@ -268,7 +268,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$article_info = $this->model_cms_article->getArticle($article_id);
 
 		if ($article_info) {
-			$this->document->setTitle($article_info['meta_title']);
+			$this->document->setTitle($article_info['meta_title'] ? $article_info['meta_title'] : $article_info['name']);
 			$this->document->setDescription($article_info['meta_description']);
 			$this->document->setKeywords($article_info['meta_keyword']);
 

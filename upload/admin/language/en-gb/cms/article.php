@@ -36,7 +36,6 @@ $_['entry_layout']            = 'Layout Override';
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']        = 'Warning: You do not have permission to modify articles!';
 $_['error_name']              = 'Article Name must be between 1 and 255 characters!';
-$_['error_meta_title']        = 'Meta Title must be greater than 1 and less than 255 characters!';
 $_['error_keyword']           = 'SEO URL must be between 1 and 64 characters!';
 $_['error_keyword_exists']    = 'SEO URL must be unique!';
 $_['error_keyword_character'] = 'Keyword can only use characters a-z, 0-9, - and _!';

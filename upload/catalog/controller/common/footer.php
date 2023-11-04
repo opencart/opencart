@@ -12,7 +12,13 @@ class Footer extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/footer');
 
-		$data['blog'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'));
+		$this->load->model('cms/topic');
+
+		$results = $this->model_cms_topic->getTopics();
+
+		if ( $results ) {
+			$data['blog'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'));
+		}
 
 		$data['informations'] = [];
 

@@ -6,29 +6,60 @@ namespace Opencart\Admin\Model\Setting;
  * @package Opencart\Admin\Model\Setting
  */
 class Modification extends \Opencart\System\Engine\Model {
-	public function addModification(array $data) {
+	/**
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	public function addModification(array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "modification` SET `extension_install_id` = '" . (int)$data['extension_install_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `author` = '" . $this->db->escape($data['author']) . "', `version` = '" . $this->db->escape($data['version']) . "', `link` = '" . $this->db->escape($data['link']) . "', `xml` = '" . $this->db->escape($data['xml']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
 	}
 
-	public function deleteModification(int $modification_id) {
+	/**
+	 * @param int $modification_id
+	 *
+	 * @return void
+	 */
+	public function deleteModification(int $modification_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `modification_id` = '" . (int)$modification_id . "'");
 	}
 
-	public function deleteModificationsByExtensionInstallId(int $extension_install_id) {
+	/**
+	 * @param int $extension_install_id
+	 *
+	 * @return void
+	 */
+	public function deleteModificationsByExtensionInstallId(int $extension_install_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "modification` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
+	/**
+	 * @param int  $modification_id
+	 * @param bool $status
+	 *
+	 * @return void
+	 */
 	public function editStatus(int $modification_id, bool $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = '" . (bool)$status . "' WHERE `modification_id` = '" . (int)$modification_id . "'");
 	}
 
-	public function getModification(int $modification_id) {
+	/**
+	 * @param int $modification_id
+	 *
+	 * @return mixed
+	 */
+	public function getModification(int $modification_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "modification` WHERE `modification_id` = '" . (int)$modification_id . "'");
 
 		return $query->row;
 	}
 
-	public function getModifications(array $data = []) {
+	/**
+	 * @param array $data
+	 *
+	 * @return mixed
+	 */
+	public function getModifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "modification`";
 
 		$sort_data = array(
@@ -68,12 +99,20 @@ class Modification extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalModifications(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "modification`");
 
 		return $query->row['total'];
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getModificationByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "modification` WHERE `code` = '" . $this->db->escape($code) . "'");
 

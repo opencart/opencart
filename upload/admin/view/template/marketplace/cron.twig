@@ -41,6 +41,30 @@ $('#cron').on('click', 'thead a, .pagination a', function (e) {
     $('#cron').load(this.href);
 });
 
+$('#cron').on('click', '.btn-info', function () {
+    var element = this;
+
+    $('#modal-cron').remove();
+
+    html = '<div id="modal-cron" class="modal">';
+    html += '  <div class="modal-dialog">';
+    html += '    <div class="modal-content">';
+    html += '      <div class="modal-header">';
+    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
+    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+    html += '      </div>';
+    html += '      <div class="modal-body">' + $($(element).attr('data-oc-target')).html() + '</div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $('body').append(html);
+
+    var modal = new bootstrap.Modal(document.querySelector('#modal-cron'));
+
+    modal.show();
+});
+
 $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function () {
     var element = this;
 
@@ -68,36 +92,6 @@ $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function () {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
-
-$('#cron').on('click', '.btn-info', function () {
-    var element = this;
-
-    $('#modal-cron').remove();
-
-    html = '<div id="modal-cron" class="modal">';
-    html += '  <div class="modal-dialog">';
-    html += '    <div class="modal-content">';
-    html += '      <div class="modal-header">';
-    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
-    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-    html += '      </div>';
-    html += '      <div class="modal-body">';
-    html += '        <div class="mb-3">';
-    html += '          <label for="input-description" class="form-label">{{ entry_description|escape('js') }}</label>';
-    html += '          <textarea placeholder="{{ entry_description|escape('js') }}" id="input-description" rows="5" class="form-control" disabled>' + $(element).attr('data-oc-description') + '</textarea>';
-    html += '        </div>';
-    html += '      </div>';
-    html += '      </div>';
-    html += '    </div>';
-    html += '  </div>';
-    html += '</div>';
-
-    $('body').append(html);
-
-    var modal = new bootstrap.Modal(document.querySelector('#modal-cron'));
-
-    modal.show();
 });
 //--></script>
 {{ footer }}

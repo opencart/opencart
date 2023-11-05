@@ -29,9 +29,11 @@
             <div id="modification">{{ list }}</div>
           </div>
           <div id="tab-log" class="tab-pane">
+
             <p>
               <textarea wrap="off" rows="15" class="form-control">{{ log }}</textarea>
             </p>
+
             <div class="row row-cols-2">
               <div class="col">
                 <a href="{{ log.download }}" class="btn btn-primary w-100"{% if not log.download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a>
@@ -84,6 +86,30 @@ $('#modification').on('click', '.btn-success, .btn-danger', function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+$('#modification').on('click', '.btn-info', function () {
+    var element = this;
+
+    $('#modal-modification').remove();
+
+    html = '<div id="modal-modification" class="modal">';
+    html += '  <div class="modal-dialog">';
+    html += '    <div class="modal-content">';
+    html += '      <div class="modal-header">';
+    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
+    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+    html += '      </div>';
+    html += '      <div class="modal-body">' + $($(element).attr('data-oc-target')).html() + '</div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $('body').append(html);
+
+    var modal = new bootstrap.Modal(document.querySelector('#modal-modification'));
+
+    modal.show();
 });
 //--></script>
 {{ footer }}

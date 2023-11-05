@@ -36,7 +36,8 @@
               <td class="text-start">{{ modification.author }}</td>
               <td class="text-start">{{ modification.version }}</td>
               <td class="text-start">{{ modification.date_added }}</td>
-              <td class="text-end text-nowrap"><a href="{{ modification.link }}" data-toggle="tooltip" title="{{ button_link }}" class="btn btn-info" target="_blank"><i class="fa fa-link"></i></a>
+              <td class="text-end text-nowrap">
+                <button type="button" data-oc-target="#modification-{{ modification.modification_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% if not modification.status %}
                   <button type="button" value="{{ modification.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
                 {% else %}
@@ -57,3 +58,9 @@
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>
+{% for modification in modifications %}
+  <div id="modification-{{ modification.modification_id }}" class="d-none">
+    <label class="form-label">{{ entry_description }}</label>
+    <textarea placeholder="{{ entry_description }}" rows="5" class="form-control" disabled>{{ modification.description }}</textarea>
+  </div>
+{% endfor %}

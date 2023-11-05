@@ -3120,6 +3120,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name'     => 'description',
+				'type'     => 'text',
+				'not_null' => true
+			],
+			[
 				'name'     => 'code',
 				'type'     => 'varchar(255)',
 				'not_null' => true
@@ -4136,13 +4141,18 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name'           => 'extension_install_id',
-				'type'           => 'int(11)',
-				'not_null'       => true
+				'name'      => 'extension_install_id',
+				'type'      => 'int(11)',
+				'not_null'  => true
 			],
 			[
 				'name'     => 'name',
 				'type'     => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name'     => 'description',
+				'type'     => 'text',
 				'not_null' => true
 			],
 			[
@@ -6833,6 +6843,11 @@ function oc_db_schema() {
 				'type'           => 'int(11)',
 				'not_null'       => true,
 				'auto_increment' => true
+			],
+			[
+				'name'     => 'description',
+				'type'     => 'text',
+				'not_null' => true
 			],
 			[
 				'name'     => 'code',

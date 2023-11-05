@@ -118,9 +118,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 				'modification_id' => $result['modification_id'],
 				'name'            => $result['name'],
 				'code'            => $result['code'],
+				'description'     => $result['description'],
 				'author'          => $result['author'],
 				'version'         => $result['version'],
-				'status'          => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'status'          => $result['status'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
 				'enable'          => $this->url->link('marketplace/modification.enable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id']),
@@ -139,7 +140,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$data['sort_name'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
 		$data['sort_author'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=author' . $url, true);
 		$data['sort_version'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url, true);
-		$data['sort_status'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
 		$data['sort_date_added'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
@@ -169,15 +169,14 @@ class Modification extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/modification_list', $data);
 	}
 
-	public function refresh($data = array()) {
+	public function refresh() {
 		$this->load->language('marketplace/modification');
 
-		$this->load->model('setting/modification');
+		$json = [];
 
-		$results = $this->model_setting_modification->getModifications($filter_data);
-
-
-
+		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
 		if (!$json) {
 			// Just before files are deleted, if config settings say maintenance mode is off then turn it on
@@ -187,14 +186,11 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
 
-			//Log
-			$log = array();
-
 			// Clear all modification files
-			$files = array();
+			$files = [];
 
 			// Make path into an array
-			$path = array(DIR_MODIFICATION . '*');
+			$path = [DIR_EXTENSION . 'ocmod/*'];
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {
@@ -216,7 +212,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			// Clear all modification files
 			foreach ($files as $file) {
-				if ($file != DIR_MODIFICATION . 'index.html') {
+				if ($file != DIR_EXTENSION . 'ocmod/index.html') {
 					// If file just delete
 					if (is_file($file)) {
 						unlink($file);
@@ -229,10 +225,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			}
 
 			// Begin
-			$xml = array();
-
-			// Load the default modification XML
-			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			$xml = [];
 
 			// This is purly for developers so they can run mods directly and have them run without upload after each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
@@ -252,7 +245,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$modification = array();
+			// Log
+			$log = [];
+
+			$modification = [];
 
 			foreach ($xml as $xml) {
 				if (empty($xml)){
@@ -267,7 +263,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
 				// Wipe the past modification store in the backup array
-				$recovery = array();
+				$recovery = [];
 
 				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
 				if (isset($modification)) {
@@ -531,12 +527,12 @@ class Modification extends \Opencart\System\Engine\Controller {
 					foreach ($directories as $directory) {
 						$path = $path . '/' . $directory;
 
-						if (!is_dir(DIR_MODIFICATION . $path)) {
-							@mkdir(DIR_MODIFICATION . $path, 0777);
+						if (!is_dir(DIR_EXTENSION . 'ocmod/' . $path)) {
+							@mkdir(DIR_EXTENSION . 'ocmod/' . $path, 0777);
 						}
 					}
 
-					$handle = fopen(DIR_MODIFICATION . $key, 'w');
+					$handle = fopen(DIR_EXTENSION . 'ocmod/'  . $key, 'w');
 
 					fwrite($handle, $value);
 
@@ -548,25 +544,27 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
 			// Do not return success message if refresh() was called with $data
-			$this->session->data['success'] = $this->language->get('text_success');
-
-
+			$json['success'] = $this->language->get('text_success');
 		}
 
-
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function clear() {
 		$this->load->language('marketplace/modification');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->load->model('setting/modification');
+		$json = [];
 
-		if ($this->validate()) {
+		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
 			$files = array();
 
 			// Make path into an array
-			$path = array(DIR_MODIFICATION . '*');
+			$path = array(DIR_EXTENSION . 'ocmod/*');
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {
@@ -588,7 +586,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			// Clear all modification files
 			foreach ($files as $file) {
-				if ($file != DIR_MODIFICATION . 'index.html') {
+				if ($file != DIR_EXTENSION . 'ocmod/index.html') {
 					// If file just delete
 					if (is_file($file)) {
 						unlink($file);
@@ -641,6 +639,36 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function disable(): void {
+		$this->load->language('marketplace/modification');
+
+		$json = [];
+
+		if (isset($this->request->get['modification_id'])) {
+			$modification_id = (int)$this->request->get['modification_id'];
+		} else {
+			$modification_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/modification');
+
+			$this->model_setting_modification->editStatus($modification_id, 0);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function download(): void {
 		$this->load->language('marketplace/modification');
 
 		$json = [];

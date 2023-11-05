@@ -28,6 +28,30 @@ $('#event').on('click', 'thead a, .pagination a', function (e) {
     $('#event').load(this.href);
 });
 
+$('#event').on('click', '.btn-info', function () {
+    var element = this;
+
+    $('#modal-event').remove();
+
+    html = '<div id="modal-event" class="modal">';
+    html += '  <div class="modal-dialog">';
+    html += '    <div class="modal-content">';
+    html += '      <div class="modal-header">';
+    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
+    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+    html += '      </div>';
+    html += '      <div class="modal-body">' + $($(element).attr('data-oc-target')).html() + '</div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $('body').append(html);
+
+    var modal = new bootstrap.Modal(document.querySelector('#modal-event'));
+
+    modal.show();
+});
+
 $('#event').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
 
@@ -59,41 +83,6 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
-
-$('#event').on('click', '.btn-info', function () {
-    var element = this;
-
-    $('#modal-event').remove();
-
-    html = '<div id="modal-event" class="modal">';
-    html += '  <div class="modal-dialog">';
-    html += '    <div class="modal-content">';
-    html += '      <div class="modal-header">';
-    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
-    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-    html += '      </div>';
-    html += '      <div class="modal-body">';
-    html += '        <div class="mb-3">';
-    html += '          <label for="input-description" class="form-label">{{ entry_description|escape('js') }}</label> <textarea placeholder="{{ entry_description|escape('js') }}" id="input-description" rows="5" class="form-control" disabled>' + $(element).attr('data-oc-description') + '</textarea>';
-    html += '        </div>';
-    html += '        <div class="mb-3">';
-    html += '          <label for="input-trigger" class="form-label">{{ entry_trigger|escape('js') }}</label> <textarea placeholder="{{ entry_trigger|escape('js') }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-oc-trigger') + '</textarea>';
-    html += '        </div>';
-    html += '        <div class="mb-3">';
-    html += '          <label for="input-action" class="form-label">{{ entry_action|escape('js') }}</label> <textarea placeholder="{{ entry_action|escape('js') }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-oc-action') + '</textarea>';
-    html += '        </div>';
-    html += '      </div>';
-    html += '      </div>';
-    html += '    </div>';
-    html += '  </div>';
-    html += '</div>';
-
-    $('body').append(html);
-
-    var modal = new bootstrap.Modal(document.querySelector('#modal-event'));
-
-    modal.show();
 });
 //--></script>
 {{ footer }}

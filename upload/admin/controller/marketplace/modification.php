@@ -381,7 +381,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 											if ($index !== '') {
 												$indexes = explode(',', $index);
 											} else {
-												$indexes = array();
+												$indexes = '';
 											}
 
 											// Get all the matches
@@ -457,7 +457,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 											}
 
 											// Log
-											$match = array();
+											$match = [];
 
 											preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
 
@@ -561,10 +561,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = array();
+			$files = [];
 
 			// Make path into an array
-			$path = array(DIR_EXTENSION . 'ocmod/*');
+			$path = [DIR_EXTENSION . 'ocmod/*'];
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {

@@ -442,7 +442,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 	public function xml() {
 		$this->load->language('marketplace/install');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];

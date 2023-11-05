@@ -14,9 +14,9 @@ class Footer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/topic');
 
-		$results = $this->model_cms_topic->getTopics();
+		$topic_total = $this->model_cms_topic->getTotalTopics();
 
-		if ( $results ) {
+		if ( $topic_total ) {
 			$data['blog'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'));
 		}
 

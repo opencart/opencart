@@ -365,6 +365,8 @@ class Cart {
 	 * @param int   $quantity
 	 * @param array $option
 	 * @param int   $subscription_plan_id
+     * @param bool  $override
+     * @param float $price
 	 *
 	 * @return    void
 	 */

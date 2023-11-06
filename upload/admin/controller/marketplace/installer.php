@@ -254,7 +254,7 @@ class Installer extends \Opencart\System\Engine\Controller {
                 $install_info = json_decode($zip->getFromName('install.json'), true);
 
 				if ($install_info) {
-					if (!$install_info['name']) {
+					if (!empty($install_info['name'])) {
 						$json['error'] = $this->language->get('error_name');
 					}
 
@@ -474,10 +474,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			if (!is_file($file)) {
 				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
-			}
-
-			if (is_dir(DIR_EXTENSION . 'ocmod/' . $extension_install_info['code'] . '/')) {
-				$json['error'] = sprintf($this->language->get('error_directory_exists'), $extension_install_info['code'] . '/');
 			}
 
 			if (!is_dir(DIR_EXTENSION . 'ocmod/' . $extension_install_info['code'] . '/')) {

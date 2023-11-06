@@ -10,7 +10,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('cms/comment');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -204,13 +204,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function approve() {
+	public function approve(): void {
 		$this->load->language('cms/comment');
 
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
+			$selected = $this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -256,13 +256,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function spam() {
+	public function spam(): void {
 		$this->load->language('cms/comment');
 
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
+			$selected = $this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -305,13 +305,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('cms/comment');
 
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
+			$selected = $this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

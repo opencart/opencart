@@ -27,7 +27,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getTotalOrdersByCountry(): array {
-		$query = $this->db->query("SELECT COUNT(*) AS total, SUM(`o`.`total`) AS amount, c.`iso_code_2` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "country` c ON (`o`.`payment_country_id` = c.`country_id`) WHERE `o`.`order_status_id` > '0' GROUP BY `o`.`payment_country_id`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, SUM(`o`.`total`) AS amount, c.`iso_code_2` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "country` c ON (`o`.`payment_country_id` = c.`country_id`) WHERE `o`.`order_status_id` > '0' GROUP BY `o`.`payment_country_id`");
 
 		return $query->rows;
 	}
@@ -51,7 +51,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, HOUR(`date_added`) AS hour FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, HOUR(`date_added`) AS hour FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
 
 		foreach ($query->rows as $result) {
 			$order_data[$result['hour']] = [
@@ -86,7 +86,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$order_data[date('w', strtotime($result['date_added']))] = [
@@ -119,7 +119,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "') GROUP BY DATE(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "') GROUP BY DATE(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$order_data[date('j', strtotime($result['date_added']))] = [
@@ -150,7 +150,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$order_data[date('n', strtotime($result['date_added']))] = [

@@ -60,7 +60,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function list() {
+	public function list(): void {
 		$this->load->language('cms/comment');
 
 		$this->response->setOutput($this->getList());

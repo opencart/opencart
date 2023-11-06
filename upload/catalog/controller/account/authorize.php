@@ -93,7 +93,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function send() {
+	public function send(): void {
 		$this->load->language('account/authorize');
 
 		$json = [];
@@ -155,7 +155,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function unlock() {
+	public function unlock(): void {
 		$this->load->language('account/authorize');
 
 		if (isset($this->request->cookie['authorize'])) {
@@ -184,7 +184,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function confirm() {
+	public function confirm(): void {
 		$this->load->language('account/authorize');
 
 		$json = [];
@@ -203,7 +203,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function reset() {
+	public function reset(): void {
 		$this->load->language('account/authorize');
 
 		if (isset($this->request->get['email'])) {

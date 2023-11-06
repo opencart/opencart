@@ -822,7 +822,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function calculate() {
+	public function calculate(): void {
 		$this->load->language('marketing/affiliate');
 
 		$json = [];
@@ -906,7 +906,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function complete() {
+	public function complete(): void {
 		$this->load->language('marketing/affiliate');
 
 		$json = [];

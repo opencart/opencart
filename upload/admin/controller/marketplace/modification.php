@@ -265,7 +265,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				// Wipe the past modification store in the backup array
 				$recovery = [];
 
-				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
+				// Store a backup recovery of the modification code in case we need to use it if an abort attribute is used.
 				if (isset($modification)) {
 					$recovery = $modification;
 				}
@@ -415,11 +415,11 @@ class Modification extends \Opencart\System\Engine\Controller {
 															$new_lines = explode("\n", $add);
 
 															if ($offset < 0) {
-																array_splice($lines, $line_id + $offset, abs($offset) + 1, array(str_replace($search, $add, $line)));
+																array_splice($lines, $line_id + $offset, abs($offset) + 1, [str_replace($search, $add, $line)]);
 
 																$line_id -= $offset;
 															} else {
-																array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
+																array_splice($lines, $line_id, $offset + 1, [str_replace($search, $add, $line)]);
 															}
 															break;
 														case 'before':

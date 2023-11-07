@@ -44,7 +44,7 @@ class Apcu {
 	 * 
 	 * @return	 void
      */
-	public function set(string $key, array|string|null $value, int $expire = 0): void {
+	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
 		}

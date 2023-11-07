@@ -496,7 +496,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				if ($xml) {
 					try {
-						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom = new \DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 
 						$name = $dom->getElementsByTagName('name')->item(0);
@@ -569,7 +569,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 							$this->model_setting_modification->addModification($modification_data);
 						}
-					} catch (Exception $exception) {
+					} catch (\Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 				}

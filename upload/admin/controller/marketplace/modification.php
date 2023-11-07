@@ -255,7 +255,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 					continue;
 				}
 
-				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
@@ -513,7 +513,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			}
 
 			// Log
-			$ocmod = new Log('ocmod.log');
+			$ocmod = new \Opencart\System\Library\Log('ocmod.log');
 			$ocmod->write(implode("\n", $log));
 
 			// Write all modification files

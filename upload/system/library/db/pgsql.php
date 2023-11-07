@@ -9,7 +9,7 @@ class PgSQL {
 	/**
 	 * @var object|resource|null
 	 */
-	private object|null $connection;
+	private $connection;
 
 	/**
 	 * Constructor
@@ -47,7 +47,7 @@ class PgSQL {
 	 *
 	 * @return   bool|object
 	 */
-	public function query(string $sql): bool|object {
+	public function query(string $sql) {
 		$resource = pg_query($this->connection, $sql);
 
 		if ($resource) {

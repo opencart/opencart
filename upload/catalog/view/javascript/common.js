@@ -355,11 +355,13 @@ $(document).on('submit', 'form', function (e) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     // Refresh
-                    var url = $(form).attr('data-oc-load');
-                    var target = $(form).attr('data-oc-target');
+                    const url = $(form).attr('data-oc-load').split(',');
+                    const target = $(form).attr('data-oc-target').split(',');
 
-                    if (url !== undefined && target !== undefined) {
-                        $(target).load(url);
+                    for (let i = 0; i < url.length; i ++) {
+                        if (url[i] !== undefined && target[i] !== undefined) {
+                            $(target[i]).load(url[i]);
+                        }
                     }
                 }
 

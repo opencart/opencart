@@ -150,7 +150,9 @@
               if (json['success']) {
                   $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                  $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+                  $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}', {}, function () {
+                      $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
+                  });
 
                   $('#modal-shipping').modal('hide');
               }

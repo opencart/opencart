@@ -1,0 +1,7 @@
+parameters:
+    level: 0
+    paths:
+        - ./upload/
+    excludePaths:
+        - ./system/storage/vendor/
+        - ./upload/system/storage/vendor/

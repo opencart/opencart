@@ -194,19 +194,19 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_subscription_id'])) {
-			$implode[] .= "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
+			$implode[] = "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] .= "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] .= "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
-			$implode[] .= "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
+			$implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {

@@ -15,6 +15,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 			$data['save'] = $this->url->link('extension/opencart/total/coupon.save', 'language=' . $this->config->get('config_language'), true);
 			$data['list'] = $this->url->link('checkout/cart.list', 'language=' . $this->config->get('config_language'), true);
+			$data['header_cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'), true);
 
 			if (isset($this->session->data['coupon'])) {
 				$data['coupon'] = $this->session->data['coupon'];

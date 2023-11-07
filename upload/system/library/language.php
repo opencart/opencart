@@ -75,7 +75,7 @@ class Language {
      * @param	string	$key
 	 * @param	string	$value
      */	
-	public function set(string $key, string $value) {
+	public function set(string $key, string $value): void {
 		$this->data[$key] = $value;
 	}
 	

@@ -9,7 +9,7 @@ class PgSQL {
 	/**
 	 * @var object|resource|null
 	 */
-	private object|null $connection;
+	private $connection;
 
 	/**
 	 * Constructor
@@ -47,7 +47,7 @@ class PgSQL {
 	 *
 	 * @return   bool|object
 	 */
-	public function query(string $sql): bool|object {
+	public function query(string $sql) {
 		$resource = pg_query($this->connection, $sql);
 
 		if ($resource) {
@@ -79,7 +79,7 @@ class PgSQL {
 			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
 		}
 	}
-	
+
 	/**
 	 * Escape
 	 *
@@ -99,7 +99,7 @@ class PgSQL {
 	public function countAffected(): int {
 		return pg_affected_rows($this->connection);
 	}
-	
+
 	/**
 	 * getLastId
 	 *

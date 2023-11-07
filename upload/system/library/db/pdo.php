@@ -9,7 +9,7 @@ class PDO {
 	/**
 	 * @var object|\PDO|null
 	 */
-	private object|null $connection;
+	private ?object $connection;
 	/**
 	 * @var array
 	 */

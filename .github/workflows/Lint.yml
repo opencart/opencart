@@ -1,0 +1,40 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: Lint
+        run: |
+          error=0
+          for file in $(find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*'); do
+            php -l -n $file | grep -v "No syntax errors detected" && error=1
+          done
+          if [ $error -eq 1 ]; then
+            echo "Syntax errors were found."
+            exit 1
+          else
+            echo "No syntax errors were detected."
+          fi

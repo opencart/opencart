@@ -36,11 +36,11 @@ class Mail {
 	/**
      * setTo
      *
-     * @param	string	$to
+     * @param	string|array	$to
 	 *
 	 * @return  void
      */
-	public function setTo(string|array $to): void {
+	public function setTo($to): void {
 		$this->option['to'] = $to;
 	}
 

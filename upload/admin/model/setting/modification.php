@@ -57,7 +57,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * @param array $data
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getModifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "modification`";

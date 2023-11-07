@@ -107,11 +107,14 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$install_info = json_decode($zip->getFromName('install.json'), true);
 
 					if ($install_info) {
-						if (isset($install_info['description'])) {
+						if (!empty($install_info['description'])) {
 							$description = $install_info['description'];
 						} else {
 							$description = '';
 						}
+
+						$keys = [];
+
 
 						$extension_data = [
 							'extension_id'          => 0,
@@ -362,7 +365,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			// Unzip the files
 			$zip = new \ZipArchive();
 
-			if ($zip->open($file)) {
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$total = $zip->numFiles;
 				$limit = 200;
 
@@ -475,119 +478,103 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (!is_file($file)) {
 				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
-
-			if (!is_dir(DIR_EXTENSION . 'ocmod/' . $extension_install_info['code'] . '/')) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
-			}
-
-			// Validate if extension already in use
-			$this->load->model('setting/modification');
-
-			$modification_info = $this->model_setting_modification->getTotalModificationsByCode($extension_install_info['code']);
-
-			if (!$modification_info) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
-			}
 		} else {
 			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {
-
 			// Unzip the files
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
+				$total = $zip->numFiles;
+				$limit = 200;
 
-			$total = $zip->numFiles;
-			$limit = 200;
+				// If xml file just put it straight into the DB
 
+				$xml = $zip->getStream('test');
 
+				if ($xml) {
+					try {
+						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom->loadXml($xml);
 
+						$name = $dom->getElementsByTagName('name')->item(0);
 
-
-
-			// If xml file just put it straight into the DB
-			$xml = file_get_contents($file);
-
-			if ($xml) {
-				try {
-					$dom = new DOMDocument('1.0', 'UTF-8');
-					$dom->loadXml($xml);
-
-					$name = $dom->getElementsByTagName('name')->item(0);
-
-					if ($name) {
-						$name = $name->nodeValue;
-					} else {
-						$name = '';
-					}
-
-					$description = $dom->getElementsByTagName('description')->item(0);
-
-					if ($description) {
-						$description = $name->nodeValue;
-					} else {
-						$description = '';
-					}
-
-					$code = $dom->getElementsByTagName('code')->item(0);
-
-					if ($code) {
-						$code = $code->nodeValue;
-
-						// Check to see if the modification is already installed or not.
-						$modification_info = $this->model_setting_modification->getModificationByCode($code);
-
-						if ($modification_info) {
-							$this->model_setting_modification->deleteModification($modification_info['modification_id']);
+						if ($name) {
+							$name = $name->nodeValue;
+						} else {
+							$name = '';
 						}
-					} else {
-						$json['error'] = $this->language->get('error_code');
+
+						$description = $dom->getElementsByTagName('description')->item(0);
+
+						if ($description) {
+							$description = $name->nodeValue;
+						} else {
+							$description = '';
+						}
+
+						$code = $dom->getElementsByTagName('code')->item(0);
+
+						if ($code) {
+							$code = $code->nodeValue;
+
+							// Check to see if the modification is already installed or not.
+							$modification_info = $this->model_setting_modification->getModificationByCode($code);
+
+							if ($modification_info) {
+								$this->model_setting_modification->deleteModification($modification_info['modification_id']);
+							}
+						} else {
+							$json['error'] = $this->language->get('error_code');
+						}
+
+						$author = $dom->getElementsByTagName('author')->item(0);
+
+						if ($author) {
+							$author = $author->nodeValue;
+						} else {
+							$author = '';
+						}
+
+						$version = $dom->getElementsByTagName('version')->item(0);
+
+						if ($version) {
+							$version = $version->nodeValue;
+						} else {
+							$version = '';
+						}
+
+						$link = $dom->getElementsByTagName('link')->item(0);
+
+						if ($link) {
+							$link = $link->nodeValue;
+						} else {
+							$link = '';
+						}
+
+						if (!$json) {
+							$modification_data = [
+								'extension_install_id' => $extension_install_id,
+								'name'                 => $name,
+								'description'          => $description,
+								'code'                 => $code,
+								'author'               => $author,
+								'version'              => $version,
+								'link'                 => $link,
+								'xml'                  => $xml,
+								'status'               => 0
+							];
+
+							$this->model_setting_modification->addModification($modification_data);
+						}
+					} catch (Exception $exception) {
+						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
-
-					$author = $dom->getElementsByTagName('author')->item(0);
-
-					if ($author) {
-						$author = $author->nodeValue;
-					} else {
-						$author = '';
-					}
-
-					$version = $dom->getElementsByTagName('version')->item(0);
-
-					if ($version) {
-						$version = $version->nodeValue;
-					} else {
-						$version = '';
-					}
-
-					$link = $dom->getElementsByTagName('link')->item(0);
-
-					if ($link) {
-						$link = $link->nodeValue;
-					} else {
-						$link = '';
-					}
-
-					if (!$json) {
-						$modification_data = [
-							'extension_install_id' => $extension_install_id,
-							'name'                 => $name,
-							'description'          => $description,
-							'code'                 => $code,
-							'author'               => $author,
-							'version'              => $version,
-							'link'                 => $link,
-							'xml'                  => $xml,
-							'status'               => 0
-						];
-
-						$this->model_setting_modification->addModification($modification_data);
-					}
-				} catch (Exception $exception) {
-					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
+			} else {
+				$json['error'] = $this->language->get('error_unzip');
 			}
 		}
 

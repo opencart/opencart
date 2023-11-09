@@ -17,7 +17,9 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
+
       <div id="shopping-cart">{{ list }}</div>
+
       {% if modules %}
         <h2>{{ text_next }}</h2>
         <p>{{ text_next_choice }}</p>
@@ -27,6 +29,7 @@
           {% endfor %}
         </div>
       {% endif %}
+
       <br/>
       <div class="row">
         <div class="col"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
@@ -81,6 +84,19 @@ $('#shopping-cart').on('submit', 'form', function (e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+// Update cart header
+var element = document.getElementById('shopping-cart');
+
+observer = new MutationObserver(function(mutationsList, observer) {
+    $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
+});
+
+observer.observe(element, {
+    characterData: false,
+    childList: true,
+    attributes: false
 });
 //--></script>
 {{ footer }}

@@ -255,7 +255,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 					continue;
 				}
 
-				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
@@ -287,6 +287,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 						if ((substr($file, 0, 5) == 'admin')) {
 							$path = DIR_APPLICATION . substr($file, 6);
+						}
+
+						if ((substr($file, 0, 9) == 'extension')) {
+							$path = DIR_EXTENSION . substr($file, 9);
 						}
 
 						if ((substr($file, 0, 6) == 'system')) {

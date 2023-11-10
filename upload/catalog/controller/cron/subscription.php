@@ -35,6 +35,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
+			$order_info = $this->model_checkout_order->getOrder($result['order_id']);
+
 			if (($result['trial_status'] && $result['trial_remaining']) || ($result['duration'] && $result['remaining'])) {
 				$error = '';
 

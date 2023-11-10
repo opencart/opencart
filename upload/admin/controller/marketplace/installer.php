@@ -124,7 +124,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 							}
 						}
 
-
 						if (!empty($install_info['description'])) {
 							$description = $install_info['description'];
 						} else {
@@ -600,7 +599,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$json['error'] = $this->language->get('error_unzip');
 				}
 			}
-
 
 			if (!$json) {
 				$json['text'] = $this->language->get('text_vendor');

@@ -89,7 +89,7 @@ $('#shopping-cart').on('submit', 'form', function (e) {
 // Update cart header
 var element = document.getElementById('shopping-cart');
 
-observer = new MutationObserver(function(mutationsList, observer) {
+observer = new MutationObserver(function(mutations, observer) {
     $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
 });
 

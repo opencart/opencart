@@ -130,6 +130,7 @@ $(document).on('submit', '#form-shipping-method', function(e) {
 
                     $('#input-payment-method').val('');
 
+                    $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
                     $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },

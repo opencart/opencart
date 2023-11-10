@@ -169,7 +169,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/modification_list', $data);
 	}
 
-	public function refresh() {
+	public function refresh(): void {
 		$this->load->language('marketplace/modification');
 
 		$json = [];
@@ -555,7 +555,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('marketplace/modification');
 
 		$json = [];

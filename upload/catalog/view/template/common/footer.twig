@@ -5,7 +5,9 @@
       <div class="col-sm-3">
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
+          {% if blog %}
           <li><a href="{{ blog }}">{{ text_blog }}</a></li>
+          {% endif %}
           {% for information in informations %}
             <li><a href="{{ information.href }}">{{ information.title }}</a></li>
           {% endfor %}

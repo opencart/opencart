@@ -290,25 +290,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalProductsByProductId(int $product_id): int {
-		$sql = "SELECT SUM(`op`.`quantity`) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `op`.`product_id` = '" . (int)$product_id . "'";
-
-		if (!empty($data['filter_order_status'])) {
-			$implode = [];
-
-			$order_statuses = explode(',', $data['filter_order_status']);
-
-			foreach ($order_statuses as $order_status_id) {
-				$implode[] = "`order_status_id` = '" . (int)$order_status_id . "'";
-			}
-
-			if ($implode) {
-				$sql .= " AND (" . implode(" OR ", $implode) . ")";
-			}
-		} elseif (isset($data['filter_order_status_id']) && $data['filter_order_status_id'] !== '') {
-			$sql .= " AND `order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
-		} else {
-			$sql .= " AND `order_status_id` > '0'";
-		}
+		$sql = "SELECT SUM(`op`.`quantity`) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `op`.`product_id` = '" . (int)$product_id . "' AND `order_status_id` > '0'";
 
 		$query = $this->db->query($sql);
 

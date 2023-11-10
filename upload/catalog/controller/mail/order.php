@@ -161,11 +161,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_status'] = '';
 		}
 
-		if ($comment) {
-			$data['comment'] = nl2br($comment);
-		} else {
-			$data['comment'] = '';
-		}
+		$data['comment'] = nl2br($order_info['comment']);
 
 		// Payment Address
 		if ($order_info['payment_address_format']) {

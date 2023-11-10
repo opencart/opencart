@@ -512,6 +512,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 				for ($i = 0; $i < $limit; $i++) {
 					$source = $zip->getNameIndex($i);
 
+					if (basename($source)) {}
+
 					$xml = $zip->getStream('test');
 
 					//'zip://' . $file . '#' . $source

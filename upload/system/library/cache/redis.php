@@ -47,7 +47,7 @@ class Redis {
 	 * @param mixed  $value
 	 * @param int    $expire
 	 */
-	public function set(string $key, $value, int $expire = 0) {
+	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
 		}

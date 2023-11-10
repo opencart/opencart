@@ -50,7 +50,7 @@ class Memcached {
 	 * @param mixed  $value
 	 * @param int    $expire
 	 */
-	public function set(string $key, $value, int $expire = 0) {
+	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
 		}
@@ -63,7 +63,7 @@ class Memcached {
 	 *
 	 * @param string $key
 	 */
-	public function delete(string $key) {
+	public function delete(string $key): void {
 		$this->memcached->delete(CACHE_PREFIX . $key);
 	}
 }

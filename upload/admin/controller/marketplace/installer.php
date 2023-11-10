@@ -453,7 +453,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function xml() {
+	public function xml(): void {
 		$this->load->language('marketplace/install');
 
 		$json = [];

@@ -7,6 +7,10 @@ namespace Opencart\Catalog\Controller\Mail;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**
+	 * Mail class for orders
+	 *
+	 * Trigger catalog/model/checkout/order/addHistory/before
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
@@ -371,6 +375,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 *
+	 * catalog/model/checkout/order/addHistory/before
+	 *
 	 * @param array  $order_info
 	 * @param int    $order_status_id
 	 * @param string $comment
@@ -553,8 +560,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$description = '';
-
-				$this->load->model('checkout/subscription');
 
 				$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 

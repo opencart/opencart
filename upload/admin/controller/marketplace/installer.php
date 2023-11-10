@@ -272,8 +272,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$install_info = json_decode($zip->getFromName('install.json'), true);
 
 				if ($install_info) {
-
-
 					if (!empty($install_info['name'])) {
 						$json['error'] = $this->language->get('error_name');
 					}

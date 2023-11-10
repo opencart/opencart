@@ -86,6 +86,10 @@ $('#shopping-cart').on('submit', 'form', function (e) {
     });
 });
 
+$('#shopping-cart').observe(function (e) {
+    $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
+});
+/*
 // Update cart header
 var element = document.getElementById('shopping-cart');
 
@@ -98,5 +102,6 @@ observer.observe(element, {
     childList: true,
     attributes: false
 });
+*/
 //--></script>
 {{ footer }}

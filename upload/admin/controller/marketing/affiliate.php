@@ -646,8 +646,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['custom_fields'] = [];
 
 		$filter_data = [
-			'sort'  => 'cf.sort_order',
-			'order' => 'ASC'
+			'filter_location' => 'affiliate',
+			'sort'            => 'cf.sort_order',
+			'order'           => 'ASC'
 		];
 
 		// Custom Fields
@@ -656,17 +657,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['status']) {
-				$data['custom_fields'][] = [
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-					'name'               => $custom_field['name'],
-					'value'              => $custom_field['value'],
-					'type'               => $custom_field['type'],
-					'location'           => $custom_field['location'],
-					'sort_order'         => $custom_field['sort_order']
-				];
-			}
+			$data['custom_fields'][] = [
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
+				'name'               => $custom_field['name'],
+				'value'              => $custom_field['value'],
+				'type'               => $custom_field['type'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			];
 		}
 
 		if (!empty($affiliate_info)) {
@@ -750,6 +749,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if ($customer_info) {
 			$this->load->model('customer/custom_field');
 
+			$filter_data = [
+				'filter_location'          => 'account',
+				'filter_customer_group_id' => $this->request->post['customer_group_id'],
+				'filter_status'            => 1
+			];
+
 			$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_info['customer_group_id']]);
 
 			foreach ($custom_fields as $custom_field) {
@@ -817,7 +822,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function calculate() {
+	public function calculate(): void {
 		$this->load->language('marketing/affiliate');
 
 		$json = [];
@@ -901,7 +906,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function complete() {
+	public function complete(): void {
 		$this->load->language('marketing/affiliate');
 
 		$json = [];

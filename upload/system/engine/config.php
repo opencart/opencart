@@ -45,7 +45,7 @@ class Config {
 	 *
 	 * @return    mixed
 	 */
-	public function get(string $key): mixed {
+	public function get(string $key) {
 		return isset($this->data[$key]) ? $this->data[$key] : '';
 	}
 
@@ -53,9 +53,9 @@ class Config {
 	 * Set
 	 *
 	 * @param string $key
-	 * @param string $value
+	 * @param mixed $value
 	 */
-	public function set(string $key, mixed $value): void {
+	public function set(string $key, $value): void {
 		$this->data[$key] = $value;
 	}
 

@@ -7,9 +7,9 @@ namespace Opencart\Admin\Controller\Startup;
  */
 class Permission extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return object
 	 */
-	public function index(): object|null {
+	public function index(): ?object {
 		if (isset($this->request->get['route'])) {
 			$pos = strrpos($this->request->get['route'], '.');
 

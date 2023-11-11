@@ -7,11 +7,11 @@ namespace Opencart\System\Library\Cart;
  */
 class Length {
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object|mixed|null
+	 * @var object
 	 */
 	private object $config;
 	/**
@@ -28,7 +28,7 @@ class Length {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
 
-		$length_class_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` mc LEFT JOIN `" . DB_PREFIX . "length_class_description` mcd ON (mc.`length_class_id` = mcd.`length_class_id`) WHERE mcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$length_class_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` `mc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `mcd` ON (`mc`.`length_class_id` = `mcd`.`length_class_id`) WHERE `mcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($length_class_query->rows as $result) {
 			$this->lengths[$result['length_class_id']] = [

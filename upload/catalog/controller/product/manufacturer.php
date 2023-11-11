@@ -65,7 +65,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function info(): \Opencart\System\Engine\Action|null {
+	public function info(): ?\Opencart\System\Engine\Action {
 		$this->load->language('product/manufacturer');
 
 		if (isset($this->request->get['manufacturer_id'])) {

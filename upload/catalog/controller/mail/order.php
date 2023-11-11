@@ -7,6 +7,10 @@ namespace Opencart\Catalog\Controller\Mail;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**
+	 * Mail class for orders
+	 *
+	 * Trigger catalog/model/checkout/order/addHistory/before
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
@@ -48,7 +52,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// If the order status does not return 0, we send the update as a text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
-				$this->edit($order_info, $order_status_id, $comment, $notify);
+				$this->history($order_info, $order_status_id, $comment, $notify);
 			}
 		}
 	}
@@ -147,8 +151,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-		$data['payment_method'] = $order_info['payment_method']['name'];
-		$data['shipping_method'] = $order_info['shipping_method']['name'];
+		$data['payment_method'] = isset($order_info['payment_method']['name']) ? $order_info['payment_method']['name'] : '';
+		$data['shipping_method'] = isset($order_info['shipping_method']['name']) ? $order_info['shipping_method']['name'] : '';
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
@@ -161,11 +165,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_status'] = '';
 		}
 
-		if ($comment) {
-			$data['comment'] = nl2br($comment);
-		} else {
-			$data['comment'] = '';
-		}
+		$data['comment'] = nl2br($order_info['comment']);
 
 		// Payment Address
 		if ($order_info['payment_address_format']) {
@@ -200,7 +200,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			'country'   => $order_info['payment_country']
 		];
 
-		$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+		$data['payment_address'] = str_replace([
+			"\r\n",
+			"\r",
+			"\n"
+		], '<br/>', preg_replace([
+			"/\s\s+/",
+			"/\r\r+/",
+			"/\n\n+/"
+		], '<br/>', trim(str_replace($find, $replace, $format))));
 
 		// Shipping Address
 		if ($order_info['shipping_address_format']) {
@@ -235,7 +243,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			'country'   => $order_info['shipping_country']
 		];
 
-		$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+		$data['shipping_address'] = str_replace([
+			"\r\n",
+			"\r",
+			"\n"
+		], '<br/>', preg_replace([
+			"/\s\s+/",
+			"/\r\r+/",
+			"/\n\n+/"
+		], '<br/>', trim(str_replace($find, $replace, $format))));
 
 		$this->load->model('tool/upload');
 
@@ -359,6 +375,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 *
+	 * catalog/model/checkout/order/addHistory/before
+	 *
 	 * @param array  $order_info
 	 * @param int    $order_status_id
 	 * @param string $comment
@@ -367,7 +386,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function edit(array $order_info, int $order_status_id, string $comment, bool $notify): void {
+	public function history(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		if (!defined('HTTP_CATALOG')) {
@@ -458,11 +477,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/checkout/order/addHistory/before
-
 	/**
 	 * @param string $route
 	 * @param array  $args
+	 *
+	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
 	 * @return void
 	 * @throws \Exception
@@ -541,8 +560,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$description = '';
-
-				$this->load->model('checkout/subscription');
 
 				$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 

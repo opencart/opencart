@@ -95,7 +95,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getReviews(array $data = []): array {
-		$sql = "SELECT r.`review_id`, pd.`name`, r.`author`, r.`rating`, r.`status`, r.`date_added` FROM `" . DB_PREFIX . "review` r LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (r.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT `r`.`review_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_product']) . '%') . "'";
@@ -106,15 +106,15 @@ class Review extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND r.`status` = '" . (bool)$data['filter_status'] . "'";
+			$sql .= " AND `r`.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$sql .= " AND DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$sql .= " AND DATE(`r`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$sql .= " AND DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$sql .= " AND DATE(`r`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$sort_data = [
@@ -128,7 +128,7 @@ class Review extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY r.`date_added`";
+			$sql .= " ORDER BY `r`.`date_added`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -160,7 +160,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalReviews(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` r LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (r.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_product']) . '%') . "'";

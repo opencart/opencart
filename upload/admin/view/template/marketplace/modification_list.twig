@@ -1,0 +1,66 @@
+<form id="form-modification" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#modification">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start">{% if sort == 'name' %}
+              <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+            {% else %}
+              <a href="{{ sort_name }}">{{ column_name }}</a>
+            {% endif %}</td>
+          <td class="text-start">{% if sort == 'author' %}
+              <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a>
+            {% else %}
+              <a href="{{ sort_author }}">{{ column_author }}</a>
+            {% endif %}</td>
+          <td class="text-start">{% if sort == 'version' %}
+              <a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>
+            {% else %}
+              <a href="{{ sort_version }}">{{ column_version }}</a>
+            {% endif %}</td>
+          <td class="text-start">{% if sort == 'date_added' %}
+              <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
+            {% else %}
+              <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
+            {% endif %}</td>
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if modifications %}
+          {% for modification in modifications %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ modification.modification_id }}" class="form-check-input"/></td>
+              <td class="text-start">{{ modification.name }}</td>
+              <td class="text-start">{{ modification.author }}</td>
+              <td class="text-start">{{ modification.version }}</td>
+              <td class="text-start">{{ modification.date_added }}</td>
+              <td class="text-end text-nowrap">
+                <button type="button" data-oc-target="#modification-{{ modification.modification_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+                {% if not modification.status %}
+                  <button type="button" value="{{ modification.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
+                {% else %}
+                  <button type="button" value="{{ modification.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for modification in modifications %}
+  <div id="modification-{{ modification.modification_id }}" class="d-none">
+    <label class="form-label">{{ entry_description }}</label>
+    <textarea placeholder="{{ entry_description }}" rows="5" class="form-control" disabled>{{ modification.description }}</textarea>
+  </div>
+{% endfor %}

@@ -9,10 +9,12 @@
 namespace Opencart\System\Library;
 /**
  * Class DB Adapter
+ *
+ * @package Opencart\System\Library
  */
 class DB {
 	/**
-	 * @var object|mixed
+	 * @var object
 	 */
 	private object $adaptor;
 
@@ -25,13 +27,15 @@ class DB {
 	 * @param string $password
 	 * @param string $database
 	 * @param int    $port
-	 *
+	 * @param string $ssl_key
+	 * @param string $ssl_cert
+	 * @param string $ssl_ca
 	 */
-	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey='', string $sslCert='', string $sslCa='') {
+	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $sslKey, $sslCert, $sslCa);
+			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $ssl_key, $ssl_cert, $ssl_ca);
 		} else {
 			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
@@ -42,9 +46,9 @@ class DB {
 	 *
 	 * @param string $sql SQL statement to be executed
 	 *
-	 * @return    array
+	 * @return    mixed
 	 */
-	public function query(string $sql): bool|object {
+	public function query(string $sql) {
 		return $this->adaptor->query($sql);
 	}
 

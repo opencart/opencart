@@ -59,8 +59,10 @@ class Event {
 	 *
 	 * @param	string	$event
 	 * @param	array	$args
+	 *
+	 * @return   mixed
  	*/		
-	public function trigger(string $event, array $args = []): mixed {
+	public function trigger(string $event, array $args = []) {
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$result = $value['action']->execute($this->registry, $args);
@@ -75,7 +77,7 @@ class Event {
 	}
 	
 	/**
-	 * 
+	 * unregister
 	 *
 	 * @param	string	$trigger
 	 * @param	string	$route
@@ -89,7 +91,7 @@ class Event {
 	}
 	
 	/**
-	 * 
+	 * clear
 	 *
 	 * @param	string	$trigger
  	*/		

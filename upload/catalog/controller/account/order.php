@@ -107,7 +107,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
-	public function info(): object|null {
+	public function info(): ?object {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {

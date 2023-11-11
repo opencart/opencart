@@ -43,7 +43,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getReturn(int $return_id): array {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(c.`firstname`, ' ', c.`lastname`) FROM `" . DB_PREFIX . "customer` c WHERE c.`customer_id` = r.`customer_id`) AS customer, (SELECT c.`language_id` FROM `" . DB_PREFIX . "customer` c WHERE c.`customer_id` = r.`customer_id`) AS language_id, (SELECT rs.`name` FROM `" . DB_PREFIX . "return_status` rs WHERE rs.`return_status_id` = r.`return_status_id` AND rs.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS return_status FROM `" . DB_PREFIX . "return` r WHERE r.`return_id` = '" . (int)$return_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) FROM `" . DB_PREFIX . "customer` `c` WHERE `c`.`customer_id` = `r`.`customer_id`) AS `customer`, (SELECT `c`.`language_id` FROM `" . DB_PREFIX . "customer` `c` WHERE `c`.`customer_id` = `r`.`customer_id`) AS `language_id`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r` WHERE `r`.`return_id` = '" . (int)$return_id . "'");
 
 		return $query->row;
 	}
@@ -54,7 +54,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getReturns(array $data = []): array {
-		$sql = "SELECT *, CONCAT(`r`.`firstname`, ' ', `r`.`lastname`) AS customer, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r`";
+		$sql = "SELECT *, CONCAT(`r`.`firstname`, ' ', `r`.`lastname`) AS `customer`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r`";
 
 		$implode = [];
 
@@ -79,15 +79,15 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_return_status_id'])) {
-			$implode[] = "r.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
+			$implode[] = "`r`.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`r`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`r`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -108,7 +108,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY r.`return_id`";
+			$sql .= " ORDER BY `r`.`return_id`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -145,11 +145,11 @@ class Returns extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_return_id'])) {
-			$implode[] = "r.`return_id` = '" . (int)$data['filter_return_id'] . "'";
+			$implode[] = "`r`.`return_id` = '" . (int)$data['filter_return_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "LCASE(CONCAT(`r`.`firstname`, ' ', r.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`r`.`firstname`, ' ', `r`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_order_id'])) {
@@ -247,7 +247,7 @@ class Returns extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT rh.`date_added`, rs.`name` AS status, rh.`comment`, rh.`notify` FROM `" . DB_PREFIX . "return_history` rh LEFT JOIN `" . DB_PREFIX . "return_status` rs ON rh.`return_status_id` = rs.`return_status_id` WHERE rh.`return_id` = '" . (int)$return_id . "' AND rs.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY rh.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT `rh`.`date_added`, `rs`.`name` AS `status`, `rh`.`comment`, `rh`.`notify` FROM `" . DB_PREFIX . "return_history` `rh` LEFT JOIN `" . DB_PREFIX . "return_status` `rs` ON `rh`.`return_status_id` = `rs`.`return_status_id` WHERE `rh`.`return_id` = '" . (int)$return_id . "' AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `rh`.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

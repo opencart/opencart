@@ -12,8 +12,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getSpam(string $comment): int {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "antispam` WHERE '" . $this->db->escape($comment) . "' LIKE CONCAT('%', `keyword`, '%')");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "antispam` WHERE '" . $this->db->escape(str_replace(' ', '', $comment)) . "' LIKE CONCAT('%', `keyword`, '%')");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

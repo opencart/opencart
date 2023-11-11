@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Extension\Opencart\Module;
 /**
  * Class Bestseller
  *
- * @package Opencart\Admin\Controller\Extension\Opencart\Module
+ * @package Opencart\Admin\Model\Extension\Opencart\Module
  */
 class Bestseller extends \Opencart\System\Engine\Model {
 	/**

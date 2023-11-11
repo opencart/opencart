@@ -14,7 +14,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function addReview(string &$route, array &$args, mixed &$output): void {
+	public function addReview(string &$route, array &$args, &$output): void {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('review', 1);	
@@ -29,7 +29,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function addReturn(string &$route, array &$args, mixed &$output): void {
+	public function addReturn(string &$route, array &$args, &$output): void {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('returns', 1);

@@ -30,9 +30,9 @@ class Apcu {
      *
      * @param	 string	 $key
 	 * 
-	 * @return	 array|string|null
+	 * @return	 mixed
      */
-	public function get(string $key): array|string|null {
+	public function get(string $key) {
 		return $this->active ? apcu_fetch(CACHE_PREFIX . $key) : [];
 	}
 
@@ -44,7 +44,7 @@ class Apcu {
 	 * 
 	 * @return	 void
      */
-	public function set(string $key, array|string|null $value, int $expire = 0): void {
+	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
 		}

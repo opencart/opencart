@@ -307,7 +307,7 @@ class Order extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY o.`order_id`";
+			$sql .= " ORDER BY `o`.`order_id`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -331,6 +331,17 @@ class Order extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	/**
+	 * @param int $subscription_id
+	 *
+	 * @return int
+	 */
+	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -381,7 +392,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && !$override && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (!$safe && !$override && in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				// Anti-Fraud
 				$this->load->model('setting/extension');
 
@@ -409,7 +420,7 @@ class Order extends \Opencart\System\Engine\Model {
 			$order_totals = $this->getTotals($order_id);
 
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
-			if (!in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				// Redeem coupon, vouchers and reward points
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
@@ -462,13 +473,28 @@ class Order extends \Opencart\System\Engine\Model {
 					$order_subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
 
 					if ($order_subscription_info) {
+						// Add options for subscription
+						$option_data = [];
+
+						$options = $this->getOptions($order_id, $order_product['order_product_id']);
+
+						foreach ($options as $option) {
+							if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+								$option_data[$option['product_option_id']] = $option['value'];
+							} elseif ($option['type'] == 'select' || $option['type'] == 'radio') {
+								$option_data[$option['product_option_id']] = $option['product_option_value_id'];
+							} elseif ($option['type'] == 'checkbox') {
+								$option_data[$option['product_option_id']][] = $option['product_option_value_id'];
+							}
+						}
+
 						// Add subscription if one is not setup
 						$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
 
 						if ($subscription_info) {
 							$subscription_id = $subscription_info['subscription_id'];
 						} else {
-							$subscription_id = $this->model_checkout_subscription->addSubscription(array_merge($order_subscription_info, $order_product, $order_info));
+							$subscription_id = $this->model_checkout_subscription->addSubscription(array_merge($order_subscription_info, $order_product, $order_info, ['option' => $option_data]));
 						}
 
 						// Add history and set active subscription
@@ -478,7 +504,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
-			if (in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status')) && !in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				// Restock
 				foreach ($order_products as $order_product) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `subtract` = '1'");

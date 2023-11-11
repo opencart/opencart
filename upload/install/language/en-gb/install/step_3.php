@@ -23,13 +23,17 @@ $_['entry_db_advanced']      = 'Advanced';
 $_['entry_db_ssl_key']       = 'SSL Key';
 $_['entry_db_ssl_cert']      = 'SSL Cert';
 $_['entry_db_ssl_ca']        = 'SSL CA';
-$_['entry_db_ssl_info']      = 'Certificate inputs should be added as a single line like: "MIIDrzCCApegAwIBAgIQ....=="';
+
 $_['entry_db_database']      = 'Database';
 $_['entry_db_port']          = 'Port';
 $_['entry_db_prefix']        = 'Prefix';
 $_['entry_username']         = 'Username';
 $_['entry_password']         = 'Password';
 $_['entry_email']            = 'E-Mail';
+
+// Help
+$_['entry_db_ssl_info']      = 'Certificate inputs should be added as a single line like: "MIIDrzCCApegAwIBAgIQ....=="';
+
 
 // Error
 $_['error_db_driver']        = 'Database Driver required!';

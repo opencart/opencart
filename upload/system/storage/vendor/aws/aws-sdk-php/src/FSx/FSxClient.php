@@ -71,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise releaseFileSystemNfsV3LocksAsync(array $args = [])
  * @method \Aws\Result restoreVolumeFromSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreVolumeFromSnapshotAsync(array $args = [])
+ * @method \Aws\Result startMisconfiguredStateRecovery(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startMisconfiguredStateRecoveryAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

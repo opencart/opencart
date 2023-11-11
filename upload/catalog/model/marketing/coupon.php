@@ -51,7 +51,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 			// Categories
 			$coupon_category_data = [];
 
-			$coupon_category_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` cc LEFT JOIN `" . DB_PREFIX . "category_path` cp ON (cc.`category_id` = cp.`path_id`) WHERE cc.`coupon_id` = '" . (int)$coupon_query->row['coupon_id'] . "'");
+			$coupon_category_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` `cc` LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cc`.`category_id` = `cp`.`path_id`) WHERE `cc`.`coupon_id` = '" . (int)$coupon_query->row['coupon_id'] . "'");
 
 			foreach ($coupon_category_query->rows as $category) {
 				$coupon_category_data[] = $category['category_id'];
@@ -114,7 +114,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalHistoriesByCoupon(string $coupon): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` `ch` LEFT JOIN `" . DB_PREFIX . "coupon` `c` ON (`ch`.`coupon_id` = `c`.`coupon_id`) WHERE `c`.`code` = '" . $this->db->escape($coupon) . "'");
 
 		return (int)$query->row['total'];
 	}
@@ -126,7 +126,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalHistoriesByCustomerId(string $coupon, int $customer_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "' AND ch.`customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` `ch` LEFT JOIN `" . DB_PREFIX . "coupon` `c` ON (`ch`.`coupon_id` = `c`.`coupon_id`) WHERE `c`.`code` = '" . $this->db->escape($coupon) . "' AND `ch`.`customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];
 	}

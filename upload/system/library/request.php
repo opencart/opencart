@@ -1,40 +1,40 @@
 <?php
 /**
- * @package		OpenCart
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
+ * @package        OpenCart
+ * @author         Daniel Kerr
+ * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license        https://opensource.org/licenses/GPL-3.0
+ * @link           https://www.opencart.com
+ */
 namespace Opencart\System\Library;
 /**
  * Class Request
  */
 class Request {
 	/**
-	 * @var array|mixed
+	 * @var array
 	 */
 	public array $get = [];
 	/**
-	 * @var array|mixed
+	 * @var array
 	 */
 	public array $post = [];
 	/**
-	 * @var array|mixed
+	 * @var array
 	 */
 	public array $cookie = [];
 	/**
-	 * @var array|mixed
+	 * @var array
 	 */
 	public array $files = [];
 	/**
-	 * @var array|mixed
+	 * @var array
 	 */
 	public array $server = [];
-	
+
 	/**
 	 * Constructor
- 	*/
+	 */
 	public function __construct() {
 		$this->get = $this->clean($_GET);
 		$this->post = $this->clean($_POST);
@@ -42,15 +42,15 @@ class Request {
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
 	}
-	
+
 	/**
-     * Clean
+	 * Clean
 	 *
-	 * @param	mixed	$data
+	 * @param mixed $data
 	 *
-     * @return	mixed
-     */
-	public function clean(mixed $data): mixed {
+	 * @return    mixed
+	 */
+	public function clean($data) {
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {
 				unset($data[$key]);

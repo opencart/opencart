@@ -14,7 +14,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, mixed &$output): void {
+	public function index(string &$route, array &$args, &$output): void {
 		$this->load->model('customer/gdpr');
 
 		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);

@@ -62,7 +62,7 @@ class Action {
 	 *
 	 * @return    mixed
 	 */
-	public function execute(\Opencart\System\Engine\Registry $registry, array &$args = []): mixed {
+	public function execute(\Opencart\System\Engine\Registry $registry, array &$args = []) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');

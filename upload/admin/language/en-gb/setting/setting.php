@@ -48,7 +48,6 @@ $_['text_language']                       = 'Language';
 $_['text_currency']                       = 'Currency';
 $_['text_measurement']                    = 'Measurement';
 
-
 // Entry
 $_['entry_meta_title']                    = 'Meta Title';
 $_['entry_meta_description']              = 'Meta Tag Description';
@@ -104,6 +103,7 @@ $_['entry_customer_group_display']        = 'Customer Groups';
 $_['entry_customer_price']                = 'Login Display Prices';
 $_['entry_telephone_display']             = 'Telephone Display';
 $_['entry_telephone_required']            = 'Telephone Required';
+$_['entry_customer_2fa']                  = 'Two-factor Security';
 $_['entry_login_attempts']                = 'Max Login Attempts';
 $_['entry_account']                       = 'Account Terms';
 $_['entry_cart_weight']                   = 'Display Weight on Cart Page';
@@ -173,7 +173,7 @@ $_['entry_maintenance']                   = 'Maintenance Mode';
 $_['entry_session_expire']                = 'Session Lifetime';
 $_['entry_session_samesite']              = 'Session Samesite Cookie';
 $_['entry_compression']                   = 'Output Compression Level';
-$_['entry_security']                      = 'Two-factor Security';
+$_['entry_user_2fa']                      = 'Two-factor Security';
 $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
 $_['entry_error_filename']                = 'Error Log Filename';
@@ -211,7 +211,8 @@ $_['help_customer_activity']              = 'Track customers activity via the cu
 $_['help_customer_group']                 = 'Default customer group.';
 $_['help_customer_group_display']         = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
 $_['help_customer_price']                 = 'Only show prices when a customer is logged in.';
-$_['help_login_attempts']                 = 'Maximum login attempts allowed before the account is locked for 1 hour. Customer and affiliate accounts can be unlocked on the customer or affiliate admin pages.';
+$_['help_customer_2fa']                   = 'Two-factor security for customers.';
+$_['help_login_attempts']                 = 'Maximum login attempts allowed before the account is locked for 1 hour. Customer accounts can be unlocked on the customer admin pages.';
 $_['help_account']                        = 'Forces people to agree to terms before an account can be created.';
 $_['help_invoice_prefix']                 = 'Set the invoice prefix (e.g. INV-2011-00). Invoice IDs will start at 1 for each unique prefix.';
 $_['help_cart_weight']                    = 'Show the cart weight on the cart page.';
@@ -245,7 +246,7 @@ $_['help_mail_alert']                     = 'Select which features you would lik
 $_['help_mail_alert_email']               = 'Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated).';
 $_['help_session_expire']                 = 'Set the PHP Session lifetime in seconds (e.g. 3600 = 1 hour)';
 $_['help_session_samesite']               = 'Set the PHP Session samesite cookie';
-$_['help_security']                       = 'Two-factor security for admin users.';
+$_['help_user_2fa']                       = 'Two-factor security for admin users.';
 $_['help_shared']                         = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                         = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';
 $_['help_seo_url']                        = 'To use SEO URLs, apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.';
@@ -253,7 +254,6 @@ $_['help_file_max_size']                  = 'The maximum file size you can allow
 $_['help_file_ext_allowed']               = 'Add which file extensions are allowed to be uploaded. Use a new line for each value.';
 $_['help_file_mime_allowed']              = 'Add which file mime types are allowed to be uploaded. Use a new line for each value.';
 $_['help_maintenance']                    = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
-$_['help_encryption']                     = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
 $_['help_compression']                    = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
 
 // Error
@@ -287,7 +287,7 @@ $_['error_image_wishlist']                = 'Wish List Image Size dimensions req
 $_['error_image_cart']                    = 'Cart Image Size dimensions required!';
 $_['error_image_location']                = 'Store Image Size dimensions required!';
 $_['error_file_max_size']                 = 'Max File Size required!';
-$_['error_security']                      = 'Two-factor Security cannot be used if you do not have your email setup yet!';
+$_['error_user_2fa']                      = 'Two-factor Security cannot be used if you do not have your email setup yet!';
 $_['error_extension']                     = 'PHP uploads are not allowed!';
 $_['error_mime']                          = 'PHP uploads are not allowed!';
 $_['error_log_required']                  = 'Error Log Filename required!';

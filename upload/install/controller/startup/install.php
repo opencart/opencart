@@ -11,7 +11,7 @@ class Install extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		// Document
-		$this->registry->set('document', new \Opencart\System\Library\Document(HTTP_SERVER));
+		$this->registry->set('document', new \Opencart\System\Library\Document());
 
 		// URL
 		$this->registry->set('url', new \Opencart\System\Library\Url(HTTP_SERVER));

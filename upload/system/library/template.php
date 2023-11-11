@@ -12,7 +12,7 @@ namespace Opencart\System\Library;
  */
 class Template {
 	/**
-	 * @var object|mixed
+	 * @var object
 	 */
 	private object $adaptor;
 

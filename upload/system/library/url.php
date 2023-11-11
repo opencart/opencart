@@ -24,7 +24,7 @@ class Url {
 	/**
 	 * Constructor.
 	 *
-	 * @param 	string 	$url
+	 * @param string $url
 	 */
 	public function __construct(string $url) {
 		$this->url = $url;
@@ -35,9 +35,9 @@ class Url {
 	 *
 	 * Add a rewrite method to the URL system
 	 *
-	 * @param	object	$rewrite
+	 * @param object $rewrite
 	 *
-	 * @return 	void
+	 * @return    void
 	 */
 	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
 		$this->rewrite[] = $rewrite;
@@ -46,13 +46,13 @@ class Url {
 	/**
 	 * Generates a URL
 	 *
-	 * @param 	string        	$route
-	 * @param 	string|array	$args
-	 * @param 	bool			$js
+	 * @param string $route
+	 * @param mixed  $args
+	 * @param bool   $js
 	 *
 	 * @return string
 	 */
-	public function link(string $route, string|array $args = '', bool $js = false): string {
+	public function link(string $route, $args = '', bool $js = false): string {
 		$url = $this->url . 'index.php?route=' . $route;
 
 		if ($args) {

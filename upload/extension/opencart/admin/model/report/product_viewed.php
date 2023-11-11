@@ -30,7 +30,7 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addReport(int $product_id, int $viewed) {
+	public function addReport(int $product_id, int $viewed): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_viewed` SET `product_id` = '" . (int)$product_id . "', `viewed` = '" . (int)$viewed . "'");
 	}
 

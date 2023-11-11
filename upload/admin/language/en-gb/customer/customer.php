@@ -13,7 +13,9 @@ $_['text_customer']         = 'Customer Details';
 $_['text_password']         = 'Password';
 $_['text_other']            = 'Other';
 $_['text_balance']          = 'Balance';
-$_['text_address']          = 'Address';
+$_['text_address']          = 'Addresses';
+$_['text_address_add']      = 'Add Address';
+$_['text_address_edit']     = 'Edit Address';
 $_['text_payment_method']   = 'Payment Methods';
 $_['text_history']          = 'History';
 $_['text_history_add']      = 'Add History';
@@ -47,6 +49,7 @@ $_['column_image']          = 'Image';
 $_['column_type']           = 'Type';
 $_['column_date_expire']    = 'Date Expires';
 $_['column_user_agent']     = 'User Agent';
+$_['column_address']        = 'Address';
 $_['column_action']         = 'Action';
 
 // Entry
@@ -59,6 +62,7 @@ $_['entry_telephone']       = 'Telephone';
 $_['entry_newsletter']      = 'Newsletter';
 $_['entry_status']          = 'Status';
 $_['entry_safe']            = 'Safe';
+$_['entry_commenter']       = 'Commenter';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';
 $_['entry_company']         = 'Company';
@@ -86,6 +90,7 @@ $_['button_order']          = 'Orders';
 
 // Help
 $_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system';
+$_['help_commenter']        = 'Set to true to allow customer from being caught by the anti-spam system';
 $_['help_points']           = 'Use minus to remove points';
 
 // Error

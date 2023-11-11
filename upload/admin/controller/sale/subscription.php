@@ -418,11 +418,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['subscription_id'] = $subscription_id;
-
 		$this->load->model('sale/subscription');
 
-		$subscription_info = $this->model_sale_subscription->getSubscription($data['subscription_id']);
+		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
 
 		if (!empty($subscription_info)) {
 			$data['subscription_id'] = $subscription_info['subscription_id'];
@@ -437,7 +435,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
 		}
 
-		if (!empty($subscription_info)) {
+		if (!empty($order_info)) {
 			$data['order'] = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $subscription_info['order_id']);
 		} else {
 			$data['order'] = '';
@@ -460,12 +458,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['firstname'] = $customer_info['firstname'];
 		} else {
 			$data['firstname'] = '';
-		}
-
-		if (!empty($customer_info)) {
-			$data['lastname'] = $customer_info['lastname'];
-		} else {
-			$data['lastname'] = '';
 		}
 
 		if (!empty($customer_info)) {
@@ -666,9 +658,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Product data
 		if (!empty($subscription_info)) {
-			$this->load->model('sale/order');
-
-			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
+			//$this->load->model('sale/order');
+			//getSubscriptionByOrderProductId
+		//	$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
 
 		if (!empty($product_info['name'])) {

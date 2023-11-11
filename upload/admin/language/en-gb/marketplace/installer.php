@@ -7,6 +7,7 @@ $_['text_upload']            = 'Success: The extension has been uploaded!';
 $_['text_success']           = 'Success: You have modified extensions!';
 $_['text_progress']          = 'Install Progress';
 $_['text_installed']         = 'Installed Extensions';
+$_['text_info']              = 'Extension Information';
 
 // Column
 $_['column_image']           = 'Image';
@@ -17,6 +18,8 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_progress']         = 'Progress';
+$_['entry_name']             = 'Extension Name';
+$_['entry_description']      = 'Description';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';

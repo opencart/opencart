@@ -1,0 +1,356 @@
+<?php
+namespace Opencart\Admin\Controller\Customer;
+/**
+ * Class Address
+ *
+ * @package Opencart\Admin\Controller\Customer
+ */
+class Address extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
+	public function index(): void {
+		$this->load->language('customer/customer');
+
+		$this->response->setOutput($this->getAddress());
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAddress(): string {
+		$this->load->language('customer/customer');
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
+
+		$data['addresses'] = [];
+
+		$this->load->model('customer/customer');
+
+		$results = $this->model_customer_customer->getAddresses($customer_id);
+
+		foreach ($results as $result) {
+			$data['addresses'][] = [
+				'firstname' => $result['firstname'],
+				'lastname'  => $result['lastname'],
+				'company'   => $result['company'],
+				'address_1' => $result['address_1'],
+				'address_2' => $result['address_2'],
+				'postcode'  => $result['postcode'],
+				'city'      => $result['city'],
+				'zone'      => $result['zone'],
+				'country'   => $result['country'],
+				'default'   => $result['default'],
+				'edit'      => $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&address_id=' . $result['address_id']),
+				'delete'    => $this->url->link('customer/address.delete', 'user_token=' . $this->session->data['user_token'] . '&address_id=' . $result['address_id'])
+			];
+		}
+
+		$data['address_add'] = $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
+
+		return $this->load->view('customer/address_list', $data);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function form(): void {
+		$this->load->language('customer/customer');
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (isset($this->request->get['address_id'])) {
+			$data['heading_title'] = $this->language->get('text_address_add');
+		} else {
+			$data['heading_title'] = $this->language->get('text_address_edit');
+		}
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['save'] = $this->url->link('customer/address.save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
+		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
+		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
+
+		if (isset($this->request->get['address_id'])) {
+			$this->load->model('customer/customer');
+
+			$address_info = $this->model_customer_customer->getAddress($this->request->get['address_id']);
+		}
+
+		if (isset($this->request->get['address_id'])) {
+			$data['address_id'] = (int)$this->request->get['address_id'];
+		} else {
+			$data['address_id'] = 0;
+		}
+
+		if (!empty($address_info)) {
+			$data['firstname'] = $address_info['firstname'];
+		} else {
+			$data['firstname'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['lastname'] = $address_info['lastname'];
+		} else {
+			$data['lastname'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['company'] = $address_info['company'];
+		} else {
+			$data['company'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['address_1'] = $address_info['address_1'];
+		} else {
+			$data['address_1'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['address_2'] = $address_info['address_2'];
+		} else {
+			$data['address_2'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['postcode'] = $address_info['postcode'];
+		} else {
+			$data['postcode'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['city'] = $address_info['city'];
+		} else {
+			$data['city'] = '';
+		}
+
+		if (!empty($address_info)) {
+			$data['country_id'] = $address_info['country_id'];
+		} else {
+			$data['country_id'] = $this->config->get('config_country_id');
+		}
+
+		if (!empty($address_info)) {
+			$data['zone_id'] = $address_info['zone_id'];
+		} else {
+			$data['zone_id'] = '';
+		}
+
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		// Custom fields
+		$data['custom_fields'] = [];
+
+		$filter_data = [
+			'filter_location' => 'address',
+			'sort'            => 'cf.sort_order',
+			'order'           => 'ASC'
+		];
+
+		$this->load->model('customer/custom_field');
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+
+		foreach ($custom_fields as $custom_field) {
+			$data['custom_fields'][] = [
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
+				'name'               => $custom_field['name'],
+				'value'              => $custom_field['value'],
+				'type'               => $custom_field['type'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			];
+		}
+
+		if (!empty($address_info)) {
+			$data['address_custom_field'] = $address_info['custom_field'];
+		} else {
+			$data['address_custom_field'] = [];
+		}
+
+		if (isset($this->request->get['address_id'])) {
+			$data['default'] = $address_info['default'];
+		} else {
+			$data['default'] = true;
+		}
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('customer/address_form', $data));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('customer/customer');
+
+		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+		if (!$customer_info) {
+			$json['error']['warning'] = $this->language->get('error_customer');
+		}
+
+		if (!$json) {
+			if ((oc_strlen($this->request->post['firstname']) < 1) || (oc_strlen($this->request->post['firstname']) > 32)) {
+				$json['error']['address_firstname'] = $this->language->get('error_firstname');
+			}
+
+			if ((oc_strlen($this->request->post['lastname']) < 1) || (oc_strlen($this->request->post['lastname']) > 32)) {
+				$json['error']['address_lastname'] = $this->language->get('error_lastname');
+			}
+
+			if ((oc_strlen($this->request->post['address_1']) < 3) || (oc_strlen($this->request->post['address_1']) > 128)) {
+				$json['error']['address_address_1'] = $this->language->get('error_address_1');
+			}
+
+			if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 128)) {
+				$json['error']['address_city'] = $this->language->get('error_city');
+			}
+
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
+
+			if ($country_info && $country_info['postcode_required'] && (oc_strlen($this->request->post['postcode']) < 2 || oc_strlen($this->request->post['postcode']) > 10)) {
+				$json['error']['address_postcode'] = $this->language->get('error_postcode');
+			}
+
+			if (!$country_info || $this->request->post['country_id'] == '') {
+				$json['error']['address_country'] = $this->language->get('error_country');
+			}
+
+			if ($this->request->post['zone_id'] == '') {
+				$json['error']['address_zone'] = $this->language->get('error_zone');
+			}
+
+			$filter_data = [
+				'filter_location'          => 'address',
+				'filter_customer_group_id' => $customer_info['customer_group_id'],
+				'filter_status'            => 1
+			];
+
+			$this->load->model('customer/custom_field');
+
+			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					$json['error']['address_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					$json['error']['address_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+				}
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			if (!$this->request->post['address_id']) {
+				$this->model_customer_customer->addAddress($customer_id, $this->request->post);
+			} else {
+				$this->model_customer_customer->editAddress($customer_id, $this->request->post['address_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('customer/customer');
+
+		$address_info = $this->model_customer_customer->getAddress($address_id);
+
+		if (!$address_info) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		if (!$json) {
+			$this->model_customer_customer->deleteAddress($address_id, $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * @return void
+	 */
+	public function address(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
+		}
+
+		$this->load->model('customer/customer');
+
+		$address_info = $this->model_customer_customer->getAddress($address_id);
+
+		if (!$address_info) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		if (!$json) {
+			$json = $address_info;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+}

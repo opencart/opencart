@@ -153,17 +153,6 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $subscription_id
-	 *
-	 * @return int
-	 */
-	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -238,7 +227,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getHistories(int $order_id): array {
-		$query = $this->db->query("SELECT `date_added`, os.`name` AS status, oh.`comment`, oh.`notify` FROM `" . DB_PREFIX . "order_history` oh LEFT JOIN `" . DB_PREFIX . "order_status` os ON oh.`order_status_id` = os.`order_status_id` WHERE oh.`order_id` = '" . (int)$order_id . "' AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY oh.`date_added`");
+		$query = $this->db->query("SELECT `date_added`, `os`.`name` AS `status`, `oh`.`comment`, `oh`.`notify` FROM `" . DB_PREFIX . "order_history` `oh` LEFT JOIN `" . DB_PREFIX . "order_status` `os` ON `oh`.`order_status_id` = `os`.`order_status_id` WHERE `oh`.`order_id` = '" . (int)$order_id . "' AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `oh`.`date_added`");
 
 		return $query->rows;
 	}
@@ -262,7 +251,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalOrders(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` o WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND o.`order_status_id` > '0' AND o.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` `o` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `o`.`order_status_id` > '0' AND `o`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];
@@ -277,7 +266,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalOrdersByProductId(int $product_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.`order_id` = o.`order_id`) WHERE o.`customer_id` = '" . (int)$this->customer->getId() . "' AND op.`product_id` = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "' AND `op`.`product_id` = '" . (int)$product_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];
@@ -314,5 +303,16 @@ class Order extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
+	}
+
+	/**
+	 * @param int $subscription_id
+	 *
+	 * @return int
+	 */
+	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		return (int)$query->row['total'];
 	}
 }

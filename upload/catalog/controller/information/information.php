@@ -9,7 +9,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): object|null {
+	public function index(): ?object {
 		$this->load->language('information/information');
 
 		if (isset($this->request->get['information_id'])) {

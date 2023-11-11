@@ -18,7 +18,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, mixed &$output): void {
+	public function index(string &$route, array &$args, &$output): void {
 		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config' && isset($args[1]['config_currency'])) {
 			$currency = $args[1]['config_currency'];
 		} else {

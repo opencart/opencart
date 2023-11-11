@@ -145,16 +145,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json && !empty($this->request->cookie['language'])) {
-			$this->load->model('localisation/language');
-
-			$language_info = $this->model_localisation_language->getLanguageByCode($this->request->cookie['language']);
-
-			if ($language_info['extension'] == $this->request->get['extension']) {
-				$json['error'] = $this->language->get('error_code');
-			}
-		}
-
 		if (!$json) {
 			$this->load->model('setting/extension');
 

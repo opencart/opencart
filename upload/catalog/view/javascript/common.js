@@ -575,11 +575,9 @@ var chain = new Chain();
 // Observe
 +function($) {
     $.fn.observe = function(callback) {
-        var element = this;
-
         observer = new MutationObserver(callback);
 
-        observer.observe($(element)[0], {
+        observer.observe($(this)[0], {
             characterData: false,
             childList: true,
             attributes: false

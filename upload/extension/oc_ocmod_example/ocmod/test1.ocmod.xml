@@ -24,7 +24,7 @@
                 <![CDATA[if (defined('DIR_CATALOG') && is_file(DIR_MODIFICATION . 'admin/view/template/' . $filename . '.twig')) {
                 $code = file_get_contents(DIR_MODIFICATION . 'admin/view/template/' . $filename . '.twig');
             } elseif (is_file(DIR_MODIFICATION . 'catalog/view/theme/' . $filename . '.twig')) {
-                $code = file_get_contents(DIR_MODIFICATION . 'catalog/view/theme/' . $filename . '.twig');
+                $code = file_get_contents(DIR_MODIFICATION . 'catalog/view/template/' . $filename . '.twig');
             } elseif (is_file($file)) {]]>
             </add>
         </operation>

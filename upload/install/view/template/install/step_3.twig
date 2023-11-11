@@ -16,9 +16,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data">
           <fieldset>
             <legend>{{ text_db_connection }}</legend>
-
             <div class="row">
-
               <div class="col-md-4 order-md-2">
                 <div class="alert alert-info">
                   <p>{{ text_help }}</p>
@@ -67,10 +65,6 @@
                   </div>
                 </div>
 
-
-
-
-
                 <div class="row mb-3">
                   <div class="accordion" id="db-advanced" style="display:{{ db_driver =='mysqli'?'block':'none' }};">
                     <div class="accordion-item">
@@ -112,10 +106,6 @@
                     </div>
                   </div>
                 </div>
-
-
-
-
 
                 <div class="row mb-3">
                   <div class="col-6 required">
@@ -178,7 +168,6 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#input-subscription').on('change', function(e) {
     var element = this;
@@ -187,6 +176,7 @@ $('#input-subscription').on('change', function(e) {
 
     $('#subscription-description-' + $(element).val()).removeClass('d-none');
 });
+
 
 
 

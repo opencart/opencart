@@ -129,7 +129,11 @@ class Attribute extends \Opencart\System\Engine\Model {
 			$sql .= " AND `a`.`attribute_group_id` = '" . (int)$data['filter_attribute_group_id'] . "'";
 		}
 
-		$sort_data = ['ad.name', 'attribute_group', 'a.sort_order'];
+		$sort_data = [
+			'ad.name', 
+			'attribute_group', 
+			'a.sort_order'
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

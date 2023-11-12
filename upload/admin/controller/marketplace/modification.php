@@ -121,6 +121,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				'description'     => $result['description'],
 				'author'          => $result['author'],
 				'version'         => $result['version'],
+				'xml'             => $result['xml'],
 				'status'          => $result['status'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
@@ -232,7 +233,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			if ($files) {
 				foreach ($files as $file) {
-				//	$xml[] = file_get_contents($file);
+					$xml[] = file_get_contents($file);
 				}
 			}
 
@@ -252,17 +253,13 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$modification = [];
 
 			foreach ($xml as $xml) {
-				if (empty($xml)){
+				if (empty($xml)) {
 					continue;
 				}
-
-
 
 				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
-
-				echo $xml;
 
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;

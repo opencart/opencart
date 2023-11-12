@@ -432,7 +432,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 2, $total);
+			$json['text'] = sprintf($this->language->get('text_install'), $start, $end, $total);
 
 			$url = '';
 

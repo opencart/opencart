@@ -417,7 +417,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					// If check if the path is not directory and check there is no existing file
 					if (substr($source, -1) != '/') {
-						if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
+						if (!is_file($base . $path) && file_put_contents($base . $path, $zip->getFromIndex($i)) !== false) {
 							$this->model_setting_extension->addPath($extension_install_id, $prefix . $path);
 						}
 					}

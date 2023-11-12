@@ -4177,7 +4177,7 @@ function oc_db_schema() {
 			],
 			[
 				'name'     => 'xml',
-				'type'     => 'varchar(64)',
+				'type'     => 'text',
 				'not_null' => true
 			],
 			[

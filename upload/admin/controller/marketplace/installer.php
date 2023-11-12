@@ -165,16 +165,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['extensions'][] = [
-				'name'        => $result['name'],
-				'description' => $result['description'],
-				'version'     => $result['version'],
-				'author'      => $result['author'],
-				'status'      => $result['status'],
-				'link'        => $link,
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'install'     => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'uninstall'   => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'delete'      => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
+				'extension_install_id' => $result['extension_install_id'],
+				'name'                 => $result['name'],
+				'description'          => $result['description'],
+				'code'                 => $result['code'],
+				'version'              => $result['version'],
+				'author'               => $result['author'],
+				'status'               => $result['status'],
+				'link'                 => $link,
+				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'install'              => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
+				'uninstall'            => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
+				'delete'               => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
 			];
 		}
 
@@ -453,7 +455,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function xml(): void {
-		$this->load->language('marketplace/install');
+		$this->load->language('marketplace/installer');
 
 		$json = [];
 
@@ -547,21 +549,19 @@ class Installer extends \Opencart\System\Engine\Controller {
 										$link = '';
 									}
 
-									if (!$json) {
-										$modification_data = [
-											'extension_install_id' => $extension_install_id,
-											'name'                 => $name,
-											'description'          => $description,
-											'code'                 => $code,
-											'author'               => $author,
-											'version'              => $version,
-											'link'                 => $link,
-											'xml'                  => $xml,
-											'status'               => 0
-										];
+									$modification_data = [
+										'extension_install_id' => $extension_install_id,
+										'name'                 => $name,
+										'description'          => $description,
+										'code'                 => $code,
+										'author'               => $author,
+										'version'              => $version,
+										'link'                 => $link,
+										'xml'                  => $xml,
+										'status'               => 0
+									];
 
-										$this->model_setting_modification->addModification($modification_data);
-									}
+									$this->model_setting_modification->addModification($modification_data);
 								} catch (\Exception $exception) {
 									$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 								}
@@ -577,7 +577,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_vendor');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/installer/vendor', 'user_token=' . $this->session->data['user_token'], true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/installer.vendor', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -815,6 +815,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/modification');
 
 			$this->model_setting_modification->deleteModificationsByExtensionInstallId($extension_install_id);
+
+			$json['text'] = $this->language->get('text_vendor');
 
 			$url = '';
 

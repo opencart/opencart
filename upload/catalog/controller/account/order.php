@@ -214,7 +214,19 @@ class Order extends \Opencart\System\Engine\Controller {
 				'country'   => $order_info['payment_country']
 			];
 
-			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+			$pattern_1 = [
+				"\r\n",
+				"\r",
+				"\n"
+			];
+
+			$pattern_2 = [
+				"/\s\s+/",
+				"/\r\r+/",
+				"/\n\n+/"
+			];
+
+			$data['payment_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
 			$data['payment_method'] = $order_info['payment_method']['name'];
 
@@ -252,7 +264,9 @@ class Order extends \Opencart\System\Engine\Controller {
 					'country'   => $order_info['shipping_country']
 				];
 
-				$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+
+
+				$data['shipping_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
 				$data['shipping_method'] = $order_info['shipping_method']['name'];
 			} else {

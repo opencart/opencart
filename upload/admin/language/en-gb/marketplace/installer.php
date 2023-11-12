@@ -8,7 +8,7 @@ $_['text_success']           = 'Success: You have modified extensions!';
 $_['text_progress']          = 'Install Progress';
 $_['text_installed']         = 'Installed Extensions';
 $_['text_info']              = 'Extension Information';
-$_['text_install']           = 'Installing files %s of %s';
+$_['text_install']           = 'Installing files %s to %s of %s';
 $_['text_vendor']            = 'Refresh vendor files';
 $_['text_xml']               = 'Install OCMOD files';
 

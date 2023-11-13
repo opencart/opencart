@@ -296,18 +296,14 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'pd.name',
-			'p.model',
-			'p.price',
-			'p.quantity',
-			'p.status',
-			'p.sort_order'
+			'price',
+			'quantity'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `o`.`order_id`";
+			$sql .= " ORDER BY `order_id`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

@@ -167,6 +167,14 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -195,7 +203,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('user/user_permission.save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('user/user_permission.save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['user_group_id'])) {
@@ -339,12 +347,30 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/user_group');
 
 			if (!$this->request->post['user_group_id']) {
-				$json['user_group_id'] = $this->model_user_user_group->addUserGroup($this->request->post);
+				$user_group_id = $this->model_user_user_group->addUserGroup($this->request->post);
 			} else {
 				$this->model_user_user_group->editUserGroup($this->request->post['user_group_id'], $this->request->post);
+
+				$user_group_id = $this->request->post['user_group_id'];
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $user_group_id . $url));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

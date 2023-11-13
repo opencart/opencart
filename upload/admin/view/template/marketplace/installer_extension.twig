@@ -22,7 +22,7 @@
             <td class="text-start align-text-top">{{ extension.version }}</td>
             <td class="text-start align-text-top">{{ extension.date_added }}</td>
             <td class="text-end align-text-top text-nowrap">
-              <button type="button" data-oc-target="#extension-{{ extension.extension_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+              <button type="button" data-oc-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
               {% if not extension.status %}
                 <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                 <a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
@@ -46,14 +46,18 @@
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>
 {% for extension in extensions %}
-  <div id="extension-{{ extension.extension_id }}" class="d-none">
+  <div id="extension-install-{{ extension.extension_install_id }}" class="d-none">
     <div class="mb-3">
       <label class="form-label">{{ entry_name }}</label>
-      <textarea placeholder="{{ entry_name }}" class="form-control" disabled>{{ extension.name }}</textarea>
+      <input type="text" value="{{ extension.name }}" class="form-control" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ entry_description }}</label>
+      <textarea rows="5" class="form-control" disabled>{{ extension.description }}</textarea>
     </div>
     <div>
-      <label class="form-label">{{ entry_description }}</label>
-      <textarea placeholder="{{ entry_description }}" rows="5" class="form-control" disabled>{{ extension.description }}</textarea>
+      <label class="form-label">{{ entry_code }}</label>
+      <input type="text" value="{{ extension.code }}" class="form-control" disabled/>
     </div>
   </div>
 {% endfor %}

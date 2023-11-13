@@ -119,23 +119,16 @@ class Installer extends \Opencart\System\Engine\Controller {
 						];
 
 						foreach ($keys as $key) {
-							if (!isset($this->request->post[$key])) {
-								$this->request->post[$key] = '';
+							if (!isset($install_info[$key])) {
+								$install_info[$key] = '';
 							}
 						}
 
-
-						if (!empty($install_info['description'])) {
-							$description = $install_info['description'];
-						} else {
-							$description = '';
-						}
-
 						$extension_data = [
-							'extension_id'          => 0,
-							'extension_download_id' => 0,
+							'extension_id'          => $install_info['extension_id'],
+							'extension_download_id' => $install_info['extension_download_id'],
 							'name'                  => $install_info['name'],
-							'description'           => $description,
+							'description'           => $install_info['description'],
 							'code'                  => $code,
 							'version'               => $install_info['version'],
 							'author'                => $install_info['author'],
@@ -172,16 +165,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['extensions'][] = [
-				'name'        => $result['name'],
-				'description' => $result['description'],
-				'version'     => $result['version'],
-				'author'      => $result['author'],
-				'status'      => $result['status'],
-				'link'        => $link,
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'install'     => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'uninstall'   => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'delete'      => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
+				'extension_install_id' => $result['extension_install_id'],
+				'name'                 => $result['name'],
+				'description'          => $result['description'],
+				'code'                 => $result['code'],
+				'version'              => $result['version'],
+				'author'               => $result['author'],
+				'status'               => $result['status'],
+				'link'                 => $link,
+				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'install'              => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
+				'uninstall'            => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
+				'delete'               => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
 			];
 		}
 
@@ -272,20 +267,21 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$install_info = json_decode($zip->getFromName('install.json'), true);
 
 				if ($install_info) {
-					if (!empty($install_info['name'])) {
-						$json['error'] = $this->language->get('error_name');
-					}
+					$keys = [
+						'extension_id',
+						'extension_download_id',
+						'name',
+						'description',
+						'code',
+						'version',
+						'author',
+						'link'
+					];
 
-					if (!$install_info['version']) {
-						$json['error'] = $this->language->get('error_version');
-					}
-
-					if (!$install_info['author']) {
-						$json['error'] = $this->language->get('error_author');
-					}
-
-					if (!$install_info['link']) {
-						$json['error'] = $this->language->get('error_link');
+					foreach ($keys as $key) {
+						if (!isset($install_info[$key])) {
+							$install_info[$key] = '';
+						}
 					}
 				} else {
 					$json['error'] = $this->language->get('error_install');
@@ -362,16 +358,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
 				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
 			}
-
-			// Validate if extension already in use
-			$this->load->model('setting/modification');
-
-			$modification_info = $this->model_setting_modification->getTotalModificationsByCode($extension_install_info['code']);
-
-			if (!$modification_info) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
-			}
-
 		} else {
 			$json['error'] = $this->language->get('error_extension');
 		}
@@ -431,7 +417,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					// If check if the path is not directory and check there is no existing file
 					if (substr($source, -1) != '/') {
-						if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
+						if (!is_file($base . $path) && file_put_contents($base . $path, $zip->getFromIndex($i)) !== false) {
 							$this->model_setting_extension->addPath($extension_install_id, $prefix . $path);
 						}
 					}
@@ -446,7 +432,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 2, $total);
+			$json['text'] = sprintf($this->language->get('text_install'), $start, $end, $total);
 
 			$url = '';
 
@@ -469,7 +455,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function xml(): void {
-		$this->load->language('marketplace/install');
+		$this->load->language('marketplace/installer');
 
 		$json = [];
 
@@ -502,405 +488,393 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
-				$total = $zip->numFiles;
-				$limit = 200;
+				$this->load->model('setting/modification');
 
 				// If xml file just put it straight into the DB
 				// Check if any of the files already exist.
-				for ($i = 0; $i < $limit; $i++) {
+				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$source = $zip->getNameIndex($i);
 
-					if (basename($source)) {}
+					if (substr($source, 0, 6) == 'ocmod/' && substr($source, -10) == '.ocmod.xml') {
+						$code = basename($source, '.ocmod.xml');
 
-					$xml = $zip->getStream('test');
+						// Check to see if the modification is already installed or not.
+						$modification_info = $this->model_setting_modification->getModificationByCode($code);
 
-					//'zip://' . $file . '#' . $source
+						if (!$modification_info) {
+							$xml = $zip->getFromName($source);
 
-					if ($xml) {
-						try {
-							$dom = new \DOMDocument('1.0', 'UTF-8');
-							$dom->loadXml($xml);
+							if ($xml) {
+								try {
+									$dom = new \DOMDocument('1.0', 'UTF-8');
+									$dom->loadXml($xml);
 
-							$name = $dom->getElementsByTagName('name')->item(0);
+									$name = $dom->getElementsByTagName('name')->item(0);
 
-							if ($name) {
-								$name = $name->nodeValue;
-							} else {
-								$name = '';
-							}
+									if ($name) {
+										$name = $name->nodeValue;
+									} else {
+										$name = '';
+									}
 
-							$description = $dom->getElementsByTagName('description')->item(0);
+									$description = $dom->getElementsByTagName('description')->item(0);
 
-							if ($description) {
-								$description = $name->nodeValue;
-							} else {
-								$description = '';
-							}
+									if ($description) {
+										$description = $name->nodeValue;
+									} else {
+										$description = '';
+									}
 
-							$code = $dom->getElementsByTagName('code')->item(0);
+									$author = $dom->getElementsByTagName('author')->item(0);
 
-							if ($code) {
-								$code = $code->nodeValue;
+									if ($author) {
+										$author = $author->nodeValue;
+									} else {
+										$author = '';
+									}
 
-								// Check to see if the modification is already installed or not.
-								$modification_info = $this->model_setting_modification->getModificationByCode($code);
+									$version = $dom->getElementsByTagName('version')->item(0);
 
-								if ($modification_info) {
-									$this->model_setting_modification->deleteModification($modification_info['modification_id']);
+									if ($version) {
+										$version = $version->nodeValue;
+									} else {
+										$version = '';
+									}
+
+									$link = $dom->getElementsByTagName('link')->item(0);
+
+									if ($link) {
+										$link = $link->nodeValue;
+									} else {
+										$link = '';
+									}
+
+									$modification_data = [
+										'extension_install_id' => $extension_install_id,
+										'name'                 => $name,
+										'description'          => $description,
+										'code'                 => $code,
+										'author'               => $author,
+										'version'              => $version,
+										'link'                 => $link,
+										'xml'                  => $xml,
+										'status'               => 0
+									];
+
+									$this->model_setting_modification->addModification($modification_data);
+								} catch (\Exception $exception) {
+									$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 								}
+							}
+						}
+					}
+				}
+			} else {
+				$json['error'] = $this->language->get('error_unzip');
+			}
+		}
+
+		if (!$json) {
+			$json['text'] = $this->language->get('text_vendor');
+
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/installer.vendor', 'user_token=' . $this->session->data['user_token'], true));
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Generate new autoloader file
+	 *
+	 * @return void
+	 */
+	public function vendor(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Generate php autoload file
+			$code = '<?php' . "\n";
+
+			$files = glob(DIR_STORAGE . 'vendor/*/*/composer.json');
+
+			foreach ($files as $file) {
+				$output = json_decode(file_get_contents($file), true);
+
+				$code .= '// ' . $output['name'] . "\n";
+
+				if (isset($output['autoload'])) {
+					$directory = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+
+					// Autoload psr-4 files
+					if (isset($output['autoload']['psr-4'])) {
+						$autoload = $output['autoload']['psr-4'];
+
+						foreach ($autoload as $namespace => $path) {
+							if (!is_array($path)) {
+								$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($path, '/') . '/' . '\', true);' . "\n";
 							} else {
-								$json['error'] = $this->language->get('error_code');
+								foreach ($path as $value) {
+									$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($value, '/') . '/' . '\', true);' . "\n";
+								}
 							}
-
-							$author = $dom->getElementsByTagName('author')->item(0);
-
-							if ($author) {
-								$author = $author->nodeValue;
-							} else {
-								$author = '';
-							}
-
-							$version = $dom->getElementsByTagName('version')->item(0);
-
-							if ($version) {
-								$version = $version->nodeValue;
-							} else {
-								$version = '';
-							}
-
-							$link = $dom->getElementsByTagName('link')->item(0);
-
-							if ($link) {
-								$link = $link->nodeValue;
-							} else {
-								$link = '';
-							}
-
-							if (!$json) {
-								$modification_data = [
-									'extension_install_id' => $extension_install_id,
-									'name'                 => $name,
-									'description'          => $description,
-									'code'                 => $code,
-									'author'               => $author,
-									'version'              => $version,
-									'link'                 => $link,
-									'xml'                  => $xml,
-									'status'               => 0
-								];
-
-								$this->model_setting_modification->addModification($modification_data);
-							}
-						} catch (\Exception $exception) {
-							$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 						}
 					}
 
-				} else {
-					$json['error'] = $this->language->get('error_unzip');
-				}
-			}
+					// Autoload psr-0 files
+					if (isset($output['autoload']['psr-0'])) {
+						$autoload = $output['autoload']['psr-0'];
 
-
-			if (!$json) {
-				$json['text'] = $this->language->get('text_vendor');
-
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/installer/vendor', 'user_token=' . $this->session->data['user_token'], true));
-			}
-
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode($json));
-		}
-
-		/**
-		 * Generate new autoloader file
-		 *
-		 * @return void
-		 */ public
-		function vendor(): void {
-			$this->load->language('marketplace/installer');
-
-			$json = [];
-
-			if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
-				$json['error'] = $this->language->get('error_permission');
-			}
-
-			if (!$json) {
-				// Generate php autoload file
-				$code = '<?php' . "\n";
-
-				$files = glob(DIR_STORAGE . 'vendor/*/*/composer.json');
-
-				foreach ($files as $file) {
-					$output = json_decode(file_get_contents($file), true);
-
-					$code .= '// ' . $output['name'] . "\n";
-
-					if (isset($output['autoload'])) {
-						$directory = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
-
-						// Autoload psr-4 files
-						if (isset($output['autoload']['psr-4'])) {
-							$autoload = $output['autoload']['psr-4'];
-
-							foreach ($autoload as $namespace => $path) {
-								if (!is_array($path)) {
-									$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($path, '/') . '/' . '\', true);' . "\n";
-								} else {
-									foreach ($path as $value) {
-										$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($value, '/') . '/' . '\', true);' . "\n";
-									}
+						foreach ($autoload as $namespace => $path) {
+							if (!is_array($path)) {
+								$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($path, '/') . '/' . '\', true);' . "\n";
+							} else {
+								foreach ($path as $value) {
+									$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($value, '/') . '/' . '\', true);' . "\n";
 								}
 							}
 						}
+					}
 
-						// Autoload psr-0 files
-						if (isset($output['autoload']['psr-0'])) {
-							$autoload = $output['autoload']['psr-0'];
+					// Autoload classmap
+					if (isset($output['autoload']['classmap'])) {
+						$autoload = [];
 
-							foreach ($autoload as $namespace => $path) {
-								if (!is_array($path)) {
-									$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($path, '/') . '/' . '\', true);' . "\n";
-								} else {
-									foreach ($path as $value) {
-										$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . rtrim($value, '/') . '/' . '\', true);' . "\n";
-									}
-								}
-							}
-						}
+						$classmaps = $output['autoload']['classmap'];
 
-						// Autoload classmap
-						if (isset($output['autoload']['classmap'])) {
-							$autoload = [];
+						foreach ($classmaps as $classmap) {
+							$directories = [dirname($file) . '/' . $classmap];
 
-							$classmaps = $output['autoload']['classmap'];
+							while (count($directories) != 0) {
+								$next = array_shift($directories);
 
-							foreach ($classmaps as $classmap) {
-								$directories = [dirname($file) . '/' . $classmap];
+								if (is_dir($next)) {
+									foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+										if (is_dir($file)) {
+											$directories[] = $file . '/';
+										}
 
-								while (count($directories) != 0) {
-									$next = array_shift($directories);
+										if (is_file($file)) {
+											$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
 
-									if (is_dir($next)) {
-										foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-											if (is_dir($file)) {
-												$directories[] = $file . '/';
-											}
-
-											if (is_file($file)) {
-												$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
-
-												if ($namespace) {
-													$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
-												}
+											if ($namespace) {
+												$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
 											}
 										}
 									}
 								}
 							}
-
-							foreach ($autoload as $namespace => $path) {
-								$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . rtrim($path, '/') . '/' . '\', true);' . "\n";
-							}
 						}
 
-						// Autoload files
-						if (isset($output['autoload']['files'])) {
-							$files = $output['autoload']['files'];
-
-							foreach ($files as $file) {
-								$code .= 'if (is_file(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\')) {' . "\n";
-								$code .= '	require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\');' . "\n";
-								$code .= '}' . "\n";
-							}
+						foreach ($autoload as $namespace => $path) {
+							$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . rtrim($path, '/') . '/' . '\', true);' . "\n";
 						}
 					}
 
-					$code .= "\n";
+					// Autoload files
+					if (isset($output['autoload']['files'])) {
+						$files = $output['autoload']['files'];
+
+						foreach ($files as $file) {
+							$code .= 'if (is_file(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\')) {' . "\n";
+							$code .= '	require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\');' . "\n";
+							$code .= '}' . "\n";
+						}
+					}
 				}
 
-				file_put_contents(DIR_SYSTEM . 'vendor.php', trim($code));
-
-				$json['success'] = $this->language->get('text_success');
+				$code .= "\n";
 			}
 
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode($json));
+			file_put_contents(DIR_SYSTEM . 'vendor.php', trim($code));
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		/**
-		 * @return void
-		 */ public
-		function uninstall(): void {
-			$this->load->language('marketplace/installer');
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
-			$json = [];
+	/**
+	 * @return void
+	 */
+	public function uninstall(): void {
+		$this->load->language('marketplace/installer');
 
-			if (isset($this->request->get['extension_install_id'])) {
-				$extension_install_id = (int)$this->request->get['extension_install_id'];
-			} else {
-				$extension_install_id = 0;
-			}
+		$json = [];
 
-			if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
-				$json['error'] = $this->language->get('error_permission');
-			}
-
-			$this->load->model('setting/extension');
-
-			$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
-
-			if ($extension_install_info) {
-				if ($extension_install_info['code'] == 'opencart') {
-					$json['error'] = $this->language->get('error_default');
-				}
-
-				// Validate if extension being uninstalled
-				$extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension_install_info['code']);
-
-				if ($extension_total) {
-					$json['error'] = sprintf($this->language->get('error_uninstall'), $extension_total);
-				}
-			} else {
-				$json['error'] = $this->language->get('error_extension');
-			}
-
-			if (!$json) {
-				$files = [];
-
-				// Make path into an array
-				$directory = [DIR_EXTENSION . $extension_install_info['code'] . '/'];
-
-				// While the path array is still populated keep looping through
-				while (count($directory) != 0) {
-					$next = array_shift($directory);
-
-					if (is_dir($next)) {
-						foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-							// If directory add to path array
-							$directory[] = $file;
-						}
-					}
-
-					// Add the file to the files to be deleted array
-					$files[] = $next;
-				}
-
-				// Reverse sort the file array
-				rsort($files);
-
-				foreach ($files as $file) {
-					// If file just delete
-					if (is_file($file)) {
-						unlink($file);
-					}
-
-					// If directory use the remove directory function
-					if (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				// Remove extension directory and files
-				$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
-
-				rsort($results);
-
-				foreach ($results as $result) {
-					$path = '';
-
-					// Remove images
-					if (substr($result['path'], 0, 6) == 'image/') {
-						$path = DIR_IMAGE . substr($result['path'], 6);
-					}
-
-					// Remove vendor files or any connected extensions that was also installed.
-					if (substr($result['path'], 0, 15) == 'system/storage/') {
-						$path = DIR_STORAGE . substr($result['path'], 15);
-					}
-
-					// Check if the location exists or not
-					$path_total = $this->model_setting_extension->getTotalPaths($result['path']);
-
-					if ($path_total < 2) {
-						if (is_file($path)) {
-							unlink($path);
-						}
-
-						if (is_dir($path)) {
-							rmdir($path);
-						}
-					}
-
-					$this->model_setting_extension->deletePath($result['extension_path_id']);
-				}
-
-				// Remove extension directory
-				$this->model_setting_extension->editStatus($extension_install_id, 0);
-
-				// Remove any OCMOD modifications
-				$this->load->model('setting/modification');
-
-				$this->model_setting_modification->deleteModificationsByExtensionInstallId($extension_install_id);
-
-				$url = '';
-
-				if (isset($this->request->get['extension_install_id'])) {
-					$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
-				}
-
-				$json['next'] = $this->url->link('marketplace/installer.vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
-			}
-
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode($json));
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = (int)$this->request->get['extension_install_id'];
+		} else {
+			$extension_install_id = 0;
 		}
 
-		/**
-		 * @return void
-		 */ public
-		function delete(): void {
-			$this->load->language('marketplace/installer');
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
-			$json = [];
+		$this->load->model('setting/extension');
 
-			if (isset($this->request->get['extension_install_id'])) {
-				$extension_install_id = (int)$this->request->get['extension_install_id'];
-			} else {
-				$extension_install_id = 0;
-			}
+		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-			if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
-				$json['error'] = $this->language->get('error_permission');
-			}
-
-			$this->load->model('setting/extension');
-
-			$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
-
-			if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
+		if ($extension_install_info) {
+			if ($extension_install_info['code'] == 'opencart') {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			if (!$extension_install_info) {
-				$json['error'] = $this->language->get('error_extension');
+			// Validate if extension being uninstalled
+			$extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension_install_info['code']);
+
+			if ($extension_total) {
+				$json['error'] = sprintf($this->language->get('error_uninstall'), $extension_total);
+			}
+		} else {
+			$json['error'] = $this->language->get('error_extension');
+		}
+
+		if (!$json) {
+			$files = [];
+
+			// Make path into an array
+			$directory = [DIR_EXTENSION . $extension_install_info['code'] . '/'];
+
+			// While the path array is still populated keep looping through
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
+
+				if (is_dir($next)) {
+					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						// If directory add to path array
+						$directory[] = $file;
+					}
+				}
+
+				// Add the file to the files to be deleted array
+				$files[] = $next;
 			}
 
-			if (!$json) {
-				$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
+			// Reverse sort the file array
+			rsort($files);
 
-				// Remove file
+			foreach ($files as $file) {
+				// If file just delete
 				if (is_file($file)) {
 					unlink($file);
 				}
 
-				$this->model_setting_extension->deleteInstall($extension_install_id);
-
-				$json['success'] = $this->language->get('text_success');
+				// If directory use the remove directory function
+				if (is_dir($file)) {
+					rmdir($file);
+				}
 			}
 
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode($json));
+			// Remove extension directory and files
+			$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
+
+			rsort($results);
+
+			foreach ($results as $result) {
+				$path = '';
+
+				// Remove images
+				if (substr($result['path'], 0, 6) == 'image/') {
+					$path = DIR_IMAGE . substr($result['path'], 6);
+				}
+
+				// Remove vendor files or any connected extensions that was also installed.
+				if (substr($result['path'], 0, 15) == 'system/storage/') {
+					$path = DIR_STORAGE . substr($result['path'], 15);
+				}
+
+				// Check if the location exists or not
+				$path_total = $this->model_setting_extension->getTotalPaths($result['path']);
+
+				if ($path_total < 2) {
+					if (is_file($path)) {
+						unlink($path);
+					}
+
+					if (is_dir($path)) {
+						rmdir($path);
+					}
+				}
+
+				$this->model_setting_extension->deletePath($result['extension_path_id']);
+			}
+
+			// Remove extension directory
+			$this->model_setting_extension->editStatus($extension_install_id, 0);
+
+			// Remove any OCMOD modifications
+			$this->load->model('setting/modification');
+
+			$this->model_setting_modification->deleteModificationsByExtensionInstallId($extension_install_id);
+
+			$json['text'] = $this->language->get('text_vendor');
+
+			$url = '';
+
+			if (isset($this->request->get['extension_install_id'])) {
+				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
+			}
+
+			$json['next'] = $this->url->link('marketplace/installer.vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
+
+		if (isset($this->request->get['extension_install_id'])) {
+			$extension_install_id = (int)$this->request->get['extension_install_id'];
+		} else {
+			$extension_install_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/extension');
+
+		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
+
+		if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
+			$json['error'] = $this->language->get('error_default');
+		}
+
+		if (!$extension_install_info) {
+			$json['error'] = $this->language->get('error_extension');
+		}
+
+		if (!$json) {
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
+
+			// Remove file
+			if (is_file($file)) {
+				unlink($file);
+			}
+
+			$this->model_setting_extension->deleteInstall($extension_install_id);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+}

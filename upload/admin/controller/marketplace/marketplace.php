@@ -920,6 +920,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						'extension_id'          => $extension_id,
 						'extension_download_id' => $extension_download_id,
 						'name'                  => $response_info['name'],
+						'description'           => isset($response_info['description']) ? $response_info['description'] : '',
 						'code' 				    => basename($response_info['filename'], '.ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],

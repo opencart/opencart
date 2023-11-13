@@ -202,7 +202,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 									unlink(DIR_OPENCART . $destination);
 								}
 
-								if (!copy('zip://' . $file . '#' . $source, DIR_OPENCART . $destination)) {
+								if (file_put_contents(DIR_OPENCART . $destination, $zip->getFromIndex($i)) === false) {
 									$json['error'] = sprintf($this->language->get('error_copy'), $source, $destination);
 								}
 							}

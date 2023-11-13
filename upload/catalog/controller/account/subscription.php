@@ -255,7 +255,19 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'country'   => $address_info['country']
 				];
 
-				$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+				$pattern_1 = [
+					"\r\n",
+					"\r",
+					"\n"
+				];
+
+				$pattern_2 = [
+					"/\s\s+/",
+					"/\r\r+/",
+					"/\n\n+/"
+				];
+
+				$data['payment_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 			} else {
 				$data['payment_address'] = '';
 			}
@@ -304,7 +316,19 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'country'   => $address_info['country']
 				];
 
-				$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+				$pattern_1 = [
+					"\r\n",
+					"\r",
+					"\n"
+				];
+
+				$pattern_2 = [
+					"/\s\s+/",
+					"/\r\r+/",
+					"/\n\n+/"
+				];
+
+				$data['shipping_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 			} else {
 				$data['shipping_address'] = '';
 			}

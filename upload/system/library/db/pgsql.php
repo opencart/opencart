@@ -20,7 +20,7 @@ class PgSQL {
 	 * @param    string  $database
 	 * @param    string  $port
 	 */
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey='', string $sslCert='', string $sslCa='') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
 		if (!$port) {
 			$port = '5432';
 		}

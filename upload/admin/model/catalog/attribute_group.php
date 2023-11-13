@@ -24,7 +24,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int   $attribute_group_id
+	 * @param int $attribute_group_id
 	 * @param array $data
 	 *
 	 * @return void
@@ -68,7 +68,10 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	public function getAttributeGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = agd.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		$sort_data = ['agd.name', 'ag.sort_order'];
+		$sort_data = [
+			'agd.name',
+			'ag.sort_order'
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

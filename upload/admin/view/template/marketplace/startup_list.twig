@@ -43,6 +43,6 @@
 {% for startup in startups %}
 	<div id="startup-{{ startup.startup_id }}" class="d-none">
 		<label class="form-label">{{ entry_description }}</label>
-		<textarea placeholder="{{ entry_description }}" rows="5" class="form-control" disabled>{{ startup.description }}</textarea>
+		<textarea rows="5" class="form-control" disabled>{{ startup.description }}</textarea>
 	</div>
 {% endfor %}

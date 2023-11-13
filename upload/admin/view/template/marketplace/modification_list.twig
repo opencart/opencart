@@ -60,7 +60,21 @@
 </form>
 {% for modification in modifications %}
   <div id="modification-{{ modification.modification_id }}" class="d-none">
-    <label class="form-label">{{ entry_description }}</label>
-    <textarea placeholder="{{ entry_description }}" rows="5" class="form-control" disabled>{{ modification.description }}</textarea>
+    <div class="mb-3">
+      <label class="form-label">{{ entry_name }}</label>
+      <input type="text" value="{{ modification.name }}" class="form-control" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ entry_description }}</label>
+      <textarea rows="5" class="form-control" disabled>{{ modification.description }}</textarea>
+    </div>
+    <div>
+      <label class="form-label">{{ entry_code }}</label>
+      <input type="text" value="{{ modification.code }}" class="form-control" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ entry_xml }}</label>
+      <textarea rows="15" class="form-control" disabled>{{ modification.xml }}</textarea>
+    </div>
   </div>
 {% endfor %}

@@ -121,6 +121,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				'description'     => $result['description'],
 				'author'          => $result['author'],
 				'version'         => $result['version'],
+				'xml'             => $result['xml'],
 				'status'          => $result['status'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
@@ -184,7 +185,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
+			$this->model_setting_setting->editValue('config', 'config_maintenance', true);
 
 			// Clear all modification files
 			$files = [];
@@ -227,7 +228,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			// Begin
 			$xml = [];
 
-			// This is purly for developers so they can run mods directly and have them run without upload after each change.
+			// This is purely so developers they can run mods directly and have them run without upload after each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
 			if ($files) {
@@ -236,7 +237,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Get the default modification file
+			$this->load->model('setting/modification');
+
 			$results = $this->model_setting_modification->getModifications();
 
 			foreach ($results as $result) {
@@ -251,7 +253,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$modification = [];
 
 			foreach ($xml as $xml) {
-				if (empty($xml)){
+				if (empty($xml)) {
 					continue;
 				}
 
@@ -545,7 +547,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			}
 
 			// Maintance mode back to original settings
-			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
+			$this->model_setting_setting->editValue('config', 'config_maintenance', $maintenance);
 
 			// Do not return success message if refresh() was called with $data
 			$json['success'] = $this->language->get('text_success');
@@ -690,7 +692,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/modification');
 
-			$this->model_setting_modification->editStatus($modification_id, 0);
+
 
 			$json['success'] = $this->language->get('text_success');
 		}

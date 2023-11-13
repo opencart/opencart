@@ -107,7 +107,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 									unlink($base . $destination);
 								}
 
-								if (!copy('zip://' . $file . '#' . $source, $base . $destination)) {
+								if (file_put_contents($base . $destination, $zip->getFromIndex($i)) === false) {
 									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
 								}
 							}
@@ -122,7 +122,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 9);
+			$json['text'] = sprintf($this->language->get('text_patch'), 2, 2, 9);
 
 			$url = '';
 

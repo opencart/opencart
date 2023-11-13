@@ -42,15 +42,15 @@
 <div id="event-{{ event.event_id }}" class="d-none">
   <div class="mb-3">
     <label class="form-label">{{ entry_description }}</label>
-    <textarea placeholder="{{ entry_description }}" rows="5" class="form-control" disabled>{{ event.description }}</textarea>
+    <textarea rows="5" class="form-control" disabled>{{ event.description }}</textarea>
   </div>
   <div class="mb-3">
     <label class="form-label">{{ entry_trigger }}</label>
-    <textarea placeholder="{{ entry_trigger }}" class="form-control" disabled>{{ event.trigger }}</textarea>
+    <textarea class="form-control" disabled>{{ event.trigger }}</textarea>
   </div>
   <div>
     <label class="form-label">{{ entry_action }}</label>
-    <textarea placeholder="{{ entry_action }}" class="form-control" disabled>{{ event.action }}</textarea>
+    <textarea class="form-control" disabled>{{ event.action }}</textarea>
   </div>
 </div>
 {% endfor %}

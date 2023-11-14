@@ -6,11 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{{ title }}</title>
   <base href="{{ base }}"/>
-  {% if description %}
-    <meta name="description" content="{{ description }}"/>
-  {% endif %}
-  {% if keywords %}
-    <meta name="keywords" content="{{ keywords }}"/>
+  {% if seo %}
+    {{ seo }}
   {% endif %}
   <script src="{{ jquery }}" type="text/javascript"></script>
   <link href="{{ bootstrap }}" type="text/css" rel="stylesheet" media="screen"/>
@@ -33,6 +30,9 @@
   {% for analytic in analytics %}
     {{ analytic }}
   {% endfor %}
+  {% if schema %}
+    {{ schema }}
+  {% endif %}
 </head>
 <body>
 <div id="alert" class="toast-container position-fixed top-0 end-0 p-3"></div>

@@ -24,6 +24,14 @@ class Document {
 	 */
 	private string $keywords = '';
 	/**
+	 * @var string
+	 */
+	private string $seo = '';
+	/**
+	 * @var string
+	 */
+	private string $schema = '';
+	/**
 	 * @var array
 	 */
 	private array $links = [];
@@ -92,6 +100,41 @@ class Document {
 		return $this->keywords;
 	}
 
+	/**
+	 *
+	 *
+	 * @param	string	$seo
+	 */
+	public function setSeo(string $seo): void {
+		$this->seo = $seo;
+	}
+
+	/**
+	 *
+	 *
+	 * @return	string
+	 */
+	public function getSeo(): string {
+		return $this->seo;
+	}
+
+	/**
+	 *
+	 *
+	 * @param	string	$schema
+	 */
+	public function setSchema(string $schema): void {
+		$this->schema = $schema;
+	}
+
+	/**
+	 *
+	 *
+	 * @return	string
+	 */
+	public function getSchema(): string {
+		return $this->schema;
+	}
 	/**
      *
      *

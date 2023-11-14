@@ -1,5 +1,8 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+use Melbahja\Seo\MetaTags;
+use Melbahja\Seo\Schema;
+use Melbahja\Seo\Schema\Thing;
 /**
  * Class Product
  *
@@ -23,10 +26,55 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
+			//Seo Meta tags
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {
+				$popup = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+			} else {
+				$popup = '';
+			}
+			$canonical = html_entity_decode($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id));
+			if ((float)$product_info['special']) {
+				$seoPrice = $this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax'));
+			} else {
+				$seoPrice = $this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax'));
+			}
+
+			$metadata = new MetaTags();
+			$metadata
+				->title($product_info['meta_title'])
+				->description($product_info['meta_description'])
+				->image($popup)
+				->canonical($canonical);
+
+			$thing = new Thing('Product');
+			$thing->name  = $product_info['meta_title'];
+			$thing->sku   = $product_info['sku'];
+			$thing->image = $popup;
+			$thing->description = $product_info['meta_description'];
+			$thing->offers = new Thing('Offer', [
+				'availability' => 'https://schema.org/InStock',
+				'priceCurrency' => $this->session->data['currency'],
+				"price" => $seoPrice,
+				'url' => $canonical,
+			]);
+
+			$webpage = new Thing("WebPage", [
+				'@id' => $canonical. "#webpage",
+				'url' => $canonical,
+				'name' => $product_info['meta_title'],
+			]);
+
+
+			$schema = new Schema(
+				$thing,
+				$webpage,
+			);
+
 			$this->document->setTitle($product_info['meta_title']);
-			$this->document->setDescription($product_info['meta_description']);
-			$this->document->setKeywords($product_info['meta_keyword']);
-			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), 'canonical');
+			$this->document->setSeo($metadata);
+			$this->document->setSchema($schema);
 
 			$data['breadcrumbs'] = [];
 
@@ -226,11 +274,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . $url . '&product_id=' . $product_id)
 			];
 
-			$this->document->setTitle($product_info['meta_title']);
-			$this->document->setDescription($product_info['meta_description']);
-			$this->document->setKeywords($product_info['meta_keyword']);
-			$this->document->addLink($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), 'canonical');
-
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
@@ -287,8 +330,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['add_to_wishlist'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
 			$data['add_to_compare'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
-
-			$this->load->model('tool/image');
 
 			if (is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {
 				$data['popup'] = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));

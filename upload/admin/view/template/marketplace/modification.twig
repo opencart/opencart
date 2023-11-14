@@ -30,14 +30,18 @@
           </div>
           <div id="tab-log" class="tab-pane">
             <p>
-              <textarea wrap="off" rows="15" class="form-control">{{ log }}</textarea>
+              <textarea id="input-log" wrap="off" rows="15" class="form-control">{{ log }}</textarea>
             </p>
             <div class="row row-cols-2">
               <div class="col">
-                <a href="{{ log.download }}" class="btn btn-primary w-100"{% if not log.download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a>
+
+                <a href="{{ download }}" class="btn btn-primary w-100"{% if not download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a>
+
               </div>
               <div class="col">
-                <button type="button" id="button-clear" data-oc-target="input-log" class="btn btn-danger w-100"><i class="fa-solid fa-eraser"></i> {{ button_clear }}</button>
+
+                <button type="button" id="button-log" class="btn btn-danger w-100"><i class="fa-solid fa-eraser"></i> {{ button_clear }}</button>
+
               </div>
             </div>
           </div>
@@ -170,6 +174,39 @@ $('#modification').on('click', '.btn-info', function () {
     var modal = new bootstrap.Modal(document.querySelector('#modal-modification'));
 
     modal.show();
+});
+
+$('#button-log').on('click', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=tool/log.clear&user_token={{ user_token }}&filename=ocmod.log',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-log').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 {{ footer }}

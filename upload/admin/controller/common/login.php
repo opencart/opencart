@@ -124,8 +124,8 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			$this->model_user_user->addLogin($this->user->getId(), $login_data);
 
-			if ($this->request->post['redirect'] && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
-				$json['redirect'] = str_replace('&amp;', '&',  $this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token']);
+			if ($this->request->post['redirect'] && str_starts_with(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'), HTTP_SERVER)) {
+				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8') . '&user_token=' . $this->session->data['user_token'];
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 			}

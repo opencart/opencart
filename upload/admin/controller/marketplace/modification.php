@@ -47,13 +47,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$data['list'] = $this->getList();
 
 		// Log
-		$file = DIR_LOGS . 'ocmod.log';
-
-		if (file_exists($file)) {
-			$data['log'] = htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
-		} else {
-			$data['log'] = '';
-		}
+		$data['log'] = $this->getLog();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -566,6 +560,20 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function log(): void {
+		$this->response->setOutput($this->getLog());
+	}
+
+	public function getLog(): string {
+		$file = DIR_LOGS . 'ocmod.log';
+
+		if (is_file($file)) {
+			return htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		} else {
+			return '';
+		}
 	}
 
 	public function clear(): void {

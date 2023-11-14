@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    bootstrap="./tests/bootstrap.php"
+    colors="true"
+    cacheResult="false">
+  <coverage>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="SEO Tests">
+      <directory suffix=".php">./tests/</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

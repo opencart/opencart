@@ -1,0 +1,49 @@
+name: Test
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    run:
+        runs-on: ${{ matrix.os }}
+        continue-on-error: ${{ matrix.experimental }}
+        strategy:
+            max-parallel: 2
+            matrix:
+                os:
+                    - ubuntu-latest
+                php:
+                    - 8.0
+                    - 7.4
+                    - 7.2
+                experimental: [false]
+
+        name: PHP ${{ matrix.php }} test on ${{ matrix.os }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@master
+            - name: Install PHP
+              uses: shivammathur/setup-php@master
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: xdebug
+            - name: Get composer cache directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+            - name: Cache composer dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: ${{ runner.os }}-composer
+            - name: Install Composer dependencies
+              run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+              continue-on-error: ${{ matrix.experimental }}
+            - name: Testing with PHPUnit
+              run: vendor/bin/phpunit
+              continue-on-error: ${{ matrix.experimental }}

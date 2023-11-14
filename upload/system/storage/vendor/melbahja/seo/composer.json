@@ -1,0 +1,47 @@
+{
+	"name": "melbahja/seo",
+	"type": "library",
+	"description": "Simple PHP library to help developers 🍻 do better on-page SEO optimization",
+	"keywords": [
+		"seo", 
+		"search engine optimization", 
+		"php7",
+		"schema.org",
+		"sitemaps", 
+		"sitemap.xml", 
+		"sitemap index",
+		"meta tags",
+		"open graph",
+		"twitter tags"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mohamed ELbahja",
+			"email": "mohamed@elbahja.me",
+			"homepage": "https://elbahja.me",
+			"role": "Developer"
+		}
+	],
+	"require":  {
+		"php": ">=7.2",
+		"ext-xml": "*",
+		"ext-curl": "*",
+		"ext-json": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Melbahja\\Seo\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4":{
+			"Tests\\Melbahja\\Seo\\": "tests/"
+		}
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^8.5"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}

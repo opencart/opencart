@@ -24,6 +24,9 @@ $autoloader->register('GuzzleHttp\Promise', DIR_STORAGE . 'vendor/guzzlehttp/pro
 // guzzlehttp/psr7
 $autoloader->register('GuzzleHttp\Psr7', DIR_STORAGE . 'vendor/guzzlehttp/psr7/src/', true);
 
+// melbahja/seo
+$autoloader->register('Melbahja\Seo', DIR_STORAGE . 'vendor/melbahja/seo/src/', true);
+
 // mtdowling/jmespath.php
 $autoloader->register('JmesPath', DIR_STORAGE . 'vendor/mtdowling/jmespath.php/src/', true);
 if (is_file(DIR_STORAGE . 'vendor/mtdowling/jmespath.php/src/JmesPath.php')) {

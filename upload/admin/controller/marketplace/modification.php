@@ -41,8 +41,13 @@ class Modification extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/modification.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['download'] = $this->url->link('tool/log.download', 'user_token=' . $this->session->data['user_token'] . '&filename=ocmod.log');
+		$data['upload'] = $this->url->link('tool/installer.upload', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		// Log
+		$data['log'] = $this->getLog();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -557,6 +562,20 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function log(): void {
+		$this->response->setOutput($this->getLog());
+	}
+
+	public function getLog(): string {
+		$file = DIR_LOGS . 'ocmod.log';
+
+		if (is_file($file)) {
+			return htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		} else {
+			return '';
+		}
+	}
+
 	public function clear(): void {
 		$this->load->language('marketplace/modification');
 
@@ -663,36 +682,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/modification');
 
 			$this->model_setting_modification->editStatus($modification_id, 0);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * @return void
-	 */
-	public function download(): void {
-		$this->load->language('marketplace/modification');
-
-		$json = [];
-
-		if (isset($this->request->get['modification_id'])) {
-			$modification_id = (int)$this->request->get['modification_id'];
-		} else {
-			$modification_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/modification');
-
-
 
 			$json['success'] = $this->language->get('text_success');
 		}

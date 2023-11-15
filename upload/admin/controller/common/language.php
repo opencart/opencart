@@ -69,7 +69,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['redirect'])) {
-			$redirect = htmlspecialchars_decode($this->request->post['redirect'], ENT_COMPAT);
+			$redirect = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$redirect = '';
 		}
@@ -85,7 +85,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 365 * 10);
 
-			if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
+			if ($redirect && str_starts_with($redirect, $this->config->get('config_url'))) {
 				$json['redirect'] = $redirect;
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);

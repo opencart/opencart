@@ -9,6 +9,8 @@
 namespace Opencart\System\Engine;
 /**
  * Class Controller
+ *
+ * @mixin \Opencart\System\Engine\Registry
  */
 class Controller {
 	/**

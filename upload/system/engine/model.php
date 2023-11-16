@@ -13,6 +13,8 @@
 namespace Opencart\System\Engine;
 /**
  * Class Model
+ *
+ * @mixin \Opencart\System\Engine\Registry
  */
 class Model {
 	/**

@@ -215,7 +215,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['promotions'] = [];
 
-		if ($page == 1  && isset($response_info['promotions'])) {
+		if ($page == 1 && isset($response_info['promotions'])) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = [
 					'name'         => $result['name'],

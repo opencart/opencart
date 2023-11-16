@@ -149,18 +149,26 @@ class Security extends \Opencart\System\Engine\Controller {
 			$base_old = DIR_STORAGE;
 			$base_new = $path . $name . '/';
 
+			// Check current storage path exists
 			if (!is_dir($base_old)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
+			// Check the chosen directory is not in the public webspace
 			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
 			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
-			if (is_dir($base_new) && $page < 2) {
+			// Make sure the no directory with same name already exists
+			if (is_dir($base_new) && $page == 1) {
 				$json['error'] = $this->language->get('error_storage_exists');
+			}
+
+			// Make sure the new directory created exists
+			if (!is_dir($base_new) && $page > 1) {
+				$json['error'] = $this->language->get('error_storage');
 			}
 
 			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
@@ -297,7 +305,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_admin');
 			}
 
-			if (is_dir($base_new) && $page < 2) {
+			if (is_dir($base_new) && $page == 1) {
 				$json['error'] = $this->language->get('error_admin_exists');
 			}
 

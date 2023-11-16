@@ -351,11 +351,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
 
-			if ($page == 1 && is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
+			if (is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/') && $page == 1) {
 				$json['error'] = sprintf($this->language->get('error_directory_exists'), $extension_install_info['code'] . '/');
 			}
 
-			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
+			if (!is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/') && $page > 1) {
 				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
 			}
 		} else {
@@ -520,7 +520,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 									$description = $dom->getElementsByTagName('description')->item(0);
 
 									if ($description) {
-										$description = $name->nodeValue;
+										$description = $description->nodeValue;
 									} else {
 										$description = '';
 									}
@@ -702,6 +702,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {

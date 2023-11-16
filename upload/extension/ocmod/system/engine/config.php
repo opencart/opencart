@@ -97,7 +97,7 @@ class Config {
 		if (is_file($file)) {
 			$_ = [];
 
-			require(modification(modification($file)));
+			require(modification($file));
 
 			$this->data = array_merge($this->data, $_);
 

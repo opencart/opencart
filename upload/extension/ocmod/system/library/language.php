@@ -147,7 +147,7 @@ class Language {
 			}
 
 			if (is_file($file)) {
-				require(modification(modification($file)));
+				require(modification($file));
 			}
 
 			$this->cache[$code][$filename] = $_;

@@ -66,7 +66,7 @@ class Template {
 
 			extract($data);
 
-			include(modification(modification($this->compile($filename, $code))));
+			include(modification($this->compile($filename, $code)));
 
 			return ob_get_clean();
 		} else {

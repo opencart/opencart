@@ -309,7 +309,7 @@ class Loader {
 		}
 
 		if (is_file($file)) {
-			include_once(modification(modification($file)));
+			include_once(modification($file));
 		} else {
 			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}

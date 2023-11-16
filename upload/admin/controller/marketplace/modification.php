@@ -309,13 +309,17 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 							if ($files) {
 								foreach ($files as $file) {
+									if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+									}
+
 									// Get the key to be used for the modification cache filename.
 									if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
 										$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
 									}
 
-									if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+									if (substr($file, 0, strlen(DIR_EXTENSION)) == DIR_EXTENSION) {
+										$key = 'extension/' . substr($file, strlen(DIR_EXTENSION));
 									}
 
 									if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {

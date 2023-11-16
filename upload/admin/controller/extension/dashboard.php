@@ -7,6 +7,11 @@ namespace Opencart\Admin\Controller\Extension;
  */
 class Dashboard extends \Opencart\System\Engine\Controller {
 	/**
+	 * @var array
+	 */
+	private array $error = [];
+
+	/**
 	 * @return void
 	 */
 	public function index(): void {

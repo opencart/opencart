@@ -9,6 +9,8 @@
 namespace Opencart\System\Engine;
 /**
  * Class Loader
+ *
+ * @mixin \Opencart\System\Engine\Registry
  */
 class Loader {
 	/**

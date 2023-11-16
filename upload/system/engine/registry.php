@@ -9,6 +9,28 @@
 namespace Opencart\System\Engine;
 /**
  * Class Registry
+ *
+ * @property \Opencart\System\Engine\Config $config
+ * @property \Opencart\System\Engine\Event $event
+ * @property \Opencart\System\Engine\Loader $load
+ * @property \Opencart\System\Engine\Registry $autoloader
+ * @property \Opencart\System\Library\Cache $cache
+ * @property \Opencart\System\Library\Cart\Cart $cart
+ * @property \Opencart\System\Library\Cart\Currency $currency
+ * @property \Opencart\System\Library\Cart\Customer $customer
+ * @property \Opencart\System\Library\Cart\Length $length
+ * @property \Opencart\System\Library\Cart\Tax $tax
+ * @property \Opencart\System\Library\Cart\Weight $weight
+ * @property \Opencart\System\Library\DB $db
+ * @property \Opencart\System\Library\Document $document
+ * @property \Opencart\System\Library\Language $language
+ * @property \Opencart\System\Library\Log $log
+ * @property \Opencart\System\Library\Request $request
+ * @property \Opencart\System\Library\Response $response
+ * @property \Opencart\System\Library\Session $session
+ * @property \Opencart\System\Library\Template $template
+ * @property \Opencart\System\Library\Url $url
+ * @property ?\Opencart\System\Library\Cart\User $user
  */
 class Registry {
 	/**

@@ -434,7 +434,7 @@ class Cart {
 	}
 
 	/**
-	 * getSubscription
+	 * getSubscriptions
 	 *
 	 * @return    array
 	 */

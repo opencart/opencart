@@ -45,9 +45,9 @@ class Registry {
 	 *
 	 * @param    string  $key
 	 *
-	 * @return   object
+	 * @return   ?object
 	 */
-	public function __get(string $key): object {
+	public function __get(string $key): ?object {
 		return $this->get($key);
 	}
 
@@ -59,7 +59,7 @@ class Registry {
 	 * @param    string  $key
 	 * @param    object  $value
 	 *
-	 * @return   null
+	 * @return   void
 	 */
 	public function __set(string $key, object $value): void {
 		$this->set($key, $value);
@@ -83,9 +83,9 @@ class Registry {
      *
      * @param	string	$key
 	 * 
-	 * @return	mixed
+	 * @return	?object
      */
-	public function get(string $key) {
+	public function get(string $key): ?object {
 		return isset($this->data[$key]) ? $this->data[$key] : null;
 	}
 
@@ -119,7 +119,7 @@ class Registry {
 	 *
 	 * @param	string	$key
 	 *
-	 * @return	null
+	 * @return	void
 	 */
 	public function unset(string $key): void {
 		if (isset($this->data[$key])) {

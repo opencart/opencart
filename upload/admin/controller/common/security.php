@@ -162,12 +162,12 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Make sure the no directory with same name already exists
-			if (is_dir($base_new) && $page == 1) {
+			if ($page == 1 && is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage_exists');
 			}
 
 			// Make sure the new directory created exists
-			if (!is_dir($base_new) && $page > 1) {
+			if ($page > 1 && !is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
@@ -305,7 +305,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_admin');
 			}
 
-			if (is_dir($base_new) && $page == 1) {
+			if ($page == 1  && is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_admin_exists');
 			}
 

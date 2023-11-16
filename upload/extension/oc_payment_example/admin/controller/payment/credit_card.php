@@ -114,7 +114,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$data['reports'][] = [
 				'order_id'   => $result['order_id'],
 				'card'       => $result['card'],
-				'amount'     => $this->curency->format($result['amount'], $this->config->get('config_currency')),
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'response'   => $result['response'],
 				'status'     => $result['order_status'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),

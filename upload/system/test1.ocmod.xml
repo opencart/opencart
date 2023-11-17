@@ -49,7 +49,7 @@
         </operation>
     </file>
 
-
+    <!-- Library Test -->
     <file path="system/library/template/template.php">
         <operation>
             <search regex="true">

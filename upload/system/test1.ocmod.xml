@@ -5,6 +5,7 @@
     <version>1.0</version>
     <author>OpenCart Ltd</author>
     <link>http://www.opencart.com</link>
+    <!-- Controller Test -->
     <file path="admin/controller/catalog/attribute.php">
         <operation>
             <search regex="false"><![CDATA[$this->load->language('catalog/attribute');]]></search>
@@ -16,7 +17,7 @@
             <add position="after"><![CDATA[        // AFTER WORKS]]></add>
         </operation>
     </file>
-
+    <!-- Model Test -->
     <file path="admin/model/catalog/attribute.php">
         <operation>
             <search regex="false"><![CDATA[public function addAttribute(array $data): int {]]></search>
@@ -28,8 +29,25 @@
             <add position="after"><![CDATA[        // AFTER WORKS]]></add>
         </operation>
     </file>
-
-
+    <!-- View Test -->
+    <file path="admin/view/template/catalog/attribute.twig">
+        <operation>
+            <search regex="false">
+                <![CDATA[<div class="float-end">]]>
+            </search>
+            <add position="before">
+                <![CDATA[        // BEFORE WORKS]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[<div class="float-end">]]>
+            </search>
+            <add position="after">
+                <![CDATA[        // AFTER WORKS]]>
+            </add>
+        </operation>
+    </file>
 
 
     <file path="system/library/template/template.php">

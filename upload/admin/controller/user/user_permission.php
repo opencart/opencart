@@ -266,7 +266,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 				}
 
 				// Add the file to the files to be deleted array
-				if (is_file($file)) {
+				if (is_file($file) && substr($file, strrpos($file, '.')) == '.php') {
 					$files[] = $file;
 				}
 			}

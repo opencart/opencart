@@ -7400,17 +7400,17 @@ function oc_db_schema() {
 			],
 			[
 				'name'     => 'trial_duration',
-				'type'     => 'int(10)',
+				'type'     => 'smallint(6)',
 				'not_null' => true
 			],
 			[
 				'name'     => 'trial_cycle',
-				'type'     => 'int(10)',
+				'type'     => 'smallint(6)',
 				'not_null' => true
 			],
 			[
 				'name'     => 'trial_status',
-				'type'     => 'tinyint(4)',
+				'type'     => 'tinyint(1)',
 				'not_null' => true
 			],
 			[
@@ -7420,12 +7420,12 @@ function oc_db_schema() {
 			],
 			[
 				'name'     => 'duration',
-				'type'     => 'int(10)',
+				'type'     => 'smallint(6)',
 				'not_null' => true
 			],
 			[
 				'name'     => 'cycle',
-				'type'     => 'int(10)',
+				'type'     => 'smallint(6)',
 				'not_null' => true
 			],
 			[

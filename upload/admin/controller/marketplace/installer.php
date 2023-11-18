@@ -127,8 +127,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$extension_data = [
 							'extension_id'          => $install_info['extension_id'],
 							'extension_download_id' => $install_info['extension_download_id'],
-							'name'                  => $install_info['name'],
-							'description'           => $install_info['description'],
+							'name'                  => strip_tags($install_info['name'], '<b>'),
+							'description'           => strip_tags($install_info['description']),
 							'code'                  => $code,
 							'version'               => $install_info['version'],
 							'author'                => $install_info['author'],

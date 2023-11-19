@@ -287,15 +287,39 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Extension permissions
+		$files = [];
+
+		$path = [DIR_EXTENSION . '*/admin/controller/*'];
+
+		// While the path array is still populated keep looping through
+		while (count($path) != 0) {
+			$next = array_shift($path);
+
+			foreach (glob($next . '/*') as $file) {
+				// If directory add to path array
+				if (is_dir($file)) {
+					$path[] = $file;
+				}
+
+				// Add the file to the files to be deleted array
+				if (is_file($file) && substr($file, strrpos($file, '.')) == '.php') {
+					$files[] = $file;
+				}
+			}
+		}
+
+		// Sort the file array
+		sort($files);
+
 		$data['extensions'] = [];
 
-		// Extension permissions
-		$results = glob(DIR_EXTENSION . '*/admin/controller/*/*.php');
+		foreach ($files as $file) {
+			$controller = substr($file, strlen(DIR_EXTENSION));
 
-		foreach ($results as $result) {
-			$path = substr($result, strlen(DIR_EXTENSION));
+			$permission = 'extension/' . str_replace('admin/controller/', '', substr($controller, 0, strrpos($controller, '.')));
 
-			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($path, 0, strrpos($path, '.')));
+			$data['extensions'][] = $permission;
 		}
 
 		if (isset($user_group_info['permission']['access'])) {

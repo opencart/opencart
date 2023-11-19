@@ -95,14 +95,13 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 				$cube = $dom->getElementsByTagName('Cube')->item(0);
 
+				// Compile all the rates into an array
 				$currencies = [];
 
 				$currencies['EUR'] = 1.0000;
 
 				foreach ($cube->getElementsByTagName('Cube') as $currency) {
-					if ($currency->getAttribute('currency')) {
-						$currencies[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
-					}
+					$currencies[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
 				}
 
 				if (isset($currencies[$default])) {
@@ -118,7 +117,10 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 					foreach ($results as $result) {
 						if (isset($currencies[$result['code']])) {
-							$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($value * ($value / $currencies[$result['code']])));
+							$from = $currencies['EUR'];
+							$to = $currencies[$result['code']];
+
+							$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($value * ($from / $to)));
 						}
 					}
 

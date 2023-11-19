@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Flat
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */
 class Flat extends \Opencart\System\Engine\Model {
 	/**

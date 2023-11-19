@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Template;
 /**
  * Class Template
  *
- * @package
+ * @package Opencart\System\Library\Template
  */
 class Template {
 	protected string $directory = '';

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Session;
 /**
  * Class Redis
  *
- * @package
+ * @package Opencart\System\Library\Session
  */
 class Redis {
 	private object $config;

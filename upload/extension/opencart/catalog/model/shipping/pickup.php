@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Pickup
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */
 class Pickup extends \Opencart\System\Engine\Model {
 	/**

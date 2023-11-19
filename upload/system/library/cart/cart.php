@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cart;
 /**
  * Class Cart
  *
- * @package
+ * @package Opencart\System\Library\Cart
  */
 class Cart {
 	/**

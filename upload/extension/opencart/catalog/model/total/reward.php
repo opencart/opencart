@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Reward
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */
 class Reward extends \Opencart\System\Engine\Model {
 	/**

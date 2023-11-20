@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class Cheque
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Payment
  */
 class Cheque extends \Opencart\System\Engine\Model {
 	/**

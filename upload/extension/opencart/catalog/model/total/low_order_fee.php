@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class LowOrderFee
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */
 class LowOrderFee extends \Opencart\System\Engine\Model {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cache;
 /**
  * Class APCU
  *
- * @package
+ * @package Opencart\System\Library\Cache
  */
 class Apcu {
 	/**

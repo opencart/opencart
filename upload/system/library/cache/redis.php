@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cache;
 /**
  * Class Redis
  *
- * @package
+ * @package Opencart\System\Library\Cache
  */
 class Redis {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\DB;
 /**
  * Class PgSQL
  *
- * @package
+ * @package Opencart\System\Library\DB
  */
 class PgSQL {
 	/**

@@ -95,7 +95,15 @@ class WishList extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($product_info['quantity'] <= 0) {
-					$stock = $product_info['stock_status'];
+					$this->load->model('localisation/stock_status');
+
+					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
+
+					if ($stock_status_info) {
+						$stock = $stock_status_info['name'];
+					} else {
+						$stock = '';
+					}
 				} elseif ($this->config->get('config_stock_display')) {
 					$stock = $product_info['quantity'];
 				} else {

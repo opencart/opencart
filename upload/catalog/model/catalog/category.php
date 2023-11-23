@@ -73,11 +73,11 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param $category_id
+	 * @param int $category_id
 	 *
 	 * @return int
 	 */
-	public function getLayoutId($category_id): int {
+	public function getLayoutId(int $category_id): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {

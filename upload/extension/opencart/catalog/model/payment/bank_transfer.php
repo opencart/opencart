@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class BankTransfer
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Payment
  */
 class BankTransfer extends \Opencart\System\Engine\Model {
 	/**

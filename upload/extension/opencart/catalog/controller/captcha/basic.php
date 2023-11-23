@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
 /**
  * Class Basic
  *
- * @package
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Captcha
  */
 class Basic extends \Opencart\System\Engine\Controller {
 	/**

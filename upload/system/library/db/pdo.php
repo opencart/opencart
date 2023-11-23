@@ -3,7 +3,7 @@ namespace Opencart\System\Library\DB;
 /**
  * Class PDO
  *
- * @package
+ * @package Opencart\System\Library\DB
  */
 class PDO {
 	/**

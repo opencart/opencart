@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Free
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */
 class Free extends \Opencart\System\Engine\Model {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cache;
 /**
  * Class Mem
  *
- * @package
+ * @package Opencart\System\Library\Cache
  */
 class Mem {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 /**
  * Class Filter
  *
- * @package
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Module
  */
 class Filter extends \Opencart\System\Engine\Controller {
 	/**

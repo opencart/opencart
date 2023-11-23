@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Tax
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */
 class Tax extends \Opencart\System\Engine\Model {
 	/**

@@ -11,7 +11,7 @@ namespace Opencart\System\Library\Session;
 /**
  * Class DB
  *
- * @package
+ * @package Opencart\System\Library\Session
  */
 class DB {
 	private object $db;

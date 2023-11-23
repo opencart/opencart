@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 /**
  * Class Banner
  *
- * @package
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Module
  */
 class Banner extends \Opencart\System\Engine\Controller {
 	/**

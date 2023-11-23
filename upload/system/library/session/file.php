@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Session;
 /**
  * Class File
  *
- * @package
+ * @package Opencart\System\Library\Session
  */
 class File {
 	private object $config;

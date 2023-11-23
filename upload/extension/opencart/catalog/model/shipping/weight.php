@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Weight
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */
 class Weight extends \Opencart\System\Engine\Model {
 	/**

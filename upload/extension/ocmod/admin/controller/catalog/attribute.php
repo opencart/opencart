@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Catalog;
+namespace Opencart\Admin\Controller\Extension\Ocmod\Catalog;
 /**
  * Class Attribute
  *
@@ -10,8 +10,9 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
+        echo 'CONTROLLER WORKING</br>';
         // BEFORE WORKS
-		$this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute'); // REPLACE WORKS
         // AFTER WORKS
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -61,7 +62,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 */
 	public function list(): void {
         // BEFORE WORKS
-		$this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute'); // REPLACE WORKS
         // AFTER WORKS
 
 		$this->response->setOutput($this->getList());
@@ -172,7 +173,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 */
 	public function form(): void {
         // BEFORE WORKS
-		$this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute'); // REPLACE WORKS
         // AFTER WORKS
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -260,7 +261,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 */
 	public function save(): void {
         // BEFORE WORKS
-		$this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute'); // REPLACE WORKS
         // AFTER WORKS
 
 		$json = [];
@@ -304,7 +305,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 */
 	public function delete(): void {
         // BEFORE WORKS
-		$this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute'); // REPLACE WORKS
         // AFTER WORKS
 
 		$json = [];

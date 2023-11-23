@@ -7,6 +7,7 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Modification extends \Opencart\System\Engine\Controller {
 	/**
+	 * Controller
 	 *
 	 * @param string $route
 	 * @param array  $args
@@ -14,30 +15,42 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function controller(string &$route, array &$args): void {
-		echo $route . '<br/>';
-
-		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/controller/' . $route)) {
-			echo 'woorks';
-
+	public function controller(string &$route, array &$args) {
+		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/controller/' . $route . '.php')) {
 			$route = 'extension/ocmod/' . $route;
 		}
 	}
 
+	/**
+	 * Model
+	 *
+	 *
+	 *
+	 * @param string $route
+	 * @param array  $args
+	 * @param array  $output
+	 *
+	 * @return void
+	 */
 	public function model(string &$route, array &$args): void {
-		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/model/' . $route)) {
-			$route = 'extension/ocmod/' . $route;
+		// For all models we need to separate the method which will always the last /
+		$pos = strrpos($route, '/');
+
+		$class = substr($route, 0, $pos);
+
+		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/model/' . $class . '.php')) {
+			$route = 'extension/ocmod/' . $class . '/' . substr($route, $pos + 1);
 		}
 	}
 
 	public function view(string &$route, array &$args): void {
-		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/view/template/' . $route)) {
+		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/view/template/' . $route . '.twig')) {
 			$route = 'extension/ocmod/' . $route;
 		}
 	}
 
 	public function library(string &$route, array &$args): void {
-		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/controller/' . $route)) {
+		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/system/library/' . $route . '.php')) {
 			$route = 'extension/ocmod/' . $route;
 		}
 	}

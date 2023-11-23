@@ -7,6 +7,7 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**
+	 * Auto update currencies
 	 *
 	 * model/setting/setting/editSetting
 	 * model/localisation/currency/addCurrency

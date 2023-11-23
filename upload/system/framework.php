@@ -175,28 +175,17 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 $registry->set('document', new \Opencart\System\Library\Document());
 
 // Action error object to execute if any other actions cannot be executed.
-$action = '';
-$args = [];
-$output = '';
-
-$error = new \Opencart\System\Engine\Action($config->get('action_error'));
+$error = $config->get('action_error');
 
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
-	$pre_action = new \Opencart\System\Engine\Action($pre_action);
-
-	$result = $pre_action->execute($registry);
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
-
-		break;
-	}
+	$result = $loader->controller($pre_action);
 
 	// If action cannot be executed, we return an action error object.
 	if ($result instanceof \Exception) {
-		$action = $error;
+		$loader->controller($error);
 
+		// In case there is an error we only want to execute once.
 		$error = '';
 
 		break;
@@ -204,54 +193,21 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 }
 
 // Route
-if (!$action) {
-	if (!empty($request->get['route'])) {
-		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-	} else {
-		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
-	}
+if (isset($request->get['route'])) {
+	$route = (string)$request->get['route'];
+} else {
+	$route = (string)$config->get('action_default');
 }
 
 // Dispatch
-while ($action) {
-	// Route needs to be updated each time so it can trigger events
-	$route = $action->getId();
-
-	// Keep the original trigger.
-	$trigger = $route;
-
-	$result = $event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
-	}
-
-	// Execute the action.
-	$result = $action->execute($registry, $args);
-
-	$action = '';
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
-	}
+if ($error) {
+	$result = $loader->controller($route);
 
 	// If action cannot be executed, we return the action error object.
 	if ($result instanceof \Exception) {
-		$action = $error;
+		$loader->controller($error);
 
-		// In case there is an error we don't want to infinitely keep calling the action error object.
 		$error = '';
-	}
-
-	// If not an object, then it's the output
-	if (!$action) {
-		$output = $result;
-	}
-
-	$result = $event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
 	}
 }
 

@@ -12,7 +12,7 @@ namespace Opencart\System\Engine;
  */
 class Action {
 	/**
-	 * @var string|array|string[]|null
+	 * @var string|array|string|null
 	 */
 	private string $route;
 	/**
@@ -35,12 +35,13 @@ class Action {
 		$pos = strrpos($this->route, '.');
 
 		if ($pos === false) {
-			$this->class = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
+			$this->class =  'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
 			$this->method = 'index';
 		} else {
 			$this->class = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
 			$this->method = substr($this->route, $pos + 1);
 		}
+
 	}
 
 	/**
@@ -54,7 +55,6 @@ class Action {
 	}
 
 	/**
-	 *
 	 * Execute
 	 *
 	 * @param object $registry
@@ -69,7 +69,7 @@ class Action {
 		}
 
 		// Get the current namespace being used by the config
-		$class = 'Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
+		$class ='Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
 
 		// Initialize the class
 		if (class_exists($class)) {

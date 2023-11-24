@@ -864,14 +864,14 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// Variants
 		if (!empty($product_info)) {
-			$data['variant'] = json_decode($product_info['variant'], true);
+			$data['variant'] = $product_info['variant'];
 		} else {
 			$data['variant'] = [];
 		}
 
 		// Overrides
 		if (!empty($product_info)) {
-			$data['override'] = json_decode($product_info['override'], true);
+			$data['override'] = $product_info['override'];
 		} else {
 			$data['override'] = [];
 		}

@@ -14,9 +14,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function addCustomer(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `store_id` = '" . (int)$data['store_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `newsletter` = '" . (isset($data['newsletter']) ? (bool)$data['newsletter'] : 0) . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `status` = '" . (isset($data['status']) ? (bool)$data['status'] : 0) . "', `safe` = '" . (isset($data['safe']) ? (bool)$data['safe'] : 0) . "', `commenter` = '" . (isset($data['commenter']) ? (bool)$data['commenter'] : 0) . "', `date_added` = NOW()");
 
-		$customer_id = $this->db->getLastId();
-
-		return $customer_id;
+		return $this->db->getLastId();
 	}
 
 	/**
@@ -81,7 +79,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomer(int $customer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -92,7 +94,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomerByEmail(string $email): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -168,9 +174,15 @@ class Customer extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
+		$customer_data = [];
+
 		$query = $this->db->query($sql);
 
-		return $query->rows;
+		foreach ($query->rows as $result) {
+			$customer_data[] = $result + ['custom_field' => json_decode($result['custom_field'], true)];
+		}
+
+		return $customer_data;
 	}
 
 	/**

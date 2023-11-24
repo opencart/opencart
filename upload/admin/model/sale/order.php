@@ -246,9 +246,21 @@ class Order extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
+		$order_data = [];
+
 		$query = $this->db->query($sql);
 
-		return $query->rows;
+		foreach ($query->rows as $key => $result) {
+			$order_data[$key] = $result;
+
+			$order_data[$key]['custom_field'] = json_decode($result['custom_field'], true);
+			$order_data[$key]['payment_custom_field'] = json_decode($result['payment_custom_field'], true);
+			$order_data[$key]['payment_method'] = json_decode($result['payment_method'], true);
+			$order_data[$key]['shipping_custom_field'] = json_decode($result['shipping_custom_field'], true);
+			$order_data[$key]['shipping_method'] = json_decode($result['shipping_method'], true);
+		}
+
+		return $order_data;
 	}
 
 	/**

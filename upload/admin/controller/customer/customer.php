@@ -590,7 +590,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($customer_info)) {
-			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
+			$data['account_custom_field'] = $customer_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = [];
 		}
@@ -1425,7 +1425,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 					'lastname'          => $result['lastname'],
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
-					'custom_field'      => json_decode($result['custom_field'], true),
+					'custom_field'      => $result['custom_field'],
 					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
 				];
 			}

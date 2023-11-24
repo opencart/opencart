@@ -39,14 +39,6 @@
                 <![CDATA[$this->load->language('catalog/attribute'); // REPLACE WORKS]]>
             </add>
         </operation>
-        <operation>
-            <search regex="false">
-                <![CDATA[public function index(): void {]]>
-            </search>
-            <add position="after">
-                <![CDATA[        echo 'CONTROLLER WORKING</br>';]]>
-            </add>
-        </operation>
     </file>
     <!-- Model Test -->
     <file path="admin/model/catalog/attribute.php">

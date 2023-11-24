@@ -356,10 +356,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					// Load payment method used by the subscription
 					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 
-					if (is_callable([
-						$this->{'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code']},
-						'charge'
-					])) {
+					$callable = [$this->{'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code']}, 'charge'];
+
+					if (is_callable($callable)) {
 						// Process payment
 						$response_info = $this->{'model_extension_' . $order_data['payment_method']['extension'] . '_payment_' . $order_data['payment_method']['code']}->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $order_data['payment_method']['code']);
 
@@ -388,13 +387,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 								$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
 
 								$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $remaining);
-							} elseif ($result['duration']) {
+							} elseif ($result['duration'] && $result['remaining']) {
 								$remaining = $result['remaining'] - 1;
 								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
 
-								// If has duration make sure there is remaining
+								// If duration make sure there is remaining
 								$this->model_account_subscription->editRemaining($result['subscription_id'], $remaining);
-							} else {
+							} elseif (!$result['duration']) {
 								// If duration is unlimited
 								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
 							}

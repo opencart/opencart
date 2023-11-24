@@ -127,8 +127,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$extension_data = [
 							'extension_id'          => $install_info['extension_id'],
 							'extension_download_id' => $install_info['extension_download_id'],
-							'name'                  => strip_tags($install_info['name'], '<b>'),
-							'description'           => strip_tags($install_info['description']),
+							'name'                  => strip_tags($install_info['name']),
+							'description'           => nl2br(strip_tags($install_info['description'])),
 							'code'                  => $code,
 							'version'               => $install_info['version'],
 							'author'                => $install_info['author'],
@@ -383,6 +383,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$path = $extension_install_info['code'] . '/' . $destination;
 					$base = DIR_EXTENSION;
 					$prefix = '';
+
+					// OCMOD files shoudl not be copies across
+					if (substr($destination, 0, 6) == 'ocmod/') {
+						continue;
+					}
 
 					// image > image
 					if (substr($destination, 0, 6) == 'image/') {

@@ -10,7 +10,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-        echo 'CONTROLLER WORKING</br>';
         // BEFORE WORKS
 		$this->load->language('catalog/attribute'); // REPLACE WORKS
         // AFTER WORKS

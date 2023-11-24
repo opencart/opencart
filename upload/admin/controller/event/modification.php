@@ -11,7 +11,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 *
 	 * @param string $route
 	 * @param array  $args
-	 * @param array  $output
 	 *
 	 * @return void
 	 */
@@ -28,7 +27,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 *
 	 * @param string $route
 	 * @param array  $args
-	 * @param array  $output
 	 *
 	 * @return void
 	 */
@@ -43,12 +41,28 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * View
+	 *
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function view(string &$route, array &$args): void {
 		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/view/template/' . $route . '.twig')) {
 			$route = 'extension/ocmod/' . $route;
 		}
 	}
 
+	/**
+	 * Library
+	 *
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function library(string &$route, array &$args): void {
 		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/system/library/' . $route . '.php')) {
 			$route = 'extension/ocmod/' . $route;

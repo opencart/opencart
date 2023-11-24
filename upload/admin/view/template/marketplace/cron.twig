@@ -41,6 +41,17 @@ $('#cron').on('click', 'thead a, .pagination a', function (e) {
     $('#cron').load(this.href);
 });
 
+$('#button-copy').on('click', function () {
+    var copyText = document.getElementById('input-cron');
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+});
+
 $('#cron').on('click', '.btn-info', function () {
     var element = this;
 

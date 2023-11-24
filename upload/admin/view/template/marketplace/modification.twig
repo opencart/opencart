@@ -33,16 +33,8 @@
               <textarea id="input-log" wrap="off" rows="15" class="form-control">{{ log }}</textarea>
             </p>
             <div class="row row-cols-2">
-              <div class="col">
-
-                <a href="{{ download }}" class="btn btn-primary w-100"{% if not download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a>
-
-              </div>
-              <div class="col">
-
-                <button type="button" id="button-log" class="btn btn-danger w-100"><i class="fa-solid fa-eraser"></i> {{ button_clear }}</button>
-
-              </div>
+              <div class="col"><a href="{{ download }}" class="btn btn-primary w-100"{% if not download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a></div>
+              <div class="col"><button type="button" id="button-log" class="btn btn-danger w-100"><i class="fa-solid fa-eraser"></i> {{ button_clear }}</button></div>
             </div>
           </div>
         </div>
@@ -50,6 +42,11 @@
     </div>
   </div>
 </div>
+<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
+<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <script type="text/javascript"><!--
 $('#modification').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
@@ -154,7 +151,7 @@ $('#modification').on('click', '.btn-success, .btn-danger', function(e) {
     });
 });
 
-$('#modification').on('click', '.btn-info', function () {
+$('#modification').on('click', '.btn-info', function() {
     var element = this;
 
     $('#modal-modification').remove();
@@ -172,6 +169,18 @@ $('#modification').on('click', '.btn-info', function () {
     html += '</div>';
 
     $('body').append(html);
+    /*
+    // Initialize codemirrror
+    var codemirror = CodeMirror.fromTextArea(document.querySelector($(element).attr('data-oc-target')), {
+        mode: 'text/html',
+        lineNumbers: true,
+        lineWrapping: true,
+        autofocus: true,
+        theme: 'monokai'
+    });
+    */
+    //codemirror.setValue(json['code']);
+    //codemirror.setSize('100%', '500px');
 
     var modal = new bootstrap.Modal(document.querySelector('#modal-modification'));
 

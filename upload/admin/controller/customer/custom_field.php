@@ -384,7 +384,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->request->post['type'] == 'text' && $this->request->post['validation'] && @preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), null) === false) {
+		if ($this->request->post['type'] == 'text' && $this->request->post['validation'] && @preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), '') === false) {
 			$json['error']['validation'] = $this->language->get('error_validation');
 		}
 

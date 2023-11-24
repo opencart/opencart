@@ -69,7 +69,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($customer_info)) {
-			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
+			$data['account_custom_field'] = $customer_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = [];
 		}

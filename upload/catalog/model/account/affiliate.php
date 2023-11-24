@@ -38,7 +38,11 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	public function getAffiliate(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + json_decode($query->row['_custom_field'], true);
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -49,7 +53,11 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	public function getAffiliateByTracking(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($code) . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + json_decode($query->row['_custom_field'], true);
+		} else {
+			return [];
+		}
 	}
 
 	/**

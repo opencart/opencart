@@ -109,7 +109,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomer(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + json_decode($query->row['_custom_field'], true);
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -120,7 +124,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomerByEmail(string $email): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + json_decode($query->row['_custom_field'], true);
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -131,7 +139,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomerByCode(string $code): array {
 		$query = $this->db->query("SELECT `customer_id`, `firstname`, `lastname`, `email` FROM `" . DB_PREFIX . "customer` WHERE `code` = '" . $this->db->escape($code) . "' AND `code` != ''");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + json_decode($query->row['_custom_field'], true);
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -144,9 +156,11 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		if ($query->num_rows) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '' WHERE `customer_id` = '" . (int)$query->row['customer_id'] . "'");
-		}
 
-		return $query->row;
+			return $query->row + json_decode($query->row['_custom_field'], true);
+		} else {
+			return [];
+		}
 	}
 
 	/**

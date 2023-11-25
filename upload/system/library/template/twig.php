@@ -26,7 +26,7 @@ class Twig {
 	/**
 	 * Constructor
 	 *
-	 * @param    string $adaptor
+	 * @param    string  $adaptor
 	 *
 	 */
 	public function __construct() {

@@ -126,7 +126,7 @@ class MySQLi {
 	/**
 	 * Escape
 	 *
-	 * @param string  value
+	 * @param string $value
 	 *
 	 * @return   string
 	 */

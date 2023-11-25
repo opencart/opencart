@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Template;
 /**
  * Class Twig
  *
- * @package
+ * @package Opencart\System\Library\Template
  */
 class Twig {
 	/**

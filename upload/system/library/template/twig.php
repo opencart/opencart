@@ -42,8 +42,8 @@ class Twig {
 	/**
 	 * addPath
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param    string  $namespace
+	 * @param    string  $directory
 	 *
 	 * @return	 void
 	 */

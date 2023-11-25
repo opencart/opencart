@@ -40,7 +40,8 @@ class Apcu {
      * Set
      *
      * @param	 string	 $key
-	 * @param	 array|string|null  $key
+	 * @param	 mixed	 $value
+	 * @param	 int 	 $expire
 	 * 
 	 * @return	 void
      */

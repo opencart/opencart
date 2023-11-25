@@ -48,7 +48,7 @@ class DB {
 	 * Write
 	 *
 	 * @param    string  $session_id
-	 * @param    array  $data
+	 * @param    array   $data
 	 *
 	 * @return   bool
 	 */

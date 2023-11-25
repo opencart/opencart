@@ -72,8 +72,8 @@ class Length {
 	/**
 	 * Format
 	 *
-	 * @param    float  $value
-	 * @param    int  $length_class_id
+	 * @param    float   $value
+	 * @param    int     $length_class_id
 	 * @param    string  $decimal_point
 	 * @param    string  $thousand_point
 	 *

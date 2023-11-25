@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Template;
 /**
  * Class Twig
  *
- * @package
+ * @package Opencart\System\Library\Template
  */
 class Twig {
 	/**
@@ -26,7 +26,7 @@ class Twig {
 	/**
 	 * Constructor
 	 *
-	 * @param    string $adaptor
+	 * @param    string  $adaptor
 	 *
 	 */
 	public function __construct() {
@@ -42,8 +42,8 @@ class Twig {
 	/**
 	 * addPath
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param    string  $namespace
+	 * @param    string  $directory
 	 *
 	 * @return	 void
 	 */

@@ -49,7 +49,7 @@ class Template {
 	 * @param	 array	$data
 	 * @param    string $code
 	 *
-	 * @return    string
+	 * @return   string
 	 */
 	public function render(string $filename, array $data = [], string $code = ''): string {
 		return $this->adaptor->render($filename, $data, $code);

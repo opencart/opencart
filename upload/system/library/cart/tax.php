@@ -99,8 +99,8 @@ class Tax {
 	 * Calculate
 	 *
 	 * @param    float  $value
-	 * @param    int  $tax_class_id
-	 * @param    bool  $calculate
+	 * @param    int    $tax_class_id
+	 * @param    bool   $calculate
 	 *
 	 * @return   float
 	 */
@@ -128,7 +128,7 @@ class Tax {
 	 * getTax
 	 *
 	 * @param    float  $value
-	 * @param    int  $tax_class_id
+	 * @param    int    $tax_class_id
 	 *
 	 * @return   float
 	 */
@@ -165,7 +165,7 @@ class Tax {
 	 * getRates
 	 *
 	 * @param    float  $value
-	 * @param    int  $tax_class_id
+	 * @param    int    $tax_class_id
 	 *
 	 * @return   array
 	 */

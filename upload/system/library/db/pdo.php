@@ -96,7 +96,7 @@ class PDO {
 	/**
 	 * Escape
 	 *
-	 * @param    string  value
+	 * @param    string  $value
 	 *
 	 * @return   string
 	 */

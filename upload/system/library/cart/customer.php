@@ -96,7 +96,7 @@ class Customer {
 	 *
 	 * @param    string  $email
 	 * @param    string  $password
-	 * @param    bool  $override
+	 * @param    bool    $override
 	 *
 	 * @return   bool
 	 */

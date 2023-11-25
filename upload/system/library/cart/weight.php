@@ -43,7 +43,7 @@ class Weight {
 	/**
 	 * Convert
 	 *
-	 * @param    float  $value
+	 * @param    float   $value
 	 * @param    string  $from
 	 * @param    string  $to
 	 *
@@ -72,7 +72,7 @@ class Weight {
 	/**
 	 * Format
 	 *
-	 * @param    float  $value
+	 * @param    float   $value
 	 * @param    string  $weight_class_id
 	 * @param    string  $decimal_point
 	 * @param    string  $thousand_point

@@ -33,7 +33,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function editReturnStatus(int $return_status_id, array $data) : void{
+	public function editReturnStatus(int $return_status_id, array $data) : void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
 
 		foreach ($data['return_status'] as $language_id => $value) {

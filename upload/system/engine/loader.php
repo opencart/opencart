@@ -19,51 +19,51 @@ class Loader {
 	protected $registry;
 
 	/**
-	 * Constructor
-	 *
-	 * @param object $registry
-	 */
+     * Constructor
+     *
+     * @param object $registry
+     */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
 
 	/**
-	 * __get
-	 *
-	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
-	 *
-	 * @param string $key
-	 *
-	 * @return   object
-	 */
+     * __get
+     *
+     * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
+     *
+     * @param string $key
+     *
+     * @return object
+     */
 	public function __get(string $key): object {
 		return $this->registry->get($key);
 	}
 
 	/**
-	 * __set
-	 *
-	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
-	 *
-	 * @param string $key
-	 * @param object $value
-	 *
-	 * @return    void
-	 */
+     * __set
+     *
+     * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
+     *
+     * @param string $key
+     * @param object $value
+     *
+     * @return void
+     */
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
 	}
 
 	/**
-	 * Controller
-	 *
-	 * https://wiki.php.net/rfc/variadics
-	 *
-	 * @param string $route
-	 * @param mixed  $args
-	 *
-	 * @return    mixed
-	 */
+     * Controller
+     *
+     * https://wiki.php.net/rfc/variadics
+     *
+     * @param string $route
+     * @param mixed  $args
+     *
+     * @return mixed
+     */
 	public function controller(string $route, ...$args) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $route));
@@ -96,12 +96,12 @@ class Loader {
 	}
 
 	/**
-	 * Model
-	 *
-	 * @param string $route
-	 *
-	 * @return     void
-	 */
+     * Model
+     *
+     * @param string $route
+     *
+     * @return void
+     */
 	public function model(string $route): void {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
@@ -164,16 +164,16 @@ class Loader {
 	}
 
 	/**
-	 * View
-	 *
-	 * Loads the template file and generates the html code.
-	 *
-	 * @param string $route
-	 * @param array  $data
-	 * @param string $code
-	 *
-	 * @return   string
-	 */
+     * View
+     *
+     * Loads the template file and generates the html code.
+     *
+     * @param string $route
+     * @param array  $data
+     * @param string $code
+     *
+     * @return string
+     */
 	public function view(string $route, array $data = [], string $code = ''): string {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
@@ -197,14 +197,14 @@ class Loader {
 	}
 
 	/**
-	 * Language
-	 *
-	 * @param string $route
-	 * @param string $prefix
-	 * @param string $code
-	 *
-	 * @return    array
-	 */
+     * Language
+     *
+     * @param string $route
+     * @param string $prefix
+     * @param string $code
+     *
+     * @return array
+     */
 	public function language(string $route, string $prefix = '', string $code = ''): array {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', $route);
@@ -223,12 +223,12 @@ class Loader {
 	}
 
 	/**
-	 * Config
-	 *
-	 * @param string $route
-	 *
-	 * @return     array
-	 */
+     * Config
+     *
+     * @param string $route
+     *
+     * @return array
+     */
 	public function config(string $route): array {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', $route);
@@ -247,12 +247,12 @@ class Loader {
 	}
 
 	/**
-	 * Helper
-	 *
-	 * @param string $route
-	 *
-	 * @return     void
-	 */
+     * Helper
+     *
+     * @param string $route
+     *
+     * @return void
+     */
 	public function helper(string $route): void {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 

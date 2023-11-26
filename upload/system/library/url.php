@@ -22,7 +22,7 @@ class Url {
 	private array $rewrite = [];
 
 	/**
-	 * Constructor.
+	 * Constructor
 	 *
 	 * @param string $url
 	 */

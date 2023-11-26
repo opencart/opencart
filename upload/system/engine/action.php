@@ -47,7 +47,7 @@ class Action {
 	/**
 	 * getId
 	 *
-	 * @return    string
+	 * @return string
 	 *
 	 */
 	public function getId(): string {
@@ -60,7 +60,7 @@ class Action {
 	 * @param object $registry
 	 * @param array  $args
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function execute(\Opencart\System\Engine\Registry $registry, array &$args = []) {
 		// Stop any magical methods being called

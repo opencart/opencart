@@ -22,10 +22,10 @@ class Smtp {
 	];
 
 	/**
-	 * Constructor
-	 *
-	 * @param    array  $option
-	 */
+     * Constructor
+     *
+     * @param array $option
+     */
 	public function __construct(array &$option = []) {
 		foreach ($this->default as $key => $value) {
 			if (!isset($option[$key])) {
@@ -37,10 +37,10 @@ class Smtp {
 	}
 
 	/**
-	 * Send
-	 *
-	 * @return    bool
-	 */
+     * Send
+     *
+     * @return bool
+     */
 	public function send(): bool {
 		if (empty($this->option['smtp_hostname'])) {
 			throw new \Exception('Error: SMTP hostname required!');
@@ -270,17 +270,7 @@ class Smtp {
 			return false;
 		}
 	}
-
-	/**
-	 * handleReply
-	 *
-	 * @param	array	$handle
-	 * @param	bool	$status_code
-	 * @param	bool	$error_text
-	 * @param	int		$counter
-	 *
-	 * @return      string
-	 */
+	
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';
 

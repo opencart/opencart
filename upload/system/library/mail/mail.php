@@ -9,19 +9,19 @@ class Mail {
 	protected array $option = [];
 
 	/**
-	 * Constructor
-	 *
-	 * @param    array  $option
-	 */
+     * Constructor
+     *
+     * @param array $option
+     */
 	public function __construct(array &$option = []) {
 		$this->option = &$option;
 	}
 
 	/**
-	 * Send
-	 *
-	 * @return    bool
-	 */
+     * Send
+     *
+     * @return bool
+     */
 	public function send(): bool {
 		if (is_array($this->option['to'])) {
 			$to = implode(',', $this->option['to']);

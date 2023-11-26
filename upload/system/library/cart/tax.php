@@ -20,23 +20,23 @@ class Tax {
 	private array $tax_rates = [];
 
 	/**
-	 * Constructor
-	 *
-	 * @param    object  $registry
-	 */
+     * Constructor
+     *
+     * @param object $registry
+     */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
 	}
 
 	/**
-	 * setShippingAddress
-	 *
-	 * @param    int  $country_id
-	 * @param    int  $zone_id
-	 *
-	 * @return   void
-	 */
+     * setShippingAddress
+     *
+     * @param int $country_id
+     * @param int $zone_id
+     *
+     * @return void
+     */
 	public function setShippingAddress(int $country_id, int $zone_id): void {
 		$tax_query = $this->db->query("SELECT `tr1`.`tax_class_id`, `tr2`.`tax_rate_id`, `tr2`.`name`, `tr2`.`rate`, `tr2`.`type`, `tr1`.`priority` FROM `" . DB_PREFIX . "tax_rule` `tr1` LEFT JOIN `" . DB_PREFIX . "tax_rate` `tr2` ON (`tr1`.`tax_rate_id` = `tr2`.`tax_rate_id`) INNER JOIN `" . DB_PREFIX . "tax_rate_to_customer_group` `tr2cg` ON (`tr2`.`tax_rate_id` = `tr2cg`.`tax_rate_id`) LEFT JOIN `" . DB_PREFIX . "zone_to_geo_zone` `z2gz` ON (`tr2`.`geo_zone_id` = `z2gz`.`geo_zone_id`) LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr2`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr1`.`based` = 'shipping' AND `tr2cg`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `z2gz`.`country_id` = '" . (int)$country_id . "' AND (`z2gz`.`zone_id` = '0' OR `z2gz`.`zone_id` = '" . (int)$zone_id . "') ORDER BY `tr1`.`priority` ASC");
 
@@ -52,13 +52,13 @@ class Tax {
 	}
 
 	/**
-	 * setPaymentAddress
-	 *
-	 * @param    int  $country_id
-	 * @param    int  $zone_id
-	 *
-	 * @return   void
-	 */
+     * setPaymentAddress
+     *
+     * @param int $country_id
+     * @param int $zone_id
+     *
+     * @return void
+     */
 	public function setPaymentAddress(int $country_id, int $zone_id): void {
 		$tax_query = $this->db->query("SELECT `tr1`.`tax_class_id`, `tr2`.`tax_rate_id`, `tr2`.`name`, `tr2`.`rate`, `tr2`.`type`, `tr1`.`priority` FROM `" . DB_PREFIX . "tax_rule` `tr1` LEFT JOIN `" . DB_PREFIX . "tax_rate` `tr2` ON (`tr1`.`tax_rate_id` = `tr2`.`tax_rate_id`) INNER JOIN `" . DB_PREFIX . "tax_rate_to_customer_group` `tr2cg` ON (`tr2`.`tax_rate_id` = `tr2cg`.`tax_rate_id`) LEFT JOIN `" . DB_PREFIX . "zone_to_geo_zone` `z2gz` ON (`tr2`.`geo_zone_id` = `z2gz`.`geo_zone_id`) LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr2`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr1`.`based` = 'payment' AND `tr2cg`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `z2gz`.`country_id` = '" . (int)$country_id . "' AND (`z2gz`.`zone_id` = '0' OR `z2gz`.`zone_id` = '" . (int)$zone_id . "') ORDER BY `tr1`.`priority` ASC");
 
@@ -74,13 +74,13 @@ class Tax {
 	}
 
 	/**
-	 * setStoreAddress
-	 *
-	 * @param    int  $country_id
-	 * @param    int  $zone_id
-	 *
-	 * @return   void
-	 */
+     * setStoreAddress
+     *
+     * @param int $country_id
+     * @param int $zone_id
+     *
+     * @return void
+     */
 	public function setStoreAddress(int $country_id, int $zone_id): void {
 		$tax_query = $this->db->query("SELECT `tr1`.`tax_class_id`, `tr2`.`tax_rate_id`, `tr2`.`name`, `tr2`.`rate`, `tr2`.`type`, `tr1`.`priority` FROM `" . DB_PREFIX . "tax_rule` `tr1` LEFT JOIN `" . DB_PREFIX . "tax_rate` `tr2` ON (`tr1`.`tax_rate_id` = `tr2`.`tax_rate_id`) INNER JOIN `" . DB_PREFIX . "tax_rate_to_customer_group` `tr2cg` ON (`tr2`.`tax_rate_id` = `tr2cg`.`tax_rate_id`) LEFT JOIN `" . DB_PREFIX . "zone_to_geo_zone` `z2gz` ON (`tr2`.`geo_zone_id` = `z2gz`.`geo_zone_id`) LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr2`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr1`.`based` = 'store' AND `tr2cg`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `z2gz`.`country_id` = '" . (int)$country_id . "' AND (`z2gz`.`zone_id` = '0' OR `z2gz`.`zone_id` = '" . (int)$zone_id . "') ORDER BY `tr1`.`priority` ASC");
 
@@ -96,14 +96,14 @@ class Tax {
 	}
 
 	/**
-	 * Calculate
-	 *
-	 * @param    float  $value
-	 * @param    int    $tax_class_id
-	 * @param    bool   $calculate
-	 *
-	 * @return   float
-	 */
+     * Calculate
+     *
+     * @param float $value
+     * @param int   $tax_class_id
+     * @param bool  $calculate
+     *
+     * @return float
+     */
 	public function calculate(float $value, int $tax_class_id, bool $calculate = true): float {
 		if ($tax_class_id && $calculate) {
 			$amount = 0;
@@ -125,13 +125,13 @@ class Tax {
 	}
 
 	/**
-	 * getTax
-	 *
-	 * @param    float  $value
-	 * @param    int    $tax_class_id
-	 *
-	 * @return   float
-	 */
+     * getTax
+     *
+     * @param float $value
+     * @param int   $tax_class_id
+     *
+     * @return float
+     */
 	public function getTax(float $value, int $tax_class_id): float {
 		$amount = 0;
 
@@ -145,12 +145,12 @@ class Tax {
 	}
 
 	/**
-	 * getRateName
-	 *
-	 * @param    int  $tax_rate_id
-	 *
-	 * @return   string
-	 */
+     * getRateName
+     *
+     * @param int $tax_rate_id
+     *
+     * @return string
+     */
 	public function getRateName(int $tax_rate_id): string {
 		$tax_query = $this->db->query("SELECT `name` FROM `" . DB_PREFIX . "tax_rate` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 
@@ -162,13 +162,13 @@ class Tax {
 	}
 
 	/**
-	 * getRates
-	 *
-	 * @param    float  $value
-	 * @param    int    $tax_class_id
-	 *
-	 * @return   array
-	 */
+     * getRates
+     *
+     * @param float $value
+     * @param int   $tax_class_id
+     *
+     * @return array
+     */
 	public function getRates(float $value, int $tax_class_id): array {
 		$tax_rate_data = [];
 
@@ -200,10 +200,10 @@ class Tax {
 	}
 
 	/**
-	 * Clear
-	 *
-	 * @return   void
-	 */
+     * Clear
+     *
+     * @return void
+     */
 	public function clear(): void {
 		$this->tax_rates = [];
 	}

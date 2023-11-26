@@ -17,11 +17,11 @@ class Template {
 	private object $adaptor;
 
 	/**
-	 * Constructor
-	 *
-	 * @param    string $adaptor
-	 *
-	 */
+     * Constructor
+     *
+     * @param string $adaptor
+     *
+     */
 	public function __construct(string $adaptor) {
 		$class = 'Opencart\System\Library\Template\\' . $adaptor;
 
@@ -33,24 +33,26 @@ class Template {
 	}
 
 	/**
-	 * addPath
-	 *
-	 * @param    string $namespace
-	 * @param    string $directory
-	 */
+     * addPath
+     *
+     * @param string $namespace
+     * @param string $directory
+     *
+     * @return void
+     */
 	public function addPath(string $namespace, string $directory = ''): void {
 		$this->adaptor->addPath($namespace, $directory);
 	}
 
 	/**
-	 * Render
-	 *
-	 * @param    string $filename
-	 * @param	 array	$data
-	 * @param    string $code
-	 *
-	 * @return   string
-	 */
+     * Render
+     *
+     * @param string $filename
+     * @param array	 $data
+     * @param string $code
+     *
+     * @return string
+     */
 	public function render(string $filename, array $data = [], string $code = ''): string {
 		return $this->adaptor->render($filename, $data, $code);
 	}

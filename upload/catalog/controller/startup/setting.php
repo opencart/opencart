@@ -29,7 +29,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			// If catalog constant is defined
 			if (defined('HTTP_CATALOG')) {
 				$this->config->set('config_url', HTTP_CATALOG);
-			} else{
+			} else {
 				$this->config->set('config_url', HTTP_SERVER);
 			}
 		}

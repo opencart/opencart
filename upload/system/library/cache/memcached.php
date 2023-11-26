@@ -33,12 +33,12 @@ class Memcached {
 	}
 
 	/**
-	 * Get
-	 *
-	 * @param string $key
-	 *
-	 * @return     mixed
-	 */
+     * Get
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
 	public function get(string $key) {
 		return $this->memcached->get(CACHE_PREFIX . $key);
 	}

@@ -28,72 +28,77 @@ class Response {
 	private string $output = '';
 
 	/**
-	 * Constructor
-	 *
-	 * @param	string	$header
-	 *
- 	*/
+     * Constructor
+     *
+     * @param string $header
+     *
+     */
 	public function addHeader(string $header): void {
 		$this->headers[] = $header;
 	}
 
 	/**
-	 * Get Headers
-	 *
-	 * @param	array
-	 *
- 	*/
+     * getHeaders
+     *
+     * @param array
+     *
+     */
 	public function getHeaders(): array {
 		return $this->headers;
 	}
 
 	/**
-	 * Redirect
-	 *
-	 * @param	string	$url
-	 * @param	int		$status
-	 *
- 	*/
+     * Redirect
+     *
+     * @param string $url
+     * @param int	 $status
+     *
+     * @return void
+     */
 	public function redirect(string $url, int $status = 302): void {
 		header('Location: ' . str_replace(['&amp;', "\n", "\r"], ['&', '', ''], $url), true, $status);
 		exit();
 	}
 
 	/**
-	 * Set Compression
-	 *
-	 * @param	int		$level
- 	*/
+     * setCompression
+     *
+     * @param int $level
+     *
+     * @return void
+     */
 	public function setCompression(int $level): void {
 		$this->level = $level;
 	}
 
 	/**
-	 * Set Output
-	 *
-	 * @param	string	$output
- 	*/	
+     * setOutput
+     *
+     * @param string $output
+     *
+     * @return void
+     */
 	public function setOutput(string $output): void {
 		$this->output = $output;
 	}
 
 	/**
-	 * Get Output
-	 *
-	 * @return	array
-	 */
+     * getOutput
+     *
+     * @return string
+     */
 	public function getOutput(): string {
 		return $this->output;
 	}
 
 	/**
-	 * Compress
-	 *
-	 * @param	string	$data
-	 * @param	int		$level
-	 * 
-	 * @return	string
- 	*/
+     * Compress
+     *
+     * @param string $data
+     * @param int	 $level
+     *
+     * @return	string
+     */
 	private function compress(string $data, int $level = 0): string {
 		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
 			$encoding = 'gzip';
@@ -125,10 +130,12 @@ class Response {
 	}
 
 	/**
-	 * Output
-	 *
-	 * Displays the set HTML output
- 	*/
+     * Output
+     *
+     * Displays the set HTML output
+     *
+     * @return void
+     */
 	public function output(): void {
 		if ($this->output) {
 			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;

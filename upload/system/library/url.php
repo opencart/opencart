@@ -31,27 +31,27 @@ class Url {
 	}
 
 	/**
-	 * addRewrite
-	 *
-	 * Add a rewrite method to the URL system
-	 *
-	 * @param object $rewrite
-	 *
-	 * @return    void
-	 */
+     * addRewrite
+     *
+     * Add a rewrite method to the URL system
+     *
+     * @param object $rewrite
+     *
+     * @return void
+     */
 	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
 		$this->rewrite[] = $rewrite;
 	}
 
 	/**
-	 * Generates a URL
-	 *
-	 * @param string $route
-	 * @param mixed  $args
-	 * @param bool   $js
-	 *
-	 * @return string
-	 */
+     * Generates a URL
+     *
+     * @param string $route
+     * @param mixed  $args
+     * @param bool   $js
+     *
+     * @return string
+     */
 	public function link(string $route, $args = '', bool $js = false): string {
 		$url = $this->url . 'index.php?route=' . $route;
 

@@ -33,23 +33,23 @@ class Language {
 	protected array $cache = [];
 
 	/**
-	 * Constructor
-	 *
-	 * @param    string  $code
-	 *
-	 */
+     * Constructor
+     *
+     * @param string $code
+     *
+     */
 	public function __construct(string $code) {
 		$this->code = $code;
 	}
 
 	/**
-	 * addPath
-	 *
-	 * @param    string  $namespace
-	 * @param    string  $directory
-	 *
-	 * @return   void
-	 */
+     * addPath
+     *
+     * @param string $namespace
+     * @param string $directory
+     *
+     * @return void
+     */
 	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
@@ -59,22 +59,26 @@ class Language {
 	}
 
 	/**
+     * Get
+     *
      * Get language text string
      *
-     * @param	string	$key
-	 * 
-	 * @return	string
+     * @param string $key
      */
 	public function get(string $key) {
 		return isset($this->data[$key]) ? $this->data[$key] : $key;
 	}
 
 	/**
-     *  Set language text string
+     * Set
      *
-     * @param	string	$key
-	 * @param	string	$value
-     */	
+     * Set language text string
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return void
+     */
 	public function set(string $key, string $value): void {
 		$this->data[$key] = $value;
 	}
@@ -82,7 +86,9 @@ class Language {
 	/**
      * All
      *
-	 * @return	array
+     * @param string $prefix
+     *
+     * @return array
      */
 	public function all(string $prefix = ''): array {
 		if (!$prefix) {
@@ -103,10 +109,10 @@ class Language {
 	}
 
 	/**
-	 * Clear
-	 *
-	 * @return	void
-	 */
+     * Clear
+     *
+     * @return void
+     */
 	public function clear(): void {
 		$this->data = [];
 	}
@@ -114,10 +120,11 @@ class Language {
 	/**
      * Load
      *
-     * @param	string	$filename
-	 * @param	string	$code 		Language code
-	 * 
-	 * @return	array
+     * @param string $filename
+     * @param string $prefix
+     * @param string $code Language code
+     *
+     * @return array
      */
 	public function load(string $filename, string $prefix = '', string $code = ''): array {
 		if (!$code) {

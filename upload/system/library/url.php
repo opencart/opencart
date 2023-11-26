@@ -44,6 +44,8 @@ class Url {
 	}
 
 	/**
+     * Link
+     * 
      * Generates a URL
      *
      * @param string $route

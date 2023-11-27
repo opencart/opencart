@@ -22,7 +22,7 @@
             <td class="text-start align-text-top">{{ extension.version }}</td>
             <td class="text-start align-text-top">{{ extension.date_added }}</td>
             <td class="text-end align-text-top text-nowrap">
-              <button type="button" data-oc-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
               {% if not extension.status %}
                 <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                 <a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
@@ -46,20 +46,43 @@
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>
 {% for extension in extensions %}
-  <div id="extension-install-{{ extension.extension_install_id }}" class="d-none">
-    <div class="mb-3">
-      <label class="form-label">{{ entry_name }}</label>
-      <div>{{ extension.name }}</div>
-    </div>
-    {% if extension.description %}
-      <div class="mb-3">
-        <label class="form-label">{{ entry_description }}</label>
-        <div>{{ extension.description }}</div>
+  <div id="extension-install-{{ extension.extension_install_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">{{ entry_name }}</label>
+
+
+            <div>{{ extension.name }}</div>
+
+
+          </div>
+          {% if extension.description %}
+            <div class="mb-3">
+              <label class="form-label">{{ entry_description }}</label>
+
+
+              <div>{{ extension.description }}</div>
+
+
+            </div>
+          {% endif %}
+          <div>
+            <label class="form-label">{{ entry_code }}</label>
+
+
+            <div>{{ extension.code }}</div>
+
+
+
+          </div>
+        </div>
       </div>
-    {% endif %}
-    <div>
-      <label class="form-label">{{ entry_code }}</label>
-      <div>{{ extension.code }}</div>
     </div>
   </div>
 {% endfor %}

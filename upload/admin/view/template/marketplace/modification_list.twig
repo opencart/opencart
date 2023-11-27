@@ -37,7 +37,7 @@
               <td class="text-start">{{ modification.version }}</td>
               <td class="text-start">{{ modification.date_added }}</td>
               <td class="text-end text-nowrap">
-                <button type="button" data-oc-target="#modification-{{ modification.modification_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-modification-{{ modification.modification_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% if not modification.status %}
                   <button type="button" value="{{ modification.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
                 {% else %}
@@ -59,29 +59,38 @@
   </div>
 </form>
 {% for modification in modifications %}
-  <div id="modification-{{ modification.modification_id }}" class="d-none">
-
-    <ul class="nav nav-tabs">
-      <li class="nav-item"><a href="#tab-test" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-      <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
-    </ul>
-    <div class="tab-content">
-      <div id="tab-test" class="tab-pane active">
-        <div class="mb-3">
-          <label class="form-label">{{ entry_name }}</label> <input type="text" value="{{ modification.name }}" class="form-control" disabled/>
+  <div id="modal-modification-{{ modification.modification_id }}" class="modal modal-lg">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="mb-3">
-          <label class="form-label">{{ entry_description }}</label> <textarea rows="5" class="form-control" disabled>{{ modification.description }}</textarea>
-        </div>
-        <div>
-          <label class="form-label">{{ entry_code }}</label> <input type="text" value="{{ modification.code }}" class="form-control" disabled/>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">{{ entry_xml }}</label> <textarea rows="15" class="form-control" disabled>{{ modification.xml }}</textarea>
+        <div class="modal-body">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-test" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="tab-test" class="tab-pane active">
+              <div class="mb-3">
+                <label class="form-label">{{ entry_name }}</label>
+                <input type="text" value="{{ modification.name }}" class="form-control" readonly/>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">{{ entry_description }}</label>
+                <textarea rows="5" class="form-control" readonly>{{ modification.description }}</textarea>
+              </div>
+              <div>
+                <label class="form-label">{{ entry_code }}</label>
+                <input type="text" value="{{ modification.code }}" class="form-control" readonly/>
+              </div>
+            </div>
+            <div id="tab-data" class="tab-pane">
+              <textarea rows="25" class="form-control" readonly>{{ modification.xml }}</textarea></div>
+          </div>
         </div>
       </div>
-      <div id="tab-data" class="tab-pane">rgterte</div>
     </div>
-
   </div>
 {% endfor %}

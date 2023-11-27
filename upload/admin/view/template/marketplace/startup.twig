@@ -27,30 +27,6 @@ $('#startup').on('click', 'thead a, .pagination a', function (e) {
     $('#startup').load(this.href);
 });
 
-$('#startup').on('click', '.btn-info', function () {
-    var element = this;
-
-    $('#modal-startup').remove();
-
-    html = '<div id="modal-startup" class="modal">';
-    html += '  <div class="modal-dialog">';
-    html += '    <div class="modal-content">';
-    html += '      <div class="modal-header">';
-    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
-    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-    html += '      </div>';
-    html += '      <div class="modal-body">' + $($(element).attr('data-oc-target')).html() + '</div>';
-    html += '    </div>';
-    html += '  </div>';
-    html += '</div>';
-
-    $('body').append(html);
-
-    var modal = new bootstrap.Modal(document.querySelector('#modal-startup'));
-
-    modal.show();
-});
-
 $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
 

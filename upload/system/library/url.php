@@ -22,7 +22,7 @@ class Url {
 	private array $rewrite = [];
 
 	/**
-	 * Constructor.
+	 * Constructor
 	 *
 	 * @param string $url
 	 */
@@ -44,6 +44,8 @@ class Url {
 	}
 
 	/**
+     * Link
+     * 
      * Generates a URL
      *
      * @param string $route

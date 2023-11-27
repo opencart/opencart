@@ -100,14 +100,14 @@ class WishList extends \Opencart\System\Engine\Controller {
 					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
 
 					if ($stock_status_info) {
-						$data['stock'] = $stock_status_info['name'];
+						$stock = $stock_status_info['name'];
 					} else {
-						$data['stock'] = '';
+						$stock = '';
 					}
 				} elseif ($this->config->get('config_stock_display')) {
-					$data['stock'] = $product_info['quantity'];
+					$stock = $product_info['quantity'];
 				} else {
-					$data['stock'] = $this->language->get('text_instock');
+					$stock = $this->language->get('text_instock');
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {

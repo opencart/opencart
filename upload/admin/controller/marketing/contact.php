@@ -98,6 +98,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 			$emails = [];
 
+			print_r($this->request->post);
+
+
 			switch ($this->request->post['to']) {
 				case 'newsletter':
 					$customer_data = [

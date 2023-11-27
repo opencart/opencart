@@ -71,10 +71,10 @@ class Cart {
 	}
 
 	/**
-	 * getProducts
-	 *
-	 * @return    array
-	 */
+     * getProducts
+     *
+     * @return array
+     */
 	public function getProducts(): array {
 		if (!$this->data) {
 			$cart_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "cart` WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
@@ -359,17 +359,17 @@ class Cart {
 	}
 
 	/**
-	 * Add
-	 *
-	 * @param int   $product_id
-	 * @param int   $quantity
-	 * @param array $option
-	 * @param int   $subscription_plan_id
+     * Add
+     *
+     * @param int   $product_id
+     * @param int   $quantity
+     * @param array $option
+     * @param int   $subscription_plan_id
      * @param bool  $override
      * @param float $price
-	 *
-	 * @return    void
-	 */
+     *
+     * @return void
+     */
 	public function add(int $product_id, int $quantity = 1, array $option = [], int $subscription_plan_id = 0, bool $override = false, float $price = 0): void {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cart` WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 
@@ -384,13 +384,13 @@ class Cart {
 	}
 
 	/**
-	 * Update
-	 *
-	 * @param int $cart_id
-	 * @param int $quantity
-	 *
-	 * @return    void
-	 */
+     * Update
+     *
+     * @param int $cart_id
+     * @param int $quantity
+     *
+     * @return void
+     */
 	public function update(int $cart_id, int $quantity): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = '" . (int)$quantity . "' WHERE `cart_id` = '" . (int)$cart_id . "' AND `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
@@ -399,23 +399,23 @@ class Cart {
 	}
 
 	/**
-	 * Has
-	 *
-	 * @param int $cart_id
-	 *
-	 * @return    bool
-	 */
+     * Has
+     *
+     * @param int $cart_id
+     *
+     * @return bool
+     */
 	public function has(int $cart_id): bool {
 		return isset($this->data[$cart_id]);
 	}
 
 	/**
-	 * Remove
-	 *
-	 * @param int $cart_id
-	 *
-	 * @return    void
-	 */
+     * Remove
+     *
+     * @param int $cart_id
+     *
+     * @return void
+     */
 	public function remove(int $cart_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `cart_id` = '" . (int)$cart_id . "' AND `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
@@ -423,10 +423,10 @@ class Cart {
 	}
 
 	/**
-	 * Clear
-	 *
-	 * @return    void
-	 */
+     * Clear
+     *
+     * @return void
+     */
 	public function clear(): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
@@ -434,10 +434,10 @@ class Cart {
 	}
 
 	/**
-	 * getSubscriptions
-	 *
-	 * @return    array
-	 */
+     * getSubscriptions
+     *
+     * @return array
+     */
 	public function getSubscriptions(): array {
 		$product_data = [];
 
@@ -451,10 +451,10 @@ class Cart {
 	}
 
 	/**
-	 * getWeight
-	 *
-	 * @return    float
-	 */
+     * getWeight
+     *
+     * @return float
+     */
 	public function getWeight(): float {
 		$weight = 0;
 
@@ -468,10 +468,10 @@ class Cart {
 	}
 
 	/**
-	 * getSubTotal
-	 *
-	 * @return    float
-	 */
+     * getSubTotal
+     *
+     * @return float
+     */
 	public function getSubTotal(): float {
 		$total = 0;
 
@@ -483,10 +483,10 @@ class Cart {
 	}
 
 	/**
-	 * getTaxes
-	 *
-	 * @return    array
-	 */
+     * getTaxes
+     *
+     * @return array
+     */
 	public function getTaxes(): array {
 		$tax_data = [];
 
@@ -508,10 +508,10 @@ class Cart {
 	}
 
 	/**
-	 * getTotal
-	 *
-	 * @return    float
-	 */
+     * getTotal
+     *
+     * @return float
+     */
 	public function getTotal(): float {
 		$total = 0;
 
@@ -523,10 +523,10 @@ class Cart {
 	}
 
 	/**
-	 * countProducts
-	 *
-	 * @return    int
-	 */
+     * countProducts
+     *
+     * @return int
+     */
 	public function countProducts(): int {
 		$product_total = 0;
 
@@ -540,28 +540,28 @@ class Cart {
 	}
 
 	/**
-	 * hadProducts
-	 *
-	 * @return    bool
-	 */
+     * hadProducts
+     *
+     * @return bool
+     */
 	public function hasProducts(): bool {
 		return (bool)count($this->getProducts());
 	}
 
 	/**
-	 * hasSubscription
-	 *
-	 * @return    bool
-	 */
+     * hasSubscription
+     *
+     * @return bool
+     */
 	public function hasSubscription(): bool {
 		return (bool)count($this->getSubscriptions());
 	}
 
 	/**
-	 * hasStock
-	 *
-	 * @return    bool
-	 */
+     * hasStock
+     *
+     * @return bool
+     */
 	public function hasStock(): bool {
 		foreach ($this->getProducts() as $product) {
 			if (!$product['stock']) {
@@ -573,10 +573,10 @@ class Cart {
 	}
 
 	/**
-	 * hasShipping
-	 *
-	 * @return    bool
-	 */
+     * hasShipping
+     *
+     * @return bool
+     */
 	public function hasShipping(): bool {
 		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
@@ -588,10 +588,10 @@ class Cart {
 	}
 
 	/**
-	 * hasDownload
-	 *
-	 * @return    bool
-	 */
+     * hasDownload
+     *
+     * @return bool
+     */
 	public function hasDownload(): bool {
 		foreach ($this->getProducts() as $product) {
 			if ($product['download']) {

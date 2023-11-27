@@ -27,11 +27,11 @@ class Autoloader {
 	/**
 	 * Register
 	 *
-	 * @param    string  $namespace
-	 * @param    string  $directory
-	 * @param    bool    $psr4
+	 * @param string $namespace
+	 * @param string $directory
+	 * @param bool   $psr4
 	 *
-	 * @return   void
+	 * @return void
 	 *
 	 * @psr-4 filename standard is stupid composer has lower case file structure than its packages have camelcase file names!
 	 */	
@@ -45,9 +45,9 @@ class Autoloader {
 	/**
 	 * Load
 	 *
-	 * @param    string  $class
+	 * @param string $class
 	 *
-	 * @return	 bool
+	 * @return bool
 	 */
 	public function load(string $class): bool {
 		$namespace = '';

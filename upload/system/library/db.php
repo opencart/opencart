@@ -26,7 +26,7 @@ class DB {
 	 * @param string $username
 	 * @param string $password
 	 * @param string $database
-	 * @param int    $port
+	 * @param string $port
 	 * @param string $ssl_key
 	 * @param string $ssl_cert
 	 * @param string $ssl_ca
@@ -64,7 +64,7 @@ class DB {
 	}
 
 	/**
-     * Count Affected
+     * countAffected
      *
      * Gets the total number of affected rows from the last query
      *
@@ -75,7 +75,7 @@ class DB {
 	}
 
 	/**
-     * Get Last ID
+     * getLastId
      *
      * Get the last ID gets the primary key that was returned after creating a row in a table.
      *
@@ -86,7 +86,7 @@ class DB {
 	}
 
 	/**
-     * Is Connected
+     * isConnected
      *
      * Checks if a DB connection is active.
      *

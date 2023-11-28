@@ -218,11 +218,11 @@ $trigger = $route;
 // Trigger the pre events
 $event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
-// Dispatch
 if (!$action) {
 	$action = new \Opencart\System\Engine\Action($route);
 }
 
+// Dispatch
 while ($action) {
 	// Execute action
 	$output = $action->execute($registry, $args);

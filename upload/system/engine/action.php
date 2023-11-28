@@ -73,7 +73,17 @@ class Action {
 
 		// Initialize the class
 		if (class_exists($class)) {
-			$controller = new $class($registry);
+			// Create a key to store an action object
+			$key = 'controller_' . str_replace(array('/', '.'), '_', explode('.', (string)$this->route)[0]);
+
+			if (!$registry->has($key)) {
+				$controller = new $class($registry);
+
+				// Store controller as action object
+				$registry->set($key, $controller);
+			} else {
+				$controller = $registry->get($key);
+			}
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

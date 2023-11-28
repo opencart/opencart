@@ -7,6 +7,7 @@ $_['text_brand']        = 'Brand';
 $_['text_index']        = 'Brand Index:';
 $_['text_error']        = 'Brand not found!';
 $_['text_empty']        = 'There are no products to list.';
+$_['text_no_results']   = 'There are no brands to list.';
 $_['text_quantity']     = 'Qty:';
 $_['text_manufacturer'] = 'Brand:';
 $_['text_model']        = 'Product Code:';

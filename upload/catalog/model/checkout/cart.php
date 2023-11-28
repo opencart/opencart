@@ -26,7 +26,7 @@ class Cart extends \Opencart\System\Engine\Model {
 					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 					if ($upload_info) {
-						$value = $upload_info['name'];
+						$value = $upload_info['code'];
 					} else {
 						$value = '';
 					}

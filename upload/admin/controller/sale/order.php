@@ -670,7 +670,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					if ($upload_info) {
 						$option_data[] = [
 							'name'  => $option['name'],
-							'value' => $upload_info['name'],
+							'value' => $upload_info['code'],
 							'type'  => $option['type'],
 							'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 						];
@@ -1411,7 +1411,7 @@ class Order extends \Opencart\System\Engine\Controller {
 							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 							if ($upload_info) {
-								$value = $upload_info['name'];
+								$value = $upload_info['code'];
 							} else {
 								$value = '';
 							}
@@ -1624,7 +1624,7 @@ class Order extends \Opencart\System\Engine\Controller {
 								$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 								if ($upload_info) {
-									$value = $upload_info['name'];
+									$value = $upload_info['code'];
 								} else {
 									$value = '';
 								}

@@ -270,7 +270,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 						if ($upload_info) {
-							$value = $upload_info['name'];
+							$value = $upload_info['code'];
 						} else {
 							$value = '';
 						}

@@ -207,7 +207,7 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 // Route
 if (isset($request->get['route'])) {
-	$route = $request->get['route'];
+	$route = (string)$request->get['route'];
 } else {
 	$route = (string)$config->get('action_default');
 }

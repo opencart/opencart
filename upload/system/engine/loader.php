@@ -68,6 +68,9 @@ class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $route));
 
+		echo $route . '<br/>';
+
+
 		$trigger = $route;
 
 		// Trigger the pre events
@@ -79,6 +82,8 @@ class Loader {
 		while ($action) {
 			// Execute action
 			$output = $action->execute($this->registry, $args);
+
+			echo
 
 			// Make action a non-object so it's not infinitely looping
 			$action = '';

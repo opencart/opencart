@@ -123,6 +123,9 @@ class Loader {
 						// https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 						// https://wiki.php.net/rfc/variadics
 						$proxy->{$method} = function (&...$args) use ($route, $method) {
+							// Create a key to store the proxy object
+							$key = 'proxy_' . str_replace('/', '_', $route);
+
 							$route = $route . '/' . $method;
 
 							$trigger = $route;
@@ -137,7 +140,14 @@ class Loader {
 							$class = 'Opencart\\' . $this->config->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($route, 0, $pos), '_/'));
 							$method = substr($route, $pos + 1);
 
-							$model = new $class($this->registry);
+							if (!$this->registry->has($key)) {
+								$model = new $class($this->registry);
+								
+								// Store model as proxy object
+								$this->registry->set($key, $model);
+							} else {
+								$model = $this->registry->get($key);
+							}
 
 							// Get the method to be used
 							$callable = [$model, $method];

@@ -33,9 +33,6 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->registry->set('user', new \Opencart\System\Library\Cart\User($this->registry));
 
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
-
-			echo $route . '<br/>';
-
 			return new \Opencart\System\Engine\Action('common/login');
 		}
 

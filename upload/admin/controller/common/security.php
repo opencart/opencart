@@ -413,7 +413,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 *
+	 * Destructor
 	 */
 	public function __destruct() {
 		// Remove old admin if exists

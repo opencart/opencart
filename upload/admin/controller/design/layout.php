@@ -227,7 +227,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/extension');
-
 		$this->load->model('setting/module');
 
 		$data['extensions'] = [];

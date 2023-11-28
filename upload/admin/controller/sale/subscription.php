@@ -687,7 +687,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if ($upload_info) {
 					$data['options'][] = [
 						'name'  => $option['name'],
-						'value' => $upload_info['name'],
+						'value' => $upload_info['code'],
 						'type'  => $option['type'],
 						'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 					];

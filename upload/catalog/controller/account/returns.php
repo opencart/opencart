@@ -92,7 +92,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
+	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?object {
 		$this->load->language('account/returns');

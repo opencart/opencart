@@ -42,11 +42,6 @@
     </div>
   </div>
 </div>
-<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
-<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
-<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
-<script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
-<script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <script type="text/javascript"><!--
 $('#modification').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
@@ -150,21 +145,7 @@ $('#modification').on('click', '.btn-success, .btn-danger', function(e) {
         }
     });
 });
-/*
-$('#modification').on('click', '.btn-info', function() {
-    // Initialize codemirrror
-    var codemirror = CodeMirror.fromTextArea(document.querySelector($(element).attr('data-oc-target')), {
-        mode: 'text/html',
-        lineNumbers: true,
-        lineWrapping: true,
-        autofocus: true,
-        theme: 'monokai'
-    });
 
-    //codemirror.setValue(json['code']);
-    //codemirror.setSize('100%', '500px');
-});
-  */
 $('#button-log').on('click', function(e) {
     e.preventDefault();
 

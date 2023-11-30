@@ -476,7 +476,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 											preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
 
-											// Remove part of the the result if a limit is set.
+											// Remove part of the result if a limit is set.
 											if ($limit > 0) {
 												$match[0] = array_slice($match[0], 0, $limit);
 											}

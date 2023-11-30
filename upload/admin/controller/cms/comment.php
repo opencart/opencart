@@ -9,7 +9,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-
 	public function index(): void {
 		$this->load->language('cms/comment');
 

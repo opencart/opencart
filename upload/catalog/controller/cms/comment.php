@@ -113,6 +113,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('cms/comment_list', $data);
 	}
 
+	/**
+     * @return void
+     */
 	public function write(): void {
 		$this->load->language('cms/comment');
 

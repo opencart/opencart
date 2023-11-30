@@ -147,7 +147,7 @@ class Loader {
 	//
 	protected function callback(\Opencart\System\Engine\Registry $registry, string $route): callable {
 		return function (&...$args) use ($registry, $route) {
-			//static $model;
+			static $model;
 
 			$trigger = $route;
 

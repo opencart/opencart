@@ -248,6 +248,9 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('cms/blog_list', $data));
 	}
 
+	/**
+     * @return object|\Opencart\System\Engine\Action|null
+     */
 	public function info(): ?object {
 		$this->load->language('cms/blog');
 

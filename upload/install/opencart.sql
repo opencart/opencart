@@ -596,10 +596,10 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 -- Dumping data for table `oc_coupon`
 --
 
-INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
-(4, '-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '2020-01-01', 10, '10', 0, '2009-01-27 13:55:03'),
-(5, 'Free Shipping', '3333', 'P', '0.0000', 0, 1, '100.0000', '2014-01-01', '2014-02-01', 10, '10', 0, '2009-03-14 21:13:53'),
-(6, '-10.00 Discount', '1111', 'F', '10.0000', 0, 0, '10.0000', '2014-01-01', '2020-01-01', 100000, '10000', 0, '2009-03-14 21:15:18');
+INSERT INTO `oc_coupon` (`name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
+('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '2020-01-01', 10, '10', 0, '2009-01-27 13:55:03'),
+('Free Shipping', '3333', 'P', '0.0000', 0, 1, '100.0000', '2014-01-01', '2014-02-01', 10, '10', 0, '2009-03-14 21:13:53'),
+('-10.00 Discount', '1111', 'F', '10.0000', 0, 0, '10.0000', '2014-01-01', '2020-01-01', 100000, '10000', 0, '2009-03-14 21:15:18');
 
 -----------------------------------------------------------
 
@@ -607,10 +607,10 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 -- Dumping data for table `oc_cron`
 --
 
-INSERT INTO `oc_cron` (`cron_id`, `code`, `description`, `cycle`, `action`, `status`, `date_added`, `date_modified`) VALUES
-(1, 'currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
-(2, 'gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
-(3, 'subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
+INSERT INTO `oc_cron` (`code`, `description`, `cycle`, `action`, `status`, `date_added`, `date_modified`) VALUES
+('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
+('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
+('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
 
 -----------------------------------------------------------
 
@@ -618,15 +618,15 @@ INSERT INTO `oc_cron` (`cron_id`, `code`, `description`, `cycle`, `action`, `sta
 -- Dumping data for table `oc_currency`
 --
 
-INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, '2014-09-25 14:40:00'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2014-09-25 14:40:00'),
-(3, 'Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00'),
-(4, 'Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, '2018-02-16 12:00:00'),
-(5, 'Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, '2018-02-16 12:00:00'),
-(6, 'Russian Ruble', 'RUB', '', '₽', '2', 56.40360000, 0, '2018-02-16 12:00:00'),
-(7, 'Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, '2018-02-16 12:00:00'),
-(8, 'Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, '2018-02-16 12:00:00');
+INSERT INTO `oc_currency` (`title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
+('Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, '2014-09-25 14:40:00'),
+('US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2014-09-25 14:40:00'),
+('Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00'),
+('Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, '2018-02-16 12:00:00'),
+('Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, '2018-02-16 12:00:00'),
+('Russian Ruble', 'RUB', '', '₽', '2', 56.40360000, 0, '2018-02-16 12:00:00'),
+('Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, '2018-02-16 12:00:00'),
+('Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, '2018-02-16 12:00:00');
 
 -----------------------------------------------------------
 
@@ -879,50 +879,50 @@ INSERT INTO `oc_event` (`code`, `description`, `trigger`, `action`, `status`) VA
 -- Dumping data for table `oc_extension`
 --
 
-INSERT INTO `oc_extension` (`extension_id`, `extension`, `type`, `code`) VALUES
-(1, 'opencart', 'payment', 'cod'),
-(2, 'opencart', 'total', 'shipping'),
-(3, 'opencart', 'total', 'sub_total'),
-(4, 'opencart', 'total', 'tax'),
-(5, 'opencart', 'total', 'total'),
-(6, 'opencart', 'module', 'banner'),
-(8, 'opencart', 'total', 'credit'),
-(9, 'opencart', 'shipping', 'flat'),
-(10, 'opencart', 'total', 'handling'),
-(11, 'opencart', 'total', 'low_order_fee'),
-(12, 'opencart', 'total', 'coupon'),
-(13, 'opencart', 'module', 'category'),
-(14, 'opencart', 'module', 'account'),
-(15, 'opencart', 'module', 'topic'),
-(16, 'opencart', 'total', 'reward'),
-(17, 'opencart', 'total', 'voucher'),
-(18, 'opencart', 'payment', 'free_checkout'),
-(19, 'opencart', 'module', 'featured'),
-(20, 'opencart', 'theme', 'basic'),
-(21, 'opencart', 'dashboard', 'activity'),
-(22, 'opencart', 'dashboard', 'sale'),
-(23, 'opencart', 'dashboard', 'recent'),
-(24, 'opencart', 'dashboard', 'order'),
-(25, 'opencart', 'dashboard', 'online'),
-(26, 'opencart', 'dashboard', 'map'),
-(27, 'opencart', 'dashboard', 'customer'),
-(28, 'opencart', 'dashboard', 'chart'),
-(29, 'opencart', 'report', 'sale_coupon'),
-(31, 'opencart', 'report', 'customer_search'),
-(32, 'opencart', 'report', 'customer_transaction'),
-(33, 'opencart', 'report', 'product_purchased'),
-(34, 'opencart', 'report', 'product_viewed'),
-(35, 'opencart', 'report', 'sale_return'),
-(36, 'opencart', 'report', 'sale_order'),
-(37, 'opencart', 'report', 'sale_shipping'),
-(38, 'opencart', 'report', 'sale_tax'),
-(39, 'opencart', 'report', 'customer_activity'),
-(40, 'opencart', 'report', 'customer_order'),
-(41, 'opencart', 'report', 'customer_reward'),
-(42, 'opencart', 'currency', 'ecb'),
-(43, 'opencart', 'report', 'marketing'),
-(44, 'opencart', 'report', 'customer_subscription'),
-(45, 'opencart', 'report', 'customer');
+INSERT INTO `oc_extension` (`extension`, `type`, `code`) VALUES
+('opencart', 'currency', 'ecb'),
+('opencart', 'module', 'featured'),
+('opencart', 'module', 'banner'),
+('opencart', 'payment', 'cod'),
+('opencart', 'payment', 'free_checkout'),
+('opencart', 'module', 'category'),
+('opencart', 'module', 'account'),
+('opencart', 'module', 'topic'),
+('opencart', 'shipping', 'flat'),
+('opencart', 'theme', 'basic'),
+('opencart', 'total', 'credit'),
+('opencart', 'total', 'shipping'),
+('opencart', 'total', 'sub_total'),
+('opencart', 'total', 'tax'),
+('opencart', 'total', 'total'),
+('opencart', 'total', 'handling'),
+('opencart', 'total', 'low_order_fee'),
+('opencart', 'total', 'coupon'),
+('opencart', 'total', 'reward'),
+('opencart', 'total', 'voucher'),
+('opencart', 'dashboard', 'activity'),
+('opencart', 'dashboard', 'sale'),
+('opencart', 'dashboard', 'recent'),
+('opencart', 'dashboard', 'order'),
+('opencart', 'dashboard', 'online'),
+('opencart', 'dashboard', 'map'),
+('opencart', 'dashboard', 'customer'),
+('opencart', 'dashboard', 'chart'),
+('opencart', 'report', 'sale_coupon'),
+('opencart', 'report', 'customer_search'),
+('opencart', 'report', 'customer_transaction'),
+('opencart', 'report', 'product_purchased'),
+('opencart', 'report', 'product_viewed'),
+('opencart', 'report', 'sale_return'),
+('opencart', 'report', 'sale_order'),
+('opencart', 'report', 'sale_shipping'),
+('opencart', 'report', 'sale_tax'),
+('opencart', 'report', 'customer_activity'),
+('opencart', 'report', 'customer_order'),
+('opencart', 'report', 'customer_reward'),
+('opencart', 'report', 'marketing'),
+('opencart', 'report', 'customer_subscription'),
+('opencart', 'report', 'customer');
 
 -----------------------------------------------------------
 
@@ -930,8 +930,8 @@ INSERT INTO `oc_extension` (`extension_id`, `extension`, `type`, `code`) VALUES
 -- Dumping data for table `oc_extension_install`
 --
 
-INSERT INTO `oc_extension_install` (`extension_install_id`, `extension_id`, `extension_download_id`, `name`, `code`, `version`, `author`, `link`, `status`, `date_added`) VALUES
-(1, 0, 0, 'OpenCart Default Extensions', 'opencart', '1.0', 'OpenCart Ltd', 'http://www.opencart.com', 1, '2020-08-29 15:35:39');
+INSERT INTO `oc_extension_install` (`extension_install_id`, `extension_id`, `extension_download_id`, `name`, `description`, `code`, `version`, `author`, `link`, `status`, `date_added`) VALUES
+(1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '1.0', 'OpenCart Ltd', 'http://www.opencart.com', 1, '2020-08-29 15:35:39');
 
 -----------------------------------------------------------
 

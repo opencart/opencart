@@ -264,8 +264,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'country'   => $order_info['shipping_country']
 				];
 
-
-
 				$data['shipping_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
 				$data['shipping_method'] = $order_info['shipping_method']['name'];

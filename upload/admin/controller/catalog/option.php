@@ -399,7 +399,6 @@ class Option extends \Opencart\System\Engine\Controller {
 			$this->load->language('catalog/option');
 
 			$this->load->model('catalog/option');
-
 			$this->load->model('tool/image');
 
 			$filter_data = [

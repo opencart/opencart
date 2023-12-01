@@ -81,7 +81,7 @@
           </div>
           <div class="mb-3">
             <label class="form-label">{{ entry_xml }}</label>
-            <textarea rows="25" class="form-control codemirror" readonly>{{ modification.xml }}</textarea>
+            <textarea rows="25" class="form-control codemirror overflow-scroll" readonly>{{ modification.xml }}</textarea>
           </div>
         </div>
       </div>
@@ -93,16 +93,17 @@
 <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
 <script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
 <script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/addon/edit/matchbrackets.js"></script>
 <script type="text/javascript"><!--
 // Initialize codemirrror
 var codemirror = CodeMirror.fromTextArea(document.querySelector('.codemirror'), {
     mode: 'text/xml',
     lineNumbers: true,
     lineWrapping: true,
-    autofocus: true,
+    readOnly: true,
+    autofocus: false,
     theme: 'monokai'
 });
 
-//codemirror.setValue(json['code']);
 codemirror.setSize('100%', '600px');
 //--></script>

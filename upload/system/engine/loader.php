@@ -147,7 +147,7 @@ class Loader {
 	//
 	protected function callback(\Opencart\System\Engine\Registry $registry, string $route): callable {
 		return function (&...$args) use ($registry, $route) {
-			static $model;
+			//static $model;
 
 			$trigger = $route;
 
@@ -167,12 +167,16 @@ class Loader {
 			$class = 'Opencart\\' . $this->config->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($path, '_/'));
 
 			// Check if the requested model is already stored in the registry.
-			if (!isset($model[$key])) {
-				$model[$key] = new $class($registry);
+			if (!$registry->has($key)) {
+				$model = new $class($registry);
+
+				$registry->set($key, $model);
+			} else {
+				$model = $registry->get($key);
 			}
 
 			// Get the method to be used
-			$callable = [$model[$key], $method];
+			$callable = [$model, $method];
 
 			if (is_callable($callable)) {
 				$output = call_user_func_array($callable, $args);

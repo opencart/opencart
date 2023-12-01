@@ -24,7 +24,7 @@
               <td class="text-start d-none d-lg-table-cell">{{ cron.date_modified }}</td>
               <td class="text-end text-nowrap">
                 {% if cron.description %}
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ cron.cron_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ cron.cron_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}
                   <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
                 {% endif %}
@@ -51,16 +51,16 @@
 </form>
 {% for cron in crons %}
   {% if cron.description %}
-  <div id="modal-cron-{{ cron.cron_id }}" class="modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div id="modal-cron-{{ cron.cron_id }}" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ cron.description }}</textarea></div>
         </div>
-        <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ cron.description }}</textarea></div>
       </div>
     </div>
-  </div>
   {% endif %}
 {% endfor %}

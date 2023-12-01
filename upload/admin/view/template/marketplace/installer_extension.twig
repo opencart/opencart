@@ -55,18 +55,14 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">{{ entry_name }}</label>
-            <input type="text" value="{{ extension.name }}" class="form-control" readonly/>
+            <label class="form-label">{{ entry_name }}</label> <input type="text" value="{{ extension.name }}" class="form-control" readonly/>
           </div>
-          {% if extension.description %}
-            <div class="mb-3">
-              <label class="form-label">{{ entry_description }}</label>
-              <textarea rows="5" class="form-control" readonly>{{ extension.description }}</textarea>
-            </div>
-          {% endif %}
+          <div class="mb-3">
+            <label class="form-label">{{ entry_description }}</label>
+            <textarea rows="5" class="form-control" readonly>{{ extension.description }}</textarea>
+          </div>
           <div>
-            <label class="form-label">{{ entry_code }}</label>
-            <input type="text" value="{{ extension.code }}" class="form-control" readonly/>
+            <label class="form-label">{{ entry_code }}</label> <input type="text" value="{{ extension.code }}" class="form-control" readonly/>
           </div>
         </div>
       </div>

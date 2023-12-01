@@ -221,7 +221,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
 				$json['error']['minimum'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-
 				break;
 			}
 		}

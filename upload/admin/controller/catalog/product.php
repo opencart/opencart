@@ -1079,7 +1079,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$product_options = $this->model_catalog_product->getOptions($this->request->post['master_id']);
 
 			foreach ($product_options as $product_option) {
-				if (isset($this->request->post['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {
+				if (empty($this->request->post['variant'][$product_option['product_option_id']]) && $product_option['required']) {
 					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}

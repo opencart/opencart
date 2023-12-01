@@ -39,7 +39,7 @@ class Factory {
 	 */
 	public function controller(string $route): object {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $route));
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
 		// Class path
 		$class = 'Opencart\\' . $this->registry->get('config')->get('application') . '\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
@@ -66,8 +66,6 @@ class Factory {
 
 		// Generate the class
 		$class = 'Opencart\\' . $this->registry->get('config')->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
-
-		echo $class . '<br/>';
 
 		// Check if the requested model is already stored in the registry.
 		if (class_exists($class)) {

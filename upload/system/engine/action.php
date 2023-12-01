@@ -56,13 +56,13 @@ class Action {
 			$method = 'index';
 		}
 
-		// Create a key to store the controller object
-		$key = 'controller_' . str_replace('/', '_', $route);
-
 		// Stop any magical methods being called
 		if (substr($method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
+
+		// Create a key to store the controller object
+		$key = 'controller_' . str_replace('/', '_', $route);
 
 		if (!$registry->has($key)) {
 			// Initialize the class

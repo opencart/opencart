@@ -283,7 +283,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$product_options = $this->model_catalog_product->getOptions($product_id);
 
 			foreach ($product_options as $product_option) {
-				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+				if (empty($option[$product_option['product_option_id']]) && $product_option['required']) {
 					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}

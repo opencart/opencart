@@ -283,7 +283,7 @@ class Smtp {
 		}
 
 		// Handle slowish server responses (generally due to policy servers)
-		if (!$line && empty($reply) && $counter < $this->option['max_attempts']) {
+		if (empty($reply) && !$line && $counter < $this->option['max_attempts']) {
 			sleep(1);
 
 			$counter++;

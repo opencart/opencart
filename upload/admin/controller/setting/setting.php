@@ -598,7 +598,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		foreach ($extensions as $extension) {
 			if (in_array(trim($extension), $disallowed)) {
 				$json['error']['file_ext_allowed'] = $this->language->get('error_extension');
-
 				break;
 			}
 		}
@@ -614,7 +613,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		foreach ($mimes as $mime) {
 			if (in_array(trim($mime), $disallowed)) {
 				$json['error']['file_mime_allowed'] = $this->language->get('error_mime');
-
 				break;
 			}
 		}

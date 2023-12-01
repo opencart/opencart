@@ -430,7 +430,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			// Check path exists
 			if (($path == $base) || (substr(str_replace('\\', '/', realpath($base . $path)) . '/', 0, strlen($base)) != $base)) {
 				$json['error'] = $this->language->get('error_delete');
-
 				break;
 			}
 		}

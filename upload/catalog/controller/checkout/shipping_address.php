@@ -215,7 +215,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
 				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
 				break;
 			}
 		}

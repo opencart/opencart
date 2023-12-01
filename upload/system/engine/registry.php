@@ -122,8 +122,6 @@ class Registry {
      * @return void
      */
 	public function unset(string $key): void {
-		if (isset($this->data[$key])) {
-			unset($this->data[$key]);
-		}
+		unset($this->data[$key]);
 	}
 }

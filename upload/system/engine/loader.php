@@ -120,7 +120,46 @@ class Loader {
 
 				foreach (get_class_methods($class) as $method) {
 					if ((substr($method, 0, 2) != '__') && is_callable($class, $method)) {
-						$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
+						$proxy->{$method} = function(&...$args) use ($route, $method) {
+							$route = $route . '/' . $method;
+
+							$trigger = $route;
+
+							// Trigger the pre events
+							$this->event->trigger('model/' . $trigger . '/before', [&$route, &$args]);
+
+							// Find last `/` so we can remove and find the method
+							$pos = strrpos($route, '/');
+
+							$class = substr($route, 0, $pos);
+							$method = substr($route, $pos + 1);
+
+							// Create a new key to store the model object
+							$key = 'callback_' . str_replace('/', '_', $class);
+
+							if (!$this->registry->has($key)) {
+								// Initialize the class
+								$model = $this->factory->model($class);
+
+								// Store object
+								$this->registry->set($key, $model);
+							} else {
+								$model = $this->registry->get($key);
+							}
+
+							$callable = [$model, $method];
+
+							if (is_callable($callable)) {
+								$output = call_user_func_array($callable, $args);
+							} else {
+								throw new \Exception('Error: Could not call model/' . $route . '!');
+							}
+
+							// Trigger the post events
+							$this->event->trigger('model/' . $trigger . '/after', [&$route, &$args, &$output]);
+
+							return $output;
+						};
 					}
 				}
 
@@ -129,66 +168,6 @@ class Loader {
 				throw new \Exception('Error: Could not load model ' . $class . '!');
 			}
 		}
-	}
-
-
-	/**
-	 * callback
-	 *
-	 * Grab args using function because we don't know the number of args being passed.
-	 *
-	 * https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
-	 *
-	 * @param object $registry
-	 * @param string $route
-	 *
-	 * @return void
-	 */
-	//
-	protected function callback(\Opencart\System\Engine\Registry $registry, string $route): callable {
-		return function (&...$args) use ($registry, $route) {
-			//static $model;
-
-			$trigger = $route;
-
-			// Trigger the pre events
-			$registry->event->trigger('model/' . $trigger . '/before', [&$route, &$args]);
-
-			// Find last `/` so we can remove and find the method
-			$pos = strrpos($route, '/');
-
-			$path   = substr($route, 0, $pos);
-			$method = substr($route, $pos + 1);
-
-			// Create a new key to store the model object
-			$key = 'model_' . str_replace('/', '_', $path);
-
-			// Generate the class
-			$class = 'Opencart\\' . $this->config->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($path, '_/'));
-
-			// Check if the requested model is already stored in the registry.
-			if (!$registry->has($key)) {
-				$model = new $class($registry);
-
-				$registry->set($key, $model);
-			} else {
-				$model = $registry->get($key);
-			}
-
-			// Get the method to be used
-			$callable = [$model, $method];
-
-			if (is_callable($callable)) {
-				$output = call_user_func_array($callable, $args);
-			} else {
-				throw new \Exception('Error: Could not call model/' . $route . '!');
-			}
-
-			// Trigger the post events
-			$registry->event->trigger('model/' . $trigger . '/after', [&$route, &$args, &$output]);
-
-			return $output;
-		};
 	}
 
 	/**

@@ -174,6 +174,9 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 // Document
 $registry->set('document', new \Opencart\System\Library\Document());
 
+// Factory
+$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
+
 $action = '';
 $args = [];
 $output = '';

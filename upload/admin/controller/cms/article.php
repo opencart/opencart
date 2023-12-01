@@ -222,6 +222,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		$this->load->model('tool/image');
+
 		$data['article_description'] = [];
 
 		if (isset($this->request->get['article_id'])) {

@@ -97,8 +97,6 @@ class Loader {
 
 	/**
      * Model
-     *
-	 * https://wiki.php.net/rfc/variadics
 	 *
      * @param string $route
      *
@@ -120,6 +118,7 @@ class Loader {
 
 				foreach (get_class_methods($class) as $method) {
 					if ((substr($method, 0, 2) != '__') && is_callable($class, $method)) {
+						// https://wiki.php.net/rfc/variadics
 						$proxy->{$method} = function(&...$args) use ($route, $method) {
 							$route = $route . '/' . $method;
 

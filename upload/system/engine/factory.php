@@ -30,12 +30,9 @@ class Factory {
 	/**
 	 * Controller
 	 *
-	 * https://wiki.php.net/rfc/variadics
-	 *
 	 * @param string $route
-	 * @param mixed  $args
 	 *
-	 * @return mixed
+	 * @return object
 	 */
 	public function controller(string $route): object {
 		// Sanitize the call
@@ -54,11 +51,9 @@ class Factory {
 	/**
 	 * Model
 	 *
-	 * https://wiki.php.net/rfc/variadics
-	 *
 	 * @param string $route
 	 *
-	 * @return void
+	 * @return object
 	 */
 	public function model(string $route): object {
 		// Sanitize the call

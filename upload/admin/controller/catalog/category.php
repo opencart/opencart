@@ -392,7 +392,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->post['category_id']) {
-					$json['error']['parent'] = $this->language->get('error_parent');					
+					$json['error']['parent'] = $this->language->get('error_parent');
+					
 					break;
 				}
 			}

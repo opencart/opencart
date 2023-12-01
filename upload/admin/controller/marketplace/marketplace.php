@@ -677,7 +677,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				$this->session->data['extension_download'][$extension_id] = $response_info['downloads'];
 			} else {
 				$this->session->data['extension_download'][$extension_id] = [];
-				$this->session->data['extension_download'][$extension_id] = [];
 			}
 
 			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');

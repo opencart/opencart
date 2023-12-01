@@ -189,7 +189,6 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 	if ($result instanceof \Opencart\System\Engine\Action) {
 		$action = $result;
-
 		break;
 	}
 
@@ -200,7 +199,6 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 		// In case there is an error we only want to execute once.
 		$error = '';
-
 		break;
 	}
 }

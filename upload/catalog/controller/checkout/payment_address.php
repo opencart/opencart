@@ -58,7 +58,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((empty($this->session->data['vouchers']) && !$this->cart->hasProducts()) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
@@ -68,7 +68,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
 				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
 				break;
 			}
 		}
@@ -199,7 +198,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((empty($this->session->data['vouchers']) && !$this->cart->hasProducts()) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 

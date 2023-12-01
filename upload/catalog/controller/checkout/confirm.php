@@ -39,7 +39,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
 				$status = false;
-
 				break;
 			}
 		}

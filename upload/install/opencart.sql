@@ -6574,7 +6574,11 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4438, 14, 'Vorarlberg, Mittelberg', '8-E01', 1),
 (4439, 105, 'Sondrio, Livigno', 'SO-E01', 1),
 (4440, 105, 'Como, Campione d’Italia and terretory Lake Lugano', 'CO-E01', 1),
-(4441, 84, 'Mount Athos', 'AO', 1);
+(4441, 84, 'Mount Athos', 'AO', 1),
+(4442, 109, 'Abai', 'ABA', 1),
+(4443, 109, 'Jetisu', 'JET', 1),
+(4444, 109, 'Shymkent', 'SHY', 1),
+(4445, 109, 'Ulytau', 'ULY', 1);
 
 -----------------------------------------------------------
 

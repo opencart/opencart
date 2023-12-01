@@ -34,11 +34,14 @@ class Redis {
      * @return array
      */
 	public function read(string $session_id): array	{
-		$data = $this->redis->get($this->prefix . $session_id);
-		if (is_null($data) || empty($data))
-			return [];
-		return json_decode($data, true);
-	}
+        $data = $this->redis->get($this->prefix . $session_id);
+        
+        if (is_null($data) || empty($data)) {
+            return [];
+        } else {
+            return json_decode($data, true);
+        }
+    }
 
 	/**
      * Write

@@ -224,6 +224,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+
 		$data['article_description'] = [];
 
 		if (isset($this->request->get['article_id'])) {
@@ -285,10 +287,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['image'] = '';
 		}
-
-		$this->load->model('tool/image');
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
 			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));

@@ -222,6 +222,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		$this->load->model('tool/image');
+
 		$data['article_description'] = [];
 
 		if (isset($this->request->get['article_id'])) {
@@ -237,6 +239,8 @@ class Article extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if (!empty($article_info)) {
 			$data['author'] = $article_info['author'];
@@ -276,22 +280,6 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['article_store'] = $this->model_cms_article->getStores($this->request->get['article_id']);
 		} else {
 			$data['article_store'] = [0];
-		}
-
-		if (!empty($article_info)) {
-			$data['image'] = $article_info['image'];
-		} else {
-			$data['image'] = '';
-		}
-
-		$this->load->model('tool/image');
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
-		} else {
-			$data['thumb'] = $data['placeholder'];
 		}
 
 		if (!empty($article_info)) {

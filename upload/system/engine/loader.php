@@ -229,6 +229,33 @@ class Loader {
 	}
 
 	/**
+	 * Library
+	 *
+	 * @param string $route
+	 *
+	 * @return void
+	 */
+	public function library(string $route, &...$args): object {
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
+
+		// Create a new key to store the model object
+		$key = 'library_' . str_replace('/', '_', $route);
+
+		if (!$this->registry->has($key)) {
+			// Initialize the class
+			$library = $this->factory->library($route, $args);
+
+			// Store object
+			$this->registry->set($key, $library);
+		} else {
+			$library = $this->registry->get($key);
+		}
+
+		return $library;
+	}
+
+	/**
      * Config
      *
      * @param string $route

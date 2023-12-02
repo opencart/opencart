@@ -69,4 +69,27 @@ class Factory {
 			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
 	}
+
+
+	/**
+	 * Library
+	 *
+	 * @param string $route
+	 *
+	 * @return object
+	 */
+	public function library(string $route, array $args): object {
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
+
+		// Generate the class
+		$class = 'Opencart\System\Library\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+
+		// Check if the requested model is already stored in the registry.
+		if (class_exists($class)) {
+			return new $class(...$args);
+		} else {
+			throw new \Exception('Error: Could not load library ' . $route . '!');
+		}
+	}
 }

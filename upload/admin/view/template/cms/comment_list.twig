@@ -4,8 +4,6 @@
       <tr>
         <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
         <td class="text-start">{{ column_comment }}</td>
-        <td class="text-start">{{ column_status }}</td>
-
       </tr>
     </thead>
     <tbody>
@@ -14,21 +12,25 @@
           <tr>
             <td class="text-center"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
             <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
-              <ul class="list-inline">
-                {% if comment.customer_edit %}
-                  <li class="list-inline-item">{{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></li>
+              <p>
+                {% if comment.status %}
+                  <small class="text-success">{{ text_enabled }}</small>
                 {% else %}
-                  <li class="list-inline-item">{{ text_by }} {{ comment.author }}</li>
+                  <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}
-                <li class="list-inline-item">{{ comment.date_added }}</li>
-              </ul>
+                {% if comment.customer_edit %}
+                  -
+                  <small>{{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
+                {% else %}
+                  -
+                  <small>{{ text_by }} {{ comment.author }}</small>
+                {% endif %}
+                -
+                <small>{{ comment.date_added }}</small>
+              </p>
+
               {{ comment.comment }}
             </td>
-            <td>{% if comment.status %}
-                <span class="badge bg-success">{{ text_enabled }}</span>
-              {% else %}
-                <span class="badge bg-danger">{{ text_disabled }}</span>
-              {% endif %}</td>
           </tr>
         {% endfor %}
       {% else %}

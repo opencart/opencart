@@ -6,9 +6,11 @@
     <div id="comment-{{ comment.blog_comment_id }}" class="media">
 
       <div class="media-body">
-
         <p class="media-heading">{{ comment.author }} <span>{{ comment.date_added }}</span></p>
         <p>{{ comment.comment }}</p>
+
+
+
 
         <div class="reply">
           <div class="reply-box">
@@ -19,9 +21,11 @@
                 {% for reply in comment.reply %}
                   <div class="media">
                     <div class="media-left"><img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="media-object"/></div>
-                    <div class="media-body">{% if reply.remove %}
+                    <div class="media-body">
+                      {% if reply.remove %}
                         <div class="pull-right"><a href="{{ reply.remove }}" class="btn btn-link btn-xs reply-remove">{{ text_remove }}</a></div>
                       {% endif %}
+
                       <p class="media-heading">{{ reply.member }} <span>{{ reply.date_added }}</span></p>
                       <p>{{ reply.comment }}</p>
                     </div>
@@ -59,7 +63,6 @@
           </div>
 
 
-
         </div>
       </div>
 
@@ -68,6 +71,5 @@
 
   <div class="text-end">{{ pagination }}</div>
 {% else %}
-
   <p class="text-center">{{ text_no_results }}</p>
 {% endif %}

@@ -10,10 +10,6 @@ $_['text_by']           = 'by';
 
 // Column
 $_['column_comment']    = 'Comment';
-$_['column_article']    = 'Article';
-$_['column_status']     = 'Status';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_keyword']     = 'Keyword';

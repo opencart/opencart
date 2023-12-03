@@ -275,7 +275,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $article_comment_id
+	 * @param int  $article_comment_id
 	 * @param bool $status
 	 *
 	 * @return void

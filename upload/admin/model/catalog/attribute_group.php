@@ -24,11 +24,11 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $attribute_group_id
-	 * @param array $data
-	 *
-	 * @return void
-	 */
+     * @param int   $attribute_group_id
+     * @param array $data
+     *
+     * @return void
+     */
 	public function editAttributeGroup(int $attribute_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 

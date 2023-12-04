@@ -624,6 +624,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name'     => 'parent_id',
+				'type'     => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name'     => 'customer_id',
 				'type'     => 'int(11)',
 				'not_null' => true
@@ -638,6 +643,7 @@ function oc_db_schema() {
 				'type'     => 'text',
 				'not_null' => true
 			],
+
 			[
 				'name'     => 'status',
 				'type'     => 'tinyint(1)',
@@ -669,6 +675,12 @@ function oc_db_schema() {
 				'name' => 'article_id',
 				'key'  => [
 					'article_id'
+				]
+			],
+			[
+				'name' => 'parent_id',
+				'key'  => [
+					'parent_id'
 				]
 			]
 		],

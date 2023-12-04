@@ -177,6 +177,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getComments
+	 *
 	 * @param array $data
 	 *
 	 * @return array

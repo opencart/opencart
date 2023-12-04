@@ -668,7 +668,7 @@ class Order extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		foreach ($products as $product_id) {
-			$implode[] = "op.`product_id` = '" . (int)$product_id . "'";
+			$implode[] = "`op`.`product_id` = '" . (int)$product_id . "'";
 		}
 
 		$query = $this->db->query("SELECT DISTINCT `o`.`email` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "order_product` `op` ON (`o`.`order_id` = `op`.`order_id`) WHERE (" . implode(" OR ", $implode) . ") AND `o`.`order_status_id` <> '0' LIMIT " . (int)$start . "," . (int)$end);

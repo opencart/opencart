@@ -925,7 +925,7 @@ INSERT INTO `oc_extension` (`extension`, `type`, `code`) VALUES
 ('opencart', 'report', 'customer_order'),
 ('opencart', 'report', 'customer_reward'),
 ('opencart', 'report', 'marketing'),
-('opencart', 'report', 'customer_subscription'),
+('opencart', 'report', 'subscription'),
 ('opencart', 'report', 'customer');
 
 -----------------------------------------------------------
@@ -990,7 +990,7 @@ INSERT INTO `oc_extension_path` (`extension_install_id`, `path`) VALUES
 (1, 'opencart/admin/controller/report/customer_order.php'),
 (1, 'opencart/admin/controller/report/customer_reward.php'),
 (1, 'opencart/admin/controller/report/customer_search.php'),
-(1, 'opencart/admin/controller/report/customer_subscription.php'),
+(1, 'opencart/admin/controller/report/subscription.php'),
 (1, 'opencart/admin/controller/report/customer_transaction.php'),
 (1, 'opencart/admin/controller/report/marketing.php'),
 (1, 'opencart/admin/controller/report/product_purchased.php'),
@@ -1060,7 +1060,7 @@ INSERT INTO `oc_extension_path` (`extension_install_id`, `path`) VALUES
 (1, 'opencart/admin/language/en-gb/report/customer_order.php'),
 (1, 'opencart/admin/language/en-gb/report/customer_reward.php'),
 (1, 'opencart/admin/language/en-gb/report/customer_search.php'),
-(1, 'opencart/admin/language/en-gb/report/customer_subscription.php'),
+(1, 'opencart/admin/language/en-gb/report/subscription.php'),
 (1, 'opencart/admin/language/en-gb/report/customer_transaction.php'),
 (1, 'opencart/admin/language/en-gb/report/marketing.php'),
 (1, 'opencart/admin/language/en-gb/report/product_purchased.php'),
@@ -1100,7 +1100,7 @@ INSERT INTO `oc_extension_path` (`extension_install_id`, `path`) VALUES
 (1, 'opencart/admin/model/report/activity.php'),
 (1, 'opencart/admin/model/report/coupon.php'),
 (1, 'opencart/admin/model/report/customer.php'),
-(1, 'opencart/admin/model/report/customer_subscription.php'),
+(1, 'opencart/admin/model/report/subscription.php'),
 (1, 'opencart/admin/model/report/customer_transaction.php'),
 (1, 'opencart/admin/model/report/marketing.php'),
 (1, 'opencart/admin/model/report/product_purchased.php'),
@@ -1172,9 +1172,9 @@ INSERT INTO `oc_extension_path` (`extension_install_id`, `path`) VALUES
 (1, 'opencart/admin/view/template/report/customer_search.twig'),
 (1, 'opencart/admin/view/template/report/customer_search_form.twig'),
 (1, 'opencart/admin/view/template/report/customer_search_list.twig'),
-(1, 'opencart/admin/view/template/report/customer_subscription.twig'),
-(1, 'opencart/admin/view/template/report/customer_subscription_form.twig'),
-(1, 'opencart/admin/view/template/report/customer_subscription_list.twig'),
+(1, 'opencart/admin/view/template/report/subscription.twig'),
+(1, 'opencart/admin/view/template/report/subscription_form.twig'),
+(1, 'opencart/admin/view/template/report/subscription_list.twig'),
 (1, 'opencart/admin/view/template/report/customer_transaction.twig'),
 (1, 'opencart/admin/view/template/report/customer_transaction_form.twig'),
 (1, 'opencart/admin/view/template/report/customer_transaction_list.twig'),
@@ -2194,8 +2194,8 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'report_product_purchased', 'report_product_purchased_sort_order', '14', 0),
 (0, 'report_marketing', 'report_marketing_status', '1', 0),
 (0, 'report_marketing', 'report_marketing_sort_order', '15', 0),
-(0, 'report_customer_subscription', 'report_customer_subscription_status', '1', 0),
-(0, 'report_customer_subscription', 'report_customer_subscription_sort_order', '16', 0);
+(0, 'report_subscription', 'report_subscription_status', '1', 0),
+(0, 'report_subscription', 'report_subscription_sort_order', '16', 0);
 -----------------------------------------------------------
 
 --

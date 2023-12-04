@@ -35,7 +35,7 @@ class Proxy {
 	 * __set
 	 *
 	 * @param string $key
-	 * @param string $value
+	 * @param object $value
 	 *
 	 * @return void
 	 */

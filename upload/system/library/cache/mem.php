@@ -33,23 +33,25 @@ class Mem {
 	}
 
 	/**
-	 * Get
-	 *
-	 * @param string $key
-	 *
-	 * @return     mixed
-	 */
+     * Get
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
 	public function get(string $key) {
 		return $this->memcache->get(CACHE_PREFIX . $key);
 	}
 
 	/**
-	 * Set
-	 *
-	 * @param string $key
-	 * @param mixed  $value
-	 * @param int    $expire
-	 */
+     * Set
+     *
+     * @param string $key
+     * @param mixed  $value
+     * @param int    $expire
+     *
+     * @return void
+     */
 	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
@@ -59,10 +61,12 @@ class Mem {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @param string $key
-	 */
+     * Delete
+     *
+     * @param string $key
+     *
+     * @return void
+     */
 	public function delete(string $key): void {
 		$this->memcache->delete(CACHE_PREFIX . $key);
 	}

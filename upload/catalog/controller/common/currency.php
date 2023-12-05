@@ -55,7 +55,7 @@ class ControllerCommonCurrency extends Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 		
-		if (isset($this->request->post['redirect'])) {
+		if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) === 0 || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) === 0)) {
 			$this->response->redirect($this->request->post['redirect']);
 		} else {
 			$this->response->redirect($this->url->link('common/home'));

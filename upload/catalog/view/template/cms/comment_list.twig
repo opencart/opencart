@@ -1,36 +1,30 @@
 {% if comments %}
-
   {% for comment in comments %}
-    <div class="border">
-
-      <div id="comment-{{ comment.article_comment_id }}" class="mb-3">
-        <p class="text-bold border">{{ comment.author }} <span>{{ comment.date_added }}</span></p>
-        <p class="border">{{ comment.comment }}</p>
+    <div id="comment-{{ comment.article_comment_id }}" class="border mb-3">
+      <div class="p-2">
+        <p>{{ text_by }} {{ comment.author }} - {{ comment.date_added }}</p>
+        <p>{{ comment.comment }}</p>
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
+          <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
+          {% if comment_guest %}
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-secondary">{{ button_reply }}</button>
+          {% else %}
+            <button type="button" class="btn btn-outline-secondary" disabled="disabled">{{ button_reply }}</button>
+          {% endif %}
+        </div>
       </div>
-
-      {% if comment.reply %}
-        <button type="button" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-primary">{{ button_replies }}</button>
-      {% endif %}
-
-      <div id="reply-{{ comment.article_comment_id }}">
-
-      </div>
-
-      <p class="text-end">
-        {% if comment_guest %}
-          <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-primary btn-sm">{{ button_reply }}</button>
+      <div class="border-top p-2 text-center">
+        {% if comment.reply %}
+          <button type="button" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_replies }}</button>
         {% else %}
-          <button type="button" class="btn btn-primary btn-sm" disabled="disabled">{{ button_reply }}</button>
+          <button type="button" class="btn btn-outline-secondary" disabled>{{ button_replies }}</button>
         {% endif %}
-      </p>
-
+      </div>
     </div>
   {% endfor %}
-
   <a href="{{ comment.refresh }}" class="refresh">{{ text_refresh }}</a>
-
   <div class="text-end">{{ pagination }}</div>
-
 {% else %}
   <p class="text-center">{{ text_no_results }}</p>
 {% endif %}

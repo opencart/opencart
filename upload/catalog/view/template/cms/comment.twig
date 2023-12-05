@@ -1,9 +1,5 @@
+<h2>{{ text_comment }}</h2>
 <div id="comment">{{ list }}</div>
-{% if comment_guest %}
-  <div class="text-center"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-primary btn-block">{{ button_comment }}</button></div>
-{% else %}
-  {{ text_login }}
-{% endif %}
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -15,12 +11,12 @@
         <form id="form-comment">
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" id="input-author" class="form-control"/>
+            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
             <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-            <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
           <input type="hidden" name="parent" value="{{ parent_id }}" id="input-parent"/>
@@ -41,7 +37,7 @@ $('#comment').on('click', '.pagination a', function(e) {
 });
 
 // Refresh
-$('#comment-box').on('click', '.reply-refresh', function(e) {
+$('#rely').on('click', '.reply-refresh', function(e) {
     e.preventDefault();
 
     var element = this;

@@ -9,6 +9,7 @@ $_['text_blog']       = 'Blog';
 $_['text_by']         = 'By';
 $_['text_tags']       = 'Tags:';
 $_['text_comment']    = 'comments';
+
 $_['text_no_results'] = 'There are no articles.';
 
 // Entry
@@ -16,3 +17,4 @@ $_['entry_search']    = 'Search';
 
 // Button
 $_['button_continue'] = 'Continue Reading';
+$_['button_comment']  = 'Post Comment';

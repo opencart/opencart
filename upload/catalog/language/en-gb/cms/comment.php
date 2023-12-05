@@ -8,7 +8,7 @@ $_['text_all']        = 'All';
 $_['text_blog']       = 'Blog';
 $_['text_by']         = 'By';
 $_['text_tags']       = 'Tags:';
-$_['text_comment']    = 'comments';
+$_['text_comment']    = 'Comments (%s)';
 $_['text_write']      = 'Write a comment';
 $_['text_login']      = 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment';
 $_['text_no_results'] = 'Be the first to write a comment for this article.';
@@ -23,9 +23,9 @@ $_['entry_author']    = 'Your Name';
 $_['entry_comment']   = 'Comment';
 
 // Button
-$_['button_comment']  = 'Write Comment';
-$_['button_reply']    = 'Reply';
-$_['button_replies']  = 'Load replies...';
+$_['button_comment']  = 'Post Comment';
+$_['button_reply']    = 'Post Reply';
+$_['button_replies']  = 'Show Replies (%s)';
 $_['button_more']     = 'See more replies...';
 
 // Error

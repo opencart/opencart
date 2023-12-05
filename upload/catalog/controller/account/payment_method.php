@@ -90,7 +90,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-				if (is_callable([$this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'getStored'])) {
+				if (method_exists([$this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'getStored'])) {
 					$payment_method_info = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getStored();
 
 					if ($payment_method_info) {

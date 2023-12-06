@@ -143,9 +143,14 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$data['google_base_categories'] = array();
 
+		$limit = 10;
+		$filter_data = array(
+			'start'       => ($page - 1) * $limit,
+			'limit'       => $limit
+		);
+		
 		$this->load->model('extension/feed/google_base');
-
-		$results = $this->model_extension_feed_google_base->getCategories(($page - 1) * 10, 10);
+		$results = $this->model_extension_feed_google_base->getCategories($filter_data);
 
 		foreach ($results as $result) {
 			$data['google_base_categories'][] = array(
@@ -161,12 +166,12 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $category_total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
+		$pagination->limit = $limit;
 		$pagination->url = $this->url->link('extension/feed/google_base/category', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($category_total - 10)) ? $category_total : ((($page - 1) * 10) + 10), $category_total, ceil($category_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($category_total - $limit)) ? $category_total : ((($page - 1) * $limit) + $limit), $category_total, ceil($category_total / $limit));
 
 		$this->response->setOutput($this->load->view('extension/feed/google_base_category', $data));
 	}

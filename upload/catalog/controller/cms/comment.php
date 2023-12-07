@@ -26,18 +26,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
-			$data['comment_guest'] = true;
-		} else {
-			$data['comment_guest'] = false;
-		}
-
-		if ($this->customer->isLogged()) {
-			$data['customer'] = $this->customer->getFirstName() . ' ' . $this->customer->getLastName();
-		} else {
-			$data['customer'] = '';
-		}
-
 		// Create a login token to prevent brute force attacks
 		$data['comment_token'] = $this->session->data['comment_token'] = oc_token(32);
 
@@ -170,6 +158,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['comments'][] = [
 				'article_comment_id' => $result['article_comment_id'],
+				'parent_id'          => $result['parent_id'],
 				'comment'            => nl2br($result['comment']),
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added']))
@@ -184,8 +173,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'limit' => $limit,
 			'url'   => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}')
 		]);
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($comment_total - $limit)) ? $comment_total : ((($page - 1) * $limit) + $limit), $comment_total, ceil($comment_total / $limit));
 
 		return $this->load->view('cms/comment_reply', $data);
 	}

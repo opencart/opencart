@@ -1,5 +1,6 @@
 {% if comments %}
   {% for comment in comments %}
+
     <div id="comment-{{ comment.article_comment_id }}" class="border mb-3">
       <div class="p-2">
         <p>{{ text_by }} {{ comment.author }} - {{ comment.date_added }}</p>
@@ -7,22 +8,28 @@
         <div class="text-end">
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
+
           {% if comment_guest %}
             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-secondary">{{ button_reply }}</button>
           {% else %}
             <button type="button" class="btn btn-outline-secondary" disabled="disabled">{{ button_reply }}</button>
           {% endif %}
+
         </div>
       </div>
       <div class="border-top p-2 text-center">
+
         {% if comment.reply %}
           <button type="button" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_replies }}</button>
         {% else %}
           <button type="button" class="btn btn-outline-secondary" disabled>{{ button_replies }}</button>
         {% endif %}
+
       </div>
     </div>
+
   {% endfor %}
+
   <a href="{{ comment.refresh }}" class="refresh">{{ text_refresh }}</a>
   <div class="text-end">{{ pagination }}</div>
 {% else %}

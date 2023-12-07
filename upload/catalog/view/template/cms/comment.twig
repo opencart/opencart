@@ -9,18 +9,23 @@
       </div>
       <div class="modal-body">
         <form id="form-comment">
+
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
             <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
+
           <div class="mb-3 required">
             <label for="input-comment" class="form-label">{{ entry_comment }}</label>
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
+
           <input type="hidden" name="parent" value="{{ parent_id }}" id="input-parent"/>
+
           {{ captcha }}
+
         </form>
       </div>
       <div class="modal-footer">
@@ -34,30 +39,6 @@ $('#comment').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#comment').load(this.href);
-});
-
-// Refresh
-$('#rely').on('click', '.reply-refresh', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).attr('href'),
-        dataType: 'html',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(html) {
-            $(element).parent().replaceWith(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
 });
 
 $('#form-comment').on('submit', function(e) {
@@ -103,6 +84,30 @@ $('#form-comment').on('submit', function(e) {
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Refresh
+$('#rely').on('click', '.reply-refresh', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $(element).parent().replaceWith(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });

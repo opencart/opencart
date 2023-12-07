@@ -13,8 +13,6 @@ $_['text_write']      = 'Write a comment';
 $_['text_login']      = 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment';
 $_['text_no_results'] = 'Be the first to write a comment for this article.';
 $_['text_queue']      = 'Your comment has been added to our moderation queue!';
-$_['text_refresh']    = 'refresh';
-$_['text_remove']     = 'Remove';
 $_['text_success']    = 'Thank you for your comment. It has been submitted to the webmaster for approval.';
 
 // Entry

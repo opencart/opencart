@@ -125,10 +125,6 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry = new \Opencart\System\Engine\Registry();
 		$registry->set('autoloader', $this->autoloader);
 
-		// Factory
-		$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
-
-		// Config
 		$config = new \Opencart\System\Engine\Config();
 		$registry->set('config', $config);
 
@@ -160,6 +156,9 @@ class Store extends \Opencart\System\Engine\Model {
 		// Loader
 		$loader = new \Opencart\System\Engine\Loader($registry);
 		$registry->set('load', $loader);
+
+		// Factory
+		$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 		// Create a dummy request class, so we can feed the data to the order editor
 		$request = new \stdClass();

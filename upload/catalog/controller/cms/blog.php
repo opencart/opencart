@@ -355,12 +355,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
-				$data['comment_guest'] = true;
-			} else {
-				$data['comment_guest'] = false;
-			}
-
 			$data['comment'] = $this->config->get('config_comment_status') ? $this->load->controller('cms/comment') : '';
 			$data['comment_total'] = $this->model_cms_article->getTotalComments($article_id);
 

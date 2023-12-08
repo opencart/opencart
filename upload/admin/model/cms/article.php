@@ -165,14 +165,16 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$article_data = $this->cache->get('article.'. md5($sql));
+		$key = md5($sql);
+
+		$article_data = $this->cache->get('article.'. $key);
 
 		if (!$article_data) {
 			$query = $this->db->query($sql);
 
 			$article_data = $query->rows;
 
-			$this->cache->set('article.'. md5($sql), $article_data);
+			$this->cache->set('article.'. $key, $article_data);
 		}
 
 		return $article_data;

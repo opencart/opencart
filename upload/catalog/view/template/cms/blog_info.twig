@@ -9,20 +9,12 @@
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-
       <h1>{{ heading_title }}</h1>
-
       {% if image %}
         <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-2"/>
       {% endif %}
-
-      <ul class="list-inline">
-        <li class="list-inline-item">{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a></li>
-        <li class="list-inline-item">{{ date_added }}</li>
-        <li class="list-inline-item">{{ comment_total }} {{ text_comment }}</li>
-      </ul>
+      <p>{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
       <div>{{ description }}</div>
-
       {% if tags %}
         <p>{{ text_tags }}
           {% for tag in tags %}
@@ -30,22 +22,9 @@
           {% endfor %}
         </p>
       {% endif %}
-
-      <div class="text-center">
-        <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
-        <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
-        {% if comment_guest %}
-          <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
-        {% else %}
-          <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
-        {% endif %}
-      </div>
-
       {% if comment %}
-        <hr/>
         <div>{{ comment }}</div>
       {% endif %}
-
       {{ content_bottom }}
     </div>
     {{ column_right }}

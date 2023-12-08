@@ -94,14 +94,16 @@ class Store extends \Opencart\System\Engine\Model {
 	public function getStores(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";
 
-		$store_data = $this->cache->get('store.' . md5($sql));
+		$key = md5($sql);
+
+		$store_data = $this->cache->get('store.' . $key);
 
 		if (!$store_data) {
 			$query = $this->db->query($sql);
 
 			$store_data = $query->rows;
 
-			$this->cache->set('store.' . md5($sql), $store_data);
+			$this->cache->set('store.' . $key, $store_data);
 		}
 
 		return $store_data;
@@ -122,7 +124,10 @@ class Store extends \Opencart\System\Engine\Model {
 		// Registry
 		$registry = new \Opencart\System\Engine\Registry();
 		$registry->set('autoloader', $this->autoloader);
+
+		// Factory
 		$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
+
 		// Config
 		$config = new \Opencart\System\Engine\Config();
 		$registry->set('config', $config);

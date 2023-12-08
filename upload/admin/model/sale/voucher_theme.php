@@ -92,14 +92,16 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$voucher_theme_data = $this->cache->get('voucher_theme.' . md5($sql));
+		$key = md5($sql);
+
+		$voucher_theme_data = $this->cache->get('voucher_theme.' . $key);
 
 		if (!$voucher_theme_data) {
 			$query = $this->db->query($sql);
 
 			$voucher_theme_data = $query->rows;
 
-			$this->cache->set('voucher_theme.' . md5($sql), $voucher_theme_data);
+			$this->cache->set('voucher_theme.' . $key, $voucher_theme_data);
 		}
 
 		return $voucher_theme_data;

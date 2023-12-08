@@ -1,14 +1,27 @@
+{% if replies %}
 
-{% for reply in comment.reply %}
+<div id="reply-{{ reply.article_comment_id }}">
 
-  <div class="">
-    <p class="text-bold border">{{ reply.author }} <span>{{ reply.date_added }}</span></p>
-    <p class="border">{{ reply.comment }}</p>
-  </div>
+  {% for reply in replies %}
+    <div class="p-2">
+      <p>{{ text_by }} {{ reply.author }} - {{ reply.date_added }}</p>
+      <p>{{ reply.comment }}</p>
+    </div>
+  {% endfor %}
 
-{% endfor %}
 
 
-{% if comment.next %}
-  <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">{{ button_replies }}</a></div>
+
+
+
+  {% if next %}
+    <div class="text-center"><a href="{{ next }}" class="btn btn-outline-secondary">{{ button_more }}</a></div>
+  {% endif %}
+
+
+
+  <button type="button" data-bs-toggle="refresh" data-bs-target="#reply-{{ comment.article_comment_id }}" data-bs-url="{{ refresh }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
+</div>
+
+
 {% endif %}

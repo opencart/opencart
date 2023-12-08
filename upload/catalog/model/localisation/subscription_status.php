@@ -23,14 +23,16 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	public function getSubscriptionStatuses(): array {
 		$sql = "SELECT `subscription_status_id`, `name` FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
-		$subscription_status_data = $this->cache->get('subscription_status.'. md5($sql));
+		$key = md5($sql);
+
+		$subscription_status_data = $this->cache->get('subscription_status.'. $key);
 
 		if (!$subscription_status_data) {
 			$query = $this->db->query($sql);
 
 			$subscription_status_data = $query->rows;
 
-			$this->cache->set('subscription_status.'. md5($sql), $subscription_status_data);
+			$this->cache->set('subscription_status.'. $key, $subscription_status_data);
 		}
 
 		return $subscription_status_data;

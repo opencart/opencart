@@ -54,14 +54,16 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$manufacturer_data = $this->cache->get('manufacturer.' . md5($sql));
+		$key = md5($sql);
+
+		$manufacturer_data = $this->cache->get('manufacturer.' . $key);
 
 		if (!$manufacturer_data) {
 			$query = $this->db->query($sql);
 
 			$manufacturer_data = $query->rows;
 
-			$this->cache->set('manufacturer.' . md5($sql), $manufacturer_data);
+			$this->cache->set('manufacturer.' . $key, $manufacturer_data);
 		}
 
 		return $manufacturer_data;

@@ -87,14 +87,16 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$article_data = $this->cache->get('article.'. md5($sql));
+		$key = md5($sql);
+
+		$article_data = $this->cache->get('article.'. $key);
 
 		if (!$article_data) {
 			$query = $this->db->query($sql);
 
 			$article_data = $query->rows;
 
-			$this->cache->set('article.'. md5($sql), $article_data);
+			$this->cache->set('article.'. $key, $article_data);
 		}
 
 		return $article_data;
@@ -173,7 +175,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addComment(int $article_id, array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
@@ -188,7 +190,7 @@ class Article extends \Opencart\System\Engine\Model {
      * @return array
      */
 
-	public function getComments(int $article_id, int $start = 0, int $limit = 10): array {
+	public function getComments(int $article_id, int $parent_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -197,16 +199,18 @@ class Article extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}
 
-		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND `status` = '1' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit;
+		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND parent_id = '" .  (int)$parent_id . "' AND `status` = '1' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit;
 
-		$comment_data = $this->cache->get('comment.'. md5($sql));
+		$key = md5($sql);
+
+		$comment_data = $this->cache->get('comment.'. $key);
 
 		if (!$comment_data) {
 			$query = $this->db->query($sql);
 
 			$comment_data = $query->rows;
 
-			$this->cache->set('comment.'. md5($sql), $comment_data);
+			$this->cache->set('comment.'. $key, $comment_data);
 		}
 
 		return $comment_data;
@@ -217,8 +221,8 @@ class Article extends \Opencart\System\Engine\Model {
      *
      * @return int
      */
-	public function getTotalComments(int $article_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND `status` = '1'");
+	public function getTotalComments(int $article_id, int $parent_id = 0): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND parent_id = '" .  (int)$parent_id . "' AND `status` = '1'");
 
 		return (int)$query->row['total'];
 	}

@@ -123,6 +123,7 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry = new \Opencart\System\Engine\Registry();
 		$registry->set('autoloader', $this->autoloader);
 		$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
+		
 		// Config
 		$config = new \Opencart\System\Engine\Config();
 		$registry->set('config', $config);

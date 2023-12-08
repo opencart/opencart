@@ -20,7 +20,7 @@ $_['entry_search']    = 'Search';
 $_['entry_author']    = 'Your Name';
 $_['entry_comment']   = 'Comment';
 
-// Button
+// Buttons
 $_['button_comment']  = 'Post Comment';
 $_['button_reply']    = 'Post Reply';
 $_['button_replies']  = 'Show Replies (%s)';

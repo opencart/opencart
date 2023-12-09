@@ -1,0 +1,14 @@
+
+{% for reply in comment.reply %}
+
+  <div class="">
+    <p class="text-bold border">{{ reply.author }} <span>{{ reply.date_added }}</span></p>
+    <p class="border">{{ reply.comment }}</p>
+  </div>
+
+{% endfor %}
+
+
+{% if comment.next %}
+  <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">{{ button_replies }}</a></div>
+{% endif %}

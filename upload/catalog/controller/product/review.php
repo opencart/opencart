@@ -13,16 +13,14 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/review');
 
 		if (isset($this->request->get['product_id'])) {
-			$product_id = (int)$this->request->get['product_id'];
+			$data['product_id'] = (int)$this->request->get['product_id'];
 		} else {
-			$product_id = 0;
+			$data['product_id'] = 0;
 		}
 
 		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 
 		$data['list'] = $this->getList();
-
-		$data['product_id'] = $product_id;
 
 		if ($this->customer->isLogged() || $this->config->get('config_review_guest')) {
 			$data['review_guest'] = true;
@@ -37,9 +35,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		// Create a login token to prevent brute force attacks
-		$this->session->data['review_token'] = oc_token(32);
-
-		$data['review_token'] = $this->session->data['review_token'];
+		$data['review_token'] = $this->session->data['review_token'] = oc_token(32);
 
 		// Captcha
 		$this->load->model('setting/extension');

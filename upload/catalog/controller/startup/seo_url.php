@@ -32,6 +32,16 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 						$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 					}
 				}
+
+				if (!isset($this->request->get['route']) && count($parts) == 1 && isset($this->request->get['language'])) {
+					$this->request->get['route'] = $this->config->get('action_default');
+				}
+			} elseif (!isset($this->request->get['route'])) {
+				$this->request->get['route'] = $this->config->get('action_default');
+			}
+
+			if (!isset($this->request->get['route'])) {
+				$this->request->get['route'] = $this->config->get('action_error');
 			}
 		}
 	}

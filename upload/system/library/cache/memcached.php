@@ -21,10 +21,10 @@ class Memcached {
 	const CACHEDUMP_LIMIT = 9999;
 
 	/**
-	 * Constructor
-	 *
-	 * @param int $expire
-	 */
+     * Constructor
+     *
+     * @param int $expire
+     */
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 
@@ -44,12 +44,14 @@ class Memcached {
 	}
 
 	/**
-	 * Set
-	 *
-	 * @param string $key
-	 * @param mixed  $value
-	 * @param int    $expire
-	 */
+     * Set
+     *
+     * @param string $key
+     * @param mixed  $value
+     * @param int    $expire
+     *
+     * @return void
+     */
 	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
@@ -59,10 +61,12 @@ class Memcached {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @param string $key
-	 */
+     * Delete
+     *
+     * @param string $key
+     *
+     * @return void
+     */
 	public function delete(string $key): void {
 		$this->memcached->delete(CACHE_PREFIX . $key);
 	}

@@ -23,8 +23,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * Model
 	 *
-	 *
-	 *
 	 * @param string $route
 	 * @param array  $args
 	 *

@@ -199,7 +199,6 @@ class Smtp {
 				fputs($handle, base64_encode($this->option['smtp_password']) . "\r\n");
 
 				$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
-
 			} else {
 				fputs($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
 

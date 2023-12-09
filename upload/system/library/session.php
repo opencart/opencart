@@ -25,11 +25,11 @@ class Session {
 	public array $data = [];
 
 	/**
-	 * Constructor
-	 *
-	 * @param	string	$adaptor
-	 * @param	object	$registry
- 	*/
+     * Constructor
+     *
+     * @param string $adaptor
+     * @param object $registry
+     */
 	public function __construct(string $adaptor, \Opencart\System\Engine\Registry $registry) {
 		$class = 'Opencart\System\Library\Session\\' . $adaptor;
 		
@@ -48,23 +48,23 @@ class Session {
 	}
 	
 	/**
-	 * Get Session ID
-	 *
-	 * @return	string
- 	*/	
+     * Get Session ID
+     *
+     * @return string
+     */
 	public function getId(): string {
 		return $this->session_id;
 	}
 
 	/**
-	 * Start
-	 *
-	 * Starts a session.
-	 *
-	 * @param	string	$session_id
-	 *
-	 * @return	string	Returns the current session ID.
- 	*/	
+     * Start
+     *
+     * Starts a session.
+     *
+     * @param string $session_id
+     *
+     * @return string Returns the current session ID.
+     */
 	public function start(string $session_id = ''): string {
 		if (!$session_id) {
 			if (function_exists('random_bytes')) {
@@ -86,23 +86,23 @@ class Session {
 	}
 
 	/**
-	 * Close
-	 *
-	 * Writes the session data to storage
-	 *
-	 * @return	void
- 	*/
+     * Close
+     *
+     * Writes the session data to storage
+     *
+     * @return void
+     */
 	public function close(): void {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
 
 	/**
-	 * Destroy
-	 *
-	 * Deletes the current session from storage
-	 *
-	 * @return	void
- 	*/
+     * Destroy
+     *
+     * Deletes the current session from storage
+     *
+     * @return void
+     */
 	public function destroy(): void {
 		$this->data = [];
 
@@ -110,12 +110,12 @@ class Session {
 	}
 
 	/**
-	 * GC
-	 *
-	 * Garbage Collection
-	 *
-	 * @return	void
-	 */
+     * GC
+     *
+     * Garbage Collection
+     *
+     * @return void
+     */
 	public function gc(): void {
 		$this->adaptor->gc($this->session_id);
 	}

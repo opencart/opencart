@@ -83,6 +83,7 @@
             </div>
             <input type="hidden" name="product_id" value="{{ product_id }}"/>
           </form>
+          <br/>
           <div id="product">
             <form id="form-product">
               {% if options %}
@@ -202,7 +203,6 @@
                         <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                       </div>
                     {% endif %}
-
                   {% endfor %}
                 </div>
               {% endif %}
@@ -224,71 +224,66 @@
                 </div>
               {% endif %}
               <div class="mb-3">
-                <label for="input-quantity" class="form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+                <div class="input-group">
+                  <div class="input-group-text">{{ entry_qty }}</div>
+                  <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/>
+                  <button type="submit" id="button-cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
+                </div>
+                <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                 <div id="error-quantity" class="form-text"></div>
-                <br/>
-                <button type="submit" id="button-cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
               </div>
               {% if minimum > 1 %}
-                <div class="alert alert-info"><i class="fa-solid fa-circle-info"></i> {{ text_minimum }}</div>
+                <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum }}</div>
               {% endif %}
-
             </form>
           </div>
-
         </div>
-
-        <ul class="nav nav-tabs">
-          <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
-
-          {% if attribute_groups %}
-            <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
+        {% if attribute_groups %}
+          <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
+        {% endif %}
+        {% if review_status %}
+          <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review }}</a></li>
+        {% endif %}
+      </ul>
+      <div class="tab-content">
+        <div id="tab-description" class="tab-pane fade show active mb-4">{{ description }}
+          {% if tags %}
+            <p>{{ text_tags }}
+              {% for tag in tags %}
+                <a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.last %},{% endif %}
+              {% endfor %}
+            </p>
           {% endif %}
-
-          {% if review_status %}
-            <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review }}</a></li>
-          {% endif %}
-        </ul>
-
-        <div class="tab-content">
-
-          <div id="tab-description" class="tab-pane fade show active mb-4">{{ description }}
-            {% if tags %}
-              <p>{{ text_tags }}
-                {% for tag in tags %}
-                  <a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.last %},{% endif %}
-                {% endfor %}
-              </p>
-            {% endif %}
-          </div>
-
-          {% if attribute_groups %}
-            <div id="tab-specification" class="tab-pane fade">
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  {% for attribute_group in attribute_groups %}
-                    <thead>
+        </div>
+        {% if attribute_groups %}
+          <div id="tab-specification" class="tab-pane fade">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                {% for attribute_group in attribute_groups %}
+                  <thead>
+                    <tr>
+                      <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for attribute in attribute_group.attribute %}
                       <tr>
-                        <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                        <td>{{ attribute.name }}</td>
+                        <td>{{ attribute.text }}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {% for attribute in attribute_group.attribute %}
-                        <tr>
-                          <td>{{ attribute.name }}</td>
-                          <td>{{ attribute.text }}</td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                  {% endfor %}
-                </table>
-              </div>
+                    {% endfor %}
+                  </tbody>
+                {% endfor %}
+              </table>
             </div>
-          {% endif %}
-          {% if review_status %}
-            <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
-          {% endif %}
-        </div>
+          </div>
+        {% endif %}
+        {% if review_status %}
+          <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
+        {% endif %}
       </div>
       {% if products %}
         <h3>{{ text_related }}</h3>
@@ -298,8 +293,10 @@
           {% endfor %}
         </div>
       {% endif %}
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('#input-subscription').on('change', function(e) {

@@ -88,7 +88,15 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
+/**
+ * Class CliInstall
+ *
+ * @package Opencart\Install
+ */
 class CliInstall extends \Opencart\System\Engine\Controller {
+	/**
+     * @return void
+     */
 	public function index(): void {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];

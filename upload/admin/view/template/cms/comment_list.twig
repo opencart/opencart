@@ -4,8 +4,7 @@
       <tr>
         <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
         <td class="text-start">{{ column_comment }}</td>
-        <td class="text-start">{{ column_status }}</td>
-
+        <td class="text-end">{{ column_action }}</td>
       </tr>
     </thead>
     <tbody>
@@ -14,26 +13,33 @@
           <tr>
             <td class="text-center"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
             <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
-              <ul class="list-inline">
-                {% if comment.customer_edit %}
-                  <li class="list-inline-item">{{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></li>
+
+              <p>
+
+                {% if comment.status %}
+                  <small class="text-success">{{ text_enabled }}</small>
                 {% else %}
-                  <li class="list-inline-item">{{ text_by }} {{ comment.author }}</li>
+                  <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}
-                <li class="list-inline-item">{{ comment.date_added }}</li>
-              </ul>
+
+                {% if comment.customer_edit %}
+                  <small> - {{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
+                {% else %}
+                  <small> - {{ text_by }} {{ comment.author }}</small>
+                {% endif %}
+
+                <small> - {{ comment.date_added }}</small>
+              </p>
+
               {{ comment.comment }}
+
             </td>
-            <td>{% if comment.status %}
-                <span class="badge bg-success">{{ text_enabled }}</span>
-              {% else %}
-                <span class="badge bg-danger">{{ text_disabled }}</span>
-              {% endif %}</td>
+            <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment-{{ comment.comment_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>
@@ -43,9 +49,35 @@
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>
+{% for comment in comments %}
+  <div id="modal-comment-{{ comment.comment_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
 
+          <textarea rows="5" class="form-control mb-3" readonly>{{ comment.comment }}</textarea>
 
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-success d-block"><i class="fa-solid fa-check"></i> {{ button_approve }}</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-warning"><i class="fa-solid fa-ban"></i> {{ button_spam }}</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> {{ button_delete }}</button>
+            </div>
+          </div>
 
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
 
 
 

@@ -9,16 +9,15 @@
 namespace Opencart\System\Engine;
 /**
  * Class Action
+ *
+ * @package Opencart\System\Engine
  */
 class Action {
 	/**
 	 * @var string
 	 */
 	private string $route;
-	/**
-	 * @var string
-	 */
-	private string $class;
+
 	/**
 	 * @var string
 	 */
@@ -29,19 +28,17 @@ class Action {
 	 *
 	 * @param string $route
 	 */
-	public function __construct(string $route, $application = 'catalog/') {
-		$this->route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
+	public function __construct(string $route) {
+		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 
-		//'Opencart\\' . $application . '\\' . $this->class;
+		$pos = strrpos($route, '.');
 
-		$pos = strrpos($this->route, '.');
-
-		if ($pos === false) {
-			$this->class =  'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
-			$this->method = 'index';
+		if ($pos !== false) {
+			$this->route = substr($route, 0, $pos);
+			$this->method = substr($route, $pos + 1);
 		} else {
-			$this->class = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
-			$this->method = substr($this->route, $pos + 1);
+			$this->route = $route;
+			$this->method = 'index';
 		}
 	}
 
@@ -69,18 +66,28 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
-		// Get the current namespace being used by the config
-		$class = 'Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
+		// Create a key to store the controller object
+		$key = 'controller_' . str_replace('/', '_', $this->route);
 
-		// Initialize the class
-		if (class_exists($class)) {
-			$controller = new $class($registry);
+		if (!$registry->has($key)) {
+			// Initialize the class
+			$controller = $registry->get('factory')->controller($this->route);
+
+			// Store object
+			$registry->set($key, $controller);
 		} else {
+			$controller = $registry->get($key);
+		}
+
+		// If action cannot be executed, we return an action error object.
+		if ($controller instanceof \Exception) {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}
 
-		if (is_callable([$controller, $this->method])) {
-			return call_user_func_array([$controller, $this->method], $args);
+		$callable = [$controller, $this->method];
+
+		if (is_callable($callable)) {
+			return call_user_func_array($callable, $args);
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

@@ -43,9 +43,9 @@ class Registry {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
 	 *
-	 * @param    string  $key
+	 * @param string $key
 	 *
-	 * @return   ?object
+	 * @return ?object
 	 */
 	public function __get(string $key): ?object {
 		return $this->get($key);
@@ -56,8 +56,8 @@ class Registry {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
 	 *
-	 * @param    string  $key
-	 * @param    object  $value
+	 * @param string $key
+	 * @param object $value
 	 *
 	 * @return   void
 	 */
@@ -70,9 +70,9 @@ class Registry {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
 	 *
-	 * @param    string  $key
+	 * @param string $key
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function __isset(string $key): bool {
 		return $this->has($key);

@@ -42,7 +42,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $customer_id
+	 * @param int  $customer_id
 	 * @param bool $status
 	 *
 	 * @return void

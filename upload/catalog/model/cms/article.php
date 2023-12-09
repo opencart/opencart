@@ -101,8 +101,10 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @return int
-	 */
+     * @param array $data
+     * 
+     * @return int
+     */
 	public function getTotalArticles(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'";
 
@@ -177,10 +179,15 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * getComments
 	 *
-	 * @return array
-	 */
+     * @param int $article_id
+     * @param int $start
+     * @param int $limit
+     *
+     * @return array
+     */
+
 	public function getComments(int $article_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
@@ -206,10 +213,10 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
-	 *
-	 * @return int
-	 */
+     * @param int $article_id
+     *
+     * @return int
+     */
 	public function getTotalComments(int $article_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND `status` = '1'");
 

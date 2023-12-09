@@ -158,10 +158,11 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));					
 	}
 
-	/* Generate new autoloader file */
 	/**
-	 * @return void
-	 */
+     * Generate new autoloader file
+     *    
+     * @return void
+     */
 	public function vendor(): void {
 		$this->load->language('common/developer');
 

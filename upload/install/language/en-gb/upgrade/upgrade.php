@@ -18,7 +18,7 @@ $_['text_success']      = 'Congratulations! You have successfully upgraded your 
 $_['text_patch']        = 'Patch %s has been applied (%s of %s)';
 
 // Entry
-$_['entry_admin']       = 'Admin Name';
+$_['entry_admin']       = 'Admin Directory Name';
 $_['entry_progress']    = 'Progress';
 
 // Error

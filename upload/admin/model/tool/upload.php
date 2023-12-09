@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Tool;
  */
 class Upload extends \Opencart\System\Engine\Model {
 	/**
+	 * addUpload
+	 *
 	 * @param string $name
 	 * @param string $filename
 	 *
@@ -21,6 +23,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteUpload
+	 *
 	 * @param int $upload_id
 	 *
 	 * @return void
@@ -30,6 +34,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getUpload
+	 *
 	 * @param int $upload_id
 	 *
 	 * @return array
@@ -41,6 +47,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getUploadByCode
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -52,6 +60,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getUploads
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -117,6 +127,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalUploads
+	 *
 	 * @param array $data
 	 *
 	 * @return int

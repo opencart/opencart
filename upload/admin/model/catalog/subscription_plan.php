@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
+	 * addSubscriptionPlan
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -24,6 +26,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editSubscriptionPlan
+	 *
 	 * @param int   $subscription_plan_id
 	 * @param array $data
 	 *
@@ -40,6 +44,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * copySubscriptionPlan
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return void
@@ -53,6 +59,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteSubscriptionPlan
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return void
@@ -65,6 +73,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSubscriptionPlan
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return array
@@ -76,6 +86,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescription
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return array
@@ -93,6 +105,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSubscriptionPlans
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -139,6 +153,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalSubscriptionPlans
+	 *
 	 * @return int
 	 */
 	public function getTotalSubscriptionPlans(): int {

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Design;
  */
 class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
+	 * addSeoUrl
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editSeoUrl
+	 *
 	 * @param int   $seo_url_id
 	 * @param array $data
 	 *
@@ -28,6 +32,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteSeoUrl
+	 *
 	 * @param int $seo_url_id
 	 *
 	 * @return void
@@ -37,6 +43,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSeoUrl
+	 *
 	 * @param int $seo_url_id
 	 *
 	 * @return array
@@ -48,6 +56,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSeoUrls
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -120,6 +130,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalSeoUrls
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -159,6 +171,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSeoUrlByKeyValue
+	 *
 	 * @param string $key
 	 * @param string $value
 	 * @param int    $store_id
@@ -173,6 +187,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSeoUrlByKeyword
+	 *
 	 * @param string $keyword
 	 * @param int    $store_id
 	 * @param int    $language_id

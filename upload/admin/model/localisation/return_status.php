@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**
+	 * addReturnStatus
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editReturnStatus
+	 *
 	 * @param int   $return_status_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteReturnStatus
+	 *
 	 * @param int $return_status_id
 	 *
 	 * @return void
@@ -55,6 +61,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getReturnStatus
+	 *
 	 * @param int $return_status_id
 	 *
 	 * @return array
@@ -66,6 +74,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getReturnStatuses
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $return_status_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalReturnStatuses
+	 *
 	 * @return int
 	 */
 	public function getTotalReturnStatuses(): int {

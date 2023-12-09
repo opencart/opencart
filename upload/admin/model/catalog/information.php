@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Information extends \Opencart\System\Engine\Model {
 	/**
+	 * addInformation
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -47,6 +49,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editInformation
+	 *
 	 * @param int   $information_id
 	 * @param array $data
 	 *
@@ -91,6 +95,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteInformation
+	 *
 	 * @param int $information_id
 	 *
 	 * @return void
@@ -106,6 +112,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getInformation
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -117,6 +125,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getInformations
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -169,6 +179,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -192,6 +204,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getStores
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -209,6 +223,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSeoUrls
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -226,6 +242,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getLayouts
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -243,6 +261,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalInformations
+	 *
 	 * @return int
 	 */
 	public function getTotalInformations(): int {
@@ -252,6 +272,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalInformationsByLayoutId
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

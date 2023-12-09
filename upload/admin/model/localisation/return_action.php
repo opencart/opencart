@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
+	 * addReturnAction
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editReturnAction
+	 *
 	 * @param int   $return_action_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteReturnAction
+	 *
 	 * @param int $return_action_id
 	 *
 	 * @return void
@@ -55,6 +61,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getReturnAction
+	 *
 	 * @param int $return_action_id
 	 *
 	 * @return array
@@ -66,6 +74,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getReturnActions
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $return_action_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalReturnActions
+	 *
 	 * @return int
 	 */
 	public function getTotalReturnActions(): int {

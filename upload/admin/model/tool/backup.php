@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Tool;
  */
 class Backup extends \Opencart\System\Engine\Model {
 	/**
+	 * getTables
+	 *
 	 * @return array
 	 */
 	public function getTables(): array {
@@ -24,6 +26,8 @@ class Backup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getRecords
+	 *
 	 * @param string $table
 	 * @param int    $start
 	 * @param int    $limit
@@ -49,6 +53,8 @@ class Backup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalRecords
+	 *
 	 * @param string $table
 	 *
 	 * @return int

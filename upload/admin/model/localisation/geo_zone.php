@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class GeoZone extends \Opencart\System\Engine\Model {
 	/**
+	 * addGeoZone
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -30,6 +32,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editGeoZone
+	 *
 	 * @param int   $geo_zone_id
 	 * @param array $data
 	 *
@@ -52,6 +56,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteGeoZone
+	 *
 	 * @param int $geo_zone_id
 	 *
 	 * @return void
@@ -64,6 +70,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getGeoZone
+	 *
 	 * @param int $geo_zone_id
 	 *
 	 * @return array
@@ -75,6 +83,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getGeoZones
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -127,6 +137,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalGeoZones
+	 *
 	 * @return int
 	 */
 	public function getTotalGeoZones(): int {
@@ -136,6 +148,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getZoneToGeoZones
+	 *
 	 * @param int $geo_zone_id
 	 *
 	 * @return array
@@ -147,6 +161,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalZoneToGeoZoneByGeoZoneId
+	 *
 	 * @param int $geo_zone_id
 	 *
 	 * @return int
@@ -158,6 +174,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalZoneToGeoZoneByCountryId
+	 *
 	 * @param int $country_id
 	 *
 	 * @return int
@@ -169,6 +187,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalZoneToGeoZoneByZoneId
+	 *
 	 * @param int $zone_id
 	 *
 	 * @return int

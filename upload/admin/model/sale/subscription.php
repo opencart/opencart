@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Sale;
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**
+	 * editSubscription
+	 *
 	 * @param int   $subscription_id
 	 * @param array $data
 	 *
@@ -17,6 +19,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editPaymentMethod
+	 *
 	 * @param int $subscription_id
 	 * @param int $customer_payment_id
 	 *
@@ -27,6 +31,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editSubscriptionPlan
+	 *
 	 * @param int $subscription_id
 	 * @param int $subscription_plan_id
 	 *
@@ -37,6 +43,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editRemaining
+	 *
 	 * @param int $subscription_id
 	 * @param int $remaining
 	 *
@@ -47,6 +55,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editTrialRemaining
+	 *
 	 * @param int $subscription_id
 	 * @param int $trial_remaining
 	 *
@@ -57,6 +67,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editDateNext
+	 *
 	 * @param int    $subscription_id
 	 * @param string $date_next
 	 *
@@ -67,6 +79,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSubscription
+	 *
 	 * @param int $subscription_id
 	 *
 	 * @return array
@@ -88,6 +102,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSubscriptionByOrderProductId
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -100,6 +116,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSubscriptions
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -184,6 +202,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalSubscriptions
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -227,6 +247,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalSubscriptionsByStoreId
+	 *
 	 * @param int $store_id
 	 *
 	 * @return int
@@ -238,6 +260,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalSubscriptionsBySubscriptionStatusId
+	 *
 	 * @param int $subscription_status_id
 	 *
 	 * @return int
@@ -249,6 +273,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addHistory
+	 *
 	 * @param int    $subscription_id
 	 * @param int    $subscription_status_id
 	 * @param string $comment
@@ -263,6 +289,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getHistories
+	 *
 	 * @param int $subscription_id
 	 * @param int $start
 	 * @param int $limit
@@ -284,6 +312,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalHistories
+	 *
 	 * @param int $subscription_id
 	 *
 	 * @return int
@@ -295,6 +325,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalHistoriesBySubscriptionStatusId
+	 *
 	 * @param int $subscription_status_id
 	 *
 	 * @return int

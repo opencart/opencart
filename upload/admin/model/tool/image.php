@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Tool;
  */
 class Image extends \Opencart\System\Engine\Model {
 	/**
+	 * Resize
+	 *
 	 * @param string $filename
 	 * @param int    $width
 	 * @param int    $height
@@ -26,7 +28,7 @@ class Image extends \Opencart\System\Engine\Model {
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-				 
+
 			if (!in_array($image_type, [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_WEBP])) {
 				return HTTP_CATALOG . 'image/' . $image_old;
 			}

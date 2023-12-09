@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
+	 * addAddressFormat
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editAddressFormat
+	 *
 	 * @param int   $address_format_id
 	 * @param array $data
 	 *
@@ -28,6 +32,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteAddressFormat
+	 *
 	 * @param int $address_format_id
 	 *
 	 * @return void
@@ -37,6 +43,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAddressFormat
+	 *
 	 * @param int $address_format_id
 	 *
 	 * @return array
@@ -48,6 +56,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAddressFormats
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -73,6 +83,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalAddressFormats
+	 *
 	 * @param array $data
 	 *
 	 * @return int

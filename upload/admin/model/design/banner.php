@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Design;
  */
 class Banner extends \Opencart\System\Engine\Model {
 	/**
+	 * addBanner
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editBanner
+	 *
 	 * @param int   $banner_id
 	 * @param array $data
 	 *
@@ -48,6 +52,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteBanner
+	 *
 	 * @param int $banner_id
 	 *
 	 * @return void
@@ -58,6 +64,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getBanner
+	 *
 	 * @param int $banner_id
 	 *
 	 * @return array
@@ -69,6 +77,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getBanners
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -111,6 +121,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getImages
+	 *
 	 * @param int $banner_id
 	 *
 	 * @return array
@@ -133,6 +145,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalBanners
+	 *
 	 * @return int
 	 */
 	public function getTotalBanners(): int {

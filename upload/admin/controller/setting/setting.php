@@ -642,6 +642,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Theme
+	 *
 	 * @return void
 	 */
 	public function theme(): void {

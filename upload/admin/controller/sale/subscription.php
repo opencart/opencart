@@ -351,6 +351,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return void
 	 */
 	public function info(): void {
@@ -811,6 +813,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -820,6 +824,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getHistory
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -867,6 +873,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * addHistory
+	 *
 	 * @return void
 	 */
 	public function addHistory(): void {
@@ -913,6 +921,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Order
+	 *
 	 * @return void
 	 */
 	public function order(): void {
@@ -922,6 +932,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getOrder
+	 *
 	 * @return string
 	 */
 	public function getOrder(): string {

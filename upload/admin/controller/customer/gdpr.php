@@ -193,7 +193,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/gdpr_list', $data);
 	}
 
-	/*
+	/**
+	 * Approve
+	 *
 	 *  Action Statuses
 	 *
 	 *	EXPORT
@@ -215,8 +217,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *	pending    = 1
 	 *	processing = 2
 	 *	denied     = -1
-	*/
-	/**
+	 *
 	 * @return void
 	 */
 	public function approve(): void {
@@ -263,6 +264,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Deny
+	 *
 	 * @return void
 	 */
 	public function deny(): void {

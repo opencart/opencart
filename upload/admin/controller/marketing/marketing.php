@@ -459,6 +459,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -468,6 +470,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getReport
+	 *
 	 * @return string
 	 */
 	public function getReport(): string {

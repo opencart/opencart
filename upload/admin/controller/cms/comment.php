@@ -201,6 +201,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Approve
+	 *
 	 * @return void
 	 */
 	public function approve(): void {
@@ -253,6 +255,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Spam
+	 *
 	 * @return void
 	 */
 	public function spam(): void {

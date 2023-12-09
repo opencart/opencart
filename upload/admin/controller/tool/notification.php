@@ -75,7 +75,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$second = time() - strtotime($result['date_added']);
-			
+
 			$ranges = [
 				'second' => $second,
 				'minute' => floor($second / 60),
@@ -118,6 +118,8 @@ class Notification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return void
 	 */
 	public function info(): void {

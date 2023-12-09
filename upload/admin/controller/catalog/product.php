@@ -1172,6 +1172,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Copy
+	 *
 	 * @return void
 	 */
 	public function copy(): void {
@@ -1204,6 +1206,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -1213,6 +1217,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getReport
+	 *
 	 * @return string
 	 */
 	public function getReport(): string {

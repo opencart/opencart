@@ -333,6 +333,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Path
+	 *
 	 * @return void
 	 */
 	public function path(): void {
@@ -397,6 +399,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Translation
+	 *
 	 * @return void
 	 */
 	public function translation(): void {

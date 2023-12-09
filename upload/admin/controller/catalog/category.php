@@ -261,7 +261,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['stores'] = [];
-		
+
 		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
@@ -389,11 +389,11 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
-			
+
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->post['category_id']) {
 					$json['error']['parent'] = $this->language->get('error_parent');
-					
+
 					break;
 				}
 			}
@@ -440,6 +440,8 @@ class Category extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Repair
+	 *
 	 * @return void
 	 */
 	public function repair(): void {

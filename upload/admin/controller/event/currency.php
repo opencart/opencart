@@ -9,15 +9,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Auto update currencies
 	 *
-	 * model/setting/setting/editSetting
-	 * model/localisation/currency/addCurrency
-	 * model/localisation/currency/editCurrency
-	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
+	 * model/setting/setting/editSetting
+	 * model/localisation/currency/addCurrency
+	 * model/localisation/currency/editCurrency
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config' && isset($args[1]['config_currency'])) {

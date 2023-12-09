@@ -722,6 +722,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -731,6 +733,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getHistory
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -778,6 +782,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * addHistory
+	 *
 	 * @return void
 	 */
 	public function addHistory(): void {

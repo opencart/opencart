@@ -6,7 +6,6 @@ namespace Opencart\Admin\Controller\Mail;
  * @package Opencart\Admin\Controller\Mail
  */
 class Authorize extends \Opencart\System\Engine\Controller {
-	// admin/model/user/user/editCode/after
 	/**
 	 * @param $route
 	 * @param $args
@@ -14,6 +13,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 * @throws \Exception
+	 *
+	 * admin/model/user/user/editCode/after
 	 */
 	public function index(&$route, &$args, &$output): void {
 		if (isset($this->request->get['route'])) {
@@ -59,15 +60,17 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// admin/model/user/user/editCode/after
-
 	/**
+	 * Reset
+	 *
 	 * @param $route
 	 * @param $args
 	 * @param $output
 	 *
 	 * @return void
 	 * @throws \Exception
+	 *
+	 * admin/model/user/user/editCode/after
 	 */
 	public function reset(&$route, &$args, &$output): void {
 		if (isset($this->request->get['route'])) {

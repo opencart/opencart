@@ -356,6 +356,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -365,6 +367,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getReport
+	 *
 	 * @return string
 	 */
 	private function getReport(): string {
@@ -426,6 +430,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -503,6 +509,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {

@@ -16,6 +16,8 @@ class Address extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getAddress
+	 *
 	 * @return string
 	 */
 	public function getAddress(): string {
@@ -325,6 +327,8 @@ class Address extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Address
+	 *
 	 * @return void
 	 */
 	public function address(): void {

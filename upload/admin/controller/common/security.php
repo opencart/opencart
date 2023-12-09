@@ -60,6 +60,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -120,6 +122,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Storage
+	 *
 	 * @return void
 	 */
 	public function storage(): void {
@@ -278,6 +282,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Admin
+	 *
 	 * @return void
 	 */
 	public function admin(): void {

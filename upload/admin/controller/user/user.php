@@ -387,6 +387,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Authorize
+	 *
 	 * @return void
 	 */
 	public function authorize(): void {
@@ -396,6 +398,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getAuthorize
+	 *
 	 * @return string
 	 */
 	public function getAuthorize(): string {
@@ -446,6 +450,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * deleteAuthorize
+	 *
 	 * @return void
 	 */
 	public function deleteAuthorize(): void {
@@ -495,6 +501,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Login
+	 *
 	 * @return void
 	 */
 	public function login(): void {
@@ -504,6 +512,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getLogin
+	 *
 	 * @return string
 	 */
 	public function getLogin(): string {

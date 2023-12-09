@@ -319,6 +319,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Refresh
+	 *
 	 * @return void
 	 */
 	public function refresh(): void {

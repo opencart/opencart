@@ -749,12 +749,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if ($customer_info) {
 			$this->load->model('customer/custom_field');
 
-			$filter_data = [
-				'filter_location'          => 'account',
-				'filter_customer_group_id' => $this->request->post['customer_group_id'],
-				'filter_status'            => 1
-			];
-
 			$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_info['customer_group_id']]);
 
 			foreach ($custom_fields as $custom_field) {
@@ -820,6 +814,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Calculate
+	 *
 	 * @return void
 	 */
 	public function calculate(): void {
@@ -849,6 +845,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Csv
+	 *
 	 * @return \Opencart\System\Engine\Action|void
 	 */
 	public function csv() {
@@ -904,6 +902,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Complete
+	 *
 	 * @return void
 	 */
 	public function complete(): void {
@@ -943,6 +943,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -952,6 +954,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getReport
+	 *
 	 * @return string
 	 */
 	private function getReport(): string {

@@ -10,12 +10,12 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Dump all the language vars into the template.
 	 *
-	 * view/ * /before
-	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
 	 * @return void
+	 *
+	 * view/ * /before
 	 */
 	public function index(string &$route, array &$args): void {
 		foreach ($this->language->all() as $key => $value) {
@@ -26,14 +26,16 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * 1. Before controller load store all current loaded language data.
+	 * Before
 	 *
-	 * controller/ * /before
+	 * 1. Before controller load store all current loaded language data.
 	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
 	 * @return void
+	 *
+	 * controller/ * /before
 	 */
 	public function before(string &$route, array &$args): void {
 		$data = $this->language->all();
@@ -44,15 +46,17 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 *  // 2. After controller load restore old language data.
+	 * After
 	 *
-	 * // controller/ * / * /after
+	 * 2. After controller load restore old language data.
 	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
+	 * controller/ * / * /after
 	 */
 	public function after(string &$route, array &$args, &$output): void {
 		$data = json_decode($this->language->get('backup'), true);

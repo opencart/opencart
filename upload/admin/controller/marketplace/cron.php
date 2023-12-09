@@ -174,6 +174,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Run
+	 *
 	 * @return void
 	 */
 	public function run(): void {
@@ -217,6 +219,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Enable
+	 *
 	 * @return void
 	 */
 	public function enable(): void {
@@ -247,6 +251,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Disable
+	 *
 	 * @return void
 	 */
 	public function disable(): void {

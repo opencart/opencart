@@ -238,6 +238,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -346,6 +348,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Folder
+	 *
 	 * @return void
 	 */
 	public function folder(): void {

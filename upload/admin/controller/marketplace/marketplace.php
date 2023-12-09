@@ -529,6 +529,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?object {
@@ -697,6 +699,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Extension
+	 *
 	 * @return void
 	 */
 	public function extension(): void {
@@ -765,6 +769,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Purchase
+	 *
 	 * @return void
 	 */
 	public function purchase(): void {
@@ -847,6 +853,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -946,6 +954,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * addComment
+	 *
 	 * @return void
 	 */
 	public function addComment(): void {
@@ -1025,6 +1035,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Comment
+	 *
 	 * @return void
 	 */
 	public function comment(): void {
@@ -1099,6 +1111,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reply
+	 *
 	 * @return void
 	 */
 	public function reply(): void {

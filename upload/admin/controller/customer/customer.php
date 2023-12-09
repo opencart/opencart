@@ -732,6 +732,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Unlock
+	 *
 	 * @return void
 	 */
 	public function unlock(): void {
@@ -792,6 +794,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Login
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function login(): ?object {
@@ -834,6 +838,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Payment
+	 *
 	 * @return void
 	 */
 	public function payment(): void {
@@ -843,6 +849,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getPayment
+	 *
 	 * @return string
 	 */
 	private function getPayment(): string {
@@ -899,6 +907,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * deletePayment
+	 *
 	 * @return void
 	 */
 	public function deletePayment(): void {
@@ -929,6 +939,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -938,6 +950,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getHistory
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -983,6 +997,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * addHistory
+	 *
 	 * @return void
 	 */
 	public function addHistory(): void {
@@ -1019,6 +1035,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Transaction
+	 *
 	 * @return void
 	 */
 	public function transaction(): void {
@@ -1028,6 +1046,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getTransaction
+	 *
 	 * @return string
 	 */
 	public function getTransaction(): string {
@@ -1076,6 +1096,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * addTransaction
+	 *
 	 * @return void
 	 */
 	public function addTransaction(): void {
@@ -1114,6 +1136,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reward
+	 *
 	 * @return void
 	 */
 	public function reward(): void {
@@ -1123,6 +1147,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getReward
+	 *
 	 * @return string
 	 */
 	public function getReward(): string {
@@ -1171,6 +1197,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * addReward
+	 *
 	 * @return void
 	 */
 	public function addReward(): void {
@@ -1209,6 +1237,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Ip
+	 *
 	 * @return void
 	 */
 	public function ip(): void {
@@ -1218,6 +1248,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getIp
+	 *
 	 * @return string
 	 */
 	public function getIp(): string {
@@ -1278,6 +1310,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Authorize
+	 *
 	 * @return void
 	 */
 	public function authorize(): void {
@@ -1287,6 +1321,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * getAuthorize
+	 *
 	 * @return string
 	 */
 	public function getAuthorize(): string {
@@ -1337,6 +1373,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * deleteAuthorize
+	 *
 	 * @return void
 	 */
 	public function deleteAuthorize(): void {
@@ -1444,6 +1482,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Customfield
+	 *
 	 * @return void
 	 */
 	public function customfield(): void {

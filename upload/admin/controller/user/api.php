@@ -347,6 +347,8 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * deleteSession
+	 *
 	 * @return void
 	 */
 	public function deleteSession(): void {

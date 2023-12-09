@@ -11,7 +11,7 @@ class Log extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		$this->load->language('tool/log');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = [];
@@ -97,6 +97,8 @@ class Log extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -133,6 +135,8 @@ class Log extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Clear
+	 *
 	 * @return void
 	 */
 	public function clear(): void {

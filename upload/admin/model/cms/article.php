@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Cms;
  */
 class Article extends \Opencart\System\Engine\Model {
 	/**
-	 * addArticle
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -47,8 +45,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editArticle
-	 *
 	 * @param int   $article_id
 	 * @param array $data
 	 *
@@ -92,8 +88,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteArticle
-	 *
 	 * @param int $article_id
 	 *
 	 * @return void
@@ -110,8 +104,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getArticle
-	 *
 	 * @param int $article_id
 	 *
 	 * @return array
@@ -133,8 +125,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getArticles
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -191,8 +181,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getDescriptions
-	 *
 	 * @param int $article_id
 	 *
 	 * @return array
@@ -218,8 +206,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getSeoUrls
-	 *
 	 * @param int $article_id
 	 *
 	 * @return array
@@ -237,8 +223,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getStores
-	 *
 	 * @param int $article_id
 	 *
 	 * @return array
@@ -256,8 +240,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLayouts
-	 *
 	 * @param int $article_id
 	 *
 	 * @return array
@@ -275,8 +257,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalArticles
-	 *
 	 * @return int
 	 */
 	public function getTotalArticles(): int {
@@ -286,8 +266,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalArticlesByLayoutId
-	 *
 	 * @param int $layout_id
 	 *
 	 * @return int
@@ -299,8 +277,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editCommentStatus
-	 *
 	 * @param int  $article_comment_id
 	 * @param bool $status
 	 *
@@ -311,8 +287,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteComment
-	 *
 	 * @param int $article_comment_id
 	 *
 	 * @return void
@@ -322,8 +296,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getComment
-	 *
 	 * @param int $article_comment_id
 	 *
 	 * @return array
@@ -335,8 +307,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getComments
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -394,8 +364,6 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalComments
-	 *
 	 * @param array $data
 	 *
 	 * @return int

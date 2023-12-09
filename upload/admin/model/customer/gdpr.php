@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Customer;
  */
 class Gdpr extends \Opencart\System\Engine\Model {
 	/**
-	 * editStatus
-	 *
 	 * @param int $gdpr_id
 	 * @param int $status
 	 *
@@ -19,8 +17,6 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteGdpr
-	 *
 	 * @param int $gdpr_id
 	 *
 	 * @return void
@@ -30,8 +26,6 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getGdprs
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -85,8 +79,6 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getGdpr
-	 *
 	 * @param int $gdpr_id
 	 *
 	 * @return array
@@ -98,8 +90,6 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalGdprs
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -139,8 +129,6 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getExpires
-	 *
 	 * @return array
 	 */
 	public function getExpires(): array {

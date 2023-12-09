@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Module extends \Opencart\System\Engine\Model {
 	/**
-	 * addModule
-	 *
 	 * @param string $code
 	 * @param array  $data
 	 *
@@ -23,8 +21,6 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editModule
-	 *
 	 * @param int   $module_id
 	 * @param array $data
 	 *
@@ -35,8 +31,6 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteModule
-	 *
 	 * @param int $module_id
 	 *
 	 * @return void
@@ -46,8 +40,6 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getModule
-	 *
 	 * @param int $module_id
 	 *
 	 * @return array
@@ -63,8 +55,6 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getModules
-	 *
 	 * @return array
 	 */
 	public function getModules(): array {
@@ -74,8 +64,6 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getModulesByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -87,8 +75,6 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteModulesByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return void

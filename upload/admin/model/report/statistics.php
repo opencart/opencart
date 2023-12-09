@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Report;
  */
 class Statistics extends \Opencart\System\Engine\Model {
 	/**
-	 * getStatistics
-	 *
 	 * @return array
 	 */
 	public function getStatistics(): array {
@@ -18,8 +16,6 @@ class Statistics extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getValue
-	 *
 	 * @param string $code
 	 *
 	 * @return float
@@ -35,8 +31,6 @@ class Statistics extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addValue
-	 *
 	 * @param string $code
 	 * @param float  $value
 	 *
@@ -47,8 +41,6 @@ class Statistics extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * removeValue
-	 *
 	 * @param string $code
 	 * @param float  $value
 	 *
@@ -59,8 +51,6 @@ class Statistics extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editValue
-	 *
 	 * @param string $code
 	 * @param float  $value
 	 *

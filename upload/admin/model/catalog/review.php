@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**
-	 * addReview
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -29,8 +27,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editReview
-	 *
 	 * @param int   $review_id
 	 * @param array $data
 	 *
@@ -48,8 +44,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteReview
-	 *
 	 * @param int $review_id
 	 *
 	 * @return void
@@ -70,8 +64,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getReview
-	 *
 	 * @param int $review_id
 	 *
 	 * @return array
@@ -83,8 +75,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getRating
-	 *
 	 * @param int $product_id
 	 *
 	 * @return int
@@ -100,8 +90,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getReviews
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -167,8 +155,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalReviews
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -202,8 +188,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalReviewsAwaitingApproval
-	 *
 	 * @return int
 	 */
 	public function getTotalReviewsAwaitingApproval(): int {

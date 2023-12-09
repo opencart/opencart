@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Option extends \Opencart\System\Engine\Model {
 	/**
-	 * addOption
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -38,8 +36,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editOption
-	 *
 	 * @param int   $option_id
 	 * @param array $data
 	 *
@@ -75,8 +71,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteOption
-	 *
 	 * @param int $option_id
 	 *
 	 * @return void
@@ -89,8 +83,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getOption
-	 *
 	 * @param int $option_id
 	 *
 	 * @return array
@@ -102,8 +94,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getOptions
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -151,8 +141,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getDescriptions
-	 *
 	 * @param int $option_id
 	 *
 	 * @return array
@@ -170,8 +158,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getValue
-	 *
 	 * @param int $option_value_id
 	 *
 	 * @return array
@@ -183,8 +169,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getValues
-	 *
 	 * @param int $option_id
 	 *
 	 * @return array
@@ -207,8 +191,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getValueDescriptions
-	 *
 	 * @param int $option_id
 	 *
 	 * @return array
@@ -239,8 +221,6 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalOptions
-	 *
 	 * @return int
 	 */
 	public function getTotalOptions(): int {

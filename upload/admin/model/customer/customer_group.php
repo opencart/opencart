@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Customer;
  */
 class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
-	 * addCustomerGroup
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -26,8 +24,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editCustomerGroup
-	 *
 	 * @param int   $customer_group_id
 	 * @param array $data
 	 *
@@ -44,8 +40,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteCustomerGroup
-	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return void
@@ -60,8 +54,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getCustomerGroup
-	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return array
@@ -73,8 +65,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getCustomerGroups
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -117,8 +107,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getDescriptions
-	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return array
@@ -139,8 +127,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalCustomerGroups
-	 *
 	 * @return int
 	 */
 	public function getTotalCustomerGroups(): int {

@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Sale;
  */
 class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**
-	 * addVoucherTheme
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,8 +26,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editVoucherTheme
-	 *
 	 * @param int   $voucher_theme_id
 	 * @param array $data
 	 *
@@ -48,8 +44,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteVoucherTheme
-	 *
 	 * @param int $voucher_theme_id
 	 *
 	 * @return void
@@ -62,8 +56,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getVoucherTheme
-	 *
 	 * @param int $voucher_theme_id
 	 *
 	 * @return array
@@ -75,8 +67,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getVoucherThemes
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -118,8 +108,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getDescriptions
-	 *
 	 * @param int $voucher_theme_id
 	 *
 	 * @return array
@@ -137,8 +125,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalVoucherThemes
-	 *
 	 * @return int
 	 */
 	public function getTotalVoucherThemes(): int {

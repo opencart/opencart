@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class TaxRate extends \Opencart\System\Engine\Model {
 	/**
-	 * addTaxRate
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,8 +26,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editTaxRate
-	 *
 	 * @param int   $tax_rate_id
 	 * @param array $data
 	 *
@@ -48,8 +44,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteTaxRate
-	 *
 	 * @param int $tax_rate_id
 	 *
 	 * @return void
@@ -60,8 +54,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTaxRate
-	 *
 	 * @param int $tax_rate_id
 	 *
 	 * @return array
@@ -73,8 +65,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTaxRates
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -119,8 +109,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getCustomerGroups
-	 *
 	 * @param int $tax_rate_id
 	 *
 	 * @return array
@@ -138,8 +126,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalTaxRates
-	 *
 	 * @return int
 	 */
 	public function getTotalTaxRates(): int {
@@ -149,8 +135,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalTaxRatesByGeoZoneId
-	 *
 	 * @param int $geo_zone_id
 	 *
 	 * @return int

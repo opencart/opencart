@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Cms;
  */
 class Antispam extends \Opencart\System\Engine\Model {
 	/**
-	 * addAntispam
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -20,8 +18,6 @@ class Antispam extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editAntispam
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -31,8 +27,6 @@ class Antispam extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteAntispam
-	 *
 	 * @param int $antispam_id
 	 *
 	 * @return void
@@ -42,8 +36,6 @@ class Antispam extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getAntispam
-	 *
 	 * @param int $antispam_id
 	 *
 	 * @return array
@@ -55,8 +47,6 @@ class Antispam extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getAntispams
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -106,8 +96,6 @@ class Antispam extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalAntispams
-	 *
 	 * @param array $data
 	 *
 	 * @return int

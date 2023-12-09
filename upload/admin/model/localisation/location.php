@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class Location extends \Opencart\System\Engine\Model {
 	/**
-	 * addLocation
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -20,8 +18,6 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editLocation
-	 *
 	 * @param int   $location_id
 	 * @param array $data
 	 *
@@ -32,8 +28,6 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteLocation
-	 *
 	 * @param int $location_id
 	 *
 	 * @return void
@@ -43,8 +37,6 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLocation
-	 *
 	 * @param int $location_id
 	 *
 	 * @return array
@@ -56,8 +48,6 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLocations
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -100,8 +90,6 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalLocations
-	 *
 	 * @return int
 	 */
 	public function getTotalLocations(): int {

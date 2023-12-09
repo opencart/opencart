@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Marketing;
  */
 class Marketing extends \Opencart\System\Engine\Model {
 	/**
-	 * addMarketing
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -20,8 +18,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editMarketing
-	 *
 	 * @param int   $marketing_id
 	 * @param array $data
 	 *
@@ -32,8 +28,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteMarketing
-	 *
 	 * @param int $marketing_id
 	 *
 	 * @return void
@@ -43,8 +37,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getMarketing
-	 *
 	 * @param int $marketing_id
 	 *
 	 * @return array
@@ -56,8 +48,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getMarketingByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -69,8 +59,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getMarketings
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -144,8 +132,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalMarketings
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -181,8 +167,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getReports
-	 *
 	 * @param int $marketing_id
 	 * @param int $start
 	 * @param int $limit
@@ -204,8 +188,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalReports
-	 *
 	 * @param int $marketing_id
 	 *
 	 * @return int

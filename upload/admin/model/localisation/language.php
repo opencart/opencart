@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class Language extends \Opencart\System\Engine\Model {
 	/**
-	 * addLanguage
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -217,8 +215,6 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editLanguage
-	 *
 	 * @param int   $language_id
 	 * @param array $data
 	 *
@@ -231,8 +227,6 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteLanguage
-	 *
 	 * @param int $language_id
 	 *
 	 * @return void
@@ -300,8 +294,6 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLanguage
-	 *
 	 * @param int $language_id
 	 *
 	 * @return array
@@ -327,8 +319,6 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLanguageByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -354,8 +344,6 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLanguages
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -430,8 +418,6 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalLanguages
-	 *
 	 * @return int
 	 */
 	public function getTotalLanguages(): int {

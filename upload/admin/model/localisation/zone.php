@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class Zone extends \Opencart\System\Engine\Model {
 	/**
-	 * addZone
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -22,8 +20,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editZone
-	 *
 	 * @param int   $zone_id
 	 * @param array $data
 	 *
@@ -36,8 +32,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteZone
-	 *
 	 * @param int $zone_id
 	 *
 	 * @return void
@@ -49,8 +43,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getZone
-	 *
 	 * @param int $zone_id
 	 *
 	 * @return array
@@ -62,8 +54,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getZones
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -125,8 +115,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getZonesByCountryId
-	 *
 	 * @param int $country_id
 	 *
 	 * @return array
@@ -150,8 +138,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalZones
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -187,8 +173,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalZonesByCountryId
-	 *
 	 * @param int $country_id
 	 *
 	 * @return int

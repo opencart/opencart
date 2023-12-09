@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Cms;
  */
 class Topic extends \Opencart\System\Engine\Model {
 	/**
-	 * addTopic
-	 *
 	 * @param array $data
 	 *
 	 * @return int $topic
@@ -40,8 +38,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editTopic
-	 *
 	 * @param int   $topic_id
 	 * @param array $data
 	 *
@@ -76,8 +72,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteTopic
-	 *
 	 * @param int $topic_id
 	 *
 	 * @return void
@@ -92,8 +86,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTopic
-	 *
 	 * @param int $topic_id
 	 *
 	 * @return array
@@ -115,8 +107,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTopics
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -169,8 +159,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getDescriptions
-	 *
 	 * @param int $topic_id
 	 *
 	 * @return array
@@ -195,8 +183,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getSeoUrls
-	 *
 	 * @param int $topic_id
 	 *
 	 * @return array
@@ -214,8 +200,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getStores
-	 *
 	 * @param int $topic_id
 	 *
 	 * @return array
@@ -233,8 +217,6 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalTopics
-	 *
 	 * @return int
 	 */
 	public function getTotalTopics(): int {

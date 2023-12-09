@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Category extends \Opencart\System\Engine\Model {
 	/**
-	 * addCategory
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -81,8 +79,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editCategory
-	 *
 	 * @param int   $category_id
 	 * @param array $data
 	 *
@@ -212,8 +208,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteCategory
-	 *
 	 * @param int $category_id
 	 *
 	 * @return void
@@ -237,8 +231,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * repairCategories
-	 *
 	 * @param int $parent_id
 	 *
 	 * @return void
@@ -268,8 +260,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getCategory
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -281,8 +271,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getPath
-	 *
 	 * @param int $category_id
 	 *
 	 * @return string
@@ -292,8 +280,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getPaths
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -305,8 +291,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getCategories
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -355,8 +339,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getDescriptions
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -380,8 +362,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getFilters
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -399,8 +379,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getSeoUrls
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -418,8 +396,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getStores
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -437,8 +413,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLayouts
-	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -456,8 +430,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalCategories
-	 *
 	 * @return int
 	 */
 	public function getTotalCategories(): int {
@@ -467,8 +439,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalCategoriesByLayoutId
-	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Extension extends \Opencart\System\Engine\Model {
 	/**
-	 * getExtensions
-	 *
 	 * @return array
 	 */
 	public function getExtensions(): array {
@@ -18,8 +16,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getExtensionsByType
-	 *
 	 * @param string $type
 	 *
 	 * @return array
@@ -31,8 +27,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getExtensionByCode
-	 *
 	 * @param string $type
 	 * @param string $code
 	 *
@@ -45,8 +39,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalExtensionsByExtension
-	 *
 	 * @param string $extension
 	 *
 	 * @return int
@@ -58,8 +50,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Install
-	 *
 	 * @param string $type
 	 * @param string $extension
 	 * @param string $code
@@ -77,8 +67,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Uninstall
-	 *
 	 * @param string $type
 	 * @param string $code
 	 *
@@ -90,8 +78,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addInstall
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -103,8 +89,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteInstall
-	 *
 	 * @param int $extension_install_id
 	 *
 	 * @return void
@@ -114,8 +98,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editStatus
-	 *
 	 * @param int  $extension_install_id
 	 * @param bool $status
 	 *
@@ -126,8 +108,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getInstall
-	 *
 	 * @param int $extension_install_id
 	 *
 	 * @return array
@@ -139,8 +119,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getInstallByExtensionDownloadId
-	 *
 	 * @param int $extension_download_id
 	 *
 	 * @return array
@@ -152,8 +130,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getInstallByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -165,8 +141,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getInstalls
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -214,8 +188,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalInstalls
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -233,8 +205,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addPath
-	 *
 	 * @param int    $extension_install_id
 	 * @param string $path
 	 *
@@ -245,8 +215,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deletePath
-	 *
 	 * @param int $extension_path_id
 	 *
 	 * @return void
@@ -256,8 +224,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getPathsByExtensionInstallId
-	 *
 	 * @param int $extension_install_id
 	 *
 	 * @return array
@@ -269,8 +235,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getPaths
-	 *
 	 * @param string $path
 	 *
 	 * @return array
@@ -282,8 +246,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalPaths
-	 *
 	 * @param string $path
 	 *
 	 * @return int

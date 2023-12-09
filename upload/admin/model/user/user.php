@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\User;
  */
 class User extends \Opencart\System\Engine\Model {
 	/**
-	 * addUser
-	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -20,8 +18,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editUser
-	 *
 	 * @param int   $user_id
 	 * @param array $data
 	 *
@@ -36,8 +32,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editPassword
-	 *
 	 * @param int $user_id
 	 * @param     $password
 	 *
@@ -48,8 +42,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editCode
-	 *
 	 * @param string $email
 	 * @param string $code
 	 *
@@ -60,8 +52,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteUser
-	 *
 	 * @param int $user_id
 	 *
 	 * @return void
@@ -73,8 +63,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getUser
-	 *
 	 * @param int $user_id
 	 *
 	 * @return array
@@ -86,8 +74,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getUserByUsername
-	 *
 	 * @param string $username
 	 *
 	 * @return array
@@ -99,8 +85,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getUserByEmail
-	 *
 	 * @param string $email
 	 *
 	 * @return array
@@ -112,8 +96,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getUserByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -125,8 +107,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getUsers
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -170,8 +150,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalUsers
-	 *
 	 * @return int
 	 */
 	public function getTotalUsers(): int {
@@ -181,8 +159,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalUsersByGroupId
-	 *
 	 * @param int $user_group_id
 	 *
 	 * @return int
@@ -194,8 +170,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalUsersByEmail
-	 *
 	 * @param string $email
 	 *
 	 * @return int
@@ -207,8 +181,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addLogin
-	 *
 	 * @param int   $user_id
 	 * @param array $data
 	 *
@@ -219,8 +191,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getLogins
-	 *
 	 * @param int $user_id
 	 * @param int $start
 	 * @param int $limit
@@ -246,8 +216,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalLogins
-	 *
 	 * @param int $user_id
 	 *
 	 * @return int
@@ -263,8 +231,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addAuthorize
-	 *
 	 * @param int   $user_id
 	 * @param array $data
 	 *
@@ -275,8 +241,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editAuthorizeStatus
-	 *
 	 * @param int  $user_authorize_id
 	 * @param bool $status
 	 *
@@ -287,8 +251,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editAuthorizeTotal
-	 *
 	 * @param int $user_authorize_id
 	 * @param int $total
 	 *
@@ -299,8 +261,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteAuthorize
-	 *
 	 * @param int $user_authorize_id
 	 *
 	 * @return void
@@ -310,8 +270,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getAuthorizeByToken
-	 *
 	 * @param int    $user_id
 	 * @param string $token
 	 *
@@ -324,8 +282,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * resetAuthorizes
-	 *
 	 * @param int $user_id
 	 *
 	 * @return void
@@ -335,8 +291,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getAuthorizes
-	 *
 	 * @param int $user_id
 	 * @param int $start
 	 * @param int $limit
@@ -362,8 +316,6 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalAuthorizes
-	 *
 	 * @param int $user_id
 	 *
 	 * @return int

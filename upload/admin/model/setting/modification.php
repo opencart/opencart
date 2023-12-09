@@ -7,8 +7,6 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Modification extends \Opencart\System\Engine\Model {
 	/**
-	 * addModification
-	 *
 	 * @param array $data
 	 *
 	 * @return void
@@ -18,8 +16,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteModification
-	 *
 	 * @param int $modification_id
 	 *
 	 * @return void
@@ -29,8 +25,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * deleteModificationsByExtensionInstallId
-	 *
 	 * @param int $extension_install_id
 	 *
 	 * @return void
@@ -40,8 +34,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * editStatus
-	 *
 	 * @param int  $modification_id
 	 * @param bool $status
 	 *
@@ -52,8 +44,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getModification
-	 *
 	 * @param int $modification_id
 	 *
 	 * @return mixed
@@ -65,8 +55,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getModifications
-	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -112,8 +100,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getTotalModifications
-	 *
 	 * @return int
 	 */
 	public function getTotalModifications(): int {
@@ -123,8 +109,6 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getModificationByCode
-	 *
 	 * @param string $code
 	 *
 	 * @return array

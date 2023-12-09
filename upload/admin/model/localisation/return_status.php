@@ -91,14 +91,16 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$return_status_data = $this->cache->get('return_status.' . md5($sql));
+		$key = md5($sql);
+
+		$return_status_data = $this->cache->get('return_status.' . $key);
 
 		if (!$return_status_data) {
 			$query = $this->db->query($sql);
 
 			$return_status_data = $query->rows;
 
-			$this->cache->set('return_status.' . md5($sql), $return_status_data);
+			$this->cache->set('return_status.' . $key, $return_status_data);
 		}
 
 		return $return_status_data;

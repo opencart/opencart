@@ -293,4 +293,3 @@ $_['error_mime']                          = 'PHP uploads are not allowed!';
 $_['error_log_required']                  = 'Error Log Filename required!';
 $_['error_log_invalid']                   = 'Error Log Filename invalid!';
 $_['error_log_extension']                 = 'Error Log Filename extension needs to be .log!';
-$_['error_encryption']                    = 'Encryption Key must be between 32 and 1024 characters!';

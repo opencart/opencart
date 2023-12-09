@@ -91,14 +91,16 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$return_action_data = $this->cache->get('return_action.' . md5($sql));
+		$key = md5($sql);
+
+		$return_action_data = $this->cache->get('return_action.' . $key);
 
 		if (!$return_action_data) {
 			$query = $this->db->query($sql);
 
 			$return_action_data = $query->rows;
 
-			$this->cache->set('return_action.' . md5($sql), $return_action_data);
+			$this->cache->set('return_action.' . $key, $return_action_data);
 		}
 
 		return $return_action_data;

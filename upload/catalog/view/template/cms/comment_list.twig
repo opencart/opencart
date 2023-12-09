@@ -8,22 +8,38 @@
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
           {% if comment_guest %}
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-secondary">{{ button_reply }}</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" value="{{ comment.reply }}" class="btn btn-outline-secondary">{{ button_reply }}</button>
           {% else %}
             <button type="button" class="btn btn-outline-secondary" disabled="disabled">{{ button_reply }}</button>
           {% endif %}
         </div>
       </div>
-      <div class="border-top p-2 text-center">
-        {% if comment.reply %}
-          <button type="button" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_replies }}</button>
-        {% else %}
-          <button type="button" class="btn btn-outline-secondary" disabled>{{ button_replies }}</button>
-        {% endif %}
+
+      <div class="border-top">
+
+        <div id="reply-{{ comment.article_comment_id }}">
+
+          <div class="p-2 text-center">
+
+            {% if comment.reply_total %}
+              <button type="button" data-bs-toggle="reply" data-oc-url="{{ comment_add }}" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_replies }}</button>
+            {% else %}
+              <button type="button" class="btn btn-outline-secondary" disabled>{{ button_replies }}</button>
+            {% endif %}
+
+          </div>
+
+        </div>
+
+
+
+
+
       </div>
+
     </div>
+
   {% endfor %}
-  <a href="{{ comment.refresh }}" class="refresh">{{ text_refresh }}</a>
   <div class="text-end">{{ pagination }}</div>
 {% else %}
   <p class="text-center">{{ text_no_results }}</p>

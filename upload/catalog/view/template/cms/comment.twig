@@ -1,4 +1,14 @@
-<h2>{{ text_comment }}</h2>
+<div class="text-center">
+  <button type="button" data-oc-toggle="comment" data-oc-url="{{ comment_add }}" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
+  <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
+  {% if comment_guest %}
+    <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
+  {% else %}
+    <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
+  {% endif %}
+</div>
+<hr/>
+<h2>{{ heading_title }}</h2>
 <div id="comment">{{ list }}</div>
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
@@ -8,15 +18,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment">
+        <form id="form-comment" action="">
           <div class="mb-3 required">
-            <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <label for="input-comment" class="form-label">{{ entry_comment }}</label> <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
           <input type="hidden" name="parent" value="{{ parent_id }}" id="input-parent"/>
@@ -35,6 +43,31 @@ $('#comment').on('click', '.pagination a', function(e) {
 
     $('#comment').load(this.href);
 });
+
+// View Replies
+$('#comment').on('click', '[data-oc-toggle=\'reply\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('data-oc-target'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $(element).parent().replaceWith(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 
 // Refresh
 $('#rely').on('click', '.reply-refresh', function(e) {
@@ -60,13 +93,14 @@ $('#rely').on('click', '.reply-refresh', function(e) {
     });
 });
 
+
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=cms/comment.write&language={{ language }}&comment_token={{ comment_token }}&article_id={{ article_id }}',
+        url: $(element).attr(''),
         type: 'post',
         data: $('#form-comment').serialize(),
         dataType: 'json',

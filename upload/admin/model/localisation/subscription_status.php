@@ -91,14 +91,16 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$subscription_status_data = $this->cache->get('subscription_status.' . md5($sql));
+		$key = md5($sql);
+
+		$subscription_status_data = $this->cache->get('subscription_status.' . $key);
 
 		if (!$subscription_status_data) {
 			$query = $this->db->query($sql);
 
 			$subscription_status_data = $query->rows;
 
-			$this->cache->set('subscription_status.' . md5($sql), $subscription_status_data);
+			$this->cache->set('subscription_status.' . $key, $subscription_status_data);
 		}
 
 		return $subscription_status_data;

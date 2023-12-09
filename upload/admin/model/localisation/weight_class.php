@@ -93,14 +93,16 @@ class WeightClass extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$weight_class_data = $this->cache->get('weight_class.' . md5($sql));
+		$key = md5($sql);
+
+		$weight_class_data = $this->cache->get('weight_class.' . $key);
 
 		if (!$weight_class_data) {
 			$query = $this->db->query($sql);
 
 			$weight_class_data = $query->rows;
 
-			$this->cache->set('weight_class.' . md5($sql), $weight_class_data);
+			$this->cache->set('weight_class.' . $key, $weight_class_data);
 		}
 
 		return $weight_class_data;

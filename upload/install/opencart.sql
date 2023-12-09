@@ -637,7 +637,7 @@ INSERT INTO `oc_currency` (`title`, `code`, `symbol_left`, `symbol_right`, `deci
 INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
 (1, 0, 1),
 (2, 0, 2),
-(3, 0, 3);
+(3, 1, 3);
 
 -----------------------------------------------------------
 

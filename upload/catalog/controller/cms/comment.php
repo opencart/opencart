@@ -18,25 +18,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$data['article_id'] = 0;
 		}
 
-		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
-
 		$this->load->model('cms/article');
 
-		$data['text_comment'] = sprintf($this->language->get('text_comment'), $this->model_cms_article->getTotalComments($data['article_id']));
+		$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->model_cms_article->getTotalComments($data['article_id']));
+
+		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
+
+		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}');
 
 		$data['list'] = $this->getList();
-
-		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
-			$data['comment_guest'] = true;
-		} else {
-			$data['comment_guest'] = false;
-		}
-
-		if ($this->customer->isLogged()) {
-			$data['customer'] = $this->customer->getFirstName() . ' ' . $this->customer->getLastName();
-		} else {
-			$data['customer'] = '';
-		}
 
 		// Create a login token to prevent brute force attacks
 		$data['comment_token'] = $this->session->data['comment_token'] = oc_token(32);
@@ -94,13 +84,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$results = $this->model_cms_article->getComments($article_id, ($page - 1) * $limit, $limit);
+		$results = $this->model_cms_article->getComments($article_id, 0, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$reply_total = $this->model_cms_article->getTotalComments($article_id, $result['article_comment_id']);
 
 			if ($reply_total) {
-				$reply = $this->url->link('cms/comment.replies', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}');
+				$reply = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id']);
 			} else {
 				$reply = '';
 			}
@@ -111,11 +101,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'reply'              => $reply,
-				'reply_total'        => $reply_total,
+				'reply_total'        => $reply_total
 			];
 		}
 
-		$comment_total = $this->model_cms_article->getTotalComments($article_id);
+		$comment_total = $this->model_cms_article->getTotalComments($article_id, 0);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
@@ -170,22 +160,22 @@ class Comment extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['comments'][] = [
 				'article_comment_id' => $result['article_comment_id'],
+				'parent_id'          => $result['parent_id'],
 				'comment'            => nl2br($result['comment']),
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
 
-		$comment_total = $this->model_cms_article->getTotalComments($article_id);
+		$reply_total = $this->model_cms_article->getTotalComments($article_id, $parent_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $comment_total,
-			'page'  => $page,
-			'limit' => $limit,
-			'url'   => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}')
-		]);
+		$data['refresh'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page=' . ($page + 1));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($comment_total - $limit)) ? $comment_total : ((($page - 1) * $limit) + $limit), $comment_total, ceil($comment_total / $limit));
+		if (($page * $limit) < $reply_total) {
+			$data['next'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page=' . ($page + 1));
+		} else {
+			$data['next'] = '';
+		}
 
 		return $this->load->view('cms/comment_reply', $data);
 	}
@@ -193,7 +183,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/**
      * @return void
      */
-	public function write(): void {
+	public function add(): void {
 		$this->load->language('cms/comment');
 
 		$json = [];

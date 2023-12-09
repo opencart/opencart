@@ -24,7 +24,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 
-		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}');
+		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&page={page}');
+
+		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
+			$data['comment_guest'] = true;
+		} else {
+			$data['comment_guest'] = false;
+		}
 
 		$data['list'] = $this->getList();
 
@@ -169,10 +175,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$reply_total = $this->model_cms_article->getTotalComments($article_id, $parent_id);
 
-		$data['refresh'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page=' . ($page + 1));
+		$data['refresh'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $parent_id . '&page=' . $page);
 
 		if (($page * $limit) < $reply_total) {
-			$data['next'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page=' . ($page + 1));
+			$data['next'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $parent_id . '&page=' . ($page + 1));
 		} else {
 			$data['next'] = '';
 		}

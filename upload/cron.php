@@ -21,7 +21,6 @@ require_once(DIR_SYSTEM . 'vendor.php');
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
 $registry->set('autoloader', $autoloader);
-$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 // Config
 $config = new \Opencart\System\Engine\Config();
@@ -108,6 +107,9 @@ if ($config->has('action_event')) {
 		}
 	}
 }
+
+// Factory
+$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 // Loader
 $loader = new \Opencart\System\Engine\Loader($registry);

@@ -1,6 +1,6 @@
 {% if replies %}
 
-<div id="reply-{{ reply.article_comment_id }}">
+<div id="reply-{{ reply.article_comment_id }}-{{ page }}">
 
   {% for reply in replies %}
     <div class="p-2">
@@ -9,19 +9,18 @@
     </div>
   {% endfor %}
 
-
-
-
-
-
   {% if next %}
-    <div class="text-center"><a href="{{ next }}" class="btn btn-outline-secondary">{{ button_more }}</a></div>
+    <div class="text-center">
+
+      <button type="button" data-bs-toggle="refresh" data-bs-target="#reply-{{ comment.article_comment_id }}" data-bs-url="{{ refresh }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
+
+      <a href="{{ next }}" class="btn btn-outline-secondary">{{ button_more }}</a>
+
+    </div>
   {% endif %}
 
-
-
   <button type="button" data-bs-toggle="refresh" data-bs-target="#reply-{{ comment.article_comment_id }}" data-bs-url="{{ refresh }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
-</div>
 
+</div>
 
 {% endif %}

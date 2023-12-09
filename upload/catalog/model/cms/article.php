@@ -190,7 +190,7 @@ class Article extends \Opencart\System\Engine\Model {
      * @return array
      */
 
-	public function getComments(int $article_id, int $parent_id, int $start = 0, int $limit = 10): array {
+	public function getComments(int $article_id, int $parent_id = 0, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}

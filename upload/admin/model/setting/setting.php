@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Setting extends \Opencart\System\Engine\Model {
 	/**
+	 * getSettings
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSetting
+	 *
 	 * @param string $code
 	 * @param int    $store_id
 	 *
@@ -40,6 +44,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editSetting
+	 *
 	 * @param string $code
 	 * @param array  $data
 	 * @param int    $store_id
@@ -61,6 +67,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteSetting
+	 *
 	 * @param string $code
 	 * @param int    $store_id
 	 *
@@ -71,6 +79,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getValue
+	 *
 	 * @param string $key
 	 * @param int    $store_id
 	 *
@@ -87,6 +97,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editValue
+	 *
 	 * @param string       $code
 	 * @param string       $key
 	 * @param string|array $value

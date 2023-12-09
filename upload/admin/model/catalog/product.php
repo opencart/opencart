@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Product extends \Opencart\System\Engine\Model {
 	/**
+	 * addProduct
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -159,6 +161,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editProduct
+	 *
 	 * @param int   $product_id
 	 * @param array $data
 	 *
@@ -340,6 +344,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * copyProduct
+	 *
 	 * @param int $product_id
 	 *
 	 * @return void
@@ -374,6 +380,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteProduct
+	 *
 	 * @param int $product_id
 	 *
 	 * @return void
@@ -408,6 +416,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addVariant
+	 *
 	 * @param int   $master_id
 	 * @param array $data
 	 *
@@ -544,6 +554,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editVariant
+	 *
 	 * @param int   $master_id
 	 * @param int   $product_id
 	 * @param array $data
@@ -680,6 +692,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editVariants
+	 *
 	 * @param int   $master_id
 	 * @param array $data
 	 *
@@ -821,6 +835,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editRating
+	 *
 	 * @param int $product_id
 	 * @param int $rating
 	 *
@@ -831,6 +847,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getProduct
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -851,6 +869,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getProducts
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -932,6 +952,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -956,6 +978,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getCategories
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -973,6 +997,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getFilters
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -990,6 +1016,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAttributes
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1018,6 +1046,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getOptions
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1062,6 +1092,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getOptionValue
+	 *
 	 * @param int $product_id
 	 * @param int $product_option_value_id
 	 *
@@ -1074,6 +1106,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getOptionValuesByOptionId
+	 *
 	 * @param int $option_id
 	 *
 	 * @return array
@@ -1085,6 +1119,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getImages
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1096,6 +1132,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDiscounts
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1107,6 +1145,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSpecials
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1118,6 +1158,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getRewards
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1135,6 +1177,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDownloads
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1152,6 +1196,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getStores
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1169,6 +1215,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSeoUrls
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1186,6 +1234,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getLayouts
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1203,6 +1253,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getRelated
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1220,6 +1272,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSubscriptions
+	 *
 	 * @param int $product_id
 	 *
 	 * @return array
@@ -1231,6 +1285,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProducts
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -1268,6 +1324,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByTaxClassId
+	 *
 	 * @param int $tax_class_id
 	 *
 	 * @return int
@@ -1279,6 +1337,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByStockStatusId
+	 *
 	 * @param int $stock_status_id
 	 *
 	 * @return int
@@ -1290,6 +1350,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByWeightClassId
+	 *
 	 * @param int $weight_class_id
 	 *
 	 * @return int
@@ -1301,6 +1363,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByLengthClassId
+	 *
 	 * @param int $length_class_id
 	 *
 	 * @return int
@@ -1312,6 +1376,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByDownloadId
+	 *
 	 * @param int $download_id
 	 *
 	 * @return int
@@ -1323,6 +1389,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByManufacturerId
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return int
@@ -1334,6 +1402,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByAttributeId
+	 *
 	 * @param int $attribute_id
 	 *
 	 * @return int
@@ -1345,6 +1415,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsBySubscriptionPlanId
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return int
@@ -1356,6 +1428,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByLayoutId
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int
@@ -1367,6 +1441,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByOptionId
+	 *
 	 * @param int $option_id
 	 *
 	 * @return int
@@ -1378,6 +1454,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalProductsByOptionValueId
+	 *
 	 * @param int $option_value_id
 	 *
 	 * @return int
@@ -1389,6 +1467,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getReports
+	 *
 	 * @param int $product_id
 	 * @param int $start
 	 * @param int $limit
@@ -1410,6 +1490,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalReports
+	 *
 	 * @param int $product_id
 	 *
 	 * @return int

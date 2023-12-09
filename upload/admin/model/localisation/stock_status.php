@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class StockStatus extends \Opencart\System\Engine\Model {
 	/**
+	 * addStockStatus
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editStockStatus
+	 *
 	 * @param int   $stock_status_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteStockStatus
+	 *
 	 * @param int $stock_status_id
 	 *
 	 * @return void
@@ -55,6 +61,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getStockStatus
+	 *
 	 * @param int $stock_status_id
 	 *
 	 * @return array
@@ -66,6 +74,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getStockStatuses
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $stock_status_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStockStatuses
+	 *
 	 * @return int
 	 */
 	public function getTotalStockStatuses(): int {

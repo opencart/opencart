@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Customer;
  */
 class Customer extends \Opencart\System\Engine\Model {
 	/**
+	 * addCustomer
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editCustomer
+	 *
 	 * @param int   $customer_id
 	 * @param array $data
 	 *
@@ -32,6 +36,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editToken
+	 *
 	 * @param int    $customer_id
 	 * @param string $token
 	 *
@@ -42,6 +48,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editCommenter
+	 *
 	 * @param int  $customer_id
 	 * @param bool $status
 	 *
@@ -52,6 +60,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteCustomer
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
@@ -72,6 +82,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getCustomer
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array
@@ -87,6 +99,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getCustomerByEmail
+	 *
 	 * @param string $email
 	 *
 	 * @return array
@@ -102,6 +116,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getCustomers
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -186,6 +202,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalCustomers
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -237,6 +255,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addAddress
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array
@@ -254,6 +274,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editAddress
+	 *
 	 * @param int   $customer_id
      * @param int   $address_id
      * @param array $data
@@ -269,6 +291,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteAddress
+	 *
 	 * @param int $address_id
 	 *
 	 * @return void
@@ -278,6 +302,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAddress
+	 *
 	 * @param int $address_id
 	 *
 	 * @return array
@@ -337,6 +363,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAddresses
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array
@@ -358,6 +386,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalAddresses
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int
@@ -369,6 +399,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalAddressesByCountryId
+	 *
 	 * @param int $country_id
 	 *
 	 * @return int
@@ -380,6 +412,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalAddressesByZoneId
+	 *
 	 * @param int $zone_id
 	 *
 	 * @return int
@@ -391,6 +425,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalCustomersByCustomerGroupId
+	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return int
@@ -406,6 +442,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addHistory
+	 *
 	 * @param int    $customer_id
 	 * @param string $comment
 	 *
@@ -416,6 +454,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getHistories
+	 *
 	 * @param int $customer_id
 	 * @param int $start
 	 * @param int $limit
@@ -437,6 +477,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalHistories
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int
@@ -448,6 +490,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addTransaction
+	 *
 	 * @param int    $customer_id
 	 * @param string $description
 	 * @param float  $amount
@@ -460,6 +504,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteTransactionByOrderId
+	 *
 	 * @param int $order_id
 	 *
 	 * @return void
@@ -469,6 +515,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTransactions
+	 *
 	 * @param int $customer_id
 	 * @param int $start
 	 * @param int $limit
@@ -490,6 +538,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalTransactions
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int
@@ -501,6 +551,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTransactionTotal
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return float
@@ -512,6 +564,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalTransactionsByOrderId
+	 *
 	 * @param int $order_id
 	 *
 	 * @return int
@@ -523,6 +577,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalTransactionsByOrderId
+	 *
 	 * @param int    $customer_id
 	 * @param string $description
 	 * @param int    $points
@@ -535,6 +591,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteReward
+	 *
 	 * @param int $order_id
 	 *
 	 * @return void
@@ -544,6 +602,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getRewards
+	 *
 	 * @param int $customer_id
 	 * @param int $start
 	 * @param int $limit
@@ -565,6 +625,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalRewards
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int
@@ -576,6 +638,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getRewardTotal
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int
@@ -587,6 +651,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalRewardsByOrderId
+	 *
 	 * @param int $order_id
 	 *
 	 * @return int
@@ -598,6 +664,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getIps
+	 *
 	 * @param int $customer_id
 	 * @param int $start
 	 * @param int $limit
@@ -618,6 +686,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalIps
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int
@@ -629,6 +699,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalCustomersByIp
+	 *
 	 * @param string $ip
 	 *
 	 * @return int
@@ -640,6 +712,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalLoginAttempts
+	 *
 	 * @param string $email
 	 *
 	 * @return array
@@ -651,6 +725,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteLoginAttempts
+	 *
 	 * @param string $email
 	 *
 	 * @return void
@@ -660,6 +736,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addAuthorize
+	 *
 	 * @param int   $customer_id
 	 * @param array $data
 	 *
@@ -670,6 +748,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editAuthorizeStatus
+	 *
 	 * @param int  $customer_authorize_id
 	 * @param bool $status
 	 *
@@ -680,6 +760,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editAuthorizeTotal
+	 *
 	 * @param int $customer_authorize_id
 	 * @param int $total
 	 *
@@ -690,6 +772,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteAuthorize
+	 *
 	 * @param int $customer_authorize_id
 	 *
 	 * @return void
@@ -699,6 +783,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAuthorizeByToken
+	 *
 	 * @param int    $customer_id
 	 * @param string $token
 	 *
@@ -711,6 +797,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * resetAuthorizes
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
@@ -720,6 +808,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getAuthorizes
+	 *
 	 * @param int $customer_id
 	 * @param int $start
 	 * @param int $limit
@@ -745,6 +835,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalAuthorizes
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int

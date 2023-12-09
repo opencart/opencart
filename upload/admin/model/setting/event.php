@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Event extends \Opencart\System\Engine\Model {
 	/**
+	 * addEvent
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteEvent
+	 *
 	 * @param int $event_id
 	 *
 	 * @return void
@@ -27,6 +31,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteEventByCode
+	 *
 	 * @param string $code
 	 *
 	 * @return void
@@ -36,6 +42,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editStatus
+	 *
 	 * @param int  $event_id
 	 * @param bool $status
 	 *
@@ -46,6 +54,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editStatusByCode
+	 *
      * @param string $code
      * @param bool   $status
      *
@@ -56,6 +66,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getEvent
+	 *
 	 * @param int $event_id
 	 *
 	 * @return array
@@ -67,6 +79,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getEventByCode
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -78,6 +92,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getEvents
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -124,6 +140,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalEvents
+	 *
 	 * @return int
 	 */
 	public function getTotalEvents(): int {

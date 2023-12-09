@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Download extends \Opencart\System\Engine\Model {
 	/**
+	 * addDownload
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -24,6 +26,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editDownload
+	 *
 	 * @param int   $download_id
 	 * @param array $data
 	 *
@@ -40,6 +44,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteDownload
+	 *
 	 * @param int $download_id
 	 *
 	 * @return void
@@ -50,6 +56,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDownload
+	 *
 	 * @param int $download_id
 	 *
 	 * @return array
@@ -61,6 +69,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDownloads
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $download_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalDownloads
+	 *
 	 * @return int
 	 */
 	public function getTotalDownloads(): int {
@@ -133,6 +147,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getReports
+	 *
 	 * @param int $download_id
 	 * @param int $start
 	 * @param int $limit
@@ -154,6 +170,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalReports
+	 *
 	 * @param int $download_id
 	 *
 	 * @return int

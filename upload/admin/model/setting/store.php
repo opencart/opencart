@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Store extends \Opencart\System\Engine\Model {
 	/**
+	 * addStore
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -29,6 +31,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editStore
+	 *
 	 * @param int   $store_id
 	 * @param array $data
 	 *
@@ -41,6 +45,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteStore
+	 *
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -76,6 +82,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getStore
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array
@@ -87,6 +95,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getStores
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -110,6 +120,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * createStoreInstance
+	 *
 	 * @param int    $store_id
 	 * @param string $language
 	 * @param string $session_id
@@ -229,6 +241,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStores
+	 *
 	 * @return int
 	 */
 	public function getTotalStores(): int {
@@ -238,6 +252,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByLayoutId
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int
@@ -249,6 +265,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByLanguage
+	 *
 	 * @param string $language
 	 *
 	 * @return int
@@ -260,6 +278,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByCurrency
+	 *
 	 * @param string $currency
 	 *
 	 * @return int
@@ -271,6 +291,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByCountryId
+	 *
 	 * @param int $country_id
 	 *
 	 * @return int
@@ -282,6 +304,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByZoneId
+	 *
 	 * @param int $zone_id
 	 *
 	 * @return int
@@ -293,6 +317,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByCustomerGroupId
+	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return int
@@ -304,6 +330,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByInformationId
+	 *
 	 * @param int $information_id
 	 *
 	 * @return int
@@ -317,6 +345,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalStoresByOrderStatusId
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return int

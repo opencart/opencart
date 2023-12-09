@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Filter extends \Opencart\System\Engine\Model {
 	/**
+	 * addFilter
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -36,6 +38,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editFilter
+	 *
 	 * @param int   $filter_group_id
 	 * @param array $data
 	 *
@@ -71,6 +75,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteFilter
+	 *
 	 * @param int $filter_group_id
 	 *
 	 * @return void
@@ -83,6 +89,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getGroup
+	 *
 	 * @param int $filter_group_id
 	 *
 	 * @return array
@@ -94,6 +102,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getGroups
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -136,6 +146,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getGroupDescriptions
+	 *
 	 * @param int $filter_group_id
 	 *
 	 * @return array
@@ -153,6 +165,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getFilter
+	 *
 	 * @param int $filter_id
 	 *
 	 * @return array
@@ -164,6 +178,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getFilters
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -195,6 +211,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getDescriptions
+	 *
 	 * @param int $filter_group_id
 	 *
 	 * @return array
@@ -224,6 +242,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalGroups
+	 *
 	 * @return int
 	 */
 	public function getTotalGroups(): int {

@@ -7,17 +7,21 @@ namespace Opencart\Admin\Model\User;
  */
 class UserGroup extends \Opencart\System\Engine\Model {
 	/**
+	 * addUserGroup
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addUserGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_group` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `permission` = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
-	
+
 		return $this->db->getLastId();
 	}
 
 	/**
+	 * editUserGroup
+	 *
 	 * @param int   $user_group_id
 	 * @param array $data
 	 *
@@ -28,6 +32,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteUserGroup
+	 *
 	 * @param int $user_group_id
 	 *
 	 * @return void
@@ -37,6 +43,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getUserGroup
+	 *
 	 * @param int $user_group_id
 	 *
 	 * @return array
@@ -53,6 +61,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getUserGroups
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -84,6 +94,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalUserGroups
+	 *
 	 * @return int
 	 */
 	public function getTotalUserGroups(): int {
@@ -93,6 +105,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addPermission
+	 *
 	 * @param int    $user_group_id
 	 * @param string $type
 	 * @param string $route
@@ -112,6 +126,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * removePermission
+	 *
 	 * @param int    $user_group_id
 	 * @param string $type
 	 * @param string $route

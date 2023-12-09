@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Design;
  */
 class Layout extends \Opencart\System\Engine\Model {
 	/**
+	 * addLayout
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -32,6 +34,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editLayout
+	 *
 	 * @param int   $layout_id
 	 * @param array $data
 	 *
@@ -58,6 +62,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteLayout
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return void
@@ -74,6 +80,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getLayout
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return array
@@ -85,6 +93,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getLayouts
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -124,6 +134,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getRoutes
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return array
@@ -135,6 +147,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getModules
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return array
@@ -146,6 +160,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalLayouts
+	 *
 	 * @return int
 	 */
 	public function getTotalLayouts(): int {

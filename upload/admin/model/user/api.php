@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\User;
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**
+	 * addApi
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editApi
+	 *
 	 * @param int   $api_id
 	 * @param array $data
 	 *
@@ -48,6 +52,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteApi
+	 *
 	 * @param int $api_id
 	 *
 	 * @return void
@@ -57,6 +63,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getApi
+	 *
 	 * @param int $api_id
 	 *
 	 * @return array
@@ -68,6 +76,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getApis
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -112,6 +122,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getTotalApis
+	 *
 	 * @return int
 	 */
 	public function getTotalApis(): int {
@@ -121,6 +133,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addIp
+	 *
 	 * @param int    $api_id
 	 * @param string $ip
 	 *
@@ -131,6 +145,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getIps
+	 *
 	 * @param int $api_id
 	 *
 	 * @return array
@@ -148,6 +164,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * addSession
+	 *
 	 * @param int    $api_id
 	 * @param string $session_id
 	 * @param string $ip
@@ -167,6 +185,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getSessions
+	 *
 	 * @param int $api_id
 	 *
 	 * @return array
@@ -178,6 +198,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteSession
+	 *
 	 * @param int $api_session_id
 	 *
 	 * @return void
@@ -187,6 +209,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * deleteSessionBySessionId
+	 *
 	 * @param string $session_id
 	 *
 	 * @return void

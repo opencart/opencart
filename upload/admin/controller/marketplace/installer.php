@@ -384,7 +384,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$base = DIR_EXTENSION;
 					$prefix = '';
 
-					// OCMOD files shoudl not be copies across
+					// OCMOD files should not be copies across
 					if (substr($destination, 0, 6) == 'ocmod/') {
 						continue;
 					}

@@ -1,26 +1,20 @@
 {% if replies %}
 
-<div id="reply-{{ reply.article_comment_id }}-{{ page }}">
+  <div id="reply-{{ parent_id }}-{{ article_comment_id }}">
 
-  {% for reply in replies %}
-    <div class="p-2">
-      <p>{{ text_by }} {{ reply.author }} - {{ reply.date_added }}</p>
-      <p>{{ reply.comment }}</p>
-    </div>
-  {% endfor %}
+    {% for reply in replies %}
+      <div class="p-2">
+        <p>{{ text_by }} {{ reply.author }} - {{ reply.date_added }}</p>
+        <p>{{ reply.comment }}</p>
+      </div>
+    {% endfor %}
+
+    <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ article_comment_id }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
+
+  </div>
 
   {% if next %}
-    <div class="text-center">
-
-      <button type="button" data-bs-toggle="refresh" data-bs-target="#reply-{{ comment.article_comment_id }}" data-bs-url="{{ refresh }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
-
-      <a href="{{ next }}" class="btn btn-outline-secondary">{{ button_more }}</a>
-
-    </div>
+    <div class="text-center p-2"><button type="button" value="{{ next }}" data-oc-toggle="next" data-oc-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_more }}</button></div>
   {% endif %}
-
-  <button type="button" data-bs-toggle="refresh" data-bs-target="#reply-{{ comment.article_comment_id }}" data-bs-url="{{ refresh }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
-
-</div>
 
 {% endif %}

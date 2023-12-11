@@ -169,13 +169,15 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int   $product_id
+	 * addComment
+	 *
+	 * @param int   $article_id
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addComment(int $article_id, array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `ip` = '" . $this->db->escape((string)$data['ip']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
@@ -184,22 +186,50 @@ class Article extends \Opencart\System\Engine\Model {
 	 * getComments
 	 *
      * @param int $article_id
+	 * @param array $data
      * @param int $start
      * @param int $limit
      *
      * @return array
      */
 
-	public function getComments(int $article_id, int $parent_id = 0, int $start = 0, int $limit = 10): array {
-		if ($start < 0) {
-			$start = 0;
+	public function getComments(int $article_id, array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
+
+		if (isset($data['parent_id'])) {
+			$sql .= " AND `parent_id` = '" . (int)$data['parent_id'] . "'";
 		}
 
-		if ($limit < 1) {
-			$limit = 10;
+		$sql .= " AND `status` = '1'";
+
+		$sort_data = [
+			'rating',
+			'date_added'
+		];
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY `date_added`";
 		}
 
-		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND parent_id = '" .  (int)$parent_id . "' AND `status` = '1' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit;
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
 		$key = md5($sql);
 
@@ -221,9 +251,27 @@ class Article extends \Opencart\System\Engine\Model {
      *
      * @return int
      */
-	public function getTotalComments(int $article_id, int $parent_id = 0): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "' AND parent_id = '" .  (int)$parent_id . "' AND `status` = '1'");
+	public function getTotalComments(int $article_id, array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
+
+		if (isset($data['parent_id'])) {
+			$sql .= " AND `parent_id` = '" . (int)$data['parent_id'] . "'";
+		}
+
+		$sql .= " AND `status` = '1'";
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * addRating
+	 *
+	 * @param int   $article_id
+	 * @param array $data
+	 */
+	public function addRating(int $article_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `ip` = '" . $this->db->escape((string)$data['ip']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
 	}
 }

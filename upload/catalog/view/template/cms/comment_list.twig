@@ -1,36 +1,35 @@
 {% if comments %}
   {% for comment in comments %}
     <div id="comment-{{ comment.article_comment_id }}" class="border mb-3">
+
       <div class="p-2">
+
         <p>{{ text_by }} {{ comment.author }} - {{ comment.date_added }}</p>
         <p>{{ comment.comment }}</p>
+
         <div class="text-end">
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
           {% if comment_guest %}
-            <button type="button" data-oc-toggle="comment" data-oc-url="{{ comment_add }}" data-bs-toggle="modal" data-bs-target="#modal-comment" value="{{ comment.reply }}" class="btn btn-outline-secondary">{{ button_reply }}</button>
+            <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="comment" class="btn btn-outline-secondary">{{ button_reply }}</button>
           {% else %}
             <button type="button" class="btn btn-outline-secondary" disabled="disabled">{{ button_reply }}</button>
           {% endif %}
         </div>
+
       </div>
 
       <div id="reply-{{ comment.article_comment_id }}" class="border-top">
 
-        <div class="p-2 text-center">
-
-          {% if comment.reply_total %}
-            <button type="button" data-bs-toggle="more" data-oc-url="{{ comment_add }}" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_replies }}</button>
-          {% else %}
-            <button type="button" class="btn btn-outline-secondary" disabled>{{ button_replies }}</button>
-          {% endif %}
-
-        </div>
+        {% if comment.reply_total %}
+          <div class="text-center p-2"><button type="button" data-oc-toggle="more" value="{{ comment_add }}" data-bs-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_replies }}</button></div>
+        {% else %}
+          <div class="text-center p-2"><button type="button" class="btn btn-outline-secondary" disabled>{{ button_replies }}</button></div>
+        {% endif %}
 
       </div>
 
     </div>
-
   {% endfor %}
   <div class="text-end">{{ pagination }}</div>
 {% else %}

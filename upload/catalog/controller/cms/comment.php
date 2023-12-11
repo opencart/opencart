@@ -24,13 +24,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 
-		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&page={page}');
+		$data['comment_guest'] = ($this->customer->isLogged() || $this->config->get('config_comment_guest') ? true : false);
 
-		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
-			$data['comment_guest'] = true;
-		} else {
-			$data['comment_guest'] = false;
-		}
+		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id']);
 
 		$data['list'] = $this->getList();
 
@@ -72,10 +68,20 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$article_id = 0;
 		}
 
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'date_added';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
+		}
+
+		if ($sort == 'date_added' || $sort == 'rating') {
+			$order = 'DESC';
 		}
 
 		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
@@ -88,9 +94,17 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['comments'] = [];
 
+		$filter_data = [
+			'parent' => 0,
+			'sort'   => $sort,
+			'order'  => $order,
+			'start'  => ($page - 1) * $limit,
+			'limit'  => $limit
+		];
+
 		$this->load->model('cms/article');
 
-		$results = $this->model_cms_article->getComments($article_id, 0, ($page - 1) * $limit, $limit);
+		$results = $this->model_cms_article->getComments($article_id, $filter_data);
 
 		foreach ($results as $result) {
 			$reply_total = $this->model_cms_article->getTotalComments($article_id, $result['article_comment_id']);
@@ -107,11 +121,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'reply'              => $reply,
+				'reply_add'          => $this->url->link('cms/comment.write', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id']),
 				'reply_total'        => $reply_total
 			];
 		}
 
-		$comment_total = $this->model_cms_article->getTotalComments($article_id, 0);
+		$comment_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
@@ -159,6 +174,14 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['comments'] = [];
 
+		$filter_data = [
+			'parent' => $parent_id,
+			'sort'   => 'date_added',
+			'order'  => 'ASC',
+			'start'  => ($page - 1) * $limit,
+			'limit'  => $limit
+		];
+
 		$this->load->model('cms/article');
 
 		$results = $this->model_cms_article->getComments($article_id, $parent_id, ($page - 1) * $limit, $limit);
@@ -174,6 +197,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		$reply_total = $this->model_cms_article->getTotalComments($article_id, $parent_id);
+
+		$data['parent_id'] = $parent_id;
+		$data['page'] = $page;
 
 		$data['refresh'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $parent_id . '&page=' . $page);
 
@@ -198,6 +224,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$article_id = (int)$this->request->get['article_id'];
 		} else {
 			$article_id = 0;
+		}
+
+		if (isset($this->request->get['parent_id'])) {
+			$parent_id = (int)$this->request->get['parent_id'];
+		} else {
+			$parent_id = 0;
 		}
 
 		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
@@ -264,13 +296,68 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$status = 1;
 			}
 
-			$this->model_cms_article->addComment($article_id, $this->request->post + ['status' => $status]);
+			$comment_data = $this->request->post + [
+				'parent_id' => $parent_id,
+				'ip'        => $this->request->server['REMOTE_ADDR'],
+				'status'    => $status
+			];
+
+			$this->model_cms_article->addComment($article_id, $comment_data);
 
 			if (!$status) {
 				$json['success'] = $this->language->get('text_queue');
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+
+	/**
+	 * @return void
+	 */
+	public function rating(): void {
+		$this->load->language('cms/comment');
+
+		$json = [];
+
+		if (isset($this->request->get['article_id'])) {
+			$article_id = (int)$this->request->get['article_id'];
+		} else {
+			$article_id = 0;
+		}
+
+		$this->load->model('cms/article');
+
+		$article_info = $this->model_cms_article->getArticle($article_id);
+
+		if (!$article_info) {
+			$json['error']['warning'] = $this->language->get('error_article');
+		}
+
+		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
+			$json['error']['warning'] = $this->language->get('error_token');
+		}
+
+		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {
+			$json['error']['warning'] = $this->language->get('error_guest');
+		}
+
+		if (!$json) {
+			// Anti-Spam
+			$rating_data = $this->request->post + [
+				'rating' => $this->request->get['rating'],
+				'ip'     => $this->request->server['REMOTE_ADDR']
+			];
+
+			$this->load->model('cms/antispam');
+
+			$this->model_cms_article->addRating($article_id, $rating_data);
+
+			$json['success'] = $this->language->get('text_rating');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

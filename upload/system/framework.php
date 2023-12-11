@@ -91,6 +91,9 @@ if ($config->has('action_event')) {
 	}
 }
 
+// Factory
+$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
+
 // Loader
 $loader = new \Opencart\System\Engine\Loader($registry);
 $registry->set('load', $loader);
@@ -173,9 +176,6 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 
 // Document
 $registry->set('document', new \Opencart\System\Library\Document());
-
-// Factory
-$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 $action = '';
 $args = [];

@@ -5,12 +5,13 @@ $_['heading_title']   = 'Comments (%s)';
 // Text
 $_['text_by']         = 'By';
 $_['text_write']      = 'Write a comment';
-
 $_['text_login']      = 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment';
-
 $_['text_no_results'] = 'Be the first to write a comment for this article.';
 $_['text_queue']      = 'Your comment has been added to our moderation queue!';
 $_['text_success']    = 'Thank you for your comment. It has been submitted to the webmaster for approval.';
+$_['text_rating']     = 'Thank you for your rating!';
+$_['text_like']       = 'Like!';
+$_['text_dislike']    = 'Dislike!';
 
 // Entry
 $_['entry_author']    = 'Your Name';

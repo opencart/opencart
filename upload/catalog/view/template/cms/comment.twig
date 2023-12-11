@@ -1,15 +1,26 @@
 <div class="text-center">
-  <button type="button" data-oc-toggle="comment" data-oc-url="{{ comment_add }}" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
+  <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
   <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
-    <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
   {% else %}
     <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
 </div>
 <hr/>
-<h2>{{ heading_title }}</h2>
+<div class="row">
+  <div class="col">
+    <h2>{{ heading_title }}</h2>
+  </div>
+  <div class="col">
+    <select>
+
+    </select>
+  </div>
+</div>
+
 <div id="comment">{{ list }}</div>
+
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -20,19 +31,20 @@
       <div class="modal-body">
         <form id="form-comment" action="">
           <div class="mb-3 required">
-            <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            <label for="input-author" class="form-label">{{ entry_author }}</label>
+            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-comment" class="form-label">{{ entry_comment }}</label> <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <label for="input-comment" class="form-label">{{ entry_comment }}</label>
+            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
-          <input type="hidden" name="parent" value="{{ parent_id }}" id="input-parent"/>
           {{ captcha }}
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="button-comment" formaction="form-comment" class="btn btn-primary">{{ button_comment }}</button>
+        <button type="submit" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
       </div>
     </div>
   </div>
@@ -45,13 +57,31 @@ $('#comment').on('click', '.pagination a', function(e) {
 });
 
 // View Replies
-$('#comment').on('click', '[data-oc-toggle=\'reply\']', function(e) {
+$('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    console.log($(element).attr('value'));
+
+    $('#form-comment').attr('action', $(element).attr('value'));
+
+    var modal = new bootstrap.Modal(document.getElementById('modal-comment'));
+
+    modal.show();
+
+    //$('#modal-comment').modal('show');
+});
+
+/*
+// View Replies
+$('#comment').on('click', '[data-oc-toggle=\'comment\']', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: $(element).attr('data-oc-target'),
+        url: $(element).attr('data-oc-url'),
         dataType: 'html',
         beforeSend: function() {
             $(element).button('loading');
@@ -60,23 +90,47 @@ $('#comment').on('click', '[data-oc-toggle=\'reply\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            $(element).parent().replaceWith(html);
+            $($(element).attr('data-oc-target')).html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
+*/
 
+// More
+$('#comment').on('click', '[data-oc-toggle=\'more\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('data-oc-url'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $($(element).attr('data-oc-target')).replaceWith(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
 // Refresh
-$('#rely').on('click', '.reply-refresh', function(e) {
+$('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: $(element).attr('href'),
+        url: $(element).attr('data-oc-url'),
         dataType: 'html',
         beforeSend: function() {
             $(element).button('loading');
@@ -85,14 +139,13 @@ $('#rely').on('click', '.reply-refresh', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            $(element).parent().replaceWith(html);
+            $($(element).attr('data-oc-target')).html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-
 
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();

@@ -63,7 +63,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'address_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -146,7 +145,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'address_format_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -172,7 +170,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'api_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -210,7 +207,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'api_ip_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -243,7 +239,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'api_session_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -288,7 +283,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'attribute_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -358,7 +352,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'attribute_group_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -417,7 +410,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'banner_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -443,7 +435,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'banner_image_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -498,7 +489,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'antispam_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -528,7 +518,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'article_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -566,7 +555,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'article_comment_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -706,7 +694,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'article_rating_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -715,8 +702,7 @@ function oc_db_schema() {
 			],
 			[
 				'name'     => 'article_comment_id',
-				'type'     => 'int(11)',
-				'not_null' => true,
+				'type'     => 'int(11)'
 			],
 			[
 				'name'    => 'store_id',
@@ -730,7 +716,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'rating',
-				'type' => 'int(11)'
+				'type' => 'tinyint(11)'
 			],
 			[
 				'name' => 'ip',
@@ -879,7 +865,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'topic_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1000,7 +985,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'cart_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1097,7 +1081,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'category_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1354,7 +1337,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'country_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1397,7 +1379,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'coupon_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1500,7 +1481,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'coupon_history_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1555,7 +1535,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'coupon_product_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1593,7 +1572,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'cron_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1639,7 +1617,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'currency_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1689,7 +1666,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1801,7 +1777,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_activity_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1938,7 +1913,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_affiliate_report_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -1988,7 +1962,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_approval_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2025,7 +1998,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_authorize_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2078,7 +2050,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_group_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2145,7 +2116,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_history_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2175,7 +2145,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_login_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2227,7 +2196,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_ip_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2317,7 +2285,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_reward_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2370,7 +2337,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_transaction_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2420,7 +2386,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'customer_search_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2537,7 +2502,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'custom_field_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2653,7 +2617,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'custom_field_value_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2727,7 +2690,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'download_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2789,7 +2751,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'download_report_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2839,7 +2800,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'event_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2883,7 +2843,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'extension_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2913,7 +2872,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'extension_install_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -2978,7 +2936,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'extension_path_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3019,7 +2976,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'filter_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3093,7 +3049,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'filter_group_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3152,7 +3107,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'gdpr_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3210,7 +3164,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'geo_zone_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3236,7 +3189,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'information_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3392,7 +3344,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'language_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3443,7 +3394,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'layout_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3465,7 +3415,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'layout_module_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3506,7 +3455,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'layout_route_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3548,7 +3496,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'length_class_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3611,7 +3558,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'location_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3665,7 +3611,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'manufacturer_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3770,7 +3715,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'marketing_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3809,7 +3753,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'marketing_report_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3859,7 +3802,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'modification_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3947,7 +3889,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'notification_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -3981,7 +3922,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'option_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4039,7 +3979,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'option_value_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4117,7 +4056,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4460,7 +4398,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_history_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4511,7 +4448,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_option_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4580,7 +4516,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_product_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4666,7 +4601,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_subscription_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4778,7 +4712,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_status_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4812,7 +4745,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_total_id',
 				'type'           => 'int(10)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4870,7 +4802,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'order_voucher_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -4944,7 +4875,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5255,7 +5185,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_discount_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5357,7 +5286,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_image_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5403,7 +5331,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_option_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5449,7 +5376,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_option_value_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5621,7 +5547,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_report_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5672,7 +5597,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_reward_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5717,7 +5641,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'product_special_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -5958,7 +5881,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'return_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6080,7 +6002,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'return_action_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6115,7 +6036,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'return_history_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6165,7 +6085,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'return_reason_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6200,7 +6119,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'return_status_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6235,7 +6153,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'review_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6306,7 +6223,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'startup_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6344,7 +6260,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'statistics_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6402,7 +6317,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'setting_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6449,7 +6363,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'stock_status_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6483,7 +6396,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'store_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6509,7 +6421,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'subscription_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6710,7 +6621,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'subscription_history_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6761,7 +6671,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'subscription_plan_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6847,7 +6756,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'subscription_status_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6881,7 +6789,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'tax_class_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6907,7 +6814,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'tax_rate_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -6983,7 +6889,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'tax_rule_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7030,7 +6935,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'theme_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7071,7 +6975,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'translation_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7125,7 +7028,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'upload_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7159,7 +7061,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'seo_url_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7228,7 +7129,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'user_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7300,7 +7200,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'user_authorize_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7353,7 +7252,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'user_group_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7379,7 +7277,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'user_login_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7420,7 +7317,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'voucher_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7489,7 +7385,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'voucher_history_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7535,7 +7430,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'voucher_theme_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7589,7 +7483,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'weight_class_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7648,7 +7541,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'zone_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[
@@ -7690,7 +7582,6 @@ function oc_db_schema() {
 			[
 				'name'           => 'zone_to_geo_zone_id',
 				'type'           => 'int(11)',
-				'not_null'       => true,
 				'auto_increment' => true
 			],
 			[

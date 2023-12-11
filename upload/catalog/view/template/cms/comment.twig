@@ -8,7 +8,16 @@
   {% endif %}
 </div>
 <hr/>
-<h2>{{ heading_title }}</h2>
+<div class="row">
+  <div class="col">
+    <h2>{{ heading_title }}</h2>
+  </div>
+  <div class="col">
+    <select>
+
+    </select>
+  </div>
+</div>
 
 <div id="comment">{{ list }}</div>
 
@@ -48,24 +57,24 @@ $('#comment').on('click', '.pagination a', function(e) {
 });
 
 // View Replies
-$('#comment').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
+$('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
     e.preventDefault();
 
     var element = this;
 
-    console.log($(element).attr('data-oc-url'));
+    console.log($(element).attr('value'));
 
-   $('#form-comment').attr('action', $(element).attr('data-oc-url'));
+    $('#form-comment').attr('action', $(element).attr('value'));
 
-    var modal = new bootstrap.Modal(document.getElementById('form-comment'));
+    var modal = new bootstrap.Modal(document.getElementById('modal-comment'));
 
     modal.show();
 
     //$('#modal-comment').modal('show');
 });
 
-// View Replies
 /*
+// View Replies
 $('#comment').on('click', '[data-oc-toggle=\'comment\']', function(e) {
     e.preventDefault();
 

@@ -315,8 +315,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
 	/**
+	 * Rating
+	 *
 	 * @return void
 	 */
 	public function rating(): void {
@@ -349,7 +350,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Anti-Spam
 			$rating_data = $this->request->post + [
-				'rating' => $this->request->get['rating'],
+				'rating' => bool($this->request->get['rating']),
 				'ip'     => $this->request->server['REMOTE_ADDR']
 			];
 

@@ -26,7 +26,7 @@ class Image extends \Opencart\System\Engine\Model {
 		$image_new = 'cache/' . oc_substr($filename, 0, oc_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
-			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
+			[$width_orig, $height_orig, $image_type] = getimagesize(DIR_IMAGE . $image_old);
 				 
 			if (!in_array($image_type, [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_WEBP])) {
 				return $this->config->get('config_url') . 'image/' . $image_old;

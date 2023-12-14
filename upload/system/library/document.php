@@ -15,6 +15,10 @@ class Document {
 	/**
 	 * @var string
 	 */
+	private string $title = '';
+	/**
+	 * @var string
+	 */
 	private string $seo = '';
 	/**
 	 * @var string
@@ -32,6 +36,26 @@ class Document {
 	 * @var array
 	 */
 	private array $scripts = [];
+
+	/**
+	 * setTitle
+	 *
+	 * @param string $title
+	 *
+	 * @return void
+	 */
+	public function setTitle(string $title): void {
+		$this->title = $title;
+	}
+
+	/**
+	 * getTitle
+	 *
+	 * @return string
+	 */
+	public function getTitle(): string {
+		return $this->title;
+	}
 
 	/**
 	 *

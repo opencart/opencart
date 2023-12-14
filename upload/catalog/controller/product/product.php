@@ -246,7 +246,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
-			$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+			$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token'] = oc_token(32));
 
 			$data['product_id'] = $product_id;
 

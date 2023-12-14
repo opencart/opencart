@@ -699,15 +699,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-
 		if (!empty($product_info)) {
 			$data['quantity'] = $product_info['quantity'];
 		} else {
 			$data['quantity'] = '';
 		}
-
-
 
 		$this->load->model('localisation/subscription_status');
 

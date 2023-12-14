@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Install;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Step4
  *
@@ -12,7 +14,9 @@ class Step4 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('install/step_4');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

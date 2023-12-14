@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Logout
  *
@@ -33,7 +35,9 @@ class Logout extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('account/logout');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

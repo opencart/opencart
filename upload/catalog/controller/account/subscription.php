@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Subscription
  *
@@ -24,7 +26,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$url = '';
 
@@ -164,7 +168,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if ($subscription_info) {
 			$heading_title = sprintf($this->language->get('text_subscription'), $subscription_info['subscription_id']);
 
-			$this->document->setTitle($heading_title);
+			$metadata = new MetaTags();
+			$metadata->title($heading_title);
+			$this->document->setSeo($metadata);
 
 			$data['heading_title'] = $heading_title;
 

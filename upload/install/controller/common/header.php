@@ -11,9 +11,8 @@ class Header extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): string {
 		$this->load->language('common/header');
-		
-		$data['title'] = $this->document->getTitle();
-		$data['description'] = $this->document->getDescription();
+
+		$data['seo'] = $this->document->getSeo();
 		$data['base'] = HTTP_SERVER;
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();

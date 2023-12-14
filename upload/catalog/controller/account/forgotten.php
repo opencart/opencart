@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Forgotten
  *
@@ -16,7 +18,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 
@@ -125,7 +129,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->document->setTitle($this->language->get('heading_reset'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_reset'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

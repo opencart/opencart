@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8"/>
-	<title>{{ title }}</title>
+  {% if seo %}
+    {{ seo }}
+  {% endif %}
 	<base href="{{ base }}"/>
 	<link href="view/stylesheet/bootstrap.css" rel="stylesheet" media="screen"/>
 	<link href="view/stylesheet/fontawesome/css/all.css" type="text/css" rel="stylesheet"/>

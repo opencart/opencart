@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Returns
  *
@@ -26,7 +28,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 
@@ -114,7 +118,10 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$return_info = $this->model_account_returns->getReturn($return_id);
 
 		if ($return_info) {
-			$this->document->setTitle($this->language->get('text_return'));
+
+			$metadata = new MetaTags();
+			$metadata->title($this->language->get('text_return'));
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 
@@ -195,7 +202,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 	public function add(): void {
 		$this->load->language('account/returns');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 
@@ -426,7 +435,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 	public function success(): void {
 		$this->load->language('account/returns');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

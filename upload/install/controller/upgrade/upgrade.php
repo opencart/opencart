@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Upgrade
  *
@@ -12,7 +14,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

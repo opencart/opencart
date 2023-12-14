@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Order
  *
@@ -24,14 +26,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
-		
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
+
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -43,7 +47,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
-		
+
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
@@ -129,7 +133,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		if ($order_info) {
 			$heading_title = sprintf($this->language->get('text_order'), $order_info['order_id']);
 
-			$this->document->setTitle($heading_title);
+			$metadata = new MetaTags();
+			$metadata->title($heading_title);
+			$this->document->setSeo($metadata);
 
 			$data['heading_title'] = $heading_title;
 

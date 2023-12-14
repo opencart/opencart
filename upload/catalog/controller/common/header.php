@@ -28,10 +28,9 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 
-		$data['title'] = $this->document->getTitle();
 		$data['base'] = $this->config->get('config_url');
-//		$data['description'] = $this->document->getDescription();
-//		$data['keywords'] = $this->document->getKeywords();
+
+		//SEO and Schema Optimization
 		$data['seo'] = $this->document->getSeo();
 		$data['schema'] = $this->document->getSchema();
 

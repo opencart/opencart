@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Login
  *
@@ -12,7 +14,9 @@ class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/login');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		// If already logged in and has matching token then redirect to account page
 		if ($this->customer->isLogged() && isset($this->request->get['customer_token']) && isset($this->session->data['customer_token']) && ($this->request->get['customer_token'] == $this->session->data['customer_token'])) {
@@ -247,12 +251,12 @@ class Login extends \Opencart\System\Engine\Controller {
 				'telephone'         => $customer_info['telephone'],
 				'custom_field'      => $customer_info['custom_field']
 			];
-			
+
 			// Default Addresses
 			$this->load->model('account/address');
-			
+
 			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());
-			
+
 			if ($address_info) {
 				$this->session->data['shipping_address'] = $address_info;
 			}

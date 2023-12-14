@@ -111,7 +111,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_article->getComments($article_id, $filter_data);
 
 		foreach ($results as $result) {
-			$reply_total = $this->model_cms_article->getTotalComments($article_id, ['parent_id' => $result['article_comment_id']]);
+			$reply_data = [
+				'parent' => $result['article_comment_id'],
+				'sort'   => 'date_added',
+				'order'  => 'ASC',
+				'start'  => 0,
+				'limit'  => 5
+			];
+
+			$reply_total = $this->model_cms_article->getTotalComments($article_id, $reply_data);
 
 			if ($reply_total) {
 				$reply = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id']);
@@ -125,7 +133,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'reply'              => $reply,
-				'reply_add'          => $this->url->link('cms/comment.write', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id']),
+				'reply_add'          => $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id']),
 				'reply_total'        => $reply_total
 			];
 		}
@@ -200,7 +208,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$reply_total = $this->model_cms_article->getTotalComments($article_id, $parent_id);
+		$reply_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 
 		$data['parent_id'] = $parent_id;
 		$data['page'] = $page;
@@ -291,6 +299,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$comment_approve = (int)$this->config->get('config_comment_approve');
+
 			// Anti-Spam
 			$this->load->model('cms/antispam');
 

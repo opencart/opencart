@@ -23,7 +23,7 @@ $_['entry_comment']       = 'Comment';
 // Buttons
 $_['button_comment']      = 'Post Comment';
 $_['button_reply']        = 'Post Reply';
-$_['button_replies']      = 'Show Replies (%s)';
+$_['button_replies']      = 'Show Replies';
 $_['button_more']         = 'See more replies...';
 
 // Error

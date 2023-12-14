@@ -187,8 +187,6 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
      * @param int $article_id
 	 * @param array $data
-     * @param int $start
-     * @param int $limit
      *
      * @return array
      */
@@ -266,7 +264,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addRating
+	 * Add Rating
 	 *
 	 * @param int   $article_id
 	 * @param array $data

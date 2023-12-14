@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Information
  *
@@ -23,9 +25,12 @@ class Information extends \Opencart\System\Engine\Controller {
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {
-			$this->document->setTitle($information_info['meta_title']);
-			$this->document->setDescription($information_info['meta_description']);
-			$this->document->setKeywords($information_info['meta_keyword']);
+
+			$metadata = new MetaTags();
+			$metadata
+				->title($information_info['meta_title'])
+				->description($information_info['meta_description']);
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 

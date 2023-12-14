@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Maintenance
  *
@@ -12,7 +14,10 @@ class Maintenance extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/maintenance');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata
+			->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		if ($this->request->server['SERVER_PROTOCOL'] == 'HTTP/1.1') {
 			$this->response->addHeader('HTTP/1.1 503 Service Unavailable');

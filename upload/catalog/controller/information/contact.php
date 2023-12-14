@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Contact
  *
@@ -12,7 +14,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('information/contact');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 
@@ -176,7 +180,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 	public function success(): void {
 		$this->load->language('information/contact');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

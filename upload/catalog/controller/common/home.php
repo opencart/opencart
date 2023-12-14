@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Home
  *
@@ -10,9 +12,12 @@ class Home extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->document->setTitle($this->config->get('config_meta_title'));
-		$this->document->setDescription($this->config->get('config_meta_description'));
-		$this->document->setKeywords($this->config->get('config_meta_keyword'));
+
+		$metadata = new MetaTags();
+		$metadata
+			->title($this->config->get('config_meta_title'))
+			->description($this->config->get('config_meta_description'));
+		$this->document->setSeo($metadata);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

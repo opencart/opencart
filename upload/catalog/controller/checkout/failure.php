@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Failure
  *
@@ -12,7 +14,9 @@ class Failure extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('checkout/failure');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

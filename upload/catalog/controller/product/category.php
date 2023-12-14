@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Category
  *
@@ -57,9 +59,12 @@ class Category extends \Opencart\System\Engine\Controller {
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 
 		if ($category_info) {
-			$this->document->setTitle($category_info['meta_title']);
-			$this->document->setDescription($category_info['meta_description']);
-			$this->document->setKeywords($category_info['meta_keyword']);
+
+			$metadata = new MetaTags();
+			$metadata
+				->title($category_info['meta_title'])
+				->description($category_info['meta_description']);
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 

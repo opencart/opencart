@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Error;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Not Found
  *
@@ -12,7 +14,10 @@ class NotFound extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('error/not_found');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata
+			->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

@@ -72,7 +72,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				$webpage,
 			);
 
-			$this->document->setTitle($product_info['meta_title']);
 			$this->document->setSeo($metadata);
 			$this->document->setSchema($schema);
 

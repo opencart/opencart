@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Error;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Exception
  *
@@ -17,7 +19,10 @@ class Exception extends \Opencart\System\Engine\Controller {
 	public function index(string $message, string $code, string $file, string $line): void {
 		$this->load->language('error/exception');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata
+			->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

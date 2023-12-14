@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Voucher
  *
@@ -12,7 +14,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('checkout/voucher');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = [];
@@ -196,7 +200,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	public function success(): void {
 		$this->load->language('checkout/voucher');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

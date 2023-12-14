@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Special
  *
@@ -36,7 +38,9 @@ class Special extends \Opencart\System\Engine\Controller {
 			$limit = $this->config->get('config_pagination');
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

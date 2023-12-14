@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Manufacturer
  *
@@ -14,7 +16,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata
+			->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 
@@ -103,7 +108,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 		if ($manufacturer_info) {
-			$this->document->setTitle($manufacturer_info['name']);
+
+			$metadata = new MetaTags();
+			$metadata->title($manufacturer_info['name']);
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 

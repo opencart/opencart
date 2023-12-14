@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Checkout
  *
@@ -28,7 +30,9 @@ class Checkout extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('checkout/checkout');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

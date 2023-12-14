@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Cms;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Blog
  *
@@ -110,13 +112,20 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($topic_info) {
-			$this->document->setTitle($topic_info['meta_title']);
-			$this->document->setDescription($topic_info['meta_description']);
-			$this->document->setKeywords($topic_info['meta_keyword']);
+
+			$metadata = new MetaTags();
+			$metadata
+				->title($topic_info['meta_title'])
+				->description($topic_info['meta_description']);
+			$this->document->setSeo($metadata);
 
 			$data['heading_title'] = $topic_info['name'];
 		} else {
-			$this->document->setTitle($this->language->get('heading_title'));
+
+			$metadata = new MetaTags();
+			$metadata
+				->title($this->language->get('heading_title'));
+			$this->document->setSeo($metadata);
 
 			$data['heading_title'] = $this->language->get('heading_title');
 		}
@@ -268,9 +277,12 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$article_info = $this->model_cms_article->getArticle($article_id);
 
 		if ($article_info) {
-			$this->document->setTitle($article_info['meta_title']);
-			$this->document->setDescription($article_info['meta_description']);
-			$this->document->setKeywords($article_info['meta_keyword']);
+
+			$metadata = new MetaTags();
+			$metadata
+				->title($article_info['meta_title'])
+				->description($article_info['meta_description']);
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 

@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Gdpr
  *
@@ -17,7 +19,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		if ($information_info) {
 			$this->load->language('information/gdpr');
 
-			$this->document->setTitle($this->language->get('heading_title'));
+			$metadata = new MetaTags();
+			$metadata->title($this->language->get('heading_title'));
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 
@@ -160,7 +164,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		if ($gdpr_info) {
 			$this->load->language('information/gdpr_success');
 
-			$this->document->setTitle($this->language->get('heading_title'));
+			$metadata = new MetaTags();
+			$metadata->title($this->language->get('heading_title'));
+			$this->document->setSeo($metadata);
 
 			$data['breadcrumbs'] = [];
 

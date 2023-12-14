@@ -1,5 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+use Melbahja\Seo\MetaTags;
+
 /**
  * Class Compare
  *
@@ -28,7 +30,9 @@ class Compare extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$metadata = new MetaTags();
+		$metadata->title($this->language->get('heading_title'));
+		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];
 

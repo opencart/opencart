@@ -26,12 +26,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['comment_guest'] = ($this->customer->isLogged() || $this->config->get('config_comment_guest') ? true : false);
 
-		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id']);
+		// Create a login token to prevent brute force attacks
+		$this->session->data['comment_token'] = oc_token(32);
+
+		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&comment_token=' . $this->session->data['comment_token']);
 
 		$data['list'] = $this->getList();
-
-		// Create a login token to prevent brute force attacks
-		$data['comment_token'] = $this->session->data['comment_token'] = oc_token(32);
 
 		// Captcha
 		$this->load->model('setting/extension');
@@ -59,6 +59,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -82,6 +84,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		if ($sort == 'date_added' || $sort == 'rating') {
 			$order = 'DESC';
+		} else {
+			$order = 'ASC';
 		}
 
 		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
@@ -107,7 +111,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_article->getComments($article_id, $filter_data);
 
 		foreach ($results as $result) {
-			$reply_total = $this->model_cms_article->getTotalComments($article_id, $result['article_comment_id']);
+			$reply_total = $this->model_cms_article->getTotalComments($article_id, ['parent_id' => $result['article_comment_id']]);
 
 			if ($reply_total) {
 				$reply = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id']);
@@ -175,11 +179,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['comments'] = [];
 
 		$filter_data = [
-			'parent' => $parent_id,
-			'sort'   => 'date_added',
-			'order'  => 'ASC',
-			'start'  => ($page - 1) * $limit,
-			'limit'  => $limit
+			'parent_id' => $parent_id,
+			'sort'      => 'date_added',
+			'order'     => 'ASC',
+			'start'     => ($page - 1) * $limit,
+			'limit'     => $limit
 		];
 
 		$this->load->model('cms/article');
@@ -212,7 +216,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('cms/comment_reply', $data);
 	}
 
-	/**
+	/*
+	 * Add
+	 *
      * @return void
      */
 	public function add(): void {
@@ -358,7 +364,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 			$this->model_cms_article->addRating($article_id, $rating_data);
 
-			$json['success'] = $this->language->get('text_rating');
+			$json['success'] = $this->language->get('text_success_rating');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -756,25 +756,25 @@ function oc_db_schema() {
 			[
 				'name' => 'article_id',
 				'key'  => [
-					'article'
+					'article_id'
 				]
 			],
 			[
 				'name' => 'article_comment_id',
 				'key'  => [
-					'article_comment'
+					'article_comment_id'
 				]
 			],
 			[
 				'name' => 'customer_id',
 				'key'  => [
-					'customer'
+					'customer_id'
 				]
 			],
 			[
 				'name' => 'store_id',
 				'key'  => [
-					'store'
+					'store_id'
 				]
 			]
 		],

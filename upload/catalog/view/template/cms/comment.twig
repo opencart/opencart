@@ -1,21 +1,26 @@
 <div class="text-center">
-  <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
-  <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
+  <button type="button" value="1" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
+  <button type="button" value="0" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
-    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-load="{{ action }}" data-oc-target="#comment-{{ article_comment_id }}" class="btn btn-outline-secondary">{{ button_comment }}</button>
   {% else %}
     <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
 </div>
 <hr/>
-<div class="row">
+
+<div class="row mb-3">
   <div class="col">
     <h2>{{ heading_title }}</h2>
   </div>
-  <div class="col">
-    <select>
-
-    </select>
+  <div class="col-4">
+    <div class="input-group">
+      <span class="input-group-text">{{ text_sort }}</span>
+      <select id="sort" class="form-select">
+        <option value="rating">{{ text_rating }}</option>
+        <option value="date_added">{{ text_date_added }}</option>
+      </select>
+    </div>
   </div>
 </div>
 
@@ -29,7 +34,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment" action="">
+        <form id="form-comment" action="" data-oc-toggle="ajax" data-oc-load="" data-oc-target="">
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
             <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
@@ -40,11 +45,13 @@
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
+
           {{ captcha }}
+
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
+        <button type="submit" id="button-comment" form="form-comment" class="btn btn-primary">{{ button_comment }}</button>
       </div>
     </div>
   </div>
@@ -56,7 +63,7 @@ $('#comment').on('click', '.pagination a', function(e) {
     $('#comment').load(this.href);
 });
 
-// View Replies
+// Add Comment
 $('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
     e.preventDefault();
 
@@ -64,7 +71,9 @@ $('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
 
     console.log($(element).attr('value'));
 
-    $('#form-comment').attr('action', $(element).attr('value'));
+    $('#form-comment').attr('action', $(element).val());
+    $('#form-comment').attr('data-oc-load', $(element).attr('data-oc-load'));
+    $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
 
     var modal = new bootstrap.Modal(document.getElementById('modal-comment'));
 
@@ -72,6 +81,7 @@ $('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
 
     //$('#modal-comment').modal('show');
 });
+
 
 /*
 // View Replies
@@ -147,15 +157,17 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
     });
 });
 
+// Add Comment
+/*
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: $(element).attr(''),
+        url: $('#button-comment').attr('formaction'),
         type: 'post',
-        data: $('#form-comment').serialize(),
+        data: $(element).serialize(),
         dataType: 'json',
         cache: false,
         contentType: 'application/x-www-form-urlencoded',
@@ -167,6 +179,8 @@ $('#form-comment').on('submit', function(e) {
             $('#button-comment').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
             $('#form-comment').find('.is-invalid').removeClass('is-invalid');
             $('#form-comment').find('.invalid-feedback').removeClass('d-block');
@@ -193,4 +207,5 @@ $('#form-comment').on('submit', function(e) {
         }
     });
 });
+*/
 //--></script>

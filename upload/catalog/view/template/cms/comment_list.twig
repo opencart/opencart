@@ -8,7 +8,7 @@
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
           <button type="button" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
           {% if comment_guest %}
-            <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="comment" class="btn btn-outline-secondary">{{ button_reply }}</button>
+            <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="comment" data-oc-target="#reply-{{ parent_id }}-{{ article_comment_id }}" class="btn btn-outline-secondary">{{ button_reply }}</button>
           {% else %}
             <button type="button" class="btn btn-outline-secondary" disabled="disabled">{{ button_reply }}</button>
           {% endif %}

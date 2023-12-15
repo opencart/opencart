@@ -116,7 +116,7 @@ $('#comment').on('click', '[data-oc-toggle=\'more\']', function(e) {
     var element = this;
 
     $.ajax({
-        url: $(element).attr('data-oc-url'),
+        url: $(element).val(),
         dataType: 'html',
         beforeSend: function() {
             $(element).button('loading');
@@ -125,6 +125,8 @@ $('#comment').on('click', '[data-oc-toggle=\'more\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
+            console.log(html);
+
             $($(element).attr('data-oc-target')).replaceWith(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -149,6 +151,8 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
+            console.log(html);
+
             $($(element).attr('data-oc-target')).html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {

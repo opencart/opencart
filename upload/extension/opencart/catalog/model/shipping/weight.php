@@ -45,7 +45,6 @@ class Weight extends \Opencart\System\Engine\Model {
 						if (isset($data[1])) {
 							$cost = $data[1];
 						}
-
 						break;
 					}
 				}

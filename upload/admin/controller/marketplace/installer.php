@@ -26,7 +26,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		// Use the  for the max file size
+		// Use the configuration option to get the max file size
 		$data['error_upload_size'] = sprintf($this->language->get('error_file_size'), ini_get('upload_max_filesize'));
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
@@ -384,7 +384,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$base = DIR_EXTENSION;
 					$prefix = '';
 
-					// OCMOD files should not be copies across
+					// OCMOD files should not be copied across
 					if (substr($destination, 0, 6) == 'ocmod/') {
 						continue;
 					}

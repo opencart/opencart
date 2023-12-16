@@ -104,18 +104,18 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['rating'] < 1 || $this->request->post['rating'] > 5) {
-			$json['error']['rating']  = $this->language->get('error_rating');
+			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 
 		if (!$this->customer->isLogged() && !$this->config->get('config_review_guest')) {
-			$json['error']['warning']  = $this->language->get('error_guest');
+			$json['error']['warning'] = $this->language->get('error_guest');
 		}
 
 		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
 			$this->load->model('account/order');
 
 			if (!$this->model_account_order->getTotalOrdersByProductId($product_id)) {
-				$json['error']['purchased']  = $this->language->get('error_purchased');
+				$json['error']['purchased'] = $this->language->get('error_purchased');
 			}
 		}
 

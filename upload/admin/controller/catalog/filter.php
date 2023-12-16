@@ -55,8 +55,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * List
+     * 
+     * @return void
+     */
 	public function list(): void {
 		$this->load->language('catalog/filter');
 
@@ -64,8 +66,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return string
-	 */
+     * Get List
+     * 
+     * @return string
+     */
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -166,8 +170,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * Form
+     * 
+     * @return void
+     */
 	public function form(): void {
 		$this->load->language('catalog/filter');
 
@@ -246,8 +252,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * Save
+     * 
+     * @return void
+     */
 	public function save(): void {
 		$this->load->language('catalog/filter');
 
@@ -296,8 +304,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * Delete
+     * 
+     * @return void
+     */
 	public function delete(): void {
 		$this->load->language('catalog/filter');
 
@@ -328,8 +338,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * Autocomplete
+     * 
+     * @return void
+     */
 	public function autocomplete(): void {
 		$json = [];
 

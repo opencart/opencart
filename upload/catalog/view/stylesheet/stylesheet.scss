@@ -609,6 +609,30 @@ footer {
   }
 }
 
+.blog-thumb {
+	border: 1px solid #ddd;
+	margin-bottom: 15px;
+
+	h4 {
+		font-weight: bold;
+	}
+
+	.image {
+		text-align: center;
+		margin-bottom: 15px;
+
+		a {
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+
+	.description {
+		padding: 15px;
+	}
+}
+
 @media (min-width: 960px) {
   .product-list .product-thumb {
     display: flex;

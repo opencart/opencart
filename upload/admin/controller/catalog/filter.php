@@ -272,7 +272,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 				}
 			}
 		} else {
-			$json['error']['warning']  = $this->language->get('error_values');
+			$json['error']['warning'] = $this->language->get('error_values');
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

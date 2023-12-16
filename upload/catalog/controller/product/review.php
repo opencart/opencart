@@ -54,8 +54,10 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * Write
+     * 
+     * @return void
+     */
 	public function write(): void {
 		$this->load->language('product/review');
 
@@ -145,8 +147,10 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
-	 */
+     * List
+     *
+     * @return void
+     */
 	public function list(): void {
 		$this->load->language('product/review');
 
@@ -154,8 +158,10 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return string
-	 */
+     * Get List
+     *
+     * @return void
+     */
 	public function getList(): string {
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];

@@ -18,11 +18,17 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		if (isset($setting['limit']) && (int)$setting['limit']) {
+			$limit = (int)$setting['limit'];
+		} else {
+			$limit = 10;
+		}
+
 		$filter_data = [
 			'sort'  => 'pd.name',
 			'order' => 'ASC',
 			'start' => 0,
-			'limit' => $setting['limit']
+			'limit' => $limit
 		];
 
 		$this->load->model('catalog/product');

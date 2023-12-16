@@ -19,11 +19,17 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->load->model('extension/opencart/module/blog');
 		$this->load->model('tool/image');
 
+		if (isset($setting['limit']) && (int)$setting['limit']) {
+			$limit = (int)$setting['limit'];
+		} else {
+			$limit = 10;
+		}
+
 		$filter_data = [
 			'sort'  => 'a.date_added',
 			'order' => 'DESC',
 			'start' => 0,
-			'limit' => $setting['limit']
+			'limit' => $limit
 		];
 
 		$results = $this->model_extension_opencart_module_blog->getArticles($filter_data);

@@ -14,7 +14,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function controller(string &$route, array &$args) {
+	public function controller(string &$route, array &$args): void {
 		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/admin/controller/' . $route . '.php')) {
 			$route = 'extension/ocmod/' . $route;
 		}

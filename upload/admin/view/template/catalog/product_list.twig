@@ -26,23 +26,21 @@
                   <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}</td>
               <td class="text-start d-none d-lg-table-cell">{{ product.model }}</td>
-              <td class="text-end">
-                {% if product.special %}<span style="text-decoration: line-through;">{{ product.price }}</span>
+              <td class="text-end">{% if product.special %}
+                  <span style="text-decoration: line-through;">{{ product.price }}</span>
                   <br/>
                   <div class="text-danger">{{ product.special }}</div>
                 {% else %}
                   {{ product.price }}
                 {% endif %}</td>
-              <td class="text-end">
-                {% if product.quantity <= 0 %}
+              <td class="text-end">{% if product.quantity <= 0 %}
                   <span class="badge bg-warning">{{ product.quantity }}</span>
                 {% elseif product.quantity <= 5 %}
                   <span class="badge bg-danger">{{ product.quantity }}</span>
                 {% else %}
                   <span class="badge bg-success">{{ product.quantity }}</span>
                 {% endif %}</td>
-              <td class="text-end">
-                {% if product.variant %}
+              <td class="text-end">{% if product.variant %}
                   <div class="btn-group">
                     <a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"><i class="fa-solid fa-caret-down"></i></button>

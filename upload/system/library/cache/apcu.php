@@ -78,7 +78,7 @@ class Apcu {
 
 	/**
      * Delete all cache
-     *     
+     *
      * @return bool
      */
 	public function flush(): bool {

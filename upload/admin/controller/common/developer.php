@@ -160,7 +160,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 	/**
      * Generate new autoloader file
-     *    
+     *
      * @return void
      */
 	public function vendor(): void {

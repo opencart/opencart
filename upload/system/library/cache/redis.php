@@ -46,7 +46,7 @@ class Redis {
      * @param string $key
      * @param mixed  $value
      * @param int    $expire
-     * 
+     *
      * @return void
      */
 	public function set(string $key, $value, int $expire = 0): void {

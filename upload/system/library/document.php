@@ -40,7 +40,7 @@ class Document {
      * setTitle
      *
      * @param string $title
-     * 
+     *
      * @return void
      */
 	public function setTitle(string $title): void {

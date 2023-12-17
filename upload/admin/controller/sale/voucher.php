@@ -321,7 +321,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if ($voucher_info) {
 			if (!isset($this->request->post['voucher_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
-			} elseif ($voucher_info['voucher_id'] != (int)$this->request->post['voucher_id'])  {
+			} elseif ($voucher_info['voucher_id'] != (int)$this->request->post['voucher_id']) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}

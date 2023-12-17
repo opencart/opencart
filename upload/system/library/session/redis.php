@@ -14,7 +14,7 @@ class Redis {
      *
      * @param object $registry
      */
-	public function __construct(\Opencart\System\Engine\Registry $registry)	{
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
 
 		try {
@@ -33,7 +33,7 @@ class Redis {
      *
      * @return array
      */
-	public function read(string $session_id): array	{
+	public function read(string $session_id): array {
         $data = $this->redis->get($this->prefix . $session_id);
         
         if (is_null($data) || empty($data)) {

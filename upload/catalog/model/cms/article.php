@@ -190,7 +190,6 @@ class Article extends \Opencart\System\Engine\Model {
      *
      * @return array
      */
-
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
 

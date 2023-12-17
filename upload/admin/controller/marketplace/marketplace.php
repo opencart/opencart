@@ -729,7 +729,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						$download = '';
 					}
 
-			 		// Install
+					// Install
 					if ($install_info && !$install_info['status']) {
 						$install = $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $install_info['extension_install_id']);
 					} else {

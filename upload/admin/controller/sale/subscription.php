@@ -769,8 +769,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
 		} elseif ($this->request->post['subscription_plan_id'] == '') {
-            $json['error'] = $this->language->get('error_subscription_plan');
-        }
+			$json['error'] = $this->language->get('error_subscription_plan');
+		}
 
 		$this->load->model('catalog/subscription_plan');
 
@@ -877,8 +877,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
-            $json['error'] = $this->language->get('error_permission');
-        }
+			$json['error'] = $this->language->get('error_permission');
+		}
 
 		// Subscription
 		$this->load->model('sale/subscription');
@@ -895,8 +895,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($this->request->post['subscription_status_id']);
 
 		if (!$subscription_status_info) {
-            $json['error'] = $this->language->get('error_subscription_status');
-        }
+			$json['error'] = $this->language->get('error_subscription_status');
+		}
 
 		if (!$json) {
 			$this->model_sale_subscription->addHistory($subscription_id, $this->request->post['subscription_status_id'], $this->request->post['comment'], $this->request->post['notify']);

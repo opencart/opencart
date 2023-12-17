@@ -12,8 +12,7 @@
       {% if extensions %}
         {% for extension in extensions %}
           <tr>
-            <td class="text-start">
-              {% if extension.link %}
+            <td class="text-start">{% if extension.link %}
                 <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
               {% else %}
                 {{ extension.name }}

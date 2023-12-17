@@ -74,4 +74,4 @@ class Error extends \Opencart\System\Engine\Controller {
 			exit();
 		}
 	}
-} 
+}

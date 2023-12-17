@@ -11,7 +11,7 @@ class Log extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		$this->load->language('tool/log');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = [];

@@ -17,8 +17,7 @@
             <tr>
               <td><b>{{ extension.name }}</b></td>
               <td>{{ extension.status }}</td>
-              <td class="text-end text-nowrap">
-                {% if extension.installed %}
+              <td class="text-end text-nowrap">{% if extension.installed %}
                   {% if extension.module %}
                     <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></a>
                   {% else %}

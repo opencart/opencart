@@ -27,8 +27,7 @@
                     <b>{{ product.special }}</b> <s>{{ product.price }}</s>
                   {% endif %}
                 </div>
-              {% endif %}
-            </td>
+              {% endif %}</td>
             <td class="text-end">
               <form method="post" data-oc-toggle="ajax" data-oc-load="{{ wishlist }}" data-oc-target="#wishlist">
                 <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>

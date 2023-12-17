@@ -35,7 +35,7 @@ class Subscription extends \Opencart\System\Engine\Model {
         }
         
         switch ($group) {
-            case 'day';
+            case 'day':
                 $sql .= " GROUP BY YEAR(`s`.`date_added`), MONTH(`s`.`date_added`), DAY(`s`.`date_added`)";
                 break;
             default:
@@ -82,7 +82,7 @@ class Subscription extends \Opencart\System\Engine\Model {
         }
         
         switch ($group) {
-            case 'day';
+            case 'day':
                 $sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)) AS `total` FROM `" . DB_PREFIX . "subscription`";
                 break;
             default:

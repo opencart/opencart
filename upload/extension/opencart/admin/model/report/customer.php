@@ -186,7 +186,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		switch ($group) {
-			case 'day';
+			case 'day':
 				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)) AS `total` FROM `" . DB_PREFIX . "customer`";
 				break;
 			default:

@@ -237,7 +237,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-		
+
 		if (!empty($location_info)) {
 			$data['image'] = $location_info['image'];
 		} else {

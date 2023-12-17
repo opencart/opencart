@@ -120,7 +120,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			} else {
 				$order_href = '';
 			}
-			
+
 			$data['vouchers'][] = [
 				'voucher_id' => $result['voucher_id'],
 				'code'       => $result['code'],

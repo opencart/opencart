@@ -24,7 +24,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketplace/api');
 
 		$json = [];
-		
+
 		if (!$this->user->hasPermission('modify', 'marketplace/api')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
@@ -39,9 +39,9 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->load->model('setting/setting');
-			
+
 			$this->model_setting_setting->editSetting('opencart', $this->request->post);
-			
+
 			$json['success'] = $this->language->get('text_success');
 		}
 

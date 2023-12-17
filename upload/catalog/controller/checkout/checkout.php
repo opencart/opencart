@@ -61,13 +61,13 @@ class Checkout extends \Opencart\System\Engine\Controller {
 
 		if ($this->customer->isLogged() && $this->cart->hasShipping()) {
 			$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
-		}  else {
+		} else {
 			$data['shipping_address'] = '';
 		}
 
 		if ($this->cart->hasShipping()) {
 			$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		}  else {
+		} else {
 			$data['shipping_method'] = '';
 		}
 

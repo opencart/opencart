@@ -122,7 +122,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				'custom_field'   => $this->request->post['custom_field'] ?? []
 			];
 
 			$json['success'] = $this->language->get('text_success');

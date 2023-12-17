@@ -107,7 +107,7 @@ class MySQLi {
 
 				$result = new \stdClass();
 				$result->num_rows = $query->num_rows;
-				$result->row = isset($data[0]) ? $data[0] : [];
+				$result->row = $data[0] ?? [];
 				$result->rows = $data;
 
 				$query->close();

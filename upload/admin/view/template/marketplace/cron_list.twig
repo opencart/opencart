@@ -22,8 +22,7 @@
               <td class="text-start">{{ cron.action }}</td>
               <td class="text-start d-none d-lg-table-cell">{{ cron.date_added }}</td>
               <td class="text-start d-none d-lg-table-cell">{{ cron.date_modified }}</td>
-              <td class="text-end text-nowrap">
-                {% if cron.description %}
+              <td class="text-end text-nowrap">{% if cron.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ cron.cron_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}
                   <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>

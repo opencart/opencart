@@ -38,7 +38,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['dashboard_order_width'] = $this->config->get('dashboard_order_width');
 
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}

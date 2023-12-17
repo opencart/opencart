@@ -121,11 +121,11 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 		$data['customers'] = [];
 
 		$filter_data = [
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
-			'filter_customer'	=> $filter_customer,
-			'start'				=> ($page - 1) * $this->config->get('config_pagination'),
-			'limit'				=> $this->config->get('config_pagination')
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
+			'filter_customer'   => $filter_customer,
+			'start'             => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'             => $this->config->get('config_pagination')
 		];
 
 		$this->load->model('extension/opencart/report/customer');

@@ -125,8 +125,8 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		$data['products'] = [];
 
 		$filter_data = [
-			'filter_date_start'	     => $filter_date_start,
-			'filter_date_end'	     => $filter_date_end,
+			'filter_date_start'      => $filter_date_start,
+			'filter_date_end'        => $filter_date_end,
 			'filter_order_status_id' => $filter_order_status_id,
 			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                  => $this->config->get('config_pagination')

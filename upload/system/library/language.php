@@ -82,7 +82,7 @@ class Language {
 	public function set(string $key, string $value): void {
 		$this->data[$key] = $value;
 	}
-	
+
 	/**
 	 * All
 	 *

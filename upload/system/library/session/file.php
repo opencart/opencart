@@ -61,7 +61,7 @@ class File {
 			unlink($file);
 		}
 	}
-	
+
 	/**
 	 * GC
 	 *

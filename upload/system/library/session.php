@@ -32,7 +32,7 @@ class Session {
 	 */
 	public function __construct(string $adaptor, \Opencart\System\Engine\Registry $registry) {
 		$class = 'Opencart\System\Library\Session\\' . $adaptor;
-		
+
 		if (class_exists($class)) {
 			if ($registry) {
 				$this->adaptor = new $class($registry);
@@ -46,7 +46,7 @@ class Session {
 			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
 		}
 	}
-	
+
 	/**
 	 * Get Session ID
 	 *
@@ -79,9 +79,9 @@ class Session {
 		} else {
 			throw new \Exception('Error: Invalid session ID!');
 		}
-		
+
 		$this->data = $this->adaptor->read($session_id);
-		
+
 		return $session_id;
 	}
 

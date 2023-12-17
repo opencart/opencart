@@ -43,7 +43,7 @@ class DB {
 			return [];
 		}
 	}
-	
+
 	/**
 	 * Write
 	 *

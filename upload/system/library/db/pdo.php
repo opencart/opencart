@@ -18,7 +18,7 @@ class PDO {
 	 * @var int
 	 */
 	private int $affected;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -49,7 +49,7 @@ class PDO {
 			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 		}
 	}
-	
+
 	/**
 	 * Query
 	 *

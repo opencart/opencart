@@ -139,7 +139,7 @@ class Customer {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Logout
 	 *
@@ -176,7 +176,7 @@ class Customer {
 	public function getId(): int {
 		return $this->customer_id;
 	}
-	
+
 	/**
 	 * getFirstName
 	 *
@@ -194,7 +194,7 @@ class Customer {
 	public function getLastName(): string {
 		return $this->lastname;
 	}
-	
+
 	/**
 	 * getGroupId
 	 *
@@ -203,7 +203,7 @@ class Customer {
 	public function getGroupId(): int {
 		return $this->customer_group_id;
 	}
-	
+
 	/**
 	 * getEmail
 	 *
@@ -263,7 +263,7 @@ class Customer {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * getBalance
 	 *

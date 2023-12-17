@@ -24,7 +24,7 @@ class Log {
 	public function __construct(string $filename) {
 		$this->file = DIR_LOGS . $filename;
 	}
-	
+
 	/**
 	 * Write
 	 *

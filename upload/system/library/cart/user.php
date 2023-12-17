@@ -84,7 +84,7 @@ class User {
 			}
 		}
 	}
-	
+
 	/**
 	 * Login
 	 *
@@ -135,7 +135,7 @@ class User {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Logout
 	 *
@@ -151,7 +151,7 @@ class User {
 		$this->email = '';
 		$this->user_group_id = 0;
 	}
-	
+
 	/**
 	 * hasPermission
 	 *
@@ -167,7 +167,7 @@ class User {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * isLogged
 	 *
@@ -176,7 +176,7 @@ class User {
 	public function isLogged(): bool {
 		return $this->user_id ? true : false;
 	}
-	
+
 	/**
 	 * getId
 	 *

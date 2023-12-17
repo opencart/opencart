@@ -35,7 +35,7 @@ class Redis {
      */
 	public function read(string $session_id): array {
         $data = $this->redis->get($this->prefix . $session_id);
-        
+
         if (is_null($data) || empty($data)) {
             return [];
         } else {
@@ -58,7 +58,7 @@ class Redis {
 
 		return true;
 	}
-	
+
 	/**
 	 * Destroy
 	 *

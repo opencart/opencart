@@ -100,7 +100,7 @@ class Registry {
 	public function set(string $key, object $value): void {
 		$this->data[$key] = $value;
 	}
-	
+
     /**
      * Has
      *

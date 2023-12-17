@@ -21,7 +21,7 @@ class Event {
 	 * @var array
 	 */
 	protected array $data = [];
-	
+
 	/**
 	 * Constructor
 	 *
@@ -30,7 +30,7 @@ class Event {
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
-	
+
 	/**
 	 * Register
 	 *
@@ -46,7 +46,7 @@ class Event {
 			'action'   => $action,
 			'priority' => $priority
 		];
-		
+
 		$sort_order = [];
 
 		foreach ($this->data as $key => $value) {
@@ -55,7 +55,7 @@ class Event {
 
 		array_multisort($sort_order, SORT_ASC, $this->data);
 	}
-	
+
 	/**
 	 * Trigger
 	 *
@@ -73,7 +73,7 @@ class Event {
 
 		return '';
 	}
-	
+
 	/**
 	 * Unregister
 	 *
@@ -89,7 +89,7 @@ class Event {
 			}
 		}
 	}
-	
+
 	/**
 	 * Clear
 	 *

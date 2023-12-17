@@ -189,14 +189,14 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['marketings'] = [];
 
 		$filter_data = [
-			'filter_name'       => $filter_name,
-			'filter_code'       => $filter_code,
-			'filter_date_from'  => $filter_date_from,
-			'filter_date_to'    => $filter_date_to,
-			'sort'              => $sort,
-			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             => $this->config->get('config_pagination_admin')
+			'filter_name'      => $filter_name,
+			'filter_code'      => $filter_code,
+			'filter_date_from' => $filter_date_from,
+			'filter_date_to'   => $filter_date_to,
+			'sort'             => $sort,
+			'order'            => $order,
+			'start'            => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'            => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('marketing/marketing');

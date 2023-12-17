@@ -317,9 +317,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['categories'][] = [
-			'text' => $this->language->get('text_shipping'),
+			'text'  => $this->language->get('text_shipping'),
 			'value' => 'shipping',
-			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=shipping' . $url)
+			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=shipping' . $url)
 		];
 
 		$data['categories'][] = [
@@ -921,10 +921,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						'extension_download_id' => $extension_download_id,
 						'name'                  => $response_info['name'],
 						'description'           => isset($response_info['description']) ? $response_info['description'] : '',
-						'code' 				    => basename($response_info['filename'], '.ocmod.zip'),
+						'code'                  => basename($response_info['filename'], '.ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],
-						'link' 					=> OPENCART_SERVER . 'index.php?route=marketplace/extension.info&extension_id=' . $extension_id
+						'link'                  => OPENCART_SERVER . 'index.php?route=marketplace/extension.info&extension_id=' . $extension_id
 					];
 
 					$this->load->model('setting/extension');

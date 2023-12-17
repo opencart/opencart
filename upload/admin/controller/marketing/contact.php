@@ -224,12 +224,12 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 				if ($this->config->get('config_mail_engine')) {
 					$mail_option = [
-						'parameter' => $this->config->get('config_mail_parameter'),
+						'parameter'     => $this->config->get('config_mail_parameter'),
 						'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
 						'smtp_username' => $this->config->get('config_mail_smtp_username'),
 						'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-						'smtp_port' => $this->config->get('config_mail_smtp_port'),
-						'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
+						'smtp_port'     => $this->config->get('config_mail_smtp_port'),
+						'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
 					];
 
 					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);

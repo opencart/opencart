@@ -12,7 +12,7 @@ return $config
         '@PSR12' => true,
         'array_syntax' => true,
         'assign_null_coalescing_to_coalesce_equal' => true,
-        'binary_operator_spaces' => ['default' => 'single_space','operators' => ['=' => 'at_least_single_space','=>' => 'at_least_single_space']],
+        'binary_operator_spaces' => ['default' => 'single_space','operators' => ['=' => 'at_least_single_space','=>' => 'align_single_space_minimal']],
         'blank_line_after_namespace' => false,
         'blank_line_after_opening_tag' => false,
         'blank_lines_before_namespace' => false,

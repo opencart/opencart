@@ -79,11 +79,11 @@ class Notification extends \Opencart\System\Engine\Controller {
 			$ranges = [
 				'second' => $second,
 				'minute' => floor($second / 60),
-				'hour'	 => floor($second / 3600),
-				'day'	 => floor($second / 86400),
-				'week'	 => floor($second / 604800),
-				'month'	 => floor($second / 2629743),
-				'year'	 => floor($second / 31556926)
+				'hour'   => floor($second / 3600),
+				'day'    => floor($second / 86400),
+				'week'   => floor($second / 604800),
+				'month'  => floor($second / 2629743),
+				'year'   => floor($second / 31556926)
 			];
 
 			foreach ($ranges as $range => $value) {

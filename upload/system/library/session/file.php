@@ -68,7 +68,7 @@ class File {
 	 * @return void
 	 */
 	public function gc(): void {
-		if (round(rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
+		if (round(mt_rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
 			$expire = time() - $this->config->get('session_expire');
 
 			$files = glob(DIR_SESSION . 'sess_*');

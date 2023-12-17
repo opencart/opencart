@@ -79,24 +79,24 @@ class Registry {
 	}
 
 	/**
-     * Get
-     *
-     * @param string $key
-     *
-     * @return ?object
-     */
+	 * Get
+	 *
+	 * @param string $key
+	 *
+	 * @return ?object
+	 */
 	public function get(string $key): ?object {
 		return isset($this->data[$key]) ? $this->data[$key] : null;
 	}
 
-    /**
-     * Set
-     *
-     * @param string $key
-     * @param object $value
-     *
-     * @return void
-     */
+	/**
+	 * Set
+	 *
+	 * @param string $key
+	 * @param object $value
+	 *
+	 * @return void
+	 */
 	public function set(string $key, object $value): void {
 		$this->data[$key] = $value;
 	}
@@ -113,14 +113,14 @@ class Registry {
 	}
 
 	/**
-     * Unset
-     *
-     * Unsets registry value by key.
-     *
-     * @param string $key
-     *
-     * @return void
-     */
+	 * Unset
+	 *
+	 * Unsets registry value by key.
+	 *
+	 * @param string $key
+	 *
+	 * @return void
+	 */
 	public function unset(string $key): void {
 		unset($this->data[$key]);
 	}

@@ -63,7 +63,7 @@ $_['action_event']       = [
 	'language/*/before' => [
 		0 => 'event/modification.language'
 	],
-    'language/*/after' => [
-        0 => 'startup/language.after'
-    ]
+	'language/*/after' => [
+		0 => 'startup/language.after'
+	]
 ];

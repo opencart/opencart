@@ -141,7 +141,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		switch ($group) {
-			case 'day';
+			case 'day':
 				$sql .= " GROUP BY YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)";
 				break;
 			default:

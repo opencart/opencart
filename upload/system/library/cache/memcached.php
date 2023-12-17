@@ -18,7 +18,7 @@ class Memcached {
 	/**
 	 *
 	 */
-	const CACHEDUMP_LIMIT = 9999;
+	public const CACHEDUMP_LIMIT = 9999;
 
 	/**
 	 * Constructor

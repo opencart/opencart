@@ -216,7 +216,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$data['tax_rate_id'] = 0;
 		}
 
-	    if (!empty($tax_rate_info)) {
+		if (!empty($tax_rate_info)) {
 			$data['name'] = $tax_rate_info['name'];
 		} else {
 			$data['name'] = '';

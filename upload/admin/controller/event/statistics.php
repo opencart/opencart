@@ -15,7 +15,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 * @param mixed  $output
 	 *
 	 * @return void
-	 * 
+	 *
 	 * admin/model/catalog/review/addReview/after
 	 */
 	public function addReview(string &$route, array &$args, &$output): void {

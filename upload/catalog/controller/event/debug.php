@@ -47,7 +47,7 @@ class Debug extends \Opencart\System\Engine\Controller {
 					'route' => $route,
 					'time'  => microtime(true) - $this->session->data['debug'][$route]
 				];
-				
+
 				$this->log->write($log_data);
 			}
 		}

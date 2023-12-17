@@ -269,7 +269,7 @@ class Smtp {
 			return false;
 		}
 	}
-	
+
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';
 

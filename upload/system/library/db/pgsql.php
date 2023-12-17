@@ -79,7 +79,7 @@ class PgSQL {
 			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
 		}
 	}
-	
+
 	/**
      * Escape
      *
@@ -99,7 +99,7 @@ class PgSQL {
 	public function countAffected(): int {
 		return pg_affected_rows($this->connection);
 	}
-	
+
 	/**
      * getLastId
      *

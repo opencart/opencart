@@ -18,8 +18,7 @@
             <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a></td>
             <td class="text-start">{{ product.model }}</td>
             <td class="text-end">{{ product.stock }}</td>
-            <td class="text-end">
-              {% if product.price %}
+            <td class="text-end">{% if product.price %}
                 <div class="price">
                   {% if not product.special %}
                     {{ product.price }}

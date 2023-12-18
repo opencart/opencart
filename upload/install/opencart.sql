@@ -892,6 +892,7 @@ INSERT INTO `oc_extension` (`extension`, `type`, `code`) VALUES
 ('opencart', 'module', 'category'),
 ('opencart', 'module', 'account'),
 ('opencart', 'module', 'topic'),
+('opencart', 'module', 'db_schema'),
 ('opencart', 'shipping', 'flat'),
 ('opencart', 'theme', 'basic'),
 ('opencart', 'total', 'credit'),

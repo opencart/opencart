@@ -282,11 +282,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['rating'] = (int)$product_info['rating'];
 			$data['review_status'] = (int)$this->config->get('config_review_status');
-
 			$data['review'] = $this->load->controller('product/review');
 
-			$data['add_to_wishlist'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
-			$data['add_to_compare'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
+			$data['wishlist_add'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
+			$data['compare_add'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
 
 			$this->load->model('tool/image');
 
@@ -350,12 +349,12 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			// Check if product is variant
 			if ($product_info['master_id']) {
-				$product_id = (int)$product_info['master_id'];
+				$master_id = (int)$product_info['master_id'];
 			} else {
-				$product_id = (int)$this->request->get['product_id'];
+				$master_id = (int)$this->request->get['product_id'];
 			}
 
-			$product_options = $this->model_catalog_product->getOptions($product_id);
+			$product_options = $this->model_catalog_product->getOptions($master_id);
 
 			foreach ($product_options as $option) {
 				if ((int)$this->request->get['product_id'] && !isset($product_info['override']['variant'][$option['product_option_id']])) {
@@ -399,7 +398,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			// Subscriptions
-			$data['subscription_plans']  = [];
+			$data['subscription_plans'] = [];
 
 			$results = $this->model_catalog_product->getSubscriptions($product_id);
 

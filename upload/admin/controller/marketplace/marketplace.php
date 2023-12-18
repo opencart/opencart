@@ -517,6 +517,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$data['filter_license'] = $filter_license;
 		$data['filter_member_type'] = $filter_member_type;
 		$data['filter_rating'] = $filter_rating;
+		
 		$data['sort'] = $sort;
 
 		$data['user_token'] = $this->session->data['user_token'];

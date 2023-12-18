@@ -1,0 +1,34 @@
+<form id="form-db-schema" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#db-schema">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start">{{ column_table }}</td>
+          <td class="text-end">{{ column_field }}</td>
+          <td class="text-end">{{ column_type }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if tables %}
+          {% for table in tables %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ table.table }}" class="form-check-input"/></td>
+              <td class="text-start">{{ table.table }}</td>
+              <td class="text-end">{{ table.field }}</td>
+              <td class="text-end">{{ table.type }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

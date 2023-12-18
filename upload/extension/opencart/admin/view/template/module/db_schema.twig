@@ -1,0 +1,30 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="float-end">
+                <button type="submit" form="form-db-schema" formaction="{{ report }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_report }}" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+                <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+            <h1>{{ heading_title }}</h1>
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+            <div id="db-schema" class="card-body">{{ list }}</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"><!--
+    $('#db-schema').on('click', 'thead a, .pagination a', function (e) {
+        e.preventDefault();
+
+        $('#db-schema').load(this.href);
+    });
+    //--></script>
+{{ footer }}

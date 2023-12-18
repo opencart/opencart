@@ -2,7 +2,7 @@
   <button type="button" value="1" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
   <button type="button" value="0" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
-    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-load="{{ action }}" data-oc-target="#comment-{{ article_comment_id }}" class="btn btn-outline-secondary">{{ button_comment }}</button>
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-load="{{ action }}" data-oc-target="#comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
   {% else %}
     <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
@@ -15,17 +15,14 @@
   </div>
   <div class="col-4">
     <div class="input-group">
-      <span class="input-group-text">{{ text_sort }}</span>
-      <select id="sort" class="form-select">
+      <span class="input-group-text">{{ text_sort }}</span> <select id="sort" class="form-select">
         <option value="rating">{{ text_rating }}</option>
         <option value="date_added">{{ text_date_added }}</option>
       </select>
     </div>
   </div>
 </div>
-
 <div id="comment">{{ list }}</div>
-
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -36,18 +33,14 @@
       <div class="modal-body">
         <form id="form-comment" action="" data-oc-toggle="ajax" data-oc-load="" data-oc-target="">
           <div class="mb-3 required">
-            <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <label for="input-comment" class="form-label">{{ entry_comment }}</label> <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
-
           {{ captcha }}
-
         </form>
       </div>
       <div class="modal-footer">
@@ -126,7 +119,7 @@ $('#comment').on('click', '[data-oc-toggle=\'more\']', function(e) {
         success: function(html) {
             console.log(html);
 
-            $($(element).attr('data-oc-target')).replaceWith(html);
+            $($(element).attr('data-oc-target')).html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

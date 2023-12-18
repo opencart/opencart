@@ -14,14 +14,14 @@ class Article extends \Opencart\System\Engine\Model {
 	public function getArticle(int $article_id): array {
 		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
 
-		$article_data = $this->cache->get('article.'. md5($sql));
+		$article_data = $this->cache->get('article.' . md5($sql));
 
 		if (!$article_data) {
 			$query = $this->db->query($sql);
 
 			$article_data = $query->row;
 
-			$this->cache->set('article.'. md5($sql), $article_data);
+			$this->cache->set('article.' . md5($sql), $article_data);
 		}
 
 		return $article_data;
@@ -89,24 +89,24 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$article_data = $this->cache->get('article.'. $key);
+		$article_data = $this->cache->get('article.' . $key);
 
 		if (!$article_data) {
 			$query = $this->db->query($sql);
 
 			$article_data = $query->rows;
 
-			$this->cache->set('article.'. $key, $article_data);
+			$this->cache->set('article.' . $key, $article_data);
 		}
 
 		return $article_data;
 	}
 
 	/**
-     * @param array $data
-     * 
-     * @return int
-     */
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalArticles(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'";
 
@@ -179,17 +179,26 @@ class Article extends \Opencart\System\Engine\Model {
 	public function addComment(int $article_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `ip` = '" . $this->db->escape((string)$data['ip']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
 
+		$this->cache->delete('comment');
+
 		return $this->db->getLastId();
 	}
 
 	/**
 	 * getComments
 	 *
-     * @param int $article_id
+	 * @param int   $article_id
 	 * @param array $data
+<<<<<<< Updated upstream
      *
      * @return array
      */
+=======
+	 *
+	 * @return array
+	 */
+
+>>>>>>> Stashed changes
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
 
@@ -230,24 +239,25 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$comment_data = $this->cache->get('comment.'. $key);
+		$comment_data = $this->cache->get('comment.' . $key);
 
 		if (!$comment_data) {
 			$query = $this->db->query($sql);
 
 			$comment_data = $query->rows;
 
-			$this->cache->set('comment.'. $key, $comment_data);
+			$this->cache->set('comment.' . $key, $comment_data);
+			
 		}
 
 		return $comment_data;
 	}
 
 	/**
-     * @param int $article_id
-     *
-     * @return int
-     */
+	 * @param int $article_id
+	 *
+	 * @return int
+	 */
 	public function getTotalComments(int $article_id, array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
 

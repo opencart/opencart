@@ -189,16 +189,10 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int   $article_id
 	 * @param array $data
-<<<<<<< Updated upstream
-     *
-     * @return array
-     */
-=======
 	 *
 	 * @return array
 	 */
 
->>>>>>> Stashed changes
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
 
@@ -247,7 +241,7 @@ class Article extends \Opencart\System\Engine\Model {
 			$comment_data = $query->rows;
 
 			$this->cache->set('comment.' . $key, $comment_data);
-			
+
 		}
 
 		return $comment_data;

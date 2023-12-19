@@ -47,7 +47,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['captcha'] = '';
 		}
-
+		$data['back'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('product/review', $data);

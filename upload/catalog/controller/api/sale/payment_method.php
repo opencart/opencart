@@ -14,7 +14,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (empty($this->session->data['vouchers']) && !$this->cart->hasProducts()) {
+		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
 			$json['error'] = $this->language->get('error_product');
 		}
 

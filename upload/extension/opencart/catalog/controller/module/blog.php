@@ -20,8 +20,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		$filter_data = [
-			'sort'  => 'a.date_added',
-			'order' => 'DESC',
+			'sort'  => $setting['sort'],
+			'order' => $setting['order'],
 			'start' => 0,
 			'limit' => $setting['limit']
 		];

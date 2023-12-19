@@ -127,6 +127,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				if ($result['action'] == $action) {
 					$status = false;
+
 					break;
 				}
 			}

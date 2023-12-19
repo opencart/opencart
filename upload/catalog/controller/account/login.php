@@ -247,12 +247,12 @@ class Login extends \Opencart\System\Engine\Controller {
 				'telephone'         => $customer_info['telephone'],
 				'custom_field'      => $customer_info['custom_field']
 			];
-			
+
 			// Default Addresses
 			$this->load->model('account/address');
-			
+
 			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());
-			
+
 			if ($address_info) {
 				$this->session->data['shipping_address'] = $address_info;
 			}

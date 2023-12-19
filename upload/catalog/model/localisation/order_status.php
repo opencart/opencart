@@ -34,7 +34,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 			$this->cache->set('order_status.' . $key, $order_status_data);
 		}
-		
+
 		return $order_status_data;
 	}
 }

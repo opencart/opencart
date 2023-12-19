@@ -16,8 +16,7 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ event.event_id }}" class="form-check-input"/></td>
               <td class="text-start">{{ event.code }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ event.sort_order }}</td>
-              <td class="text-end text-nowrap">
-                {% if event.description %}
+              <td class="text-end text-nowrap">{% if event.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-event-{{ event.event_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}
                   <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>

@@ -471,25 +471,23 @@ footer h5 {
 .product-thumb .button-group button + button {
   border-left: 1px solid #ddd;
 }
-
 .blog-thumb {
-	border: 1px solid #ddd;
-	margin-bottom: 15px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
 }
 .blog-thumb h4 {
-	font-weight: bold;
+  font-weight: bold;
 }
 .blog-thumb .image {
-	text-align: center;
-	margin-bottom: 15px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 .blog-thumb .image a:hover {
-	opacity: 0.8;
+  opacity: 0.8;
 }
 .blog-thumb .description {
-	padding: 15px;
+  padding: 15px;
 }
-
 @media (min-width: 960px) {
   .product-list .product-thumb {
     display: flex;

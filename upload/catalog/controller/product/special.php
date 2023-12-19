@@ -248,9 +248,9 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 		if ($page == 1) {
-		    $this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language')), 'canonical');
+			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language')), 'canonical');
 		} else {
-		    $this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page='. $page), 'canonical');
+			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page='. $page), 'canonical');
 		}
 
 		if ($page > 1) {
@@ -258,7 +258,7 @@ class Special extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($limit && ceil($product_total / $limit) > $page) {
-		    $this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page='. ($page + 1)), 'next');
+			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page='. ($page + 1)), 'next');
 		}
 
 		$data['sort'] = $sort;

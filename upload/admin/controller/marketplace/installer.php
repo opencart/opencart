@@ -556,8 +556,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 									$modification_data = [
 										'extension_install_id' => $extension_install_id,
-										'name'                 => $name,
-										'description'          => $description,
+										'name'                 => strip_tags($name),
+										'description'          => nl2br(strip_tags($description)),
 										'code'                 => $code,
 										'author'               => $author,
 										'version'              => $version,

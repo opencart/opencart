@@ -53,7 +53,7 @@ class Error extends \Opencart\System\Engine\Controller {
 			header('Location: ' . $this->config->get('error_page'));
 			exit();
 		}
-	
+
 		return true;
 	}
 

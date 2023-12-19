@@ -29,7 +29,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate cart has products and has stock.
-		if ((empty($this->session->data['vouchers']) && !$this->cart->hasProducts()) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$status = false;
 		}
 
@@ -71,7 +71,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate checkout terms
-		if (empty($this->session->data['agree']) && $this->config->get('config_checkout_id')) {
+		if ($this->config->get('config_checkout_id') && empty($this->session->data['agree'])) {
 			$status = false;
 		}
 

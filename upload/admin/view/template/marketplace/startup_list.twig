@@ -18,8 +18,7 @@
 							<td class="text-start">{{ startup.code }}</td>
 							<td class="text-start">{{ startup.action }}</td>
 							<td class="text-end">{{ startup.sort_order }}</td>
-							<td class="text-end text-nowrap">
-								{% if startup.description %}
+							<td class="text-end text-nowrap">{% if startup.description %}
 									<button type="button" data-bs-toggle="modal" data-bs-target="#modal-startup-{{ startup.startup_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
 								{% else %}
 									<button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>

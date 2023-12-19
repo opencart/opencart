@@ -89,7 +89,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			foreach ($ranges as $range => $value) {
 				if ($value) {
 					$date_added = $value;
-					$code = $range . ($value > 1) ? 's' : '';
+					$code = $range . ($value > 1) ? $range . 's' : '';
 				}
 			}
 
@@ -136,7 +136,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$data['title'] = $notification_info['title'];
 
-			$data['text'] = oc_bbcode_decode($notification_info['text']);
+			$data['text'] = html_entity_decode($notification_info['text'], ENT_QUOTES, 'UTF-8');
 
 			$this->model_tool_notification->editStatus($notification_id, 1);
 

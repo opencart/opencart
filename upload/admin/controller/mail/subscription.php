@@ -69,7 +69,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                         $this->load->model('customer/customer');
 
                         // Customer payment
-                        $customer_payment_info = $this->model_customer_customer->getPaymentMehod($subscription['customer_id'], $subscription['customer_payment_id']);
+                        $customer_payment_info = $this->model_customer_customer->getPaymentMethod($subscription['customer_id'], $subscription['customer_payment_id']);
 
                         if ($customer_payment_info) {
                             // Since the customer payment is integrated into the customer/customer page,

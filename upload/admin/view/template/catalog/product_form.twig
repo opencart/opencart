@@ -1118,7 +1118,8 @@
                             {% for customer_group in customer_groups %}
                               <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
-                          </select></td>
+                          </select>
+                        </td>
                         <td class="text-start"><input type="text" name="product_subscription[{{ subscription_row }}][trial_price]" value="{{ product_subscription.trial_price }}" placeholder="{{ entry_trial_price }}" class="form-control"/></td>
                         <td class="text-start"><input type="text" name="product_subscription[{{ subscription_row }}][price]" value="{{ product_subscription.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>

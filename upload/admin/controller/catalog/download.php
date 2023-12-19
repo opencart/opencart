@@ -45,7 +45,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['list'] = $this->getList();
+		$data['list'] = $this->controller_catalog_download->getList();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -60,7 +60,7 @@ class Download extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/download');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_catalog_download->getList());
 	}
 
 	/**

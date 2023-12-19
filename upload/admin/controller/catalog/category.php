@@ -44,7 +44,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/category.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->getList();
+		$data['list'] = $this->controller_catalog_category->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -61,7 +61,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/category');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_catalog_category->getList());
 	}
 
 	/**
@@ -261,7 +261,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['stores'] = [];
-		
+
 		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
@@ -389,10 +389,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
-			
+
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->post['category_id']) {
-					$json['error']['parent'] = $this->language->get('error_parent');					
+					$json['error']['parent'] = $this->language->get('error_parent');
 					break;
 				}
 			}

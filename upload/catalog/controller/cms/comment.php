@@ -273,8 +273,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	/*
 	 * Add
 	 *
-     * @return void
-     */
+	 * @return void
+	 */
 	public function add(): void {
 		$this->load->language('cms/comment');
 

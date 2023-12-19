@@ -1,6 +1,6 @@
 <?php
 class ModelExtensionPaymentLaybuy extends Model {
-	public function addTransaction($status, $data = array()) {
+	public function addTransaction($data, $status) {
 		$this->log('Report: ' . print_r($data, true), '1');
 
 		$this->log('Status: ' . $status, '1');

@@ -194,8 +194,7 @@
                 {% if product.mpn %}
                   {{ text_mpn }}{{ product.mpn }}
                   <br/>
-                {% endif %}
-              </td>
+                {% endif %}</td>
               <td>{{ product.name }}
 
                 {% for option in product.option %}
@@ -206,9 +205,8 @@
                 {% if product.reward %}
                   <br/>
                   <small> - {{ text_points }} {{ product.reward }}</small>
-                {% endif %}
+                {% endif %}</td>
 
-              </td>
               <td>{{ product.weight }}</td>
               <td>{{ product.model }}</td>
               <td class="text-end">{{ product.quantity }}</td>

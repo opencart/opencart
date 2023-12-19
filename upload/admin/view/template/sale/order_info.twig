@@ -103,8 +103,7 @@
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
-                  </form>
-                </td>
+                  </form></td>
               </tr>
             {% endfor %}
           </tbody>
@@ -120,8 +119,7 @@
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
-                  </form>
-                </td>
+                  </form></td>
               </tr>
             {% endfor %}
             {% if not order_products and not order_vouchers %}

@@ -18,13 +18,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$data['article_id'] = 0;
 		}
 
-		if (isset($this->request->get['sort'])) {
+		if (isset($this->request->get['sort']) && $this->request->get['route'] == 'sale/returns.history') {
 			$sort = $this->request->get['sort'];
 		} else {
 			$sort = 'date_added';
 		}
 
-		if (isset($this->request->get['order'])) {
+		if (isset($this->request->get['order']) && $this->request->get['route'] == 'sale/returns.history') {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'DESC';

@@ -163,162 +163,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['image'] = '';
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . $this->request->get['search'];
-		}
-
-		if (isset($this->request->get['tag'])) {
-			$url .= '&tag=' . $this->request->get['tag'];
-		}
-
-		if (isset($this->request->get['topic_id'])) {
-			$url .= '&topic_id=' . $this->request->get['topic_id'];
-		}
-
-		if (isset($this->request->get['author'])) {
-			$url .= '&author=' . (string)$this->request->get['author'];
-		}
-
-		$data['sorts'] = [];
-
-		$data['sorts'][] = [
-			'text'  => $this->language->get('text_date_added_asc'),
-			'value' => 'date_added-ASC',
-			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=date_added&order=ASC' . $url)
-		];
-
-		$data['sorts'][] = [
-			'text'  => $this->language->get('text_date_added_desc'),
-			'value' => 'date_added-DESC',
-			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=date_added&order=DESC' . $url)
-		];
-
-		$data['sorts'][] = [
-			'text'  => $this->language->get('text_rating_asc'),
-			'value' => 'rating-ASC',
-			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=rating&order=ASC' . $url)
-		];
-
-		$data['sorts'][] = [
-			'text'  => $this->language->get('text_rating_desc'),
-			'value' => 'rating-DESC',
-			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=rating&order=DESC' . $url)
-		];
-
-		$data['search'] = $filter_search;
-		$data['topic_id'] = $filter_topic_id;
-
-		$data['topics'] = [];
-
-		$results = $this->model_cms_topic->getTopics();
-
-		foreach ($results as $result) {
-			$data['topics'][] = [
-				'topic_id' => $result['topic_id'],
-				'name'     => $result['name']
-			];
-		}
-
-		$data['list'] = $this->controller_cms_blog->getList();
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
-
-		$data['language'] = $this->config->get('config_language');
-
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
-
-		$this->response->setOutput($this->load->view('cms/blog_list', $data));
-	}
-
-	/**
-	 * @return void
-	 */
-	public function list(): void {
-		$this->load->language('cms/blog');
-
-		$this->response->setOutput($this->controller_cms_blog->getList());
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getList(): string {
-		if (isset($this->request->get['search'])) {
-			$filter_search = (string)$this->request->get['search'];
-		} else {
-			$filter_search = '';
-		}
-
-		if (isset($this->request->get['tag'])) {
-			$filter_tag = (string)$this->request->get['tag'];
-		} else {
-			$filter_tag = '';
-		}
-
-		if (isset($this->request->get['topic_id'])) {
-			$filter_topic_id = (int)$this->request->get['topic_id'];
-		} else {
-			$filter_topic_id = 0;
-		}
-
-		if (isset($this->request->get['author'])) {
-			$filter_author = (string)$this->request->get['author'];
-		} else {
-			$filter_author = '';
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'ad.name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . $this->request->get['search'];
-		}
-
-		if (isset($this->request->get['tag'])) {
-			$url .= '&tag=' . $this->request->get['tag'];
-		}
-
-		if (isset($this->request->get['topic_id'])) {
-			$url .= '&topic_id=' . $this->request->get['topic_id'];
-		}
-
-		if (isset($this->request->get['author'])) {
-			$url .= '&author=' . (string)$this->request->get['author'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
 		$limit = $this->config->get('config_pagination');
 
 		$data['articles'] = [];
@@ -401,6 +245,67 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($article_total - $limit)) ? $article_total : ((($page - 1) * $limit) + $limit), $article_total, ceil($article_total / $limit));
 
+		$url = '';
+
+		if (isset($this->request->get['search'])) {
+			$url .= '&search=' . $this->request->get['search'];
+		}
+
+		if (isset($this->request->get['tag'])) {
+			$url .= '&tag=' . $this->request->get['tag'];
+		}
+
+		if (isset($this->request->get['topic_id'])) {
+			$url .= '&topic_id=' . $this->request->get['topic_id'];
+		}
+
+		if (isset($this->request->get['author'])) {
+			$url .= '&author=' . (string)$this->request->get['author'];
+		}
+
+		$data['sorts'] = [];
+
+		$data['sorts'][] = [
+			'text'  => $this->language->get('text_date_added_asc'),
+			'value' => 'date_added-ASC',
+			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=date_added&order=ASC' . $url)
+		];
+
+		$data['sorts'][] = [
+			'text'  => $this->language->get('text_date_added_desc'),
+			'value' => 'date_added-DESC',
+			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=date_added&order=DESC' . $url)
+		];
+
+		$data['sorts'][] = [
+			'text'  => $this->language->get('text_rating_asc'),
+			'value' => 'rating-ASC',
+			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=rating&order=ASC' . $url)
+		];
+
+		$data['sorts'][] = [
+			'text'  => $this->language->get('text_rating_desc'),
+			'value' => 'rating-DESC',
+			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=rating&order=DESC' . $url)
+		];
+
+		$data['search'] = $filter_search;
+		$data['topic_id'] = $filter_topic_id;
+
+		$data['topics'] = [];
+
+		$results = $this->model_cms_topic->getTopics();
+
+		foreach ($results as $result) {
+			$data['topics'][] = [
+				'topic_id' => $result['topic_id'],
+				'name'     => $result['name']
+			];
+		}
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
+
 		// http://googlewebmastercentral.articlespot.com/2011/09/pagination-with-relnext-and-relprev.html
 		if ($page == 1) {
 			$this->document->addLink($this->url->link('cms/blog', 'language=' . $this->config->get('config_language')), 'canonical');
@@ -416,7 +321,16 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$this->document->addLink($this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&page=' . ($page + 1)), 'next');
 		}
 
-		return $this->load->view('cms/blog_list', $data);
+		$data['language'] = $this->config->get('config_language');
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('cms/blog', $data));
 	}
 
 	/**

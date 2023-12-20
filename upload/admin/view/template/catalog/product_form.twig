@@ -1167,12 +1167,14 @@
                           <div class="input-group">
                             <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control date"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                          </div></td>
+                          </div>
+                        </td>
                         <td class="text-start">
                           <div class="input-group">
                             <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control date"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                          </div></td>
+                          </div>
+                        </td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set discount_row = discount_row + 1 %}
@@ -1226,7 +1228,8 @@
                           <div class="input-group">
                             <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control date"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                          </div></td>
+                          </div>
+                        </td>
                         <td class="text-end"><button type="button" onclick="$('#special-row-{{ special_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set special_row = special_row + 1 %}
@@ -1292,7 +1295,8 @@
                                 <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                                 <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                               </div>
-                            </div></td>
+                            </div>
+                          </td>
                           <td class="text-start"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                           <td class="text-end"><button type="button" onclick="$('#product-image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>

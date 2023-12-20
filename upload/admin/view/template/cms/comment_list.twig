@@ -31,9 +31,8 @@
                 <small> - {{ comment.date_added }}</small>
               </p>
 
-              {{ comment.comment }}
+              {{ comment.comment }}</td>
 
-            </td>
             <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment-{{ comment.comment_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
           </tr>
         {% endfor %}

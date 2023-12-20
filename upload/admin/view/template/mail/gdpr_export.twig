@@ -7,8 +7,7 @@
             <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store_name }}" title="{{ store_name }}" style="margin-left: auto; margin-right: auto;"/></a>
           {% else %}
             <a href="{{ store_url }}">{{ store_name }}</a>
-          {% endif %}
-        </td>
+          {% endif %}</td>
       </tr>
     </thead>
     <tbody>
@@ -18,8 +17,7 @@
       <tr>
         <td style="border-bottom: 1px solid #ddd;">
           <p>{{ text_hello }}</p>
-          <p>{{ text_gdpr }}</p>
-        </td>
+          <p>{{ text_gdpr }}</p></td>
       </tr>
       {% if customer_id %}
         <tr>
@@ -42,8 +40,7 @@
                   <td>{{ telephone }}</td>
                 </tr>
               </tbody>
-            </table>
-          </td>
+            </table></td>
         </tr>
       {% endif %}
       {% if addresses %}
@@ -100,8 +97,7 @@
                     <td>{{ address.country }}</td>
                   </tr>
                 </tbody>
-              </table>
-            </td>
+              </table></td>
           </tr>
           {% set address_row = address_row + 1 %}
         {% endfor %}
@@ -127,8 +123,7 @@
                   </tr>
                 {% endfor %}
               </tbody>
-            </table>
-          </td>
+            </table></td>
         </tr>
       {% endif %}
     </tbody>

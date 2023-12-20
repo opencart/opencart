@@ -132,8 +132,7 @@
                               <input type="text" name="topic_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if topic_seo_url[store.store_id][language.language_id] %}{{ topic_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
                             </div>
                             <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
-                          {% endfor %}
-                        </td>
+                          {% endfor %}</td>
                       </tr>
                     {% endfor %}
                   </tbody>

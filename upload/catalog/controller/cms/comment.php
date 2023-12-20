@@ -18,13 +18,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$data['article_id'] = 0;
 		}
 
-		if (isset($this->request->get['sort']) && $this->request->get['route'] == 'sale/returns.history') {
+		if (isset($this->request->get['sort']) && $this->request->get['route'] == 'cms/blog.info') {
 			$sort = $this->request->get['sort'];
 		} else {
 			$sort = 'date_added';
 		}
 
-		if (isset($this->request->get['order']) && $this->request->get['route'] == 'sale/returns.history') {
+		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/blog.info') {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'DESC';
@@ -41,7 +41,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 		// Create a login token to prevent brute force attacks
 		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&comment_token=' . $this->session->data['comment_token'] = oc_token(32), true);
 
-		$data['list'] = $this->getList();
+		$data['like'] = $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true);
+		$data['dislike'] = $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true);
+
+		$data['list'] = $this->controller_cms_comment->getList();
 
 		$data['sorts'] = [];
 
@@ -94,7 +97,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('cms/comment');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_cms_comment->getList());
 	}
 
 	/**
@@ -163,9 +166,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'comment'            => nl2br($result['comment']),
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'like'               => $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true),
+				'dislike'            => $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true),
 				'reply'              => $reply,
 				'reply_add'          => $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&comment_token=' . $this->session->data['comment_token'] . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'], true),
 				'reply_total'        => $reply_total
+
 			];
 		}
 
@@ -189,7 +195,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function reply(): void {
 		$this->load->language('cms/comment');
 
-		$this->response->setOutput($this->getReplies());
+		$this->response->setOutput($this->controller_cms_comment->getReplies());
 	}
 
 	/**
@@ -387,9 +393,22 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$article_id = 0;
 		}
 
+		if (isset($this->request->get['article_comment_id'])) {
+			$article_comment_id = (int)$this->request->get['article_comment_id'];
+		} else {
+			$article_comment_id = 0;
+		}
+
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
+
+		if (!$article_info) {
+			$json['error']['warning'] = $this->language->get('error_article');
+		}
+
+		// Comment
+		$article_info = $this->model_cms_article->getComment($article_id);
 
 		if (!$article_info) {
 			$json['error']['warning'] = $this->language->get('error_article');

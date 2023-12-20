@@ -63,22 +63,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . $this->request->get['search'];
-		}
-
-		if (isset($this->request->get['tag'])) {
-			$url .= '&tag=' . $this->request->get['tag'];
-		}
-
-		if (isset($this->request->get['topic_id'])) {
-			$url .= '&topic_id=' . $this->request->get['topic_id'];
-		}
-
-		if (isset($this->request->get['author'])) {
-			$url .= '&author=' . $this->request->get['author'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -245,6 +229,20 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($article_total - $limit)) ? $article_total : ((($page - 1) * $limit) + $limit), $article_total, ceil($article_total / $limit));
 
+		$data['search'] = $filter_search;
+		$data['topic_id'] = $filter_topic_id;
+
+		$data['topics'] = [];
+
+		$results = $this->model_cms_topic->getTopics();
+
+		foreach ($results as $result) {
+			$data['topics'][] = [
+				'topic_id' => $result['topic_id'],
+				'name'     => $result['name']
+			];
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['search'])) {
@@ -288,20 +286,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 			'value' => 'rating-DESC',
 			'href'  => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&sort=rating&order=DESC' . $url)
 		];
-
-		$data['search'] = $filter_search;
-		$data['topic_id'] = $filter_topic_id;
-
-		$data['topics'] = [];
-
-		$results = $this->model_cms_topic->getTopics();
-
-		foreach ($results as $result) {
-			$data['topics'][] = [
-				'topic_id' => $result['topic_id'],
-				'name'     => $result['name']
-			];
-		}
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

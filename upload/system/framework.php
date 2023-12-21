@@ -186,7 +186,7 @@ $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
-	$pre_action  = new \Opencart\System\Engine\Action($pre_action);
+	$pre_action = new \Opencart\System\Engine\Action($pre_action);
 
 	$result = $pre_action->execute($registry);
 

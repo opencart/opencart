@@ -115,7 +115,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_voucher->getVouchers($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['order_id']) {	
+			if ($result['order_id']) {
 				$order_href = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url);
 			} else {
 				$order_href = '';

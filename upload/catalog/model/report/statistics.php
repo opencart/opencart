@@ -58,5 +58,5 @@ class Statistics extends \Opencart\System\Engine\Model {
 	 */
 	public function editValue(string $code, float $value): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "statistics` SET `value` = '" . (float)$value . "' WHERE `code` = '" . $this->db->escape($code) . "'");
-	}	
+	}
 }

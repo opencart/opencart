@@ -34,7 +34,7 @@ class Autoloader {
 	 * @return void
 	 *
 	 * @psr-4 filename standard is stupid composer has lower case file structure than its packages have camelcase file names!
-	 */	
+	 */
 	public function register(string $namespace, string $directory, $psr4 = false): void {
 		$this->path[$namespace] = [
 			'directory' => $directory,

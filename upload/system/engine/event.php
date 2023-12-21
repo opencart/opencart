@@ -53,7 +53,7 @@ class Event {
 			$sort_order[$key] = $value['priority'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $this->data);	
+		array_multisort($sort_order, SORT_ASC, $this->data);
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class Event {
 			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
 				unset($this->data[$key]);
 			}
-		}			
+		}
 	}
 	
 	/**
@@ -103,5 +103,5 @@ class Event {
 				unset($this->data[$key]);
 			}
 		}
-	}	
+	}
 }

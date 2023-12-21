@@ -80,7 +80,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 					$this->model_account_activity->addActivity('reset', $activity_data);
 				}
-			}	
+			}
 		}
 	}
 
@@ -107,7 +107,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 				$this->model_account_activity->addActivity('login', $activity_data);
 			}
-		}	
+		}
 	}
 
 	// catalog/model/account/customer/editCode/after
@@ -135,7 +135,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 				$this->model_account_activity->addActivity('forgotten', $activity_data);
 			}
-		}	
+		}
 	}
 
 	// catalog/model/account/customer/addTransaction/after
@@ -165,7 +165,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 				$this->model_account_activity->addActivity('transaction', $activity_data);
 			}
 		}
-	}	
+	}
 	
 	// catalog/model/account/affiliate/addAffiliate/after
 
@@ -187,7 +187,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_activity->addActivity('affiliate_add', $activity_data);
 		}
-	}	
+	}
 	
 	// catalog/model/account/affiliate/editAffiliate/after
 
@@ -230,7 +230,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_account_activity->addActivity('address_add', $activity_data);
-		}	
+		}
 	}
 
 	// catalog/model/account/address/editAddress/after
@@ -252,7 +252,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_account_activity->addActivity('address_edit', $activity_data);
-		}	
+		}
 	}
 
 	// catalog/model/account/address/deleteAddress/after
@@ -307,7 +307,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 				$this->model_account_activity->addActivity('return_guest', $activity_data);
 			}
 		}
-	}	
+	}
 	
 	// catalog/model/checkout/order/addHistory/before
 

@@ -41,7 +41,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('customer/customer_approval', $data));	
+		$this->response->setOutput($this->load->view('customer/customer_approval', $data));
 	}
 
 	/**
@@ -144,7 +144,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			'limit'                    => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('customer/customer_approval');	
+		$this->load->model('customer/customer_approval');
 
 		$results = $this->model_customer_customer_approval->getCustomerApprovals($filter_data);
 

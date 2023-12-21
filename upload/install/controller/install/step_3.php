@@ -299,7 +299,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$data['db_ssl_ca'] = $this->request->post['db_ssl_ca'];
 		} else {
 			$data['db_ssl_ca'] = '';
-		}		
+		}
 
 		if (isset($this->request->post['db_database'])) {
 			$data['db_database'] = $this->request->post['db_database'];

@@ -37,5 +37,5 @@ class Debug extends \Opencart\System\Engine\Controller {
 				$this->log->write($route);
 			}
 		}
-	}	
+	}
 }

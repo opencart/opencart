@@ -17,7 +17,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	public function addReview(string &$route, array &$args, &$output): void {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('review', 1);	
+		$this->model_report_statistics->addValue('review', 1);
 	}
 
 	// catalog/model/account/returns/addReturn/after

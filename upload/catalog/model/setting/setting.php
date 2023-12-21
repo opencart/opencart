@@ -53,5 +53,5 @@ class Setting extends \Opencart\System\Engine\Model {
 		} else {
 			return '';
 		}
-	}	
+	}
 }

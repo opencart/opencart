@@ -23,6 +23,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			} else {
 				$this->language->set($prefix . '_' . $result['key'], html_entity_decode($result['value'], ENT_QUOTES, 'UTF-8'));
 			}
-		}	
+		}
 	}
 }

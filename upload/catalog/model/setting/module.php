@@ -19,5 +19,5 @@ class Module extends \Opencart\System\Engine\Model {
 		} else {
 			return [];
 		}
-	}		
+	}
 }

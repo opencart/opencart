@@ -25,7 +25,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 			$description = $args[1];
 		} else {
 			$description = '';
-		}		
+		}
 		
 		if (isset($args[2])) {
 			$amount = $args[2];

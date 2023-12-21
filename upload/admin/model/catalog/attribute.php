@@ -104,8 +104,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'ad.name', 
-			'attribute_group', 
+			'ad.name',
+			'attribute_group',
 			'a.sort_order'
 		];
 

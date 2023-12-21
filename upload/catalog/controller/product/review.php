@@ -72,7 +72,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		$keys = [
-			'name',
+			'author',
 			'text',
 			'rating'
 		];

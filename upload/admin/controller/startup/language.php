@@ -25,20 +25,22 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		self::$languages = $this->model_localisation_language->getLanguages();
 
-		if (isset(self::$languages[$code])) {
-			$language_info = self::$languages[$code];
-
-			// Language
-			if ($language_info['extension']) {
-				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
-			}
-
-			// Set the config language_id key
-			$this->config->set('config_language_id', $language_info['language_id']);
-			$this->config->set('config_language_admin', $language_info['code']);
-
-			$this->load->language('default');
+		if (!isset(self::$languages[$code])) {
+			$code = array_key_first(self::$languages);
 		}
+			
+		$language_info = self::$languages[$code];
+
+		// Language
+		if ($language_info['extension']) {
+			$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
+		}
+
+		// Set the config language_id key
+		$this->config->set('config_language_id', $language_info['language_id']);
+		$this->config->set('config_language_admin', $language_info['code']);
+
+		$this->load->language('default');
 	}
 
 	// Fill the language up with default values

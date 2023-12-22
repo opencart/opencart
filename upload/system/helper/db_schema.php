@@ -578,6 +578,10 @@ function oc_db_schema() {
 				'type' => 'text'
 			],
 			[
+				'name' => 'rating',
+				'type' => 'int(11)'
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)'
 			],
@@ -701,8 +705,8 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name'     => 'article_comment_id',
-				'type'     => 'int(11)'
+				'name' => 'article_comment_id',
+				'type' => 'int(11)'
 			],
 			[
 				'name'    => 'store_id',

@@ -6,7 +6,6 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Language extends \Opencart\System\Engine\Controller {
-
 	/**
 	 * Dump all the language vars into the template.
 	 *

@@ -66,7 +66,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 			foreach ($extensions as $extension) {
-				 $result = $this->load->controller('extension/' . $extension['extension'] . '/total/' . $extension['code']);
+				$result = $this->load->controller('extension/' . $extension['extension'] . '/total/' . $extension['code']);
 
 				if (!$result instanceof \Exception) {
 					$data['modules'][] = $result;

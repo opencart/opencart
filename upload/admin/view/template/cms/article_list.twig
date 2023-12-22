@@ -21,8 +21,7 @@
                   <small class="text-success">{{ text_enabled }}</small>
                 {% else %}
                   <small class="text-danger">{{ text_disabled }}</small>
-                {% endif %}
-              </td>
+                {% endif %}</td>
               <td class="text-start">{{ article.author }}</td>
               <td class="text-end">{{ article.date_added }}</td>
               <td class="text-end"><a href="{{ article.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>

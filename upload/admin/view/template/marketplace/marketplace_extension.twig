@@ -19,8 +19,7 @@
                   <a href="{{ download.install }}" class="dropdown-item{% if not download.install %} disabled{% endif %}"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="{{ download.uninstall }}" class="dropdown-item{% if not download.uninstall %} disabled{% endif %}"><i class="fa-solid fa-minus-circle fa-fw"></i> {{ text_uninstall }}</a> <a href="{{ download.delete }}" class="dropdown-item{% if not download.delete %} disabled{% endif %}"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>
                 </div>
               </div>
-            </div>
-          </td>
+            </div></td>
         </tr>
       {% endfor %}
     {% else %}

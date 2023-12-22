@@ -1,5 +1,5 @@
 {% if replies %}
-  <div id="reply-{{ parent_id }}-{{ article_comment_id }}">
+  <div id="reply-{{ parent_id }}-{{ page }}">
     {% for reply in replies %}
       <div class="p-2 ps-5 border-bottom">
         <p>{{ text_by }} {{ reply.author }} - {{ reply.date_added }}</p>
@@ -7,10 +7,12 @@
       </div>
     {% endfor %}
   </div>
-  {% if next %}
-    <div class="text-center p-2">
-      <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ article_comment_id }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
-      <button type="button" value="{{ next }}" data-oc-toggle="next" data-oc-target="#reply-{{ comment.article_comment_id }}" class="btn btn-outline-secondary">{{ button_more }}</button>
-    </div>
-  {% endif %}
+  <div id="reply-{{ parent_id }}-{{ page + 1 }}" class="text-center p-2">
+    <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
+    {% if next %}
+      <button type="button" value="{{ next }}" data-oc-toggle="next" data-oc-target="#reply-{{ parent_id }}-{{ page + 1 }}" class="btn btn-outline-secondary">{{ button_more }}</button>
+    {% else %}
+      <button type="button" data-oc-target="#reply-{{ parent_id }}-{{ page + 1 }}" class="btn btn-outline-secondary" disabled>{{ button_more }}</button>
+    {% endif %}
+  </div>
 {% endif %}

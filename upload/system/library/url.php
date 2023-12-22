@@ -31,21 +31,21 @@ class Url {
 	}
 
 	/**
-     * addRewrite
-     *
-     * Add a rewrite method to the URL system
-     *
-     * @param object $rewrite
-     *
-     * @return void
-     */
+	 * addRewrite
+	 *
+	 * Add a rewrite method to the URL system
+	 *
+	 * @param object $rewrite
+	 *
+	 * @return void
+	 */
 	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
 		$this->rewrite[] = $rewrite;
 	}
 
 	/**
      * Link
-     * 
+     *
      * Generates a URL
      *
      * @param string $route

@@ -67,4 +67,4 @@ function oc_bbcode_decode(string $string) {
 	$string = preg_replace($pattern, $replace, $string);
 
 	return $string;
-}  
+}

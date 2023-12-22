@@ -87,10 +87,10 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		// Get directories and files
-        $paths = array_merge(
-            glob($directory . $filter_name . '*', GLOB_ONLYDIR),
-            glob($directory . $filter_name . '*{' . implode(',', $allowed) . '}', GLOB_BRACE)
-        );
+		$paths = array_merge(
+			glob($directory . $filter_name . '*', GLOB_ONLYDIR),
+			glob($directory . $filter_name . '*{' . implode(',', $allowed) . '}', GLOB_BRACE)
+		);
 
 		$total = count($paths);
 		$limit = 16;
@@ -98,8 +98,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		if ($paths) {
 			// Split the array based on current page number and max number of items per page of 10
-            foreach (array_slice($paths, $start, $limit) as $path) {
-                $path = str_replace('\\', '/', realpath($path));
+			foreach (array_slice($paths, $start, $limit) as $path) {
+				$path = str_replace('\\', '/', realpath($path));
 
 				if (substr($path, 0, strlen($path)) == $path) {
 					$name = basename($path);

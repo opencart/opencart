@@ -37,7 +37,7 @@ class Recent extends \Opencart\System\Engine\Controller {
 		$data['dashboard_recent_width'] = $this->config->get('dashboard_recent_width');
 
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
@@ -93,7 +93,7 @@ class Recent extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('sale/order');
-		
+
 		$results = $this->model_sale_order->getOrders($filter_data);
 
 		foreach ($results as $result) {

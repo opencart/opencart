@@ -1,8 +1,8 @@
 <div class="text-center">
-  <button type="button" value="1" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
-  <button type="button" value="0" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
+  <button type="button" value="{{ like }}" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
+  <button type="button" value="{{ dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
-    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-load="{{ action }}" data-oc-target="#comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
   {% else %}
     <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
@@ -31,7 +31,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment" action="" data-oc-load="" data-oc-target="">
+        <form id="form-comment" action="" data-oc-target="">
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
@@ -69,7 +69,6 @@ $('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
     console.log($(element).attr('value'));
 
     $('#form-comment').attr('action', $(element).val());
-    $('#form-comment').attr('data-oc-load', $(element).attr('data-oc-load'));
     $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
 
     $('#modal-comment').modal('show');
@@ -125,6 +124,38 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
     });
 });
 
+// Rating
+$('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 // Add Comment
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();
@@ -132,7 +163,7 @@ $('#form-comment').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: $('#button-comment').attr('formaction'),
+        url: $(element).attr('action'),
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
@@ -169,7 +200,7 @@ $('#form-comment').on('submit', function(e) {
 
                 $('#input-comment').val('');
 
-                $($('#form-comment').attr('data-oc-target')).find('');
+                $($('#form-comment').attr('data-oc-target')).find('[data-oc-toggle=\'refresh\']').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

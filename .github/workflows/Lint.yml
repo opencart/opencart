@@ -40,16 +40,14 @@ jobs:
             echo "No syntax errors were detected."
           fi
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          path: |
+            ~/.cache/composer/files
+            ./.cache
+          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ matrix.php }}-
 
       - name: Install dependencies
         run: composer require phpstan/phpstan 1.10.41

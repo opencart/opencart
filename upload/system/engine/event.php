@@ -21,49 +21,49 @@ class Event {
 	 * @var array
 	 */
 	protected array $data = [];
-	
+
 	/**
-     * Constructor
-     *
-     * @param object $route
-     */
+	 * Constructor
+	 *
+	 * @param object $route
+	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
-	
+
 	/**
-     * Register
-     *
-     * @param string $trigger
-     * @param object $action
-     * @param int	 $priority
-     *
-     * @return void
-     */
+	 * Register
+	 *
+	 * @param string $trigger
+	 * @param object $action
+	 * @param int	 $priority
+	 *
+	 * @return void
+	 */
 	public function register(string $trigger, \Opencart\System\Engine\Action $action, int $priority = 0): void {
 		$this->data[] = [
 			'trigger'  => $trigger,
 			'action'   => $action,
 			'priority' => $priority
 		];
-		
+
 		$sort_order = [];
 
 		foreach ($this->data as $key => $value) {
 			$sort_order[$key] = $value['priority'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $this->data);	
+		array_multisort($sort_order, SORT_ASC, $this->data);
 	}
-	
+
 	/**
-     * Trigger
-     *
-     * @param string $event
-     * @param array	 $args
-     *
-     * @return mixed
-     */
+	 * Trigger
+	 *
+	 * @param string $event
+	 * @param array	 $args
+	 *
+	 * @return mixed
+	 */
 	public function trigger(string $event, array $args = []) {
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
@@ -73,35 +73,35 @@ class Event {
 
 		return '';
 	}
-	
+
 	/**
-     * Unregister
-     *
-     * @param string $trigger
-     * @param string $route
-     *
-     * @return void
-     */
+	 * Unregister
+	 *
+	 * @param string $trigger
+	 * @param string $route
+	 *
+	 * @return void
+	 */
 	public function unregister(string $trigger, string $route): void {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
 				unset($this->data[$key]);
 			}
-		}			
+		}
 	}
-	
+
 	/**
-     * Clear
-     *
-     * @param string $trigger
-     *
-     * @return void
-     */
+	 * Clear
+	 *
+	 * @param string $trigger
+	 *
+	 * @return void
+	 */
 	public function clear(string $trigger): void {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger']) {
 				unset($this->data[$key]);
 			}
 		}
-	}	
+	}
 }

@@ -5,3 +5,4 @@ parameters:
     excludePaths:
         - ./system/storage/vendor/
         - ./upload/system/storage/vendor/
+    tmpDir: .cache

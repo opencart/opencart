@@ -14,7 +14,7 @@ class Redis {
      *
      * @param object $registry
      */
-	public function __construct(\Opencart\System\Engine\Registry $registry)	{
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
 
 		try {
@@ -33,9 +33,9 @@ class Redis {
      *
      * @return array
      */
-	public function read(string $session_id): array	{
+	public function read(string $session_id): array {
         $data = $this->redis->get($this->prefix . $session_id);
-        
+
         if (is_null($data) || empty($data)) {
             return [];
         } else {
@@ -44,13 +44,13 @@ class Redis {
     }
 
 	/**
-     * Write
-     *
-     * @param string $session_id
-     * @param array  $data
-     *
-     * @return bool
-     */
+	 * Write
+	 *
+	 * @param string $session_id
+	 * @param array  $data
+	 *
+	 * @return bool
+	 */
 	public function write(string $session_id, array $data): bool {
 		if ($session_id) {
 			$this->redis->set($this->prefix . $session_id, $data ? json_encode($data) : '', $this->config->get('session_expire'));
@@ -58,14 +58,14 @@ class Redis {
 
 		return true;
 	}
-	
+
 	/**
-     * Destroy
-     *
-     * @param string $session_id
-     *
-     * @return bool
-     */
+	 * Destroy
+	 *
+	 * @param string $session_id
+	 *
+	 * @return bool
+	 */
 	public function destroy(string $session_id): bool {
 		$this->redis->unlink($this->prefix . $session_id);
 
@@ -73,10 +73,10 @@ class Redis {
 	}
 
 	/**
-     * GC
-     *
-     * @return bool
-     */
+	 * GC
+	 *
+	 * @return bool
+	 */
 	public function gc(): bool {
 		// Redis will take care of Garbage Collection itself.
 

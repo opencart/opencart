@@ -246,7 +246,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 					$image = '';
 					$thumb = 'no_image.png';
 				}
-				
+
 				$data['banner_images'][$language_id][] = [
 					'title'      => $value['title'],
 					'link'       => $value['link'],

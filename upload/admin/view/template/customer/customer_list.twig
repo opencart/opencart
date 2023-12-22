@@ -22,8 +22,7 @@
                   <small class="text-success">{{ text_enabled }}</small>
                 {% else %}
                   <small class="text-danger">{{ text_disabled }}</small>
-                {% endif %}
-              </td>
+                {% endif %}</td>
               <td class="text-start">{{ customer.email }}</td>
               <td class="text-start">{{ customer.customer_group }}</td>
               <td class="text-start d-none d-lg-table-cell">{{ customer.date_added }}</td>
@@ -46,8 +45,7 @@
                       <li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fa-solid fa-lock"></i> {{ store.name }}</a></li>
                     {% endfor %}
                   </ul>
-                </div>
-              </td>
+                </div></td>
             </tr>
           {% endfor %}
         {% else %}

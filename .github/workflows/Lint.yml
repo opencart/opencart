@@ -46,8 +46,8 @@ jobs:
           path: |
             ~/.cache/composer/files
             ./.cache
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ matrix.php }}-
 
       - name: Install dependencies
         run: composer require phpstan/phpstan 1.10.41

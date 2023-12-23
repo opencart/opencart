@@ -17,6 +17,7 @@ return $config
         'blank_line_after_opening_tag' => false,
         'blank_lines_before_namespace' => false,
         'braces_position' => ['classes_opening_brace' => 'same_line','functions_opening_brace' => 'same_line'],
+        'control_structure_continuation_position' => ['position' => 'same_line'],
         'combine_nested_dirname' => true,
         'function_declaration' => ['closure_function_spacing' => 'none'],
         'heredoc_indentation' => true,
@@ -30,14 +31,13 @@ return $config
         'pow_to_exponentiation' => true,
         'use_arrow_functions' => true,
         'void_return' => true,
-    ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->in(__DIR__ . '/upload/')
-         ->exclude([
-             __DIR__ . '/upload/system/storage/vendor/',
-         ])
+        ->exclude([
+            __DIR__ . '/upload/system/storage/vendor/',
+        ])
         // ->append([
         //     'file-to-include',
         // ])
-    )
-;
+        )
+    ;

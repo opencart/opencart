@@ -175,6 +175,12 @@ class Modification extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/modification_list', $data);
 	}
 
+	/**
+	 * Refresh
+	 * 
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function refresh(): void {
 		$this->load->language('marketplace/modification');
 
@@ -566,10 +572,20 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * Log
+	 *
+	 * @return void
+	 */
 	public function log(): void {
 		$this->response->setOutput($this->getLog());
 	}
 
+	/**
+	 * getLog
+	 * 
+	 * @return string
+	 */
 	public function getLog(): string {
 		$file = DIR_LOGS . 'ocmod.log';
 
@@ -580,6 +596,11 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Clear
+	 * 
+	 * @return void
+	 */
 	public function clear(): void {
 		$this->load->language('marketplace/modification');
 
@@ -635,6 +656,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Enable
+	 * 
 	 * @return void
 	 */
 	public function enable(): void {
@@ -665,6 +688,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Disable
+	 * 
 	 * @return void
 	 */
 	public function disable(): void {
@@ -695,6 +720,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 * 
 	 * @return void
 	 */
 	public function delete(): void {

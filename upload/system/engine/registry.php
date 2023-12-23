@@ -101,13 +101,13 @@ class Registry {
 		$this->data[$key] = $value;
 	}
 
-    /**
-     * Has
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
+	/**
+	 * Has
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
 	public function has(string $key): bool {
 		return isset($this->data[$key]);
 	}

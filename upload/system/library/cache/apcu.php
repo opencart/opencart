@@ -77,10 +77,10 @@ class Apcu {
 	}
 
 	/**
-     * Delete all cache
-     *
-     * @return bool
-     */
+	 * Delete all cache
+	 *
+	 * @return bool
+	 */
 	public function flush(): bool {
 		$status = false;
 

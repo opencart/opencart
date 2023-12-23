@@ -41,7 +41,7 @@ class Autoloader {
 			'psr4'      => $psr4
 		];
 	}
-	
+
 	/**
 	 * Load
 	 *

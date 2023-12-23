@@ -26,7 +26,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		} else {
 			$description = '';
 		}
-		
+
 		if (isset($args[2])) {
 			$amount = $args[2];
 		} else {
@@ -98,5 +98,5 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				$mail->send();
 			}
 		}
-	}		
+	}
 }

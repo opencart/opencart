@@ -10,10 +10,10 @@ class Redis {
 	private object $redis;
 	public string $prefix;
 	/**
-     * Constructor
-     *
-     * @param object $registry
-     */
+	 * Constructor
+	 *
+	 * @param object $registry
+	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
 
@@ -27,21 +27,21 @@ class Redis {
 	}
 
 	/**
-     * Read
-     *
-     * @param string $session_id
-     *
-     * @return array
-     */
+	 * Read
+	 *
+	 * @param string $session_id
+	 *
+	 * @return array
+	 */
 	public function read(string $session_id): array {
-        $data = $this->redis->get($this->prefix . $session_id);
+		$data = $this->redis->get($this->prefix . $session_id);
 
-        if (is_null($data) || empty($data)) {
-            return [];
-        } else {
-            return json_decode($data, true);
-        }
-    }
+		if (is_null($data) || empty($data)) {
+			return [];
+		} else {
+			return json_decode($data, true);
+		}
+	}
 
 	/**
 	 * Write

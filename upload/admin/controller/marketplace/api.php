@@ -11,9 +11,9 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		$this->load->language('marketplace/api');
-			
+
 		$data['user_token'] = $this->session->data['user_token'];
-			
+
 		$this->response->setOutput($this->load->view('marketplace/api', $data));
 	}
 

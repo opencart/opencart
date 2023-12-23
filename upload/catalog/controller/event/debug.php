@@ -52,5 +52,5 @@ class Debug extends \Opencart\System\Engine\Controller {
 			}
 		}
 		*/
-	}	
+	}
 }

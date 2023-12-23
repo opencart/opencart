@@ -17,12 +17,12 @@ class Cache {
 	private object $adaptor;
 
 	/**
-     * Constructor
-     *
-     * @param string $adaptor The type of storage for the cache.
-     * @param int    $expire  Optional parameters
-     *
-     */
+	 * Constructor
+	 *
+	 * @param string $adaptor The type of storage for the cache.
+	 * @param int    $expire  Optional parameters
+	 *
+	 */
 	public function __construct(string $adaptor, int $expire = 3600) {
 		$class = 'Opencart\System\Library\Cache\\' . $adaptor;
 

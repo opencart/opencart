@@ -112,8 +112,9 @@ if (PHP_VERSION_ID < 80000) {
         (function_exists('stream_get_wrappers') && in_array('phpvfscomposer', stream_get_wrappers(), true))
         || (function_exists('stream_wrapper_register') && stream_wrapper_register('phpvfscomposer', 'Composer\BinProxyWrapper'))
     ) {
-        return include("phpvfscomposer://" . __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php');
+        include("phpvfscomposer://" . __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php');
+        exit(0);
     }
 }
 
-return include __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php';
+include __DIR__ . '/..'.'/mtdowling/jmespath.php/bin/jp.php';

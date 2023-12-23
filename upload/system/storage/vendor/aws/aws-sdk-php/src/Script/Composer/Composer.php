@@ -2,6 +2,7 @@
 namespace Aws\Script\Composer;
 
 use Composer\Script\Event;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Composer
@@ -83,8 +84,31 @@ class Composer
                 $modelDir = $modelPath . $modelName;
 
                 if ($filesystem->exists([$clientDir, $modelDir])) {
-                    $filesystem->remove([$clientDir, $modelDir]);;
-                    $deleteCount++;
+                    $attempts = 3;
+                    $delay = 2;
+
+                    while ($attempts) {
+                        try {
+                            $filesystem->remove([$clientDir, $modelDir]);
+                            $deleteCount++;
+                            break;
+                        } catch (IOException $e) {
+                            $attempts--;
+
+                            if (!$attempts) {
+                                throw new IOException(
+                                    "Removal failed after several attempts. Last error: " . $e->getMessage()
+                                );
+                            } else {
+                                sleep($delay);
+                                $event->getIO()->write(
+                                    "Error encountered: " . $e->getMessage() . ". Retrying..."
+                                );
+                                $delay += 2;
+                            }
+                    }
+                }
+
                 }
             }
         }

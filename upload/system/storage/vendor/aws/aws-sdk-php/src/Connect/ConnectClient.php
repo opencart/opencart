@@ -373,6 +373,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateParticipantRoleConfigAsync(array $args = [])
  * @method \Aws\Result updatePhoneNumber(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePhoneNumberAsync(array $args = [])
+ * @method \Aws\Result updatePhoneNumberMetadata(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePhoneNumberMetadataAsync(array $args = [])
  * @method \Aws\Result updatePrompt(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePromptAsync(array $args = [])
  * @method \Aws\Result updateQueueHoursOfOperation(array $args = [])

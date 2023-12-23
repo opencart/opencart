@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This document has been generated with
  * https://mlocati.github.io/php-cs-fixer-configurator/#version:3.41.1|configurator

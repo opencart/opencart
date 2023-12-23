@@ -1,12 +1,12 @@
 <?php
 namespace Aws\Credentials;
 
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Exception\CredentialsException;
 use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -19,10 +19,14 @@ class InstanceProfileProvider
     const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
     const TOKEN_PATH = 'api/token';
-
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
+    const CFG_EC2_METADATA_V1_DISABLED = 'ec2_metadata_v1_disabled';
+    const DEFAULT_TIMEOUT = 1.0;
+    const DEFAULT_RETRIES = 3;
+    const DEFAULT_TOKEN_TTL_SECONDS = 21600;
+    const DEFAULT_AWS_EC2_METADATA_V1_DISABLED = false;
 
     /** @var string */
     private $profile;
@@ -42,23 +46,26 @@ class InstanceProfileProvider
     /** @var bool */
     private $secureMode = true;
 
+    /** @var bool|null */
+    private $ec2MetadataV1Disabled;
+
     /**
      * The constructor accepts the following options:
      *
      * - timeout: Connection timeout, in seconds.
      * - profile: Optional EC2 profile name, if known.
      * - retries: Optional number of retries to be attempted.
+     * - ec2_metadata_v1_disabled: Optional for disabling the fallback to IMDSv1.
      *
      * @param array $config Configuration options.
      */
     public function __construct(array $config = [])
     {
-        $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: (isset($config['timeout']) ? $config['timeout'] : 1.0);
-        $this->profile = isset($config['profile']) ? $config['profile'] : null;
-        $this->retries = (int) getenv(self::ENV_RETRIES) ?: (isset($config['retries']) ? $config['retries'] : 3);
-        $this->client = isset($config['client'])
-            ? $config['client'] // internal use only
-            : \Aws\default_http_handler();
+        $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: ($config['timeout'] ?? self::DEFAULT_TIMEOUT);
+        $this->profile = $config['profile'] ?? null;
+        $this->retries = (int) getenv(self::ENV_RETRIES) ?: ($config['retries'] ?? self::DEFAULT_RETRIES);
+        $this->client = $config['client'] ?? \Aws\default_http_handler();
+        $this->ec2MetadataV1Disabled = $config[self::CFG_EC2_METADATA_V1_DISABLED] ?? null;
     }
 
     /**
@@ -79,7 +86,7 @@ class InstanceProfileProvider
                         self::TOKEN_PATH,
                         'PUT',
                         [
-                            'x-aws-ec2-metadata-token-ttl-seconds' => 21600
+                            'x-aws-ec2-metadata-token-ttl-seconds' => self::DEFAULT_TOKEN_TTL_SECONDS
                         ]
                     ));
                 } catch (TransferException $e) {
@@ -87,13 +94,13 @@ class InstanceProfileProvider
                         && $previousCredentials instanceof Credentials
                     ) {
                         goto generateCredentials;
-                    }
-                    else if (!method_exists($e, 'getResponse')
+                    } elseif ($this->shouldFallbackToIMDSv1()
+                        && (!method_exists($e, 'getResponse')
                         || empty($e->getResponse())
                         || !in_array(
                             $e->getResponse()->getStatusCode(),
                             [400, 500, 502, 503, 504]
-                        )
+                        ))
                     ) {
                         $this->secureMode = false;
                     } else {
@@ -169,7 +176,7 @@ class InstanceProfileProvider
                         && $previousCredentials instanceof Credentials
                     ) {
                         goto generateCredentials;
-                    } else if (!empty($this->getExceptionStatusCode($e))
+                    } elseif (!empty($this->getExceptionStatusCode($e))
                         && $this->getExceptionStatusCode($e) === 401
                     ) {
                         $this->secureMode = true;
@@ -295,5 +302,31 @@ class InstanceProfileProvider
         }
 
         return $result;
+    }
+
+    /**
+     * This functions checks for whether we should fall back to IMDSv1 or not.
+     * If $ec2MetadataV1Disabled is null then we will try to resolve this value from
+     * the following sources:
+     * - From environment: "AWS_EC2_METADATA_V1_DISABLED".
+     * - From config file: aws_ec2_metadata_v1_disabled
+     * - Defaulted to false
+     *
+     * @return bool
+     */
+    private function shouldFallbackToIMDSv1(): bool 
+    {
+        $isImdsV1Disabled = \Aws\boolean_value($this->ec2MetadataV1Disabled)
+            ?? \Aws\boolean_value(
+                ConfigurationResolver::resolve(
+                    self::CFG_EC2_METADATA_V1_DISABLED,
+                    self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED,
+                    'bool',
+                    ['use_aws_shared_config_files' => true]
+                )
+            )
+            ?? self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED;
+
+        return !$isImdsV1Disabled;
     }
 }

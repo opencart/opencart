@@ -87,6 +87,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise detectSyntaxAsync(array $args = [])
  * @method \Aws\Result detectTargetedSentiment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise detectTargetedSentimentAsync(array $args = [])
+ * @method \Aws\Result detectToxicContent(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise detectToxicContentAsync(array $args = [])
  * @method \Aws\Result importModel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importModelAsync(array $args = [])
  * @method \Aws\Result listDatasets(array $args = [])

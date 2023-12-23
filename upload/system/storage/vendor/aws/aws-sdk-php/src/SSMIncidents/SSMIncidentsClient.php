@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Systems Manager Incident Manager** service.
+ * @method \Aws\Result batchGetIncidentFindings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetIncidentFindingsAsync(array $args = [])
  * @method \Aws\Result createReplicationSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createReplicationSetAsync(array $args = [])
  * @method \Aws\Result createResponsePlan(array $args = [])
@@ -31,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getResponsePlanAsync(array $args = [])
  * @method \Aws\Result getTimelineEvent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTimelineEventAsync(array $args = [])
+ * @method \Aws\Result listIncidentFindings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIncidentFindingsAsync(array $args = [])
  * @method \Aws\Result listIncidentRecords(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listIncidentRecordsAsync(array $args = [])
  * @method \Aws\Result listRelatedItems(array $args = [])

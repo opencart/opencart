@@ -65,6 +65,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
+ * @method \Aws\Result updateKxClusterCodeConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateKxClusterCodeConfigurationAsync(array $args = [])
  * @method \Aws\Result updateKxClusterDatabases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateKxClusterDatabasesAsync(array $args = [])
  * @method \Aws\Result updateKxDatabase(array $args = [])

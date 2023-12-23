@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getServerDetailsAsync(array $args = [])
  * @method \Aws\Result getServerStrategies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getServerStrategiesAsync(array $args = [])
+ * @method \Aws\Result listAnalyzableServers(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAnalyzableServersAsync(array $args = [])
  * @method \Aws\Result listApplicationComponents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationComponentsAsync(array $args = [])
  * @method \Aws\Result listCollectors(array $args = [])

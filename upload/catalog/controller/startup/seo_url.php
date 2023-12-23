@@ -9,7 +9,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): void {
+	public function index() {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
@@ -18,8 +18,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			// Decode URL
 			if (isset($this->request->get['_route_'])) {
-
-
 				$parts = explode('/', $this->request->get['_route_']);
 
 				// remove any empty arrays from trailing
@@ -27,25 +25,23 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 					array_pop($parts);
 				}
 
-				foreach ($parts as $part) {
-					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($part);
+				foreach ($parts as $key => $value) {
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
 
 					if ($seo_url_info) {
 						$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+
+						unset($parts[$key]);
 					}
 				}
 
-				if (!isset($this->request->get['route']) && count($parts) == 1 && isset($this->request->get['language'])) {
+				if (!isset($this->request->get['route'])) {
 					$this->request->get['route'] = $this->config->get('action_default');
 				}
 
-
-			} elseif (!isset($this->request->get['route'])) {
-				$this->request->get['route'] = $this->config->get('action_default');
-			}
-
-			if (!isset($this->request->get['route'])) {
-				$this->request->get['route'] = $this->config->get('action_error');
+				if ($parts) {
+					$this->request->get['route'] = $this->config->get('action_error');
+				}
 			}
 		}
 	}

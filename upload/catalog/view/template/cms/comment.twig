@@ -98,8 +98,6 @@ $('#cms-blog').on('click', '[data-oc-toggle=\'comment\']', function(e) {
 
     var element = this;
 
-    console.log($(element).attr('value'));
-
     $('#form-comment').attr('action', $(element).val());
     $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
 
@@ -126,10 +124,6 @@ $('#form-comment').on('submit', function(e) {
             $('#button-comment').button('reset');
         },
         success: function(json) {
-            console.log(json);
-
-            console.log($('#form-comment').attr('data-oc-target'));
-
             $('.alert-dismissible').remove();
 
             $('#form-comment').find('.is-invalid').removeClass('is-invalid');
@@ -151,7 +145,7 @@ $('#form-comment').on('submit', function(e) {
 
                 $('#input-comment').val('');
 
-                //$($('#form-comment').attr('data-oc-target')).load('');
+                $($('#form-comment').attr('data-oc-target')).find('[data-oc-toggle=\'refresh\']').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -176,7 +170,9 @@ $('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            $($(element).attr('data-oc-target')).replaceWith(html);
+            $(element).parent().after(html);
+
+            $(element).parent().remove();
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -200,9 +196,11 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            //$(element).parent().remove();
+            $($(element).attr('data-oc-target')).remove();
 
-            $($(element).attr('data-oc-target')).replaceWith(html);
+            $(element).parent().after(html);
+
+            $(element).parent().remove();
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

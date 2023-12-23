@@ -14,7 +14,7 @@ class Proxy {
 	/**
 	 * @var array
 	 */
-	protected $data = [];
+	protected array $data = [];
 
 	/**
 	 * __get

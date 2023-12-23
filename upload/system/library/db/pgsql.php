@@ -12,14 +12,14 @@ class PgSQL {
 	private $connection;
 
 	/**
-     * Constructor
-     *
-     * @param string $hostname
-     * @param string $username
-     * @param string $password
-     * @param string $database
-     * @param string $port
-     */
+	 * Constructor
+	 *
+	 * @param string $hostname
+	 * @param string $username
+	 * @param string $password
+	 * @param string $database
+	 * @param string $port
+	 */
 	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
 		if (!$port) {
 			$port = '5432';
@@ -41,12 +41,12 @@ class PgSQL {
 	}
 
 	/**
-     * Query
-     *
-     * @param string $sql
-     *
-     * @return mixed
-     */
+	 * Query
+	 *
+	 * @param string $sql
+	 *
+	 * @return mixed
+	 */
 	public function query(string $sql) {
 		$resource = pg_query($this->connection, $sql);
 
@@ -79,32 +79,32 @@ class PgSQL {
 			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
 		}
 	}
-	
+
 	/**
-     * Escape
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-	public function escape(string $value): string  {
+	 * Escape
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
+	public function escape(string $value): string {
 		return pg_escape_string($this->connection, $value);
 	}
 
 	/**
-     * countAffected
-     *
-     * @return int
-     */
+	 * countAffected
+	 *
+	 * @return int
+	 */
 	public function countAffected(): int {
 		return pg_affected_rows($this->connection);
 	}
-	
+
 	/**
-     * getLastId
-     *
-     * @return int
-     */
+	 * getLastId
+	 *
+	 * @return int
+	 */
 	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
 
@@ -112,10 +112,10 @@ class PgSQL {
 	}
 
 	/**
-     * isConnected
-     *
-     * @return bool
-     */
+	 * isConnected
+	 *
+	 * @return bool
+	 */
 	public function isConnected(): bool {
 		return pg_connection_status($this->connection) == PGSQL_CONNECTION_OK;
 	}

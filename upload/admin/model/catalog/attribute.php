@@ -13,7 +13,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Create a new attribute record in the database.
 	 *
-     *	@param	array	$data
+	 *	@param	array	$data
 	 *
 	 *	@return	int		returns the primary key of the new attribute record.
 	 */
@@ -34,7 +34,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Edit attribute record in the database.
 	 *
-     *	@param	int		$attribute_id	Primary key of the attribute record to edit.
+	 *	@param	int		$attribute_id	Primary key of the attribute record to edit.
 	 *	@param	array	$data  			Array of data [
 	 * 		'attribute_group_id'
 	 * ].
@@ -104,8 +104,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'ad.name', 
-			'attribute_group', 
+			'ad.name',
+			'attribute_group',
 			'a.sort_order'
 		];
 

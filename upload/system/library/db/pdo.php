@@ -18,23 +18,23 @@ class PDO {
 	 * @var int
 	 */
 	private int $affected;
-	
+
 	/**
-     * Constructor
-     *
-     * @param string $hostname
-     * @param string $username
-     * @param string $password
-     * @param string $database
-     * @param string $port
-     */
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey='', string $sslCert='', string $sslCa='') {
+	 * Constructor
+	 *
+	 * @param string $hostname
+	 * @param string $username
+	 * @param string $password
+	 * @param string $database
+	 * @param string $port
+	 */
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey = '', string $sslCert = '', string $sslCa = '') {
 		if (!$port) {
 			$port = '3306';
 		}
 
 		try {
-			$pdo = @new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database . ';charset=utf8mb4', $username, $password, array(\PDO::ATTR_PERSISTENT => false, \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_general_ci'));
+			$pdo = @new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database . ';charset=utf8mb4', $username, $password, [\PDO::ATTR_PERSISTENT => false, \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_general_ci']);
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
@@ -49,14 +49,14 @@ class PDO {
 			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 		}
 	}
-	
+
 	/**
-     * Query
-     *
-     * @param string $sql
-     *
-     * @return mixed
-     */
+	 * Query
+	 *
+	 * @param string $sql
+	 *
+	 * @return mixed
+	 */
 	public function query(string $sql) {
 		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
 
@@ -94,12 +94,12 @@ class PDO {
 	}
 
 	/**
-     * Escape
-     *
-     * @param string $value
-     *
-     * @return string
-     */
+	 * Escape
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
 	public function escape(string $value): string {
 		$key = ':' . count($this->data);
 
@@ -109,28 +109,28 @@ class PDO {
 	}
 
 	/**
-     * countAffected
-     *
-     * @return int
-     */
+	 * countAffected
+	 *
+	 * @return int
+	 */
 	public function countAffected(): int {
 		return $this->affected;
 	}
 
 	/**
-     * getLastId
-     *
-     * @return int
-     */
+	 * getLastId
+	 *
+	 * @return int
+	 */
 	public function getLastId(): int {
 		return $this->connection->lastInsertId();
 	}
 
 	/**
-     * isConnected
-     *
-     * @return bool
-     */
+	 * isConnected
+	 *
+	 * @return bool
+	 */
 	public function isConnected(): bool {
 		return $this->connection;
 	}

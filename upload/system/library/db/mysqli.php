@@ -88,12 +88,12 @@ class MySQLi {
 	}
 
 	/**
-     * Query
-     *
-     * @param string $sql
-     *
-     * @return mixed
-     */
+	 * Query
+	 *
+	 * @param string $sql
+	 *
+	 * @return mixed
+	 */
 	public function query(string $sql) {
 		try {
 			$query = $this->connection->query($sql);
@@ -124,39 +124,39 @@ class MySQLi {
 	}
 
 	/**
-     * Escape
-     *
-     * @param string $value
-     *
-     * @return string
-     */
+	 * Escape
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
 	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
 	}
 
 	/**
-     * countAffected
-     *
-     * @return int
-     */
+	 * countAffected
+	 *
+	 * @return int
+	 */
 	public function countAffected(): int {
 		return $this->connection->affected_rows;
 	}
 
 	/**
-     * getLastId
-     *
-     * @return int
-     */
+	 * getLastId
+	 *
+	 * @return int
+	 */
 	public function getLastId(): int {
 		return $this->connection->insert_id;
 	}
 
 	/**
-     * isConnected
-     *
-     * @return bool
-     */
+	 * isConnected
+	 *
+	 * @return bool
+	 */
 	public function isConnected(): bool {
 		return $this->connection;
 	}

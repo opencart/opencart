@@ -28,12 +28,12 @@ class Redis {
 	}
 
 	/**
-     * Get
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
+	 * Get
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
 	public function get(string $key) {
 		$data = $this->redis->get(CACHE_PREFIX . $key);
 
@@ -41,14 +41,14 @@ class Redis {
 	}
 
 	/**
-     * Set
-     *
-     * @param string $key
-     * @param mixed  $value
-     * @param int    $expire
-     * 
-     * @return void
-     */
+	 * Set
+	 *
+	 * @param string $key
+	 * @param mixed  $value
+	 * @param int    $expire
+	 *
+	 * @return void
+	 */
 	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
@@ -62,12 +62,12 @@ class Redis {
 	}
 
 	/**
-     * Delete
-     *
-     * @param string $key
-     *
-     * @return void
-     */
+	 * Delete
+	 *
+	 * @param string $key
+	 *
+	 * @return void
+	 */
 	public function delete(string $key): void {
 		$this->redis->del(CACHE_PREFIX . $key);
 	}

@@ -45,7 +45,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-            return $this->load->view('extension/opencart/module/blog', $data);
+			return $this->load->view('extension/opencart/module/blog', $data);
 		} else {
 			return '';
 		}

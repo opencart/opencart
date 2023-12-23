@@ -25,7 +25,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v2
+          tools: composer:v2, cs2pr
 
       - name: Lint
         run: |
@@ -40,19 +40,24 @@ jobs:
             echo "No syntax errors were detected."
           fi
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer require phpstan/phpstan 1.10.41
+          path: |
+            ~/.cache/composer/files
+            ./.cache
+            ./.php-cs-fixer.cache
+          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ matrix.php }}-
 
       - name: PHPStan
-        run: ./system/storage/vendor/bin/phpstan analyze --no-progress
+        run: |
+          composer require --dev phpstan/phpstan 1.10.41
+          ./system/storage/vendor/bin/phpstan analyze --no-progress
+
+      - name: Code style
+        if: matrix.php == '8.3'
+        run: |
+          composer require --dev friendsofphp/php-cs-fixer v3.41.1
+          ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
+          ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr

@@ -122,7 +122,21 @@ final class StreamWrapper
     }
 
     /**
-     * @return array<int|string, int>
+     * @return array{
+     *   dev: int,
+     *   ino: int,
+     *   mode: int,
+     *   nlink: int,
+     *   uid: int,
+     *   gid: int,
+     *   rdev: int,
+     *   size: int,
+     *   atime: int,
+     *   mtime: int,
+     *   ctime: int,
+     *   blksize: int,
+     *   blocks: int
+     * }
      */
     public function stream_stat(): array
     {
@@ -152,7 +166,21 @@ final class StreamWrapper
     }
 
     /**
-     * @return array<int|string, int>
+     * @return array{
+     *   dev: int,
+     *   ino: int,
+     *   mode: int,
+     *   nlink: int,
+     *   uid: int,
+     *   gid: int,
+     *   rdev: int,
+     *   size: int,
+     *   atime: int,
+     *   mtime: int,
+     *   ctime: int,
+     *   blksize: int,
+     *   blocks: int
+     * }
      */
     public function url_stat(string $path, int $flags): array
     {

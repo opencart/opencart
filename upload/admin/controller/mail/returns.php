@@ -58,7 +58,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				}
 
 				$this->load->model('localisation/language');
-				
+
 				$language_info = $this->model_localisation_language->getLanguage($return_info['language_id']);
 
 				if ($language_info) {

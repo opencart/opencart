@@ -95,8 +95,8 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
  */
 class CliInstall extends \Opencart\System\Engine\Controller {
 	/**
-     * @return void
-     */
+	 * @return void
+	 */
 	public function index(): void {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
@@ -410,19 +410,19 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
-		
+
 		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
-		
+
 		$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
 		fwrite($file, $output);
@@ -463,15 +463,15 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
-		
+
 		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}

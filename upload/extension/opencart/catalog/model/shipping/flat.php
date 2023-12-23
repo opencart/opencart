@@ -11,7 +11,7 @@ class Flat extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array
 	 */
-	function getQuote(array $address): array {
+	public function getQuote(array $address): array {
 		$this->load->language('extension/opencart/shipping/flat');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('shipping_flat_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");

@@ -22,10 +22,10 @@ class Smtp {
 	];
 
 	/**
-     * Constructor
-     *
-     * @param array $option
-     */
+	 * Constructor
+	 *
+	 * @param array $option
+	 */
 	public function __construct(array &$option = []) {
 		foreach ($this->default as $key => $value) {
 			if (!isset($option[$key])) {
@@ -37,10 +37,10 @@ class Smtp {
 	}
 
 	/**
-     * Send
-     *
-     * @return bool
-     */
+	 * Send
+	 *
+	 * @return bool
+	 */
 	public function send(): bool {
 		if (empty($this->option['smtp_hostname'])) {
 			throw new \Exception('Error: SMTP hostname required!');
@@ -143,7 +143,7 @@ class Smtp {
 
 		if ($handle) {
 			if (substr(PHP_OS, 0, 3) != 'WIN') {
-				socket_set_timeout($handle, $this->option['smtp_timeout'], 0);
+				stream_set_timeout($handle, $this->option['smtp_timeout'], 0);
 			}
 
 			while ($line = fgets($handle, 515)) {
@@ -152,7 +152,7 @@ class Smtp {
 				}
 			}
 
-			fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+			fwrite($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
 			$reply = '';
 
@@ -174,7 +174,7 @@ class Smtp {
 			}
 
 			if (substr($this->option['smtp_hostname'], 0, 3) == 'tls') {
-				fputs($handle, 'STARTTLS' . "\r\n");
+				fwrite($handle, 'STARTTLS' . "\r\n");
 
 				$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
 
@@ -182,39 +182,39 @@ class Smtp {
 					throw new \Exception('Error: TLS could not be established!');
 				}
 
-				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+				fwrite($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
 				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
 			}
 
 			if (!empty($this->option['smtp_username']) && !empty($this->option['smtp_password'])) {
-				fputs($handle, 'AUTH LOGIN' . "\r\n");
+				fwrite($handle, 'AUTH LOGIN' . "\r\n");
 
 				$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
 
-				fputs($handle, base64_encode($this->option['smtp_username']) . "\r\n");
+				fwrite($handle, base64_encode($this->option['smtp_username']) . "\r\n");
 
 				$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
 
-				fputs($handle, base64_encode($this->option['smtp_password']) . "\r\n");
+				fwrite($handle, base64_encode($this->option['smtp_password']) . "\r\n");
 
 				$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
 			} else {
-				fputs($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
+				fwrite($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
 
 				$this->handleReply($handle, 250, 'Error: HELO not accepted from server!');
 			}
 
 			if ($this->option['verp']) {
-				fputs($handle, 'MAIL FROM: <' . $this->option['from'] . '>XVERP' . "\r\n");
+				fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>XVERP' . "\r\n");
 			} else {
-				fputs($handle, 'MAIL FROM: <' . $this->option['from'] . '>' . "\r\n");
+				fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>' . "\r\n");
 			}
 
 			$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
 
 			if (!is_array($this->option['to'])) {
-				fputs($handle, 'RCPT TO: <' . $this->option['to'] . '>' . "\r\n");
+				fwrite($handle, 'RCPT TO: <' . $this->option['to'] . '>' . "\r\n");
 
 				$reply = $this->handleReply($handle, false, 'RCPT TO [!array]');
 
@@ -223,7 +223,7 @@ class Smtp {
 				}
 			} else {
 				foreach ($this->option['to'] as $recipient) {
-					fputs($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
+					fwrite($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
 
 					$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
 
@@ -233,7 +233,7 @@ class Smtp {
 				}
 			}
 
-			fputs($handle, 'DATA' . "\r\n");
+			fwrite($handle, 'DATA' . "\r\n");
 
 			$this->handleReply($handle, 354, 'Error: DATA not accepted from server!');
 
@@ -248,15 +248,15 @@ class Smtp {
 				$results = ($line === '') ? [''] : str_split($line, 998);
 
 				foreach ($results as $result) {
-					fputs($handle, $result . "\r\n");
+					fwrite($handle, $result . "\r\n");
 				}
 			}
 
-			fputs($handle, '.' . "\r\n");
+			fwrite($handle, '.' . "\r\n");
 
 			$this->handleReply($handle, 250, 'Error: DATA not accepted from server!');
 
-			fputs($handle, 'QUIT' . "\r\n");
+			fwrite($handle, 'QUIT' . "\r\n");
 
 			$this->handleReply($handle, 221, 'Error: QUIT not accepted from server!');
 
@@ -269,7 +269,7 @@ class Smtp {
 			return false;
 		}
 	}
-	
+
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';
 

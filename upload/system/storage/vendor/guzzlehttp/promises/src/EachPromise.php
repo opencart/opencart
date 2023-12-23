@@ -135,7 +135,7 @@ class EachPromise implements PromisorInterface
 
         // Add only up to N pending promises.
         $concurrency = is_callable($this->concurrency)
-            ? call_user_func($this->concurrency, count($this->pending))
+            ? ($this->concurrency)(count($this->pending))
             : $this->concurrency;
         $concurrency = max($concurrency - count($this->pending), 0);
         // Concurrency may be set to 0 to disallow new promises.
@@ -170,8 +170,7 @@ class EachPromise implements PromisorInterface
         $this->pending[$idx] = $promise->then(
             function ($value) use ($idx, $key): void {
                 if ($this->onFulfilled) {
-                    call_user_func(
-                        $this->onFulfilled,
+                    ($this->onFulfilled)(
                         $value,
                         $key,
                         $this->aggregate
@@ -181,8 +180,7 @@ class EachPromise implements PromisorInterface
             },
             function ($reason) use ($idx, $key): void {
                 if ($this->onRejected) {
-                    call_user_func(
-                        $this->onRejected,
+                    ($this->onRejected)(
                         $reason,
                         $key,
                         $this->aggregate

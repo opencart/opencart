@@ -51,6 +51,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result publishStateMachineVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise publishStateMachineVersionAsync(array $args = [])
+ * @method \Aws\Result redriveExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise redriveExecutionAsync(array $args = [])
  * @method \Aws\Result sendTaskFailure(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendTaskFailureAsync(array $args = [])
  * @method \Aws\Result sendTaskHeartbeat(array $args = [])

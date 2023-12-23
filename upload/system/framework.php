@@ -65,7 +65,7 @@ set_error_handler(function(string $code, string $message, string $file, string $
 });
 
 // Exception Handler
-set_exception_handler(function(\Throwable $e) use ($log, $config): void  {
+set_exception_handler(function(\Throwable $e) use ($log, $config): void {
 	if ($config->get('error_log')) {
 		$log->write($e->getMessage() . ': in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}
@@ -186,7 +186,7 @@ $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
-	$pre_action  = new \Opencart\System\Engine\Action($pre_action);
+	$pre_action = new \Opencart\System\Engine\Action($pre_action);
 
 	$result = $pre_action->execute($registry);
 

@@ -37,7 +37,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['dashboard_customer_width'] = $this->config->get('dashboard_customer_width');
 
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}

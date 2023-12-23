@@ -123,6 +123,13 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
+	/**
+	 * Install
+	 * 
+	 * @param $argv
+	 *
+	 * @return string
+	 */
 	public function install($argv): string {
 		// Options
 		$option = [
@@ -493,6 +500,11 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Usage
+	 * 
+	 * @return string
+	 */
 	public function usage(): string {
 		$option = implode(' ', [
 			'--username',

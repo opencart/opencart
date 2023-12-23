@@ -46,10 +46,7 @@
             <div class="col mb-3">{{ product }}</div>
           {% endfor %}
         </div>
-        <div class="row">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
+        {{ pagination }}
       {% else %}
         <p>{{ text_no_results }}</p>
         <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

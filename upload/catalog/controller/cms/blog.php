@@ -405,10 +405,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
-
 			$data['author'] = $article_info['author'];
 			$data['filter_author'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&author=' . $article_info['author']);
-
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($article_info['date_added']));
 
 			$data['tags'] = [];

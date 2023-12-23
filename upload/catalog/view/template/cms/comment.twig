@@ -1,10 +1,10 @@
 <div class="text-center">
-  <button type="button" value="{{ like }}" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-up"></i></button>
-  <button type="button" value="{{ dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary"><i class="fa fa-thumbs-down"></i></button>
+  <button type="button" value="{{ like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
+  <button type="button" value="{{ dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
-    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment" class="btn btn-outline-secondary">{{ button_comment }}</button>
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment" class="btn btn-secondary">{{ button_comment }}</button>
   {% else %}
-    <button type="button" class="btn btn-outline-secondary" disabled>{{ button_comment }}</button>
+    <button type="button" class="btn btn-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
 </div>
 <hr/>
@@ -13,7 +13,7 @@
     <h2>{{ heading_title }}</h2>
   </div>
   <div class="col-4">
-    <div class="input-group mb-3">
+    <div class="input-group">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select">
         {% for sorts in sorts %}
           <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
@@ -60,70 +60,6 @@ $('#input-sort').on('change', function(e) {
     $('#comment').load($(this).val());
 });
 
-// Add Comment
-$('#cms-blog').on('click', 'button[data-oc-toggle=\'comment\']', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    console.log($(element).attr('value'));
-
-    $('#form-comment').attr('action', $(element).val());
-    $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
-
-    $('#modal-comment').modal('show');
-});
-
-// More
-$('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).val(),
-        dataType: 'html',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(html) {
-            $($(element).attr('data-oc-target')).replaceWith(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-// Refresh
-$('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).val(),
-        dataType: 'html',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(html) {
-            $(element).parent().remove();
-
-            $($(element).attr('data-oc-target')).replaceWith(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 // Rating
 $('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
     e.preventDefault();
@@ -151,12 +87,25 @@ $('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Add Comment
+$('#cms-blog').on('click', '[data-oc-toggle=\'comment\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    console.log($(element).attr('value'));
+
+    $('#form-comment').attr('action', $(element).val());
+    $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
+
+    $('#modal-comment').modal('show');
+});
+
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();
 
@@ -179,6 +128,8 @@ $('#form-comment').on('submit', function(e) {
         success: function(json) {
             console.log(json);
 
+            console.log($('#form-comment').attr('data-oc-target'));
+
             $('.alert-dismissible').remove();
 
             $('#form-comment').find('.is-invalid').removeClass('is-invalid');
@@ -200,8 +151,58 @@ $('#form-comment').on('submit', function(e) {
 
                 $('#input-comment').val('');
 
-                $($('#form-comment').attr('data-oc-target')).find('[data-oc-toggle=\'refresh\']').trigger('click');
+                //$($('#form-comment').attr('data-oc-target')).load('');
             }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// More
+$('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $($(element).attr('data-oc-target')).replaceWith(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Refresh
+$('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            //$(element).parent().remove();
+
+            $($(element).attr('data-oc-target')).replaceWith(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

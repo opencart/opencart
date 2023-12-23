@@ -1,4 +1,5 @@
 {% if replies %}
+
   <div id="reply-{{ parent_id }}-{{ page }}">
     {% for reply in replies %}
       <div class="p-2 ps-5 border-bottom">
@@ -7,12 +8,19 @@
       </div>
     {% endfor %}
   </div>
+
   <div id="reply-{{ parent_id }}-{{ page + 1 }}" class="text-center p-2">
     <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-outline-secondary"><i class="fa fa-sync"></i></button>
     {% if next %}
       <button type="button" value="{{ next }}" data-oc-toggle="next" data-oc-target="#reply-{{ parent_id }}-{{ page + 1 }}" class="btn btn-outline-secondary">{{ button_more }}</button>
     {% else %}
-      <button type="button" data-oc-target="#reply-{{ parent_id }}-{{ page + 1 }}" class="btn btn-outline-secondary" disabled>{{ button_more }}</button>
+      <button type="button" data-oc-target="#reply-{{ parent_id }}" class="btn btn-outline-secondary" disabled>{{ button_more }}</button>
     {% endif %}
+  </div>
+
+{% else %}
+  <div id="reply-{{ parent_id }}-0" class="text-center p-2">
+    <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-0" class="btn btn-secondary"><i class="fa fa-sync"></i></button>
+    <button type="button" data-oc-target="#reply-{{ parent_id }}" class="btn btn-secondary" disabled>{{ button_replies }}</button>
   </div>
 {% endif %}

@@ -18,6 +18,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			// Decode URL
 			if (isset($this->request->get['_route_'])) {
+
+
 				$parts = explode('/', $this->request->get['_route_']);
 
 				// remove any empty arrays from trailing
@@ -36,6 +38,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				if (!isset($this->request->get['route']) && count($parts) == 1 && isset($this->request->get['language'])) {
 					$this->request->get['route'] = $this->config->get('action_default');
 				}
+
+
 			} elseif (!isset($this->request->get['route'])) {
 				$this->request->get['route'] = $this->config->get('action_default');
 			}

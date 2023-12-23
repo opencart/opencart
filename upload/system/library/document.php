@@ -37,12 +37,12 @@ class Document {
 	private array $scripts = [];
 
 	/**
-     * setTitle
-     *
-     * @param string $title
-     *
-     * @return void
-     */
+	 * setTitle
+	 *
+	 * @param string $title
+	 *
+	 * @return void
+	 */
 	public function setTitle(string $title): void {
 		$this->title = $title;
 	}

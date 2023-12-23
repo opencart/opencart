@@ -44,16 +44,16 @@ class Url {
 	}
 
 	/**
-     * Link
-     *
-     * Generates a URL
-     *
-     * @param string $route
-     * @param mixed  $args
-     * @param bool   $js
-     *
-     * @return string
-     */
+	 * Link
+	 *
+	 * Generates a URL
+	 *
+	 * @param string $route
+	 * @param mixed  $args
+	 * @param bool   $js
+	 *
+	 * @return string
+	 */
 	public function link(string $route, $args = '', bool $js = false): string {
 		$url = $this->url . 'index.php?route=' . $route;
 

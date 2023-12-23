@@ -166,7 +166,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 			}
 		}
 	}
-	
+
 	// catalog/model/account/affiliate/addAffiliate/after
 
 	/**
@@ -188,7 +188,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 			$this->model_account_activity->addActivity('affiliate_add', $activity_data);
 		}
 	}
-	
+
 	// catalog/model/account/affiliate/editAffiliate/after
 
 	/**
@@ -308,7 +308,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 			}
 		}
 	}
-	
+
 	// catalog/model/checkout/order/addHistory/before
 
 	/**

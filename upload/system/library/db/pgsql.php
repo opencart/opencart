@@ -81,12 +81,12 @@ class PgSQL {
 	}
 
 	/**
-     * Escape
-     *
-     * @param string $value
-     *
-     * @return string
-     */
+	 * Escape
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
 	public function escape(string $value): string {
 		return pg_escape_string($this->connection, $value);
 	}

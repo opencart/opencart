@@ -91,7 +91,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 			if ($directories) {
 				foreach ($directories as $directory) {
 					$files = glob($directory . '/*');
-					
+
 					foreach ($files as $file) {
 						if (is_file($file)) {
 							unlink($file);
@@ -153,16 +153,16 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_sass_success');
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
-     * Generate new autoloader file
-     *
-     * @return void
-     */
+	 * Generate new autoloader file
+	 *
+	 * @return void
+	 */
 	public function vendor(): void {
 		$this->load->language('common/developer');
 

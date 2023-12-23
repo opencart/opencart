@@ -369,7 +369,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 			if (!$status) {
 				$json['success'] = $this->language->get('text_queue');
 			} else {
-				$json['success'] = $this->language->get('text_success');
+				if ($comment_approve) {
+					$json['success'] = $this->language->get('text_success_comment');
+				} else {
+					$json['success'] = $this->language->get('text_success_comment_approve');
+				}
 			}
 		}
 

@@ -62,9 +62,9 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code' => 'activity_address_edit',
+				'code'    => 'activity_address_edit',
 				'trigger' => 'catalog/model/account/address/editAddress/after',
-				'action' => 'event/activity.editAddress'
+				'action'  => 'event/activity.editAddress'
 			];
 
 			$events[] = [

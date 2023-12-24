@@ -1405,10 +1405,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			$filter_data = [
-				'filter_name'      => $filter_name,
-				'filter_email'     => $filter_email,
-				'start'            => 0,
-				'limit'            => 5
+				'filter_name'  => $filter_name,
+				'filter_email' => $filter_email,
+				'start'        => 0,
+				'limit'        => 5
 			];
 
 			$this->load->model('customer/customer');

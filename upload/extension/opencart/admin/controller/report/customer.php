@@ -143,9 +143,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['customers'] = [];
 
 		$filter_data = [
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
-			'filter_group'           => $filter_group,
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
+			'filter_group'      => $filter_group,
 			'start'             => ($page - 1) * 20,
 			'limit'             => 20
 		];

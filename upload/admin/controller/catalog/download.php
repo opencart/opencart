@@ -153,6 +153,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($download_total - $this->config->get('config_pagination_admin'))) ? $download_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $download_total, ceil($download_total / $this->config->get('config_pagination_admin')));
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
@@ -417,6 +419,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			'limit' => $limit,
 			'url'   => $this->url->link('catalog/download.report', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $download_id . '&page={page}')
 		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
 
 		return $this->load->view('catalog/download_report', $data);
 	}

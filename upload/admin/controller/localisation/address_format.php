@@ -102,6 +102,8 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('localisation/address_format.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($address_format_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($address_format_total - $this->config->get('config_pagination_admin'))) ? $address_format_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $address_format_total, ceil($address_format_total / $this->config->get('config_pagination_admin')));
+
 		return $this->load->view('localisation/address_format_list', $data);
 	}
 

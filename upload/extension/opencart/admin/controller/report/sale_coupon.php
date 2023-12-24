@@ -154,6 +154,8 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('extension/opencart/report/sale_coupon.report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_coupon' . $url . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($coupon_total - $this->config->get('config_pagination'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $coupon_total, ceil($coupon_total / $this->config->get('config_pagination')));
+
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 

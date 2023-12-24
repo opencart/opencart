@@ -166,6 +166,8 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('extension/opencart/report/customer_transaction.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_transaction' . $url . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
+
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;

@@ -309,6 +309,8 @@ class Review extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($review_total - $this->config->get('config_pagination_admin'))) ? $review_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $review_total, ceil($review_total / $this->config->get('config_pagination_admin')));
+
 		$data['filter_product'] = $filter_product;
 		$data['filter_author'] = $filter_author;
 		$data['filter_status'] = $filter_status;

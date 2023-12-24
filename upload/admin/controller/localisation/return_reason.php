@@ -151,6 +151,8 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_reason_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_reason_total - $this->config->get('config_pagination_admin'))) ? $return_reason_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_reason_total, ceil($return_reason_total / $this->config->get('config_pagination_admin')));
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 

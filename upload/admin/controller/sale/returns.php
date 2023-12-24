@@ -409,6 +409,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_total - $this->config->get('config_pagination_admin'))) ? $return_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_total, ceil($return_total / $this->config->get('config_pagination_admin')));
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
@@ -769,6 +771,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'limit' => $limit,
 			'url'   => $this->url->link('sale/returns.history', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $return_id . '&page={page}')
 		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
 
 		return $this->load->view('sale/returns_history', $data);
 	}

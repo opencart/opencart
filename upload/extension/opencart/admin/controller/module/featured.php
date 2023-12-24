@@ -82,7 +82,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 		if (!empty($module_info['axis'])) {
 			$data['axis'] = $module_info['axis'];
 		} else {
-			$data['axis'] ='';
+			$data['axis'] = '';
 		}
 
 		if (isset($module_info['width'])) {
@@ -102,7 +102,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = '';
 		}
-		
+
 		if (isset($this->request->get['module_id'])) {
 			$data['module_id'] = (int)$this->request->get['module_id'];
 		} else {

@@ -32,5 +32,13 @@ class Extension extends \Opencart\System\Engine\Controller {
 			// Config directory
 			$this->config->addPath('extension/' . $result['code'], DIR_EXTENSION . $result['code'] . '/system/config/');
 		}
+
+		// Register OCMOD
+		$this->autoloader->register('Opencart\Admin\Controller\Extension\Ocmod', DIR_EXTENSION . 'ocmod/admin/controller/');
+		$this->autoloader->register('Opencart\Admin\Model\Extension\Ocmod', DIR_EXTENSION . 'ocmod/admin/model/');
+		$this->autoloader->register('Opencart\System\Library\Extension\Ocmod', DIR_EXTENSION . 'ocmod/system/library/');
+		$this->template->addPath('extension/ocmod', DIR_EXTENSION . 'ocmod/admin/view/template/');
+		$this->language->addPath('extension/ocmod', DIR_EXTENSION . 'ocmod/admin/language/');
+		$this->config->addPath('extension/ocmod', DIR_EXTENSION . 'ocmod/system/config/');
 	}
 }

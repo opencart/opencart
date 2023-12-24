@@ -354,9 +354,6 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['upc'] = '';
 			$product_data['status'] = '0';
 
-			$product_data['variant'] = json_decode($product_info['variant'], true);
-			$product_data['override'] = json_decode($product_info['override'], true);
-
 			$product_data['product_attribute'] = $this->model_catalog_product->getAttributes($product_id);
 			$product_data['product_category'] = $this->model_catalog_product->getCategories($product_id);
 			$product_data['product_description'] = $this->model_catalog_product->getDescriptions($product_id);
@@ -839,9 +836,18 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getProduct(int $product_id): array {
+		$product_data = [];
+
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			$product_data = $query->row;
+
+			$product_data['variant'] = json_decode($product_data['variant'], true);
+			$product_data['override'] = json_decode($product_data['override'], true);
+		}
+
+		return $product_data;
 	}
 
 	/**
@@ -911,9 +917,18 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
+		$product_data = [];
+
 		$query = $this->db->query($sql);
 
-		return $query->rows;
+		foreach ($query->rows as $key => $result) {
+			$product_data[$key] = $result;
+
+			$product_data[$key]['variant'] = json_decode($result['variant'], true);
+			$product_data[$key]['override'] = json_decode($result['override'], true);
+		}
+
+		return $product_data;
 	}
 
 	/**

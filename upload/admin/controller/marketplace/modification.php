@@ -41,8 +41,13 @@ class Modification extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/modification.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['download'] = $this->url->link('tool/log.download', 'user_token=' . $this->session->data['user_token'] . '&filename=ocmod.log');
+		$data['upload'] = $this->url->link('tool/installer.upload', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		// Log
+		$data['log'] = $this->getLog();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -121,6 +126,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				'description'     => $result['description'],
 				'author'          => $result['author'],
 				'version'         => $result['version'],
+				'xml'             => $result['xml'],
 				'status'          => $result['status'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
@@ -184,7 +190,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
+			$this->model_setting_setting->editValue('config', 'config_maintenance', true);
 
 			// Clear all modification files
 			$files = [];
@@ -217,7 +223,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 					if (is_file($file)) {
 						unlink($file);
 
-						// If directory use the remove directory function
+					// If directory use the remove directory function
 					} elseif (is_dir($file)) {
 						rmdir($file);
 					}
@@ -227,7 +233,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			// Begin
 			$xml = [];
 
-			// This is purly for developers so they can run mods directly and have them run without upload after each change.
+			// This is purely so developers they can run mods directly and have them run without upload after each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
 			if ($files) {
@@ -236,7 +242,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Get the default modification file
+			$this->load->model('setting/modification');
+
 			$results = $this->model_setting_modification->getModifications();
 
 			foreach ($results as $result) {
@@ -251,7 +258,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$modification = [];
 
 			foreach ($xml as $xml) {
-				if (empty($xml)){
+				if (empty($xml)) {
 					continue;
 				}
 
@@ -302,13 +309,17 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 							if ($files) {
 								foreach ($files as $file) {
+									if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+									}
+
 									// Get the key to be used for the modification cache filename.
 									if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
 										$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
 									}
 
-									if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+									if (substr($file, 0, strlen(DIR_EXTENSION)) == DIR_EXTENSION) {
+										$key = 'extension/' . substr($file, strlen(DIR_EXTENSION));
 									}
 
 									if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
@@ -465,7 +476,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 											preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
 
-											// Remove part of the the result if a limit is set.
+											// Remove part of the result if a limit is set.
 											if ($limit > 0) {
 												$match[0] = array_slice($match[0], 0, $limit);
 											}
@@ -545,7 +556,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			}
 
 			// Maintance mode back to original settings
-			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
+			$this->model_setting_setting->editValue('config', 'config_maintenance', $maintenance);
 
 			// Do not return success message if refresh() was called with $data
 			$json['success'] = $this->language->get('text_success');
@@ -553,6 +564,20 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function log(): void {
+		$this->response->setOutput($this->getLog());
+	}
+
+	public function getLog(): string {
+		$file = DIR_LOGS . 'ocmod.log';
+
+		if (is_file($file)) {
+			return htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		} else {
+			return '';
+		}
 	}
 
 	public function clear(): void {
@@ -595,7 +620,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 					if (is_file($file)) {
 						unlink($file);
 
-						// If directory use the remove directory function
+					// If directory use the remove directory function
 					} elseif (is_dir($file)) {
 						rmdir($file);
 					}
@@ -643,36 +668,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function disable(): void {
-		$this->load->language('marketplace/modification');
-
-		$json = [];
-
-		if (isset($this->request->get['modification_id'])) {
-			$modification_id = (int)$this->request->get['modification_id'];
-		} else {
-			$modification_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/modification');
-
-			$this->model_setting_modification->editStatus($modification_id, 0);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * @return void
-	 */
-	public function download(): void {
 		$this->load->language('marketplace/modification');
 
 		$json = [];

@@ -15,5 +15,11 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getEnabledControlAsync(array $args = [])
  * @method \Aws\Result listEnabledControls(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnabledControlsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class ControlTowerClient extends AwsClient {}

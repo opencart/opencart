@@ -17,10 +17,10 @@ class Mail {
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$adaptor
-	 * @param   array	$option
+	 * @param string $adaptor
+	 * @param array	 $option
 	 *
- 	*/
+	 */
 	public function __construct(string $adaptor = 'mail', array $option = []) {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
 
@@ -34,98 +34,98 @@ class Mail {
 	}
 
 	/**
-     * setTo
-     *
-     * @param	string|array	$to
+	 * setTo
 	 *
-	 * @return  void
-     */
+	 * @param string|array $to
+	 *
+	 * @return void
+	 */
 	public function setTo($to): void {
 		$this->option['to'] = $to;
 	}
 
 	/**
-     * setFrom
-     *
-     * @param	string	$from
+	 * setFrom
 	 *
-	 * @return  void
-     */
+	 * @param string $from
+	 *
+	 * @return void
+	 */
 	public function setFrom(string $from): void {
 		$this->option['from'] = $from;
 	}
 
 	/**
-     * setSender
-     *
-     * @param	string	$sender
+	 * setSender
 	 *
-	 * @return  void
-     */
+	 * @param string $sender
+	 *
+	 * @return void
+	 */
 	public function setSender(string $sender): void {
 		$this->option['sender'] = $sender;
 	}
 
 	/**
-     * setReplyTo
-     *
-     * @param	string	$reply_to
+	 * setReplyTo
 	 *
-	 * @return  void
-     */
+	 * @param string $reply_to
+	 *
+	 * @return void
+	 */
 	public function setReplyTo(string $reply_to): void {
 		$this->option['reply_to'] = $reply_to;
 	}
 
 	/**
-     * setSubject
-     *
-     * @param	string	$subject
+	 * setSubject
 	 *
-	 * @return  void
-     */
+	 * @param string $subject
+	 *
+	 * @return void
+	 */
 	public function setSubject(string $subject): void {
 		$this->option['subject'] = $subject;
 	}
 
 	/**
-     * setText
-     *
-     * @param	string	$text
+	 * setText
 	 *
-	 * @return  void
-     */
+	 * @param string $text
+	 *
+	 * @return void
+	 */
 	public function setText(string $text): void {
 		$this->option['text'] = $text;
 	}
 
 	/**
-     * setHtml
-     *
-     * @param	string	$html
+	 * setHtml
 	 *
-	 * @return  void
-     */
+	 * @param string $html
+	 *
+	 * @return void
+	 */
 	public function setHtml(string $html): void {
 		$this->option['html'] = $html;
 	}
 
 	/**
-     * addAttachment
-     *
-     * @param	string	$filename
+	 * addAttachment
 	 *
-	 * @return  void
-     */
+	 * @param string $filename
+	 *
+	 * @return void
+	 */
 	public function addAttachment(string $filename): void {
 		$this->option['attachments'][] = $filename;
 	}
 
 	/**
-     * Send
-     *
-	 * @return  bool
-     */
+	 * Send
+	 *
+	 * @return bool
+	 */
 	public function send(): bool {
 		if (empty($this->option['to'])) {
 			throw new \Exception('Error: E-Mail to required!');

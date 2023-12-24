@@ -170,7 +170,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 7, 7, 9);
+			$json['text'] = sprintf($this->language->get('text_patch'), 7, 7, 9);
 
 			$url = '';
 

@@ -111,14 +111,16 @@ class GeoZone extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$geo_zone_data = $this->cache->get('geo_zone.' . md5($sql));
+		$key = md5($sql);
+
+		$geo_zone_data = $this->cache->get('geo_zone.' . $key);
 
 		if (!$geo_zone_data) {
 			$query = $this->db->query($sql);
 
 			$geo_zone_data = $query->rows;
 
-			$this->cache->set('geo_zone.' . md5($sql), $geo_zone_data);
+			$this->cache->set('geo_zone.' . $key, $geo_zone_data);
 		}
 
 		return $geo_zone_data;

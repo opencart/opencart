@@ -12,9 +12,9 @@ class Event extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		// Add events from the DB
 		$this->load->model('setting/event');
-		
+
 		$results = $this->model_setting_event->getEvents();
-		
+
 		foreach ($results as $result) {
 			if ($result['status']) {
 				$part = explode('/', $result['trigger']);

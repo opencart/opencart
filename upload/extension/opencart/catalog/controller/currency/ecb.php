@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Currency;
 /**
  * Class ECB
  *
- * @package
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Currency
  */
 class ECB extends \Opencart\System\Engine\Controller {
 	/**

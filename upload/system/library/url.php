@@ -22,7 +22,7 @@ class Url {
 	private array $rewrite = [];
 
 	/**
-	 * Constructor.
+	 * Constructor
 	 *
 	 * @param string $url
 	 */
@@ -37,13 +37,15 @@ class Url {
 	 *
 	 * @param object $rewrite
 	 *
-	 * @return    void
+	 * @return void
 	 */
 	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
 		$this->rewrite[] = $rewrite;
 	}
 
 	/**
+	 * Link
+	 *
 	 * Generates a URL
 	 *
 	 * @param string $route

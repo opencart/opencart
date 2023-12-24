@@ -19,7 +19,7 @@ class Template {
 	/**
 	 * Constructor
 	 *
-	 * @param    string $adaptor
+	 * @param string $adaptor
 	 *
 	 */
 	public function __construct(string $adaptor) {
@@ -35,8 +35,10 @@ class Template {
 	/**
 	 * addPath
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param string $namespace
+	 * @param string $directory
+	 *
+	 * @return void
 	 */
 	public function addPath(string $namespace, string $directory = ''): void {
 		$this->adaptor->addPath($namespace, $directory);
@@ -45,11 +47,11 @@ class Template {
 	/**
 	 * Render
 	 *
-	 * @param    string $filename
-	 * @param	 array	$data
-	 * @param    string $code
+	 * @param string $filename
+	 * @param array	 $data
+	 * @param string $code
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function render(string $filename, array $data = [], string $code = ''): string {
 		return $this->adaptor->render($filename, $data, $code);

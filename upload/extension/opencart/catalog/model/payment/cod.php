@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class COD
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Payment
  */
 class COD extends \Opencart\System\Engine\Model {
 	/**

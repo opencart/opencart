@@ -44,7 +44,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('account/affiliate.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token'] = oc_token(32));
 
 		$this->load->model('account/affiliate');
 
@@ -128,7 +128,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($affiliate_info)) {
-			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
+			$data['affiliate_custom_field'] = $affiliate_info['custom_field'];
 		} else {
 			$data['affiliate_custom_field'] = [];
 		}

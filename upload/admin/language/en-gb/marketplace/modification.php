@@ -17,7 +17,10 @@ $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
 // Entry
+$_['entry_name']        = 'Modification Name';
 $_['entry_description'] = 'Description';
+$_['entry_code']        = 'Code';
+$_['entry_xml']         = 'XML';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify modifications!';

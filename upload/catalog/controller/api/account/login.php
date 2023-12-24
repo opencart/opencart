@@ -30,7 +30,7 @@ class Login extends \Opencart\System\Engine\Controller {
 	 * curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
 	 *
 	 * $response = curl_exec($curl);
- 	 *
+	 *
 	 * $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	 *
 	 * curl_close($curl);

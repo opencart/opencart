@@ -8,6 +8,9 @@ $_['text_success']           = 'Success: You have modified extensions!';
 $_['text_progress']          = 'Install Progress';
 $_['text_installed']         = 'Installed Extensions';
 $_['text_info']              = 'Extension Information';
+$_['text_install']           = 'Installing files %s to %s of %s';
+$_['text_vendor']            = 'Refresh vendor files';
+$_['text_xml']               = 'Install OCMOD files';
 
 // Column
 $_['column_image']           = 'Image';
@@ -20,6 +23,7 @@ $_['column_action']          = 'Action';
 $_['entry_progress']         = 'Progress';
 $_['entry_name']             = 'Extension Name';
 $_['entry_description']      = 'Description';
+$_['entry_code']             = 'Code';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';

@@ -14,9 +14,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function addCustomer(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `store_id` = '" . (int)$data['store_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `newsletter` = '" . (isset($data['newsletter']) ? (bool)$data['newsletter'] : 0) . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `status` = '" . (isset($data['status']) ? (bool)$data['status'] : 0) . "', `safe` = '" . (isset($data['safe']) ? (bool)$data['safe'] : 0) . "', `commenter` = '" . (isset($data['commenter']) ? (bool)$data['commenter'] : 0) . "', `date_added` = NOW()");
 
-		$customer_id = $this->db->getLastId();
-
-		return $customer_id;
+		return $this->db->getLastId();
 	}
 
 	/**
@@ -44,7 +42,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $customer_id
+	 * @param int  $customer_id
 	 * @param bool $status
 	 *
 	 * @return void
@@ -81,7 +79,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomer(int $customer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -92,7 +94,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomerByEmail(string $email): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
-		return $query->row;
+		if ($query->num_rows) {
+			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -147,7 +153,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `c`.`name`";
+			$sql .= " ORDER BY `name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -168,9 +174,15 @@ class Customer extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
+		$customer_data = [];
+
 		$query = $this->db->query($sql);
 
-		return $query->rows;
+		foreach ($query->rows as $result) {
+			$customer_data[] = $result + ['custom_field' => json_decode($result['custom_field'], true)];
+		}
+
+		return $customer_data;
 	}
 
 	/**
@@ -242,9 +254,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $address_id
+	 * @param int   $customer_id
+	 * @param int   $address_id
+	 * @param array $data
 	 *
-	 * @return
+	 * @return void
 	 */
 	public function editAddress(int $customer_id, int $address_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `company` = '" . $this->db->escape($data['company']) . "', `address_1` = '" . $this->db->escape($data['address_1']) . "', `address_2` = '" . $this->db->escape($data['address_2']) . "', `city` = '" . $this->db->escape($data['city']) . "', `postcode` = '" . $this->db->escape($data['postcode']) . "', `country_id` = '" . (int)$data['country_id'] . "', `zone_id` = '" . (int)$data['zone_id'] . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `default` = '" . (!empty($data['default']) ? (bool)$data['default'] : 0) . "' WHERE `address_id` = '" . (int)$address_id . "'");
@@ -257,7 +271,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * @param int $address_id
 	 *
-	 * @return
+	 * @return void
 	 */
 	public function deleteAddress(int $address_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");

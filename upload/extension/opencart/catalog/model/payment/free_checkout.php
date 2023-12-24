@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class FreeCheckout
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Payment
  */
 class FreeCheckout extends \Opencart\System\Engine\Model {
 	/**

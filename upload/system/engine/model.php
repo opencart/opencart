@@ -13,6 +13,8 @@
 namespace Opencart\System\Engine;
 /**
  * Class Model
+ *
+ * @mixin \Opencart\System\Engine\Registry
  */
 class Model {
 	/**
@@ -23,19 +25,19 @@ class Model {
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
 
 	/**
-     * __get
-     *
-     * @param	string	$key
+	 * __get
 	 *
-	 * @return	object
-     */
+	 * @param string $key
+	 *
+	 * @return object
+	 */
 	public function __get(string $key): object {
 		if ($this->registry->has($key)) {
 			return $this->registry->get($key);
@@ -45,13 +47,13 @@ class Model {
 	}
 
 	/**
-     * __set
-     *
-     * @param	string	$key
-	 * @param	string	$value
+	 * __set
 	 *
-	 * @return	void
-     */
+	 * @param string $key
+	 * @param string $value
+	 *
+	 * @return void
+	 */
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
 	}
@@ -61,9 +63,9 @@ class Model {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
 	 *
-	 * @param    string  $key
+	 * @param string $key
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function __isset(string $key): bool {
 		return $this->registry->has($key);

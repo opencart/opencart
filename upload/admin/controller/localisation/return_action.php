@@ -6,7 +6,6 @@ namespace Opencart\Admin\Controller\Localisation;
  * @package Opencart\Admin\Controller\Localisation
  */
 class ReturnAction extends \Opencart\System\Engine\Controller {
-
 	/**
 	 * @return void
 	 */

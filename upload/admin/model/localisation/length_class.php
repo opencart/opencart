@@ -93,14 +93,16 @@ class LengthClass extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$length_class_data = $this->cache->get('length_class.' . md5($sql));
+		$key = md5($sql);
+
+		$length_class_data = $this->cache->get('length_class.' . $key);
 
 		if (!$length_class_data) {
 			$query = $this->db->query($sql);
 
 			$length_class_data = $query->rows;
 
-			$this->cache->set('length_class.' . md5($sql), $length_class_data);
+			$this->cache->set('length_class.' . $key, $length_class_data);
 		}
 
 		return $length_class_data;

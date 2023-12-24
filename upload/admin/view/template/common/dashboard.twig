@@ -33,81 +33,24 @@
   {{ security }}
 </div>
 <script type="text/javascript"><!--
-$('#button-setting').on('click', function () {
+$('#button-setting').on('click', function() {
     $.ajax({
         url: 'index.php?route=common/developer&user_token={{ user_token }}',
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-setting').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-setting').button('reset');
         },
-        success: function (html) {
+        success: function(html) {
             $('#modal-developer').remove();
 
             $('body').prepend(html);
 
             $('#modal-developer').modal('show');
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('input[name=\'developer_sass\']').on('change', function () {
-    $.ajax({
-        url: 'index.php?route=common/developer.edit&user_token={{ user_token }}',
-        type: 'post',
-        data: $('input[name=\'developer_sass\']:checked'),
-        dataType: 'json',
-        beforeSend: function () {
-            $('input[name=\'developer_sass\']').prop('disabled', true);
-        },
-        complete: function () {
-            $('input[name=\'developer_sass\']').prop('disabled', false);
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-            if (json['success']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#modal-developer table button').on('click', function () {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=common/developer.' + $(element).attr('value') + '&user_token={{ user_token }}',
-        dataType: 'json',
-        beforeSend: function () {
-            $(element).button('loading');
-        },
-        complete: function () {
-            $(element).button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

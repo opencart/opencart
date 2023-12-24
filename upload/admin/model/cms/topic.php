@@ -143,14 +143,16 @@ class Topic extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$topic_data = $this->cache->get('topic.'. md5($sql));
+		$key = md5($sql);
+
+		$topic_data = $this->cache->get('topic.'. $key);
 
 		if (!$topic_data) {
 			$query = $this->db->query($sql);
 
 			$topic_data = $query->rows;
 
-			$this->cache->set('topic.'. md5($sql), $topic_data);
+			$this->cache->set('topic.'. $key, $topic_data);
 		}
 
 		return $topic_data;

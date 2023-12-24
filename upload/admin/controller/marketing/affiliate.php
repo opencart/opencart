@@ -171,8 +171,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'value' => 800
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_tracking'] = $filter_tracking;
 		$data['filter_payment_method'] = $filter_payment_method;
@@ -669,7 +667,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($affiliate_info)) {
-			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
+			$data['affiliate_custom_field'] = $affiliate_info['custom_field'];
 		} else {
 			$data['affiliate_custom_field'] = [];
 		}

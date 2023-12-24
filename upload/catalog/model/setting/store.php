@@ -34,14 +34,16 @@ class Store extends \Opencart\System\Engine\Model {
 	public function getStores(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";
 
-		$store_data = $this->cache->get('store.' . md5($sql));
+		$key = md5($sql);
+
+		$store_data = $this->cache->get('store.' . $key);
 
 		if (!$store_data) {
 			$query = $this->db->query($sql);
 
 			$store_data = $query->rows;
 
-			$this->cache->set('store.' . md5($sql), $store_data);
+			$this->cache->set('store.' . $key, $store_data);
 		}
 
 		return $store_data;

@@ -242,6 +242,10 @@ class AwsClient implements AwsClientInterface
         $this->addRecursionDetection();
         $this->addRequestBuilder();
 
+        if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
+            $this->addQueryCompatibleInputMiddleware($this->api);
+        }
+
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
         }
@@ -455,6 +459,15 @@ class AwsClient implements AwsClientInterface
                 'request-compression'
             );
         }
+    }
+
+    private function addQueryCompatibleInputMiddleware(Service $api)
+    {
+            $list = $this->getHandlerList();
+            $list->appendValidate(
+                QueryCompatibleInputMiddleware::wrap($api),
+                'query-compatible-input'
+            );
     }
 
     private function addInvocationId()

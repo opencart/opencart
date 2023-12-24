@@ -86,7 +86,11 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updatePullThroughCacheRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePullThroughCacheRuleAsync(array $args = [])
  * @method \Aws\Result uploadLayerPart(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadLayerPartAsync(array $args = [])
+ * @method \Aws\Result validatePullThroughCacheRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise validatePullThroughCacheRuleAsync(array $args = [])
  */
 class EcrClient extends AwsClient {}

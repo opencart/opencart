@@ -17,9 +17,7 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
-
       <div id="shopping-cart">{{ list }}</div>
-
       {% if modules %}
         <h2>{{ text_next }}</h2>
         <p>{{ text_next_choice }}</p>
@@ -29,7 +27,6 @@
           {% endfor %}
         </div>
       {% endif %}
-
       <br/>
       <div class="row">
         <div class="col"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
@@ -39,7 +36,7 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('#shopping-cart').on('submit', 'form', function (e) {
+$('#shopping-cart').on('submit', 'form', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -55,13 +52,13 @@ $('#shopping-cart').on('submit', 'form', function (e) {
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(button).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(button).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             console.log(json);
 
             if (json['redirect']) {
@@ -76,32 +73,18 @@ $('#shopping-cart').on('submit', 'form', function (e) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}', {}, function () {
+            $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}', {}, function() {
                 $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
             });
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#shopping-cart').observe(function (e) {
+$('#shopping-cart').observe(function(e) {
     $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
 });
-/*
-// Update cart header
-var element = document.getElementById('shopping-cart');
-
-observer = new MutationObserver(function(mutations, observer) {
-    $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
-});
-
-observer.observe(element, {
-    characterData: false,
-    childList: true,
-    attributes: false
-});
-*/
 //--></script>
 {{ footer }}

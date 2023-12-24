@@ -52,9 +52,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			$layout_id = $this->model_cms_blog->getLayoutId((int)$this->request->get['blog_id']);
 		}
 
-
-
-
 		if (!$layout_id) {
 			$layout_id = $this->model_design_layout->getLayout($route);
 		}

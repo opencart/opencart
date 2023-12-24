@@ -73,7 +73,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 	 */
 	public function getList(): string {
 		$data['wishlist'] = $this->url->link('account/wishlist.list', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
-		$data['add_to_cart'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
+		$data['cart_add'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
 		$data['remove'] = $this->url->link('account/wishlist.remove', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 
 		$data['products'] = [];
@@ -95,7 +95,15 @@ class WishList extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($product_info['quantity'] <= 0) {
-					$stock = $product_info['stock_status'];
+					$this->load->model('localisation/stock_status');
+
+					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
+
+					if ($stock_status_info) {
+						$stock = $stock_status_info['name'];
+					} else {
+						$stock = '';
+					}
 				} elseif ($this->config->get('config_stock_display')) {
 					$stock = $product_info['quantity'];
 				} else {

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Fraud;
 /**
  * Class Ip
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Fraud
  */
 class Ip extends \Opencart\System\Engine\Model {
 	/**

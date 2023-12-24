@@ -153,14 +153,16 @@ class Information extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$information_data = $this->cache->get('information.' . md5($sql));
+		$key = md5($sql);
+
+		$information_data = $this->cache->get('information.' . $key);
 
 		if (!$information_data) {
 			$query = $this->db->query($sql);
 
 			$information_data = $query->rows;
 
-			$this->cache->set('information.' . md5($sql), $information_data);
+			$this->cache->set('information.' . $key, $information_data);
 		}
 
 		return $information_data;

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cart;
 /**
  * Class Weight
  *
- * @package
+ * @package Opencart\System\Library\Cart
  */
 class Weight {
 	/**
@@ -22,7 +22,7 @@ class Weight {
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
@@ -43,11 +43,11 @@ class Weight {
 	/**
 	 * Convert
 	 *
-	 * @param    float  $value
-	 * @param    string  $from
-	 * @param    string  $to
+	 * @param float  $value
+	 * @param string $from
+	 * @param string $to
 	 *
-	 * @return   float
+	 * @return float
 	 */
 	public function convert(float $value, string $from, string $to): float {
 		if ($from == $to) {
@@ -72,12 +72,12 @@ class Weight {
 	/**
 	 * Format
 	 *
-	 * @param    float  $value
-	 * @param    string  $weight_class_id
-	 * @param    string  $decimal_point
-	 * @param    string  $thousand_point
+	 * @param float  $value
+	 * @param string $weight_class_id
+	 * @param string $decimal_point
+	 * @param string $thousand_point
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function format(float $value, string $weight_class_id, string $decimal_point = '.', string $thousand_point = ','): string {
 		if (isset($this->weights[$weight_class_id])) {
@@ -90,9 +90,9 @@ class Weight {
 	/**
 	 * getUnit
 	 *
-	 * @param    int  $weight_class_id
+	 * @param int $weight_class_id
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getUnit(int $weight_class_id): string {
 		if (isset($this->weights[$weight_class_id])) {

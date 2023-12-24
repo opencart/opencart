@@ -92,7 +92,7 @@ class MySQLi {
 	 *
 	 * @param string $sql
 	 *
-	 * @return   mixed
+	 * @return mixed
 	 */
 	public function query(string $sql) {
 		try {
@@ -126,9 +126,9 @@ class MySQLi {
 	/**
 	 * Escape
 	 *
-	 * @param string  value
+	 * @param string $value
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
@@ -137,7 +137,7 @@ class MySQLi {
 	/**
 	 * countAffected
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function countAffected(): int {
 		return $this->connection->affected_rows;
@@ -146,7 +146,7 @@ class MySQLi {
 	/**
 	 * getLastId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getLastId(): int {
 		return $this->connection->insert_id;
@@ -155,7 +155,7 @@ class MySQLi {
 	/**
 	 * isConnected
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function isConnected(): bool {
 		return $this->connection;

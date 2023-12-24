@@ -340,7 +340,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$data['postcode_required'] = 0;
 		}
 
-	    if (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['status'] = $country_info['status'];
 		} else {
 			$data['status'] = '1';

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cart;
 /**
  * Class Currency
  *
- * @package
+ * @package Opencart\System\Library\Cart
  */
 class Currency {
 	/**
@@ -43,7 +43,7 @@ class Currency {
 	 * @param float  $value
 	 * @param bool   $format
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function format(float $number, string $currency, float $value = 0, bool $format = true): string {
 		if (!isset($this->currencies[$currency])) {
@@ -88,7 +88,7 @@ class Currency {
 	 * @param string $from
 	 * @param string $to
 	 *
-	 * @return   float
+	 * @return float
 	 */
 	public function convert(float $value, string $from, string $to): float {
 		if (isset($this->currencies[$from])) {
@@ -111,7 +111,7 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getId(string $currency): int {
 		if (isset($this->currencies[$currency])) {
@@ -126,7 +126,7 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getSymbolLeft(string $currency): string {
 		if (isset($this->currencies[$currency])) {
@@ -141,7 +141,7 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getSymbolRight(string $currency): string {
 		if (isset($this->currencies[$currency])) {
@@ -156,7 +156,7 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getDecimalPlace(string $currency): string {
 		if (isset($this->currencies[$currency])) {
@@ -171,9 +171,8 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return   float
+	 * @return float
 	 */
-
 	public function getValue(string $currency): float {
 		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['value'];
@@ -187,7 +186,7 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function has(string $currency): bool {
 		return isset($this->currencies[$currency]);

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * CLass SaleCoupon
  *
- * @package  Opencart\Admin\Controller\Extension\Opencart\Report
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class SaleCoupon extends \Opencart\System\Engine\Controller {
 	/**

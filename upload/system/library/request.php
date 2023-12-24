@@ -48,7 +48,7 @@ class Request {
 	 *
 	 * @param mixed $data
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function clean($data) {
 		if (is_array($data)) {

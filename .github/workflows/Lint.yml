@@ -1,0 +1,63 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2', '8.3']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2, cs2pr
+
+      - name: Lint
+        run: |
+          error=0
+          for file in $(find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*'); do
+            php -l -n $file | grep -v "No syntax errors detected" && error=1
+          done
+          if [ $error -eq 1 ]; then
+            echo "Syntax errors were found."
+            exit 1
+          else
+            echo "No syntax errors were detected."
+          fi
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/composer/files
+            ./.cache
+            ./.php-cs-fixer.cache
+          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ matrix.php }}-
+
+      - name: PHPStan
+        run: |
+          composer require --dev phpstan/phpstan 1.10.41
+          ./system/storage/vendor/bin/phpstan analyze --no-progress
+
+      - name: Code style
+        if: matrix.php == '8.3'
+        run: |
+          composer require --dev friendsofphp/php-cs-fixer v3.41.1
+          ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
+          ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr

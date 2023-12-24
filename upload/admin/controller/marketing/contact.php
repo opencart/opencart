@@ -71,6 +71,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/store');
 			$this->load->model('setting/setting');
 			$this->load->model('customer/customer');
+			$this->load->model('marketing/affiliate');
 			$this->load->model('sale/order');
 
 			$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
@@ -159,14 +160,13 @@ class Contact extends \Opencart\System\Engine\Controller {
 					break;
 				case 'affiliate_all':
 					$affiliate_data = [
-						'filter_affiliate' => 1,
-						'start'            => ($page - 1) * $limit,
-						'limit'            => $limit
+						'start' => ($page - 1) * $limit,
+						'limit' => $limit
 					];
 
-					$email_total = $this->model_customer_customer->getTotalCustomers($affiliate_data);
+					$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);
 
-					$results = $this->model_customer_customer->getCustomers($affiliate_data);
+					$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
 
 					foreach ($results as $result) {
 						$emails[] = $result['email'];
@@ -177,7 +177,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 						$affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * $limit, $limit);
 
 						foreach ($affiliates as $affiliate_id) {
-							$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+							$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
 							if ($affiliate_info) {
 								$emails[] = $affiliate_info['email'];

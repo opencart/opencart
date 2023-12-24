@@ -173,7 +173,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['reset_token']) || !isset($this->session->data['reset_token']) || ($this->session->data['reset_token'] != $this->request->get['reset_token'])) {
 			$this->session->data['error'] = $this->language->get('error_session');
 
-			$json['redirect'] = $this->url->link('account/forgotten', true);
+			$json['redirect'] = $this->url->link('account/forgotten', '', true);
 		}
 
 		$this->load->model('user/user');
@@ -189,7 +189,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 6) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

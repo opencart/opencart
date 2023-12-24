@@ -590,7 +590,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($customer_info)) {
-			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
+			$data['account_custom_field'] = $customer_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = [];
 		}
@@ -704,7 +704,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->post['customer_id']))) {
-			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 6) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
@@ -1425,7 +1425,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 					'lastname'          => $result['lastname'],
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
-					'custom_field'      => json_decode($result['custom_field'], true),
+					'custom_field'      => $result['custom_field'],
 					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
 				];
 			}

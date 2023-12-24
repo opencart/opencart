@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Template;
 /**
  * Class Twig
  *
- * @package
+ * @package Opencart\System\Library\Template
  */
 class Twig {
 	/**
@@ -26,7 +26,7 @@ class Twig {
 	/**
 	 * Constructor
 	 *
-	 * @param    string $adaptor
+	 * @param    string  $adaptor
 	 *
 	 */
 	public function __construct() {
@@ -42,8 +42,8 @@ class Twig {
 	/**
 	 * addPath
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param    string  $namespace
+	 * @param    string  $directory
 	 *
 	 * @return	 void
 	 */
@@ -108,12 +108,16 @@ class Twig {
 			$config = [
 				'charset'     => 'utf-8',
 				'autoescape'  => false,
-				'debug'       => false,
+				'debug'       => true,
 				'auto_reload' => true,
 				'cache'       => DIR_CACHE . 'template/'
 			];
 
 			$twig = new \Twig\Environment($loader, $config);
+
+			if ($config['debug']) {
+				$twig->addExtension(new \Twig\Extension\DebugExtension());
+			}
 
 			return $twig->render($file, $data);
 		} catch (\Twig\Error\SyntaxError $e) {

@@ -255,15 +255,15 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion.getList'");
-			
+
 			// Rename subscription to mail_subscription
-            $this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 5, 5, 9);
+			$json['text'] = sprintf($this->language->get('text_patch'), 5, 5, 9);
 
 			$url = '';
 

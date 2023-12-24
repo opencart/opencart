@@ -20,27 +20,27 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		} else {
 			$customer_id = 0;
 		}
-		
+
 		if (isset($args[1])) {
 			$description = $args[1];
 		} else {
 			$description = '';
-		}		
-		
+		}
+
 		if (isset($args[2])) {
 			$amount = $args[2];
 		} else {
 			$amount = 0;
 		}
-		
+
 		if (isset($args[3])) {
 			$order_id = $args[3];
 		} else {
 			$order_id = 0;
 		}
-			
+
 		$this->load->model('customer/customer');
-						
+
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
@@ -98,5 +98,5 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				$mail->send();
 			}
 		}
-	}		
-}	
+	}
+}

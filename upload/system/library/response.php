@@ -30,19 +30,19 @@ class Response {
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$header
+	 * @param string $header
 	 *
- 	*/
+	 */
 	public function addHeader(string $header): void {
 		$this->headers[] = $header;
 	}
 
 	/**
-	 * Get Headers
+	 * getHeaders
 	 *
-	 * @param	array
+	 * @param array
 	 *
- 	*/
+	 */
 	public function getHeaders(): array {
 		return $this->headers;
 	}
@@ -50,37 +50,42 @@ class Response {
 	/**
 	 * Redirect
 	 *
-	 * @param	string	$url
-	 * @param	int		$status
+	 * @param string $url
+	 * @param int	 $status
 	 *
- 	*/
+	 * @return void
+	 */
 	public function redirect(string $url, int $status = 302): void {
 		header('Location: ' . str_replace(['&amp;', "\n", "\r"], ['&', '', ''], $url), true, $status);
 		exit();
 	}
 
 	/**
-	 * Set Compression
+	 * setCompression
 	 *
-	 * @param	int		$level
- 	*/
+	 * @param int $level
+	 *
+	 * @return void
+	 */
 	public function setCompression(int $level): void {
 		$this->level = $level;
 	}
 
 	/**
-	 * Set Output
+	 * setOutput
 	 *
-	 * @param	string	$output
- 	*/	
+	 * @param string $output
+	 *
+	 * @return void
+	 */
 	public function setOutput(string $output): void {
 		$this->output = $output;
 	}
 
 	/**
-	 * Get Output
+	 * getOutput
 	 *
-	 * @return	array
+	 * @return string
 	 */
 	public function getOutput(): string {
 		return $this->output;
@@ -89,11 +94,11 @@ class Response {
 	/**
 	 * Compress
 	 *
-	 * @param	string	$data
-	 * @param	int		$level
-	 * 
-	 * @return	string
- 	*/
+	 * @param string $data
+	 * @param int	 $level
+	 *
+	 * @return string
+	 */
 	private function compress(string $data, int $level = 0): string {
 		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
 			$encoding = 'gzip';
@@ -128,7 +133,9 @@ class Response {
 	 * Output
 	 *
 	 * Displays the set HTML output
- 	*/
+	 *
+	 * @return void
+	 */
 	public function output(): void {
 		if ($this->output) {
 			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;

@@ -242,14 +242,21 @@ abstract class RestSerializer
                 $path = rtrim($path, '/');
             }
             $relative = $path . $relative;
+
+            if (strpos($relative, '../') !== false) {
+                if ($relative[0] !== '/') {
+                    $relative = '/' . $relative;
+                }
+                return new Uri($this->endpoint . $relative);
+            }
         }
         // If endpoint has path, remove leading '/' to preserve URI resolution.
         if ($path && $relative[0] === '/') {
             $relative = substr($relative, 1);
         }
 
-        //Append path to endpoint when leading '//...' present
-        // as uri cannot be properly resolved
+        //Append path to endpoint when leading '//...'
+        // present as uri cannot be properly resolved
         if ($this->api->isModifiedModel()
             && strpos($relative, '//') === 0
         ) {

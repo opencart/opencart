@@ -95,6 +95,12 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		$data['filter_product'] = $filter_product;
+		$data['filter_author'] = $filter_author;
+		$data['filter_status'] = $filter_status;
+		$data['filter_date_from'] = $filter_date_from;
+		$data['filter_date_to'] = $filter_date_to;
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -216,7 +222,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('catalog/review');
-		
+
 		$results = $this->model_catalog_review->getReviews($filter_data);
 
 		foreach ($results as $result) {
@@ -295,7 +301,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
-		
+
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $review_total,
 			'page'  => $page,

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cart;
 /**
  * Class Customer
  *
- * @package
+ * @package Opencart\System\Library\Cart
  */
 class Customer {
 	/**
@@ -62,7 +62,7 @@ class Customer {
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
@@ -94,11 +94,11 @@ class Customer {
 	/**
 	 * Login
 	 *
-	 * @param    string  $email
-	 * @param    string  $password
-	 * @param    bool  $override
+	 * @param string $email
+	 * @param string $password
+	 * @param bool   $override
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function login(string $email, string $password, bool $override = false): bool {
 		$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "' AND `status` = '1'");
@@ -139,11 +139,11 @@ class Customer {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Logout
 	 *
-	 * @return   void
+	 * @return void
 	 */
 	public function logout(): void {
 		unset($this->session->data['customer_id']);
@@ -162,7 +162,7 @@ class Customer {
 	/**
 	 * isLogged
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function isLogged(): bool {
 		return $this->customer_id ? true : false;
@@ -171,16 +171,16 @@ class Customer {
 	/**
 	 * getId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getId(): int {
 		return $this->customer_id;
 	}
-	
+
 	/**
 	 * getFirstName
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getFirstName(): string {
 		return $this->firstname;
@@ -189,25 +189,25 @@ class Customer {
 	/**
 	 * getLastName
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getLastName(): string {
 		return $this->lastname;
 	}
-	
+
 	/**
 	 * getGroupId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getGroupId(): int {
 		return $this->customer_group_id;
 	}
-	
+
 	/**
 	 * getEmail
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getEmail(): string {
 		return $this->email;
@@ -216,7 +216,7 @@ class Customer {
 	/**
 	 * getTelephone
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getTelephone(): string {
 		return $this->telephone;
@@ -225,7 +225,7 @@ class Customer {
 	/**
 	 * getNewsletter
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function getNewsletter(): bool {
 		return $this->newsletter;
@@ -234,7 +234,7 @@ class Customer {
 	/**
 	 * isSafe
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function isSafe(): bool {
 		return $this->safe;
@@ -243,7 +243,7 @@ class Customer {
 	/**
 	 * isCommenter
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function isCommenter(): bool {
 		return $this->commenter;
@@ -252,7 +252,7 @@ class Customer {
 	/**
 	 * getAddressId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getAddressId(): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer_id . "' AND `default` = '1'");
@@ -263,11 +263,11 @@ class Customer {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * getBalance
 	 *
-	 * @return   float
+	 * @return float
 	 */
 	public function getBalance(): float {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer_id . "'");
@@ -278,7 +278,7 @@ class Customer {
 	/**
 	 * getRewardPoints
 	 *
-	 * @return   float
+	 * @return float
 	 */
 	public function getRewardPoints(): float {
 		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer_id . "'");

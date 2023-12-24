@@ -94,7 +94,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['copy'] = $this->url->link('catalog/product.copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->getList();
+		$data['list'] = $this->controller_catalog_product->getList();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
@@ -117,7 +117,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/product');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_catalog_product->getList());
 	}
 
 	/**
@@ -864,14 +864,14 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// Variants
 		if (!empty($product_info)) {
-			$data['variant'] = json_decode($product_info['variant'], true);
+			$data['variant'] = $product_info['variant'];
 		} else {
 			$data['variant'] = [];
 		}
 
 		// Overrides
 		if (!empty($product_info)) {
-			$data['override'] = json_decode($product_info['override'], true);
+			$data['override'] = $product_info['override'];
 		} else {
 			$data['override'] = [];
 		}

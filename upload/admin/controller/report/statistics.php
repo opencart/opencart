@@ -51,11 +51,11 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 */
 	public function getList(): string {
 		$data['statistics'] = [];
-		
+
 		$this->load->model('report/statistics');
-		
+
 		$results = $this->model_report_statistics->getStatistics();
-		
+
 		foreach ($results as $result) {
 			$data['statistics'][] = [
 				'name'  => $this->language->get('text_' . $result['code']),

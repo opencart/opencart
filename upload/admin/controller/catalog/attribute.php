@@ -43,7 +43,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/attribute.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/attribute.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->getList();
+		$data['list'] = $this->controller_catalog_attribute->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -60,7 +60,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/attribute');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_catalog_attribute->getList());
 	}
 
 	/**

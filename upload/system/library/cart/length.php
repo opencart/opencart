@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cart;
 /**
  * Class Length
  *
- * @package
+ * @package Opencart\System\Library\Cart
  */
 class Length {
 	/**
@@ -22,7 +22,7 @@ class Length {
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
@@ -43,11 +43,11 @@ class Length {
 	/**
 	 * Convert
 	 *
-	 * @param    float  $value
-	 * @param    string  $from
-	 * @param    string  $to
+	 * @param float  $value
+	 * @param string $from
+	 * @param string $to
 	 *
-	 * @return   float
+	 * @return float
 	 */
 	public function convert(float $value, string $from, string $to): float {
 		if ($from == $to) {
@@ -72,12 +72,12 @@ class Length {
 	/**
 	 * Format
 	 *
-	 * @param    float  $value
-	 * @param    int  $length_class_id
-	 * @param    string  $decimal_point
-	 * @param    string  $thousand_point
+	 * @param float  $value
+	 * @param int    $length_class_id
+	 * @param string $decimal_point
+	 * @param string $thousand_point
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function format(float $value, int $length_class_id, string $decimal_point = '.', string $thousand_point = ','): string {
 		if (isset($this->lengths[$length_class_id])) {
@@ -90,9 +90,9 @@ class Length {
 	/**
 	 * getUnit
 	 *
-	 * @param    int  $length_class_id
+	 * @param int $length_class_id
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getUnit(int $length_class_id): string {
 		if (isset($this->lengths[$length_class_id])) {

@@ -215,7 +215,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['promotions'] = [];
 
-		if (isset($response_info['promotions']) && $page == 1) {
+		if ($page == 1 && isset($response_info['promotions'])) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = [
 					'name'         => $result['name'],
@@ -517,6 +517,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$data['filter_license'] = $filter_license;
 		$data['filter_member_type'] = $filter_member_type;
 		$data['filter_rating'] = $filter_rating;
+
 		$data['sort'] = $sort;
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -677,7 +678,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				$this->session->data['extension_download'][$extension_id] = $response_info['downloads'];
 			} else {
 				$this->session->data['extension_download'][$extension_id] = [];
-				$this->session->data['extension_download'][$extension_id] = [];
 			}
 
 			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
@@ -729,7 +729,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						$download = '';
 					}
 
-			 		// Install
+					// Install
 					if ($install_info && !$install_info['status']) {
 						$install = $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $install_info['extension_install_id']);
 					} else {
@@ -920,6 +920,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						'extension_id'          => $extension_id,
 						'extension_download_id' => $extension_download_id,
 						'name'                  => $response_info['name'],
+						'description'           => isset($response_info['description']) ? $response_info['description'] : '',
 						'code' 				    => basename($response_info['filename'], '.ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 /**
  * Class BestSeller
  *
- * @package
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Module
  */
 class BestSeller extends \Opencart\System\Engine\Controller {
 	/**
@@ -65,7 +65,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 
-            return $this->load->view('extension/opencart/module/bestseller', $data);
+			return $this->load->view('extension/opencart/module/bestseller', $data);
 		} else {
 			return '';
 		}

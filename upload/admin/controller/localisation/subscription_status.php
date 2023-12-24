@@ -151,8 +151,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('localisation/subscription_status.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_status_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($subscription_status_total - $this->config->get('config_pagination_admin'))) ? $subscription_status_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $subscription_status_total, ceil($subscription_status_total / $this->config->get('config_pagination_admin')));
-
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 

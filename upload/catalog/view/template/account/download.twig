@@ -33,10 +33,7 @@
             </tbody>
           </table>
         </div>
-        <div class="row mb-3">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
+        {{ pagination }}
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}

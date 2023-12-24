@@ -97,8 +97,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 			'url'   => $this->url->link('design/theme.history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
-
 		$this->response->setOutput($this->load->view('design/theme_history', $data));
 	}
 

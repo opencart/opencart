@@ -39,10 +39,7 @@
     </tbody>
   </table>
 </div>
-<div class="row">
-  <div class="col-sm-6 text-start">{{ pagination }}</div>
-  <div class="col-sm-6 text-end">{{ results }}</div>
-</div>
+{{ pagination }}
 {% for extension in extensions %}
   <div id="extension-install-{{ extension.extension_install_id }}" class="modal">
     <div class="modal-dialog">

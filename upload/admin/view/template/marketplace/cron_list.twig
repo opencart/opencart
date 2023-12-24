@@ -44,10 +44,7 @@
       </tbody>
     </table>
   </div>
-  <div class="row">
-    <div class="col-sm-6 text-start">{{ pagination }}</div>
-    <div class="col-sm-6 text-end">{{ results }}</div>
-  </div>
+  {{ pagination }}
 </form>
 {% for cron in crons %}
   {% if cron.description %}

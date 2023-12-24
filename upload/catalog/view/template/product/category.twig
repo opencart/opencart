@@ -83,10 +83,7 @@
             <div class="col mb-3">{{ product }}</div>
           {% endfor %}
         </div>
-        <div class="row">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
+        {{ pagination }}
       {% endif %}
       {% if not categories and not products %}
         <p>{{ text_no_results }}</p>

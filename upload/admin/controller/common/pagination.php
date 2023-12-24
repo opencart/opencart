@@ -98,6 +98,8 @@ class Pagination extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($num_pages > 1 || $back) {
+			$data['results'] = sprintf($this->language->get('text_pagination'), ($total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit), $total, ceil($total / $limit));
+
 			return $this->load->view('common/pagination', $data);
 		} else {
 			return '';

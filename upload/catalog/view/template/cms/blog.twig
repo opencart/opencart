@@ -57,10 +57,7 @@
             <div class="text-end"><a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a></div>
           </div>
         {% endfor %}
-        <div class="row">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
+        {{ pagination }}
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}

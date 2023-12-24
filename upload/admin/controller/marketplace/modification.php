@@ -1,11 +1,15 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
+use DOMDocument;
+use Exception;
+use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Log;
 /**
  * Class Modification
  *
  * @package Opencart\Admin\Controller\Marketplace
  */
-class Modification extends \Opencart\System\Engine\Controller {
+class Modification extends Controller {
 	/**
 	 * @return void
 	 */
@@ -175,6 +179,12 @@ class Modification extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/modification_list', $data);
 	}
 
+	/**
+	 * Refresh
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
 	public function refresh(): void {
 		$this->load->language('marketplace/modification');
 
@@ -262,7 +272,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 					continue;
 				}
 
-				$dom = new \DOMDocument('1.0', 'UTF-8');
+				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
@@ -528,7 +538,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			}
 
 			// Log
-			$ocmod = new \Opencart\System\Library\Log('ocmod.log');
+			$ocmod = new Log('ocmod.log');
 			$ocmod->write(implode("\n", $log));
 
 			// Write all modification files
@@ -566,10 +576,20 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * Log
+	 *
+	 * @return void
+	 */
 	public function log(): void {
 		$this->response->setOutput($this->getLog());
 	}
 
+	/**
+	 * getLog
+	 *
+	 * @return string
+	 */
 	public function getLog(): string {
 		$file = DIR_LOGS . 'ocmod.log';
 
@@ -580,6 +600,11 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Clear
+	 *
+	 * @return void
+	 */
 	public function clear(): void {
 		$this->load->language('marketplace/modification');
 

@@ -28,6 +28,7 @@ return $config
         'non_printable_character' => true,
         'normalize_index_brace' => true,
         'pow_to_exponentiation' => true,
+        'random_api_migration' => true,
         'use_arrow_functions' => true,
         'void_return' => true,
     ])

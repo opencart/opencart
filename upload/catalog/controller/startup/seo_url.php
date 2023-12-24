@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Startup;
  */
 class SeoUrl extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return void
+	 * @return null
 	 */
 	public function index() {
 		// Add rewrite to URL class
@@ -44,6 +44,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+
+		return null;
 	}
 
 	/**

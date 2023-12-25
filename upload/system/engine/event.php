@@ -16,7 +16,7 @@ class Event {
 	/**
 	 * @var \Opencart\System\Engine\Registry
 	 */
-	protected $registry;
+	protected \Opencart\System\Engine\Registry $registry;
 	/**
 	 * @var array
 	 */

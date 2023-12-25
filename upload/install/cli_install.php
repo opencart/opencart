@@ -69,7 +69,7 @@ require_once(DIR_SYSTEM . 'library/db/mysqli.php');
 require_once(DIR_SYSTEM . 'helper/db_schema.php');
 
 // Registry
-$registry = new Registry();
+$registry = new \Opencart\System\Engine\Registry();
 
 // Request
 $registry->set('request', new \Opencart\System\Library\Request());

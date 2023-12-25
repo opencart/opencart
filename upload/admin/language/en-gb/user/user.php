@@ -15,6 +15,9 @@ $_['text_authorize']        = 'Authorize History';
 
 // Column
 $_['column_username']       = 'Username';
+$_['column_firstname']      = 'Firstname';
+$_['column_lastname']       = 'Lastname';
+$_['column_user_group']     = 'User Group';
 $_['column_status']         = 'Status';
 $_['column_ip']             = 'IP';
 $_['column_user_agent']     = 'User Agent';

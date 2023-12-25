@@ -81,8 +81,8 @@ class Customer {
 				$this->email = $customer_query->row['email'];
 				$this->telephone = $customer_query->row['telephone'];
 				$this->newsletter = $customer_query->row['newsletter'];
-				$this->safe = $customer_query->row['safe'];
-				$this->commenter = $customer_query->row['commenter'];
+				$this->safe = (bool)$customer_query->row['safe'];
+				$this->commenter = (bool)$customer_query->row['commenter'];
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `language_id` = '" . (int)$this->config->get('config_language_id') . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `customer_id` = '" . (int)$this->customer_id . "'");
 			} else {
@@ -129,8 +129,8 @@ class Customer {
 			$this->email = $customer_query->row['email'];
 			$this->telephone = $customer_query->row['telephone'];
 			$this->newsletter = $customer_query->row['newsletter'];
-			$this->safe = $customer_query->row['safe'];
-			$this->commenter = $customer_query->row['commenter'];
+			$this->safe = (bool)$customer_query->row['safe'];
+			$this->commenter = (bool)$customer_query->row['commenter'];
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `language_id` = '" . (int)$this->config->get('config_language_id') . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `customer_id` = '" . (int)$this->customer_id . "'");
 

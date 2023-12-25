@@ -15,8 +15,9 @@
         </div>
       </div>
       <div id="reply-{{ comment.article_comment_id }}">
+        <div id="reply-{{ comment.article_comment_id }}-0"></div>
         <div class="text-center p-2 border-top">
-          <button type="button" value="{{ comment.reply }}" data-oc-toggle="refresh" class="btn btn-secondary"><i class="fa fa-sync"></i></button>
+          <button type="button" value="{{ comment.reply }}" data-oc-toggle="refresh" data-oc-target="reply-{{ comment.article_comment_id }}-0" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
           {% if comment.reply_total %}
             <button type="button" value="{{ comment.reply }}" data-oc-toggle="next" class="btn btn-secondary">{{ button_replies }} ({{ comment.reply_total }})</button>
           {% else %}
@@ -28,8 +29,9 @@
   {% endfor %}
   <div class="text-end">{{ pagination }}</div>
 {% else %}
+  <div id="comment-0"></div>
   <div class="text-center p-2 border-top">
-    <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" class="btn btn-secondary"><i class="fa fa-sync"></i></button>
+    <button type="button" value="{{ refresh }}" data-oc-toggle="refresh" data-oc-target="comment-0" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
     {{ text_no_results }}
   </div>
 {% endif %}

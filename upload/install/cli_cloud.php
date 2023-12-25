@@ -60,7 +60,7 @@ set_error_handler(/**
  *
  * @return false
  * @throws \ErrorException
- */ function($code, $message, $file, $line, array $errcontext) {
+ */ function($code, $message, $file, $line, array $errcontext): bool {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;

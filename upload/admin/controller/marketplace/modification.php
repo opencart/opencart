@@ -1,15 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
-use DOMDocument;
-use Exception;
-use Opencart\System\Engine\Controller;
-use Opencart\System\Library\Log;
 /**
  * Class Modification
  *
  * @package Opencart\Admin\Controller\Marketplace
  */
-class Modification extends Controller {
+class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
@@ -272,7 +268,7 @@ class Modification extends Controller {
 					continue;
 				}
 
-				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
@@ -538,7 +534,7 @@ class Modification extends Controller {
 			}
 
 			// Log
-			$ocmod = new Log('ocmod.log');
+			$ocmod = new \Opencart\System\Library\Log('ocmod.log');
 			$ocmod->write(implode("\n", $log));
 
 			// Write all modification files

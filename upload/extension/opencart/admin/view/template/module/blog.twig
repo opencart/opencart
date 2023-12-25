@@ -46,6 +46,24 @@
                 </div>
               </div>
               <div class="row mb-3">
+                <label for="input-order" class="col-sm-2 col-form-label">{{ entry_order }}</label>
+                <div class="col-sm-10">
+                  <select name="order" id="input-order" class="form-select">
+                    <option value="DESC"{% if order == "DESC" %} selected {% endif %}>{{ text_desc }}</option>
+                    <option value="ASC"{% if order == "ASC" %} selected {% endif %}>{{ text_asc }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-sort" class="col-sm-2 col-form-label">{{ entry_sort }}</label>
+                <div class="col-sm-10">
+                  <select name="sort" id="input-sort" class="form-select">
+                    <option value="ad.name"{% if sort == "ad.name" %} selected {% endif %}>{{ text_sort_name }}</option>
+                    <option value="a.date_added"{% if sort == "a.date_added" %} selected {% endif %}>{{ text_sort_date }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">

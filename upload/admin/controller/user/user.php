@@ -73,6 +73,24 @@ class User extends \Opencart\System\Engine\Controller {
 			$sort = 'username';
 		}
 
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'firstname';
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'lastname';
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'user_group';
+		}
+
 		if (isset($this->request->get['order'])) {
 			$order = (string)$this->request->get['order'];
 		} else {
@@ -112,12 +130,18 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
+		$this->load->model('user/user_group');
+
 		$results = $this->model_user_user->getUsers($filter_data);
 
 		foreach ($results as $result) {
 			$data['users'][] = [
 				'user_id'    => $result['user_id'],
 				'username'   => $result['username'],
+				'firstname'  => $result['firstname'],
+				'lastname'   => $result['lastname'],
+				'user_group' => $this->model_user_user_group->getUserGroup($result['user_group_id'])['name'],
+				'status'     => $result['status'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('user/user.form', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
@@ -133,6 +157,9 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sort_username'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
+		$data['sort_firstname'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=firstname' . $url);
+		$data['sort_lastname'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=lastname' . $url);
+		$data['sort_user_group'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=user_group' . $url);
 		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 

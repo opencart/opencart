@@ -142,7 +142,6 @@ class User extends \Opencart\System\Engine\Controller {
 				'lastname'   => $result['lastname'],
 				'user_group' => $this->model_user_user_group->getUserGroup($result['user_group_id'])['name'],
 				'status'     => $result['status'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('user/user.form', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
 			];

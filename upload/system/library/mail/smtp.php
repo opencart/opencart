@@ -15,10 +15,10 @@ class Smtp {
 	 * @var array|int[]
 	 */
 	protected array $default = [
-		'smtp_port'     => 25,
-		'smtp_timeout'  => 5,
-		'max_attempts'  => 3,
-		'verp'          => false
+		'smtp_port'    => 25,
+		'smtp_timeout' => 5,
+		'max_attempts' => 3,
+		'verp'         => false
 	];
 
 	/**

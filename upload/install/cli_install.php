@@ -126,7 +126,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 	/**
 	 * Install
 	 *
-	 * @param mixed   $argv
+	 * @param array<int, string>   $argv
 	 * @return string
 	 */
 	public function install($argv): string {

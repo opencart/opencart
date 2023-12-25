@@ -27,15 +27,6 @@
                 {% endif %}</td>
               </td>
               <td class="text-start">{{ user.firstname }} {{ user.lastname }}</td>
-              <td class="text-start">{{ user.user_group }}</td>              <td class="text-start">{{ user.username }}
-                <br/>
-                {% if user.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
-                {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
-                {% endif %}</td>
-              </td>
-              <td class="text-start">{{ user.firstname }} {{ user.lastname }}</td>
               <td class="text-start">{{ user.user_group }}</td>
               <td class="text-start">{{ user.status }}</td>
               <td class="text-start">{{ user.date_added }}</td>

@@ -171,7 +171,6 @@ $('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
         },
         success: function(html) {
             $(element).parent().after(html);
-
             $(element).parent().remove();
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -196,10 +195,13 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            $($(element).attr('data-oc-target')).remove();
+            var target = $(element).attr('data-oc-target');
+
+            if (target !== undefined) {
+                $(target).remove();
+            }
 
             $(element).parent().after(html);
-
             $(element).parent().remove();
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -29,13 +29,6 @@
 
 namespace Install;
 
-use ErrorException;
-use Exception;
-use Opencart\System\Engine\Controller;
-use Opencart\System\Engine\Registry;
-use Opencart\System\Library\DB;
-use Opencart\System\Library\Request;
-use Opencart\System\Library\Response;
 ini_set('display_errors', 1);
 
 error_reporting(E_ALL);
@@ -79,10 +72,10 @@ require_once(DIR_SYSTEM . 'helper/db_schema.php');
 $registry = new Registry();
 
 // Request
-$registry->set('request', new Request());
+$registry->set('request', new \Opencart\System\Library\Request());
 
 // Response
-$response = new Response();
+$response = new \Opencart\System\Library\Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
@@ -92,7 +85,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 		return false;
 	}
 
-	throw new ErrorException($message, 0, $code, $file, $line);
+	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
 /**
@@ -100,7 +93,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
  *
  * @package Opencart\Install
  */
-class CliInstall extends Controller {
+class CliInstall extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
@@ -291,8 +284,8 @@ class CliInstall extends Controller {
 
 		try {
 			// Database
-			$db = new DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);
-		} catch (Exception $e) {
+			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);
+		} catch (\Exception $e) {
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 
@@ -546,7 +539,7 @@ class CliInstall extends Controller {
 }
 
 // Controller
-$controller = new CliInstall($registry);
+$controller = new \Install\CliInstall($registry);
 $controller->index();
 
 // Output

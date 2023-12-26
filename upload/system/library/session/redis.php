@@ -9,6 +9,7 @@ class Redis {
 	private object $config;
 	private object $redis;
 	public string $prefix;
+
 	/**
 	 * Constructor
 	 *

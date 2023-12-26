@@ -643,18 +643,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['date_next'] = '';
 		}
 
-
-
 		// Payment method
 		if (!empty($subscription_info)) {
 			$data['payment_method'] = $subscription_info['payment_method']['name'];
 		} else {
 			$data['payment_method'] = '';
 		}
-
-
-
-
 
 		if (!empty($order_info)) {
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));

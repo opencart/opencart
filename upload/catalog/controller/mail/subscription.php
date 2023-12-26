@@ -376,7 +376,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-
 	// catalog/model/checkout/order/addHistory/before
 
 	/**

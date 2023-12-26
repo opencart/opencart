@@ -15,7 +15,6 @@ class Mem {
 	 */
 	private int $expire;
 
-
 	public const CACHEDUMP_LIMIT = 9999;
 
 	/**

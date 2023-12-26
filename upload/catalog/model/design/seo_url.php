@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Design;
  */
 class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Seo Url By Keyword
+	 *
 	 * @param string $keyword
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Url By Key Value
+	 *
 	 * @param string $key
 	 * @param string $value
 	 *

@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Design;
  */
 class Theme extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Theme
+	 *
 	 * @param string $route
 	 *
 	 * @return array

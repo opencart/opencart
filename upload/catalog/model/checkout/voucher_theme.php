@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Checkout;
  */
 class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Voucher Theme
+	 *
 	 * @param int $voucher_theme_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Voucher Themes
+	 *
 	 * @param array $data
 	 *
 	 * @return array

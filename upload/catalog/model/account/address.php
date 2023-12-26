@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Address extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Address
+	 *
 	 * @param int   $customer_id
 	 * @param array $data
 	 *
@@ -25,6 +27,8 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Address
+	 *
 	 * @param int   $address_id
 	 * @param array $data
 	 *
@@ -48,6 +52,8 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Address
+	 *
 	 * @param int $customer_id
 	 * @param int $address_id
 	 *
@@ -111,6 +117,8 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Addresses
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array
@@ -132,6 +140,8 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Addresses
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int

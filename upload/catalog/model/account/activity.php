@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Activity extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Activity
+	 *
 	 * @param string $key
 	 * @param array  $data
 	 *

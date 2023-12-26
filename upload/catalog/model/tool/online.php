@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Tool;
  */
 class Online extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Online
+	 *
 	 * @param string $ip
 	 * @param int    $customer_id
 	 * @param string $url

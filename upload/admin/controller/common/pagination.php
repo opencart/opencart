@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Common;
  */
 class Pagination extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param array $setting
 	 *
 	 * @return string

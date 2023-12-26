@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Cms;
  */
 class Topic extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Topic
+	 *
 	 * @param int $topic_id
 	 *
 	 * @return array

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
  */
 class Blog extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -110,6 +112,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -148,5 +152,4 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 }

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Tool;
  */
 class Log extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

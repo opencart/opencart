@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Checkout;
  */
 class Voucher extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Voucher
+	 *
 	 * @param int   $order_id
 	 * @param array $data
 	 *
@@ -19,6 +21,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Disable Voucher
+	 *
 	 * @param int $order_id
 	 *
 	 * @return void
@@ -28,6 +32,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Voucher
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -95,6 +101,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Voucher By Order ID
+	 *
 	 * @param int $order_id
 	 *
 	 * @return void

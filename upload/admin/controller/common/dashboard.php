@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Common;
  */
 class Dashboard extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

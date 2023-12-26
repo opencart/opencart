@@ -11,6 +11,8 @@ return $config
     ->setRules([
         '@PER-CS2.0:risky' => true,
         '@PER-CS2.0' => true,
+        '@DoctrineAnnotation' => true,
+        '@PHPUnit100Migration:risky' => true,
         'array_syntax' => true,
         'assign_null_coalescing_to_coalesce_equal' => true,
         'binary_operator_spaces' => ['default' => 'single_space','operators' => ['=' => 'at_least_single_space','=>' => 'align_single_space_minimal']],
@@ -30,6 +32,9 @@ return $config
         'no_alias_functions' => true,
         'no_blank_lines_after_phpdoc' => true,
         'no_empty_phpdoc' => true,
+        'no_php4_constructor' => true,
+        'no_unneeded_final_method' => true,
+        'no_unset_cast' => true,
         'no_whitespace_before_comma_in_array' => true,
         'non_printable_character' => true,
         'normalize_index_brace' => true,
@@ -58,6 +63,7 @@ return $config
         'phpdoc_var_without_name' => true,
         'pow_to_exponentiation' => true,
         'random_api_migration' => true,
+        'simple_to_complex_string_variable' => true,
         'use_arrow_functions' => true,
         'void_return' => true,
     ])

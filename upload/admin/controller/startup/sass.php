@@ -9,9 +9,9 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return void
-	 *
 	 * @throws \ScssPhp\ScssPhp\Exception\SassException
+	 *
+	 * @return void
 	 */
 	public function index(): void {
 		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');

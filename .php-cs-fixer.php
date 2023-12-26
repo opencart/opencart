@@ -122,6 +122,7 @@ return $config
         'phpdoc_no_access' => true,
         'phpdoc_no_alias_tag' => true,
         'phpdoc_no_useless_inheritdoc' => true,
+        'phpdoc_order' => true,
         'phpdoc_order_by_value' => true,
         'phpdoc_param_order' => true,
         'phpdoc_return_self_reference' => true,

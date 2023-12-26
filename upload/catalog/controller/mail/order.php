@@ -63,9 +63,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @param string $comment
 	 * @param bool   $notify
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function add(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		// Check for any downloadable products
@@ -379,9 +379,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @param string $comment
 	 * @param bool   $notify
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function history(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -480,9 +480,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function alert(string &$route, array &$args): void {
 		if (isset($args[0])) {

@@ -12,9 +12,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		// $args[0] $code
@@ -89,9 +89,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function remove(string &$route, array &$args, &$output): void {
 		if (isset($args[0])) {

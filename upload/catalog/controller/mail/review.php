@@ -12,9 +12,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {

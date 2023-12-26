@@ -183,6 +183,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * Refresh
 	 *
 	 * @return void
+	 *
 	 * @throws Exception
 	 */
 	public function refresh(): void {

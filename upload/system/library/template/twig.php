@@ -26,8 +26,7 @@ class Twig {
 	/**
 	 * Constructor
 	 *
-	 * @param    string  $adaptor
-	 *
+	 * @param string $adaptor
 	 */
 	public function __construct() {
 		// Unfortunately, we have to set the web root directory as the base since Twig confuses which template cache to use.
@@ -42,10 +41,10 @@ class Twig {
 	/**
 	 * addPath
 	 *
-	 * @param    string  $namespace
-	 * @param    string  $directory
+	 * @param string $namespace
+	 * @param string $directory
 	 *
-	 * @return	 void
+	 * @return void
 	 */
 	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
@@ -58,11 +57,11 @@ class Twig {
 	/**
 	 * Render
 	 *
-	 * @param	string	$filename
-	 * @param	array	$data
-	 * @param	string	$code
+	 * @param string $filename
+	 * @param array  $data
+	 * @param string $code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function render(string $filename, array $data = [], string $code = ''): string {
 		$file = $this->directory . $filename . '.twig';

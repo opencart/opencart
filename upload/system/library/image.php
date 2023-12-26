@@ -1,10 +1,12 @@
 <?php
 /**
  * @package        OpenCart
+ *
  * @author         Daniel Kerr
  * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license        https://opensource.org/licenses/GPL-3.0
- * @link           https://www.opencart.com
+ *
+ * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
 /**
@@ -16,7 +18,7 @@ class Image {
 	 */
 	private string $file;
 	/**
-	 * @var object|false|\GdImage
+	 * @var false|\GdImage|object
 	 */
 	private $image;
 	/**
@@ -40,7 +42,6 @@ class Image {
 	 * Constructor
 	 *
 	 * @param string $file
-	 *
 	 */
 	public function __construct(string $file) {
 		if (!extension_loaded('gd')) {

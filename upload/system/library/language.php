@@ -1,10 +1,12 @@
 <?php
 /**
  * @package		OpenCart
+ *
  * @author		Daniel Kerr
  * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
+ *
+ * @see		https://www.opencart.com
 */
 namespace Opencart\System\Library;
 /**
@@ -36,7 +38,6 @@ class Language {
 	 * Constructor
 	 *
 	 * @param string $code
-	 *
 	 */
 	public function __construct(string $code) {
 		$this->code = $code;
@@ -122,7 +123,7 @@ class Language {
 	 *
 	 * @param string $filename
 	 * @param string $prefix
-	 * @param string $code Language code
+	 * @param string $code     Language code
 	 *
 	 * @return array
 	 */

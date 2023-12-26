@@ -14,6 +14,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function index(string &$route, array &$args, &$output): void {

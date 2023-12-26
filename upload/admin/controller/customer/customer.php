@@ -137,6 +137,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -146,6 +148,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -414,6 +418,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -643,6 +649,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -732,6 +740,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Unlock
+	 *
 	 * @return void
 	 */
 	public function unlock(): void {
@@ -760,6 +770,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -792,6 +804,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Login
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function login(): ?object {
@@ -834,6 +848,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Payment
+	 *
 	 * @return void
 	 */
 	public function payment(): void {
@@ -843,6 +859,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Payment
+	 *
 	 * @return string
 	 */
 	private function getPayment(): string {
@@ -899,6 +917,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete Payment
+	 *
 	 * @return void
 	 */
 	public function deletePayment(): void {
@@ -929,6 +949,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -938,6 +960,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -983,6 +1007,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add History
+	 *
 	 * @return void
 	 */
 	public function addHistory(): void {
@@ -1019,6 +1045,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Transaction
+	 *
 	 * @return void
 	 */
 	public function transaction(): void {
@@ -1028,6 +1056,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Transaction
+	 *
 	 * @return string
 	 */
 	public function getTransaction(): string {
@@ -1076,6 +1106,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add Transaction
+	 *
 	 * @return void
 	 */
 	public function addTransaction(): void {
@@ -1114,6 +1146,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reward
+	 *
 	 * @return void
 	 */
 	public function reward(): void {
@@ -1123,6 +1157,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Reward
+	 *
 	 * @return string
 	 */
 	public function getReward(): string {
@@ -1171,6 +1207,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add Reward
+	 *
 	 * @return void
 	 */
 	public function addReward(): void {
@@ -1209,6 +1247,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Ip
+	 *
 	 * @return void
 	 */
 	public function ip(): void {
@@ -1218,6 +1258,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Ip
 	 * @return string
 	 */
 	public function getIp(): string {
@@ -1278,6 +1319,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Authorize
+	 *
 	 * @return void
 	 */
 	public function authorize(): void {
@@ -1287,6 +1330,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Authorize
+	 *
 	 * @return string
 	 */
 	public function getAuthorize(): string {
@@ -1337,6 +1382,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete Authorize
+	 *
 	 * @return void
 	 */
 	public function deleteAuthorize(): void {
@@ -1386,6 +1433,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Autocomplete
+	 *
 	 * @return void
 	 */
 	public function autocomplete(): void {
@@ -1444,6 +1493,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Customfield
 	 * @return void
 	 */
 	public function customfield(): void {

@@ -14,6 +14,8 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -108,6 +110,8 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -172,6 +176,8 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -203,6 +209,8 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {
@@ -229,6 +237,8 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

@@ -55,6 +55,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -169,6 +173,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -345,6 +351,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -391,6 +399,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -423,6 +433,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -432,6 +444,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {

@@ -19,6 +19,8 @@ class Feed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -75,6 +77,8 @@ class Feed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Validate
+	 *
 	 * @return bool
 	 */
 	protected function validate(): bool {
@@ -86,6 +90,8 @@ class Feed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -150,6 +156,8 @@ class Feed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {

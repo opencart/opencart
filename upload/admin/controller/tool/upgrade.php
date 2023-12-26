@@ -80,6 +80,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -139,6 +141,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {

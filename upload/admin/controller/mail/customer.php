@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Customer extends \Opencart\System\Engine\Controller {
 	/**
+	 * Approve
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -102,6 +104,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Deny
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

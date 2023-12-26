@@ -7,7 +7,6 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Forgotten extends \Opencart\System\Engine\Controller {
 	/**
-	 *
 	 * admin/model/user/user/editCode/after
 	 *
 	 * @param string $route

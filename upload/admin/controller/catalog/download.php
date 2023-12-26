@@ -55,6 +55,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -162,6 +166,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -252,6 +258,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -314,6 +322,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -356,6 +366,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -365,6 +377,7 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Report
 	 * @return string
 	 */
 	private function getReport(): string {
@@ -426,6 +439,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -503,6 +518,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -558,6 +575,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Autocomplete
+	 *
 	 * @return void
 	 */
 	public function autocomplete(): void {

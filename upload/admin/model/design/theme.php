@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Design;
  */
 class Theme extends \Opencart\System\Engine\Model {
 	/**
+	 * Edit Theme
+	 *
 	 * @param int    $store_id
 	 * @param string $route
 	 * @param string $code
@@ -20,6 +22,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Theme
+	 *
 	 * @param int $theme_id
 	 *
 	 * @return void
@@ -29,6 +33,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Theme
+	 *
 	 * @param int    $store_id
 	 * @param string $route
 	 *
@@ -41,6 +47,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Themes
+	 *
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -61,6 +69,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Themes
+	 *
 	 * @return int
 	 */
 	public function getTotalThemes(): int {

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Manufacturer
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -43,6 +45,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Manufacturer
+	 *
 	 * @param int   $manufacturer_id
 	 * @param array $data
 	 *
@@ -81,6 +85,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Manufacturer
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return void
@@ -95,6 +101,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Manufacturer
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return array
@@ -106,6 +114,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Manufacturers
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -152,6 +162,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Stores
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return array
@@ -169,6 +181,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Urls
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return array
@@ -186,6 +200,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Layouts
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return array
@@ -203,6 +219,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Manufacturers
+	 *
 	 * @return int
 	 */
 	public function getTotalManufacturers(): int {
@@ -212,6 +230,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Manufacturers By Layout ID
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

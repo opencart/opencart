@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Design;
  */
 class Translation extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Translation
+	 *
 	 * @param array $data
 	 *
 	 * @return void
@@ -16,6 +18,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Translation
+	 *
 	 * @param int   $translation_id
 	 * @param array $data
 	 *
@@ -26,6 +30,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Translation
+	 *
 	 * @param int $translation_id
 	 *
 	 * @return void
@@ -35,6 +41,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Translation
+	 *
 	 * @param int $translation_id
 	 *
 	 * @return array
@@ -46,6 +54,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Translations
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -91,6 +101,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Translations
+	 *
 	 * @return int
 	 */
 	public function getTotalTranslations(): int {

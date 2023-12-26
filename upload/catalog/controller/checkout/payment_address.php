@@ -50,6 +50,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -181,6 +183,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Address
+	 *
 	 * @return void
 	 */
 	public function address(): void {

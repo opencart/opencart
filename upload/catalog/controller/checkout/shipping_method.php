@@ -26,6 +26,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Quote
+	 *
 	 * @return void
 	 */
 	public function quote(): void {
@@ -84,6 +86,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

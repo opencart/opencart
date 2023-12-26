@@ -58,6 +58,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @param array  $order_info
 	 * @param int    $order_status_id
 	 * @param string $comment
@@ -371,6 +373,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
 	 *
 	 * catalog/model/checkout/order/addHistory/before
 	 *
@@ -474,6 +477,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Alert
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *

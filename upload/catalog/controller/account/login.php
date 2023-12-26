@@ -99,6 +99,8 @@ class Login extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Login
+	 *
 	 * @return void
 	 */
 	public function login(): void {
@@ -197,6 +199,8 @@ class Login extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Token
+	 *
 	 * @return void
 	 */
 	public function token(): void {

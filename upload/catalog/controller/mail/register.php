@@ -68,6 +68,8 @@ class Register extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after
 
 	/**
+	 * Alert
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

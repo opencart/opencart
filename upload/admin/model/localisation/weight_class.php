@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class WeightClass extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Weight Class
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -26,6 +28,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Weight Class
+	 *
 	 * @param int   $weight_class_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Weight Class
+	 *
 	 * @param int $weight_class_id
 	 *
 	 * @return void
@@ -56,6 +62,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Weight Classes
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -109,6 +117,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Weight Class
+	 *
 	 * @param int $weight_class_id
 	 *
 	 * @return array
@@ -120,6 +130,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Description By Unit
+	 *
 	 * @param string $unit
 	 *
 	 * @return array
@@ -131,6 +143,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $weight_class_id
 	 *
 	 * @return array
@@ -151,6 +165,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Weight Classes
+	 *
 	 * @return int
 	 */
 	public function getTotalWeightClasses(): int {

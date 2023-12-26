@@ -10,6 +10,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * Loads order info
 	 */
 	/**
+	 * Load
+	 *
 	 * @return void
 	 */
 	public function load(): void {
@@ -177,6 +179,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Comment
+	 *
 	 * @return void
 	 */
 	public function comment(): void {
@@ -199,6 +203,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @return void
 	 */
 	public function confirm(): void {
@@ -533,6 +539,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -567,6 +575,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add History
+	 *
 	 * @return void
 	 */
 	public function addHistory(): void {

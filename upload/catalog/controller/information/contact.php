@@ -96,6 +96,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Send
+	 *
 	 * @return void
 	 * @throws \Exception
 	 */
@@ -171,6 +173,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Success
+	 *
 	 * @return void
 	 */
 	public function success(): void {

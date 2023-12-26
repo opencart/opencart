@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\User;
  */
 class UserGroup extends \Opencart\System\Engine\Model {
 	/**
+	 * Add User Group
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit User Group
+	 *
 	 * @param int   $user_group_id
 	 * @param array $data
 	 *
@@ -28,6 +32,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete User Group
+	 *
 	 * @param int $user_group_id
 	 *
 	 * @return void
@@ -37,6 +43,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get User Group
+	 *
 	 * @param int $user_group_id
 	 *
 	 * @return array
@@ -53,6 +61,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get User Groups
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -84,6 +94,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total User Groups
+	 *
 	 * @return int
 	 */
 	public function getTotalUserGroups(): int {
@@ -93,6 +105,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Permission
+	 *
 	 * @param int    $user_group_id
 	 * @param string $type
 	 * @param string $route
@@ -112,6 +126,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Remove Permission
+	 *
 	 * @param int    $user_group_id
 	 * @param string $type
 	 * @param string $route

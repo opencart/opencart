@@ -105,6 +105,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?object {
@@ -409,6 +411,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -418,6 +422,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -464,6 +470,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reorder
+	 *
 	 * @return void
 	 */
 	public function reorder(): void {

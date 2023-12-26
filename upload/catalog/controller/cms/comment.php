@@ -91,6 +91,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -182,6 +184,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reply
+	 *
 	 * @return void
 	 */
 	public function reply(): void {
@@ -191,7 +195,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Reply
+	 * Get Replies
 	 *
 	 * @return string
 	 */

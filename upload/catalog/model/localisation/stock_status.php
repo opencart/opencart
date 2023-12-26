@@ -45,14 +45,14 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$stock_status_data = $this->cache->get('stock_status.'. $key);
+		$stock_status_data = $this->cache->get('stock_status.' . $key);
 
 		if (!$stock_status_data) {
 			$query = $this->db->query($sql);
 
 			$stock_status_data = $query->rows;
 
-			$this->cache->set('stock_status.'. $key, $stock_status_data);
+			$this->cache->set('stock_status.' . $key, $stock_status_data);
 		}
 
 		return $stock_status_data;

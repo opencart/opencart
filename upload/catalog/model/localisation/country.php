@@ -27,14 +27,14 @@ class Country extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$country_data = $this->cache->get('country.'. $key);
+		$country_data = $this->cache->get('country.' . $key);
 
 		if (!$country_data) {
 			$query = $this->db->query($sql);
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.'. $key, $country_data);
+			$this->cache->set('country.' . $key, $country_data);
 		}
 
 		return $country_data;
@@ -50,14 +50,14 @@ class Country extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$country_data = $this->cache->get('country.'. $key);
+		$country_data = $this->cache->get('country.' . $key);
 
 		if (!$country_data) {
 			$query = $this->db->query($sql);
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.'. md5($sql), $country_data);
+			$this->cache->set('country.' . md5($sql), $country_data);
 		}
 
 		return $country_data;
@@ -71,14 +71,14 @@ class Country extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$country_data = $this->cache->get('country.'. $key);
+		$country_data = $this->cache->get('country.' . $key);
 
 		if (!$country_data) {
 			$query = $this->db->query($sql);
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.'. $key, $country_data);
+			$this->cache->set('country.' . $key, $country_data);
 		}
 
 		return $country_data;

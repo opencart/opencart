@@ -129,7 +129,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/dashboard/' . $code);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' .$extension . '/dashboard/' . $code);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $extension . '/dashboard/' . $code);
 
 			$namespace = str_replace(['_', '/'], ['', '\\'], ucwords($extension, '_/'));
 

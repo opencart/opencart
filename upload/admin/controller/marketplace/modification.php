@@ -557,7 +557,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					$handle = fopen(DIR_EXTENSION . 'ocmod/'  . $key, 'w');
+					$handle = fopen(DIR_EXTENSION . 'ocmod/' . $key, 'w');
 
 					fwrite($handle, $value);
 

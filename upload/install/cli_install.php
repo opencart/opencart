@@ -187,7 +187,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		if (count($missing)) {
-			return 'ERROR: Following inputs were missing or invalid: ' . implode(', ', $missing)  . "\n";
+			return 'ERROR: Following inputs were missing or invalid: ' . implode(', ', $missing) . "\n";
 		}
 
 		// Pre-installation check

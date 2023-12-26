@@ -246,19 +246,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 			$module_data = [];
 
-			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] .'.' . $extension['code']);
+			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] . '.' . $extension['code']);
 
 			foreach ($modules as $module) {
 				$module_data[] = [
 					'name' => strip_tags($module['name']),
-					'code' => $extension['extension'] . '.' .  $extension['code'] . '.' .  $module['module_id']
+					'code' => $extension['extension'] . '.' . $extension['code'] . '.' . $module['module_id']
 				];
 			}
 
 			if ($this->config->has('module_' . $extension['code'] . '_status') || $module_data) {
 				$data['extensions'][] = [
 					'name'   => strip_tags($this->language->get($extension['code'] . '_heading_title')),
-					'code'   => $extension['extension'] . '.' .  $extension['code'],
+					'code'   => $extension['extension'] . '.' . $extension['code'],
 					'module' => $module_data
 				];
 			}

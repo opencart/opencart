@@ -412,15 +412,15 @@ class Category extends \Opencart\System\Engine\Controller {
 			if ($page == 1) {
 				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path']), 'canonical');
 			} else {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page='. $page), 'canonical');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page=' . $page), 'canonical');
 			}
 
 			if ($page > 1) {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . (($page - 2) ? '&page=' . ($page - 1) : '')), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page='. ($page + 1)), 'next');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page=' . ($page + 1)), 'next');
 			}
 
 			$data['sort'] = $sort;

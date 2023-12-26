@@ -133,13 +133,13 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Before we delete we need to make sure there is a sass file to regenerate the css
-			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
+			$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 
 			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
 				unlink($file);
 			}
 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/scss/bootstrap.scss');
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/scss/bootstrap.scss');
 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -20) . '/bootstrap.css';
@@ -149,7 +149,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/stylesheet.scss');
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/stylesheet.scss');
 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -16) . '/stylesheet.css';

@@ -468,6 +468,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Categories By Layout ID
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

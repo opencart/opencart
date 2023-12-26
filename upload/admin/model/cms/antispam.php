@@ -107,6 +107,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Antispam(s)
+	 *
 	 * @param array $data
 	 *
 	 * @return int

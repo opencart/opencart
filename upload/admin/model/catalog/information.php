@@ -273,6 +273,7 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Information(s) By Layout ID
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

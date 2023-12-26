@@ -7,6 +7,7 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Returns extends \Opencart\System\Engine\Controller {
 	/**
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

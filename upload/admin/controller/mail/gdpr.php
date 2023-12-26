@@ -8,6 +8,7 @@ namespace Opencart\Admin\Controller\Mail;
 class Gdpr extends \Opencart\System\Engine\Controller {
 	// admin/model/customer/gdpr/editStatus
 	/**
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -45,6 +46,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Export
+	 *
 	 * @param array $gdpr_info
 	 *
 	 * @return void
@@ -221,6 +224,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Approve
+	 *
 	 * @param array $gdpr_info
 	 *
 	 * @return void
@@ -312,6 +317,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Deny
+	 *
 	 * @param array $gdpr_info
 	 *
 	 * @return void
@@ -403,6 +410,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @param array $gdpr_info
 	 *
 	 * @return void

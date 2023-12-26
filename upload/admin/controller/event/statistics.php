@@ -7,7 +7,6 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Statistics extends \Opencart\System\Engine\Controller {
 	/**
-	 *
 	 * addReview
 	 *
 	 * @param string $route

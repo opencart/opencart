@@ -8,6 +8,8 @@ namespace Opencart\Admin\Controller\Mail;
 class Subscription extends \Opencart\System\Engine\Controller {
 	// admin/controller/sale/subscription/addHistory/after
 	/**
+	 * History
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -160,6 +162,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	// admin/controller/sale/subscription/addTransaction/after
 
 	/**
+	 * Transaction
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

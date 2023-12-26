@@ -262,7 +262,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('cms/comment_reply', $data);
 	}
 
-	/*
+	/**
 	 * Add
 	 *
 	 * @return void

@@ -1,10 +1,12 @@
 <?php
 /**
  * @package		OpenCart
+ *
  * @author		Daniel Kerr
  * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
+ *
+ * @see		https://www.opencart.com
 */
 namespace Opencart\System\Library;
 /**
@@ -63,7 +65,7 @@ class Session {
 	 *
 	 * @param string $session_id
 	 *
-	 * @return string Returns the current session ID.
+	 * @return string returns the current session ID
 	 */
 	public function start(string $session_id = ''): string {
 		if (!$session_id) {

@@ -6,7 +6,7 @@ namespace Opencart\Catalog\Controller\Api\Account;
  * @package Opencart\Catalog\Controller\Api\Account
  */
 class Login extends \Opencart\System\Engine\Controller {
-	/*
+	/**
 	 * Opencart\Catalog\Controller\Api\Account\Login.Index
 	 *
 	 * @Example
@@ -64,7 +64,6 @@ class Login extends \Opencart\System\Engine\Controller {
 	 * $response = curl_exec($curl);
 	 *
 	 * curl_close($curl);
-	 *
 	 */
 	public function index(): void {
 		$this->load->language('api/account/login');

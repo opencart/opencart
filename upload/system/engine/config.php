@@ -1,10 +1,12 @@
 <?php
 /**
  * @package        OpenCart
+ *
  * @author         Daniel Kerr
  * @copyright      Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license        https://opensource.org/licenses/GPL-3.0
- * @link           https://www.opencart.com
+ *
+ * @see           https://www.opencart.com
  */
 namespace Opencart\System\Engine;
 /**
@@ -43,7 +45,7 @@ class Config {
 	 *
 	 * @param string $key
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function get(string $key) {
 		return isset($this->data[$key]) ? $this->data[$key] : '';
@@ -53,7 +55,7 @@ class Config {
 	 * Set
 	 *
 	 * @param string $key
-	 * @param mixed $value
+	 * @param mixed  $value
 	 */
 	public function set(string $key, $value): void {
 		$this->data[$key] = $value;
@@ -64,7 +66,7 @@ class Config {
 	 *
 	 * @param string $key
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function has(string $key): bool {
 		return isset($this->data[$key]);

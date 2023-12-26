@@ -8,6 +8,7 @@ namespace Opencart\Admin\Controller\Startup;
 class Session extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function index(): void {

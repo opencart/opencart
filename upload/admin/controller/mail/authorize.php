@@ -13,6 +13,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @param $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function index(&$route, &$args, &$output): void {
@@ -69,6 +70,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @param $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function reset(&$route, &$args, &$output): void {

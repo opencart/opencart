@@ -62,6 +62,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	// admin/model/user/user/editCode/after
 
 	/**
+	 * Reset
+	 *
 	 * @param $route
 	 * @param $args
 	 * @param $output

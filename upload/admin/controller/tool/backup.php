@@ -62,6 +62,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -71,6 +73,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -115,6 +119,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Backup
+	 *
 	 * @return void
 	 */
 	public function backup(): void {
@@ -239,6 +245,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Restore
+	 *
 	 * @return void
 	 */
 	public function restore(): void {
@@ -335,6 +343,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -376,6 +386,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -421,6 +433,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

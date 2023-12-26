@@ -7,6 +7,7 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Voucher extends \Opencart\System\Engine\Controller {
 	/**
+	 *
 	 * @param int $voucher_id
 	 *
 	 * @return void

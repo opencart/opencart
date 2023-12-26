@@ -97,6 +97,8 @@ class Log extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -133,6 +135,8 @@ class Log extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Clear
+	 *
 	 * @return void
 	 */
 	public function clear(): void {

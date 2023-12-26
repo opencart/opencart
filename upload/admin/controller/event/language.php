@@ -25,6 +25,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Before
+	 *
 	 * 1. Before controller load store all current loaded language data.
 	 *
 	 * controller/ * /before
@@ -43,6 +45,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * After
+	 *
 	 *  // 2. After controller load restore old language data.
 	 *
 	 * // controller/ * / * /after

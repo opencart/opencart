@@ -20,6 +20,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @return void
 	 */
 	public function edit(): void {
@@ -44,6 +46,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Cache
+	 *
 	 * @return void
 	 */
 	public function cache(): void {
@@ -74,6 +78,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Theme
+	 *
 	 * @return void
 	 */
 	public function theme(): void {
@@ -112,6 +118,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Sass
+	 *
 	 * @return void
 	 */
 	public function sass(): void {
@@ -159,6 +167,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Vendor
+	 *
 	 * Generate new autoloader file
 	 *
 	 * @return void

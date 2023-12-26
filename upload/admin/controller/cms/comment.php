@@ -42,6 +42,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -51,6 +53,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -201,6 +205,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Approve
+	 *
 	 * @return void
 	 */
 	public function approve(): void {
@@ -253,6 +259,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Spam
+	 *
 	 * @return void
 	 */
 	public function spam(): void {
@@ -302,6 +310,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

@@ -12,6 +12,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function index(string &$route, array &$args, &$output): void {
@@ -78,6 +79,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function alert(string &$route, array &$args, &$output): void {

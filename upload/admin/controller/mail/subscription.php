@@ -15,6 +15,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function history(string &$route, array &$args, &$output): void {
@@ -169,6 +170,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function transaction(string &$route, array &$args, &$output): void {

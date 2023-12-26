@@ -1259,6 +1259,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Get Ip
+	 *
 	 * @return string
 	 */
 	public function getIp(): string {
@@ -1494,6 +1495,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Customfield
+	 *
 	 * @return void
 	 */
 	public function customfield(): void {

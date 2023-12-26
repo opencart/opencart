@@ -378,6 +378,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Get Report
+	 *
 	 * @return string
 	 */
 	private function getReport(): string {

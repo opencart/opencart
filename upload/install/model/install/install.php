@@ -10,6 +10,7 @@ class Install extends \Opencart\System\Engine\Model {
 	 * @param array $data
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function database(array $data): void {

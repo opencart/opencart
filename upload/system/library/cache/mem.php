@@ -7,7 +7,7 @@ namespace Opencart\System\Library\Cache;
  */
 class Mem {
 	/**
-	 * @var object|\Memcache
+	 * @var \Memcache|object
 	 */
 	private object $memcache;
 	/**
@@ -15,9 +15,7 @@ class Mem {
 	 */
 	private int $expire;
 
-	/**
-	 *
-	 */
+
 	public const CACHEDUMP_LIMIT = 9999;
 
 	/**

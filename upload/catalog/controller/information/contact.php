@@ -99,6 +99,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 	 * Send
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function send(): void {

@@ -101,7 +101,7 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string       $code
 	 * @param string       $key
-	 * @param string|array $value
+	 * @param array|string $value
 	 * @param int          $store_id
 	 *
 	 * @return void

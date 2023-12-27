@@ -12,6 +12,7 @@ class Image extends \Opencart\System\Engine\Model {
 	 * @param int    $height
 	 *
 	 * @return string
+	 *
 	 * @throws \Exception
 	 */
 	public function resize(string $filename, int $width, int $height): string {

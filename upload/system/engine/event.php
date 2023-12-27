@@ -1,17 +1,19 @@
 <?php
 /**
  * @package		OpenCart
+ *
  * @author		Daniel Kerr
  * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
+ *
+ * @see		https://www.opencart.com
 */
 namespace Opencart\System\Engine;
 /**
-* Class Event
-*
-* https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
-*/
+ * Class Event
+ *
+ * https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
+ */
 class Event {
 	/**
 	 * @var \Opencart\System\Engine\Registry
@@ -36,7 +38,7 @@ class Event {
 	 *
 	 * @param string $trigger
 	 * @param object $action
-	 * @param int	 $priority
+	 * @param int    $priority
 	 *
 	 * @return void
 	 */
@@ -60,7 +62,7 @@ class Event {
 	 * Trigger
 	 *
 	 * @param string $event
-	 * @param array	 $args
+	 * @param array  $args
 	 *
 	 * @return mixed
 	 */

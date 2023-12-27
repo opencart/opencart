@@ -474,6 +474,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * Info
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function info(): void {

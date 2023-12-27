@@ -124,7 +124,6 @@ class PgSQL {
 	 * Destructor
 	 *
 	 * Closes the DB connection when this object is destroyed.
-	 *
 	 */
 	public function __destruct() {
 		if ($this->connection) {

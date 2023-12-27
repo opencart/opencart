@@ -64,6 +64,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @param bool   $notify
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function add(array $order_info, int $order_status_id, string $comment, bool $notify): void {
@@ -371,7 +372,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 *
 	 * catalog/model/checkout/order/addHistory/before
 	 *
 	 * @param array  $order_info
@@ -380,6 +380,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @param bool   $notify
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function history(array $order_info, int $order_status_id, string $comment, bool $notify): void {
@@ -480,6 +481,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function alert(string &$route, array &$args): void {

@@ -13,9 +13,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Create a new attribute record in the database.
 	 *
-	 *	@param	array	$data
+	 * @param array $data
 	 *
-	 *	@return	int		returns the primary key of the new attribute record.
+	 * @return int returns the primary key of the new attribute record
 	 */
 	public function addAttribute(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -34,12 +34,12 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Edit attribute record in the database.
 	 *
-	 *	@param	int		$attribute_id	Primary key of the attribute record to edit.
-	 *	@param	array	$data  			Array of data [
-	 * 		'attribute_group_id'
-	 * ].
+	 * @param int   $attribute_id primary key of the attribute record to edit
+	 * @param array $data         array of data [
+	 *                            'attribute_group_id'
+	 *                            ]
 	 *
-	 *	@return	void
+	 * @return void
 	 */
 	public function editAttribute(int $attribute_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_id` = '" . (int)$attribute_id . "'");
@@ -56,10 +56,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Delete attribute record in the database.
 	 *
-	 *	@param	int	$attribute_id primary key of the attribute record to be deleted
+	 * @param int $attribute_id primary key of the attribute record to be deleted
 	 *
-	 *	@return	void
-	 *
+	 * @return void
 	 */
 	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
@@ -71,10 +70,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 *	@param	int		$attribute_id primary key of the attribute record to be fetched
+	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 *	@return	array
-	 *
+	 * @return array
 	 */
 	public function getAttribute(int $attribute_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute` `a` LEFT JOIN `" . DB_PREFIX . "attribute_description` `ad` ON (`a`.`attribute_id` = `ad`.`attribute_id`) WHERE `a`.`attribute_id` = '" . (int)$attribute_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -87,10 +85,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 *	@param	array	$data array of filters
+	 * @param array $data array of filters
 	 *
-	 *	@return	array
-	 *
+	 * @return array
 	 */
 	public function getAttributes(array $data = []): array {
 		$sql = "SELECT *, (SELECT `agd`.`name` FROM `" . DB_PREFIX . "attribute_group_description` `agd` WHERE `agd`.`attribute_group_id` = `a`.`attribute_group_id` AND `agd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `attribute_group` FROM `" . DB_PREFIX . "attribute` `a` LEFT JOIN `" . DB_PREFIX . "attribute_description` `ad` ON (`a`.`attribute_id` = `ad`.`attribute_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -143,9 +140,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 *	@param	int		$attribute_id primary key of the attribute record to be fetched.
+	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 *	@return	array	returns array of descriptions sorted by language_id
+	 * @return array returns array of descriptions sorted by language_id
 	 */
 	public function getDescriptions(int $attribute_id): array {
 		$attribute_data = [];
@@ -164,7 +161,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the total number of attribute records in the database.
 	 *
-	 *	@return	int	Total number of attribute records.
+	 * @return int total number of attribute records
 	 */
 	public function getTotalAttributes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute`");
@@ -181,9 +178,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the total number of attribute records with group ID in the database.
 	 *
-	 *	@param	int	$attribute_group_id foreign key of the attribute record to be fetched.
+	 * @param int $attribute_group_id foreign key of the attribute record to be fetched
 	 *
-	 *	@return	int	Total number of attribute records that have attribute group ID.
+	 * @return int total number of attribute records that have attribute group ID
 	 */
 	public function getTotalAttributesByAttributeGroupId(int $attribute_group_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");

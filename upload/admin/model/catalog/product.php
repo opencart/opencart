@@ -1107,6 +1107,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Option Values By Option ID
+	 *
 	 * @param int $option_id
 	 *
 	 * @return array

@@ -7,16 +7,15 @@
     <button type="button" class="btn btn-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
 </div>
-
 <hr/>
-
 <div class="row mb-3">
   <div class="col">
     <h2>{{ heading_title }}</h2>
   </div>
   <div class="col-4">
     <div class="input-group">
-      <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select">
+      <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+      <select id="input-sort" class="form-select">
         {% for sorts in sorts %}
           <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
         {% endfor %}
@@ -24,9 +23,7 @@
     </div>
   </div>
 </div>
-
 <div id="comment">{{ list }}</div>
-
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -37,11 +34,13 @@
       <div class="modal-body">
         <form id="form-comment" action="" data-oc-target="">
           <div class="mb-3 required">
-            <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            <label for="input-author" class="form-label">{{ entry_author }}</label>
+            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-comment" class="form-label">{{ entry_comment }}</label> <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <label for="input-comment" class="form-label">{{ entry_comment }}</label>
+            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
           {{ captcha }}
@@ -62,38 +61,6 @@ $('#comment').on('click', '.pagination a', function(e) {
 
 $('#input-sort').on('change', function(e) {
     $('#comment').load($(this).val());
-});
-
-// Rating
-$('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
 });
 
 // Add Comment
@@ -174,7 +141,7 @@ $('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            $(element).parent().after(html);
+            $(element).parent().before(html);
             $(element).parent().remove();
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -199,14 +166,42 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
-            var target = $(element).attr('data-oc-target');
+            $($(element).attr('data-oc-target')).remove();
 
-            if (target !== undefined) {
-                $(target).remove();
+            $(element).parent().before(html);
+            $(element).parent().remove();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Rating
+$('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            $(element).parent().after(html);
-            $(element).parent().remove();
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

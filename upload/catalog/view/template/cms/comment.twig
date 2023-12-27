@@ -2,7 +2,7 @@
   <button type="button" value="{{ like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
   <button type="button" value="{{ dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
-    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" class="btn btn-secondary">{{ button_comment }}</button>
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-secondary">{{ button_comment }}</button>
   {% else %}
     <button type="button" class="btn btn-secondary" disabled>{{ button_comment }}</button>
   {% endif %}
@@ -71,6 +71,7 @@ $('#cms-blog').on('click', '[data-oc-toggle=\'comment\']', function(e) {
 
     $('#form-comment').attr('action', $(element).val());
     $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
+    $('#form-comment').attr('data-oc-trigger', $(element).attr('data-oc-trigger'));
 
     $('#modal-comment').modal('show');
 });

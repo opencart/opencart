@@ -169,6 +169,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if (!$error) {
 					// Subscription
 					$order_data = [];
+
 					$order_data['subscription_id'] = $order_info['subscription_id'];
 
 					// Store Details

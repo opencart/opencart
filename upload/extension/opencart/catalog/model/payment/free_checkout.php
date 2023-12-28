@@ -22,7 +22,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 			$amounts = [];
 		}
 
-		$total = $total + array_sum($amounts);
+		$total += array_sum($amounts);
 
 		if ((float)$total <= 0.00) {
 			$status = true;

@@ -67,7 +67,7 @@ class Log extends \Opencart\System\Engine\Controller {
 				$i = 0;
 
 				while (($size / 1024) > 1) {
-					$size = $size / 1024;
+					$size /= 1024;
 					$i++;
 				}
 

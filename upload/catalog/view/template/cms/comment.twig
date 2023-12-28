@@ -32,7 +32,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment" action="" data-oc-target="">
+        <form id="form-comment" action="" data-oc-target="" data-oc-trigger="">
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
             <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
@@ -117,7 +117,7 @@ $('#form-comment').on('submit', function(e) {
 
                 $('#input-comment').val('');
 
-                $($('#form-comment').attr('data-oc-target')).find('[data-oc-toggle=\'refresh\']').trigger('click');
+                $($('#form-comment').attr('data-oc-trigger')).trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

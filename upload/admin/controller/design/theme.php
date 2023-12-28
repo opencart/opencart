@@ -49,6 +49,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -103,6 +105,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Path
+	 *
 	 * @return void
 	 */
 	public function path(): void {
@@ -233,6 +237,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Template
+	 *
 	 * @return void
 	 */
 	public function template(): void {
@@ -301,6 +307,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -344,6 +352,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reset
+	 *
 	 * @return void
 	 */
 	public function reset(): void {
@@ -400,6 +410,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

@@ -40,7 +40,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->language('default');
 		}
 	}
-	
+
 	// Override the language default values
 
 	/**

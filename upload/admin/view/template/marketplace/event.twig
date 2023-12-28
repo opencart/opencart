@@ -28,30 +28,6 @@ $('#event').on('click', 'thead a, .pagination a', function (e) {
     $('#event').load(this.href);
 });
 
-$('#event').on('click', '.btn-info', function () {
-    var element = this;
-
-    $('#modal-event').remove();
-
-    html = '<div id="modal-event" class="modal">';
-    html += '  <div class="modal-dialog">';
-    html += '    <div class="modal-content">';
-    html += '      <div class="modal-header">';
-    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
-    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-    html += '      </div>';
-    html += '      <div class="modal-body">' + $($(element).attr('data-oc-target')).html() + '</div>';
-    html += '    </div>';
-    html += '  </div>';
-    html += '</div>';
-
-    $('body').append(html);
-
-    var modal = new bootstrap.Modal(document.querySelector('#modal-event'));
-
-    modal.show();
-});
-
 $('#event').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
 
@@ -69,6 +45,8 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
             $(element).button('reset');
         },
         success: function (json) {
+            $('.alert-dismissible').remove();
+
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }

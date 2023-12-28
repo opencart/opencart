@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeRoutingControlAsync(array $args = [])
  * @method \Aws\Result describeSafetyRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSafetyRuleAsync(array $args = [])
+ * @method \Aws\Result getResourcePolicy(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
  * @method \Aws\Result listAssociatedRoute53HealthChecks(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAssociatedRoute53HealthChecksAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])

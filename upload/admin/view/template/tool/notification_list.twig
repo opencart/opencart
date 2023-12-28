@@ -4,6 +4,7 @@
       <thead>
         <tr>
           <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-center"></td>
           <td class="text-start">{{ column_message }}</td>
           <td class="text-end">{{ column_action }}</td>
         </tr>
@@ -17,8 +18,7 @@
               <td class="text-primary" style="width: 1px;"><i class="fa-regular fa-bell fa-3x"></i></td>
               <td class="text-start"><a href="{{ notification.view }}" class="text-primary{% if not notification.status %} font-weight-bold{% endif %}">{{ notification.title }}</a>
                 <br/>
-                <div class="text-muted">{{ notification.date_added }}</div>
-              </td>
+                <div class="text-muted">{{ notification.date_added }}</div></td>
               <td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
             </tr>
             {% set notification_row = notification_row + 1 %}

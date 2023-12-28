@@ -50,8 +50,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['categories'][$key]['manufacturer'][] = [
-				'name'  => $result['name'],
-				'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])
+				'name' => $result['name'],
+				'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])
 			];
 		}
 
@@ -68,7 +68,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
+	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?\Opencart\System\Engine\Action {
 		$this->load->language('product/manufacturer');
@@ -331,7 +331,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 			if ($page == 1) {
-			    $this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
+				$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 			} else {
 				$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . $page), 'canonical');
 			}

@@ -129,8 +129,8 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_customer'   => $filter_customer,
 			'filter_ip'         => $filter_ip,
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
 			'start'             => ($page - 1) * 20,
 			'limit'             => 20
 		];

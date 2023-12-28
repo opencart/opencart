@@ -3,13 +3,11 @@
   <h2>{{ text_write }}</h2>
   {% if review_guest %}
     <div class="mb-3 required">
-      <label for="input-author" class="form-label">{{ entry_author }}</label>
-      <input type="text" name="author" value="{{ customer }}" id="input-author" class="form-control"/>
+      <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ customer }}" id="input-author" class="form-control"/>
       <div id="error-author" class="invalid-feedback"></div>
     </div>
     <div class="mb-3 required">
-      <label for="input-text" class="form-label">{{ entry_review }}</label>
-      <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
+      <label for="input-text" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
       <div id="error-text" class="invalid-feedback"></div>
       <div class="invalid-feedback">{{ text_note }}</div>
     </div>
@@ -31,13 +29,8 @@
       <div id="error-rating" class="invalid-feedback"></div>
     </div>
     {{ captcha }}
-    <div class="row">
-      <div class="col">
-        <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
-      </div>
-      <div class="col text-end">
-        <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
-      </div>
+    <div class="text-end">
+      <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   {% else %}
     {{ text_login }}

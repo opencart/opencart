@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cart;
 /**
  * Class User
  *
- * @package
+ * @package Opencart\System\Library\Cart
  */
 class User {
 	/**
@@ -50,7 +50,7 @@ class User {
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
@@ -84,14 +84,14 @@ class User {
 			}
 		}
 	}
-	
+
 	/**
 	 * Login
 	 *
-	 * @param    string  $username
-	 * @param    string  $password
+	 * @param string $username
+	 * @param string $password
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function login(string $username, string $password): bool {
 		$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "' AND `status` = '1'");
@@ -135,11 +135,11 @@ class User {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Logout
 	 *
-	  * @return   void
+	 * @return void
 	 */
 	public function logout(): void {
 		unset($this->session->data['user_id']);
@@ -151,14 +151,14 @@ class User {
 		$this->email = '';
 		$this->user_group_id = 0;
 	}
-	
+
 	/**
 	 * hasPermission
 	 *
-	 * @param    string  $key
-	 * @param    string  $value
+	 * @param string $key
+	 * @param string $value
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function hasPermission(string $key, string $value): bool {
 		if (isset($this->permission[$key])) {
@@ -167,20 +167,20 @@ class User {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * isLogged
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function isLogged(): bool {
 		return $this->user_id ? true : false;
 	}
-	
+
 	/**
 	 * getId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getId(): int {
 		return $this->user_id;
@@ -189,7 +189,7 @@ class User {
 	/**
 	 * getUserName
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getUserName(): string {
 		return $this->username;
@@ -198,7 +198,7 @@ class User {
 	/**
 	 * getFirstName
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getFirstName(): string {
 		return $this->firstname;
@@ -207,7 +207,7 @@ class User {
 	/**
 	 * getLastName
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getLastName(): string {
 		return $this->lastname;
@@ -216,7 +216,7 @@ class User {
 	/**
 	 * getEmail
 	 *
-	 * @return   string
+	 * @return string
 	 */
 	public function getEmail(): string {
 		return $this->email;
@@ -225,7 +225,7 @@ class User {
 	/**
 	 * getGroupId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getGroupId(): int {
 		return $this->user_group_id;

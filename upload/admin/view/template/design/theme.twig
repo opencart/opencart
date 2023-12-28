@@ -205,7 +205,7 @@ $('#path').on('click', 'a.file', function (e) {
                     $('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
 
                     // Initialize codemirrror
-                    var codemirror = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
+                    var codemirror = CodeMirror.fromTextArea(document.querySelector('#input-'), {
                         mode: 'text/html',
                         lineNumbers: true,
                         lineWrapping: true,

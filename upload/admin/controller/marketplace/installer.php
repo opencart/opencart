@@ -26,7 +26,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		// Use the  for the max file size
+		// Use the configuration option to get the max file size
 		$data['error_upload_size'] = sprintf($this->language->get('error_file_size'), ini_get('upload_max_filesize'));
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
@@ -51,6 +51,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -60,6 +62,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -127,8 +131,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$extension_data = [
 							'extension_id'          => $install_info['extension_id'],
 							'extension_download_id' => $install_info['extension_download_id'],
-							'name'                  => $install_info['name'],
-							'description'           => $install_info['description'],
+							'name'                  => strip_tags($install_info['name']),
+							'description'           => nl2br(strip_tags($install_info['description'])),
 							'code'                  => $code,
 							'version'               => $install_info['version'],
 							'author'                => $install_info['author'],
@@ -214,6 +218,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -317,6 +323,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -383,6 +391,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$path = $extension_install_info['code'] . '/' . $destination;
 					$base = DIR_EXTENSION;
 					$prefix = '';
+
+					// OCMOD files should not be copied across
+					if (substr($destination, 0, 6) == 'ocmod/') {
+						continue;
+					}
 
 					// image > image
 					if (substr($destination, 0, 6) == 'image/') {
@@ -452,6 +465,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Xml
+	 *
 	 * @return void
 	 */
 	public function xml(): void {
@@ -520,7 +535,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 									$description = $dom->getElementsByTagName('description')->item(0);
 
 									if ($description) {
-										$description = $name->nodeValue;
+										$description = $description->nodeValue;
 									} else {
 										$description = '';
 									}
@@ -551,8 +566,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 									$modification_data = [
 										'extension_install_id' => $extension_install_id,
-										'name'                 => $name,
-										'description'          => $description,
+										'name'                 => strip_tags($name),
+										'description'          => nl2br(strip_tags($description)),
 										'code'                 => $code,
 										'author'               => $author,
 										'version'              => $version,
@@ -585,6 +600,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Vendor
+	 *
 	 * Generate new autoloader file
 	 *
 	 * @return void
@@ -702,6 +719,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -832,6 +851,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

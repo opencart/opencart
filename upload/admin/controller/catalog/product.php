@@ -94,7 +94,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['copy'] = $this->url->link('catalog/product.copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->getList();
+		$data['list'] = $this->controller_catalog_product->getList();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
@@ -112,12 +112,14 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
 		$this->load->language('catalog/product');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_catalog_product->getList());
 	}
 
 	/**
@@ -334,6 +336,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -864,14 +868,14 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// Variants
 		if (!empty($product_info)) {
-			$data['variant'] = json_decode($product_info['variant'], true);
+			$data['variant'] = $product_info['variant'];
 		} else {
 			$data['variant'] = [];
 		}
 
 		// Overrides
 		if (!empty($product_info)) {
-			$data['override'] = json_decode($product_info['override'], true);
+			$data['override'] = $product_info['override'];
 		} else {
 			$data['override'] = [];
 		}
@@ -1048,6 +1052,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -1141,6 +1147,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -1173,6 +1181,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Copy
+	 *
 	 * @return void
 	 */
 	public function copy(): void {
@@ -1205,6 +1215,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -1214,6 +1226,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Report
+	 *
 	 * @return string
 	 */
 	public function getReport(): string {
@@ -1272,6 +1286,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Autocomplete
+	 *
 	 * @return void
 	 */
 	public function autocomplete(): void {

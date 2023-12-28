@@ -82,7 +82,7 @@ set_error_handler(function(string $code, string $message, string $file, string $
 });
 
 // Exception Handler
-set_exception_handler(function(\Throwable $e) use ($log, $config): void  {
+set_exception_handler(function(\Throwable $e) use ($log, $config): void {
 	if ($config->get('error_log')) {
 		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}
@@ -107,6 +107,9 @@ if ($config->has('action_event')) {
 		}
 	}
 }
+
+// Factory
+$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 // Loader
 $loader = new \Opencart\System\Engine\Loader($registry);

@@ -55,6 +55,8 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -116,12 +120,12 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['articles'][] = [
-				'article_id'  => $result['article_id'],
-				'name'        => $result['name'],
-				'author'      => $result['author'],
-				'status'      => $result['status'],
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id'] . $url)
+				'article_id' => $result['article_id'],
+				'name'       => $result['name'],
+				'author'     => $result['author'],
+				'status'     => $result['status'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id'] . $url)
 			];
 		}
 
@@ -165,6 +169,8 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -283,22 +289,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($article_info)) {
-			$data['image'] = $article_info['image'];
-		} else {
-			$data['image'] = '';
-		}
-
-		$this->load->model('tool/image');
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
-		} else {
-			$data['thumb'] = $data['placeholder'];
-		}
-
-		if (!empty($article_info)) {
 			$data['status'] = $article_info['status'];
 		} else {
 			$data['status'] = true;
@@ -330,6 +320,8 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -398,6 +390,8 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

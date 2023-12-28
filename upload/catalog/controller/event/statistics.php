@@ -17,9 +17,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	public function addReview(string &$route, array &$args, &$output): void {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('review', 1);	
+		$this->model_report_statistics->addValue('review', 1);
 	}
-		
+
 	// catalog/model/account/returns/addReturn/after
 
 	/**
@@ -34,7 +34,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 
 		$this->model_report_statistics->addValue('returns', 1);
 	}
-	
+
 	// catalog/model/checkout/order/addHistory/before
 
 	/**
@@ -45,7 +45,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 */
 	public function addHistory(string &$route, array &$args): void {
 		$this->load->model('checkout/order');
-				
+
 		$order_info = $this->model_checkout_order->getOrder($args[0]);
 
 		if ($order_info) {
@@ -63,7 +63,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			if (in_array($new_status_id, $active_status) && !in_array($old_status_id, $active_status)) {
 				$this->model_report_statistics->addValue('order_sale', $order_info['total']);
 			}
-			
+
 			// If order status not in complete or processing remove value to sale total
 			if (!in_array($new_status_id, $active_status) && in_array($old_status_id, $active_status)) {
 				$this->model_report_statistics->removeValue('order_sale', $order_info['total']);

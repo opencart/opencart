@@ -422,11 +422,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
         success: function (html) {
             $('body').append(html);
 
-            var element = document.querySelector('#modal-image');
-
-            var modal = new bootstrap.Modal(element);
-
-            modal.show();
+            $('#modal-image').modal('show');
         }
     });
 });

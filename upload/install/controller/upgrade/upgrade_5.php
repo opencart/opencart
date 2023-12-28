@@ -62,9 +62,9 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code' => 'activity_address_edit',
+				'code'    => 'activity_address_edit',
 				'trigger' => 'catalog/model/account/address/editAddress/after',
-				'action' => 'event/activity.editAddress'
+				'action'  => 'event/activity.editAddress'
 			];
 
 			$events[] = [
@@ -255,9 +255,9 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion.getList'");
-			
+
 			// Rename subscription to mail_subscription
-            $this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

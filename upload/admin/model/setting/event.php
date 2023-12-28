@@ -46,8 +46,8 @@ class Event extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int  $event_id
-	 * @param bool $status
+	 * @param string $code
+	 * @param bool   $status
 	 *
 	 * @return void
 	 */

@@ -47,6 +47,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -56,6 +58,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -116,6 +120,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -610,6 +616,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -711,7 +719,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->load->model('setting/setting');
-
 			$this->load->model('setting/store');
 
 			if (!$this->request->post['store_id']) {
@@ -732,6 +739,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -772,7 +781,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->load->model('setting/store');
-
 			$this->load->model('setting/setting');
 
 			foreach ($selected as $store_id) {

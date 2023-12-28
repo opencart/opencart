@@ -88,7 +88,15 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
+/**
+ * Class CliInstall
+ *
+ * @package Opencart\Install
+ */
 class CliInstall extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
@@ -115,6 +123,13 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
+	/**
+	 * Install
+	 *
+	 * @param array<int, string> $argv
+	 *
+	 * @return string
+	 */
 	public function install($argv): string {
 		// Options
 		$option = [
@@ -173,7 +188,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		if (count($missing)) {
-			return 'ERROR: Following inputs were missing or invalid: ' . implode(', ', $missing)  . "\n";
+			return 'ERROR: Following inputs were missing or invalid: ' . implode(', ', $missing) . "\n";
 		}
 
 		// Pre-installation check
@@ -402,19 +417,19 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
-		
+
 		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
-		
+
 		$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
 		fwrite($file, $output);
@@ -455,15 +470,15 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
-		
+
 		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
 		}
-		
+
 		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
 		}
@@ -485,6 +500,11 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Usage
+	 *
+	 * @return string
+	 */
 	public function usage(): string {
 		$option = implode(' ', [
 			'--username',

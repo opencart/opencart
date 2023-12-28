@@ -108,6 +108,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCloudFormation(array $args = [])
  * @method \Aws\CloudFront\CloudFrontClient createCloudFront(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudFront(array $args = [])
+ * @method \Aws\CloudFrontKeyValueStore\CloudFrontKeyValueStoreClient createCloudFrontKeyValueStore(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudFrontKeyValueStore(array $args = [])
  * @method \Aws\CloudHSMV2\CloudHSMV2Client createCloudHSMV2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudHSMV2(array $args = [])
  * @method \Aws\CloudHsm\CloudHsmClient createCloudHsm(array $args = [])
@@ -278,8 +280,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionFraudDetector(array $args = [])
  * @method \Aws\GameLift\GameLiftClient createGameLift(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGameLift(array $args = [])
- * @method \Aws\GameSparks\GameSparksClient createGameSparks(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionGameSparks(array $args = [])
  * @method \Aws\Glacier\GlacierClient createGlacier(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlacier(array $args = [])
  * @method \Aws\GlobalAccelerator\GlobalAcceleratorClient createGlobalAccelerator(array $args = [])
@@ -316,6 +316,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionInspector(array $args = [])
  * @method \Aws\Inspector2\Inspector2Client createInspector2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInspector2(array $args = [])
+ * @method \Aws\InspectorScan\InspectorScanClient createInspectorScan(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionInspectorScan(array $args = [])
  * @method \Aws\InternetMonitor\InternetMonitorClient createInternetMonitor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInternetMonitor(array $args = [])
  * @method \Aws\IoT1ClickDevicesService\IoT1ClickDevicesServiceClient createIoT1ClickDevicesService(array $args = [])
@@ -382,6 +384,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionLakeFormation(array $args = [])
  * @method \Aws\Lambda\LambdaClient createLambda(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLambda(array $args = [])
+ * @method \Aws\LaunchWizard\LaunchWizardClient createLaunchWizard(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLaunchWizard(array $args = [])
  * @method \Aws\LexModelBuildingService\LexModelBuildingServiceClient createLexModelBuildingService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLexModelBuildingService(array $args = [])
  * @method \Aws\LexModelsV2\LexModelsV2Client createLexModelsV2(array $args = [])
@@ -414,8 +418,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMWAA(array $args = [])
  * @method \Aws\MachineLearning\MachineLearningClient createMachineLearning(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMachineLearning(array $args = [])
- * @method \Aws\Macie\MacieClient createMacie(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionMacie(array $args = [])
  * @method \Aws\Macie2\Macie2Client createMacie2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMacie2(array $args = [])
  * @method \Aws\MainframeModernization\MainframeModernizationClient createMainframeModernization(array $args = [])
@@ -676,6 +678,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTransfer(array $args = [])
  * @method \Aws\Translate\TranslateClient createTranslate(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
+ * @method \Aws\TrustedAdvisor\TrustedAdvisorClient createTrustedAdvisor(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionTrustedAdvisor(array $args = [])
  * @method \Aws\VPCLattice\VPCLatticeClient createVPCLattice(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionVPCLattice(array $args = [])
  * @method \Aws\VerifiedPermissions\VerifiedPermissionsClient createVerifiedPermissions(array $args = [])
@@ -721,7 +725,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.283.3';
+    const VERSION = '3.288.1';
 
     /** @var array Arguments for creating clients */
     private $args;

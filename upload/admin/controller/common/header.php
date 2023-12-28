@@ -72,7 +72,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			if ($user_info) {
 				$data['firstname'] = $user_info['firstname'];
 				$data['lastname'] = $user_info['lastname'];
-			}  else {
+			} else {
 				$data['firstname'] = '';
 				$data['lastname'] = '';
 			}

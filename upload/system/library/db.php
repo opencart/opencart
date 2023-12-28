@@ -1,10 +1,12 @@
 <?php
 /**
  * @package        OpenCart
+ *
  * @author         Daniel Kerr
  * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license        https://opensource.org/licenses/GPL-3.0
- * @link           https://www.opencart.com
+ *
+ * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
 /**
@@ -26,7 +28,7 @@ class DB {
 	 * @param string $username
 	 * @param string $password
 	 * @param string $database
-	 * @param int    $port
+	 * @param string $port
 	 * @param string $ssl_key
 	 * @param string $ssl_cert
 	 * @param string $ssl_ca
@@ -46,7 +48,7 @@ class DB {
 	 *
 	 * @param string $sql SQL statement to be executed
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function query(string $sql) {
 		return $this->adaptor->query($sql);
@@ -57,40 +59,40 @@ class DB {
 	 *
 	 * @param string $value Value to be protected against SQL injections
 	 *
-	 * @return    string    returns escaped value
+	 * @return string Returns escaped value
 	 */
 	public function escape(string $value): string {
 		return $this->adaptor->escape($value);
 	}
 
 	/**
-	 * Count Affected
+	 * countAffected
 	 *
 	 * Gets the total number of affected rows from the last query
 	 *
-	 * @return    int    returns the total number of affected rows.
+	 * @return int returns the total number of affected rows
 	 */
 	public function countAffected(): int {
 		return $this->adaptor->countAffected();
 	}
 
 	/**
-	 * Get Last ID
+	 * getLastId
 	 *
 	 * Get the last ID gets the primary key that was returned after creating a row in a table.
 	 *
-	 * @return    int returns last ID
+	 * @return int Returns last ID
 	 */
 	public function getLastId(): int {
 		return $this->adaptor->getLastId();
 	}
 
 	/**
-	 * Is Connected
+	 * isConnected
 	 *
 	 * Checks if a DB connection is active.
 	 *
-	 * @return    bool
+	 * @return bool
 	 */
 	public function isConnected(): bool {
 		return $this->adaptor->isConnected();

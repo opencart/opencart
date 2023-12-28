@@ -1,10 +1,12 @@
 <?php
 /**
  * @package     OpenCart
+ *
  * @author      Daniel Kerr
  * @copyright   Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license     https://opensource.org/licenses/GPL-3.0
- * @link        https://www.opencart.com
+ *
+ * @see        https://www.opencart.com
  */
 namespace Opencart\System\Engine;
 /**
@@ -27,27 +29,27 @@ class Autoloader {
 	/**
 	 * Register
 	 *
-	 * @param    string  $namespace
-	 * @param    string  $directory
-	 * @param    bool  $psr4
+	 * @param string $namespace
+	 * @param string $directory
+	 * @param bool   $psr4
 	 *
-	 * @return   void
+	 * @return void
 	 *
 	 * @psr-4 filename standard is stupid composer has lower case file structure than its packages have camelcase file names!
-	 */	
-	public function register(string $namespace, string $directory, $psr4 = false): void {
+	 */
+	public function register(string $namespace, string $directory, bool $psr4 = false): void {
 		$this->path[$namespace] = [
 			'directory' => $directory,
 			'psr4'      => $psr4
 		];
 	}
-	
+
 	/**
 	 * Load
 	 *
-	 * @param    string  $class
+	 * @param string $class
 	 *
-	 * @return	 bool
+	 * @return bool
 	 */
 	public function load(string $class): bool {
 		$namespace = '';

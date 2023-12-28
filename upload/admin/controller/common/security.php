@@ -60,6 +60,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -120,6 +122,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Storage
+	 *
 	 * @return void
 	 */
 	public function storage(): void {
@@ -132,13 +136,13 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['name'])) {
-			$name = preg_replace('[^a-zA-z0-9_]', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+			$name = preg_replace('/[^a-zA-Z0-9_\.]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = '';
 		}
 
 		if (isset($this->request->get['path'])) {
-			$path = preg_replace('[^a-zA-z0-9_\:\/]', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
+			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
 		} else {
 			$path = '';
 		}
@@ -149,18 +153,26 @@ class Security extends \Opencart\System\Engine\Controller {
 			$base_old = DIR_STORAGE;
 			$base_new = $path . $name . '/';
 
+			// Check current storage path exists
 			if (!is_dir($base_old)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
+			// Check the chosen directory is not in the public webspace
 			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
 			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
-			if (is_dir($base_new) && $page < 2) {
+			// Make sure the no directory with same name already exists
+			if ($page == 1 && is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage_exists');
+			}
+
+			// Make sure the new directory created exists
+			if ($page > 1 && !is_dir($base_new)) {
+				$json['error'] = $this->language->get('error_storage');
 			}
 
 			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
@@ -270,6 +282,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Admin
+	 *
 	 * @return void
 	 */
 	public function admin(): void {
@@ -282,7 +296,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['name'])) {
-			$name = preg_replace('[^a-zA-z0-9]', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+			$name = preg_replace('[^a-zA-Z0-9]', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = 'admin';
 		}
@@ -297,7 +311,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_admin');
 			}
 
-			if (is_dir($base_new) && $page < 2) {
+			if ($page == 1 && is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_admin_exists');
 			}
 
@@ -405,7 +419,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 *
+	 * Destructor
 	 */
 	public function __destruct() {
 		// Remove old admin if exists

@@ -27,15 +27,13 @@
                     <b>{{ product.special }}</b> <s>{{ product.price }}</s>
                   {% endif %}
                 </div>
-              {% endif %}
-            </td>
+              {% endif %}</td>
             <td class="text-end">
               <form method="post" data-oc-toggle="ajax" data-oc-load="{{ wishlist }}" data-oc-target="#wishlist">
                 <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
-                <button type="submit" formaction="{{ add_to_cart }}" data-bs-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping fa-fw"></i></button>
+                <button type="submit" formaction="{{ cart_add }}" data-bs-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping fa-fw"></i></button>
                 <button type="submit" formaction="{{ remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark fa-fw"></i></button>
-              </form>
-            </td>
+              </form></td>
           </tr>
         {% endfor %}
       </tbody>

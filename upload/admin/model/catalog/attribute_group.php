@@ -24,7 +24,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $attribute_group_id
+	 * @param int   $attribute_group_id
 	 * @param array $data
 	 *
 	 * @return void

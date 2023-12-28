@@ -7,11 +7,14 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Returns extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function index(string &$route, array &$args, &$output): void {
@@ -58,7 +61,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				}
 
 				$this->load->model('localisation/language');
-				
+
 				$language_info = $this->model_localisation_language->getLanguage($return_info['language_id']);
 
 				if ($language_info) {

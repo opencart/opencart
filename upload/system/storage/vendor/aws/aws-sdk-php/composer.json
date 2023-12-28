@@ -24,7 +24,7 @@
         "ext-pcre": "*",
         "ext-json": "*",
         "ext-simplexml": "*",
-        "aws/aws-crt-php": "^1.0.4",
+        "aws/aws-crt-php": "^1.2.3",
         "psr/http-message": "^1.0 || ^2.0"
     },
     "require-dev": {

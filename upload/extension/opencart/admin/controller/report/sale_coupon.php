@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * CLass SaleCoupon
  *
- * @package  Opencart\Admin\Controller\Extension\Opencart\Report
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class SaleCoupon extends \Opencart\System\Engine\Controller {
 	/**
@@ -115,8 +115,8 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 		$data['coupons'] = [];
 
 		$filter_data = [
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
 			'start'             => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'             => $this->config->get('config_pagination')
 		];

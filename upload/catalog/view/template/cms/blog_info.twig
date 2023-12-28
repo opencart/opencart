@@ -9,15 +9,11 @@
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-      <h2>{{ heading_title }}</h2>
+      <h1>{{ heading_title }}</h1>
       {% if image %}
         <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-2"/>
       {% endif %}
-      <ul class="list-inline">
-        <li class="list-inline-item">{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a></li>
-        <li class="list-inline-item">{{ date_added }}</li>
-        <li class="list-inline-item">{{ comment_total }} {{ text_comment }}</li>
-      </ul>
+      <p>{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
       <div>{{ description }}</div>
       {% if tags %}
         <p>{{ text_tags }}
@@ -27,8 +23,7 @@
         </p>
       {% endif %}
       {% if comment %}
-        <hr/>
-        <div>{{ comment }}</div>
+        <div id="comment">{{ comment }}</div>
       {% endif %}
       {{ content_bottom }}
     </div>

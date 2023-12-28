@@ -38,6 +38,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -47,15 +49,17 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
 		$data['statistics'] = [];
-		
+
 		$this->load->model('report/statistics');
-		
+
 		$results = $this->model_report_statistics->getStatistics();
-		
+
 		foreach ($results as $result) {
 			$data['statistics'][] = [
 				'name'  => $this->language->get('text_' . $result['code']),
@@ -68,6 +72,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Order Sale
+	 *
 	 * @return void
 	 */
 	public function orderSale(): void {
@@ -93,6 +99,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Order Processing
+	 *
 	 * @return void
 	 */
 	public function orderProcessing(): void {
@@ -118,6 +126,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Order Complete
+	 *
 	 * @return void
 	 */
 	public function orderComplete(): void {
@@ -143,6 +153,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Order Other
+	 *
 	 * @return void
 	 */
 	public function orderOther(): void {
@@ -180,6 +192,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Returns
+	 *
 	 * @return void
 	 */
 	public function returns(): void {
@@ -205,6 +219,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Product
+	 *
 	 * @return void
 	 */
 	public function product(): void {
@@ -230,6 +246,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Review
+	 *
 	 * @return void
 	 */
 	public function review(): void {

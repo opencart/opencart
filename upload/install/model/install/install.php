@@ -10,6 +10,7 @@ class Install extends \Opencart\System\Engine\Model {
 	 * @param array $data
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function database(array $data): void {
@@ -111,7 +112,7 @@ class Install extends \Opencart\System\Engine\Model {
 		}
 
 		$db->query("SET CHARACTER SET utf8mb4");
-		
+
 		$db->query("SET @@session.sql_mode = ''");
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE `user_id` = '1'");

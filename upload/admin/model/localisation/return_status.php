@@ -33,7 +33,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function editReturnStatus(int $return_status_id, array $data) : void{
+	public function editReturnStatus(int $return_status_id, array $data): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
 
 		foreach ($data['return_status'] as $language_id => $value) {
@@ -91,14 +91,16 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$return_status_data = $this->cache->get('return_status.' . md5($sql));
+		$key = md5($sql);
+
+		$return_status_data = $this->cache->get('return_status.' . $key);
 
 		if (!$return_status_data) {
 			$query = $this->db->query($sql);
 
 			$return_status_data = $query->rows;
 
-			$this->cache->set('return_status.' . md5($sql), $return_status_data);
+			$this->cache->set('return_status.' . $key, $return_status_data);
 		}
 
 		return $return_status_data;

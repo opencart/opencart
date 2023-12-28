@@ -94,14 +94,16 @@ class Store extends \Opencart\System\Engine\Model {
 	public function getStores(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";
 
-		$store_data = $this->cache->get('store.' . md5($sql));
+		$key = md5($sql);
+
+		$store_data = $this->cache->get('store.' . $key);
 
 		if (!$store_data) {
 			$query = $this->db->query($sql);
 
 			$store_data = $query->rows;
 
-			$this->cache->set('store.' . md5($sql), $store_data);
+			$this->cache->set('store.' . $key, $store_data);
 		}
 
 		return $store_data;
@@ -113,6 +115,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @param string $session_id
 	 *
 	 * @return \Opencart\System\Engine\Registry
+	 *
 	 * @throws \Exception
 	 */
 	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): object {
@@ -123,7 +126,6 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry = new \Opencart\System\Engine\Registry();
 		$registry->set('autoloader', $this->autoloader);
 
-		// Config
 		$config = new \Opencart\System\Engine\Config();
 		$registry->set('config', $config);
 
@@ -151,6 +153,9 @@ class Store extends \Opencart\System\Engine\Model {
 				}
 			}
 		}
+
+		// Factory
+		$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 		// Loader
 		$loader = new \Opencart\System\Engine\Loader($registry);

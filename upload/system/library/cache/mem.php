@@ -3,11 +3,11 @@ namespace Opencart\System\Library\Cache;
 /**
  * Class Mem
  *
- * @package
+ * @package Opencart\System\Library\Cache
  */
 class Mem {
 	/**
-	 * @var object|\Memcache
+	 * @var \Memcache|object
 	 */
 	private object $memcache;
 	/**
@@ -15,10 +15,7 @@ class Mem {
 	 */
 	private int $expire;
 
-	/**
-	 *
-	 */
-	const CACHEDUMP_LIMIT = 9999;
+	public const CACHEDUMP_LIMIT = 9999;
 
 	/**
 	 * Constructor
@@ -37,7 +34,7 @@ class Mem {
 	 *
 	 * @param string $key
 	 *
-	 * @return     mixed
+	 * @return mixed
 	 */
 	public function get(string $key) {
 		return $this->memcache->get(CACHE_PREFIX . $key);
@@ -49,6 +46,8 @@ class Mem {
 	 * @param string $key
 	 * @param mixed  $value
 	 * @param int    $expire
+	 *
+	 * @return void
 	 */
 	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
@@ -62,6 +61,8 @@ class Mem {
 	 * Delete
 	 *
 	 * @param string $key
+	 *
+	 * @return void
 	 */
 	public function delete(string $key): void {
 		$this->memcache->delete(CACHE_PREFIX . $key);

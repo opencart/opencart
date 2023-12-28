@@ -101,6 +101,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function send(): void {

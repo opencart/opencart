@@ -1,10 +1,12 @@
 <?php
 /**
  * @package        OpenCart
+ *
  * @author         Daniel Kerr
  * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license        https://opensource.org/licenses/GPL-3.0
- * @link           https://www.opencart.com
+ *
+ * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
 /**
@@ -19,9 +21,8 @@ class Cache {
 	/**
 	 * Constructor
 	 *
-	 * @param string $adaptor The type of storage for the cache.
+	 * @param string $adaptor the type of storage for the cache
 	 * @param int    $expire  Optional parameters
-	 *
 	 */
 	public function __construct(string $adaptor, int $expire = 3600) {
 		$class = 'Opencart\System\Library\Cache\\' . $adaptor;
@@ -34,11 +35,13 @@ class Cache {
 	}
 
 	/**
+	 * Get
+	 *
 	 * Gets a cache by key name.
 	 *
 	 * @param string $key The cache key name
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function get(string $key) {
 		return $this->adaptor->get($key);
@@ -52,16 +55,20 @@ class Cache {
 	 * @param string $key   The cache key
 	 * @param mixed  $value The cache value
 	 *
-	 * @return    string
+	 * @return void
 	 */
 	public function set(string $key, $value, int $expire = 0): void {
 		$this->adaptor->set($key, $value, $expire);
 	}
 
 	/**
+	 * Delete
+	 *
 	 * Deletes a cache by key name.
 	 *
 	 * @param string $key The cache key
+	 *
+	 * @return void
 	 */
 	public function delete(string $key): void {
 		$this->adaptor->delete($key);

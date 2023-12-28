@@ -26,8 +26,7 @@
             {% if product.subscription %}
               <br/>
               <small> - {{ text_subscription }}: {{ product.subscription }}</small>
-            {% endif %}
-          </td>
+            {% endif %}</td>
           <td class="text-start">{{ product.model }}</td>
           <td class="text-start">
             <form method="post" data-oc-target="#shopping-cart">
@@ -36,8 +35,7 @@
                 <button type="submit" formaction="{{ product_edit }}" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
                 <button type="submit" formaction="{{ product_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
               </div>
-            </form>
-          </td>
+            </form></td>
           <td class="text-end">{{ product.price }}</td>
           <td class="text-end">{{ product.total }}</td>
         </tr>
@@ -54,8 +52,7 @@
                 <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
               </div>
               <input type="hidden" name="key" value="{{ voucher.key }}"/>
-            </form>
-          </td>
+            </form></td>
           <td class="text-end">{{ voucher.amount }}</td>
           <td class="text-end">{{ voucher.amount }}</td>
         </tr>

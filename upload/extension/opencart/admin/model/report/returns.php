@@ -35,7 +35,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		switch ($group) {
-			case 'day';
+			case 'day':
 				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.`date_added`), DAY(r.`date_added`)";
 				break;
 			default:
@@ -80,7 +80,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		switch ($group) {
-			case 'day';
+			case 'day':
 				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)) AS `total` FROM `" . DB_PREFIX . "return`";
 				break;
 			default:

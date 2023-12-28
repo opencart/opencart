@@ -55,6 +55,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -115,12 +119,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_voucher->getVouchers($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['order_id']) {	
+			if ($result['order_id']) {
 				$order_href = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url);
 			} else {
 				$order_href = '';
 			}
-			
+
 			$data['vouchers'][] = [
 				'voucher_id' => $result['voucher_id'],
 				'code'       => $result['code'],
@@ -179,6 +183,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -299,6 +305,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -321,7 +329,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if ($voucher_info) {
 			if (!isset($this->request->post['voucher_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
-			} elseif ($voucher_info['voucher_id'] != (int)$this->request->post['voucher_id'])  {
+			} elseif ($voucher_info['voucher_id'] != (int)$this->request->post['voucher_id']) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
@@ -361,6 +369,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -405,6 +415,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -414,6 +426,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -461,6 +475,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Send
+	 *
 	 * @return void
 	 */
 	public function send(): void {

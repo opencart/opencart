@@ -7,6 +7,11 @@ namespace Opencart\Admin\Controller\Extension;
  */
 class Dashboard extends \Opencart\System\Engine\Controller {
 	/**
+	 * @var array
+	 */
+	private array $error = [];
+
+	/**
 	 * @return void
 	 */
 	public function index(): void {
@@ -14,6 +19,8 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -72,6 +79,8 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Validate
+	 *
 	 * @return bool
 	 */
 	protected function validate(): bool {
@@ -83,6 +92,8 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -118,7 +129,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/dashboard/' . $code);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' .$extension . '/dashboard/' . $code);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $extension . '/dashboard/' . $code);
 
 			$namespace = str_replace(['_', '/'], ['', '\\'], ucwords($extension, '_/'));
 
@@ -147,6 +158,8 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {

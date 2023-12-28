@@ -3,7 +3,7 @@ namespace Opencart\System\Library\DB;
 /**
  * Class PgSQL
  *
- * @package
+ * @package Opencart\System\Library\DB
  */
 class PgSQL {
 	/**
@@ -14,11 +14,11 @@ class PgSQL {
 	/**
 	 * Constructor
 	 *
-	 * @param    string  $hostname
-	 * @param    string  $username
-	 * @param    string  $password
-	 * @param    string  $database
-	 * @param    string  $port
+	 * @param string $hostname
+	 * @param string $username
+	 * @param string $password
+	 * @param string $database
+	 * @param string $port
 	 */
 	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
 		if (!$port) {
@@ -43,9 +43,9 @@ class PgSQL {
 	/**
 	 * Query
 	 *
-	 * @param    string  $sql
+	 * @param string $sql
 	 *
-	 * @return   bool|object
+	 * @return mixed
 	 */
 	public function query(string $sql) {
 		$resource = pg_query($this->connection, $sql);
@@ -79,31 +79,31 @@ class PgSQL {
 			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
 		}
 	}
-	
+
 	/**
 	 * Escape
 	 *
-	 * @param    string  value
+	 * @param string $value
 	 *
-	 * @return   string
+	 * @return string
 	 */
-	public function escape(string $value): string  {
+	public function escape(string $value): string {
 		return pg_escape_string($this->connection, $value);
 	}
 
 	/**
 	 * countAffected
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function countAffected(): int {
 		return pg_affected_rows($this->connection);
 	}
-	
+
 	/**
 	 * getLastId
 	 *
-	 * @return   int
+	 * @return int
 	 */
 	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
@@ -114,7 +114,7 @@ class PgSQL {
 	/**
 	 * isConnected
 	 *
-	 * @return   bool
+	 * @return bool
 	 */
 	public function isConnected(): bool {
 		return pg_connection_status($this->connection) == PGSQL_CONNECTION_OK;
@@ -124,7 +124,6 @@ class PgSQL {
 	 * Destructor
 	 *
 	 * Closes the DB connection when this object is destroyed.
-	 *
 	 */
 	public function __destruct() {
 		if ($this->connection) {

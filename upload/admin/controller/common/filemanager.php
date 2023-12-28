@@ -42,6 +42,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -87,10 +89,10 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		// Get directories and files
-        $paths = array_merge(
-            glob($directory . $filter_name . '*', GLOB_ONLYDIR),
-            glob($directory . $filter_name . '*{' . implode(',', $allowed) . '}', GLOB_BRACE)
-        );
+		$paths = array_merge(
+			glob($directory . $filter_name . '*', GLOB_ONLYDIR),
+			glob($directory . $filter_name . '*{' . implode(',', $allowed) . '}', GLOB_BRACE)
+		);
 
 		$total = count($paths);
 		$limit = 16;
@@ -98,8 +100,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		if ($paths) {
 			// Split the array based on current page number and max number of items per page of 10
-            foreach (array_slice($paths, $start, $limit) as $path) {
-                $path = str_replace('\\', '/', realpath($path));
+			foreach (array_slice($paths, $start, $limit) as $path) {
+				$path = str_replace('\\', '/', realpath($path));
 
 				if (substr($path, 0, strlen($path)) == $path) {
 					$name = basename($path);
@@ -238,6 +240,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -283,7 +287,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			foreach ($files as $file) {
 				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
-					$filename = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
+					$filename = preg_replace('/[\/\\\\?%*:|"<>]/', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
 					if ((oc_strlen($filename) < 4) || (oc_strlen($filename) > 255)) {
@@ -346,6 +350,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Folder
+	 *
 	 * @return void
 	 */
 	public function folder(): void {
@@ -374,7 +380,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			// Sanitize the folder name
-			$folder = preg_replace('[/\\?%*&:|"<>]', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
+			$folder = preg_replace('/[\/\\\\?%*&:|"<>]/', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
 			if ((oc_strlen($folder) < 3) || (oc_strlen($folder) > 128)) {
@@ -402,6 +408,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

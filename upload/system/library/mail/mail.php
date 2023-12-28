@@ -11,7 +11,7 @@ class Mail {
 	/**
 	 * Constructor
 	 *
-	 * @param    array  $option
+	 * @param array $option
 	 */
 	public function __construct(array &$option = []) {
 		$this->option = &$option;
@@ -20,7 +20,7 @@ class Mail {
 	/**
 	 * Send
 	 *
-	 * @return    bool
+	 * @return bool
 	 */
 	public function send(): bool {
 		if (is_array($this->option['to'])) {

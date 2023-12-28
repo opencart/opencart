@@ -3,11 +3,11 @@ namespace Opencart\System\Library\Cache;
 /**
  * Class Memcached
  *
- * @package
+ * @package Opencart\System\Library\Cache
  */
 class Memcached {
 	/**
-	 * @var object|\Memcached
+	 * @var \Memcached|object
 	 */
 	private object $memcached;
 	/**
@@ -15,10 +15,7 @@ class Memcached {
 	 */
 	private int $expire;
 
-	/**
-	 *
-	 */
-	const CACHEDUMP_LIMIT = 9999;
+	public const CACHEDUMP_LIMIT = 9999;
 
 	/**
 	 * Constructor
@@ -37,7 +34,7 @@ class Memcached {
 	 *
 	 * @param string $key
 	 *
-	 * @return     mixed
+	 * @return mixed
 	 */
 	public function get(string $key) {
 		return $this->memcached->get(CACHE_PREFIX . $key);
@@ -49,6 +46,8 @@ class Memcached {
 	 * @param string $key
 	 * @param mixed  $value
 	 * @param int    $expire
+	 *
+	 * @return void
 	 */
 	public function set(string $key, $value, int $expire = 0): void {
 		if (!$expire) {
@@ -62,6 +61,8 @@ class Memcached {
 	 * Delete
 	 *
 	 * @param string $key
+	 *
+	 * @return void
 	 */
 	public function delete(string $key): void {
 		$this->memcached->delete(CACHE_PREFIX . $key);

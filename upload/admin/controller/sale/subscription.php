@@ -126,6 +126,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -135,6 +137,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -351,6 +355,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return void
 	 */
 	public function info(): void {
@@ -637,18 +643,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['date_next'] = '';
 		}
 
-
-
 		// Payment method
 		if (!empty($subscription_info)) {
 			$data['payment_method'] = $subscription_info['payment_method']['name'];
 		} else {
 			$data['payment_method'] = '';
 		}
-
-
-
-
 
 		if (!empty($order_info)) {
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
@@ -699,15 +699,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-
 		if (!empty($product_info)) {
 			$data['quantity'] = $product_info['quantity'];
 		} else {
 			$data['quantity'] = '';
 		}
-
-
 
 		$this->load->model('localisation/subscription_status');
 
@@ -757,6 +753,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -773,8 +771,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
 		} elseif ($this->request->post['subscription_plan_id'] == '') {
-            $json['error'] = $this->language->get('error_subscription_plan');
-        }
+			$json['error'] = $this->language->get('error_subscription_plan');
+		}
 
 		$this->load->model('catalog/subscription_plan');
 
@@ -811,6 +809,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -820,6 +820,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -867,6 +869,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add History
+	 *
 	 * @return void
 	 */
 	public function addHistory(): void {
@@ -881,8 +885,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
-            $json['error'] = $this->language->get('error_permission');
-        }
+			$json['error'] = $this->language->get('error_permission');
+		}
 
 		// Subscription
 		$this->load->model('sale/subscription');
@@ -899,8 +903,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($this->request->post['subscription_status_id']);
 
 		if (!$subscription_status_info) {
-            $json['error'] = $this->language->get('error_subscription_status');
-        }
+			$json['error'] = $this->language->get('error_subscription_status');
+		}
 
 		if (!$json) {
 			$this->model_sale_subscription->addHistory($subscription_id, $this->request->post['subscription_status_id'], $this->request->post['comment'], $this->request->post['notify']);
@@ -913,6 +917,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Order
+	 *
 	 * @return void
 	 */
 	public function order(): void {
@@ -922,6 +928,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Order
+	 *
 	 * @return string
 	 */
 	public function getOrder(): string {

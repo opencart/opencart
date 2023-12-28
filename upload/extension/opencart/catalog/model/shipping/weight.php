@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Weight
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */
 class Weight extends \Opencart\System\Engine\Model {
 	/**
@@ -45,7 +45,6 @@ class Weight extends \Opencart\System\Engine\Model {
 						if (isset($data[1])) {
 							$cost = $data[1];
 						}
-
 						break;
 					}
 				}

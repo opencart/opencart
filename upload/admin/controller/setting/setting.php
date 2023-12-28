@@ -382,7 +382,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_image_wishlist_width'] = $this->config->get('config_image_wishlist_width');
 		$data['config_image_wishlist_height'] = $this->config->get('config_image_wishlist_height');
 		$data['config_image_cart_width'] = $this->config->get('config_image_cart_width');
-		$data['config_image_cart_height'] =$this->config->get('config_image_cart_height');
+		$data['config_image_cart_height'] = $this->config->get('config_image_cart_height');
 		$data['config_image_location_width'] = $this->config->get('config_image_location_width');
 		$data['config_image_location_height'] = $this->config->get('config_image_location_height');
 
@@ -452,6 +452,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -644,6 +646,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Theme
+	 *
 	 * @return void
 	 */
 	public function theme(): void {

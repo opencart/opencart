@@ -10,10 +10,12 @@ class Captcha extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
- 		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->getList());
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -71,6 +73,8 @@ class Captcha extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -135,6 +139,8 @@ class Captcha extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {

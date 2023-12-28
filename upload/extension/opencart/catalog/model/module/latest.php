@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Latest
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Module
  */
 class Latest extends \Opencart\Catalog\Model\Catalog\Product {
 	/**

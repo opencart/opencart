@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Credit
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */
 class Credit extends \Opencart\System\Engine\Model {
 	/**

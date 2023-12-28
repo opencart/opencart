@@ -43,7 +43,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/manufacturer.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->getList();
+		$data['list'] = $this->controller_catalog_manufacturer->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -55,15 +55,19 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
 		$this->load->language('catalog/manufacturer');
 
-		$this->response->setOutput($this->getList());
+		$this->response->setOutput($this->controller_catalog_manufacturer->getList());
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -162,6 +166,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -352,6 +358,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -394,6 +402,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Autocomplete
+	 *
 	 * @return void
 	 */
 	public function autocomplete(): void {

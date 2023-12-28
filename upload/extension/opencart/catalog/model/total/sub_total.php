@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class SubTotal
  *
- * @package
+ * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */
 class SubTotal extends \Opencart\System\Engine\Model {
 	/**

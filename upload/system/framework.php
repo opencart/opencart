@@ -65,7 +65,7 @@ set_error_handler(function(string $code, string $message, string $file, string $
 });
 
 // Exception Handler
-set_exception_handler(function(\Throwable $e) use ($log, $config): void  {
+set_exception_handler(function(\Throwable $e) use ($log, $config): void {
 	if ($config->get('error_log')) {
 		$log->write($e->getMessage() . ': in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}
@@ -90,6 +90,9 @@ if ($config->has('action_event')) {
 		}
 	}
 }
+
+// Factory
+$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
 
 // Loader
 $loader = new \Opencart\System\Engine\Loader($registry);
@@ -174,11 +177,11 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 // Document
 $registry->set('document', new \Opencart\System\Library\Document());
 
-// Action error object to execute if any other actions cannot be executed.
 $action = '';
 $args = [];
 $output = '';
 
+// Action error object to execute if any other actions cannot be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 // Pre Actions
@@ -195,8 +198,10 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 	// If action cannot be executed, we return an action error object.
 	if ($result instanceof \Exception) {
+		// Execute action
 		$action = $error;
 
+		// In case there is an error we only want to execute once.
 		$error = '';
 
 		break;
@@ -204,56 +209,46 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 }
 
 // Route
+if (isset($request->get['route'])) {
+	$route = (string)$request->get['route'];
+} else {
+	$route = (string)$config->get('action_default');
+}
+
+// Keep the original trigger
+$trigger = $route;
+
+// Trigger the pre events
+$event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+
 if (!$action) {
-	if (!empty($request->get['route'])) {
-		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-	} else {
-		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
-	}
+	$action = new \Opencart\System\Engine\Action($route);
 }
 
 // Dispatch
 while ($action) {
-	// Route needs to be updated each time so it can trigger events
-	$route = $action->getId();
+	// Execute action
+	$output = $action->execute($registry, $args);
 
-	// Keep the original trigger.
-	$trigger = $route;
-
-	$result = $event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
-	}
-
-	// Execute the action.
-	$result = $action->execute($registry, $args);
-
+	// Make action a non-object so it's not infinitely looping
 	$action = '';
 
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
+	// Action object returned then we keep the loop going
+	if ($output instanceof \Opencart\System\Engine\Action) {
+		$action = $output;
 	}
 
 	// If action cannot be executed, we return the action error object.
-	if ($result instanceof \Exception) {
+	if ($output instanceof \Exception) {
 		$action = $error;
 
 		// In case there is an error we don't want to infinitely keep calling the action error object.
 		$error = '';
 	}
-
-	// If not an object, then it's the output
-	if (!$action) {
-		$output = $result;
-	}
-
-	$result = $event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
-	}
 }
+
+// Trigger the post events
+$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
 // Output
 $response->output();

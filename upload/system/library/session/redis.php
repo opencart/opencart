@@ -23,7 +23,6 @@ class Redis {
 			$this->redis->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 			$this->prefix = CACHE_PREFIX . '.session.'; // session prefix to identify session keys
 		} catch (\RedisException $e) {
-			//
 		}
 	}
 

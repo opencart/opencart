@@ -175,7 +175,7 @@ $_['error_format_kb']				= 'Warning: The uploaded file exceeds the max file size
 $_['error_format_mb']				= 'Warning: The uploaded file exceeds the max file size: %s megabytes!';
 $_['error_format_gb']				= 'Warning: The uploaded file exceeds the max file size: %s gigabytes!';
 
-/* When doing translations only include the matching language code */
+// When doing translations only include the matching language code
 
 // CKEditor
 //$_['ckeditor']                    = 'af';

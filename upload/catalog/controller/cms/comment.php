@@ -421,9 +421,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Anti-Spam
 			$rating_data = $this->request->post + [
-					'rating' => (bool)$this->request->get['rating'],
-					'ip'     => $this->request->server['REMOTE_ADDR']
-				];
+				'rating' => (bool)$this->request->get['rating'],
+				'ip'     => $this->request->server['REMOTE_ADDR']
+			];
 
 			$this->load->model('cms/antispam');
 

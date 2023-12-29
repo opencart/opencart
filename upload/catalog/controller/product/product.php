@@ -61,7 +61,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			]);
 
 			$webpage = new Thing("WebPage", [
-				'@id'  => $canonical. "#webpage",
+				'@id'  => $canonical . "#webpage",
 				'url'  => $canonical,
 				'name' => $product_info['meta_title'],
 			]);

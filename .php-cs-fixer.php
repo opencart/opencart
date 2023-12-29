@@ -138,6 +138,7 @@ return $config
         'phpdoc_var_without_name' => true,
         'pow_to_exponentiation' => true,
         'random_api_migration' => true,
+        'regular_callable_call' => true,
         'return_assignment' => true,
         'return_to_yield_from' => true,
         'self_accessor' => true,

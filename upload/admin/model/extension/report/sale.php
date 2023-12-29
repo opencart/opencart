@@ -160,7 +160,7 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		switch($group) {
-			case 'day';
+			case 'day':
 				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added)";
 				break;
 			default:
@@ -202,7 +202,7 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		switch($group) {
-			case 'day';
+			case 'day':
 				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added), DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;
 			default:
@@ -260,7 +260,7 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		switch($group) {
-			case 'day';
+			case 'day':
 				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title";
 				break;
 			default:
@@ -300,7 +300,7 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		switch($group) {
-			case 'day';
+			case 'day':
 				$sql = "SELECT COUNT(DISTINCT YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title) AS total FROM `" . DB_PREFIX . "order` o";
 				break;
 			default:
@@ -360,7 +360,7 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		switch($group) {
-			case 'day';
+			case 'day':
 				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title";
 				break;
 			default:
@@ -400,7 +400,7 @@ class ModelExtensionReportSale extends Model {
 		}
 
 		switch($group) {
-			case 'day';
+			case 'day':
 				$sql = "SELECT COUNT(DISTINCT YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title) AS total FROM `" . DB_PREFIX . "order` o";
 				break;
 			default:

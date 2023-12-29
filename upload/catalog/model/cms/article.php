@@ -200,6 +200,19 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * getComment
+	 *
+	 * @param int   $article_comment_id
+	 *
+	 * @return array
+	 */
+	public function getComment(int $article_comment_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_comment_id . "' AND `status` = '1'");
+
+		return $query->row;
+	}
+
+	/**
 	 * getComments
 	 *
 	 * @param int   $article_id

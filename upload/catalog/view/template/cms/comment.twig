@@ -1,6 +1,6 @@
 <div class="text-center">
-  <button type="button" value="{{ like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
-  <button type="button" value="{{ dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
+  <button type="button" value="{{ like }}" id="input-rating-like" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
+  <button type="button" value="{{ dislike }}" id="input-rating-dislike" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
   {% if comment_guest %}
     <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-secondary">{{ button_comment }}</button>
   {% else %}
@@ -179,7 +179,7 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
 });
 
 // Rating
-$('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
+let rating = function(e) {
     e.preventDefault();
 
     var element = this;
@@ -208,5 +208,9 @@ $('#comment').on('click', '[data-oc-toggle=\'rate\']', function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
+}
+
+$('#input-rating-like, #input-rating-dislike').on('click', rating);
+
+$('#comment').on('click', '[data-oc-toggle=\'rate\']', rating);
 //--></script>

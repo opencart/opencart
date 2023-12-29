@@ -316,7 +316,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {
-			$json['error']['warning'] = $this->language->get('error_guest');
+			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
 		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 25)) {
@@ -400,30 +400,30 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$article_info = $this->model_cms_article->getArticle($article_id);
 
 		if (!$article_info) {
-			$json['error']['warning'] = $this->language->get('error_article');
+			$json['error'] = $this->language->get('error_article');
 		}
 
 		// Comment
 		$article_comment_info = $this->model_cms_article->getComment($article_comment_id);
 
 		if (!$article_comment_info) {
-			$json['error']['warning'] = $this->language->get('error_comment');
+			$json['error'] = $this->language->get('error_comment');
 		}
 
 		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
-			$json['error']['warning'] = $this->language->get('error_token');
+			$json['error'] = $this->language->get('error_token');
 		}
 
 		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {
-			$json['error']['warning'] = $this->language->get('error_guest');
+			$json['error'] = $this->language->get('error_login');
 		}
 
 		if (!$json) {
 			// Anti-Spam
 			$rating_data = $this->request->post + [
-					'rating' => (bool)$this->request->get['rating'],
-					'ip'     => $this->request->server['REMOTE_ADDR']
-				];
+				'rating' => (bool)$this->request->get['rating'],
+				'ip'     => $this->request->server['REMOTE_ADDR']
+			];
 
 			$this->load->model('cms/antispam');
 

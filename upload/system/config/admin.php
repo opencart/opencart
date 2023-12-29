@@ -54,7 +54,7 @@ $_['action_event']       = [
 		//1 => 'event/debug.before'
 	],
 	//'model/*/after' => [
-		//0 => 'event/debug.after'
+	//	0 => 'event/debug.after'
 	//],
 	'view/*/before' => [
 		0   => 'event/modification.view',

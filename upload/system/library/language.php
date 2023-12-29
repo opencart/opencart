@@ -7,7 +7,7 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  *
  * @see		https://www.opencart.com
-*/
+ */
 namespace Opencart\System\Library;
 /**
  * Class Language

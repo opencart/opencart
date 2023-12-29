@@ -102,7 +102,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			];
 
 			while (($size / 1024) > 1) {
-				$size = $size / 1024;
+				$size /= 1024;
 
 				$i++;
 			}

@@ -294,9 +294,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		}
 
 		// Return success message
-		$output = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
-
-		return $output;
+		return 'SUCCESS! OpenCart successfully installed on your server' . "\n";
 	}
 
 	/**

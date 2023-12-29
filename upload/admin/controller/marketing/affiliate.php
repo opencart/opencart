@@ -906,7 +906,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				header('Content-Disposition: attachment; filename=payout-' . date('d-m-Y') . '.csv"');
 				header('Content-Length: ' . strlen($csv));
 
-				print($csv);
+				echo $csv;
 			} else {
 				exit('Error: Headers already sent out!');
 			}

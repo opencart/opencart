@@ -1413,7 +1413,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 
 				$pattern_2 = [
-					"/\s\s+/",
+					"/\\s\\s+/",
 					"/\r\r+/",
 					"/\n\n+/"
 				];
@@ -1673,7 +1673,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 
 				$pattern_2 = [
-					"/\s\s+/",
+					"/\\s\\s+/",
 					"/\r\r+/",
 					"/\n\n+/"
 				];

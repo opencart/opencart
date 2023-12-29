@@ -186,9 +186,9 @@ class Special extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sorts'][] = [
-				'text'  => $this->language->get('text_model_asc'),
-				'value' => 'p.model-ASC',
-				'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=ASC' . $url)
+			'text'  => $this->language->get('text_model_asc'),
+			'value' => 'p.model-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [

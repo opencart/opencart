@@ -77,7 +77,7 @@ class Proxy {
 	 */
 	public function __call(string $method, array $args) {
 		// Hack for pass-by-reference
-		foreach ($args as $key => &$value) ;
+		foreach ($args as $key => &$value);
 
 		if (isset($this->data[$method])) {
 			return call_user_func_array($this->data[$method], $args);

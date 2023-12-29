@@ -56,7 +56,7 @@ class Basic extends \Opencart\System\Engine\Controller {
 		imagefilledrectangle($image, 0, 0, 0, $height - 1, $black);
 		imagefilledrectangle($image, 0, $height - 1, $width, $height - 1, $black);
 
-		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2), intval(($height - 15) / 2), $this->session->data['captcha'], $black);
+		imagestring($image, 10, (int)(($width - (strlen($this->session->data['captcha']) * 9)) / 2), (int)(($height - 15) / 2), $this->session->data['captcha'], $black);
 
 		header('Content-type: image/jpeg');
 		header('Cache-Control: no-cache');

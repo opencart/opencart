@@ -69,16 +69,15 @@ class Search extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['search'])) {
-			$meta_title = $this->language->get('heading_title') .  ' - ' . $this->request->get['search'];
+			$meta_title = $this->language->get('heading_title') . ' - ' . $this->request->get['search'];
 		} elseif (isset($this->request->get['tag'])) {
-			$meta_title = $this->language->get('heading_title') .  ' - ' . $this->language->get('heading_tag') . $this->request->get['tag'];
+			$meta_title = $this->language->get('heading_title') . ' - ' . $this->language->get('heading_tag') . $this->request->get['tag'];
 		} else {
 			$meta_title = $this->language->get('heading_title');
 		}
 
 		$metadata = new MetaTags();
-		$metadata
-			->title($meta_title);
+		$metadata->title($meta_title);
 		$this->document->setSeo($metadata);
 
 		$data['breadcrumbs'] = [];

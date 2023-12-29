@@ -54,15 +54,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			$thing->image = $popup;
 			$thing->description = $product_info['meta_description'];
 			$thing->offers = new Thing('Offer', [
-				'availability' => 'https://schema.org/InStock',
+				'availability'  => 'https://schema.org/InStock',
 				'priceCurrency' => $this->session->data['currency'],
-				"price" => $seoPrice,
-				'url' => $canonical,
+				'price'         => $seoPrice,
+				'url'           => $canonical,
 			]);
 
 			$webpage = new Thing("WebPage", [
-				'@id' => $canonical. "#webpage",
-				'url' => $canonical,
+				'@id'  => $canonical. "#webpage",
+				'url'  => $canonical,
 				'name' => $product_info['meta_title'],
 			]);
 

@@ -62,6 +62,8 @@ class Document {
 	 * setSeo
 	 *
 	 * @param string $seo
+	 *
+	 * @return void
 	 */
 	public function setSeo(string $seo): void {
 		$this->seo = $seo;
@@ -70,7 +72,7 @@ class Document {
 	/**
 	 * getSeo
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getSeo(): string {
 		return $this->seo;
@@ -80,6 +82,8 @@ class Document {
 	 * setSchema
 	 *
 	 * @param string $schema
+	 *
+	 * @return void
 	 */
 	public function setSchema(string $schema): void {
 		$this->schema = $schema;
@@ -88,7 +92,7 @@ class Document {
 	/**
 	 * getSchema
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getSchema(): string {
 		return $this->schema;
@@ -105,7 +109,7 @@ class Document {
 	public function addLink(string $href, string $rel): void {
 		$this->links[$href] = [
 			'href' => $href,
-			'rel' => $rel
+			'rel'  => $rel
 		];
 	}
 
@@ -129,8 +133,8 @@ class Document {
 	 */
 	public function addStyle(string $href, string $rel = 'stylesheet', string $media = 'screen'): void {
 		$this->styles[$href] = [
-			'href' => $href,
-			'rel' => $rel,
+			'href'  => $href,
+			'rel'   => $rel,
 			'media' => $media
 		];
 	}

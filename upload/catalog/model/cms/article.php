@@ -202,7 +202,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * getComment
 	 *
-	 * @param int   $article_comment_id
+	 * @param int $article_comment_id
 	 *
 	 * @return array
 	 */

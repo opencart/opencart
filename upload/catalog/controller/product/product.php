@@ -3,6 +3,7 @@ namespace Opencart\Catalog\Controller\Product;
 use Melbahja\Seo\MetaTags;
 use Melbahja\Seo\Schema;
 use Melbahja\Seo\Schema\Thing;
+
 /**
  * Class Product
  *
@@ -65,7 +66,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				'url'  => $canonical,
 				'name' => $product_info['meta_title'],
 			]);
-
 
 			$schema = new Schema(
 				$thing,

@@ -53,6 +53,7 @@ return $config
         'implode_call' => true,
         'increment_style' => ['style' => 'post'],
         'integer_literal_case' => true,
+        'is_null' => true,
         'lambda_not_used_import' => true,
         'linebreak_after_opening_tag' => true,
         'list_syntax' => true,

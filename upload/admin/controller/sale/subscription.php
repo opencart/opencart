@@ -721,7 +721,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
 
-		// Extension Order Tabs can are called here.
+		// Extension Order Tabs can be called here.
 		/*
 		$this->load->model('setting/extension');
 

@@ -1166,7 +1166,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
 
-		// Extension Order Tabs can are called here.
+		// Extension Order Tabs can be called here.
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info['payment_method']['code'])) {
@@ -1193,7 +1193,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Extension Order Tabs can are called here.
+		// Extension Order Tabs can be called here.
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('fraud');

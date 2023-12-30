@@ -67,7 +67,7 @@ class Log extends \Opencart\System\Engine\Controller {
 				$i = 0;
 
 				while (($size / 1024) > 1) {
-					$size = $size / 1024;
+					$size /= 1024;
 					$i++;
 				}
 
@@ -97,6 +97,8 @@ class Log extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -133,6 +135,8 @@ class Log extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Clear
+	 *
 	 * @return void
 	 */
 	public function clear(): void {

@@ -186,9 +186,9 @@ class Special extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sorts'][] = [
-				'text'  => $this->language->get('text_model_asc'),
-				'value' => 'p.model-ASC',
-				'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=ASC' . $url)
+			'text'  => $this->language->get('text_model_asc'),
+			'value' => 'p.model-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
@@ -246,19 +246,19 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
-		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+		// https://developers.google.com/search/blog/2011/09/pagination-with-relnext-and-relprev
 		if ($page == 1) {
 			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language')), 'canonical');
 		} else {
-			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page='. $page), 'canonical');
+			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page=' . $page), 'canonical');
 		}
 
 		if ($page > 1) {
-			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
+			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . (($page - 2) ? '&page=' . ($page - 1) : '')), 'prev');
 		}
 
 		if ($limit && ceil($product_total / $limit) > $page) {
-			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page='. ($page + 1)), 'next');
+			$this->document->addLink($this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&page=' . ($page + 1)), 'next');
 		}
 
 		$data['sort'] = $sort;

@@ -55,6 +55,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -229,6 +233,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -268,6 +274,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Download
+	 *
 	 * @return void
 	 */
 	public function download(): void {
@@ -332,6 +340,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {

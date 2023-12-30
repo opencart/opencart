@@ -55,6 +55,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -190,6 +194,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -297,6 +303,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -375,6 +383,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {
@@ -413,6 +423,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Authorize
+	 *
 	 * @return void
 	 */
 	public function authorize(): void {
@@ -422,6 +434,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Authorize
+	 *
 	 * @return string
 	 */
 	public function getAuthorize(): string {
@@ -472,6 +486,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete Authorize
+	 *
 	 * @return void
 	 */
 	public function deleteAuthorize(): void {
@@ -521,6 +537,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Login
+	 *
 	 * @return void
 	 */
 	public function login(): void {
@@ -530,6 +548,8 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Login
+	 *
 	 * @return string
 	 */
 	public function getLogin(): string {

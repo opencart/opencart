@@ -20,6 +20,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @return void
 	 */
 	public function edit(): void {
@@ -44,6 +46,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Cache
+	 *
 	 * @return void
 	 */
 	public function cache(): void {
@@ -74,6 +78,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Theme
+	 *
 	 * @return void
 	 */
 	public function theme(): void {
@@ -112,6 +118,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Sass
+	 *
 	 * @return void
 	 */
 	public function sass(): void {
@@ -125,13 +133,13 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Before we delete we need to make sure there is a sass file to regenerate the css
-			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
+			$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 
 			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
 				unlink($file);
 			}
 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/scss/bootstrap.scss');
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/scss/bootstrap.scss');
 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -20) . '/bootstrap.css';
@@ -141,7 +149,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/stylesheet.scss');
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/stylesheet.scss');
 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -16) . '/stylesheet.css';
@@ -159,6 +167,8 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Vendor
+	 *
 	 * Generate new autoloader file
 	 *
 	 * @return void

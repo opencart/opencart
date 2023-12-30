@@ -35,7 +35,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
-			foreach ($customer_groups  as $customer_group) {
+			foreach ($customer_groups as $customer_group) {
 				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 					$data['customer_groups'][] = $customer_group;
 				}
@@ -144,7 +144,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
 		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$data['captcha'] = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code']);
+			$data['captcha'] = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code']);
 		} else {
 			$data['captcha'] = '';
 		}

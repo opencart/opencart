@@ -139,7 +139,6 @@ class PDO {
 	 * Destructor
 	 *
 	 * Closes the DB connection when this object is destroyed.
-	 *
 	 */
 	public function __destruct() {
 		$this->connection = null;

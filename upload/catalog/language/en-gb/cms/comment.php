@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']        = 'Comments (%s)';
+$_['heading_title']        = 'Comments';
 
 // Text
 $_['text_by']              = 'By';
@@ -33,5 +33,5 @@ $_['error_article']        = 'Warning: Article could not be found!';
 $_['error_token']          = 'Warning: Comment token invalid!';
 $_['error_author']         = 'Your Name must be between 3 and 25 characters!';
 $_['error_comment']        = 'Comment must be between 25 and 1000 characters!';
-$_['error_guest']          = 'You must login to comment on the article!';
+$_['error_login']          = 'You must login to comment on the article!';
 $_['error_status']         = 'Comments are disabled!';

@@ -9,6 +9,7 @@ class Redis {
 	private object $config;
 	private object $redis;
 	public string $prefix;
+
 	/**
 	 * Constructor
 	 *
@@ -22,7 +23,6 @@ class Redis {
 			$this->redis->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 			$this->prefix = CACHE_PREFIX . '.session.'; // session prefix to identify session keys
 		} catch (\RedisException $e) {
-			//
 		}
 	}
 
@@ -36,7 +36,7 @@ class Redis {
 	public function read(string $session_id): array {
 		$data = $this->redis->get($this->prefix . $session_id);
 
-		if (is_null($data) || empty($data)) {
+		if (!$data) {
 			return [];
 		} else {
 			return json_decode($data, true);

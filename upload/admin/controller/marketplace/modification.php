@@ -59,6 +59,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -68,6 +70,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -179,6 +183,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * Refresh
 	 *
 	 * @return void
+	 *
 	 * @throws Exception
 	 */
 	public function refresh(): void {
@@ -553,7 +558,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					$handle = fopen(DIR_EXTENSION . 'ocmod/'  . $key, 'w');
+					$handle = fopen(DIR_EXTENSION . 'ocmod/' . $key, 'w');
 
 					fwrite($handle, $value);
 
@@ -656,6 +661,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Enable
+	 *
 	 * @return void
 	 */
 	public function enable(): void {
@@ -686,6 +693,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Disable
+	 *
 	 * @return void
 	 */
 	public function disable(): void {
@@ -716,6 +725,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

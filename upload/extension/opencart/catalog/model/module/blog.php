@@ -49,14 +49,14 @@ class Blog extends \Opencart\System\Engine\Model {
 
 		$key = md5($sql);
 
-		$article_data = $this->cache->get('article.'. $key);
+		$article_data = $this->cache->get('article.' . $key);
 
 		if (!$article_data) {
 			$query = $this->db->query($sql);
 
 			$article_data = $query->rows;
 
-			$this->cache->set('article.'. $key, $article_data);
+			$this->cache->set('article.' . $key, $article_data);
 		}
 
 		return $article_data;

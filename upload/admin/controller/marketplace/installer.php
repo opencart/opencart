@@ -51,6 +51,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -60,6 +62,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -214,6 +218,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -317,6 +323,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -457,6 +465,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Xml
+	 *
 	 * @return void
 	 */
 	public function xml(): void {
@@ -590,6 +600,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Vendor
+	 *
 	 * Generate new autoloader file
 	 *
 	 * @return void
@@ -839,6 +851,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

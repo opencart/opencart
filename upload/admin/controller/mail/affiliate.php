@@ -7,11 +7,14 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
+	 * Approve
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function approve(string &$route, array &$args, &$output): void {
@@ -90,11 +93,14 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Deny
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
 	 * @return void
+	 *
 	 * @throws \Exception
 	 */
 	public function deny(string &$route, array &$args, &$output): void {

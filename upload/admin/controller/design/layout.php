@@ -55,6 +55,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -64,6 +66,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	protected function getList(): string {
@@ -160,6 +164,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -240,19 +246,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 			$module_data = [];
 
-			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] .'.' . $extension['code']);
+			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] . '.' . $extension['code']);
 
 			foreach ($modules as $module) {
 				$module_data[] = [
 					'name' => strip_tags($module['name']),
-					'code' => $extension['extension'] . '.' .  $extension['code'] . '.' .  $module['module_id']
+					'code' => $extension['extension'] . '.' . $extension['code'] . '.' . $module['module_id']
 				];
 			}
 
 			if ($this->config->has('module_' . $extension['code'] . '_status') || $module_data) {
 				$data['extensions'][] = [
 					'name'   => strip_tags($this->language->get($extension['code'] . '_heading_title')),
-					'code'   => $extension['extension'] . '.' .  $extension['code'],
+					'code'   => $extension['extension'] . '.' . $extension['code'],
 					'module' => $module_data
 				];
 			}
@@ -302,6 +308,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -334,6 +342,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

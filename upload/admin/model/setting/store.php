@@ -115,6 +115,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @param string $session_id
 	 *
 	 * @return \Opencart\System\Engine\Registry
+	 *
 	 * @throws \Exception
 	 */
 	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): object {
@@ -313,7 +314,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$checkout_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_checkout_id' AND `value` = '" . (int)$information_id . "' AND `store_id` != '0'");
 
-		return ($account_query->row['total'] + $checkout_query->row['total']);
+		return $account_query->row['total'] + $checkout_query->row['total'];
 	}
 
 	/**

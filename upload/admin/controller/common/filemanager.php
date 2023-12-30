@@ -42,6 +42,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -238,6 +240,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
 	 * @return void
 	 */
 	public function upload(): void {
@@ -346,6 +350,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Folder
+	 *
 	 * @return void
 	 */
 	public function folder(): void {
@@ -402,6 +408,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @return void
 	 */
 	public function delete(): void {

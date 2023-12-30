@@ -120,7 +120,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . DB_DRIVER . '\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' .DB_HOSTNAME . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . DB_HOSTNAME . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . DB_USERNAME . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
 
@@ -305,7 +305,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . DB_DRIVER . '\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' .DB_HOSTNAME . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . DB_HOSTNAME . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . DB_USERNAME . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";

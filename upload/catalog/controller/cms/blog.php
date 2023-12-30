@@ -290,7 +290,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		// http://googlewebmastercentral.articlespot.com/2011/09/pagination-with-relnext-and-relprev.html
+		// https://developers.google.com/search/blog/2011/09/pagination-with-relnext-and-relprev
 		if ($page == 1) {
 			$this->document->addLink($this->url->link('cms/blog', 'language=' . $this->config->get('config_language')), 'canonical');
 		} else {

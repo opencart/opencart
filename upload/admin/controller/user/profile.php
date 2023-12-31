@@ -18,16 +18,16 @@ class Profile extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('user/profile')
 		];
 
-		$data['save'] = $this->url->link('user/profile.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('user/profile.save');
+		$data['back'] = $this->url->link('common/dashboard');
 
 		$this->load->model('user/user');
 

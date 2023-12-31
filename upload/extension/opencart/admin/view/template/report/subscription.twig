@@ -79,6 +79,6 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#subscription').load('index.php?route=extension/opencart/report/subscription.list&user_token={{ user_token }}' + url);
+    $('#subscription').load('index.php?route=extension/opencart/report/subscription.list' + url);
 });
 //--></script>

@@ -112,18 +112,18 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('marketing/affiliate', $url)
 		];
 
-		$data['csv'] = $this->url->link('marketing/affiliate.csv', 'user_token=' . $this->session->data['user_token']);
-		$data['complete'] = $this->url->link('marketing/affiliate.complete', 'user_token=' . $this->session->data['user_token']);
-		$data['add'] = $this->url->link('marketing/affiliate.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('marketing/affiliate.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['csv'] = $this->url->link('marketing/affiliate.csv');
+		$data['complete'] = $this->url->link('marketing/affiliate.complete');
+		$data['add'] = $this->url->link('marketing/affiliate.form', $url);
+		$data['delete'] = $this->url->link('marketing/affiliate.delete');
 
 		$data['list'] = $this->getList();
 
@@ -180,8 +180,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['filter_status'] = $filter_status;
 
 		$data['limit'] = $limit;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -319,7 +317,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-		$data['action'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('marketing/affiliate.list', $url);
 
 		$data['affiliates'] = [];
 
@@ -350,8 +348,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				'balance'     => $this->currency->format($result['balance'], $this->config->get('config_currency')),
 				'status'      => $result['status'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'customer'    => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
-				'edit'        => $this->url->link('marketing/affiliate.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
+				'customer'    => $this->url->link('customer/customer.form', 'customer_id=' . $result['customer_id']),
+				'edit'        => $this->url->link('marketing/affiliate.form', 'customer_id=' . $result['customer_id'] . $url)
 			];
 		}
 
@@ -395,10 +393,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-		$data['sort_name'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_tracking'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.tracking' . $url);
-		$data['sort_commission'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.commission' . $url);
-		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.date_added' . $url);
+		$data['sort_name'] = $this->url->link('marketing/affiliate.list', 'sort=name' . $url);
+		$data['sort_tracking'] = $this->url->link('marketing/affiliate.list', 'sort=ca.tracking' . $url);
+		$data['sort_commission'] = $this->url->link('marketing/affiliate.list', 'sort=ca.commission' . $url);
+		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'sort=ca.date_added' . $url);
 
 		$url = '';
 
@@ -448,7 +446,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'total' => $affiliate_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('marketing/affiliate.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($affiliate_total - $limit)) ? $affiliate_total : ((($page - 1) * $limit) + $limit), $affiliate_total, ceil($affiliate_total / $limit));
@@ -526,17 +524,17 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('marketing/affiliate', $url)
 		];
 
-		$data['save'] = $this->url->link('marketing/affiliate.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('marketing/affiliate.save');
+		$data['back'] = $this->url->link('marketing/affiliate', $url);
+		$data['upload'] = $this->url->link('tool/upload.upload');
 
 		// Affiliate
 		if (isset($this->request->get['customer_id'])) {
@@ -681,8 +679,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['history'] = $this->load->controller('customer/customer.getHistory');
 		$data['transaction'] = $this->load->controller('customer/customer.getTransaction');
 		$data['report'] = $this->getReport();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -1012,7 +1008,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				'store'      => $store,
 				'country'    => $result['country'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'])
+				'filter_ip'  => $this->url->link('customer/customer', 'filter_ip=' . $result['ip'])
 			];
 		}
 
@@ -1022,7 +1018,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'total' => $report_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('marketing/affiliate.report', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
+			'url'   => $this->url->link('marketing/affiliate.report', 'customer_id=' . $customer_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));

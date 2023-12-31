@@ -151,15 +151,15 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    window.history.pushState({}, null, 'index.php?route=customer/gdpr&user_token={{ user_token }}' + url);
+    window.history.pushState({}, null, 'index.php?route=customer/gdpr' + url);
 
-    $('#gdpr').load('index.php?route=customer/gdpr.list&user_token={{ user_token }}' + url);
+    $('#gdpr').load('index.php?route=customer/gdpr.list' + url);
 });
 
 $('#input-email').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {

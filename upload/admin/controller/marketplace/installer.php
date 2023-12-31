@@ -18,12 +18,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('marketplace/installer')
 		];
 
 		// Use the configuration option to get the max file size
@@ -31,7 +31,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
-		$data['upload'] = $this->url->link('tool/installer.upload', 'user_token=' . $this->session->data['user_token']);
+		$data['upload'] = $this->url->link('tool/installer.upload');
 
 		$data['list'] = $this->getList();
 
@@ -40,8 +40,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['filter_extension_download_id'] = '';
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -161,7 +159,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if ($result['extension_id']) {
-				$link = $this->url->link('marketplace/marketplace.info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);
+				$link = $this->url->link('marketplace/marketplace.info', 'extension_id=' . $result['extension_id']);
 			} elseif ($result['link']) {
 				$link = $result['link'];
 			} else {
@@ -178,9 +176,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 				'status'               => $result['status'],
 				'link'                 => $link,
 				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'install'              => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'uninstall'            => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'delete'               => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
+				'install'              => $this->url->link('marketplace/installer.install', 'extension_install_id=' . $result['extension_install_id']),
+				'uninstall'            => $this->url->link('marketplace/installer.uninstall', 'extension_install_id=' . $result['extension_install_id']),
+				'delete'               => $this->url->link('marketplace/installer.delete', 'extension_install_id=' . $result['extension_install_id'])
 			];
 		}
 
@@ -196,9 +194,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_version'] = $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
-		$data['sort_date_added'] = $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
+		$data['sort_name'] = $this->url->link('marketplace/installer.list', 'sort=name' . $url);
+		$data['sort_version'] = $this->url->link('marketplace/installer.list', 'sort=version' . $url);
+		$data['sort_date_added'] = $this->url->link('marketplace/installer.list', 'sort=date_added' . $url);
 
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
@@ -206,7 +204,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('marketplace/installer.list', 'page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($extension_total - $this->config->get('config_pagination_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $extension_total, ceil($extension_total / $this->config->get('config_pagination_admin')));
@@ -454,9 +452,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($end < $total) {
-				$json['next'] = $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('marketplace/installer.install', $url . '&page=' . ($page + 1), true);
 			} else {
-				$json['next'] = $this->url->link('marketplace/installer.xml', 'user_token=' . $this->session->data['user_token'] . $url, true);
+				$json['next'] = $this->url->link('marketplace/installer.xml', $url, true);
 			}
 		}
 
@@ -592,7 +590,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_vendor');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/installer.vendor', 'user_token=' . $this->session->data['user_token'], true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/installer.vendor', '', true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -843,7 +841,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
 			}
 
-			$json['next'] = $this->url->link('marketplace/installer.vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$json['next'] = $this->url->link('marketplace/installer.vendor', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

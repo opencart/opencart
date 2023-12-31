@@ -18,21 +18,21 @@ class Online extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
+			'href' => $this->url->link('marketplace/extension', 'type=dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/dashboard/online', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/online')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/dashboard/online.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
+		$data['save'] = $this->url->link('extension/opencart/dashboard/online.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=dashboard');
 
 		$data['dashboard_online_width'] = $this->config->get('dashboard_online_width');
 
@@ -99,7 +99,7 @@ class Online extends \Opencart\System\Engine\Controller {
 			$data['total'] = $online_total;
 		}
 
-		$data['online'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token']);
+		$data['online'] = $this->url->link('report/online');
 
 		return $this->load->view('extension/opencart/dashboard/online_info', $data);
 	}

@@ -24,20 +24,18 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('setting/store', $url)
 		];
 
-		$data['add'] = $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('setting/store.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('setting/store.form', $url);
+		$data['delete'] = $this->url->link('setting/store.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -75,7 +73,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('setting/store.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('setting/store.list', $url);
 
 		$data['stores'] = [];
 
@@ -88,7 +86,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
 				'url'      => HTTP_CATALOG,
-				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
+				'edit'     => $this->url->link('setting/setting')
 			];
 		}
 
@@ -101,7 +99,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'url'      => $result['url'],
-				'edit'     => $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
+				'edit'     => $this->url->link('setting/store.form', 'store_id=' . $result['store_id'])
 			];
 		}
 
@@ -111,7 +109,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			'total' => $store_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('setting/store.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('setting/store.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($store_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($store_total - $this->config->get('config_pagination_admin'))) ? $store_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $store_total, ceil($store_total / $this->config->get('config_pagination_admin')));
@@ -141,21 +139,21 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('setting/store')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_settings'),
-			'href' => $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . (isset($this->request->post['store_id']) ? '&store_id=' . $this->request->get['store_id'] : '') . $url)
+			'href' => $this->url->link('setting/store.form', (isset($this->request->post['store_id']) ? 'store_id=' . $this->request->get['store_id'] : '') . $url)
 		];
 
-		$data['save'] = $this->url->link('setting/store.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('setting/store.save');
+		$data['back'] = $this->url->link('setting/store');
 
 		if (isset($this->request->get['store_id'])) {
 			$this->load->model('setting/setting');
@@ -605,8 +603,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_image_location_height'] = 50;
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

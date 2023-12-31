@@ -18,12 +18,12 @@ class Log extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('tool/log')
 		];
 
 		if (isset($this->session->data['error'])) {
@@ -79,15 +79,13 @@ class Log extends \Opencart\System\Engine\Controller {
 			$data['logs'][] = [
 				'name'     => $filename,
 				'output'   => fread($handle, 3145728),
-				'download' => $this->url->link('tool/log.download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . $filename),
-				'clear'    => $this->url->link('tool/log.clear', 'user_token=' . $this->session->data['user_token'] . '&filename=' . $filename),
+				'download' => $this->url->link('tool/log.download', 'filename=' . $filename),
+				'clear'    => $this->url->link('tool/log.clear', 'filename=' . $filename),
 				'error'    => $error
 			];
 
 			fclose($handle);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -115,13 +113,13 @@ class Log extends \Opencart\System\Engine\Controller {
 		if (!is_file($file)) {
 			$this->session->data['error'] = sprintf($this->language->get('error_file'), $filename);
 
-			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('tool/log', '', true));
 		}
 
 		if (!filesize($file)) {
 			$this->session->data['error'] = sprintf($this->language->get('error_empty'), $filename);
 
-			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('tool/log', '', true));
 		}
 
 		$this->response->addheader('Pragma: public');

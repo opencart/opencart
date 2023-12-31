@@ -137,15 +137,15 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    window.history.pushState({}, null, 'index.php?route=sale/returns&user_token={{ user_token }}' + url);
+    window.history.pushState({}, null, 'index.php?route=sale/returns' + url);
 
-    $('#return').load('index.php?route=sale/returns.list&user_token={{ user_token }}' + url);
+    $('#return').load('index.php?route=sale/returns.list' + url);
 });
 
 $('#input-customer').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -165,7 +165,7 @@ $('#input-customer').autocomplete({
 $('#input-product').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -185,7 +185,7 @@ $('#input-product').autocomplete({
 $('#input-model').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&filter_model=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {

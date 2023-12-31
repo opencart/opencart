@@ -18,21 +18,21 @@ class Weight extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping')
+			'href' => $this->url->link('marketplace/extension', 'type=shipping')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/shipping/weight', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/shipping/weight')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/shipping/weight.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
+		$data['save'] = $this->url->link('extension/opencart/shipping/weight.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=shipping');
 
 		$this->load->model('localisation/geo_zone');
 

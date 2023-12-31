@@ -5,7 +5,7 @@ CKEDITOR.plugins.add('opencart', {
 				$('#modal-image').remove();
 
 				$.ajax({
-					url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&ckeditor=' + editor.name,
+					url: 'index.php?route=common/filemanager&ckeditor=' + editor.name,
 					dataType: 'html',
 					success: function(html) {
 						$('body').append(html);

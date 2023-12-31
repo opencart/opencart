@@ -289,9 +289,9 @@ $('#module-column-left, #module-column-right, #module-content-top, #module-conte
     var part = this.value.split('.');
 
     if (typeof part[2] == 'undefined') {
-        $(this).parent().find('a').attr('href', 'index.php?route=extension/' + part[0] + '/module/' + part[1] + '&user_token={{ user_token }}');
+        $(this).parent().find('a').attr('href', 'index.php?route=extension/' + part[0] + '/module/' + part[1]);
     } else {
-        $(this).parent().find('a').attr('href', 'index.php?route=extension/' + part[0] + '/module/' + part[1] + '&user_token={{ user_token }}&module_id=' + part[2]);
+        $(this).parent().find('a').attr('href', 'index.php?route=extension/' + part[0] + '/module/' + part[1] + '&module_id=' + part[2]);
     }
 });
 //--></script>

@@ -18,21 +18,21 @@ class Fixer extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency')
+			'href' => $this->url->link('marketplace/extension', 'type=currency')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/currency/fixer', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/currency/fixer')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/currency/fixer.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
+		$data['save'] = $this->url->link('extension/opencart/currency/fixer.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=currency');
 
 		$data['currency_fixer_api'] = $this->config->get('currency_fixer_api');
 		$data['currency_fixer_status'] = $this->config->get('currency_fixer_status');

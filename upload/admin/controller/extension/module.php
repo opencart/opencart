@@ -21,7 +21,7 @@ class Module extends \Opencart\System\Engine\Controller {
 	public function getList(): string {
 		$this->load->language('extension/module');
 
-		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
+		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout'));
 
 		$available = [];
 
@@ -73,8 +73,8 @@ class Module extends \Opencart\System\Engine\Controller {
 					$module_data[] = [
 						'name'   => $module['name'],
 						'status' => (bool)$setting_info['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
-						'delete' => $this->url->link('extension/module.delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
+						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'module_id=' . $module['module_id']),
+						'delete' => $this->url->link('extension/module.delete', 'module_id=' . $module['module_id'])
 					];
 				}
 
@@ -88,10 +88,10 @@ class Module extends \Opencart\System\Engine\Controller {
 					'name'      => $this->language->get($code . '_heading_title'),
 					'status'    => $status,
 					'module'    => $module_data,
-					'install'   => $this->url->link('extension/module.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/module.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/module.install', 'extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/module.uninstall', 'extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
-					'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'])
+					'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code)
 				];
 			}
 		}

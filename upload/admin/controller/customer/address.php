@@ -29,7 +29,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
+		$data['action'] = $this->url->link('customer/address', 'customer_id=' . $customer_id);
 
 		$data['addresses'] = [];
 
@@ -49,12 +49,12 @@ class Address extends \Opencart\System\Engine\Controller {
 				'zone'      => $result['zone'],
 				'country'   => $result['country'],
 				'default'   => $result['default'],
-				'edit'      => $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&address_id=' . $result['address_id']),
-				'delete'    => $this->url->link('customer/address.delete', 'user_token=' . $this->session->data['user_token'] . '&address_id=' . $result['address_id'])
+				'edit'      => $this->url->link('customer/address.form', 'customer_id=' . $customer_id . '&address_id=' . $result['address_id']),
+				'delete'    => $this->url->link('customer/address.delete', 'address_id=' . $result['address_id'])
 			];
 		}
 
-		$data['address_add'] = $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
+		$data['address_add'] = $this->url->link('customer/address.form', 'customer_id=' . $customer_id);
 
 		return $this->load->view('customer/address_list', $data);
 	}
@@ -82,9 +82,9 @@ class Address extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
-		$data['save'] = $this->url->link('customer/address.save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
-		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
-		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('customer/address.save', 'customer_id=' . $customer_id);
+		$data['action'] = $this->url->link('customer/address', 'customer_id=' . $customer_id);
+		$data['upload'] = $this->url->link('tool/upload.upload');
 
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('customer/customer');
@@ -192,8 +192,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['default'] = true;
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('customer/address_form', $data));
 	}

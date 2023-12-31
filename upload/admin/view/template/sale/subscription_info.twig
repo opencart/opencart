@@ -33,7 +33,7 @@
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_order }}</strong>
                   <br/>
-                  <a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ order_id }}</a>
+                  <a href="index.php?route=customer/customer.form&customer_id={{ customer_id }}" target="_blank">{{ order_id }}</a>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_customer }}</strong>
                     <br/>
-                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    <div id="customer-value"><a href="index.php?route=customer/customer.form&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -507,7 +507,7 @@
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -531,7 +531,7 @@ $('#input-customer').autocomplete({
 $('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -562,7 +562,7 @@ $('#form-history').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/subscription.addHistory&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        url: 'index.php?route=sale/subscription.addHistory&subscription_id=' + $('#input-subscription-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),
@@ -583,7 +583,7 @@ $('#form-history').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=sale/subscription.history&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
+                $('#history').load('index.php?route=sale/subscription.history&subscription_id=' + $('#input-subscription-id').val());
 
                 $('#input-history').val('');
             }

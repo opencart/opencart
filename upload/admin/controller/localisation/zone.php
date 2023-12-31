@@ -50,24 +50,22 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/zone', $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/zone.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('localisation/zone.form', $url);
+		$data['delete'] = $this->url->link('localisation/zone.delete');
 
 		$data['list'] = $this->getList();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_country'] = $filter_country;
 		$data['filter_code'] = $filter_code;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -155,7 +153,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/zone.list', $url);
 
 		$data['zones'] = [];
 
@@ -180,7 +178,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 				'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : ''),
 				'code'    => $result['code'],
 				'status'  => $result['status'],
-				'edit'    => $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)
+				'edit'    => $this->url->link('localisation/zone.form', 'zone_id=' . $result['zone_id'] . $url)
 			];
 		}
 
@@ -204,9 +202,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_country'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.name' . $url);
-		$data['sort_name'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=z.name' . $url);
-		$data['sort_code'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=z.code' . $url);
+		$data['sort_country'] = $this->url->link('localisation/zone.list', 'sort=c.name' . $url);
+		$data['sort_name'] = $this->url->link('localisation/zone.list', 'sort=z.name' . $url);
+		$data['sort_code'] = $this->url->link('localisation/zone.list', 'sort=z.code' . $url);
 
 		$url = '';
 
@@ -236,7 +234,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			'total' => $zone_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/zone.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($zone_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($zone_total - $this->config->get('config_pagination_admin'))) ? $zone_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $zone_total, ceil($zone_total / $this->config->get('config_pagination_admin')));
@@ -289,16 +287,16 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/zone', $url)
 		];
 
-		$data['save'] = $this->url->link('localisation/zone.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/zone.save');
+		$data['back'] = $this->url->link('localisation/zone', $url);
 
 		if (isset($this->request->get['zone_id'])) {
 			$this->load->model('localisation/zone');

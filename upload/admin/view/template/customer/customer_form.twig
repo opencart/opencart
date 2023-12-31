@@ -374,7 +374,7 @@
 <script type="text/javascript"><!--
 $('#input-customer-group').on('change', function() {
     $.ajax({
-        url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        url: 'index.php?route=customer/customer.customfield&customer_group_id=' + this.value,
         dataType: 'json',
         success: function(json) {
             $('.custom-field').hide();
@@ -425,7 +425,7 @@ $('#address').on('click', '.btn-primary', function (e) {
 });
 
 $('#input-customer-id').on('change', function (e) {
-    $('#address').load('index.php?route=customer/address&user_token={{ user_token }}&customer_id=' + this.value);
+    $('#address').load('index.php?route=customer/address&customer_id=' + this.value);
 });
 
 $('#payment-method').on('click', '.pagination a', function(e) {
@@ -459,7 +459,7 @@ $('#payment-method').on('click', 'button', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').load('index.php?route=customer/customer.getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#payment-method').load('index.php?route=customer/customer.getPayment&customer_id=' + $('#input-customer-id').val());
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -474,7 +474,7 @@ $('#payment-method').on('change', 'input[name=\'status\']', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer.disablePayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.disablePayment&customer_id=' + $('#input-customer-id').val(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -493,7 +493,7 @@ $('#payment-method').on('change', 'input[name=\'status\']', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').load('index.php?route=customer/customer.getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#payment-method').load('index.php?route=customer/customer.getPayment&customer_id=' + $('#input-customer-id').val());
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -512,7 +512,7 @@ $('#button-history').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addHistory&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: 'comment=' + encodeURIComponent($('#input-history').val()),
         dataType: 'json',
@@ -533,7 +533,7 @@ $('#button-history').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#history').load('index.php?route=customer/customer.history&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-history').val('');
             }
@@ -554,7 +554,7 @@ $('#button-transaction').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addTransaction&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + $('#input-amount').val(),
         dataType: 'json',
@@ -575,7 +575,7 @@ $('#button-transaction').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#transaction').load('index.php?route=customer/customer.transaction&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-transaction').val('');
                 $('#input-amount').val('');
@@ -597,7 +597,7 @@ $('#button-reward').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer.addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addReward&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: 'description=' + encodeURIComponent($('#input-reward').val()) + '&points=' + $('#input-points').val(),
         dataType: 'json',
@@ -618,7 +618,7 @@ $('#button-reward').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#reward').load('index.php?route=customer/customer.reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#reward').load('index.php?route=customer/customer.reward&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-reward').val('');
                 $('#input-points').val('');
@@ -671,7 +671,7 @@ $('#authorize').on('click', '.btn', function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#authorize').load('index.php?route=customer/customer.authorize&user_token={{ user_token }}&customer_id={{ customer_id }}');
+                    $('#authorize').load('index.php?route=customer/customer.authorize&customer_id={{ customer_id }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

@@ -32,20 +32,18 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/return_reason', $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/return_reason.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('localisation/return_reason.form', $url);
+		$data['delete'] = $this->url->link('localisation/return_reason.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/return_reason.list', $url);
 
 		$data['return_reasons'] = [];
 
@@ -122,7 +120,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$data['return_reasons'][] = [
 				'return_reason_id' => $result['return_reason_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)
+				'edit'             => $this->url->link('localisation/return_reason.form', 'return_reason_id=' . $result['return_reason_id'] . $url)
 			];
 		}
 
@@ -134,7 +132,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('localisation/return_reason.list', 'sort=name' . $url);
 
 		$url = '';
 
@@ -152,7 +150,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			'total' => $return_reason_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/return_reason.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_reason_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_reason_total - $this->config->get('config_pagination_admin'))) ? $return_reason_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_reason_total, ceil($return_reason_total / $this->config->get('config_pagination_admin')));
@@ -193,16 +191,16 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/return_reason', $url)
 		];
 
-		$data['save'] = $this->url->link('localisation/return_reason.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/return_reason.save');
+		$data['back'] = $this->url->link('localisation/return_reason', $url);
 
 		if (isset($this->request->get['return_reason_id'])) {
 			$data['return_reason_id'] = (int)$this->request->get['return_reason_id'];

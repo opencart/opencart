@@ -18,12 +18,12 @@ class Report extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('report/report')
 		];
 
 		if (isset($this->request->get['code'])) {
@@ -49,7 +49,7 @@ class Report extends \Opencart\System\Engine\Controller {
 					'text'       => $this->language->get($result['code'] . '_heading_title'),
 					'code'       => $result['code'],
 					'sort_order' => $this->config->get('report_' . $result['code'] . '_sort_order'),
-					'href'       => $this->url->link('extension/' . $result['extension'] . '/report/' . $result['code'] . '.report', 'user_token=' . $this->session->data['user_token'])
+					'href'       => $this->url->link('extension/' . $result['extension'] . '/report/' . $result['code'] . '.report')
 				];
 			}
 		}
@@ -61,8 +61,6 @@ class Report extends \Opencart\System\Engine\Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

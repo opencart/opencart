@@ -18,21 +18,21 @@ class Cloud extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=other')
+			'href' => $this->url->link('marketplace/extension', 'type=other')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/other/cloud', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/other/cloud')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/other/cloud.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=other');
+		$data['save'] = $this->url->link('extension/opencart/other/cloud.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=other');
 
 		$data['other_cloud_key'] = $this->config->get('other_cloud_key');
 		$data['other_cloud_secret'] = $this->config->get('other_cloud_secret');

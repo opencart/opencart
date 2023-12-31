@@ -346,7 +346,7 @@
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -371,7 +371,7 @@ $('#input-customer').autocomplete({
 
 $('#input-customer-group').on('change', function() {
     $.ajax({
-        url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        url: 'index.php?route=customer/customer.customfield&customer_group_id=' + this.value,
         dataType: 'json',
         success: function(json) {
             $('.custom-field').hide();
@@ -405,7 +405,7 @@ $('#button-history').on('click', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addHistory&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),
@@ -425,7 +425,7 @@ $('#button-history').on('click', function(e) {
             if (json['success']) {
                 $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#history').load('index.php?route=customer/customer.history&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-history').val('');
             }
@@ -446,7 +446,7 @@ $('#button-transaction').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addTransaction&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + encodeURIComponent($('#input-amount').val()),
@@ -466,7 +466,7 @@ $('#button-transaction').on('click', function(e) {
             if (json['success']) {
                 $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#transaction').load('index.php?route=customer/customer.transaction&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-transaction').val('');
                 $('#input-amount').val('');

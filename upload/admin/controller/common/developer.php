@@ -14,8 +14,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 		$data['developer_sass'] = $this->config->get('developer_sass');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
 

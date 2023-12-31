@@ -18,21 +18,21 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_stores'),
-			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('setting/store')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('setting/setting')
 		];
 
-		$data['save'] = $this->url->link('setting/setting.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('setting/setting.save');
+		$data['back'] = $this->url->link('setting/store');
 
 		// General
 		$data['config_meta_title'] = $this->config->get('config_meta_title');
@@ -441,8 +441,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_error_display'] = $this->config->get('config_error_display');
 		$data['config_error_log'] = $this->config->get('config_error_log');
 		$data['config_error_filename'] = $this->config->get('config_error_filename');
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

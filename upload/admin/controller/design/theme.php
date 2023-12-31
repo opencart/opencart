@@ -18,12 +18,12 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('design/theme')
 		];
 
 		$data['stores'] = [];
@@ -38,8 +38,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 				'name'     => $result['name']
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -85,8 +83,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'route'      => $result['route'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('design/theme.template', 'user_token=' . $this->session->data['user_token']),
-				'delete'     => $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'])
+				'edit'       => $this->url->link('design/theme.template'),
+				'delete'     => $this->url->link('design/theme.delete', 'theme_id=' . $result['theme_id'])
 			];
 		}
 
@@ -96,7 +94,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('design/theme.history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('design/theme.history', 'page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));

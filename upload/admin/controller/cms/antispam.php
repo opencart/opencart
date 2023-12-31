@@ -38,22 +38,20 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('cms/antispam', $url)
 		];
 
-		$data['add'] = $this->url->link('cms/antispam.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('cms/antispam.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('cms/antispam.form', $url);
+		$data['delete'] = $this->url->link('cms/antispam.delete');
 
 		$data['list'] = $this->getList();
 
 		$data['filter_keyword'] = $filter_keyword;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -121,7 +119,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('cms/antispam.list', $url);
 
 		$data['antispams'] = [];
 
@@ -141,7 +139,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$data['antispams'][] = [
 				'antispam_id' => $result['antispam_id'],
 				'keyword'     => $result['keyword'],
-				'edit'        => $this->url->link('cms/antispam.form', 'user_token=' . $this->session->data['user_token'] . '&antispam_id=' . $result['antispam_id'] . $url)
+				'edit'        => $this->url->link('cms/antispam.form', 'antispam_id=' . $result['antispam_id'] . $url)
 			];
 		}
 
@@ -157,7 +155,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_keyword'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
+		$data['sort_keyword'] = $this->url->link('cms/antispam.list', 'sort=keyword' . $url);
 
 		$url = '';
 
@@ -179,7 +177,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'total' => $antispam_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('cms/antispam.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($antispam_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($antispam_total - $this->config->get('config_pagination_admin'))) ? $antispam_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $antispam_total, ceil($antispam_total / $this->config->get('config_pagination_admin')));
@@ -224,16 +222,16 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('cms/antispam', $url)
 		];
 
-		$data['save'] = $this->url->link('cms/antispam.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('cms/antispam.save');
+		$data['back'] = $this->url->link('cms/antispam', $url);
 
 		if (isset($this->request->get['antispam_id'])) {
 			$this->load->model('cms/antispam');

@@ -32,20 +32,18 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('design/layout', $url)
 		];
 
-		$data['add'] = $this->url->link('design/layout.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/layout.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('design/layout.form', $url);
+		$data['delete'] = $this->url->link('design/layout.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('design/layout.list', $url);
 
 		$data['layouts'] = [];
 
@@ -122,7 +120,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['layouts'][] = [
 				'layout_id' => $result['layout_id'],
 				'name'      => $result['name'],
-				'edit'      => $this->url->link('design/layout.form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
+				'edit'      => $this->url->link('design/layout.form', 'layout_id=' . $result['layout_id'] . $url)
 			];
 		}
 
@@ -134,7 +132,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('design/layout.list', 'sort=name' . $url);
 
 		$url = '';
 
@@ -152,7 +150,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'total' => $layout_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('design/layout.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($layout_total - $this->config->get('config_pagination_admin'))) ? $layout_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $layout_total, ceil($layout_total / $this->config->get('config_pagination_admin')));
@@ -193,16 +191,16 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('design/layout', $url)
 		];
 
-		$data['save'] = $this->url->link('design/layout.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('design/layout.save');
+		$data['back'] = $this->url->link('design/layout', $url);
 
 		if (isset($this->request->get['layout_id'])) {
 			$this->load->model('design/layout');
@@ -282,7 +280,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],
 					'sort_order' => $layout_module['sort_order'],
-					'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'])
+					'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1])
 				];
 			} else {
 				$module_info = $this->model_setting_module->getModule($part[2]);
@@ -292,13 +290,11 @@ class Layout extends \Opencart\System\Engine\Controller {
 						'code'       => $layout_module['code'],
 						'position'   => $layout_module['position'],
 						'sort_order' => $layout_module['sort_order'],
-						'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[2])
+						'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'module_id=' . $part[2])
 					];
 				}
 			}
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

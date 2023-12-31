@@ -183,7 +183,7 @@ $('#input-address-country').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + this.value,
+        url: 'index.php?route=localisation/country.country&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);

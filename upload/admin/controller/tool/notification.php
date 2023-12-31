@@ -18,17 +18,15 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('tool/notification')
 		];
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -102,8 +100,8 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'title'           => $result['title'],
 				'status'          => $result['status'],
 				'date_added'      => sprintf($this->language->get('text_' . $code . '_ago'), $date_added),
-				'view'            => $this->url->link('tool/notification.info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'] . $url),
-				'delete'          => $this->url->link('tool/notification.delete', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'] . $url)
+				'view'            => $this->url->link('tool/notification.info', 'notification_id=' . $result['notification_id'] . $url),
+				'delete'          => $this->url->link('tool/notification.delete', 'notification_id=' . $result['notification_id'] . $url)
 			];
 		}
 
@@ -113,7 +111,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			'total' => $notification_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('tool/notification.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('tool/notification.list', 'page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($notification_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($notification_total - $this->config->get('config_pagination_admin'))) ? $notification_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $notification_total, ceil($notification_total / $this->config->get('config_pagination_admin')));

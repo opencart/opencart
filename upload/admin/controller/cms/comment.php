@@ -18,21 +18,19 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('cms/comment')
 		];
 
-		$data['approve'] = $this->url->link('cms/comment.approve', 'user_token=' . $this->session->data['user_token']);
-		$data['spam'] = $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token']);
-		$data['delete'] = $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['approve'] = $this->url->link('cms/comment.approve');
+		$data['spam'] = $this->url->link('cms/comment.spam');
+		$data['delete'] = $this->url->link('cms/comment.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -120,7 +118,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('cms/comment.list', $url);
 
 		$data['comments'] = [];
 
@@ -148,7 +146,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!$result['status']) {
-				$approve = $this->url->link('cms/comment.approve', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url);
+				$approve = $this->url->link('cms/comment.approve', 'article_comment_id=' . $result['article_comment_id'] . $url);
 			} else {
 				$approve = '';
 			}
@@ -156,15 +154,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$data['comments'][] = [
 				'article_comment_id' => $result['article_comment_id'],
 				'article'            => $article,
-				'article_edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
+				'article_edit'       => $this->url->link('cms/article.form', 'article_id=' . $result['article_id']),
 				'author'             => $result['author'],
-				'customer_edit'      => $result['customer_id'] ? $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']) : '',
+				'customer_edit'      => $result['customer_id'] ? $this->url->link('customer/customer.form', 'customer_id=' . $result['customer_id']) : '',
 				'comment'            => nl2br($result['comment']),
 				'status'             => $result['status'],
 				'date_added'         => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'approve'            => $approve,
-				'spam'               => $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),
-				'delete'             => $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url)
+				'spam'               => $this->url->link('cms/comment.spam', 'article_comment_id=' . $result['article_comment_id'] . $url),
+				'delete'             => $this->url->link('cms/comment.delete', 'article_comment_id=' . $result['article_comment_id'] . $url)
 			];
 		}
 
@@ -196,7 +194,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('cms/comment.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($comment_total - $this->config->get('config_pagination_admin'))) ? $comment_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $comment_total, ceil($comment_total / $this->config->get('config_pagination_admin')));

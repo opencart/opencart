@@ -19,7 +19,7 @@ $('#button-generate').on('click', function () {
 
     $(element).button('loading');
 
-    var next = 'index.php?route=extension/opencart/report/product_viewed.generate&user_token={{ user_token }}';
+    var next = 'index.php?route=extension/opencart/report/product_viewed.generate';
 
     var viewed = function () {
         return $.ajax({
@@ -45,7 +45,7 @@ $('#button-generate').on('click', function () {
 
                     $(element).button('reset');
 
-                    $('#product-viewed').load('index.php?route=extension/opencart/report/product_viewed.list&user_token={{ user_token }}');
+                    $('#product-viewed').load('index.php?route=extension/opencart/report/product_viewed.list');
                 }
 
                 if (json['next']) {

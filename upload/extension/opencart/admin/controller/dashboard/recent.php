@@ -18,21 +18,21 @@ class Recent extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
+			'href' => $this->url->link('marketplace/extension', 'type=dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/dashboard/recent', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/recent')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/dashboard/recent.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
+		$data['save'] = $this->url->link('extension/opencart/dashboard/recent.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=dashboard');
 
 		$data['dashboard_recent_width'] = $this->config->get('dashboard_recent_width');
 
@@ -103,11 +103,9 @@ class Recent extends \Opencart\System\Engine\Controller {
 				'status'     => $result['order_status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'view'       => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
+				'view'       => $this->url->link('sale/order.info', 'order_id=' . $result['order_id'])
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/recent_info', $data);
 	}

@@ -122,18 +122,18 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('sale/order', $url)
 		];
 
-		$data['add'] = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/order.delete', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['invoice'] = $this->url->link('sale/order.invoice', 'user_token=' . $this->session->data['user_token']);
-		$data['shipping'] = $this->url->link('sale/order.shipping', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('sale/order.info', $url);
+		$data['delete'] = $this->url->link('sale/order.delete', $url);
+		$data['invoice'] = $this->url->link('sale/order.invoice');
+		$data['shipping'] = $this->url->link('sale/order.shipping');
 
 		$data['list'] = $this->getList();
 
@@ -168,8 +168,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['filter_total'] = $filter_total;
 		$data['filter_date_from'] = $filter_date_from;
 		$data['filter_date_to'] = $filter_date_to;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -317,7 +315,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('sale/order.list', $url);
 
 		$data['orders'] = [];
 
@@ -351,7 +349,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_method' => $result['shipping_method'],
-				'view'            => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
+				'view'            => $this->url->link('sale/order.info', 'order_id=' . $result['order_id'] . $url)
 			];
 		}
 
@@ -399,13 +397,13 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_order'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url);
-		$data['sort_store_name'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.store_name' . $url);
-		$data['sort_customer'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
-		$data['sort_status'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=order_status' . $url);
-		$data['sort_total'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.total' . $url);
-		$data['sort_date_added'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_modified' . $url);
+		$data['sort_order'] = $this->url->link('sale/order.list', 'sort=o.order_id' . $url);
+		$data['sort_store_name'] = $this->url->link('sale/order.list', 'sort=o.store_name' . $url);
+		$data['sort_customer'] = $this->url->link('sale/order.list', 'sort=customer' . $url);
+		$data['sort_status'] = $this->url->link('sale/order.list', 'sort=order_status' . $url);
+		$data['sort_total'] = $this->url->link('sale/order.list', 'sort=o.total' . $url);
+		$data['sort_date_added'] = $this->url->link('sale/order.list', 'sort=o.date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('sale/order.list', 'sort=o.date_modified' . $url);
 
 		$url = '';
 
@@ -459,7 +457,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/order.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_total - $this->config->get('config_pagination_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_total, ceil($order_total / $this->config->get('config_pagination_admin')));
@@ -549,19 +547,19 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('sale/order', $url)
 		];
 
-		$data['shipping'] = $this->url->link('sale/order.shipping', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
-		$data['invoice'] = $this->url->link('sale/order.invoice', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
-		$data['back'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
-		$data['customer_add'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token']);
+		$data['shipping'] = $this->url->link('sale/order.shipping', 'order_id=' . $order_id);
+		$data['invoice'] = $this->url->link('sale/order.invoice', 'order_id=' . $order_id);
+		$data['back'] = $this->url->link('sale/order', $url);
+		$data['upload'] = $this->url->link('tool/upload.upload');
+		$data['customer_add'] = $this->url->link('customer/customer.form');
 
 		if ($order_id) {
 			$this->load->model('sale/order');
@@ -697,7 +695,7 @@ class Order extends \Opencart\System\Engine\Controller {
 							'name'  => $option['name'],
 							'value' => $upload_info['name'],
 							'type'  => $option['type'],
-							'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+							'href'  => $this->url->link('tool/upload.download', 'code=' . $upload_info['code'])
 						];
 					}
 				}
@@ -732,7 +730,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
-				$subscription = $this->url->link('sale/subscription.info', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
+				$subscription = $this->url->link('sale/subscription.info', 'subscription_id=' . $subscription_info['subscription_id']);
 			} else {
 				$subscription = '';
 			}
@@ -761,7 +759,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_vouchers'][] = [
 				'description' => $voucher['description'],
 				'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-				'href'        => $this->url->link('sale/voucher.form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+				'href'        => $this->url->link('sale/voucher.form', 'voucher_id=' . $voucher['voucher_id'])
 			];
 		}
 
@@ -816,7 +814,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->get['route'] = 'api/sale/order.load';
 			$store->request->get['language'] = $language;
 
-			unset($store->request->get['user_token']);
 			unset($store->request->get['action']);
 
 			$store->load->controller($store->request->get['route']);
@@ -1234,8 +1231,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Histories
 		$data['history'] = $this->getHistory();
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1297,7 +1292,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// 3. Remove the unneeded keys
 			unset($store->request->get['action']);
-			unset($store->request->get['user_token']);
 
 			// Call the required API controller
 			$store->load->controller($store->request->get['route']);
@@ -1814,7 +1808,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('sale/order.history', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&page={page}')
+			'url'   => $this->url->link('sale/order.history', 'order_id=' . $order_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));

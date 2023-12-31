@@ -29,7 +29,7 @@ $('#form-api').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=marketplace/api.save&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/api.save',
         type: 'post',
         dataType: 'json',
         data: $('#form-api').serialize(),
@@ -67,4 +67,4 @@ $('#form-api').on('submit', function(e) {
         }
     });
 });
-//--></script> 
+//--></script>

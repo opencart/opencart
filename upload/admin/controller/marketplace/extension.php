@@ -18,12 +18,12 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('marketplace/extension')
 		];
 
 		if (isset($this->request->get['type'])) {
@@ -47,7 +47,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 				$data['categories'][] = [
 					'code' => $extension,
 					'text' => $this->language->get($extension . '_heading_title') . ' (' . count(glob(DIR_EXTENSION . '*/admin/controller/' . $extension . '/*.php')) . ')',
-					'href' => $this->url->link('extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
+					'href' => $this->url->link('extension/' . $extension)
 				];
 			}
 		}
@@ -59,8 +59,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['extension'] = '';
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

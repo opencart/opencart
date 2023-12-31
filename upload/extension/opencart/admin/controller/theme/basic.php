@@ -24,21 +24,21 @@ class Basic extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme')
+			'href' => $this->url->link('marketplace/extension', 'type=theme')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/theme/basic', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id)
+			'href' => $this->url->link('extension/opencart/theme/basic', 'store_id=' . $store_id)
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/theme/basic.save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme');
+		$data['save'] = $this->url->link('extension/opencart/theme/basic.save', 'store_id=' . $store_id);
+		$data['back'] = $this->url->link('marketplace/extension', 'type=theme');
 
 		if (isset($this->request->get['store_id'])) {
 			$this->load->model('setting/setting');

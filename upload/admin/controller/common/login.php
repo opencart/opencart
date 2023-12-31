@@ -15,12 +15,12 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		// Check to see if user is already logged
-		if ($this->user->isLogged() && isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+		if ($this->user->isLogged() && $this->jwthelper->validateToken()) {
+			$this->response->redirect($this->url->link('common/dashboard', '', true));
 		}
 
 		// Check to see if user is using incorrect token
-		if (isset($this->request->get['user_token']) && (!isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
+		if (!$this->jwthelper->validateToken()) {
 			$data['error_warning'] = $this->language->get('error_token');
 		} elseif (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -55,7 +55,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			$route = $args['route'];
 
 			unset($args['route']);
-			unset($args['user_token']);
 
 			$url = '';
 
@@ -97,8 +96,8 @@ class Login extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->user->isLogged() && isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
-			$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+		if ($this->user->isLogged() && $this->jwthelper->validateToken()) {
+			$json['redirect'] = $this->url->link('common/dashboard', '', true);
 		}
 
 		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || $this->request->get['login_token'] != $this->session->data['login_token']) {
@@ -112,8 +111,6 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['user_token'] = oc_token(32);
-
 			// Remove login token so it cannot be used again.
 			unset($this->session->data['login_token']);
 
@@ -127,9 +124,9 @@ class Login extends \Opencart\System\Engine\Controller {
 			$this->model_user_user->addLogin($this->user->getId(), $login_data);
 
 			if ($this->request->post['redirect'] && str_starts_with(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'), HTTP_SERVER)) {
-				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8') . '&user_token=' . $this->session->data['user_token'];
+				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8');
 			} else {
-				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+				$json['redirect'] = $this->url->link('common/dashboard', '', true);
 			}
 		}
 

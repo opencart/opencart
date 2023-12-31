@@ -55,7 +55,7 @@ $('#button-refresh').on('click', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=marketplace/modification.refresh&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/modification.refresh',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -74,7 +74,7 @@ $('#button-refresh').on('click', function(e) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            $('#input-log').load('index.php?route=marketplace/modification.log&user_token={{ user_token }}');
+            $('#input-log').load('index.php?route=marketplace/modification.log');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -88,7 +88,7 @@ $('#button-clear').on('click', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=marketplace/modification.clear&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/modification.clear',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -152,7 +152,7 @@ $('#button-log').on('click', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=tool/log.clear&user_token={{ user_token }}&filename=ocmod.log',
+        url: 'index.php?route=tool/log.clear&filename=ocmod.log',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -170,7 +170,7 @@ $('#button-log').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-log').load('index.php?route=marketplace/modification.log&user_token={{ user_token }}');
+                $('#input-log').load('index.php?route=marketplace/modification.log');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

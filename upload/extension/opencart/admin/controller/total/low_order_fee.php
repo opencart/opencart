@@ -18,21 +18,21 @@ class LowOrderFee extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total')
+			'href' => $this->url->link('marketplace/extension', 'type=total')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/total/low_order_fee', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/total/low_order_fee')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/total/low_order_fee.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
+		$data['save'] = $this->url->link('extension/opencart/total/low_order_fee.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=total');
 
 		$data['total_low_order_fee_total'] = $this->config->get('total_low_order_fee_total');
 		$data['total_low_order_fee_fee'] = $this->config->get('total_low_order_fee_fee');

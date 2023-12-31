@@ -36,8 +36,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$data['ckeditor'] = '';
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
 
@@ -124,7 +122,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						$data['directories'][] = [
 							'name' => $name,
 							'path' => oc_substr($path, oc_strlen($base)) . '/',
-							'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(oc_substr($path, oc_strlen($base))) . $url)
+							'href' => $this->url->link('common/filemanager.list', 'directory=' . urlencode(oc_substr($path, oc_strlen($base))) . $url)
 						];
 					}
 
@@ -175,7 +173,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 		}
 
-		$data['parent'] = $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['parent'] = $this->url->link('common/filemanager.list', $url);
 
 		// Refresh
 		$url = '';
@@ -204,7 +202,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['refresh'] = $this->url->link('common/filemanager.list', $url);
 
 		$url = '';
 
@@ -233,7 +231,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			'total' => $total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('common/filemanager.list', $url . '&page={page}')
 		]);
 
 		$this->response->setOutput($this->load->view('common/filemanager_list', $data));

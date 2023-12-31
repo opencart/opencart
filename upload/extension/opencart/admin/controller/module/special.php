@@ -18,33 +18,33 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
+			'href' => $this->url->link('marketplace/extension', 'type=module')
 		];
 
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/opencart/module/special', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('extension/opencart/module/special')
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/opencart/module/special', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id'])
+				'href' => $this->url->link('extension/opencart/module/special', 'module_id=' . $this->request->get['module_id'])
 			];
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['save'] = $this->url->link('extension/opencart/module/special.save', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('extension/opencart/module/special.save');
 		} else {
-			$data['save'] = $this->url->link('extension/opencart/module/special.save', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['save'] = $this->url->link('extension/opencart/module/special.save', 'module_id=' . $this->request->get['module_id']);
 		}
 
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=module');
 
 		if (isset($this->request->get['module_id'])) {
 			$this->load->model('setting/module');

@@ -18,12 +18,12 @@ class Permission extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link($this->request->get['route'], 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link($this->request->get['route'])
 		];
 
 		$data['header'] = $this->load->controller('common/header');

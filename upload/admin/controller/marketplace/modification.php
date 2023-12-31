@@ -32,24 +32,22 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('marketplace/modification', $url)
 		];
 
-		$data['delete'] = $this->url->link('marketplace/modification.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['download'] = $this->url->link('tool/log.download', 'user_token=' . $this->session->data['user_token'] . '&filename=ocmod.log');
-		$data['upload'] = $this->url->link('tool/installer.upload', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('marketplace/modification.delete');
+		$data['download'] = $this->url->link('tool/log.download', 'filename=ocmod.log');
+		$data['upload'] = $this->url->link('tool/installer.upload');
 
 		$data['list'] = $this->getList();
 
 		// Log
 		$data['log'] = $this->getLog();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -107,7 +105,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('marketplace/modification.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('marketplace/modification.list', $url);
 
 		$data['modifications'] = [];
 
@@ -134,8 +132,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 				'status'          => $result['status'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
-				'enable'          => $this->url->link('marketplace/modification.enable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id']),
-				'disable'         => $this->url->link('marketplace/modification.disable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id'])
+				'enable'          => $this->url->link('marketplace/modification.enable', 'modification_id=' . $result['modification_id']),
+				'disable'         => $this->url->link('marketplace/modification.disable', 'modification_id=' . $result['modification_id'])
 			];
 		}
 
@@ -147,10 +145,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
-		$data['sort_author'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=author' . $url, true);
-		$data['sort_version'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url, true);
-		$data['sort_date_added'] = $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
+		$data['sort_name'] = $this->url->link('marketplace/modification', 'sort=name' . $url, true);
+		$data['sort_author'] = $this->url->link('marketplace/modification', 'sort=author' . $url, true);
+		$data['sort_version'] = $this->url->link('marketplace/modification', 'sort=version' . $url, true);
+		$data['sort_date_added'] = $this->url->link('marketplace/modification', 'sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -168,7 +166,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			'total' => $modification_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/modification.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('marketplace/modification.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($modification_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($modification_total - $this->config->get('config_pagination_admin'))) ? $modification_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $modification_total, ceil($modification_total / $this->config->get('config_pagination_admin')));

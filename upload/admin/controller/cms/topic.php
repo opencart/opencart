@@ -32,20 +32,18 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('cms/topic', $url)
 		];
 
-		$data['add'] = $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('cms/topic.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('cms/topic.form', $url);
+		$data['delete'] = $this->url->link('cms/topic.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('cms/topic.list', $url);
 
 		$data['topics'] = [];
 
@@ -124,7 +122,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 				'name'       => $result['name'],
 				'status'     => $result['status'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)
+				'edit'       => $this->url->link('cms/topic.form', 'topic_id=' . $result['topic_id'] . $url)
 			];
 		}
 
@@ -136,8 +134,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=bcd.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=bc.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('cms/topic.list', 'sort=bcd.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'sort=bc.sort_order' . $url);
 
 		$url = '';
 
@@ -155,7 +153,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'total' => $topic_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('cms/topic.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($topic_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($topic_total - $this->config->get('config_pagination_admin'))) ? $topic_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $topic_total, ceil($topic_total / $this->config->get('config_pagination_admin')));
@@ -199,16 +197,16 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('cms/topic', $url)
 		];
 
-		$data['save'] = $this->url->link('cms/topic.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('cms/topic.save');
+		$data['back'] = $this->url->link('cms/topic', $url);
 
 		if (isset($this->request->get['topic_id'])) {
 			$this->load->model('cms/topic');
@@ -287,8 +285,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['topic_seo_url'] = [];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

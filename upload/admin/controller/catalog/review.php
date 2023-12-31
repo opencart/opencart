@@ -82,16 +82,16 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('catalog/review', $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/review.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('catalog/review.form', $url);
+		$data['delete'] = $this->url->link('catalog/review.delete');
 
 		$data['list'] = $this->getList();
 
@@ -100,8 +100,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['filter_status'] = $filter_status;
 		$data['filter_date_from'] = $filter_date_from;
 		$data['filter_date_to'] = $filter_date_to;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -209,7 +207,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('catalog/review.list', $url);
 
 		$data['reviews'] = [];
 
@@ -237,7 +235,7 @@ class Review extends \Opencart\System\Engine\Controller {
 				'rating'     => $result['rating'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
+				'edit'       => $this->url->link('catalog/review.form', 'review_id=' . $result['review_id'] . $url)
 			];
 		}
 
@@ -269,10 +267,10 @@ class Review extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_product'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url);
-		$data['sort_author'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.author' . $url);
-		$data['sort_rating'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.rating' . $url);
-		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
+		$data['sort_product'] = $this->url->link('catalog/review.list', 'sort=pd.name' . $url);
+		$data['sort_author'] = $this->url->link('catalog/review.list', 'sort=r.author' . $url);
+		$data['sort_rating'] = $this->url->link('catalog/review.list', 'sort=r.rating' . $url);
+		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'sort=r.date_added' . $url);
 
 		$url = '';
 
@@ -310,7 +308,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'total' => $review_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('catalog/review.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($review_total - $this->config->get('config_pagination_admin'))) ? $review_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $review_total, ceil($review_total / $this->config->get('config_pagination_admin')));
@@ -377,16 +375,16 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('catalog/review', $url)
 		];
 
-		$data['save'] = $this->url->link('catalog/review.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('catalog/review.save');
+		$data['back'] = $this->url->link('catalog/review', $url);
 
 		if (isset($this->request->get['review_id'])) {
 			$this->load->model('catalog/review');
@@ -441,8 +439,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = '';
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -579,7 +575,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			if ($total && $end < $total) {
 				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
 
-				$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('catalog/review.sync', 'page=' . ($page + 1), true);
 			} else {
 				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
 

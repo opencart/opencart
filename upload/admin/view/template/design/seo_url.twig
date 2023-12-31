@@ -102,9 +102,9 @@ $('#button-filter').on('click', function () {
         url += '&filter_language_id=' + filter_language_id;
     }
 
-    window.history.pushState({}, null, 'index.php?route=design/seo_url&user_token={{ user_token }}' + url);
+    window.history.pushState({}, null, 'index.php?route=design/seo_url' + url);
 
-    $('#seo-url').load('index.php?route=design/seo_url.list&user_token={{ user_token }}' + url);
+    $('#seo-url').load('index.php?route=design/seo_url.list' + url);
 });
 //--></script>
 {{ footer }}

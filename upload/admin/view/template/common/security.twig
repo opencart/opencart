@@ -99,7 +99,7 @@ $('#button-install').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.install&user_token={{ user_token }}',
+        url: 'index.php?route=common/security.install',
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -141,7 +141,7 @@ $('#button-storage').on('click', function () {
 
     $(element).button('loading');
 
-    var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
+    var next = 'index.php?route=common/security.storage&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
 
     var storage = function () {
         return $.ajax({
@@ -195,7 +195,7 @@ $('#button-admin').on('click', function () {
 
     $(element).button('loading');
 
-    var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val());
+    var next = 'index.php?route=common/security.admin&name=' + encodeURIComponent($('#input-admin').val());
 
     var admin = function () {
         return $.ajax({

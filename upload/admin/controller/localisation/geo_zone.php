@@ -32,20 +32,18 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/geo_zone', $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/geo_zone.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/geo_zone.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('localisation/geo_zone.form', $url);
+		$data['delete'] = $this->url->link('localisation/geo_zone.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/geo_zone.list', $url);
 
 		$data['geo_zones'] = [];
 
@@ -123,7 +121,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 				'geo_zone_id' => $result['geo_zone_id'],
 				'name'        => $result['name'],
 				'description' => $result['description'],
-				'edit'        => $this->url->link('localisation/geo_zone.form', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url)
+				'edit'        => $this->url->link('localisation/geo_zone.form', 'geo_zone_id=' . $result['geo_zone_id'] . $url)
 			];
 		}
 
@@ -135,8 +133,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_description'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=description' . $url);
+		$data['sort_name'] = $this->url->link('localisation/geo_zone.list', 'sort=name' . $url);
+		$data['sort_description'] = $this->url->link('localisation/geo_zone.list', 'sort=description' . $url);
 
 		$url = '';
 
@@ -154,7 +152,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			'total' => $geo_zone_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/geo_zone.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($geo_zone_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($geo_zone_total - $this->config->get('config_pagination_admin'))) ? $geo_zone_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $geo_zone_total, ceil($geo_zone_total / $this->config->get('config_pagination_admin')));
@@ -195,16 +193,16 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/geo_zone', $url)
 		];
 
-		$data['save'] = $this->url->link('localisation/geo_zone.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/geo_zone.save');
+		$data['back'] = $this->url->link('localisation/geo_zone', $url);
 
 		if (isset($this->request->get['geo_zone_id'])) {
 			$this->load->model('localisation/geo_zone');
@@ -239,8 +237,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['zone_to_geo_zones'] = [];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

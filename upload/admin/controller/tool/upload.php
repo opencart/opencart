@@ -32,20 +32,18 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('tool/upload', $url)
 		];
 
-		$data['add'] = $this->url->link('tool/upload.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('tool/upload.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('tool/upload.form', $url);
+		$data['delete'] = $this->url->link('tool/upload.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -133,7 +131,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('tool/upload.list', $url);
 
 		$data['uploads'] = [];
 
@@ -157,7 +155,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 				'name'       => $result['name'],
 				'code'       => $result['code'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'download'   => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
+				'download'   => $this->url->link('tool/upload.download', 'code=' . $result['code'] . $url)
 			];
 		}
 
@@ -185,9 +183,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_code'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_date_added'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
+		$data['sort_name'] = $this->url->link('tool/upload.list', 'sort=name' . $url);
+		$data['sort_code'] = $this->url->link('tool/upload.list', 'sort=code' . $url);
+		$data['sort_date_added'] = $this->url->link('tool/upload.list', 'sort=date_added' . $url);
 
 		$url = '';
 
@@ -217,7 +215,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			'total' => $upload_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('tool/upload.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($upload_total - $this->config->get('config_pagination_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $upload_total, ceil($upload_total / $this->config->get('config_pagination_admin')));
@@ -323,12 +321,12 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('common/dashboard')
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('error/not_found')
 			];
 
 			$data['header'] = $this->load->controller('common/header');

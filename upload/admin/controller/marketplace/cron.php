@@ -32,22 +32,20 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('marketplace/cron', $url)
 		];
 
-		$data['delete'] = $this->url->link('marketplace/cron.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('marketplace/cron.delete');
 
 		// Example cron URL
 		$data['cron'] = HTTP_CATALOG . 'index.php?route=cron/cron';
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -105,7 +103,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('marketplace/cron.list', $url);
 
 		$data['crons'] = [];
 
@@ -130,9 +128,9 @@ class Cron extends \Opencart\System\Engine\Controller {
 				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
-				'run'           => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
-				'enable'        => $this->url->link('marketplace/cron.enable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
-				'disable'       => $this->url->link('marketplace/cron.disable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
+				'run'           => $this->url->link('marketplace/cron.run', 'cron_id=' . $result['cron_id']),
+				'enable'        => $this->url->link('marketplace/cron.enable', 'cron_id=' . $result['cron_id']),
+				'disable'       => $this->url->link('marketplace/cron.disable', 'cron_id=' . $result['cron_id'])
 			];
 		}
 
@@ -144,11 +142,11 @@ class Cron extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_code'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_cycle'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cycle' . $url);
-		$data['sort_action'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=action' . $url);
-		$data['sort_date_added'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
+		$data['sort_code'] = $this->url->link('marketplace/cron.list', 'sort=code' . $url);
+		$data['sort_cycle'] = $this->url->link('marketplace/cron.list', 'sort=cycle' . $url);
+		$data['sort_action'] = $this->url->link('marketplace/cron.list', 'sort=action' . $url);
+		$data['sort_date_added'] = $this->url->link('marketplace/cron.list', 'sort=date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('marketplace/cron.list', 'sort=date_modified' . $url);
 
 		$url = '';
 
@@ -166,7 +164,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 			'total' => $cron_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('marketplace/cron.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($cron_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($cron_total - $this->config->get('config_pagination_admin'))) ? $cron_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $cron_total, ceil($cron_total / $this->config->get('config_pagination_admin')));

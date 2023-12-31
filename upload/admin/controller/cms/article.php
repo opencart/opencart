@@ -32,20 +32,18 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('cms/article', $url)
 		];
 
-		$data['add'] = $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('cms/article.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('cms/article.form', $url);
+		$data['delete'] = $this->url->link('cms/article.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('cms/article.list', $url);
 
 		$data['articles'] = [];
 
@@ -125,7 +123,7 @@ class Article extends \Opencart\System\Engine\Controller {
 				'author'     => $result['author'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id'] . $url)
+				'edit'       => $this->url->link('cms/article.form', 'article_id=' . $result['article_id'] . $url)
 			];
 		}
 
@@ -137,9 +135,9 @@ class Article extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url);
-		$data['sort_author'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.author' . $url);
-		$data['sort_date_added'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.date_added' . $url);
+		$data['sort_name'] = $this->url->link('cms/article.list', 'sort=ad.name' . $url);
+		$data['sort_author'] = $this->url->link('cms/article.list', 'sort=a.author' . $url);
+		$data['sort_date_added'] = $this->url->link('cms/article.list', 'sort=a.date_added' . $url);
 
 		$url = '';
 
@@ -157,7 +155,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			'total' => $article_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('cms/article.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($article_total - $this->config->get('config_pagination_admin'))) ? $article_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $article_total, ceil($article_total / $this->config->get('config_pagination_admin')));
@@ -201,16 +199,16 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('cms/article', $url)
 		];
 
-		$data['save'] = $this->url->link('cms/article.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('cms/article.save');
+		$data['back'] = $this->url->link('cms/article', $url);
 
 		if (isset($this->request->get['article_id'])) {
 			$this->load->model('cms/article');
@@ -309,8 +307,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['article_layout'] = [];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

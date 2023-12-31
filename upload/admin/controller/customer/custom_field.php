@@ -32,20 +32,18 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('customer/custom_field', $url)
 		];
 
-		$data['add'] = $this->url->link('customer/custom_field.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('customer/custom_field.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('customer/custom_field.form', $url);
+		$data['delete'] = $this->url->link('customer/custom_field.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('customer/custom_field.list', $url);
 
 		$data['custom_fields'] = [];
 
@@ -161,7 +159,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 				'type'            => $type,
 				'status'          => $result['status'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('customer/custom_field.form', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
+				'edit'            => $this->url->link('customer/custom_field.form', 'custom_field_id=' . $result['custom_field_id'] . $url)
 			];
 		}
 
@@ -173,11 +171,11 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cfd.name' . $url);
-		$data['sort_location'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.location' . $url);
-		$data['sort_type'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.type' . $url);
-		$data['sort_status'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.status' . $url);
-		$data['sort_sort_order'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('customer/custom_field.list', 'sort=cfd.name' . $url);
+		$data['sort_location'] = $this->url->link('customer/custom_field.list', 'sort=cf.location' . $url);
+		$data['sort_type'] = $this->url->link('customer/custom_field.list', 'sort=cf.type' . $url);
+		$data['sort_status'] = $this->url->link('customer/custom_field.list', 'sort=cf.status' . $url);
+		$data['sort_sort_order'] = $this->url->link('customer/custom_field.list', 'sort=cf.sort_order' . $url);
 
 		$url = '';
 
@@ -195,7 +193,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'total' => $custom_field_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('customer/custom_field.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($custom_field_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($custom_field_total - $this->config->get('config_pagination_admin'))) ? $custom_field_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $custom_field_total, ceil($custom_field_total / $this->config->get('config_pagination_admin')));
@@ -236,16 +234,16 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('customer/custom_field', $url)
 		];
 
-		$data['save'] = $this->url->link('customer/custom_field.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('customer/custom_field.save');
+		$data['back'] = $this->url->link('customer/custom_field', $url);
 
 		if (isset($this->request->get['custom_field_id'])) {
 			$this->load->model('customer/custom_field');
@@ -346,8 +344,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 				$data['custom_field_required'][] = $custom_field_customer_group['customer_group_id'];
 			}
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

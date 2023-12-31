@@ -18,17 +18,15 @@ class Statistics extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('report/statistics')
 		];
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -64,7 +62,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$data['statistics'][] = [
 				'name'  => $this->language->get('text_' . $result['code']),
 				'value' => $result['value'],
-				'href'  => $this->url->link('report/statistics.' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'])
+				'href'  => $this->url->link('report/statistics.' . str_replace('_', '', $result['code']))
 			];
 		}
 

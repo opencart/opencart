@@ -18,21 +18,21 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
+			'href' => $this->url->link('marketplace/extension', 'type=module')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/module/filter', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/module/filter')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/module/filter.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['save'] = $this->url->link('extension/opencart/module/filter.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=module');
 
 		$data['module_filter_status'] = $this->config->get('module_filter_status');
 

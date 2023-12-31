@@ -21,12 +21,12 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('marketing/contact')
 		];
 
 		$this->load->model('setting/store');
@@ -36,8 +36,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -210,7 +208,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				if ($end < $email_total) {
 					$json['text'] = sprintf($this->language->get('text_sent'), $start ? $start : 1, $email_total);
 
-					$json['next'] = $this->url->link('marketing/contact.send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+					$json['next'] = $this->url->link('marketing/contact.send', 'page=' . ($page + 1), true);
 				} else {
 					$json['success'] = $this->language->get('text_success');
 

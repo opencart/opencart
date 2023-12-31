@@ -69,7 +69,7 @@ $('#button-upgrade').on('click', function () {
     if (confirm('{{ text_confirm }}')) {
         $('#progress').html('{{ text_download|escape('js') }}');
 
-        var next = 'index.php?route=tool/upgrade.download&user_token={{ user_token }}&version={{ latest_version }}';
+        var next = 'index.php?route=tool/upgrade.download&version={{ latest_version }}';
 
         var upgrade = function() {
             return $.ajax({

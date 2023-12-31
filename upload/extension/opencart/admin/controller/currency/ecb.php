@@ -18,21 +18,21 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency')
+			'href' => $this->url->link('marketplace/extension', 'type=currency')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/currency/ecb', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/currency/ecb')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/currency/ecb.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
+		$data['save'] = $this->url->link('extension/opencart/currency/ecb.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=currency');
 
 		$data['currency_ecb_status'] = $this->config->get('currency_ecb_status');
 

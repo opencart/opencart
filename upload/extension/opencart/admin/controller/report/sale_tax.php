@@ -18,21 +18,21 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
+			'href' => $this->url->link('marketplace/extension', 'type=report')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/report/sale_tax', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/sale_tax')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/report/sale_tax.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
+		$data['save'] = $this->url->link('extension/opencart/report/sale_tax.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=report');
 
 		$data['report_sale_tax_status'] = $this->config->get('report_sale_tax_status');
 		$data['report_sale_tax_sort_order'] = $this->config->get('report_sale_tax_sort_order');
@@ -101,8 +101,6 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 			'text'  => $this->language->get('text_day'),
 			'value' => 'day',
 		];
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_tax', $data));
 	}
@@ -201,7 +199,7 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/sale_tax.report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_tax' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/sale_tax.report', 'code=sale_tax' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($order_total - $this->config->get('config_pagination'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $order_total, ceil($order_total / $this->config->get('config_pagination')));
@@ -210,8 +208,6 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/report/sale_tax_list', $data);
 	}

@@ -32,14 +32,14 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('common/header');
 
-		if (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token'])) {
+		if (!$this->jwthelper->validateToken()) {
 			$data['logged'] = false;
 
 			$data['home'] = $this->url->link('common/login');
 		} else {
 			$data['logged'] = true;
 
-			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+			$data['home'] = $this->url->link('common/dashboard');
 
 			$data['language'] = $this->load->controller('common/language');
 
@@ -58,14 +58,14 @@ class Header extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$data['notifications'][] = [
 					'title' => $result['title'],
-					'href'  => $this->url->link('tool/notification.info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
+					'href'  => $this->url->link('tool/notification.info', 'notification_id=' . $result['notification_id'])
 				];
 			}
 
-			$data['notification_all'] = $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token']);
+			$data['notification_all'] = $this->url->link('tool/notification');
 			$data['notification_total'] = $this->model_tool_notification->getTotalNotifications(['filter_status' => 0]);
 
-			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
+			$data['profile'] = $this->url->link('user/profile');
 
 			$this->load->model('user/user');
 
@@ -106,7 +106,7 @@ class Header extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
+			$data['logout'] = $this->url->link('common/logout');
 		}
 
 		return $this->load->view('common/header', $data);

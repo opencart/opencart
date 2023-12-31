@@ -58,7 +58,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			setcookie('authorize', $token, time() + 60 * 60 * 24 * 365 * 10);
 		}
 
-		$data['action'] = $this->url->link('common/authorize.validate', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('common/authorize.validate');
 
 		// Set the code to be emailed
 		$this->session->data['code'] = oc_token(4);
@@ -69,7 +69,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = $args['route'];
 
 			unset($args['route']);
-			unset($args['user_token']);
 
 			$url = '';
 
@@ -79,10 +78,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$data['redirect'] = $this->url->link($route, $url);
 		} else {
-			$data['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+			$data['redirect'] = $this->url->link('common/dashboard', '', true);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -134,7 +131,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($authorize_info['attempts'] >= 2) {
-				$json['redirect'] = $this->url->link('common/authorize.unlock', 'user_token=' . $this->session->data['user_token'], true);
+				$json['redirect'] = $this->url->link('common/authorize.unlock', '', true);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_code');
@@ -146,9 +143,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			// Register the cookie for security.
 			if (isset($this->request->post['redirect']) && str_starts_with(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'), HTTP_SERVER)) {
-				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8') . '&user_token=' . $this->session->data['user_token'];
+				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8');
 			} else {
-				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+				$json['redirect'] = $this->url->link('common/dashboard', '', true);
 			}
 		}
 
@@ -176,10 +173,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		if ($authorize_info && $authorize_info['status']) {
 			// Redirect if already have a valid token.
-			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('common/dashboard', '', true));
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -239,7 +234,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_unlocked');
 
-			$this->response->redirect($this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('common/authorize', '', true));
 		} else {
 			$this->user->logout();
 

@@ -32,20 +32,18 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('user/api', $url)
 		];
 
-		$data['add'] = $this->url->link('user/api.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/api.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('user/api.form', $url);
+		$data['delete'] = $this->url->link('user/api.delete');
 
 		$data['list'] = $this->getList();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -103,7 +101,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('user/api.list', $url);
 
 		$data['apis'] = [];
 
@@ -125,7 +123,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('user/api.form', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
+				'edit'          => $this->url->link('user/api.form', 'api_id=' . $result['api_id'] . $url)
 			];
 		}
 
@@ -137,10 +135,10 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_username'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
-		$data['sort_status'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_date_added'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
+		$data['sort_username'] = $this->url->link('user/api.list', 'sort=username' . $url);
+		$data['sort_status'] = $this->url->link('user/api.list', 'sort=status' . $url);
+		$data['sort_date_added'] = $this->url->link('user/api.list', 'sort=date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('user/api.list', 'sort=date_modified' . $url);
 
 		$url = '';
 
@@ -158,7 +156,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'total' => $user_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('user/api.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($user_total - $this->config->get('config_pagination_admin'))) ? $user_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $user_total, ceil($user_total / $this->config->get('config_pagination_admin')));
@@ -206,16 +204,16 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('user/api', $url)
 		];
 
-		$data['save'] = $this->url->link('user/api.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('user/api.save');
+		$data['back'] = $this->url->link('user/api', $url);
 
 		if (isset($this->request->get['api_id'])) {
 			$this->load->model('user/api');
@@ -270,8 +268,6 @@ class Api extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -45,7 +45,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			'error/permission'
 		];
 
-		if (!in_array($route, $ignore) && (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
+		if (!in_array($route, $ignore) && !$this->jwthelper->validateToken()) {
 			return new \Opencart\System\Engine\Action('common/login');
 		}
 

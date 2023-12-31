@@ -50,24 +50,22 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/country', $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/country.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('localisation/country.form', $url);
+		$data['delete'] = $this->url->link('localisation/country.delete');
 
 		$data['list'] = $this->getList();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_iso_code_2'] = $filter_iso_code_2;
 		$data['filter_iso_code_3'] = $filter_iso_code_3;
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -155,7 +153,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/country.list', $url);
 
 		$data['countries'] = [];
 
@@ -180,7 +178,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				'status'     => $result['status'],
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
-				'edit'       => $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
+				'edit'       => $this->url->link('localisation/country.form', 'country_id=' . $result['country_id'] . $url)
 			];
 		}
 
@@ -204,9 +202,9 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
-		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
+		$data['sort_name'] = $this->url->link('localisation/country.list', 'sort=name' . $url);
+		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'sort=iso_code_2' . $url);
+		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'sort=iso_code_3' . $url);
 
 		$url = '';
 
@@ -236,7 +234,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'total' => $country_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/country.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($country_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($country_total - $this->config->get('config_pagination_admin'))) ? $country_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $country_total, ceil($country_total / $this->config->get('config_pagination_admin')));
@@ -289,16 +287,16 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/country', $url)
 		];
 
-		$data['save'] = $this->url->link('localisation/country.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/country.save');
+		$data['back'] = $this->url->link('localisation/country', $url);
 
 		if (isset($this->request->get['country_id'])) {
 			$this->load->model('localisation/country');

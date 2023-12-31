@@ -18,21 +18,21 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud')
+			'href' => $this->url->link('marketplace/extension', 'type=fraud')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/fraud/ip', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/fraud/ip')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/fraud/ip.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud');
+		$data['save'] = $this->url->link('extension/opencart/fraud/ip.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=fraud');
 
 		$data['fraud_ip_order_status_id'] = $this->config->get('fraud_ip_order_status_id');
 
@@ -41,8 +41,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['fraud_ip_status'] = $this->config->get('fraud_ip_status');
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -123,7 +121,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 				'ip'         => $result['ip'],
 				'total'      => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'date_added' => date('d/m/y', strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'])
+				'filter_ip'  => $this->url->link('customer/customer', 'filter_ip=' . $result['ip'])
 			];
 		}
 
@@ -133,7 +131,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 			'total' => $ip_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('extension/opencart/fraud/ip.ip', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/fraud/ip.ip', 'page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($ip_total - $limit)) ? $ip_total : ((($page - 1) * $limit) + $limit), $ip_total, ceil($ip_total / $limit));

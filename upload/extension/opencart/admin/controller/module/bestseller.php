@@ -18,33 +18,33 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module')
+			'href' => $this->url->link('marketplace/extension', 'type=module')
 		];
 
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('extension/opencart/module/bestseller')
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id'])
+				'href' => $this->url->link('extension/opencart/module/bestseller', 'module_id=' . $this->request->get['module_id'])
 			];
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['save'] = $this->url->link('extension/opencart/module/bestseller.save', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('extension/opencart/module/bestseller.save');
 		} else {
-			$data['save'] = $this->url->link('extension/opencart/module/bestseller.save', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['save'] = $this->url->link('extension/opencart/module/bestseller.save', 'module_id=' . $this->request->get['module_id']);
 		}
 
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=module');
 
 		if (isset($this->request->get['module_id'])) {
 			$this->load->model('setting/module');
@@ -95,8 +95,6 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['report'] = $this->getReport();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -209,7 +207,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$data['reports'][] = [
 				'product' => $product,
 				'total'   => $result['total'],
-				'edit'    => $this->url->link('catalog/product.edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
+				'edit'    => $this->url->link('catalog/product.edit', 'product_id=' . $result['product_id'])
 			];
 		}
 
@@ -219,7 +217,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			'total' => $report_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/module/bestseller.report', 'page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
@@ -276,7 +274,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			if ($end < $total) {
 				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
 
-				$json['next'] = $this->url->link('extension/opencart/module/bestseller.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('extension/opencart/module/bestseller.sync', 'page=' . ($page + 1), true);
 			} else {
 				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
 

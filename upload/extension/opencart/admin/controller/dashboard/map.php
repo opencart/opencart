@@ -18,21 +18,21 @@ class Map extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
+			'href' => $this->url->link('marketplace/extension', 'type=dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/dashboard/map', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/map')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/dashboard/map.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
+		$data['save'] = $this->url->link('extension/opencart/dashboard/map.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=dashboard');
 
 		$data['dashboard_map_width'] = $this->config->get('dashboard_map_width');
 
@@ -82,7 +82,7 @@ class Map extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/map');
 
-		$data['user_token'] = $this->session->data['user_token'];
+		$data = [];
 
 		return $this->load->view('extension/opencart/dashboard/map_info', $data);
 	}

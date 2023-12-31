@@ -29,12 +29,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('tool/upgrade')
 		];
 
 		$data['current_version'] = VERSION;
@@ -69,8 +69,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		// For testing
 		//$data['latest_version'] = 'master';
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -133,7 +131,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_install');
 
-			$json['next'] = $this->url->link('tool/upgrade.install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
+			$json['next'] = $this->url->link('tool/upgrade.install', 'version=' . $version, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -18,12 +18,12 @@ class NotFound extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', isset($this->session->data['user_token']) ? 'user_token=' . $this->session->data['user_token'] : '')
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('error/not_found', isset($this->session->data['user_token']) ? 'user_token=' . $this->session->data['user_token'] : '')
+			'href' => $this->url->link('error/not_found')
 		];
 
 		$data['header'] = $this->load->controller('common/header');

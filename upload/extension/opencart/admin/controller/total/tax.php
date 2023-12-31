@@ -23,21 +23,21 @@ class Tax extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total')
+			'href' => $this->url->link('marketplace/extension', 'type=total')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/total/tax', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/total/tax')
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/total/tax.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
+		$data['save'] = $this->url->link('extension/opencart/total/tax.save');
+		$data['back'] = $this->url->link('marketplace/extension', 'type=total');
 
 		$data['total_tax_status'] = $this->config->get('total_tax_status');
 		$data['total_tax_sort_order'] = $this->config->get('total_tax_sort_order');

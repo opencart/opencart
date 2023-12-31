@@ -164,7 +164,7 @@ $('#authorize').on('click', '.btn', function (e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#authorize').load('index.php?route=user/user.authorize&user_token={{ user_token }}&user_id={{ user_id }}');
+                    $('#authorize').load('index.php?route=user/user.authorize&user_id={{ user_id }}');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -180,4 +180,4 @@ $('#login').on('click', '.pagination a', function (e) {
     $('#login').load(this.href);
 });
 //--></script>
-{{ footer }} 
+{{ footer }}

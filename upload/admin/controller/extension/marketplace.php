@@ -58,10 +58,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
 					'status'    => $this->config->get('language_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/marketplace.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/marketplace.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/marketplace.install', 'extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/marketplace.uninstall', 'extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
-					'edit'      => $this->url->link('extension/' . $extension . '/marketplace/' . $code, 'user_token=' . $this->session->data['user_token'])
+					'edit'      => $this->url->link('extension/' . $extension . '/marketplace/' . $code)
 				];
 			}
 		}

@@ -50,8 +50,6 @@ class Security extends \Opencart\System\Engine\Controller {
 			$data['admin'] = '';
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if ($data['install'] || $data['storage'] || $data['admin']) {
 			return $this->load->view('common/security', $data);
 		} else {
@@ -228,7 +226,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($end < $total) {
-				$json['next'] = $this->url->link('common/security.storage', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&path=' . $path . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('common/security.storage', 'name=' . $name . '&path=' . $path . '&page=' . ($page + 1), true);
 			} else {
 				// Start deleting old storage location files.
 				rsort($files);
@@ -374,7 +372,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			if (($page * $limit) <= $total) {
-				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('common/security.admin', 'name=' . $name . '&page=' . ($page + 1), true);
 			} else {
 				// Update the old config files
 				$file = $base_new . 'config.php';

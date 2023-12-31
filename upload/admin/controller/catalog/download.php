@@ -32,18 +32,16 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('catalog/download', $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/download.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/download.delete', 'user_token=' . $this->session->data['user_token']);
-
-		$data['user_token'] = $this->session->data['user_token'];
+		$data['add'] = $this->url->link('catalog/download.form', $url);
+		$data['delete'] = $this->url->link('catalog/download.delete');
 
 		$data['list'] = $this->controller_catalog_download->getList();
 
@@ -103,7 +101,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('catalog/download.list', $url);
 
 		$data['downloads'] = [];
 
@@ -123,7 +121,7 @@ class Download extends \Opencart\System\Engine\Controller {
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('catalog/download.form', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $result['download_id'] . $url)
+				'edit'        => $this->url->link('catalog/download.form', 'download_id=' . $result['download_id'] . $url)
 			];
 		}
 
@@ -135,8 +133,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . '&sort=dd.name' . $url);
-		$data['sort_date_added'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . '&sort=d.date_added' . $url);
+		$data['sort_name'] = $this->url->link('catalog/download.list', 'sort=dd.name' . $url);
+		$data['sort_date_added'] = $this->url->link('catalog/download.list', 'sort=d.date_added' . $url);
 
 		$url = '';
 
@@ -154,7 +152,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('catalog/download.list', $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($download_total - $this->config->get('config_pagination_admin'))) ? $download_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $download_total, ceil($download_total / $this->config->get('config_pagination_admin')));
@@ -200,17 +198,17 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('catalog/download', $url)
 		];
 
-		$data['save'] = $this->url->link('catalog/download.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['upload'] = $this->url->link('catalog/download.upload', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('catalog/download.save');
+		$data['back'] = $this->url->link('catalog/download', $url);
+		$data['upload'] = $this->url->link('catalog/download.upload');
 
 		if (isset($this->request->get['download_id'])) {
 			$this->load->model('catalog/download');
@@ -247,8 +245,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['report'] = $this->getReport();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -421,7 +417,7 @@ class Download extends \Opencart\System\Engine\Controller {
 				'store'      => $store,
 				'country'    => $result['country'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'])
+				'filter_ip'  => $this->url->link('customer/customer', 'filter_ip=' . $result['ip'])
 			];
 		}
 
@@ -431,7 +427,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $report_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('catalog/download.report', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $download_id . '&page={page}')
+			'url'   => $this->url->link('catalog/download.report', 'download_id=' . $download_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
@@ -559,12 +555,12 @@ class Download extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('common/dashboard')
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('error/not_found')
 			];
 
 			$data['header'] = $this->load->controller('common/header');

@@ -51,9 +51,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 	/**
 	 * Send
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function send(): void {
 		$this->load->language('marketing/contact');

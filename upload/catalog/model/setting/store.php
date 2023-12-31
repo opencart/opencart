@@ -62,9 +62,9 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @param string $language
 	 * @param string $session_id
 	 *
-	 * @return \Opencart\System\Engine\Registry
-	 *
 	 * @throws \Exception
+	 *
+	 * @return \Opencart\System\Engine\Registry
 	 */
 	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): object {
 		// Autoloader

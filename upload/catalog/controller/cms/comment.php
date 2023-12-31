@@ -347,9 +347,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$comment_approve = (int)$this->config->get('config_comment_approve');
 
-
-
-
 			// Anti-Spam
 			$this->load->model('cms/antispam');
 

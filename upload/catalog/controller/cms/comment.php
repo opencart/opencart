@@ -303,10 +303,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$this->config->get('config_comment_status')) {
-			$json['error']['warning'] = $this->language->get('error_status');
-		}
-
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
@@ -340,8 +336,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!$this->config->get('config_comment_status')) {
+			$json['error']['warning'] = $this->language->get('error_status');
+		}
+
 		if (!$json) {
 			$comment_approve = (int)$this->config->get('config_comment_approve');
+
+
+
 
 			// Anti-Spam
 			$this->load->model('cms/antispam');
@@ -395,6 +398,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$article_comment_id = 0;
 		}
 
+		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
+			$json['error'] = $this->language->get('error_token');
+		}
+
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
@@ -408,10 +415,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		if (!$article_comment_info) {
 			$json['error'] = $this->language->get('error_comment');
-		}
-
-		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
-			$json['error'] = $this->language->get('error_token');
 		}
 
 		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {

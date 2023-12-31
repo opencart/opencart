@@ -2074,7 +2074,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_image_cart_width', '47', 0),
 (0, 'config', 'config_image_location_height', '50', 0),
 (0, 'config', 'config_image_location_width', '268', 0),
-(0, 'config', 'config_comment', '', 0),
 (0, 'config', 'config_open', '', 0),
 (0, 'config', 'config_image', '', 0),
 (0, 'config', 'config_fax', '', 0),

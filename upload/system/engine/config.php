@@ -48,7 +48,7 @@ class Config {
 	 * @return mixed
 	 */
 	public function get(string $key) {
-		return isset($this->data[$key]) ? $this->data[$key] : '';
+		return $this->data[$key] ?? '';
 	}
 
 	/**

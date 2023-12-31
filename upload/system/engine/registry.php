@@ -88,7 +88,7 @@ class Registry {
 	 * @return ?object
 	 */
 	public function get(string $key): ?object {
-		return isset($this->data[$key]) ? $this->data[$key] : null;
+		return $this->data[$key] ?? null;
 	}
 
 	/**

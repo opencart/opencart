@@ -853,7 +853,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'option_id'            => $product_option['option_id'],
 				'name'                 => $product_option['name'],
 				'type'                 => $product_option['type'],
-				'value'                => isset($product_option['value']) ? $product_option['value'] : '',
+				'value'                => $product_option['value'] ?? '',
 				'required'             => $product_option['required']
 			];
 		}
@@ -912,7 +912,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					'option_id'            => $product_option['option_id'],
 					'name'                 => $option_info['name'],
 					'type'                 => $option_info['type'],
-					'value'                => isset($data['variant'][$product_option['product_option_id']]) ? $data['variant'][$product_option['product_option_id']] : $product_option['value'],
+					'value'                => $data['variant'][$product_option['product_option_id']] ?? $product_option['value'],
 					'required'             => $product_option['required']
 				];
 			}

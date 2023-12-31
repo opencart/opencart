@@ -156,6 +156,7 @@ return $config
         'string_length_to_empty' => true,
         'string_line_ending' => true,
         'switch_continue_to_break' => true,
+        'ternary_to_elvis_operator' => true,
         'trim_array_spaces' => true,
         'type_declaration_spaces' => true,
         'types_spaces' => true,

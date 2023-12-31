@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Store extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Store
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Store By Hostname
+	 *
 	 * @param string $url
 	 *
 	 * @return array
@@ -29,6 +33,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Stores
+	 *
 	 * @return array
 	 */
 	public function getStores(): array {
@@ -50,6 +56,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Create Store Instance
+	 *
 	 * @param int    $store_id
 	 * @param string $language
 	 * @param string $session_id

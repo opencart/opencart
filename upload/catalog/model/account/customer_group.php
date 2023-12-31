@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Customer Group
+	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Customer Groups
+	 *
 	 * @return array
 	 */
 	public function getCustomerGroups(): array {

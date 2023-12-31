@@ -92,6 +92,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?object {
@@ -189,6 +191,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {
@@ -321,6 +325,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -420,6 +426,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Success
+	 *
 	 * @return void
 	 */
 	public function success(): void {

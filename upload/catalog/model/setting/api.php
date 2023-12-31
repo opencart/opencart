@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**
+	 * Login
+	 *
 	 * @param string $username
 	 * @param string $key
 	 *
@@ -19,6 +21,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Api By Token
+	 *
 	 * @param string $token
 	 *
 	 * @return array
@@ -30,6 +34,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Sessions
+	 *
 	 * @param int $api_id
 	 *
 	 * @return array
@@ -41,6 +47,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Sessions
+	 *
 	 * @param int $api_id
 	 *
 	 * @return array
@@ -52,6 +60,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Update Session
+	 *
 	 * @param string $api_session_id
 	 *
 	 * @return void
@@ -62,6 +72,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Clean Sessions
+	 *
 	 * @return void
 	 */
 	public function cleanSessions(): void {

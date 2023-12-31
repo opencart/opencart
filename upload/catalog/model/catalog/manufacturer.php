@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Catalog;
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Manufacturer
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Manufacturer(s)
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -70,6 +74,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Layout ID
+	 *
 	 * @param int $manufacturer_id
 	 *
 	 * @return int

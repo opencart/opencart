@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**
+	 * Login
+	 *
 	 * @param string $username
 	 * @param string $key
 	 *
@@ -19,6 +21,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Session
+	 *
 	 * @param int    $api_id
 	 * @param string $session_id
 	 * @param string $ip
@@ -32,6 +36,8 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Ips
+	 *
 	 * @param int $api_id
 	 *
 	 * @return array

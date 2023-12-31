@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Startup;
  */
 class Session extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 *
 	 * @throws \Exception

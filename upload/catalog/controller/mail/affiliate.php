@@ -72,6 +72,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Alert
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

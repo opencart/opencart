@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Checkout;
  */
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	/**
+	 * Get Methods
+	 *
 	 * @param array $shipping_address
 	 *
 	 * @return array

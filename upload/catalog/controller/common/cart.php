@@ -123,6 +123,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return void
 	 */
 	public function info(): void {
@@ -130,6 +132,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove Product
+	 *
 	 * @return void
 	 */
 	public function removeProduct(): void {
@@ -164,6 +168,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove Voucher
+	 *
 	 * @return void
 	 */
 	public function removeVoucher(): void {

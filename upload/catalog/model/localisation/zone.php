@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class Zone extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Zone
+	 *
 	 * @param int $zone_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Zones By Country ID
+	 *
 	 * @param int $country_id
 	 *
 	 * @return array

@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Catalog;
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Review
+	 *
 	 * @param int   $product_id
 	 * @param array $data
 	 *
@@ -19,6 +21,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Reviews By Product ID
+	 *
 	 * @param int $product_id
 	 * @param int $start
 	 * @param int $limit
@@ -40,6 +44,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Reviews Product ID
+	 *
 	 * @param int $product_id
 	 *
 	 * @return int

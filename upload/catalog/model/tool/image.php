@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Tool;
  */
 class Image extends \Opencart\System\Engine\Model {
 	/**
+	 * Resize
+	 *
 	 * @param string $filename
 	 * @param int    $width
 	 * @param int    $height

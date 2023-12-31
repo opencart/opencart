@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Tool;
  */
 class Upload extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Upload
+	 *
 	 * @param string $name
 	 * @param string $filename
 	 *

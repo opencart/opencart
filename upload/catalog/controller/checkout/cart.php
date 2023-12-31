@@ -103,6 +103,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -112,6 +114,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -224,6 +228,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {
@@ -325,6 +331,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @return void
 	 */
 	public function edit(): void {
@@ -370,6 +378,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @return void
 	 */
 	public function remove(): void {

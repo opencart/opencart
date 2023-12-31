@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class TaxClass extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Tax Class
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Tax Class
+	 *
 	 * @param int   $tax_class_id
 	 * @param array $data
 	 *
@@ -48,6 +52,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Tax Class
+	 *
 	 * @param int $tax_class_id
 	 *
 	 * @return void
@@ -60,6 +66,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Tax Class
+	 *
 	 * @param int $tax_class_id
 	 *
 	 * @return array
@@ -71,6 +79,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Tax Classes
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -112,6 +122,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Tax Classes
+	 *
 	 * @return int
 	 */
 	public function getTotalTaxClasses(): int {
@@ -121,6 +133,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Tax Rules
+	 *
 	 * @param int $tax_class_id
 	 *
 	 * @return array
@@ -132,6 +146,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Tax Rules By Tax Rate ID
+	 *
 	 * @param int $tax_rate_id
 	 *
 	 * @return int

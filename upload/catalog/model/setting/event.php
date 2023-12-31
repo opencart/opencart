@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Event extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Events
+	 *
 	 * @return array
 	 */
 	public function getEvents(): array {

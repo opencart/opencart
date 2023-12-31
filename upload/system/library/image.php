@@ -325,7 +325,7 @@ class Image {
 	private function filter(): void {
 		$args = func_get_args();
 
-		call_user_func_array('imagefilter', $args);
+		imagefilter(...$args);
 	}
 
 	/**

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Mail;
  */
 class Transaction extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

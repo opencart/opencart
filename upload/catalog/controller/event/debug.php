@@ -17,6 +17,8 @@ class Debug extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Before
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
@@ -32,6 +34,8 @@ class Debug extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * After
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output

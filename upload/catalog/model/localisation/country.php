@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class Country extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Country
+	 *
 	 * @param int $country_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Country By Iso Code 2
+	 *
 	 * @param string $iso_code_2
 	 *
 	 * @return array
@@ -41,6 +45,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Country By Iso Code 3
+	 *
 	 * @param string $iso_code_3
 	 *
 	 * @return array
@@ -64,6 +70,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Countries
+	 *
 	 * @return array
 	 */
 	public function getCountries(): array {

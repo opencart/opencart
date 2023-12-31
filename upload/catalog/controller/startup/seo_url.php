@@ -49,6 +49,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Rewrite
+	 *
 	 * @param string $link
 	 *
 	 * @return string

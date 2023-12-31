@@ -37,7 +37,7 @@ error_reporting(E_ALL);
 define('APPLICATION', 'Install');
 
 // DIR
-define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
+define('DIR_OPENCART', str_replace('\\', '/', realpath(__DIR__ . '/../')) . '/');
 define('DIR_APPLICATION', DIR_OPENCART . 'install/');
 define('DIR_EXTENSION', DIR_OPENCART . 'extension/');
 define('DIR_SYSTEM', DIR_OPENCART . 'system/');
@@ -194,7 +194,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if (version_compare(phpversion(), '7.4', '<')) {
+		if (version_compare(PHP_VERSION, '7.4', '<')) {
 			$error .= 'ERROR: You need to use PHP7.4+ or above for OpenCart to work!' . "\n";
 		}
 

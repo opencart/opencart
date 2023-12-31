@@ -57,6 +57,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Maximum
+	 *
 	 * @return void
 	 */
 	public function maximum(): void {
@@ -77,6 +79,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Available
+	 *
 	 * @return void
 	 */
 	public function available(): void {

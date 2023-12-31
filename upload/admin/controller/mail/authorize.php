@@ -8,6 +8,8 @@ namespace Opencart\Admin\Controller\Mail;
 class Authorize extends \Opencart\System\Engine\Controller {
 	// admin/model/user/user/editCode/after
 	/**
+	 * Index
+	 *
 	 * @param $route
 	 * @param $args
 	 * @param $output

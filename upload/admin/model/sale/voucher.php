@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Sale;
  */
 class Voucher extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Voucher
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Voucher
+	 *
 	 * @param int   $voucher_id
 	 * @param array $data
 	 *
@@ -28,6 +32,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Voucher
+	 *
 	 * @param int $voucher_id
 	 *
 	 * @return void
@@ -38,6 +44,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Voucher
+	 *
 	 * @param int $voucher_id
 	 *
 	 * @return array
@@ -49,6 +57,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Voucher By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -60,6 +70,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Vouchers
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +119,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Vouchers
+	 *
 	 * @return int
 	 */
 	public function getTotalVouchers(): int {
@@ -116,6 +130,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Vouchers By Voucher Theme ID
+	 *
 	 * @param int $voucher_theme_id
 	 *
 	 * @return int
@@ -127,6 +143,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Histories
+	 *
 	 * @param int $voucher_id
 	 * @param int $start
 	 * @param int $limit
@@ -148,6 +166,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories
+	 *
 	 * @param int $voucher_id
 	 *
 	 * @return int

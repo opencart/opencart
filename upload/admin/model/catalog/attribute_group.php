@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Attribute Group
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -24,6 +26,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Attribute Group
+	 *
 	 * @param int   $attribute_group_id
 	 * @param array $data
 	 *
@@ -40,6 +44,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Attribute Group
+	 *
 	 * @param int $attribute_group_id
 	 *
 	 * @return void
@@ -50,6 +56,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Attribute Group
+	 *
 	 * @param int $attribute_group_id
 	 *
 	 * @return array
@@ -61,6 +69,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Attribute Groups
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -103,6 +113,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $attribute_group_id
 	 *
 	 * @return array
@@ -120,6 +132,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Attribute Groups
+	 *
 	 * @return int
 	 */
 	public function getTotalAttributeGroups(): int {

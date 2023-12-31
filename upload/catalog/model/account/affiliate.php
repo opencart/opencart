@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Affiliate extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Affiliate
+	 *
 	 * @param int   $customer_id
 	 * @param array $data
 	 *
@@ -21,6 +23,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Affiliate
+	 *
 	 * @param int   $customer_id
 	 * @param array $data
 	 *
@@ -31,6 +35,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Affiliate
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array
@@ -46,6 +52,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Affiliate By Tracking
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -61,6 +69,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Report
+	 *
 	 * @param int    $customer_id
 	 * @param string $ip
 	 * @param string $country

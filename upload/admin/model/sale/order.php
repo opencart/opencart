@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Sale;
  */
 class Order extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Order
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -155,6 +157,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Orders
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -264,6 +268,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Orders By Subscription ID
+	 *
 	 * @param int $subscription_id
 	 *
 	 * @return array
@@ -275,6 +281,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Subscription ID
+	 *
 	 * @param int $subscription_id
 	 *
 	 * @return int
@@ -286,6 +294,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Products
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -297,6 +307,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Products By Product ID
+	 *
 	 * @param int $product_id
 	 *
 	 * @return int
@@ -310,6 +322,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Options
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -322,6 +336,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -334,6 +350,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Vouchers
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -345,6 +363,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Voucher By Voucher ID
+	 *
 	 * @param int $voucher_id
 	 *
 	 * @return array
@@ -356,6 +376,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Totals
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -367,6 +389,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -430,6 +454,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Store ID
+	 *
 	 * @param int $store_id
 	 *
 	 * @return int
@@ -441,6 +467,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Order Status ID
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return int
@@ -452,6 +480,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Processing Status
+	 *
 	 * @return int
 	 */
 	public function getTotalOrdersByProcessingStatus(): int {
@@ -473,6 +503,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Complete Status
+	 *
 	 * @return int
 	 */
 	public function getTotalOrdersByCompleteStatus(): int {
@@ -494,6 +526,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Language ID
+	 *
 	 * @param int $language_id
 	 *
 	 * @return int
@@ -505,6 +539,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Currency ID
+	 *
 	 * @param int $currency_id
 	 *
 	 * @return int
@@ -516,6 +552,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Sales
+	 *
 	 * @param array $data
 	 *
 	 * @return float
@@ -579,6 +617,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Create Invoice No
+	 *
 	 * @param int $order_id
 	 *
 	 * @return string
@@ -604,6 +644,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Reward Total
+	 *
 	 * @param int $order_id
 	 *
 	 * @return int
@@ -615,6 +657,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Histories
+	 *
 	 * @param int $order_id
 	 * @param int $start
 	 * @param int $limit
@@ -636,6 +680,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories
+	 *
 	 * @param int $order_id
 	 *
 	 * @return int
@@ -647,6 +693,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories By Order Status ID
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return int
@@ -658,6 +706,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Emails By Products Ordered
+	 *
 	 * @param array $products
 	 * @param int   $start
 	 * @param int   $end
@@ -677,6 +727,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Emails By Products Ordered
+	 *
 	 * @param array $products
 	 *
 	 * @return int

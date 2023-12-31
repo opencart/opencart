@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Tool;
  */
 class Notification extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Notification
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
 	 * @param int  $notification_id
 	 * @param bool $status
 	 *
@@ -28,6 +32,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Notification
+	 *
 	 * @param int $notification_id
 	 *
 	 * @return void
@@ -37,6 +43,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Notification
+	 *
 	 * @param int $notification_id
 	 *
 	 * @return array
@@ -48,6 +56,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Notifications
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -79,6 +89,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Notifications
+	 *
 	 * @param array $data
 	 *
 	 * @return int

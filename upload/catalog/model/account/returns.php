@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Return
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Return
+	 *
 	 * @param int $return_id
 	 *
 	 * @return array
@@ -29,6 +33,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Returns
+	 *
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -49,6 +55,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Returns
+	 *
 	 * @return int
 	 */
 	public function getTotalReturns(): int {
@@ -58,6 +66,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Histories
+	 *
 	 * @param int $return_id
 	 *
 	 * @return array

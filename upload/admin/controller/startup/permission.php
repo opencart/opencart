@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Startup;
  */
 class Permission extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function index(): ?object {

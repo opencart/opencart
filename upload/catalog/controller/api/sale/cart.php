@@ -100,6 +100,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {
@@ -184,6 +186,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @return void
 	 */
 	public function edit(): void {
@@ -214,6 +218,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @return void
 	 */
 	public function remove(): void {

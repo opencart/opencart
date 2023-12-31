@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Catalog;
  */
 class Information extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Information
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Information(s)
+	 *
 	 * @return array
 	 */
 	public function getInformations(): array {
@@ -27,6 +31,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Layout ID
+	 *
 	 * @param int $information_id
 	 *
 	 * @return int

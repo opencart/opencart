@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
  */
 class ProductViewed extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -45,6 +47,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -69,6 +73,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -80,6 +86,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -91,6 +99,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Report
+	 *
 	 * @return void
 	 */
 	public function report(): void {
@@ -104,6 +114,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -113,6 +125,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Report
+	 *
 	 * @return string
 	 */
 	public function getReport(): string {
@@ -171,6 +185,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Generate
+	 *
 	 * @return void
 	 */
 	public function generate(): void {

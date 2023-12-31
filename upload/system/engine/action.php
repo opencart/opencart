@@ -88,7 +88,7 @@ class Action {
 		$callable = [$controller, $this->method];
 
 		if (is_callable($callable)) {
-			return call_user_func_array($callable, $args);
+			return $callable(...$args);
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

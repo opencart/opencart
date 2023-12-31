@@ -12,6 +12,8 @@ class Language extends \Opencart\System\Engine\Model {
 	private array $data = [];
 
 	/**
+	 * Get Language
+	 *
 	 * @param int $language_id
 	 *
 	 * @return array
@@ -43,6 +45,8 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Language By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -74,6 +78,8 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Languages
+	 *
 	 * @return array
 	 */
 	public function getLanguages(): array {

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Marketing;
  */
 class Coupon extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Coupon
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -32,6 +34,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Coupon
+	 *
 	 * @param int   $coupon_id
 	 * @param array $data
 	 *
@@ -58,6 +62,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Coupon
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return void
@@ -70,6 +76,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Coupon
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return array
@@ -81,6 +89,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Coupon By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -92,6 +102,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Coupons
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -138,6 +150,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Products
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return array
@@ -155,6 +169,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Categories
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return array
@@ -181,6 +197,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Histories
+	 *
 	 * @param int $coupon_id
 	 * @param int $start
 	 * @param int $limit
@@ -202,6 +220,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return int

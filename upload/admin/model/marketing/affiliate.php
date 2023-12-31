@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Marketing;
  */
 class Affiliate extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Affiliate
+	 *
 	 * @param array $data
 	 *
 	 * @return void
@@ -16,6 +18,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Affiliate
+	 *
 	 * @param int   $customer_id
 	 * @param array $data
 	 *
@@ -26,6 +30,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Balance
+	 *
 	 * @param int   $customer_id
 	 * @param float $amount
 	 *
@@ -36,6 +42,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Affiliate
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
@@ -46,6 +54,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Affiliate
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array
@@ -61,6 +71,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Affiliate By Tracking
+	 *
 	 * @param string $tracking
 	 *
 	 * @return array
@@ -76,6 +88,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Affiliates
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -161,6 +175,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Affiliates
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -208,6 +224,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Reports
+	 *
 	 * @param int $customer_id
 	 * @param int $start
 	 * @param int $limit
@@ -229,6 +247,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Reports
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int

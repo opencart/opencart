@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Checkout;
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Subscription
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -72,6 +74,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Subscription
+	 *
 	 * @param int   $subscription_id
 	 * @param array $data
 	 *
@@ -136,6 +140,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Subscription By Order ID
+	 *
 	 * @param int $order_id
 	 *
 	 * @return void
@@ -145,6 +151,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription By Order Product ID
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -167,6 +175,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add History
+	 *
 	 * @param int    $subscription_id
 	 * @param int    $subscription_status_id
 	 * @param string $comment
@@ -181,6 +191,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Subscription Status
+	 *
 	 * @param int  $subscription_id
 	 * @param bool $subscription_status_id
 	 *
@@ -191,6 +203,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Trial Remaining
+	 *
 	 * @param int $subscription_id
 	 * @param int $trial_remaining
 	 *
@@ -201,6 +215,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Date Next
+	 *
 	 * @param int    $subscription_id
 	 * @param string $date_next
 	 *
@@ -211,6 +227,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscriptions
+	 *
 	 * @param array $data
 	 *
 	 * @return array

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class Country extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Country
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -20,6 +22,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Country
+	 *
 	 * @param int   $country_id
 	 * @param array $data
 	 *
@@ -32,6 +36,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Country
+	 *
 	 * @param int $country_id
 	 *
 	 * @return void
@@ -43,6 +49,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Country
+	 *
 	 * @param int $country_id
 	 *
 	 * @return array
@@ -54,6 +62,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Country By Iso Code 2
+	 *
 	 * @param string $iso_code_2
 	 *
 	 * @return array
@@ -65,6 +75,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Country By Iso Code 3
+	 *
 	 * @param string $iso_code_3
 	 *
 	 * @return array
@@ -76,6 +88,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Countries
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -147,6 +161,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Countries
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -178,6 +194,8 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Countries By Address Format ID
+	 *
 	 * @param int $address_format_id
 	 *
 	 * @return int

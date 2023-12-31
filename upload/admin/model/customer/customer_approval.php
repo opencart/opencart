@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Customer;
  */
 class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Customer Approvals
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -58,6 +60,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Customer Approval
+	 *
 	 * @param int $customer_approval_id
 	 *
 	 * @return array
@@ -69,6 +73,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Customer Approvals
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -112,6 +118,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Approve Customer
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
@@ -122,6 +130,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Deny Customer
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
@@ -131,6 +141,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Approve Affiliate
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
@@ -141,6 +153,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Deny Affiliate
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return void

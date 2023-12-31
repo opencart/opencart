@@ -96,9 +96,11 @@ class Contact extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return void
+	 * Send
 	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function send(): void {
 		$this->load->language('information/contact');
@@ -172,6 +174,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Success
+	 *
 	 * @return void
 	 */
 	public function success(): void {

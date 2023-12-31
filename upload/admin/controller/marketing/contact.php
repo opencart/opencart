@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Marketing;
  */
 class Contact extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -49,9 +51,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 	/**
 	 * Send
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function send(): void {
 		$this->load->language('marketing/contact');
@@ -208,7 +210,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$end = $start + $limit;
 
 				if ($end < $email_total) {
-					$json['text'] = sprintf($this->language->get('text_sent'), $start ? $start : 1, $email_total);
+					$json['text'] = sprintf($this->language->get('text_sent'), $start ?: 1, $email_total);
 
 					$json['next'] = $this->url->link('marketing/contact.send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 				} else {

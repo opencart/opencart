@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Marketing;
  */
 class Coupon extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Coupon
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -109,6 +111,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories By Coupon
+	 *
 	 * @param string $coupon
 	 *
 	 * @return int
@@ -120,6 +124,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories By Customer ID
+	 *
 	 * @param string $coupon
 	 * @param int    $customer_id
 	 *

@@ -17,6 +17,8 @@ class Error extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Error
+	 *
 	 * @param string $code
 	 * @param string $message
 	 * @param string $file
@@ -58,6 +60,8 @@ class Error extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Exception
+	 *
 	 * @param \Throwable $e
 	 *
 	 * @return void

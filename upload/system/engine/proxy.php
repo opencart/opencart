@@ -80,7 +80,7 @@ class Proxy {
 		foreach ($args as $key => &$value);
 
 		if (isset($this->data[$method])) {
-			return call_user_func_array($this->data[$method], $args);
+			return ($this->data[$method])(...$args);
 		} else {
 			$trace = debug_backtrace();
 

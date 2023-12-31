@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Sale;
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Return
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Return
+	 *
 	 * @param int   $return_id
 	 * @param array $data
 	 *
@@ -28,6 +32,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Return
+	 *
 	 * @param int $return_id
 	 *
 	 * @return void
@@ -38,6 +44,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Return
+	 *
 	 * @param int $return_id
 	 *
 	 * @return array
@@ -49,6 +57,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Returns
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -135,6 +145,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Returns
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -186,6 +198,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Returns By Return Status ID
+	 *
 	 * @param int $return_status_id
 	 *
 	 * @return int
@@ -197,6 +211,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Returns By Return Reason ID
+	 *
 	 * @param int $return_reason_id
 	 *
 	 * @return int
@@ -208,6 +224,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Returns By Return Action ID
+	 *
 	 * @param int $return_action_id
 	 *
 	 * @return int
@@ -219,6 +237,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add History
+	 *
 	 * @param int    $return_id
 	 * @param int    $return_status_id
 	 * @param string $comment
@@ -232,6 +252,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Histories
+	 *
 	 * @param int $return_id
 	 * @param int $start
 	 * @param int $limit
@@ -253,6 +275,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories
+	 *
 	 * @param int $return_id
 	 *
 	 * @return int
@@ -264,6 +288,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Histories By Return Status ID
+	 *
 	 * @param int $return_status_id
 	 *
 	 * @return int

@@ -48,6 +48,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {
@@ -116,6 +118,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @return void
 	 */
 	public function remove(): void {

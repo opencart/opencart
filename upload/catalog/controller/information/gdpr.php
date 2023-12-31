@@ -82,6 +82,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *	denied     = -1
 	*/
 	/**
+	 * Action
+	 *
 	 * @return void
 	 */
 	public function action(): void {
@@ -144,6 +146,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Success
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function success(): ?object {

@@ -23,6 +23,6 @@ $_['error_product']    = 'Warning: Product could not be found!';
 $_['error_author']     = 'Review Name must be between 3 and 25 characters!';
 $_['error_text']       = 'Review Text must be between 25 and 1000 characters!';
 $_['error_rating']     = 'Please select a review rating!';
-$_['error_guest']      = 'You must login to review the product!';
+$_['error_login']      = 'You must login to review the product!';
 $_['error_purchased']  = 'You must have purchased this product before you can write a review!';
 $_['error_status']     = 'Reviews are disabled!';

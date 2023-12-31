@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Module extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Module
+	 *
 	 * @param int $module_id
 	 *
 	 * @return array

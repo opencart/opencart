@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Customer;
  */
 class CustomField extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Custom Field
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -44,6 +46,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Custom Field
+	 *
 	 * @param int   $custom_field_id
 	 * @param array $data
 	 *
@@ -89,6 +93,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Custom Field
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return void
@@ -102,6 +108,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Custom Field
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -113,6 +121,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Custom Fields
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -178,6 +188,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -195,6 +207,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Value
+	 *
 	 * @param int $custom_field_value_id
 	 *
 	 * @return array
@@ -206,6 +220,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Values
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -226,6 +242,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Customer Groups
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -237,6 +255,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Value Descriptions
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -266,6 +286,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Custom Fields
+	 *
 	 * @return int
 	 */
 	public function getTotalCustomFields(): int {

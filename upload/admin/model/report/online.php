@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Report;
  */
 class Online extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Online
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -48,6 +50,8 @@ class Online extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Online
+	 *
 	 * @param array $data
 	 *
 	 * @return int

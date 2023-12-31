@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Marketplace;
  */
 class Modification extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -182,9 +184,9 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * Refresh
 	 *
-	 * @return void
-	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function refresh(): void {
 		$this->load->language('marketplace/modification');

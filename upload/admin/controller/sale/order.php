@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Sale;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -473,9 +475,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function info(): void {
 		$this->load->language('sale/order');
@@ -1166,7 +1168,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
 
-		// Extension Order Tabs can are called here.
+		// Extension Order Tabs can be called here.
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info['payment_method']['code'])) {
@@ -1193,7 +1195,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Extension Order Tabs can are called here.
+		// Extension Order Tabs can be called here.
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('fraud');

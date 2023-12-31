@@ -83,7 +83,7 @@ class Smtp {
 		}
 
 		$header .= 'Return-Path: ' . $this->option['from'] . PHP_EOL;
-		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
+		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
 		$message = '--' . $boundary . PHP_EOL;

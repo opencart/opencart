@@ -7,14 +7,16 @@ namespace Opencart\Catalog\Model\Tool;
  */
 class Image extends \Opencart\System\Engine\Model {
 	/**
+	 * Resize
+	 *
 	 * @param string $filename
 	 * @param int    $width
 	 * @param int    $height
 	 * @param string $default
 	 *
-	 * @return string
-	 *
 	 * @throws \Exception
+	 *
+	 * @return string
 	 */
 	public function resize(string $filename, int $width, int $height, string $default = ''): string {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {

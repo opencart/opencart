@@ -61,6 +61,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return void
 	 */
 	public function info(): void {

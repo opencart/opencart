@@ -151,7 +151,7 @@ class Loader {
 							$callable = [$model, $method];
 
 							if (is_callable($callable)) {
-								$output = call_user_func_array($callable, $args);
+								$output = $callable(...$args);
 							} else {
 								throw new \Exception('Error: Could not call model/' . $route . '!');
 							}

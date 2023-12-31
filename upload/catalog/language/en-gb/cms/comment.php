@@ -17,6 +17,9 @@ $_['text_dislike']         = 'Dislike!';
 $_['text_success']         = 'Thank you for your comment. It has been submitted to the webmaster for approval.';
 $_['text_queue']           = 'Your comment has been added to our moderation queue!';
 $_['text_rating']          = 'Thank you for your rating!';
+$_['text_success_comment'] = 'Thank you for your comment .. to view please reload the page.';
+$_['text_success_comment_approve'] = 'Thank you for your comment. It has been submitted to the webmaster for approval.';
+
 
 // Entry
 $_['entry_author']         = 'Your Name';
@@ -33,5 +36,5 @@ $_['error_article']        = 'Warning: Article could not be found!';
 $_['error_token']          = 'Warning: Comment token invalid!';
 $_['error_author']         = 'Your Name must be between 3 and 25 characters!';
 $_['error_comment']        = 'Comment must be between 25 and 1000 characters!';
-$_['error_login']          = 'You must login to comment on the article!';
+$_['error_login']          = 'You must login to comment on the article or rate it!';
 $_['error_status']         = 'Comments are disabled!';

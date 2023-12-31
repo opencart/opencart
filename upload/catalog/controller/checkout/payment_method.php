@@ -42,6 +42,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get Methods
+	 *
 	 * @return void
 	 */
 	public function getMethods(): void {
@@ -115,6 +117,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -180,6 +184,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Comment
+	 *
 	 * @return void
 	 */
 	public function comment(): void {
@@ -212,6 +218,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Agree
+	 *
 	 * @return void
 	 */
 	public function agree(): void {

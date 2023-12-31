@@ -11,9 +11,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	 * @param array  $args
 	 * @param mixed  $output
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$this->load->model('checkout/order');

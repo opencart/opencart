@@ -21,7 +21,7 @@ error_reporting(E_ALL);
 define('APPLICATION', 'Install');
 
 // DIR
-define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
+define('DIR_OPENCART', str_replace('\\', '/', realpath(__DIR__ . '/../')) . '/');
 define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 
 // Startup
@@ -58,9 +58,9 @@ set_error_handler(/**
  * @param       $line
  * @param array $errcontext
  *
- * @return false
- *
  * @throws \ErrorException
+ *
+ * @return false
  */ function($code, $message, $file, $line, array $errcontext): bool {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {

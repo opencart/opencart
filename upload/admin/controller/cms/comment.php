@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Cms;
  */
 class Comment extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

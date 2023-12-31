@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Checkout;
  */
 class Cart extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Products
+	 *
 	 * @return array
 	 */
 	public function getProducts(): array {
@@ -91,6 +93,8 @@ class Cart extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Vouchers
+	 *
 	 * @return array
 	 */
 	public function getVouchers(): array {
@@ -116,6 +120,8 @@ class Cart extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Totals
+	 *
 	 * @param array $totals
 	 * @param array $taxes
 	 * @param int   $total

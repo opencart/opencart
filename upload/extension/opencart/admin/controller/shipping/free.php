@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
  */
 class Free extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -52,6 +54,8 @@ class Free extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

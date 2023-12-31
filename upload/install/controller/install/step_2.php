@@ -66,9 +66,9 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('install/step_2', 'language=' . $this->config->get('language_code'));
 
-		$data['php_version'] = phpversion();
+		$data['php_version'] = PHP_VERSION;
 
-		if (version_compare(phpversion(), '7.4', '<')) {
+		if (version_compare(PHP_VERSION, '7.4', '<')) {
 			$data['version'] = false;
 		} else {
 			$data['version'] = true;
@@ -136,7 +136,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 	 * @return bool
 	 */
 	private function validate(): bool {
-		if (version_compare(phpversion(), '7.4', '<')) {
+		if (version_compare(PHP_VERSION, '7.4', '<')) {
 			$this->error['warning'] = $this->language->get('error_version');
 		}
 

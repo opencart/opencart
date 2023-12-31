@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Subscription Status
+	 *
 	 * @param int $subscription_status_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription Statuses
+	 *
 	 * @return array
 	 */
 	public function getSubscriptionStatuses(): array {

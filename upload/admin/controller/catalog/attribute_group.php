@@ -114,9 +114,9 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('catalog/attribute_group');
+		$model_catalog_attribute_group = $this->load->getModel(\Opencart\Admin\Model\Catalog\AttributeGroup::class);
 
-		$results = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
+		$results = $model_catalog_attribute_group->getAttributeGroups($filter_data);
 
 		foreach ($results as $result) {
 			$data['attribute_groups'][] = [
@@ -148,7 +148,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
+		$attribute_group_total = $model_catalog_attribute_group->getTotalAttributeGroups();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $attribute_group_total,
@@ -207,9 +207,9 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['attribute_group_id'])) {
-			$this->load->model('catalog/attribute_group');
+			$model_catalog_attribute_group = $this->load->getModel(\Opencart\Admin\Model\Catalog\AttributeGroup::class);
 
-			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup($this->request->get['attribute_group_id']);
+			$attribute_group_info = $model_catalog_attribute_group->getAttributeGroup($this->request->get['attribute_group_id']);
 		}
 
 		if (isset($this->request->get['attribute_group_id'])) {
@@ -218,12 +218,12 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$data['attribute_group_id'] = 0;
 		}
 
-		$this->load->model('localisation/language');
+		$model_localisation_language = $this->load->getModel(\Opencart\Admin\Model\Localisation\Language::class);
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['languages'] = $model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['attribute_group_id'])) {
-			$data['attribute_group_description'] = $this->model_catalog_attribute_group->getDescriptions($this->request->get['attribute_group_id']);
+			$data['attribute_group_description'] = $model_catalog_attribute_group->getDescriptions($this->request->get['attribute_group_id']);
 		} else {
 			$data['attribute_group_description'] = [];
 		}
@@ -268,12 +268,12 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('catalog/attribute_group');
+			$model_catalog_attribute_group = $this->load->getModel(\Opencart\Admin\Model\Catalog\AttributeGroup::class);
 
 			if (!$this->request->post['attribute_group_id']) {
-				$json['attribute_group_id'] = $this->model_catalog_attribute_group->addAttributeGroup($this->request->post);
+				$json['attribute_group_id'] = $model_catalog_attribute_group->addAttributeGroup($this->request->post);
 			} else {
-				$this->model_catalog_attribute_group->editAttributeGroup($this->request->post['attribute_group_id'], $this->request->post);
+				$model_catalog_attribute_group->editAttributeGroup($this->request->post['attribute_group_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -303,10 +303,10 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('catalog/attribute');
+		$model_catalog_attribute = $this->load->getModel(\Opencart\Admin\Model\Catalog\Attribute::class);
 
 		foreach ($selected as $attribute_group_id) {
-			$attribute_total = $this->model_catalog_attribute->getTotalAttributesByAttributeGroupId($attribute_group_id);
+			$attribute_total = $model_catalog_attribute->getTotalAttributesByAttributeGroupId($attribute_group_id);
 
 			if ($attribute_total) {
 				$json['error'] = sprintf($this->language->get('error_attribute'), $attribute_total);
@@ -314,10 +314,10 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('catalog/attribute_group');
+			$model_catalog_attribute_group = $this->load->getModel(\Opencart\Admin\Model\Catalog\AttributeGroup::class);
 
 			foreach ($selected as $attribute_group_id) {
-				$this->model_catalog_attribute_group->deleteAttributeGroup($attribute_group_id);
+				$model_catalog_attribute_group->deleteAttributeGroup($attribute_group_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

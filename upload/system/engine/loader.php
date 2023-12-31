@@ -98,13 +98,32 @@ class Loader {
 	}
 
 	/**
+	 * Get Model
+	 *
+	 * @template TModel of \Opencart\System\Engine\Model
+	 *
+	 * @param class-string<TModel> $class
+	 *
+	 * @return \Opencart\System\Engine\Proxy<TModel>
+	 */
+	public function getModel(string $class): \Opencart\System\Engine\Proxy {
+		$parts = explode('\\', $class);
+		$last_two_parts = array_slice($parts, -2);
+		$converted = implode('/', $last_two_parts);
+		$route = preg_replace('/([a-z])([A-Z])/', '$1_$2', $converted);
+		$route = strtolower($route);
+
+		return $this->model($route);
+	}
+
+	/**
 	 * Model
 	 *
 	 * @param string $route
 	 *
-	 * @return void
+	 * @return \Opencart\System\Engine\Proxy
 	 */
-	public function model(string $route): void {
+	public function model(string $route): \Opencart\System\Engine\Proxy {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
@@ -165,10 +184,14 @@ class Loader {
 				}
 
 				$this->registry->set($key, $proxy);
+
+				return $proxy;
 			} else {
 				throw new \Exception('Error: Could not load model ' . $class . '!');
 			}
 		}
+
+		return $this->registry->get($key);
 	}
 
 	/**

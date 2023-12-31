@@ -11,6 +11,10 @@
 namespace Opencart\System\Engine;
 /**
  * Class Proxy
+ *
+ * @template TWraps of \Opencart\System\Engine\Model
+ *
+ * @mixin TWraps
  */
 class Proxy {
 	/**

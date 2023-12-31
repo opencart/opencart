@@ -21,7 +21,7 @@ error_reporting(E_ALL);
 define('APPLICATION', 'Install');
 
 // DIR
-define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
+define('DIR_OPENCART', str_replace('\\', '/', realpath(__DIR__ . '/../')) . '/');
 define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 
 // Startup

@@ -48,6 +48,11 @@ class User {
 	private array $permission = [];
 
 	/**
+	 * @var object
+	 */
+	private object $jwthelper;
+
+	/**
 	 * Constructor
 	 *
 	 * @param object $registry
@@ -56,6 +61,7 @@ class User {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
+		$this->jwthelper = $registry->get('jwthelper');
 
 		if (isset($this->session->data['user_id'])) {
 			$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$this->session->data['user_id'] . "' AND `status` = '1'");
@@ -130,6 +136,23 @@ class User {
 				}
 			}
 
+			$issuedAt = new \DateTimeImmutable();
+			$payload  = [
+				'iat'  => $issuedAt->getTimestamp(),
+				'iss'  => JWT_SERVER,
+				'nbf'  => $issuedAt->getTimestamp(),
+				'exp'  => $issuedAt->modify('+30 minutes')->getTimestamp(),
+				'aud'  => APPLICATION,
+				'data' => [
+					'user_id'       => $this->user_id,
+					'username'      => $this->username,
+					'user_group_id' => $this->user_group_id,
+					'email'         => $this->email
+				]
+			];
+
+			$this->jwthelper->generateToken($payload);
+
 			return true;
 		} else {
 			return false;
@@ -142,6 +165,17 @@ class User {
 	 * @return void
 	 */
 	public function logout(): void {
+		$option = [
+			'expires'  => time() - 1800,
+			'path'     => '/',
+			'domain'   => JWT_SERVER,
+			'secure'   => true,
+			'httponly' => true,
+			'SameSite' => 'Strict'
+		];
+
+		setcookie(hash('sha256', JWT_SERVER.APPLICATION), '', $option);
+
 		unset($this->session->data['user_id']);
 
 		$this->user_id = 0;
@@ -174,7 +208,20 @@ class User {
 	 * @return bool
 	 */
 	public function isLogged(): bool {
-		return $this->user_id ? true : false;
+		$data = [
+			'user_id'       => $this->user_id,
+			'username'      => $this->username,
+			'user_group_id' => $this->user_group_id,
+			'email'         => $this->email
+		];
+
+		$result = $this->jwthelper->validateToken($data);
+
+		if ($this->user_id && $result) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

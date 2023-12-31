@@ -23,12 +23,12 @@ class Success extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/success', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''))
+			'href' => $this->url->link('account/success', 'language=' . $this->config->get('config_language'))
 		];
 
 		if ($this->customer->isLogged()) {
@@ -40,7 +40,7 @@ class Success extends \Opencart\System\Engine\Controller {
 		if ($this->cart->hasProducts()) {
 			$data['continue'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		} else {
-			$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+			$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

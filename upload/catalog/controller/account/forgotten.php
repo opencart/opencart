@@ -13,7 +13,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/forgotten');
 
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -58,7 +58,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {
@@ -110,7 +110,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/customer');
@@ -180,7 +180,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!isset($this->request->get['reset_token']) || !isset($this->session->data['reset_token']) || ($this->request->get['reset_token'] != $this->session->data['reset_token'])) {

@@ -10,14 +10,14 @@ class Tracking extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (!$this->config->get('config_affiliate_status')) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/affiliate');
@@ -25,7 +25,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 		if (!$affiliate_info) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/tracking');
@@ -41,23 +41,21 @@ class Tracking extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/tracking', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
+			'href' => $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'))
 		];
 
 		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'));
 
 		$data['code'] = $affiliate_info['tracking'];
 
-		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['language'] = $this->config->get('config_language');
-
-		$data['customer_token'] = $this->session->data['customer_token'];
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -87,7 +85,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 			$tracking = '';
 		}
 
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);

@@ -15,8 +15,8 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		// If already logged in and has matching token then redirect to account page
-		if ($this->customer->isLogged() && isset($this->request->get['customer_token']) && isset($this->session->data['customer_token']) && ($this->request->get['customer_token'] == $this->session->data['customer_token'])) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+		if ($this->customer->isLogged() && $this->jwthelper->validateToken()) {
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = [];
@@ -37,7 +37,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		];
 
 		// Check to see if user is using incorrect token
-		if (isset($this->session->data['customer_token'])) {
+		if (!$this->jwthelper->validateToken()) {
 			$data['error_warning'] = $this->language->get('error_token');
 
 			$this->customer->logout();
@@ -55,7 +55,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
-			unset($this->session->data['customer_token']);
 		} elseif (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -179,16 +178,13 @@ class Login extends \Opencart\System\Engine\Controller {
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
-			// Create customer token
-			$this->session->data['customer_token'] = oc_token(26);
-
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && str_starts_with(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_url'))) {
-				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8') . '&customer_token=' . $this->session->data['customer_token'];
+				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8');
 			} else {
-				$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+				$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
 			}
 		}
 
@@ -230,7 +226,6 @@ class Login extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['reward']);
 		unset($this->session->data['voucher']);
 		unset($this->session->data['vouchers']);
-		unset($this->session->data['customer_token']);
 
 		$this->load->model('account/customer');
 
@@ -263,10 +258,7 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_customer->editToken($email, '');
 
-			// Create customer token
-			$this->session->data['customer_token'] = oc_token(26);
-
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		} else {
 			$this->session->data['error'] = $this->language->get('error_login');
 

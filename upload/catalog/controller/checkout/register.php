@@ -603,9 +603,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($this->request->post['account']) {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
-					// Create customer token
-					$this->session->data['customer_token'] = oc_token(26);
-
 					$json['success'] = $this->language->get('text_add_success');
 				} elseif ($this->customer->isLogged()) {
 					$json['success'] = $this->language->get('text_edit_success');

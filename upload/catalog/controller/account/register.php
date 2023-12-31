@@ -11,7 +11,7 @@ class Register extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/register');
@@ -240,9 +240,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				// Log the IP info
 				$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
-
-				// Create customer token
-				$this->session->data['customer_token'] = oc_token(26);
 			}
 
 			// Clear any previous login attempts for unregistered accounts.
@@ -255,7 +252,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 
-			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''), true);
+			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

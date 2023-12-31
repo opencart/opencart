@@ -58,6 +58,10 @@ class Customer {
 	 * @var bool
 	 */
 	private bool $commenter = false;
+	/**
+	 * @var object
+	 */
+	private object $jwthelper;
 
 	/**
 	 * Constructor
@@ -69,6 +73,7 @@ class Customer {
 		$this->config = $registry->get('config');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
+		$this->jwthelper = $registry->get('jwthelper');
 
 		if (isset($this->session->data['customer_id'])) {
 			$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$this->session->data['customer_id'] . "' AND `status` = '1'");
@@ -134,6 +139,22 @@ class Customer {
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `language_id` = '" . (int)$this->config->get('config_language_id') . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `customer_id` = '" . (int)$this->customer_id . "'");
 
+			$issued_at = new \DateTimeImmutable();
+			$payload  = [
+				'iat'  => $issued_at->getTimestamp(),
+				'iss'  => JWT_SERVER,
+				'nbf'  => $issued_at->getTimestamp(),
+				'exp'  => $issued_at->modify('+1 hour')->getTimestamp(),
+				'aud'  => APPLICATION,
+				'data' => [
+					'customer_id'       => $this->customer_id,
+					'customer_group_id' => $this->customer_group_id,
+					'email'             => $this->email
+				]
+			];
+
+			$this->jwthelper->generateToken($payload);
+
 			return true;
 		} else {
 			return false;
@@ -146,6 +167,17 @@ class Customer {
 	 * @return void
 	 */
 	public function logout(): void {
+		$option = [
+			'expires'  => time() - 3600,
+			'path'     => '/',
+			'domain'   => JWT_SERVER,
+			'secure'   => true,
+			'httponly' => true,
+			'SameSite' => 'Strict'
+		];
+
+		setcookie(hash('sha256', JWT_SERVER.APPLICATION), '', $option);
+
 		unset($this->session->data['customer_id']);
 
 		$this->customer_id = 0;
@@ -165,7 +197,19 @@ class Customer {
 	 * @return bool
 	 */
 	public function isLogged(): bool {
-		return $this->customer_id ? true : false;
+		$data = [
+			'customer_id'       => $this->customer_id,
+			'customer_group_id' => $this->customer_group_id,
+			'email'             => $this->email
+		];
+
+		$result = $this->jwthelper->validateToken($data);
+
+		if ($this->customer_id && $result) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

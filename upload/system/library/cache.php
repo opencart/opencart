@@ -54,7 +54,7 @@ class Cache {
 	 *
 	 * @param string $key    The cache key
 	 * @param mixed  $value  The cache value
-  	 * @param int    $expire The cache expiry
+	 * @param int    $expire The cache expiry
 	 *
 	 * @return void
 	 */

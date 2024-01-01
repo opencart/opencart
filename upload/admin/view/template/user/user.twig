@@ -52,22 +52,9 @@
               <div class="mb-3">
                 <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
               </div>
-              <div class="mb-3">
-                <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
-                <div class="input-group">
-                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
-                  <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
-                <div class="input-group">
-                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
-                  <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                </div>
-              </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button><button type="button" data-bs-toggle="tooltip" title="{{ button_reset }}" id="button-filter-reset" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>
@@ -131,19 +118,6 @@ $('#button-filter').on('click', function() {
     window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}' + url);
 
     $('#user').load('index.php?route=user/user.list&user_token={{ user_token }}' + url);
-});
-
-$('#button-filter-reset').on('click', function() {
-    $('input[name=\'filter_username\']').val('');
-    $('input[name=\'filter_name\']').val('');
-    $('input[name=\'filter_email\']').val('');
-    $('input[name=\'filter_user_group_id\']').val('');
-    $('input[name=\'filter_status\']').val('');
-    $('input[name=\'filter_ip\']').val('');
-
-    window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}');
-
-    window.location.assign('index.php?route=user/user&user_token={{ user_token }}');
 });
 
 $('#input-username').autocomplete({

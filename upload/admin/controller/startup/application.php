@@ -10,9 +10,6 @@ class Application extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		// JWT
-		$this->registry->set('jwt', new \Opencart\System\Library\JWT\JWT($this->registry));
-
 		// Url
 		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('site_url')));
 

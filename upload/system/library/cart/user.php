@@ -46,7 +46,6 @@ class User {
 	 * @var array
 	 */
 	private array $permission = [];
-
 	/**
 	 * @var object
 	 */
@@ -136,22 +135,17 @@ class User {
 				}
 			}
 
-			$issuedAt = new \DateTimeImmutable();
-			$payload  = [
-				'iat'  => $issuedAt->getTimestamp(),
-				'iss'  => JWT_SERVER,
-				'nbf'  => $issuedAt->getTimestamp(),
-				'exp'  => $issuedAt->modify('+30 minutes')->getTimestamp(),
-				'aud'  => APPLICATION,
-				'data' => [
-					'user_id'       => $this->user_id,
-					'username'      => $this->username,
-					'user_group_id' => $this->user_group_id,
-					'email'         => $this->email
-				]
+			$timestamp = time();
+			$payload = [
+				'iat' => $timestamp,
+				'iss' => $this->jwt->getHost(),
+				'nbf' => $timestamp,
+				'exp' => $timestamp + $this->jwt->getAdminTokenLifetime(),
+				'aud' => APPLICATION,
+				'data' => hash('sha256', $this->user_id.$this->user_group_id.$this->username.$this->email)
 			];
 
-			$this->jwt->generateToken($payload);
+			$this->jwt->createToken($payload);
 
 			return true;
 		} else {
@@ -166,15 +160,15 @@ class User {
 	 */
 	public function logout(): void {
 		$option = [
-			'expires'  => time() - 1800,
-			'path'     => '/',
-			'domain'   => JWT_SERVER,
-			'secure'   => true,
+			'expires' => time() - $this->jwt->getAdminTokenLifetime(),
+			'path' => '/',
+			'domain' => $this->jwt->getHost(),
+			'secure' => true,
 			'httponly' => true,
 			'SameSite' => 'Strict'
 		];
 
-		setcookie(hash('sha256', JWT_SERVER.APPLICATION), '', $option);
+		setcookie(hash('sha256', $this->jwt->getHost().APPLICATION), '', $option);
 
 		unset($this->session->data['user_id']);
 
@@ -209,15 +203,15 @@ class User {
 	 */
 	public function isLogged(): bool {
 		$data = [
-			'user_id'       => $this->user_id,
-			'username'      => $this->username,
+			'user_id' => $this->user_id,
+			'username' => $this->username,
 			'user_group_id' => $this->user_group_id,
-			'email'         => $this->email
+			'email' => $this->email
 		];
 
-		$result = $this->jwt->validateToken($data);
+		$validated = $this->jwt->validateToken($data);
 
-		if ($this->user_id && $result) {
+		if ($this->user_id && $validated) {
 			return true;
 		} else {
 			return false;

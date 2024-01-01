@@ -60,6 +60,3 @@ require_once(DIR_SYSTEM . 'engine/config.php');
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');
-
-// JWT
-require_once(DIR_SYSTEM . 'library/jwt.php');

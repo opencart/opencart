@@ -27,7 +27,7 @@ class Event {
 	/**
 	 * Constructor
 	 *
-	 * @param object $route
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;

@@ -123,7 +123,7 @@ $response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Ty
 $response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
 $response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 $response->addHeader('Pragma: no-cache');
-$response->setCompression($config->get('response_compression'));
+$response->setCompression((int)$config->get('response_compression'));
 
 // Database
 if ($config->get('db_autostart')) {

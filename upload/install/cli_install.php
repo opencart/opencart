@@ -116,7 +116,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 				break;
 			case 'usage':
 			default:
-				$output = $this->usage($argv);
+				$output = $this->usage();
 				break;
 		}
 

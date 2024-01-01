@@ -137,14 +137,14 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['comments'] = [];
 
 		$filter_data = [
-			'filter_keyword'    => $filter_keyword,
-			'filter_article'    => $filter_article,
-			'filter_customer'   => $filter_customer,
-			'filter_status'     => $filter_status,
-			'filter_date_from'  => $filter_date_from,
-			'filter_date_to'    => $filter_date_to,
-			'start'             => ($page - 1) * 10,
-			'limit'             => 10
+			'filter_keyword'   => $filter_keyword,
+			'filter_article'   => $filter_article,
+			'filter_customer'  => $filter_customer,
+			'filter_status'    => $filter_status,
+			'filter_date_from' => $filter_date_from,
+			'filter_date_to'   => $filter_date_to,
+			'start'            => ($page - 1) * 10,
+			'limit'            => 10
 		];
 
 		$this->load->model('cms/article');

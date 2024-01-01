@@ -257,7 +257,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address
 	 *
-	 * @param int $customer_id
+	 * @param int   $customer_id
+	 * @param array $data
 	 *
 	 * @return array
 	 */

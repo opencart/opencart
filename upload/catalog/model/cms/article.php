@@ -276,7 +276,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $article_id
+	 * @param int   $article_id
+	 * @param array $data
 	 *
 	 * @return int
 	 */

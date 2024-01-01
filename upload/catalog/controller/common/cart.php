@@ -173,12 +173,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function removeVoucher(): void {
-		$this->load->language('checkout/cart');
+		$this->load->language('checkout/voucher');
 
 		$json = [];
 
-		if (isset($this->request->get['key'])) {
-			$key = $this->request->get['key'];
+		if (isset($this->request->post['key'])) {
+			$key = $this->request->post['key'];
 		} else {
 			$key = '';
 		}

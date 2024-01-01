@@ -391,7 +391,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['comment'] = nl2br($order_info['comment']);
 
 			// History
-			$data['history'] = $this->getHistory($order_info['order_id']);
+			$data['history'] = $this->getHistory();
 
 			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 

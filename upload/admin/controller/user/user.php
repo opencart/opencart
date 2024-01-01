@@ -69,7 +69,7 @@ class User extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_username'])) {
 			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
 		}
-		
+
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -283,18 +283,18 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['users'] = [];
 
 		$filter_data = [
-			'filter_username'          => $filter_username,
-			'filter_name'              => $filter_name,
-			'filter_email'             => $filter_email,
-			'filter_user_group_id'     => $filter_user_group_id,
-			'filter_status'            => $filter_status,
-			'filter_ip'                => $filter_ip,
-			'filter_date_from'         => $filter_date_from,
-			'filter_date_to'           => $filter_date_to,
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_username'      => $filter_username,
+			'filter_name'          => $filter_name,
+			'filter_email'         => $filter_email,
+			'filter_user_group_id' => $filter_user_group_id,
+			'filter_status'        => $filter_status,
+			'filter_ip'            => $filter_ip,
+			'filter_date_from'     => $filter_date_from,
+			'filter_date_to'       => $filter_date_to,
+			'sort'                 => $sort,
+			'order'                => $order,
+			'start'                => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'                => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('user/user');
@@ -305,9 +305,9 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['users'][] = [
 				'user_id'    => $result['user_id'],
 				'username'   => $result['username'],
-				'name'           => $result['name'],
-				'email'          => $result['email'],
-				'user_group'     => $result['user_group'],
+				'name'       => $result['name'],
+				'email'      => $result['email'],
+				'user_group' => $result['user_group'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('user/user.form', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)

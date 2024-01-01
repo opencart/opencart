@@ -543,4 +543,55 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		return $this->load->view('marketing/marketing_report', $data);
 	}
+	
+	/**
+	 * Autocomplete
+	 *
+	 * @return void
+	 */
+	public function autocomplete(): void {
+		$json = [];
+
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = $this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
+		$filter_data = [
+			'filter_name'  => $filter_name,
+			'filter_code'  => $filter_code,
+			'start'        => 0,
+			'limit'        => 5
+		];
+
+		$this->load->model('marketing/marketing');
+
+		$results = $this->model_marketing_marketing->getMarketings($filter_data);
+
+		foreach ($results as $result) {
+			$json[] = [
+				'marketing_id' => $result['marketing_id'],
+				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				'code'         => $result['code']
+			];
+		}
+
+		$sort_order = [];
+
+		foreach ($json as $key => $value) {
+			$sort_order[$key] = $value['name'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $json);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

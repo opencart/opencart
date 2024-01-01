@@ -3,6 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
+        <button type="button" id="button-refresh" data-bs-toggle="tooltip" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
+
         <button type="submit" form="form-comment" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
         <button type="submit" form="form-comment" formaction="{{ spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
         <button type="submit" form="form-comment" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
@@ -42,10 +44,17 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
+              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control date"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
             </div>
             <div class="text-end">
@@ -128,10 +137,16 @@ $('#button-filter').on('click', function() {
         url += '&filter_status=' + filter_status;
     }
 
-    var filter_date_added = $('input-date-added').val();
+    var filter_date_from = $('#input-date-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
     $('#comment').load('index.php?route=cms/comment.list&user_token={{ user_token }}' + url);

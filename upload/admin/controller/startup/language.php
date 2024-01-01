@@ -23,16 +23,17 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$language_info = [];
 
+		// Set default language
 		if (isset(self::$languages[$this->config->get('config_language_admin')])) {
 			$language_info = self::$languages[$this->config->get('config_language_admin')];
 		}
 
+		// If cookie has language stored
 		if (isset($this->request->cookie['language']) && isset(self::$languages[$this->request->cookie['language']])) {
 			$language_info = self::$languages[$this->request->cookie['language']];
 		}
 
 		if ($language_info) {
-			// Language
 			if ($language_info['extension']) {
 				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
 			}

@@ -234,6 +234,7 @@ class Loader {
 	 * Library
 	 *
 	 * @param string $route
+	 * @param array  $args
 	 *
 	 * @return void
 	 */

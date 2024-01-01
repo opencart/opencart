@@ -22,6 +22,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Antispam
 	 *
+	 * @param int   $antispam_id
 	 * @param array $data
 	 *
 	 * @return int

@@ -216,7 +216,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function getTotalUsers(): int {
+	public function getTotalUsers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` `u` ";
 
 		$implode = [];

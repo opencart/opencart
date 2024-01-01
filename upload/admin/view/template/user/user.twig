@@ -1,7 +1,7 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-user').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa-solid fa-filter"></i></button>
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
@@ -21,56 +21,55 @@
         <div class="card filter-sticky">
           <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
-            <div class="mb-3">
-              <label class="form-label">{{ entry_username }}</label>
-              <input type="text" name="filter_username" value="{{ filter_username }}" placeholder="{{ entry_username }}" id="input-username" data-oc-target="autocomplete-username" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-username" class="dropdown-menu"></ul>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-name" class="dropdown-menu"></ul>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">{{ entry_email }}</label>
-              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-email" class="dropdown-menu"></ul>
-            </div>
-            <div class="mb-3">
-              <label for="input-user-group" class="form-label">{{ entry_user_group }}</label> <select name="filter_user_group_id" id="input-user-group" class="form-select">
-                <option value=""></option>
-                {% for user_group in user_groups %}
-                  <option value="{{ user_group.user_group_id }}"{% if user_group.user_group_id == filter_user_group_id %} selected{% endif %}>{{ user_group.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
-                <option value=""></option>
-                <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
-                <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
-            </div>
-            <div class="mb-3">
-              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
-              <div class="input-group">
-                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
-                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+            <form id="form-filter">
+              <div class="mb-3">
+                <label class="form-label">{{ entry_username }}</label> <input type="text" name="filter_username" value="{{ filter_username }}" placeholder="{{ entry_username }}" id="input-username" data-oc-target="autocomplete-username" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-username" class="dropdown-menu"></ul>
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
-              <div class="input-group">
-                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
-                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+              <div class="mb-3">
+                <label class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-name" class="dropdown-menu"></ul>
               </div>
-            </div>
-            <div class="text-end">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button><button type="button"data-bs-toggle="tooltip" title="{{ button_reset }}" id="button-filter-reset" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
-            </div>
+              <div class="mb-3">
+                <label class="form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-email" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-user-group" class="form-label">{{ entry_user_group }}</label> <select name="filter_user_group_id" id="input-user-group" class="form-select">
+                  <option value=""></option>
+                  {% for user_group in user_groups %}
+                    <option value="{{ user_group.user_group_id }}"{% if user_group.user_group_id == filter_user_group_id %} selected{% endif %}>{{ user_group.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                  <option value=""></option>
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
+                <div class="input-group">
+                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                  <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+                <div class="input-group">
+                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                  <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+                </div>
+              </div>
+              <div class="text-end">
+                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button><button type="button" data-bs-toggle="tooltip" title="{{ button_reset }}" id="button-filter-reset" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -84,13 +83,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#user').on('click', 'thead a, .pagination a', function (e) {
+$('#user').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#user').load(this.href);
 });
 
-$('#button-filter').on('click', function () {
+$('#button-filter').on('click', function() {
     url = '';
 
     var filter_username = $('#input-username').val();
@@ -129,45 +128,31 @@ $('#button-filter').on('click', function () {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
 
-    var filter_date_from = $('#input-date-from').val();
-
-    if (filter_date_from) {
-        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
-    }
-
-    var filter_date_to = $('#input-date-to').val();
-
-    if (filter_date_to) {
-        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
-    }
-
     window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}' + url);
 
     $('#user').load('index.php?route=user/user.list&user_token={{ user_token }}' + url);
 });
 
-$('#button-filter-reset').on('click', function () {
+$('#button-filter-reset').on('click', function() {
     $('input[name=\'filter_username\']').val('');
     $('input[name=\'filter_name\']').val('');
     $('input[name=\'filter_email\']').val('');
     $('input[name=\'filter_user_group_id\']').val('');
     $('input[name=\'filter_status\']').val('');
     $('input[name=\'filter_ip\']').val('');
-    $('input[name=\'filter_filter_date_from\']').val('');
-    $('input[name=\'filter_filter_date_to\']').val('');
-    
+
     window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}');
 
     window.location.assign('index.php?route=user/user&user_token={{ user_token }}');
 });
 
 $('#input-username').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=user/user.autocomplete&user_token={{ user_token }}&filter_username=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['username'],
                         value: item['user_id']
@@ -176,18 +161,18 @@ $('#input-username').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-username').val(item['label']);
     }
 });
 
 $('#input-name').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=user/user.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['user_id']
@@ -196,18 +181,18 @@ $('#input-name').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-name').val(item['label']);
     }
 });
 
 $('#input-email').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=user/user.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['email'],
                         value: item['user_id']
@@ -216,7 +201,7 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-email').val(item['label']);
     }
 });

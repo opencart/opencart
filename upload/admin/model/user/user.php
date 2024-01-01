@@ -160,14 +160,6 @@ class User extends \Opencart\System\Engine\Model {
 			$implode[] = "`u`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`u`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
-		}
-
-		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`u`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
-		}
-
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
@@ -245,14 +237,6 @@ class User extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$implode[] = "`u`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`u`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
-		}
-
-		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`u`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

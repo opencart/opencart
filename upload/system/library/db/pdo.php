@@ -58,7 +58,7 @@ class PDO {
 	 *
 	 * @param string $sql
 	 *
-	 * @return mixed
+	 * @return \stdClass|true
 	 */
 	public function query(string $sql) {
 		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
@@ -71,6 +71,7 @@ class PDO {
 
 				if ($statement->columnCount()) {
 					$data = $statement->fetchAll(\PDO::FETCH_ASSOC);
+					$statement->closeCursor();
 
 					$result = new \stdClass();
 					$result->row = $data[0] ?? [];
@@ -81,19 +82,16 @@ class PDO {
 					return $result;
 				} else {
 					$this->affected = $statement->rowCount();
+					$statement->closeCursor();
 
 					return true;
 				}
-
-				$statement->closeCursor();
 			} else {
 				return true;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' <br/>Error Code : ' . $e->getCode() . ' <br/>' . $sql);
 		}
-
-		return false;
 	}
 
 	/**
@@ -135,7 +133,7 @@ class PDO {
 	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return $this->connection;
+		return $this->connection !== null;
 	}
 
 	/**

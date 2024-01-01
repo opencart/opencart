@@ -18,28 +18,27 @@
                 {% else %}
                   <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}
-
                 {% if comment.customer_edit %}
                   <small> - {{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
                 {% else %}
                   <small> - {{ text_by }} {{ comment.author }}</small>
                 {% endif %}
-
                 <small> - {{ comment.date_added }}</small>
               </p>
-              <p>{{ comment.comment }}</p></td>
+              <p>{{ comment.comment }}</p>
+            </td>
           </tr>
           <tr>
             <td class="text-end">
-              <button type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ button_approve }}</button>
-              <button type="button" class="btn btn-warning"><i class="fa-solid fa-ban"></i> {{ button_spam }}</button>
-              <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> {{ button_delete }}</button>
+              <button type="button" value="{{ comment.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+              <button type="button" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
+              <button type="button" value="{{ comment.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
             </td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+          <td class="text-center" colspan="2">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>

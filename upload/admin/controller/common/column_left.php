@@ -467,6 +467,45 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			// Anti-Fraud
+			$fraud = [];
+
+			$this->load->model('setting/extension');
+
+			$results = $this->model_setting_extension->getExtensionsByType('fraud');
+
+			foreach ($results as $result) {
+				if ($this->config->get('fraud_' . $result['code'] . '_status')) {
+					$this->load->language('extension/' . $result['extension'] . '/fraud/' . $result['code'], $result['code']);
+
+					$fraud[] = [
+						'name'     => $this->language->get($result['code'] . '_heading_title'),
+						'href'     => $this->url->link('extension/' . $result['extension'] . '/fraud/' . $result['code'], 'user_token=' . $this->session->data['user_token']),
+						'children' => []
+					];
+				}
+			}
+
+			if ($fraud) {
+				$data['menus'][] = [
+					'id'       => 'menu-fraud',
+					'icon'     => 'fas fa-share-alt',
+					'name'     => $this->language->get('text_antifraud'),
+					'href'     => '',
+					'children' => $fraud
+				];
+			}
+
+			$marketing = [];
+
+			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
+				$marketing[] = [
+					'name'     => $this->language->get('text_affiliate'),
+					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
 			// System
 			$system = [];
 

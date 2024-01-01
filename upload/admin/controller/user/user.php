@@ -16,7 +16,87 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_username'])) {
+			$filter_username = (string)$this->request->get['filter_username'];
+		} else {
+			$filter_username = '';
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$filter_email = (string)$this->request->get['filter_email'];
+		} else {
+			$filter_email = '';
+		}
+
+		if (isset($this->request->get['filter_user_group_id'])) {
+			$filter_user_group_id = (int)$this->request->get['filter_user_group_id'];
+		} else {
+			$filter_user_group_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = (bool)$this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
+		if (isset($this->request->get['filter_ip'])) {
+			$filter_ip = (string)$this->request->get['filter_ip'];
+		} else {
+			$filter_ip = '';
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = (string)$this->request->get['filter_date_from'];
+		} else {
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = (string)$this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
+		}
+
 		$url = '';
+
+		if (isset($this->request->get['filter_username'])) {
+			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_user_group_id'])) {
+			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_ip'])) {
+			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -47,6 +127,19 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		$this->load->model('user/user_group');
+
+		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
+
+		$data['filter_username'] = $filter_name;
+		$data['filter_name'] = $filter_name;
+		$data['filter_email'] = $filter_email;
+		$data['filter_user_group_id'] = $filter_user_group_id;
+		$data['filter_status'] = $filter_status;
+		$data['filter_ip'] = $filter_ip;
+		$data['filter_date_from'] = $filter_date_from;
+		$data['filter_date_to'] = $filter_date_to;
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -73,6 +166,54 @@ class User extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	protected function getList(): string {
+		if (isset($this->request->get['filter_username'])) {
+			$filter_username = $this->request->get['filter_username'];
+		} else {
+			$filter_username = '';
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$filter_email = $this->request->get['filter_email'];
+		} else {
+			$filter_email = '';
+		}
+
+		if (isset($this->request->get['filter_user_group_id'])) {
+			$filter_user_group_id = (int)$this->request->get['filter_user_group_id'];
+		} else {
+			$filter_user_group_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = (bool)$this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
+		if (isset($this->request->get['filter_ip'])) {
+			$filter_ip = (string)$this->request->get['filter_ip'];
+		} else {
+			$filter_ip = '';
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = (string)$this->request->get['filter_date_from'];
+		} else {
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = (string)$this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
@@ -93,6 +234,38 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_username'])) {
+			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_user_group_id'])) {
+			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_ip'])) {
+			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -110,10 +283,18 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['users'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_username'      => $filter_username,
+			'filter_name'          => $filter_name,
+			'filter_email'         => $filter_email,
+			'filter_user_group_id' => $filter_user_group_id,
+			'filter_status'        => $filter_status,
+			'filter_ip'            => $filter_ip,
+			'filter_date_from'     => $filter_date_from,
+			'filter_date_to'       => $filter_date_to,
+			'sort'                 => $sort,
+			'order'                => $order,
+			'start'                => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'                => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('user/user');
@@ -124,6 +305,9 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['users'][] = [
 				'user_id'    => $result['user_id'],
 				'username'   => $result['username'],
+				'name'       => $result['name'],
+				'email'      => $result['email'],
+				'user_group' => $result['user_group'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('user/user.form', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
@@ -132,6 +316,38 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_username'])) {
+			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_user_group_id'])) {
+			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_ip'])) {
+			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -139,10 +355,45 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sort_username'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
-		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
+		$data['sort_name'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_email'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.email' . $url);
+		$data['sort_user_group'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=user_group' . $url);
+		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.status' . $url);
+		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.date_added' . $url);
 
 		$url = '';
+
+		if (isset($this->request->get['filter_username'])) {
+			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_user_group_id'])) {
+			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_ip'])) {
+			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -569,5 +820,70 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($login_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($login_total - $limit)) ? $login_total : ((($page - 1) * $limit) + $limit), $login_total, ceil($login_total / $limit));
 
 		return $this->load->view('user/user_login', $data);
+	}
+
+	/**
+	 * Autocomplete
+	 *
+	 * @return void
+	 */
+	public function autocomplete(): void {
+		$json = [];
+
+		if (isset($this->request->get['filter_username']) || isset($this->request->get['filter_name']) || isset($this->request->get['filter_email'])) {
+			if (isset($this->request->get['filter_username'])) {
+				$filter_username = $this->request->get['filter_username'];
+			} else {
+				$filter_username = '';
+			}
+
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+
+			if (isset($this->request->get['filter_email'])) {
+				$filter_email = $this->request->get['filter_email'];
+			} else {
+				$filter_email = '';
+			}
+
+			$filter_data = [
+				'filter_username' => $filter_username,
+				'filter_name'     => $filter_name,
+				'filter_email'    => $filter_email,
+				'start'           => 0,
+				'limit'           => 5
+			];
+
+			$this->load->model('user/user');
+
+			$results = $this->model_user_user->getUsers($filter_data);
+
+			foreach ($results as $result) {
+				$json[] = [
+					'user_id'       => $result['user_id'],
+					'user_group_id' => $result['user_group_id'],
+					'username'      => $result['username'],
+					'name'          => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'user_group'    => $result['user_group'],
+					'firstname'     => $result['firstname'],
+					'lastname'      => $result['lastname'],
+					'email'         => $result['email']
+				];
+			}
+		}
+
+		$sort_order = [];
+
+		foreach ($json as $key => $value) {
+			$sort_order[$key] = $value['username'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $json);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

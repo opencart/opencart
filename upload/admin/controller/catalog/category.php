@@ -343,8 +343,6 @@ class Category extends \Opencart\System\Engine\Controller {
 
 					if ($pos !== false) {
 						$keyword = substr($keyword, $pos + 1);
-					} else {
-						$keyword = $keyword;
 					}
 
 					$data['category_seo_url'][$store_id][$language_id] = $keyword;

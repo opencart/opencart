@@ -84,10 +84,16 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$filter_status = '';
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = (string)$this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = (string)$this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = (string)$this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -114,8 +120,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_status=' . (int)$this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . (string)$this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -127,13 +137,14 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['comments'] = [];
 
 		$filter_data = [
-			'filter_keyword'    => $filter_keyword,
-			'filter_article'    => $filter_article,
-			'filter_customer'   => $filter_customer,
-			'filter_status'     => $filter_status,
-			'filter_date_added' => $filter_date_added,
-			'start'             => ($page - 1) * 10,
-			'limit'             => 10
+			'filter_keyword'   => $filter_keyword,
+			'filter_article'   => $filter_article,
+			'filter_customer'  => $filter_customer,
+			'filter_status'    => $filter_status,
+			'filter_date_from' => $filter_date_from,
+			'filter_date_to'   => $filter_date_to,
+			'start'            => ($page - 1) * 10,
+			'limit'            => 10
 		];
 
 		$this->load->model('cms/article');
@@ -188,8 +199,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
@@ -216,10 +231,14 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$selected = [];
+
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
+		}
+
+		if (isset($this->request->get['article_comment_id'])) {
+			$selected[] = (int)$this->request->get['article_comment_id'];
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/comment')) {
@@ -270,10 +289,14 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$selected = [];
+
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
+		}
+
+		if (isset($this->request->get['article_comment_id'])) {
+			$selected[] = (int)$this->request->get['article_comment_id'];
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/comment')) {
@@ -317,6 +340,44 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function delete(): void {
+		$this->load->language('cms/comment');
+
+		$json = [];
+
+		$selected = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		}
+
+		if (isset($this->request->get['article_comment_id'])) {
+			$selected[] = (int)$this->request->get['article_comment_id'];
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/comment')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('cms/article');
+
+			foreach ($selected as $article_comment_id) {
+				$this->model_cms_article->deleteComment($article_comment_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Refresh
+	 *
+	 * @return void
+	 */
+	public function refresh(): void {
 		$this->load->language('cms/comment');
 
 		$json = [];

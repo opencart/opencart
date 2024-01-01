@@ -10,7 +10,7 @@
           <div class="card-body">
             <form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
               {% if error_warning %}
-                <div class="alert alert-danger alert-dismissible"><i class="Dfa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+                <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
               {% endif %}
               {% if success %}
                 <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>

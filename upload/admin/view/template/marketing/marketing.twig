@@ -4,10 +4,8 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-marketing').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
-
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
         <button type="submit" form="form-marketing" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
-
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -25,7 +23,8 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="input-name" class="form-label">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-name" class="dropdown-menu"></ul>
             </div>
             <div class="mb-3">
               <label for="input-code" class="form-label">{{ entry_code }}</label>
@@ -46,7 +45,7 @@
               </div>
             </div>
             <div class="text-end">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button><button type="button"data-bs-toggle="tooltip" title="{{ button_reset }}" id="button-filter-reset" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
             </div>
           </div>
         </div>
@@ -97,6 +96,37 @@ $('#button-filter').on('click', function () {
     window.history.pushState({}, null, 'index.php?route=marketing/marketing&user_token={{ user_token }}' + url);
 
     $('#marketing').load('index.php?route=marketing/marketing.list&user_token={{ user_token }}' + url);
+});
+
+$('#button-filter-reset').on('click', function () {
+    $('input[name=\'filter_name\']').val('');
+    $('input[name=\'filter_code\']').val('');
+    $('input[name=\'filter_filter_date_from\']').val('');
+    $('input[name=\'filter_filter_date_to\']').val('');
+    
+    window.history.pushState({}, null, 'index.php?route=marketing/marketing&user_token={{ user_token }}');
+
+    window.location.assign('index.php?route=marketing/marketing&user_token={{ user_token }}');
+});
+
+$('#input-name').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=marketing/marketing.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['code']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-name').val(item['label']);
+    }
 });
 //--></script>
 {{ footer }}

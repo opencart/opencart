@@ -265,8 +265,6 @@ class Smtp {
 			return true;
 		} else {
 			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
-
-			return false;
 		}
 	}
 

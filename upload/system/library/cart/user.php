@@ -50,7 +50,7 @@ class User {
 	/**
 	 * @var object
 	 */
-	private object $jwthelper;
+	private object $jwt;
 
 	/**
 	 * Constructor
@@ -61,7 +61,7 @@ class User {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
-		$this->jwthelper = $registry->get('jwthelper');
+		$this->jwt = $registry->get('jwt');
 
 		if (isset($this->session->data['user_id'])) {
 			$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$this->session->data['user_id'] . "' AND `status` = '1'");
@@ -151,7 +151,7 @@ class User {
 				]
 			];
 
-			$this->jwthelper->generateToken($payload);
+			$this->jwt->generateToken($payload);
 
 			return true;
 		} else {
@@ -215,7 +215,7 @@ class User {
 			'email'         => $this->email
 		];
 
-		$result = $this->jwthelper->validateToken($data);
+		$result = $this->jwt->validateToken($data);
 
 		if ($this->user_id && $result) {
 			return true;

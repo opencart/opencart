@@ -12,7 +12,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/footer');
 
-		if ($this->user->isLogged() && $this->jwthelper->validateToken()) {
+		if ($this->user->isLogged() && $this->jwt->validateToken()) {
 			$data['text_version'] = sprintf($this->language->get('text_version'), VERSION);
 		} else {
 			$data['text_version'] = '';

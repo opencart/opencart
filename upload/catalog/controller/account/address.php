@@ -12,7 +12,7 @@ class Address extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/address');
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -66,7 +66,7 @@ class Address extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('account/address');
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -129,7 +129,7 @@ class Address extends \Opencart\System\Engine\Controller {
 	public function form(): void {
 		$this->load->language('account/address');
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -291,7 +291,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
@@ -425,7 +425,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);

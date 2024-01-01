@@ -177,6 +177,9 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 // Document
 $registry->set('document', new \Opencart\System\Library\Document());
 
+// JWT
+$registry->set('jwt', new \Opencart\System\Library\JWT\JWT($registry));
+
 $action = '';
 $args = [];
 $output = '';

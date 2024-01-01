@@ -32,7 +32,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('common/header');
 
-		if (!$this->jwthelper->validateToken()) {
+		if (!$this->jwt->validateToken()) {
 			$data['logged'] = false;
 
 			$data['home'] = $this->url->link('common/login');

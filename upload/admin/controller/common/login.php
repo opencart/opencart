@@ -15,12 +15,12 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		// Check to see if user is already logged
-		if ($this->user->isLogged() && $this->jwthelper->validateToken()) {
+		if ($this->user->isLogged() && $this->jwt->validateToken()) {
 			$this->response->redirect($this->url->link('common/dashboard', '', true));
 		}
 
 		// Check to see if user is using incorrect token
-		if (!$this->jwthelper->validateToken()) {
+		if (!$this->jwt->validateToken()) {
 			$data['error_warning'] = $this->language->get('error_token');
 		} elseif (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -96,7 +96,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->user->isLogged() && $this->jwthelper->validateToken()) {
+		if ($this->user->isLogged() && $this->jwt->validateToken()) {
 			$json['redirect'] = $this->url->link('common/dashboard', '', true);
 		}
 

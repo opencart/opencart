@@ -18,7 +18,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));

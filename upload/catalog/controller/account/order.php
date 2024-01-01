@@ -18,7 +18,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -116,7 +116,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -481,7 +481,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_product_id = 0;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));

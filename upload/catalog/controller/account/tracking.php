@@ -10,7 +10,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -85,7 +85,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 			$tracking = '';
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);

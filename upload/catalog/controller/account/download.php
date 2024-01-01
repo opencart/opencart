@@ -18,7 +18,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
@@ -117,7 +117,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$download_id = 0;
 		}
 
-		if (!$this->customer->isLogged() || !$this->jwthelper->validateToken()) {
+		if (!$this->customer->isLogged() || !$this->jwt->validateToken()) {
 			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));

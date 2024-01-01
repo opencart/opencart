@@ -10,7 +10,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
-		if ($this->jwthelper->validateToken()) {
+		if ($this->jwt->validateToken()) {
 			$this->load->language('common/column_left');
 
 			// Create a 3 level menu array

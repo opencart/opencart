@@ -15,7 +15,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		// If already logged in and has matching token then redirect to account page
-		if ($this->customer->isLogged() && $this->jwthelper->validateToken()) {
+		if ($this->customer->isLogged() && $this->jwt->validateToken()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
@@ -37,7 +37,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		];
 
 		// Check to see if user is using incorrect token
-		if (!$this->jwthelper->validateToken()) {
+		if (!$this->jwt->validateToken()) {
 			$data['error_warning'] = $this->language->get('error_token');
 
 			$this->customer->logout();

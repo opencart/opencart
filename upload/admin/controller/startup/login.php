@@ -45,7 +45,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			'error/permission'
 		];
 
-		if (!in_array($route, $ignore) && !$this->jwthelper->validateToken()) {
+		if (!in_array($route, $ignore) && !$this->jwt->validateToken()) {
 			return new \Opencart\System\Engine\Action('common/login');
 		}
 

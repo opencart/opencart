@@ -10,6 +10,9 @@ class Application extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
+		// JWT
+		$this->registry->set('jwt', new \Opencart\System\Library\JWT\JWT($this->registry));
+
 		// Weight
 		$this->registry->set('weight', new \Opencart\System\Library\Cart\Weight($this->registry));
 

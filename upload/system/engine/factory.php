@@ -11,8 +11,6 @@
 namespace Opencart\System\Engine;
 /**
  * Class Factory
- *
- * @object \Opencart\System\Engine\Registry
  */
 class Factory {
 	/**

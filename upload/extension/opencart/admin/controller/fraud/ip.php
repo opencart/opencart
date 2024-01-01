@@ -29,6 +29,11 @@ class Ip extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_fraud'),
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud')
+		];
+
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/opencart/fraud/ip', 'user_token=' . $this->session->data['user_token'])
 		];

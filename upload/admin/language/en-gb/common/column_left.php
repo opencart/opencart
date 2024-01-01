@@ -5,6 +5,7 @@ $_['text_affiliate']           = 'Affiliate';
 $_['text_api']                 = 'API';
 $_['text_attribute']           = 'Attributes';
 $_['text_attribute_group']     = 'Attribute Groups';
+$_['text_antifraud']           = 'Anti-Fraud';
 $_['text_antispam']            = 'Anti-Spam';
 $_['text_article']             = 'Articles';
 $_['text_topic']               = 'Topics';

@@ -25,14 +25,17 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+                <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+                <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+                <label class="form-label">{{ entry_customer }}</label>
+                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-customer" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
+                <label for="input-store" class="form-label">{{ entry_store }}</label>
+                <select name="filter_store_id" id="input-store" class="form-select">
                   <option value=""></option>
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
@@ -40,7 +43,8 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-order-status" class="form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
+                <label for="input-order-status" class="form-label">{{ entry_order_status }}</label>
+                <select name="filter_order_status_id" id="input-order-status" class="form-select">
                   <option value=""></option>
                   <option value="0"{% if filter_order_status_id == '0' %} selected{% endif %}>{{ text_missing }}</option>
                   {% for order_status in order_statuses %}
@@ -49,7 +53,8 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-total" class="form-label">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                <label for="input-total" class="form-label">{{ entry_total }}</label>
+                <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
               </div>
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>

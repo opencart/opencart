@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="text-end">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button><button type="button"data-bs-toggle="tooltip" title="{{ button_reset }}" id="button-filter-reset" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
             </div>
           </div>
         </div>
@@ -154,6 +154,18 @@ $('#button-filter').on('click', function () {
     window.history.pushState({}, null, 'index.php?route=customer/gdpr&user_token={{ user_token }}' + url);
 
     $('#gdpr').load('index.php?route=customer/gdpr.list&user_token={{ user_token }}' + url);
+});
+
+$('#button-filter-reset').on('click', function () {
+    $('input[name=\'filter_email\']').val('');
+    $('input[name=\'filter_action\']').val('');
+    $('input[name=\'filter_status\']').val('');
+    $('input[name=\'filter_filter_date_from\']').val('');
+    $('input[name=\'filter_filter_date_to\']').val('');
+    
+    window.history.pushState({}, null, 'index.php?route=customer/gdpr&user_token={{ user_token }}');
+
+    window.location.assign('index.php?route=customer/gdpr&user_token={{ user_token }}');
 });
 
 $('#input-email').autocomplete({

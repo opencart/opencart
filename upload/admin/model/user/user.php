@@ -214,6 +214,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users
 	 *
+	 * @param array $data
+	 *
 	 * @return int
 	 */
 	public function getTotalUsers(array $data = []): int {

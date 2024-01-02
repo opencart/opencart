@@ -84,6 +84,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_date_from'])) {
 			$filter_date_from = (string)$this->request->get['filter_date_from'];
+<<<<<<< HEAD
 		} else {
 			$filter_date_from = '';
 		}
@@ -91,6 +92,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_date_to'])) {
 			$filter_date_to = (string)$this->request->get['filter_date_to'];
 		} else {
+=======
+		} else {
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = (string)$this->request->get['filter_date_to'];
+		} else {
+>>>>>>> upstream/master
 			$filter_date_to = '';
 		}
 

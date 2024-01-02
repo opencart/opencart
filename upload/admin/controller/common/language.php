@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Common;
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -83,7 +85,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			setcookie('language', $code, time() + 60 * 60 * 24 * 365 * 10);
+			$option = [
+				'expires'  => time() + 60 * 60 * 24 * 365 * 10,
+				'path'     => $this->config->get('session_path'),
+				'SameSite' => $this->config->get('config_session_samesite')
+			];
+
+			setcookie('language', $code, $option);
 
 			if ($redirect && str_starts_with($redirect, $this->config->get('config_url'))) {
 				$json['redirect'] = $redirect;

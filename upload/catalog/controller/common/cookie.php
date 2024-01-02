@@ -31,6 +31,8 @@ class Cookie extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @return void
 	 */
 	public function confirm(): void {

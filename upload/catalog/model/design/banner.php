@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Design;
  */
 class Banner extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Banner
+	 *
 	 * @param int $banner_id
 	 *
 	 * @return array

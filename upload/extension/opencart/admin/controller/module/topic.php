@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
  */
 class Topic extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -44,6 +46,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

@@ -169,6 +169,8 @@ class Compare extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {

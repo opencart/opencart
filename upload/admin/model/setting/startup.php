@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Startup extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Startup
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -18,6 +20,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Startup
+	 *
 	 * @param int $startup_id
 	 *
 	 * @return void
@@ -27,6 +31,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Startup By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return void
@@ -36,6 +42,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
 	 * @param int  $startup_id
 	 * @param bool $status
 	 *
@@ -46,6 +54,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Startup
+	 *
 	 * @param int $startup_id
 	 *
 	 * @return array
@@ -57,6 +67,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Startup By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -68,6 +80,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Startups
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -113,6 +127,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Startyps
+	 *
 	 * @return int
 	 */
 	public function getTotalStartups(): int {

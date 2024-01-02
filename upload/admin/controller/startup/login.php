@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Startup;
  */
 class Login extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return \Opencart\System\Engine\Action
 	 */
 	public function index(): ?object {

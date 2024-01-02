@@ -7,12 +7,14 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Review
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addReview(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "'");
 
 		$review_id = $this->db->getLastId();
 
@@ -27,13 +29,15 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Review
+	 *
 	 * @param int   $review_id
 	 * @param array $data
 	 *
 	 * @return void
 	 */
 	public function editReview(int $review_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
 
 		// Update product rating
 		$this->load->model('catalog/product');
@@ -44,6 +48,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Review
+	 *
 	 * @param int $review_id
 	 *
 	 * @return void
@@ -64,6 +70,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Review
+	 *
 	 * @param int $review_id
 	 *
 	 * @return array
@@ -75,6 +83,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Rating
+	 *
 	 * @param int $product_id
 	 *
 	 * @return int
@@ -90,6 +100,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Reviews
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -155,6 +167,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Reviews
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -188,6 +202,8 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Reviews Awaiting Approval
+	 *
 	 * @return int
 	 */
 	public function getTotalReviewsAwaitingApproval(): int {

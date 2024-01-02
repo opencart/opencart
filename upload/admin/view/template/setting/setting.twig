@@ -374,7 +374,7 @@
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-cms">{{ text_cms }}</button></h2>
                   <div id="collapse-cms" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
-                      <div class="row mt-2 mb-3 required">
+                      <div class="row mb-3 required">
                         <label for="input-article-description-length" class="col-sm-2 col-form-label">{{ entry_article_description_length }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="config_article_description_length" value="{{ config_article_description_length }}" placeholder="{{ entry_article_description_length }}" id="input-article-description-length" class="form-control"/>
@@ -382,7 +382,7 @@
                           <div id="error-article-description-length" class="invalid-feedback"></div>
                         </div>
                       </div>
-                      <div class="row mt-2 mb-3">
+                      <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_comment_status }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
@@ -402,7 +402,6 @@
                           <div class="form-text">{{ help_comment_guest }}</div>
                         </div>
                       </div>
-
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_comment_approve }}</label>
                         <div class="col-sm-10">
@@ -413,7 +412,13 @@
                           <div class="form-text">{{ help_comment_approve }}</div>
                         </div>
                       </div>
-
+                      <div class="row mb-3">
+                        <label for="input-comment-interval" class="col-sm-2 col-form-label">{{ entry_comment_interval }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="config_comment_interval" value="{{ config_comment_interval }}" placeholder="{{ entry_comment_interval }}" id="input-comment-interval" class="form-control"/>
+                          <div class="form-text">{{ help_comment_interval }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

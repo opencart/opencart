@@ -50,6 +50,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @return void
 	 */
 	public function confirm(): void {
@@ -92,6 +94,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reset
+	 *
 	 * @return void
 	 */
 	public function reset(): void {
@@ -160,6 +164,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Password
+	 *
 	 * @return void
 	 */
 	public function password(): void {

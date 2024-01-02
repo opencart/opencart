@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class Currency extends \Opencart\System\Engine\Model {
 	/**
+	 * Edit Value By Code
+	 *
 	 * @param string $code
 	 * @param float  $value
 	 *
@@ -19,6 +21,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Currency
+	 *
 	 * @param int $currency_id
 	 *
 	 * @return array
@@ -30,6 +34,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Currency By Code
+	 *
 	 * @param string $currency
 	 *
 	 * @return array
@@ -41,6 +47,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Currencies
+	 *
 	 * @return array
 	 */
 	public function getCurrencies(): array {

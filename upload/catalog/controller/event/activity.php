@@ -8,6 +8,8 @@ namespace Opencart\Catalog\Controller\Event;
 class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after
 	/**
+	 * Add Customer
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -30,6 +32,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/editCustomer/after
 
 	/**
+	 * Edit Customer
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -52,6 +56,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/editPassword/after
 
 	/**
+	 * Edit Password
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -87,6 +93,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/deleteLoginAttempts/after
 
 	/**
+	 * Login
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -113,6 +121,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/editCode/after
 
 	/**
+	 * Forgotten
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -141,6 +151,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addTransaction/after
 
 	/**
+	 * Add Transaction
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -170,6 +182,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/affiliate/addAffiliate/after
 
 	/**
+	 * Add Affiliate
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -192,6 +206,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/affiliate/editAffiliate/after
 
 	/**
+	 * Edit Affiliate
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -214,6 +230,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/address/addAddress/after
 
 	/**
+	 * Add Address
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -236,6 +254,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/address/editAddress/after
 
 	/**
+	 * Edit Address
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -258,6 +278,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/address/deleteAddress/after
 
 	/**
+	 * Delete Address
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -280,6 +302,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/returns/addReturn/after
 
 	/**
+	 * Add Return
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -312,6 +336,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/checkout/order/addHistory/before
 
 	/**
+	 * Add History
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *

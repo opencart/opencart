@@ -7,12 +7,14 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class Currency extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Currency
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addCurrency(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW()");
 
 		$this->cache->delete('currency');
 
@@ -20,18 +22,22 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Currency
+	 *
 	 * @param int   $currency_id
 	 * @param array $data
 	 *
 	 * @return void
 	 */
 	public function editCurrency(int $currency_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
 	/**
+	 * Edit Value By Code
+	 *
 	 * @param string $code
 	 * @param float  $value
 	 *
@@ -44,6 +50,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Currency
+	 *
 	 * @param int $currency_id
 	 *
 	 * @return void
@@ -55,6 +63,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Currency
+	 *
 	 * @param int $currency_id
 	 *
 	 * @return array
@@ -66,6 +76,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Currency By Code
+	 *
 	 * @param string $currency
 	 *
 	 * @return array
@@ -77,6 +89,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Currencies
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -145,6 +159,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Currencies
+	 *
 	 * @return int
 	 */
 	public function getTotalCurrencies(): int {

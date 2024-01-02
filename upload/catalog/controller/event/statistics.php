@@ -8,6 +8,8 @@ namespace Opencart\Catalog\Controller\Event;
 class Statistics extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
 	/**
+	 * Add Review
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -23,6 +25,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/returns/addReturn/after
 
 	/**
+	 * Add Return
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 * @param mixed  $output
@@ -38,6 +42,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	// catalog/model/checkout/order/addHistory/before
 
 	/**
+	 * Add History
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *

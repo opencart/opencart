@@ -27,6 +27,9 @@ class PDO {
 	 * @param string $password
 	 * @param string $database
 	 * @param string $port
+	 * @param string $sslKey
+	 * @param string $sslCert
+	 * @param string $sslCa
 	 */
 	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey = '', string $sslCert = '', string $sslCa = '') {
 		if (!$port) {
@@ -55,7 +58,7 @@ class PDO {
 	 *
 	 * @param string $sql
 	 *
-	 * @return mixed
+	 * @return \stdClass|true
 	 */
 	public function query(string $sql) {
 		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
@@ -68,9 +71,10 @@ class PDO {
 
 				if ($statement->columnCount()) {
 					$data = $statement->fetchAll(\PDO::FETCH_ASSOC);
+					$statement->closeCursor();
 
 					$result = new \stdClass();
-					$result->row = isset($data[0]) ? $data[0] : [];
+					$result->row = $data[0] ?? [];
 					$result->rows = $data;
 					$result->num_rows = count($data);
 					$this->affected = 0;
@@ -78,19 +82,16 @@ class PDO {
 					return $result;
 				} else {
 					$this->affected = $statement->rowCount();
+					$statement->closeCursor();
 
 					return true;
 				}
-
-				$statement->closeCursor();
 			} else {
 				return true;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' <br/>Error Code : ' . $e->getCode() . ' <br/>' . $sql);
 		}
-
-		return false;
 	}
 
 	/**
@@ -132,7 +133,7 @@ class PDO {
 	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return $this->connection;
+		return $this->connection !== null;
 	}
 
 	/**

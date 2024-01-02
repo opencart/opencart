@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class StockStatus extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Stock Status
+	 *
 	 * @param int $stock_status_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Stock Statuses
+	 *
 	 * @param array $data
 	 *
 	 * @return array

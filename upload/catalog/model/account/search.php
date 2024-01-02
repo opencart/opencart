@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Search extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Search
+	 *
 	 * @param array $data
 	 *
 	 * @return void

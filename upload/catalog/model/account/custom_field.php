@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class CustomField extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Custom Field
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -18,6 +20,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Custom Fields
+	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return array

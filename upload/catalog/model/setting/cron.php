@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Cron extends \Opencart\System\Engine\Model {
 	/**
+	 * Edit Cron
+	 *
 	 * @param int $cron_id
 	 *
 	 * @return void
@@ -16,6 +18,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
 	 * @param int  $cron_id
 	 * @param bool $status
 	 *
@@ -26,6 +30,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Cron
+	 *
 	 * @param int $cron_id
 	 *
 	 * @return array
@@ -37,6 +43,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Cron By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return array
@@ -48,6 +56,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Cron(s)
+	 *
 	 * @return array
 	 */
 	public function getCrons(): array {
@@ -57,6 +67,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Cron(s)
+	 *
 	 * @return int
 	 */
 	public function getTotalCrons(): int {

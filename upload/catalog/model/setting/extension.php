@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Extension extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Extensions
+	 *
 	 * @return array
 	 */
 	public function getExtensions(): array {
@@ -16,6 +18,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Extensions By Type
+	 *
 	 * @param string $type
 	 *
 	 * @return array
@@ -27,6 +31,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Extension By Code
+	 *
 	 * @param string $type
 	 * @param string $code
 	 *

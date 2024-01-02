@@ -379,12 +379,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	// catalog/model/checkout/order/addHistory/before
 
 	/**
+	 * Alert
+	 *
 	 * @param string $route
 	 * @param array  $args
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function alert(string &$route, array &$args): void {
 		if (isset($args[0])) {

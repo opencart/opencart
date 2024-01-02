@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Sale;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -471,9 +473,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function info(): void {
 		$this->load->language('sale/order');

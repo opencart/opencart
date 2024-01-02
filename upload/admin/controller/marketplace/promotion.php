@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Marketplace;
  */
 class Promotion extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Setting;
  */
 class Setting extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -182,6 +184,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_comment_status'] = $this->config->get('config_comment_status');
 		$data['config_comment_guest'] = $this->config->get('config_comment_guest');
 		$data['config_comment_approve'] = $this->config->get('config_comment_approve');
+		$data['config_comment_interval'] = $this->config->get('config_comment_interval');
 
 		// Voucher
 		$data['config_voucher_min'] = $this->config->get('config_voucher_min');
@@ -209,7 +212,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_customer_group_id'] = $this->config->get('config_customer_group_id');
 		$data['config_customer_group_display'] = (array)$this->config->get('config_customer_group_display');
-
 		$data['config_customer_price'] = $this->config->get('config_customer_price');
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');

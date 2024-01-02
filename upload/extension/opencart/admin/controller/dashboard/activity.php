@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
  */
 class Activity extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -53,6 +55,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {
@@ -77,6 +81,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Dashboard
+	 *
 	 * @return string
 	 */
 	public function dashboard(): string {

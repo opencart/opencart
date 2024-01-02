@@ -55,8 +55,8 @@ class Image {
 
 			$this->width = $info[0];
 			$this->height = $info[1];
-			$this->bits = isset($info['bits']) ? $info['bits'] : '';
-			$this->mime = isset($info['mime']) ? $info['mime'] : '';
+			$this->bits = $info['bits'] ?? '';
+			$this->mime = $info['mime'] ?? '';
 
 			if ($this->mime == 'image/gif') {
 				$this->image = imagecreatefromgif($file);
@@ -325,7 +325,7 @@ class Image {
 	private function filter(): void {
 		$args = func_get_args();
 
-		call_user_func_array('imagefilter', $args);
+		imagefilter(...$args);
 	}
 
 	/**

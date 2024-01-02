@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Return Reasons
+	 *
 	 * @param array $data
 	 *
 	 * @return array

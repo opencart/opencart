@@ -7,6 +7,8 @@ namespace Opencart\Admin\Controller\Customer;
  */
 class Gdpr extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -228,21 +230,21 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$gdprs = [];
+
+		if (isset($this->request->post['selected'])) {
+			$gdprs = $this->request->post['selected'];
+		}
+
+		if (isset($this->request->get['gdpr_id'])) {
+			$gdprs[] = (int)$this->request->get['gdpr_id'];
+		}
+
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$gdprs = [];
-
-			if (isset($this->request->post['selected'])) {
-				$gdprs = $this->request->post['selected'];
-			}
-
-			if (isset($this->request->get['gdpr_id'])) {
-				$gdprs[] = (int)$this->request->get['gdpr_id'];
-			}
-
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {
@@ -276,21 +278,21 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$gdprs = [];
+
+		if (isset($this->request->post['selected'])) {
+			$gdprs = $this->request->post['selected'];
+		}
+
+		if (isset($this->request->get['gdpr_id'])) {
+			$gdprs[] = (int)$this->request->get['gdpr_id'];
+		}
+
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$gdprs = [];
-
-			if (isset($this->request->post['selected'])) {
-				$gdprs = $this->request->post['selected'];
-			}
-
-			if (isset($this->request->get['gdpr_id'])) {
-				$gdprs[] = (int)$this->request->get['gdpr_id'];
-			}
-
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {
@@ -314,21 +316,21 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$gdprs = [];
+
+		if (isset($this->request->post['selected'])) {
+			$gdprs = $this->request->post['selected'];
+		}
+
+		if (isset($this->request->get['gdpr_id'])) {
+			$gdprs[] = (int)$this->request->get['gdpr_id'];
+		}
+
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$gdprs = [];
-
-			if (isset($this->request->post['selected'])) {
-				$gdprs = $this->request->post['selected'];
-			}
-
-			if (isset($this->request->get['gdpr_id'])) {
-				$gdprs[] = (int)$this->request->get['gdpr_id'];
-			}
-
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {

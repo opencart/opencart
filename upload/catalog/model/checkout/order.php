@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Checkout;
  */
 class Order extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Order
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -60,6 +62,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Order
+	 *
 	 * @param int   $order_id
 	 * @param array $data
 	 *
@@ -134,6 +138,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Transaction ID
+	 *
 	 * @param int    $order_id
 	 * @param string $transaction_id
 	 *
@@ -144,6 +150,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Comment
+	 *
 	 * @param int    $order_id
 	 * @param string $comment
 	 *
@@ -154,6 +162,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Order
+	 *
 	 * @param int $order_id
 	 *
 	 * @return void
@@ -178,6 +188,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Order
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -227,6 +239,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Product
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -239,6 +253,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Products
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -250,6 +266,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Options
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -262,6 +280,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription
+	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -274,6 +294,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscriptions
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -334,6 +356,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Subscription ID
+	 *
 	 * @param int $subscription_id
 	 *
 	 * @return int
@@ -345,6 +369,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Vouchers
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -356,6 +382,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Totals
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
@@ -367,6 +395,8 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add History
+	 *
 	 * @param int    $order_id
 	 * @param int    $order_status_id
 	 * @param string $comment

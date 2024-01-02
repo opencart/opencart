@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Download extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Download
+	 *
 	 * @param int $download_id
 	 *
 	 * @return array
@@ -30,6 +32,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Downloads
+	 *
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -62,6 +66,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Downloads
+	 *
 	 * @return int
 	 */
 	public function getTotalDownloads(): int {
@@ -83,6 +89,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Report
+	 *
 	 * @param int    $download_id
 	 * @param string $ip
 	 * @param string $country

@@ -111,6 +111,8 @@ class Register extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Register
+	 *
 	 * @return void
 	 */
 	public function register(): void {

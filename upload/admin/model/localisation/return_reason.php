@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Return Reason
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Return Reason
+	 *
 	 * @param int   $return_reason_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Return Reason
+	 *
 	 * @param int $return_reason_id
 	 *
 	 * @return void
@@ -55,6 +61,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Return Reason
+	 *
 	 * @param int $return_reason_id
 	 *
 	 * @return array
@@ -66,6 +74,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Return Reasons
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $return_reason_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Return Reasons
+	 *
 	 * @return int
 	 */
 	public function getTotalReturnReasons(): int {

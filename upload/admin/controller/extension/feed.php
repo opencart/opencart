@@ -12,6 +12,8 @@ class Feed extends \Opencart\System\Engine\Controller {
 	private array $error = [];
 
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

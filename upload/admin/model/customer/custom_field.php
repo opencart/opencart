@@ -7,12 +7,14 @@ namespace Opencart\Admin\Model\Customer;
  */
 class CustomField extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Custom Field
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addCustomField(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$custom_field_id = $this->db->getLastId();
 
@@ -44,13 +46,15 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Custom Field
+	 *
 	 * @param int   $custom_field_id
 	 * @param array $data
 	 *
 	 * @return void
 	 */
 	public function editCustomField(int $custom_field_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
@@ -89,6 +93,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Custom Field
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return void
@@ -102,6 +108,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Custom Field
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -113,6 +121,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Custom Fields
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -178,6 +188,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -195,6 +207,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Value
+	 *
 	 * @param int $custom_field_value_id
 	 *
 	 * @return array
@@ -206,6 +220,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Values
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -226,6 +242,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Customer Groups
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -237,6 +255,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Value Descriptions
+	 *
 	 * @param int $custom_field_id
 	 *
 	 * @return array
@@ -266,6 +286,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Custom Fields
+	 *
 	 * @return int
 	 */
 	public function getTotalCustomFields(): int {

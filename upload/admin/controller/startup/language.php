@@ -12,23 +12,28 @@ class Language extends \Opencart\System\Engine\Controller {
 	private static array $languages = [];
 
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
-		if (isset($this->request->cookie['language'])) {
-			$code = (string)$this->request->cookie['language'];
-		} else {
-			$code = $this->config->get('config_language_admin');
-		}
-
 		$this->load->model('localisation/language');
 
 		self::$languages = $this->model_localisation_language->getLanguages();
 
-		if (isset(self::$languages[$code])) {
-			$language_info = self::$languages[$code];
+		$language_info = [];
 
-			// Language
+		// Set default language
+		if (isset(self::$languages[$this->config->get('config_language_admin')])) {
+			$language_info = self::$languages[$this->config->get('config_language_admin')];
+		}
+
+		// If cookie has language stored
+		if (isset($this->request->cookie['language']) && isset(self::$languages[$this->request->cookie['language']])) {
+			$language_info = self::$languages[$this->request->cookie['language']];
+		}
+
+		if ($language_info) {
 			if ($language_info['extension']) {
 				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
 			}
@@ -41,10 +46,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// Fill the language up with default values
-
 	/**
 	 * After
+	 *
+	 * Fill the language up with default values
 	 *
 	 * @param $route
 	 * @param $prefix

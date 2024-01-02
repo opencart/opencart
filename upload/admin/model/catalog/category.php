@@ -7,12 +7,14 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Category extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Category
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addCategory(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
 
 		$category_id = $this->db->getLastId();
 
@@ -79,13 +81,15 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Category
+	 *
 	 * @param int   $category_id
 	 * @param array $data
 	 *
 	 * @return void
 	 */
 	public function editCategory(int $category_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
 
@@ -208,6 +212,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Category
+	 *
 	 * @param int $category_id
 	 *
 	 * @return void
@@ -231,6 +237,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Repair Categories
+	 *
 	 * @param int $parent_id
 	 *
 	 * @return void
@@ -260,6 +268,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Category
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -271,6 +281,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Path
+	 *
 	 * @param int $category_id
 	 *
 	 * @return string
@@ -280,6 +292,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Paths
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -291,6 +305,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Categories
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -339,6 +355,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -362,6 +380,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Filters
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -379,6 +399,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Urls
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -396,6 +418,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Stores
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -413,6 +437,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Layouts
+	 *
 	 * @param int $category_id
 	 *
 	 * @return array
@@ -430,6 +456,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Categories
+	 *
 	 * @return int
 	 */
 	public function getTotalCategories(): int {
@@ -439,6 +467,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Categories By Layout ID
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

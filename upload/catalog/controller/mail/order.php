@@ -63,9 +63,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @param string $comment
 	 * @param bool   $notify
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function add(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		// Check for any downloadable products
@@ -152,8 +152,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-		$data['payment_method'] = isset($order_info['payment_method']['name']) ? $order_info['payment_method']['name'] : '';
-		$data['shipping_method'] = isset($order_info['shipping_method']['name']) ? $order_info['shipping_method']['name'] : '';
+		$data['payment_method'] = $order_info['payment_method']['name'] ?? '';
+		$data['shipping_method'] = $order_info['shipping_method']['name'] ?? '';
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
@@ -379,9 +379,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @param string $comment
 	 * @param bool   $notify
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function history(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -480,9 +480,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
-	 * @return void
-	 *
 	 * @throws \Exception
+	 *
+	 * @return void
 	 */
 	public function alert(string &$route, array &$args): void {
 		if (isset($args[0])) {

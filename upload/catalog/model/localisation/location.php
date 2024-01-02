@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class Location extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Location
+	 *
 	 * @param int $location_id
 	 *
 	 * @return array

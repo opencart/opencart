@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Reward extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Rewards
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -50,6 +52,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Rewards
+	 *
 	 * @return int
 	 */
 	public function getTotalRewards(): int {
@@ -59,6 +63,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Points
+	 *
 	 * @return int
 	 */
 	public function getTotalPoints(): int {

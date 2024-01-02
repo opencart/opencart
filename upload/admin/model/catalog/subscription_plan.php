@@ -7,12 +7,14 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Subscription Plan
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addSubscriptionPlan(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan` SET `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan` SET `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$subscription_plan_id = $this->db->getLastId();
 
@@ -24,13 +26,15 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Subscription Plan
+	 *
 	 * @param int   $subscription_plan_id
 	 * @param array $data
 	 *
 	 * @return void
 	 */
 	public function editSubscriptionPlan(int $subscription_plan_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription_plan` SET  `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription_plan` SET  `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
@@ -40,6 +44,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Copy Subscription Plan
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return void
@@ -53,6 +59,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Subscription Plan
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return void
@@ -65,6 +73,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription Plan
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return array
@@ -76,6 +86,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Description
+	 *
 	 * @param int $subscription_plan_id
 	 *
 	 * @return array
@@ -93,6 +105,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription Plans
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -139,6 +153,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Subscription Plans
+	 *
 	 * @return int
 	 */
 	public function getTotalSubscriptionPlans(): int {

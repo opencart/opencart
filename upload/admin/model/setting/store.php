@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Setting;
  */
 class Store extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Store
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -23,12 +25,21 @@ class Store extends \Opencart\System\Engine\Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_route` SET `layout_id` = '" . (int)$layout_route['layout_id'] . "', `route` = '" . $this->db->escape($layout_route['route']) . "', `store_id` = '" . (int)$store_id . "'");
 		}
 
+		// SEO URL
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '0'");
+
+		foreach ($query->rows as $seo_url) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$seo_url['language_id'] . "', `key` = '" . $this->db->escape($seo_url['key']) . "', `value` = '" . $this->db->escape($seo_url['value']) . "', `keyword` = '" . $this->db->escape($seo_url['keyword']) . "', `sort_order` = '" . $this->db->escape($seo_url['sort_order']) . "'");
+		}
+
 		$this->cache->delete('store');
 
 		return $store_id;
 	}
 
 	/**
+	 * Edit Store
+	 *
 	 * @param int   $store_id
 	 * @param array $data
 	 *
@@ -41,6 +52,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Store
+	 *
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -76,6 +89,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Store
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array
@@ -87,6 +102,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Stores
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -110,13 +127,15 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Create Store Instance
+	 *
 	 * @param int    $store_id
 	 * @param string $language
 	 * @param string $session_id
 	 *
-	 * @return \Opencart\System\Engine\Registry
-	 *
 	 * @throws \Exception
+	 *
+	 * @return \Opencart\System\Engine\Registry
 	 */
 	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): object {
 		// Autoloader
@@ -230,6 +249,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores
+	 *
 	 * @return int
 	 */
 	public function getTotalStores(): int {
@@ -239,6 +260,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Layout ID
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int
@@ -250,6 +273,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Language
+	 *
 	 * @param string $language
 	 *
 	 * @return int
@@ -261,6 +286,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Currency
+	 *
 	 * @param string $currency
 	 *
 	 * @return int
@@ -272,6 +299,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Country ID
+	 *
 	 * @param int $country_id
 	 *
 	 * @return int
@@ -283,6 +312,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Zone ID
+	 *
 	 * @param int $zone_id
 	 *
 	 * @return int
@@ -294,6 +325,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Customer Group ID
+	 *
 	 * @param int $customer_group_id
 	 *
 	 * @return int
@@ -305,6 +338,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Information ID
+	 *
 	 * @param int $information_id
 	 *
 	 * @return int
@@ -318,6 +353,8 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stores By Order Status ID
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return int

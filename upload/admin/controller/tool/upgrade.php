@@ -18,6 +18,8 @@ namespace Opencart\Admin\Controller\Tool;
  */
 class Upgrade extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

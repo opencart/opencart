@@ -20,7 +20,7 @@ define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER
 define('HTTP_OPENCART', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 // DIR
-define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../') . '/'));
+define('DIR_OPENCART', str_replace('\\', '/', realpath(__DIR__ . '/../') . '/'));
 define('DIR_APPLICATION', DIR_OPENCART . 'install/');
 define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 define('DIR_EXTENSION', DIR_OPENCART . 'extension/');

@@ -105,6 +105,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
+	 *
 	 * @return object|\Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?object {
@@ -389,7 +391,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['comment'] = nl2br($order_info['comment']);
 
 			// History
-			$data['history'] = $this->getHistory($order_info['order_id']);
+			$data['history'] = $this->getHistory();
 
 			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
@@ -409,6 +411,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * @return void
 	 */
 	public function history(): void {
@@ -418,6 +422,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get History
+	 *
 	 * @return string
 	 */
 	public function getHistory(): string {
@@ -464,6 +470,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Reorder
+	 *
 	 * @return void
 	 */
 	public function reorder(): void {

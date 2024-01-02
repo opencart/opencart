@@ -35,9 +35,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *	Edit attribute record in the database.
 	 *
 	 * @param int   $attribute_id primary key of the attribute record to edit
-	 * @param array $data         array of data [
-	 *                            'attribute_group_id'
-	 *                            ]
+	 * @param array $data         array of data
 	 *
 	 * @return void
 	 */

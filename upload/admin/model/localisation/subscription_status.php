@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Subscription Status
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Subscription Status
+	 *
 	 * @param int   $subscription_status_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Subscription Status
+	 *
 	 * @param int $subscription_status_id
 	 *
 	 * @return void
@@ -55,6 +61,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription Status
+	 *
 	 * @param int $subscription_status_id
 	 *
 	 * @return array
@@ -66,6 +74,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription Statuses
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $subscription_status_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Subscription Statuses
+	 *
 	 * @return int
 	 */
 	public function getTotalSubscriptionStatuses(): int {

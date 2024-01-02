@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Localisation;
  */
 class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Order Status
+	 *
 	 * @param array $data
 	 *
 	 * @return int
@@ -28,6 +30,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Order Status
+	 *
 	 * @param int   $order_status_id
 	 * @param array $data
 	 *
@@ -44,6 +48,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Order Status
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return void
@@ -55,6 +61,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Order Status
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return array
@@ -66,6 +74,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Order Statuses
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -107,6 +117,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $order_status_id
 	 *
 	 * @return array
@@ -124,6 +136,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Order Statuses
+	 *
 	 * @return int
 	 */
 	public function getTotalOrderStatuses(): int {

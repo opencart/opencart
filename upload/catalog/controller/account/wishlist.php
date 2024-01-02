@@ -60,6 +60,8 @@ class WishList extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
 	 * @return void
 	 */
 	public function list(): void {
@@ -69,6 +71,8 @@ class WishList extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -142,6 +146,8 @@ class WishList extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @return void
 	 */
 	public function add(): void {
@@ -194,6 +200,8 @@ class WishList extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @return void
 	 */
 	public function remove(): void {

@@ -7,12 +7,14 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Information extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Information
+	 *
 	 * @param array $data
 	 *
 	 * @return int
 	 */
 	public function addInformation(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
 
 		$information_id = $this->db->getLastId();
 
@@ -47,13 +49,15 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Information
+	 *
 	 * @param int   $information_id
 	 * @param array $data
 	 *
 	 * @return void
 	 */
 	public function editInformation(int $information_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 
@@ -91,6 +95,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Information
+	 *
 	 * @param int $information_id
 	 *
 	 * @return void
@@ -106,6 +112,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Information
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -117,6 +125,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Information(s)
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -169,6 +179,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -192,6 +204,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Stores
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -209,6 +223,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Urls
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -226,6 +242,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Layouts
+	 *
 	 * @param int $information_id
 	 *
 	 * @return array
@@ -243,6 +261,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Information(s)
+	 *
 	 * @return int
 	 */
 	public function getTotalInformations(): int {
@@ -252,6 +272,8 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Information(s) By Layout ID
+	 *
 	 * @param int $layout_id
 	 *
 	 * @return int

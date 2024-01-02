@@ -14,3 +14,4 @@ $_['column_action']    = 'Action';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify languages!';
 $_['error_extension']  = 'Warning: Extension does not exist!';
+$_['error_default']    = 'Warning: This extension cannot be uninstalled as it is currently assigned as the administration language!';

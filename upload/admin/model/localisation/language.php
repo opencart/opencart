@@ -430,6 +430,19 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Languages By Extension
+	 *
+	 * @param string $extension
+	 *
+	 * @return array
+	 */
+	public function getLanguagesByExtensions(string $extension): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `extension` = '" . $this->db->escape($extension) . "'");
+
+		return $query->rows;
+	}
+
+	/**
 	 * Get Total Languages
 	 *
 	 * @return int

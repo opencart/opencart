@@ -58,7 +58,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function after(&$route, &$prefix, &$code, &$output): void {
+	public function after(string &$route, string &$prefix, string &$code, array &$output): void {
 		if (!$code) {
 			$code = $this->config->get('config_language_admin');
 		}

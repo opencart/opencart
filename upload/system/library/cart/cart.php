@@ -9,27 +9,27 @@ class Cart {
 	/**
 	 * @var \Opencart\System\Library\DB
 	 */
-	private object $db;
+	private \Opencart\System\Library\DB $db;
 	/**
 	 * @var \Opencart\System\Engine\Config
 	 */
-	private object $config;
+	private \Opencart\System\Engine\Config $config;
 	/**
 	 * @var \Opencart\System\Library\Cart\Customer
 	 */
-	private object $customer;
+	private \Opencart\System\Library\Cart\Customer $customer;
 	/**
 	 * @var \Opencart\System\Library\Session
 	 */
-	private object $session;
+	private \Opencart\System\Library\Session $session;
 	/**
 	 * @var \Opencart\System\Library\Cart\Tax
 	 */
-	private object $tax;
+	private \Opencart\System\Library\Cart\Tax $tax;
 	/**
 	 * @var \Opencart\System\Library\Cart\Weight
 	 */
-	private object $weight;
+	private \Opencart\System\Library\Cart\Weight $weight;
 	/**
 	 * @var array
 	 */

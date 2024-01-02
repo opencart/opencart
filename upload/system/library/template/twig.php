@@ -13,7 +13,7 @@ class Twig {
 	/**
 	 * @var \Twig\Loader\FilesystemLoader
 	 */
-	protected object $loader;
+	protected \Twig\Loader\FilesystemLoader $loader;
 	/**
 	 * @var string
 	 */

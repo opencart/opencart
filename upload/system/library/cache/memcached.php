@@ -9,7 +9,7 @@ class Memcached {
 	/**
 	 * @var \Memcached
 	 */
-	private object $memcached;
+	private \Memcached $memcached;
 	/**
 	 * @var int
 	 */

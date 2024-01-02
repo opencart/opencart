@@ -355,7 +355,7 @@ class Image {
 	 *
 	 * @return void
 	 */
-	private function merge(object $merge, int $x = 0, int $y = 0, int $opacity = 100): void {
+	private function merge(self $merge, int $x = 0, int $y = 0, int $opacity = 100): void {
 		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
 	}
 

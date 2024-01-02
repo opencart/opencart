@@ -9,7 +9,7 @@ class MySQLi {
 	/**
 	 * @var ?\mysqli
 	 */
-	private ?object $connection;
+	private ?\mysqli $connection;
 
 	/**
 	 * Constructor

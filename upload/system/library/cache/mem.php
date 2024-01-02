@@ -9,7 +9,7 @@ class Mem {
 	/**
 	 * @var \Memcache
 	 */
-	private object $memcache;
+	private \Memcache $memcache;
 	/**
 	 * @var int
 	 */

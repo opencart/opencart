@@ -543,7 +543,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		return $this->load->view('marketing/marketing_report', $data);
 	}
-	
+
 	/**
 	 * Autocomplete
 	 *
@@ -565,10 +565,10 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		$filter_data = [
-			'filter_name'  => $filter_name,
-			'filter_code'  => $filter_code,
-			'start'        => 0,
-			'limit'        => 5
+			'filter_name' => $filter_name,
+			'filter_code' => $filter_code,
+			'start'       => 0,
+			'limit'       => 5
 		];
 
 		$this->load->model('marketing/marketing');

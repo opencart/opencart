@@ -101,8 +101,8 @@ class Cart extends \Opencart\System\Engine\Model {
 		$voucher_data = [];
 
 		if (!empty($this->session->data['vouchers'])) {
-			foreach ($this->session->data['vouchers'] as $voucher) {
-				$voucher_data[] = [
+			foreach ($this->session->data['vouchers'] as $key => $voucher) {
+				$voucher_data[$key] = [
 					'code'             => $voucher['code'],
 					'description'      => $voucher['description'],
 					'from_name'        => $voucher['from_name'],

@@ -25,6 +25,7 @@
     "php": ">=7.4",
     "scssphp/scssphp": "^1.10.0",
     "twig/twig": "^3.3.7",
-    "aws/aws-sdk-php": "^3.142.1"
+    "aws/aws-sdk-php": "^3.142.1",
+	"firebase/php-jwt": "^6.10.0"
   }
 }

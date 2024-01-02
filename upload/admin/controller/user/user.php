@@ -191,6 +191,18 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard')
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('user/user_permission', $url)
+		];
+
 		$data['save'] = $this->url->link('user/user.save');
 		$data['back'] = $this->url->link('user/user', $url);
 

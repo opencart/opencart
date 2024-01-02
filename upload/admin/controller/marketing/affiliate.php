@@ -396,6 +396,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['sort_name'] = $this->url->link('marketing/affiliate.list', 'sort=name' . $url);
 		$data['sort_tracking'] = $this->url->link('marketing/affiliate.list', 'sort=ca.tracking' . $url);
 		$data['sort_commission'] = $this->url->link('marketing/affiliate.list', 'sort=ca.commission' . $url);
+		$data['sort_balance'] = $this->url->link('marketing/affiliate.list', 'sort=ca.balance' . $url);
 		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'sort=ca.date_added' . $url);
 
 		$url = '';

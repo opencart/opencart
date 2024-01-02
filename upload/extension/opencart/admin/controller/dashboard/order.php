@@ -32,7 +32,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/dashboard/order.save');
-
 		$data['back'] = $this->url->link('marketplace/extension', 'type=dashboard');
 
 		$data['dashboard_order_width'] = $this->config->get('dashboard_order_width');

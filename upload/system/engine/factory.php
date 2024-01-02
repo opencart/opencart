@@ -34,7 +34,7 @@ class Factory {
 	 *
 	 * @return \Opencart\System\Engine\Controller
 	 */
-	public function controller(string $route): \Opencart\System\Engine\Controller {
+	public function controller(string $route): ?object {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
@@ -55,7 +55,7 @@ class Factory {
 	 *
 	 * @return \Opencart\System\Engine\Model
 	 */
-	public function model(string $route): \Opencart\System\Engine\Model {
+	public function model(string $route): ?object {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 

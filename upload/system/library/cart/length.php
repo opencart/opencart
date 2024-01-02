@@ -9,11 +9,11 @@ class Length {
 	/**
 	 * @var \Opencart\System\Library\DB
 	 */
-	private object $db;
+	private \Opencart\System\Library\DB $db;
 	/**
 	 * @var \Opencart\System\Engine\Config
 	 */
-	private object $config;
+	private \Opencart\System\Engine\Config $config;
 	/**
 	 * @var array
 	 */

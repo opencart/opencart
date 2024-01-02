@@ -9,15 +9,15 @@ class User {
 	/**
 	 * @var \Opencart\System\Library\DB
 	 */
-	private object $db;
+	private \Opencart\System\Library\DB $db;
 	/**
 	 * @var \Opencart\System\Library\Request
 	 */
-	private object $request;
+	private \Opencart\System\Library\Request $request;
 	/**
 	 * @var \Opencart\System\Library\Session
 	 */
-	private object $session;
+	private \Opencart\System\Library\Session $session;
 	/**
 	 * @var int
 	 */

@@ -810,7 +810,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function login(): ?object {
+	public function login(): ?\Opencart\System\Engine\Action {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {

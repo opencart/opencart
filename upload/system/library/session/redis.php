@@ -6,8 +6,8 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class Redis {
-	private object $config;
-	private object $redis;
+	private \Opencart\System\Engine\Config $config;
+	private \Redis $redis;
 	public string $prefix;
 
 	/**

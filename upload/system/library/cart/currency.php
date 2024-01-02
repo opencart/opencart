@@ -9,11 +9,11 @@ class Currency {
 	/**
 	 * @var \Opencart\System\Library\DB
 	 */
-	private object $db;
+	private \Opencart\System\Library\DB $db;
 	/**
 	 * @var \Opencart\System\Library\Language
 	 */
-	private object $language;
+	private \Opencart\System\Library\Language $language;
 	/**
 	 * @var array
 	 */

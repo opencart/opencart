@@ -144,7 +144,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function info(): ?object {
+	public function info(): ?\Opencart\System\Engine\Action {
 		$this->load->language('account/subscription');
 
 		if (isset($this->request->get['subscription_id'])) {

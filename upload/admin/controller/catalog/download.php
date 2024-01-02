@@ -505,7 +505,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
+		if (isset($filename) && !$json) {
 			$file = $filename . '.' . oc_token(32);
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);

@@ -1,5 +1,5 @@
 {% if currencies|length > 1 %}
-  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-currency">
+  <form id="form-currency" action="{{ action }}" method="post" enctype="multipart/form-data">
     <div class="dropdown">
       <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle">{% for currency in currencies %}{% if currency.symbol_left and currency.code == code %}<strong>{{ currency.symbol_left }}</strong>{% elseif currency.symbol_right and currency.code == code %}<strong>{{ currency.symbol_right }}</strong>{% endif %}{% endfor %} <span class="d-none d-md-inline">{{ text_currency }}</span> <i class="fa-solid fa-caret-down"></i></a>
       <ul class="dropdown-menu">

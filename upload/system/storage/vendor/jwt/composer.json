@@ -1,5 +1,6 @@
 {
     "name": "firebase/php-jwt",
+	"version": "v6.10.0",
     "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
     "homepage": "https://github.com/firebase/php-jwt",
     "keywords": [

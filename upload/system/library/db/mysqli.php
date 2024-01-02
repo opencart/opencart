@@ -66,7 +66,7 @@ class MySQLi {
 		}
 
 		try {
-			$this->connection = mysqli_init();
+			$this->connection = mysqli_init() ?: null;
 
 			if ($temp_ssl_key_file || $temp_ssl_cert_file || $temp_ssl_ca_file) {
 				$this->connection->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
@@ -158,7 +158,7 @@ class MySQLi {
 	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return $this->connection;
+		return $this->connection !== null;
 	}
 
 	/**

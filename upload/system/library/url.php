@@ -37,7 +37,7 @@ class Url {
 	 *
 	 * Add a rewrite method to the URL system
 	 *
-	 * @param object $rewrite
+	 * @param \Opencart\System\Engine\Controller $rewrite
 	 *
 	 * @return void
 	 */

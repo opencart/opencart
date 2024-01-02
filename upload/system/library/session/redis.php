@@ -13,7 +13,7 @@ class Redis {
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');

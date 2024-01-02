@@ -7,7 +7,7 @@ namespace Opencart\System\Library\DB;
  */
 class PDO {
 	/**
-	 * @var object|\PDO|null
+	 * @var \PDO|null
 	 */
 	private ?object $connection;
 	/**

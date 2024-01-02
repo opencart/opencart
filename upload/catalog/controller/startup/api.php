@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Startup;
  */
 class Api extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index(): ?object {
 		if (isset($this->request->get['route'])) {

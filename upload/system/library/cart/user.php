@@ -7,15 +7,15 @@ namespace Opencart\System\Library\Cart;
  */
 class User {
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\DB
 	 */
 	private object $db;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Request
 	 */
 	private object $request;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Session
 	 */
 	private object $session;
 	/**
@@ -50,7 +50,7 @@ class User {
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

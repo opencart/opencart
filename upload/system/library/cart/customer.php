@@ -7,19 +7,19 @@ namespace Opencart\System\Library\Cart;
  */
 class Customer {
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\DB
 	 */
 	private object $db;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Engine\Config
 	 */
 	private object $config;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Request
 	 */
 	private object $request;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Session
 	 */
 	private object $session;
 	/**

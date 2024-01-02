@@ -534,7 +534,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function info(): ?object {
 		if (isset($this->request->get['extension_id'])) {

@@ -7,7 +7,7 @@ namespace Opencart\System\Library\DB;
  */
 class PgSQL {
 	/**
-	 * @var object|resource|null
+	 * @var \PgSql\Connection|resource|null
 	 */
 	private $connection;
 

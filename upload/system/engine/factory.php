@@ -14,14 +14,14 @@ namespace Opencart\System\Engine;
  */
 class Factory {
 	/**
-	 * @var object|\Opencart\System\Engine\Registry
+	 * @var \Opencart\System\Engine\Registry
 	 */
 	protected \Opencart\System\Engine\Registry $registry;
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
@@ -32,7 +32,7 @@ class Factory {
 	 *
 	 * @param string $route
 	 *
-	 * @return object
+	 * @return \Opencart\System\Engine\Controller
 	 */
 	public function controller(string $route): object {
 		// Sanitize the call
@@ -53,7 +53,7 @@ class Factory {
 	 *
 	 * @param string $route
 	 *
-	 * @return object
+	 * @return \Opencart\System\Engine\Model
 	 */
 	public function model(string $route): object {
 		// Sanitize the call

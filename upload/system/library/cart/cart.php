@@ -7,27 +7,27 @@ namespace Opencart\System\Library\Cart;
  */
 class Cart {
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\DB
 	 */
 	private object $db;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Engine\Config
 	 */
 	private object $config;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Cart\Customer
 	 */
 	private object $customer;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Session
 	 */
 	private object $session;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Cart\Tax
 	 */
 	private object $tax;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Cart\Weight
 	 */
 	private object $weight;
 	/**
@@ -38,7 +38,7 @@ class Cart {
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

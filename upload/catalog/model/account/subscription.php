@@ -11,7 +11,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id
 	 *
-	 * @return array
+	 * @return array<sting, mixed>
 	 */
 	public function getSubscription(int $subscription_id): array {
 		$subscription_data = [];

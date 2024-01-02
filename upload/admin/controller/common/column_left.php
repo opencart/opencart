@@ -480,7 +480,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 					$fraud[] = [
 						'name'     => $this->language->get($result['code'] . '_heading_title'),
-						'href'     => $this->url->link('extension/' . $result['extension'] . '/fraud/' . $result['code'], 'user_token=' . $this->session->data['user_token']),
+						'href'     => $this->url->link('extension/' . $result['extension'] . '/fraud/' . $result['code']),
 						'children' => []
 					];
 				}
@@ -501,7 +501,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
 				$marketing[] = [
 					'name'     => $this->language->get('text_affiliate'),
-					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token']),
+					'href'     => $this->url->link('marketing/affiliate'),
 					'children' => []
 				];
 			}

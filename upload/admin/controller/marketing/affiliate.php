@@ -349,7 +349,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				'name'        => $result['name'],
 				'tracking'    => $result['tracking'],
 				'commission'  => $result['commission'],
-				'balance'     => $this->currency->format($result['balance'], $this->config->get('config_currency')),
+				'balance'     => $this->currency->format((int)$result['balance'], $this->config->get('config_currency')),
 				'status'      => $result['status'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'customer'    => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),

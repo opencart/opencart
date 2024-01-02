@@ -88,8 +88,8 @@ class Image {
 	 *
 	 * @return ?\GdImage
 	 */
-	public function getImage(): object {
-		return $this->image;
+	public function getImage(): ?\GdImage {
+		return $this->image ?: null;
 	}
 
 	/**

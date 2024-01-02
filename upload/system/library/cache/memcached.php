@@ -7,9 +7,9 @@ namespace Opencart\System\Library\Cache;
  */
 class Memcached {
 	/**
-	 * @var \Memcached|object
+	 * @var \Memcached
 	 */
-	private object $memcached;
+	private \Memcached $memcached;
 	/**
 	 * @var int
 	 */

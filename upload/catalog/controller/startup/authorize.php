@@ -7,9 +7,9 @@ namespace Opencart\catalog\controller\startup;
  */
 class Authorize extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?object {
+	public function index(): ?\Opencart\System\Engine\Action {
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];
 		} else {

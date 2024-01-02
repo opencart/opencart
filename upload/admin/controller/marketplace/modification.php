@@ -282,13 +282,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
-				// Wipe the past modification store in the backup array
-				$recovery = [];
-
 				// Store a backup recovery of the modification code in case we need to use it if an abort attribute is used.
-				if (isset($modification)) {
-					$recovery = $modification;
-				}
+				$recovery = $modification;
 
 				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
 

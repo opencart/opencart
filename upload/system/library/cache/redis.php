@@ -7,9 +7,9 @@ namespace Opencart\System\Library\Cache;
  */
 class Redis {
 	/**
-	 * @var object|\Redis
+	 * @var \Redis
 	 */
-	private object $redis;
+	private \Redis $redis;
 	/**
 	 * @var int
 	 */

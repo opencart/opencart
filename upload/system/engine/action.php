@@ -56,8 +56,8 @@ class Action {
 	/**
 	 * Execute
 	 *
-	 * @param object $registry
-	 * @param array  $args
+	 * @param \Opencart\System\Engine\Registry $registry
+	 * @param array                            $args
 	 *
 	 * @return mixed
 	 */

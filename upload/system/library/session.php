@@ -29,8 +29,8 @@ class Session {
 	/**
 	 * Constructor
 	 *
-	 * @param string $adaptor
-	 * @param object $registry
+	 * @param string                           $adaptor
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(string $adaptor, \Opencart\System\Engine\Registry $registry) {
 		$class = 'Opencart\System\Library\Session\\' . $adaptor;

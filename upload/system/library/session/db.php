@@ -14,13 +14,13 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class DB {
-	private object $db;
-	private object $config;
+	private \Opencart\System\Library\DB $db;
+	private \Opencart\System\Engine\Config $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

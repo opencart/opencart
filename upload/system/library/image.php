@@ -18,7 +18,7 @@ class Image {
 	 */
 	private string $file;
 	/**
-	 * @var false|\GdImage|object
+	 * @var false|\GdImage
 	 */
 	private $image;
 	/**
@@ -86,10 +86,10 @@ class Image {
 	/**
 	 * getImage
 	 *
-	 * @return object
+	 * @return ?\GdImage
 	 */
-	public function getImage(): object {
-		return $this->image;
+	public function getImage(): ?\GdImage {
+		return $this->image ?: null;
 	}
 
 	/**
@@ -227,7 +227,7 @@ class Image {
 	/**
 	 * Watermark
 	 *
-	 * @param object $watermark
+	 * @param self   $watermark
 	 * @param string $position
 	 *
 	 * @return void
@@ -348,14 +348,14 @@ class Image {
 	/**
 	 * Merge
 	 *
-	 * @param object $merge
-	 * @param int    $x
-	 * @param int    $y
-	 * @param int    $opacity
+	 * @param self $merge
+	 * @param int  $x
+	 * @param int  $y
+	 * @param int  $opacity
 	 *
 	 * @return void
 	 */
-	private function merge(object $merge, int $x = 0, int $y = 0, int $opacity = 100): void {
+	private function merge(self $merge, int $x = 0, int $y = 0, int $opacity = 100): void {
 		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
 	}
 

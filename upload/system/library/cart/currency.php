@@ -7,13 +7,13 @@ namespace Opencart\System\Library\Cart;
  */
 class Currency {
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\DB
 	 */
-	private object $db;
+	private \Opencart\System\Library\DB $db;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\Language
 	 */
-	private object $language;
+	private \Opencart\System\Library\Language $language;
 	/**
 	 * @var array
 	 */
@@ -22,7 +22,7 @@ class Currency {
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

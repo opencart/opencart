@@ -7,9 +7,9 @@ namespace Opencart\Catalog\Controller\Product;
  */
 class Category extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?object {
+	public function index(): ?\Opencart\System\Engine\Action {
 		$this->load->language('product/category');
 
 		if (isset($this->request->get['path'])) {

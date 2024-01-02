@@ -6,12 +6,12 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class File {
-	private object $config;
+	private \Opencart\System\Engine\Config $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');

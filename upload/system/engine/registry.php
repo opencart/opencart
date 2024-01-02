@@ -14,8 +14,9 @@ namespace Opencart\System\Engine;
  *
  * @property \Opencart\System\Engine\Config         $config
  * @property \Opencart\System\Engine\Event          $event
+ * @property \Opencart\System\Engine\Factory        $factory
  * @property \Opencart\System\Engine\Loader         $load
- * @property \Opencart\System\Engine\Registry       $autoloader
+ * @property \Opencart\System\Engine\Autoloader     $autoloader
  * @property \Opencart\System\Library\Cache         $cache
  * @property \Opencart\System\Library\Cart\Cart     $cart
  * @property \Opencart\System\Library\Cart\Currency $currency

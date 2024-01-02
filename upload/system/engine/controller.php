@@ -16,7 +16,7 @@ namespace Opencart\System\Engine;
  */
 class Controller {
 	/**
-	 * @var object|\Opencart\System\Engine\Registry
+	 * @var \Opencart\System\Engine\Registry
 	 */
 	protected \Opencart\System\Engine\Registry $registry;
 

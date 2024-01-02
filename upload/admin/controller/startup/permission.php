@@ -9,9 +9,9 @@ class Permission extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?object {
+	public function index(): ?\Opencart\System\Engine\Action {
 		if (isset($this->request->get['route'])) {
 			$pos = strrpos($this->request->get['route'], '.');
 

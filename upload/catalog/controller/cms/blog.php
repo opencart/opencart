@@ -320,9 +320,9 @@ class Blog extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * @return object|\Opencart\System\Engine\Action|null
+	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function info(): ?object {
+	public function info(): ?\Opencart\System\Engine\Action {
 		$this->load->language('cms/blog');
 
 		if (isset($this->request->get['article_id'])) {

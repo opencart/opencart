@@ -16,14 +16,14 @@ namespace Opencart\System\Engine;
  */
 class Loader {
 	/**
-	 * @var object|\Opencart\System\Engine\Registry
+	 * @var \Opencart\System\Engine\Registry
 	 */
 	protected \Opencart\System\Engine\Registry $registry;
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;

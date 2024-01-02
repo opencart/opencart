@@ -36,9 +36,9 @@ class Event {
 	/**
 	 * Register
 	 *
-	 * @param string $trigger
-	 * @param object $action
-	 * @param int    $priority
+	 * @param string                         $trigger
+	 * @param \Opencart\System\Engine\Action $action
+	 * @param int                            $priority
 	 *
 	 * @return void
 	 */

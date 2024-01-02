@@ -7,13 +7,13 @@ namespace Opencart\System\Library\Cart;
  */
 class Length {
 	/**
-	 * @var object
+	 * @var \Opencart\System\Library\DB
 	 */
-	private object $db;
+	private \Opencart\System\Library\DB $db;
 	/**
-	 * @var object
+	 * @var \Opencart\System\Engine\Config
 	 */
-	private object $config;
+	private \Opencart\System\Engine\Config $config;
 	/**
 	 * @var array
 	 */
@@ -22,7 +22,7 @@ class Length {
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

@@ -7,9 +7,9 @@ namespace Opencart\System\Library\DB;
  */
 class PDO {
 	/**
-	 * @var object|\PDO|null
+	 * @var \PDO|null
 	 */
-	private ?object $connection;
+	private ?\PDO $connection;
 	/**
 	 * @var array
 	 */
@@ -27,11 +27,8 @@ class PDO {
 	 * @param string $password
 	 * @param string $database
 	 * @param string $port
-	 * @param string $sslKey
-	 * @param string $sslCert
-	 * @param string $sslCa
 	 */
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '', string $sslKey = '', string $sslCert = '', string $sslCa = '') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
 		if (!$port) {
 			$port = '3306';
 		}

@@ -6,14 +6,14 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class Redis {
-	private object $config;
-	private object $redis;
+	private \Opencart\System\Engine\Config $config;
+	private \Redis $redis;
 	public string $prefix;
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');

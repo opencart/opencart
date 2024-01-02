@@ -1990,7 +1990,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_country_id', '222', 0),
 (0, 'config', 'config_zone_id', '3563', 0),
 (0, 'config', 'config_timezone', 'UTC', 0),
-(0, 'config', 'config_language', 'en-gb', 0),
+(0, 'config', 'config_language_catalog', 'en-gb', 0),
 (0, 'config', 'config_language_admin', 'en-gb', 0),
 (0, 'config', 'config_currency', 'USD', 0),
 (0, 'config', 'config_currency_auto', '1', 0),

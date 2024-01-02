@@ -12,22 +12,28 @@ class Language extends \Opencart\System\Engine\Controller {
 	private static array $languages = [];
 
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
-		if (isset($this->request->get['language'])) {
-			$code = (string)$this->request->get['language'];
-		} else {
-			$code = $this->config->get('config_language');
-		}
-
 		$this->load->model('localisation/language');
 
 		self::$languages = $this->model_localisation_language->getLanguages();
 
-		if (isset(self::$languages[$code])) {
-			$language_info = self::$languages[$code];
+		$language_info = [];
 
+		// Set default language
+		if (isset(self::$languages[$this->config->get('config_language_catalog')])) {
+			$language_info = self::$languages[$this->config->get('config_language_catalog')];
+		}
+
+		// If GET has language var
+		if (isset($this->request->get['language']) && isset(self::$languages[$this->request->get['language']])) {
+			$language_info = self::$languages[$this->request->get['language']];
+		}
+
+		if ($language_info) {
 			// If extension switch add language directory
 			if ($language_info['extension']) {
 				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/catalog/language/');
@@ -41,10 +47,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// Override the language default values
-
 	/**
 	 * After
+	 *
+	 * Override the language default values
 	 *
 	 * @param $route
 	 * @param $prefix

@@ -320,10 +320,10 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($store_info['config_language'])) {
-			$data['config_language'] = $store_info['config_language'];
+		if (isset($store_info['config_language_catalog'])) {
+			$data['config_language_catalog'] = $store_info['config_language_catalog'];
 		} else {
-			$data['config_language'] = $this->config->get('config_language');
+			$data['config_language_catalog'] = $this->config->get('config_language_catalog');
 		}
 
 		$this->load->model('localisation/currency');

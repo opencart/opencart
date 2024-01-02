@@ -196,11 +196,11 @@
               <fieldset>
                 <legend>{{ text_language }}</legend>
                 <div class="row mb-3">
-                  <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
+                  <label for="input-language-catalog" class="col-sm-2 col-form-label">{{ entry_language }}</label>
                   <div class="col-sm-10">
-                    <select name="config_language" id="input-language" class="form-select">
+                    <select name="config_language_catalog" id="input-language-catalog" class="form-select">
                       {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
+                        <option value="{{ language.code }}"{% if language.code == config_language_catalog %} selected{% endif %}>{{ language.name }}</option>
                       {% endfor %}
                     </select>
                   </div>

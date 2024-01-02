@@ -125,7 +125,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		$data['config_language'] = $this->config->get('config_language');
+		$data['config_language_catalog'] = $this->config->get('config_language_catalog');
 		$data['config_language_admin'] = $this->config->get('config_language_admin');
 
 		// Currency

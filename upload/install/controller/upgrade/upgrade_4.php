@@ -364,6 +364,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			// Update some language settings
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language_admin' AND `value` = 'en'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_language_catalog' WHERE `key` = 'config_language'");
 
 			// Remove some setting keys
 			$remove = [

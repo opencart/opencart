@@ -408,7 +408,7 @@ $('#button-history').on('click', function(e) {
         url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
+        data: 'comment=' + encodeURIComponent($('#input-history').val()),
         beforeSend: function() {
             $(element).button('loading');
         },

@@ -329,10 +329,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		if ($this->config->get('config_comment_interval')) {
 			$filter_data = [
-				'sort'  => 'date_added',
-				'order' => 'DESC',
-				'start' => 0,
-				'limit' => 1
+				'customer_id' => $this->customer->getId(),
+				'sort'        => 'date_added',
+				'order'       => 'DESC',
+				'start'       => 0,
+				'limit'       => 1
 			];
 
 			$results = $this->model_cms_article->getComments($article_id, $filter_data);
@@ -433,11 +434,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_article');
 		}
 
-		// Comment
+		// Comment to rate
 		$article_comment_info = $this->model_cms_article->getComment($article_comment_id);
 
 		if (!$article_comment_info) {
-			$json['error'] = $this->language->get('error_comment');
+			$json['error'] = $this->language->get('error_article_comment');
 		}
 
 		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {
@@ -447,8 +448,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Anti-Spam
 			$rating_data = $this->request->post + [
-				'rating' => (bool)$this->request->get['rating'],
-				'ip'     => $this->request->server['REMOTE_ADDR']
+				'article_comment_id' => $article_comment_id,
+				'customer_id'        => $this->customer->getId(),
+				'rating'             => (bool)$this->request->get['rating'],
+				'ip'                 => $this->request->server['REMOTE_ADDR']
 			];
 
 			$this->load->model('cms/article');

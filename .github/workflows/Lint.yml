@@ -3,7 +3,7 @@ name: Lint
 on:
   push:
     branches:
-      - master
+      - 3.0.x.x
   pull_request:
     types: [opened, synchronize]
 

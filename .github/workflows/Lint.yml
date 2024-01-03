@@ -47,7 +47,7 @@ jobs:
             ~/.cache/composer/files
             ./.cache
             ./.php-cs-fixer.cache
-          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          key: OC3.0-PHP${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: OC3.0-PHP${{ matrix.php }}-
 
       - name: Code style

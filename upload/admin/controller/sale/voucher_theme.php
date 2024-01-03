@@ -136,7 +136,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('sale/voucher_theme.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('sale/voucher_theme.list', 'user_token=' . $this->session->data['user_token'] . '&sort=vtd.name' . $url);
 
 		$url = '';
 

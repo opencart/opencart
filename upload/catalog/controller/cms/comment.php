@@ -380,7 +380,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 
 			$comment_data = $this->request->post + [
-				'customer_id' => $customer_id,
+				'customer_id' => $this->customer->getId(),
 				'parent_id'   => $parent_id,
 				'ip'          => $this->request->server['REMOTE_ADDR'],
 				'status'      => $status

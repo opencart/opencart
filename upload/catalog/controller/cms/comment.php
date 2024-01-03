@@ -380,9 +380,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 
 			$comment_data = $this->request->post + [
-				'parent_id' => $parent_id,
-				'ip'        => $this->request->server['REMOTE_ADDR'],
-				'status'    => $status
+				'customer_id' => $customer_id,
+				'parent_id'   => $parent_id,
+				'ip'          => $this->request->server['REMOTE_ADDR'],
+				'status'      => $status
 			];
 
 			$this->model_cms_article->addComment($article_id, $comment_data);

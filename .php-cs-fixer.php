@@ -10,32 +10,48 @@ return $config
     ->setIndent("\t")
     ->setRules([
         '@PSR12' => true,
-        'array_syntax' => true,
         'assign_null_coalescing_to_coalesce_equal' => true,
-        'binary_operator_spaces' => ['default' => 'single_space','operators' => ['=' => 'at_least_single_space','=>' => 'at_least_single_space']],
+        'binary_operator_spaces' => false,
         'blank_line_after_namespace' => false,
         'blank_line_after_opening_tag' => false,
         'blank_lines_before_namespace' => false,
-        'braces_position' => ['classes_opening_brace' => 'same_line','functions_opening_brace' => 'same_line'],
-        'combine_nested_dirname' => true,
-        'function_declaration' => ['closure_function_spacing' => 'none'],
+        'braces_position' => false,
+        'class_definition' => false,
+        'constant_case' => false,
+        'control_structure_braces' => false,
+        'control_structure_continuation_position' => false,
+        'elseif' => false,
+        'function_declaration' => false,
         'heredoc_indentation' => true,
         'implode_call' => true,
-        'list_syntax' => true,
-        'no_alias_functions' => true,
-        'no_blank_lines_after_phpdoc' => true,
+        'indentation_type' => false,
+        'method_argument_space' => false,
+        'new_with_parentheses' => false,
+        'no_blank_lines_after_class_opening' => false,
+        'no_closing_tag' => false,
+        'no_leading_import_slash' => false,
+        'no_multiple_statements_per_line' => false,
+        'no_spaces_after_function_name' => false,
+        'no_trailing_whitespace' => false,
+        'no_trailing_whitespace_in_comment' => false,
         'no_whitespace_before_comma_in_array' => true,
-        'non_printable_character' => true,
+        'no_whitespace_in_blank_line' => false,
         'normalize_index_brace' => true,
-        'pow_to_exponentiation' => true,
-        'use_arrow_functions' => true,
-        'void_return' => true,
+        'short_scalar_cast' => false,
+        'single_blank_line_at_eof' => false,
+        'spaces_inside_parentheses' => false,
+        'statement_indentation' => false,
+        'switch_case_semicolon_to_colon' => false,
+        'switch_case_space' => false,
+        'ternary_operator_spaces' => false,
+        'unary_operator_spaces' => false,
+        'visibility_required' => false,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
-        ->in(__DIR__ . '/upload/')
-         ->exclude([
-             __DIR__ . '/upload/system/storage/vendor/',
-         ])
+        ->in(__DIR__)
+        // ->exclude([
+        //     'folder-to-exclude',
+        // ])
         // ->append([
         //     'file-to-include',
         // ])

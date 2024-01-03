@@ -327,8 +327,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['comment'] = $this->language->get('error_comment');
 		}
 
-
-
 		// Captcha
 		$this->load->model('setting/extension');
 

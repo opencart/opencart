@@ -46,7 +46,7 @@ jobs:
           path: |
             ~/.cache/composer/files
             ./.cache
-          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          key: OC3.0-PHP${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: OC3.0-PHP${{ matrix.php }}-
 
       - name: Install dependencies

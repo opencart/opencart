@@ -55,8 +55,8 @@ jobs:
         if: matrix.php == '8.3'
         run: |
           composer require --dev -w friendsofphp/php-cs-fixer v3.41.1
-          ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
-          ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
+          ./upload/system/storage/vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
+          ./upload/system/storage/vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
       - name: Install dependencies
         run: composer require phpstan/phpstan 1.10.50
 

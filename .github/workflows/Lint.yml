@@ -47,7 +47,7 @@ jobs:
             ~/.cache/composer/files
             ./.cache
           key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ matrix.php }}-
+          restore-keys: OC3.0-PHP${{ matrix.php }}-
 
       - name: Install dependencies
         run: composer require phpstan/phpstan 1.10.50

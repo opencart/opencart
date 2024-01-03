@@ -225,7 +225,7 @@ class Article extends \Opencart\System\Engine\Model {
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
 
-		if (isset($data['customer_id'])) {
+		if (!empty($data['customer_id'])) {
 			$sql .= " AND `customer_id` = '" . (int)$data['customer_id'] . "'";
 		}
 
@@ -288,7 +288,7 @@ class Article extends \Opencart\System\Engine\Model {
 	public function getTotalComments(int $article_id, array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
 
-		if (isset($data['customer_id'])) {
+		if (!empty($data['customer_id'])) {
 			$sql .= " AND `customer_id` = '" . (int)$data['customer_id'] . "'";
 		}
 

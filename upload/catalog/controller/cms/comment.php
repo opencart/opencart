@@ -331,15 +331,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$filter_data = [
 				'sort'  => 'date_added',
 				'order' => 'DESC',
-				'start' => 1,
+				'start' => 0,
 				'limit' => 1
 			];
 
-			$results = $this->model_cms_article->getArticleComments($article_id, $filter_data);
+			$results = $this->model_cms_article->getComments($article_id, $filter_data);
 
 			foreach ($results as $result) {
-				if (strtotime('+' . $this->config->get('config_comment_interval') . ' minute', strtotime($result['date_added'])) <= time()) {
-					$json['error']['interval'] = $this->language->get('error_interval');
+				if (strtotime('+' . $this->config->get('config_comment_interval') . ' minute', strtotime($result['date_added'])) >= time()) {
+					$json['error']['warning'] = sprintf($this->language->get('error_interval'), $this->config->get('config_comment_interval'));
 
 					break;
 				}
@@ -369,9 +369,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 			$spam = $this->model_cms_antispam->getSpam($this->request->post['comment']);
 
-			// If auto approve comments and
+			// If customer has been approved to make comments without moderation
 			if ($this->customer->isCommenter()) {
 				$status = 1;
+				// If auto approve comments
 			} elseif ($this->config->get('config_comment_approve') && !$spam) {
 				$status = 1;
 			} else {

@@ -96,6 +96,8 @@ $('#form-comment').on('submit', function(e) {
             $('#button-comment').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             $('#form-comment').find('.is-invalid').removeClass('is-invalid');

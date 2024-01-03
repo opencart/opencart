@@ -26,6 +26,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer:v2, cs2pr
+          extensions: mbstring
 
       - name: Lint
         run: |

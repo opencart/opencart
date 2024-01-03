@@ -307,7 +307,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('cms/article');
+	 	$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
 
@@ -325,6 +325,25 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		if ((oc_strlen($this->request->post['comment']) < 2) || (oc_strlen($this->request->post['comment']) > 1000)) {
 			$json['error']['comment'] = $this->language->get('error_comment');
+		}
+
+		if ($this->config->get('config_comment_interval')) {
+			$filter_data = [
+				'sort'  => 'date_added',
+				'order' => 'DESC',
+				'start' => 1,
+				'limit' => 1
+			];
+
+			$results = $this->model_cms_article->getArticleComments($article_id, $filter_data);
+
+			foreach ($results as $result) {
+				if (strtotime('+' . $this->config->get('config_comment_interval') . ' minute', strtotime($result['date_added'])) <= time()) {
+					$json['error']['interval'] = $this->language->get('error_interval');
+
+					break;
+				}
+			}
 		}
 
 		// Captcha

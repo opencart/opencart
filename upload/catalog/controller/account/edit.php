@@ -68,11 +68,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($customer_info)) {
-			$data['account_custom_field'] = $customer_info['custom_field'];
-		} else {
-			$data['account_custom_field'] = [];
-		}
+		$data['account_custom_field'] = $customer_info['custom_field'];
 
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 

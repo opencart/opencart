@@ -307,7 +307,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-	 	$this->load->model('cms/article');
+		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
 

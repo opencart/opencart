@@ -25,7 +25,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v2
+          tools: composer:v2, cs2pr
+          extensions: mbstring
 
       - name: Lint
         run: |
@@ -46,11 +47,18 @@ jobs:
           path: |
             ~/.cache/composer/files
             ./.cache
+            ./.php-cs-fixer.cache
           key: OC3.0-PHP${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: OC3.0-PHP${{ matrix.php }}-
 
-      - name: Install dependencies
-        run: composer require phpstan/phpstan 1.10.50
-
       - name: PHPStan
-        run: ./upload/system/storage/vendor/bin/phpstan analyze --no-progress
+        run: |
+          composer require phpstan/phpstan 1.10.50
+          ./upload/system/storage/vendor/bin/phpstan analyze --no-progress
+
+      - name: Code style
+        if: matrix.php == '8.3'
+        run: |
+          composer require --dev -w friendsofphp/php-cs-fixer v3.41.1
+          ./upload/system/storage/vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
+          ./upload/system/storage/vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr

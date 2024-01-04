@@ -181,7 +181,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['logged'] = $this->customer->isLogged();
 
-
 		return $this->load->view('cms/comment_list', $data);
 	}
 
@@ -309,7 +308,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
-	 	$this->load->model('cms/article');
+		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
 

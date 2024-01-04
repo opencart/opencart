@@ -11,3 +11,5 @@ parameters:
         - ./system/storage/vendor/
         - ./upload/system/storage/vendor/
     tmpDir: .cache
+    ignoreErrors:
+        - '#Constant [A-Z_]+ not found\.#'

@@ -26,5 +26,10 @@
     "scssphp/scssphp": "^1.10.0",
     "twig/twig": "^3.3.7",
     "aws/aws-sdk-php": "^3.142.1"
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Tools\\PHPStan\\": "tools/phpstan/"
+      }
   }
 }

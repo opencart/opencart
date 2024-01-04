@@ -1,3 +1,8 @@
+services:
+    -
+        class: \Tools\PHPStan\RegistryPropertyReflectionExtension
+        tags:
+            - phpstan.broker.propertiesClassReflectionExtension
 parameters:
     level: 0
     paths:

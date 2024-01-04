@@ -9,7 +9,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @throws \ScssPhp\ScssPhp\Exception\SassException&\Exception
+	 * @throws \Exception&\ScssPhp\ScssPhp\Exception\SassException
 	 *
 	 * @return void
 	 */

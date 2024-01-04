@@ -52,12 +52,12 @@ jobs:
 
       - name: PHPStan
         run: |
-          composer require --dev phpstan/phpstan 1.10.41
+          composer require --dev phpstan/phpstan 1.10.50
           ./system/storage/vendor/bin/phpstan analyze --no-progress
 
       - name: Code style
         if: matrix.php == '8.3'
         run: |
-          composer require --dev friendsofphp/php-cs-fixer v3.41.1
+          composer require --dev friendsofphp/php-cs-fixer v3.46.0
           ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
           ./system/storage/vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr

@@ -445,7 +445,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/order');
 
-		$results = $this->model_account_order->getHistories($order_id, ($page - 1) * $limit, $limit);
+		$results = $this->model_account_order->getHistories($order_id);
 
 		foreach ($results as $result) {
 			$data['histories'][] = [

@@ -386,11 +386,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 											$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 											$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
 											$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-											$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');
-
-											if ($offset == '') {
-												$offset = 0;
-											}
+											$offset = (int)$operation->getElementsByTagName('add')->item(0)->getAttribute('offset');
 
 											// Trim line if is set to true.
 											if ($trim == 'true') {

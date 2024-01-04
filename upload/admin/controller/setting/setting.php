@@ -182,7 +182,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// CMS
 		$data['config_article_description_length'] = $this->config->get('config_article_description_length');
 		$data['config_comment_status'] = $this->config->get('config_comment_status');
-		$data['config_comment_guest'] = $this->config->get('config_comment_guest');
 		$data['config_comment_approve'] = $this->config->get('config_comment_approve');
 		$data['config_comment_interval'] = $this->config->get('config_comment_interval');
 
@@ -190,8 +189,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_voucher_min'] = $this->config->get('config_voucher_min');
 		$data['config_voucher_max'] = $this->config->get('config_voucher_max');
 
+		// Legal
 		$data['config_cookie_id'] = $this->config->get('config_cookie_id');
-
 		$data['config_gdpr_id'] = $this->config->get('config_gdpr_id');
 		$data['config_gdpr_limit'] = $this->config->get('config_gdpr_limit');
 

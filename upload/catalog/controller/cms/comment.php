@@ -36,12 +36,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
+		$data['logged'] = $this->customer->isLogged();
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
-		$data['comment_guest'] = ($this->customer->isLogged() || $this->config->get('config_comment_guest') ? true : false);
+		$this->session->data['comment_token'] = oc_token(32);
 
 		// Create a login token to prevent brute force attacks
-		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&comment_token=' . $this->session->data['comment_token'] = oc_token(32), true);
+		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&comment_token=' . $this->session->data['comment_token'], true);
 		$data['like'] = $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true);
 		$data['dislike'] = $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true);
 
@@ -135,12 +136,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
-			$data['comment_guest'] = true;
-		} else {
-			$data['comment_guest'] = false;
-		}
-
 		$limit = 5;
 
 		$data['comments'] = [];
@@ -183,6 +178,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($comment_total - $limit)) ? $comment_total : ((($page - 1) * $limit) + $limit), $comment_total, ceil($comment_total / $limit));
 
 		$data['refresh'] = $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page=' . $page, true);
+
+		$data['logged'] = $this->customer->isLogged();
+
 
 		return $this->load->view('cms/comment_list', $data);
 	}
@@ -292,10 +290,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$parent_id = 0;
 		}
 
-		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
-			$json['error']['warning'] = $this->language->get('error_token');
-		}
-
 		$keys = [
 			'author',
 			'comment'
@@ -307,16 +301,20 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
+			$json['error']['warning'] = $this->language->get('error_token');
+		}
+
+		if (!$this->customer->isLogged()) {
+			$json['error']['warning'] = $this->language->get('error_login');
+		}
+
 	 	$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
 
 		if (!$article_info) {
 			$json['error']['warning'] = $this->language->get('error_article');
-		}
-
-		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {
-			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
 		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 25)) {

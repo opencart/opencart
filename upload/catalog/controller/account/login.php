@@ -82,7 +82,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['redirect'] = '';
 		}
 
-		$this->session->data['login_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+		$this->session->data['login_token'] = oc_token(26);
 
 		$data['login'] = $this->url->link('account/login.login', 'language=' . $this->config->get('config_language') . '&login_token=' . $this->session->data['login_token']);
 		$data['register'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'));

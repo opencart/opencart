@@ -27,10 +27,12 @@ $_['button_comment']        = 'Post Comment';
 $_['button_reply']          = 'Post Reply';
 $_['button_replies']        = 'Show Replies';
 $_['button_more']           = 'See more replies...';
+$_['button_login']          = 'Login to Comment';
+$_['button_login_reply']    = 'Login to Reply';
 
 // Error
 $_['error_article']         = 'Warning: Article could not be found!';
-$_['error_article_comment'] = 'Warning: Article could not be found!';
+$_['error_article_comment'] = 'Warning: Article comment could not be found!';
 $_['error_token']           = 'Warning: Comment token invalid!';
 $_['error_author']          = 'Your Name must be between 3 and 25 characters!';
 $_['error_comment']         = 'Comment must be between 25 and 1000 characters!';

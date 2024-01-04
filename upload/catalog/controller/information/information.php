@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Information;
  */
 class Information extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return void
+	 * @return ?\Opencart\System\Engine\Action
 	 */
 	public function index(): ?object {
 		$this->load->language('information/information');

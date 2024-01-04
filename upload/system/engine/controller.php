@@ -23,7 +23,7 @@ class Controller {
 	/**
 	 * Constructor
 	 *
-	 * @param object $registry
+	 * @param \Opencart\System\Engine\Registry $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;

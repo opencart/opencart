@@ -173,7 +173,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * @param int $article_id
 	 *
-	 * @return array
+	 * @return int
 	 */
 	public function getLayoutId(int $article_id): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");

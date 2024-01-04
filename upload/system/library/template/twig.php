@@ -25,8 +25,6 @@ class Twig {
 
 	/**
 	 * Constructor
-	 *
-	 * @param string $adaptor
 	 */
 	public function __construct() {
 		// Unfortunately, we have to set the web root directory as the base since Twig confuses which template cache to use.

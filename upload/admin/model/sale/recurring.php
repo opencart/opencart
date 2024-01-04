@@ -163,27 +163,27 @@ class ModelSaleRecurring extends Model {
 		$implode = array();
 
 		if (!empty($data['filter_order_recurring_id'])) {
-			$implode[] .= "or.order_recurring_id = " . (int)$data['filter_order_recurring_id'];
+			$implode[] = "or.order_recurring_id = " . (int)$data['filter_order_recurring_id'];
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] .= "or.order_id = " . (int)$data['filter_order_id'];
+			$implode[] = "or.order_id = " . (int)$data['filter_order_id'];
 		}
 
 		if (!empty($data['filter_payment_reference'])) {
-			$implode[] .= " or.reference LIKE '" . $this->db->escape($data['filter_reference']) . "%'";
+			$implode[] = " or.reference LIKE '" . $this->db->escape($data['filter_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] .= "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
+			$implode[] = "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] .= "or.status = " . (int)$data['filter_status'];
+			$implode[] = "or.status = " . (int)$data['filter_status'];
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] .= "DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$implode[] = "DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
 		if ($implode) {

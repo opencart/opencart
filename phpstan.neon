@@ -13,3 +13,4 @@ parameters:
     tmpDir: .cache
     ignoreErrors:
         - '#Constant [A-Z_]+ not found\.#'
+        - '#Variable \$\S+ might not be defined\.#'

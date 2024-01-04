@@ -48,10 +48,10 @@ return $config
         'visibility_required' => false,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
-        ->in(__DIR__)
-        // ->exclude([
-        //     'folder-to-exclude',
-        // ])
+        ->in(__DIR__ . '/upload/')
+         ->exclude([
+             __DIR__ . '/upload/system/storage/vendor/',
+         ])
         // ->append([
         //     'file-to-include',
         // ])

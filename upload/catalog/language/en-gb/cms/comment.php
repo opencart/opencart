@@ -39,4 +39,3 @@ $_['error_comment']         = 'Comment must be between 25 and 1000 characters!';
 $_['error_interval']        = 'Warning: you must wait %s minutes before making another comment!';
 $_['error_login']           = 'You must login to comment on the article or rate it!';
 $_['error_status']          = 'Comments are disabled!';
-

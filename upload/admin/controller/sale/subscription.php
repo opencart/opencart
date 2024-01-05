@@ -953,7 +953,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/order');
 
-		$results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id, ($page - 1) * $limit, $limit);
+		$results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id);
 
 		foreach ($results as $result) {
 			$data['orders'][] = [

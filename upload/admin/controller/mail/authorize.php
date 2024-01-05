@@ -11,8 +11,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * Index
 	 *
 	 * @param string $route
-	 * @param        $args
-	 * @param        $output
+	 * @param array  $args
+	 * @param array  $output
 	 *
 	 * @throws \Exception
 	 *
@@ -69,7 +69,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @param string $route
 	 * @param array  $args
-	 * @param        $output
+	 * @param array  $output
 	 *
 	 * @throws \Exception
 	 *

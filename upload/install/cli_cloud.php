@@ -52,11 +52,11 @@ $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
 set_error_handler(/**
- * @param       $code
- * @param       $message
- * @param       $file
- * @param       $line
- * @param array $errcontext
+ * @param int    $code
+ * @param string $message
+ * @param string $file
+ * @param int    $line
+ * @param array  $errcontext
  *
  * @throws \ErrorException
  *

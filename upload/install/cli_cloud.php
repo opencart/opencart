@@ -104,7 +104,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @param $argv
+	 * @param array $argv
 	 *
 	 * @return string
 	 */

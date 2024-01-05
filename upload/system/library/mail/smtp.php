@@ -268,6 +268,14 @@ class Smtp {
 		}
 	}
 
+	/**
+	 * @param resource     $handle
+	 * @param false|int    $status_code
+	 * @param false|string $error_text
+	 * @param int          $counter
+	 *
+	 * @return string
+	 */
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';
 

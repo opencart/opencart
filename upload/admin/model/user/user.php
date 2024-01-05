@@ -38,8 +38,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Password
 	 *
-	 * @param int $user_id
-	 * @param     $password
+	 * @param int    $user_id
+	 * @param string $password
 	 *
 	 * @return void
 	 */

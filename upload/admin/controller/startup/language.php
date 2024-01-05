@@ -51,10 +51,10 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Fill the language up with default values
 	 *
-	 * @param $route
-	 * @param $prefix
-	 * @param $code
-	 * @param $output
+	 * @param string $route
+	 * @param string $prefix
+	 * @param string $code
+	 * @param array  $output
 	 *
 	 * @return void
 	 */

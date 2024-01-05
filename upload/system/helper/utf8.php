@@ -6,10 +6,24 @@ function strlen(string $string) {
 	return mb_strlen($string);
 }
 
+/**
+ * @param string $string
+ * @param string $needle
+ * @param int    $offset
+ *
+ * @return false|int
+ */
 function strpos(string $string, string $needle, int $offset = 0) {
 	return mb_strpos($string, $needle, $offset);
 }
 
+/**
+ * @param string $string
+ * @param string $needle
+ * @param int    $offset
+ *
+ * @return false|int
+ */
 function strrpos(string $string, string $needle, int $offset = 0) {
 	return mb_strrpos($string, $needle, $offset);
 }

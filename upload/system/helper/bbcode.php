@@ -1,6 +1,6 @@
 <?php
 // BBCode Converter that converts BBCode written for OpenCart
-function oc_bbcode_decode(string $string) {
+function oc_bbcode_decode(string $string): string {
 	$pattern = [];
 	$replace = [];
 

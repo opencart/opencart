@@ -187,7 +187,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
 			if (isset($this->request->post['redirect'])) {
-				$redirect = urldecode($this->request->post['redirect']);
+				$redirect = urldecode(html_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8')));
 			} else {
 				$redirect = '';
 			}

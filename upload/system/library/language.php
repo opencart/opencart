@@ -66,7 +66,7 @@ class Language {
 	 *
 	 * @param string $key
 	 */
-	public function get(string $key) {
+	public function get(string $key): string {
 		return $this->data[$key] ?? $key;
 	}
 

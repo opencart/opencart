@@ -281,7 +281,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// We set $i so we can batch execute the queries rather than do them all at once.
 			$i = 0;
-			$start = false;
 
 			$handle = fopen($file, 'r');
 
@@ -292,26 +291,14 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 				$line = fgets($handle, 1000000);
 
-				if (substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') {
-					$sql = '';
-
-					$start = true;
-				}
-
 				if ($i > 0 && (substr($line, 0, strlen('TRUNCATE TABLE `' . DB_PREFIX . 'user`')) == 'TRUNCATE TABLE `' . DB_PREFIX . 'user`' || substr($line, 0, strlen('TRUNCATE TABLE `' . DB_PREFIX . 'user_group`')) == 'TRUNCATE TABLE `' . DB_PREFIX . 'user_group`')) {
 					fseek($handle, $position, SEEK_SET);
 
 					break;
 				}
 
-				if ($start) {
-					$sql .= $line;
-				}
-
-				if ($start && substr($line, -2) == ";\n") {
-					$this->db->query(substr($sql, 0, strlen($sql) - 2));
-
-					$start = false;
+				if ((substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') && substr($line, -2) == ";\n") {
+					$this->db->query(substr($line, 0, strlen($line) - 2));
 				}
 
 				$i++;

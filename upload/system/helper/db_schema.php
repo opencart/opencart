@@ -1,5 +1,5 @@
 <?php
-function oc_db_create($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_prefix, $db_ssl_key, $db_ssl_cert, $db_ssl_ca) {
+function oc_db_create(string $db_driver, string $db_hostname, string $db_username, string $db_password, string $db_database, string $db_port, string $db_prefix, string $db_ssl_key, string $db_ssl_cert, string $db_ssl_ca): bool {
 	try {
 		// Database
 		$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);

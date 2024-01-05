@@ -9,7 +9,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * @param string $route
 	 * @param array  $args
-	 * @param        $output
+	 * @param array  $output
 	 *
 	 *  addHistory
 	 *

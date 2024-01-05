@@ -325,7 +325,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_customer_customer->deleteAddress($address_id, $this->request->post);
+			$this->model_customer_customer->deleteAddress($address_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

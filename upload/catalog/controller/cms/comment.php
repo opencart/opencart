@@ -309,7 +309,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
-	 	$this->load->model('cms/article');
+		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
 

@@ -236,7 +236,7 @@ class Loader {
 	 * @param string $route
 	 * @param array  $args
 	 *
-	 * @return void
+	 * @return object
 	 */
 	public function library(string $route, &...$args): object {
 		// Sanitize the call

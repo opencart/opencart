@@ -184,7 +184,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * Refresh
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 *
 	 * @return void
 	 */

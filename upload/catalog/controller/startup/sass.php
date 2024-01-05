@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Startup;
  */
 class Sass extends \Opencart\System\Engine\Controller {
 	/**
-	 * @throws \ScssPhp\ScssPhp\Exception\SassException
+	 * @throws \Exception&\ScssPhp\ScssPhp\Exception\SassException
 	 *
 	 * @return void
 	 */

@@ -56,7 +56,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $modification_id
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getModification(int $modification_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "modification` WHERE `modification_id` = '" . (int)$modification_id . "'");

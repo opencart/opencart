@@ -25,7 +25,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param int   $antispam_id
 	 * @param array $data
 	 *
-	 * @return int
+	 * @return void
 	 */
 	public function editAntispam(int $antispam_id, array $data = []): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "' WHERE `antispam_id` = '" . (int)$antispam_id . "'");

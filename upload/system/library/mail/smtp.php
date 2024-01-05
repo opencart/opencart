@@ -276,7 +276,7 @@ class Smtp {
 	 *
 	 * @return string
 	 */
-	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
+	private function handleReply($handle, $status_code = false, $error_text = false, int $counter = 0): string {
 		$reply = '';
 
 		while (($line = fgets($handle, 515)) !== false) {

@@ -108,7 +108,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function install($argv): string {
+	public function install(array $argv): string {
 		// Options
 		$option = [];
 

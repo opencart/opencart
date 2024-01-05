@@ -81,10 +81,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$paths = [];
 
 		// Parse the query into its separate parts
-		$queries = explode('&', $url_info['query']);
+		$parts = explode('&', $url_info['query']);
 
-		foreach ($queries as $query) {
-			$pair = explode('=', $query);
+		foreach ($parts as $part) {
+			$pair = explode('=', $part);
 
 			if (isset($pair[0])) {
 				$key = (string)$pair[0];

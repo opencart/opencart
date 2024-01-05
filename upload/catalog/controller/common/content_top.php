@@ -46,10 +46,10 @@ class ContentTop extends \Opencart\System\Engine\Controller {
 			$layout_id = $this->model_catalog_information->getLayoutId((int)$this->request->get['information_id']);
 		}
 
-		if ($route == 'cms/blog.info' && isset($this->request->get['blog_id'])) {
-			$this->load->model('cms/blog');
+		if ($route == 'cms/blog.info' && isset($this->request->get['article_id'])) {
+			$this->load->model('cms/article');
 
-			$layout_id = $this->model_cms_blog->getLayoutId((int)$this->request->get['blog_id']);
+			$layout_id = $this->model_cms_article->getLayoutId((int)$this->request->get['article_id']);
 		}
 
 		if (!$layout_id) {

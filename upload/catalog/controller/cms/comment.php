@@ -37,7 +37,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['logged'] = $this->customer->isLogged();
-		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&page=' . $page . '&redirect=' . urlencode($this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'], true)));
 
 		$this->session->data['comment_token'] = oc_token(32);
 
@@ -180,7 +180,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['refresh'] = $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page=' . $page, true);
 
 		$data['logged'] = $this->customer->isLogged();
-
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&redirect=' . urlencode($this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id, true)));
 
 		return $this->load->view('cms/comment_list', $data);
 	}
@@ -420,8 +420,18 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$article_comment_id = 0;
 		}
 
+		if (isset($this->request->get['rating'])) {
+			$rating = (bool)$this->request->get['rating'];
+		} else {
+			$rating = 0;
+		}
+
 		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
 			$json['error'] = $this->language->get('error_token');
+		}
+
+		if (!$this->customer->isLogged()) {
+			$json['error'] = $this->language->get('error_login');
 		}
 
 		$this->load->model('cms/article');
@@ -439,16 +449,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_article_comment');
 		}
 
-		if (!$this->customer->isLogged() && !$this->config->get('config_comment_guest')) {
-			$json['error'] = $this->language->get('error_login');
-		}
-
 		if (!$json) {
 			// Anti-Spam
 			$rating_data = $this->request->post + [
 				'article_comment_id' => $article_comment_id,
 				'customer_id'        => $this->customer->getId(),
-				'rating'             => (bool)$this->request->get['rating'],
+				'rating'             => $rating,
 				'ip'                 => $this->request->server['REMOTE_ADDR']
 			];
 

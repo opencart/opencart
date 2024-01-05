@@ -9,7 +9,7 @@
   </div>
 {% endif %}
 <div class="text-center p-2 border-top">
-  <button type="button" value="{{ refresh }}" id="button-refresh-{{ parent_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-secondary"><i class="fa fa-sync"></i></button>
+  <button type="button" value="{{ refresh }}" id="button-refresh-{{ parent_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
   {% if not replies %}
     <button type="button" class="btn btn-secondary" disabled>{{ button_replies }}</button>
   {% elseif next %}

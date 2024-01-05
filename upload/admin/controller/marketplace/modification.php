@@ -268,6 +268,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			// Log
 			$log = [];
 
+			$original = [];
 			$modification = [];
 
 			foreach ($xml as $xml) {

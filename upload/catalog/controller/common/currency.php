@@ -76,10 +76,16 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		setcookie('currency', $this->session->data['currency'], $option);
 
-		if (isset($this->request->post['redirect']) && str_starts_with(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_url'))) {
-			$this->response->redirect(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->post['redirect'])) {
+			$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
 		} else {
-			$this->response->redirect($this->url->link($this->config->get('action_default')));
+			$redirect = '';
+		}
+
+		if ($redirect && str_starts_with($redirect, $this->config->get('config_url'))) {
+			$this->response->redirect($redirect);
+		} else {
+			$this->response->redirect($this->url->link($this->config->get('action_default'), 'language=' . $this->config->get('config_language')));
 		}
 	}
 }

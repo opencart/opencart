@@ -146,9 +146,15 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$this->model_user_user->editAuthorizeStatus($authorize_info['user_authorize_id'], 1);
 			$this->model_user_user->editAuthorizeTotal($authorize_info['user_authorize_id'], 0);
 
+			if (isset($this->request->post['redirect'])) {
+				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			} else {
+				$redirect = '';
+			}
+
 			// Register the cookie for security.
-			if (isset($this->request->post['redirect']) && str_starts_with(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'), HTTP_SERVER)) {
-				$json['redirect'] = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8') . '&user_token=' . $this->session->data['user_token'];
+			if ($redirect && str_starts_with($redirect, HTTP_SERVER)) {
+				$json['redirect'] = $redirect . '&user_token=' . $this->session->data['user_token'];
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 			}

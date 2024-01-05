@@ -19,7 +19,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->load->model('checkout/cart');
 
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+			$this->model_checkout_cart->getTotals($totals, $taxes, $total);
 		}
 
 		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));

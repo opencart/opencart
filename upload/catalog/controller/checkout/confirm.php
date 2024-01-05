@@ -19,7 +19,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('checkout/cart');
 
-		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+		$this->model_checkout_cart->getTotals($totals, $taxes, $total);
 
 		$status = ($this->customer->isLogged() || !$this->config->get('config_customer_price'));
 

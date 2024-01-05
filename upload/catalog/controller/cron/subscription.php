@@ -292,7 +292,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					$store->load->model('checkout/cart');
 
-					($store->model_checkout_cart->getTotals)($totals, $taxes, $total);
+					$store->model_checkout_cart->getTotals($totals, $taxes, $total);
 
 					$total_data = [
 						'totals' => $totals,

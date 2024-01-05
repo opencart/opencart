@@ -229,7 +229,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/module');
 
-			$this->model_setting_module->addModule($this->request->get['extension'] . '.' . $this->request->get['code'], $this->language->get('extension_heading_title'));
+			$this->model_setting_module->addModule($this->request->get['extension'] . '.' . $this->request->get['code'], ['name' => $this->language->get('extension_heading_title')]);
 
 			$json['success'] = $this->language->get('text_success');
 		}

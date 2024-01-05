@@ -67,13 +67,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['action'] = $this->url->link('install/step_2', 'language=' . $this->config->get('language_code'));
 
 		$data['php_version'] = PHP_VERSION;
-
-		if (version_compare(PHP_VERSION, '7.4', '<')) {
-			$data['version'] = false;
-		} else {
-			$data['version'] = true;
-		}
-
+		$data['version'] = version_compare(PHP_VERSION, '7.4', '>=');
 		$data['register_globals'] = ini_get('register_globals');
 		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
 		$data['file_uploads'] = ini_get('file_uploads');

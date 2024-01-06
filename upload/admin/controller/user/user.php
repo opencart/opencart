@@ -716,30 +716,21 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		$authorizes = $this->model_user_user->getTotalAuthorizes($user_authorize_id);
+		$authorize_info = $this->model_user_user->getAuthorize($user_authorize_id);
 
-		if (!$authorizes) {
+		if (!$authorize_info) {
 			$json['error'] = $this->language->get('error_authorize');
 		}
 
 		if (!$json) {
 			$this->model_user_user->deleteAuthorize($user_authorize_id);
 
-			$status = false;
+			// If the token is still present, then we enforce the user to log out automatically.
+			if ($authorize_info['token'] == $token) {
+				$this->session->data['success'] = $this->language->get('text_success');
 
-			foreach ($authorizes as $authorize) {
-				// If the token is still present, then we enforce the user to log out automatically.
-				if ($authorize['token'] == $token) {
-					$this->session->data['success'] = $this->language->get('text_success');
-
-					$json['redirect'] = $this->url->link('common/login', '', true);
-
-					$status = true;
-					break;
-				}
-			}
-
-			if (!$status) {
+				$json['redirect'] = $this->url->link('common/login', '', true);
+			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}

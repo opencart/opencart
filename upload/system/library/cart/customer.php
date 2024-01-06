@@ -17,7 +17,7 @@ class Customer {
 	/**
 	 * @var object
 	 */
-	private object $request; // Do not change to object as it causes errors
+	private object $request; // Do not add namespace as it stops devs being able to extend classes
 	/**
 	 * @var object
 	 */

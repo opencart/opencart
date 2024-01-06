@@ -436,7 +436,7 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array
 	 */
-	public function getLanguagesByExtensions(string $extension): array {
+	public function getLanguagesByExtension(string $extension): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `extension` = '" . $this->db->escape($extension) . "'");
 
 		return $query->rows;

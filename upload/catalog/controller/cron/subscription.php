@@ -401,7 +401,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							}
 
 							if ($date_next) {
-								$this->model_account_subscription->editDateNext($result['subscription_id'], $date_next);
+								$this->load->model('checkout/subscription');
+								$this->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
 							}
 
 							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'), true);

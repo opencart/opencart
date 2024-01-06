@@ -882,9 +882,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['payment_methods'] = [];
 
-		$this->load->model('customer/customer');
+		$this->load->model('sale/subscription');
 
-		$results = $this->model_customer_customer->getPaymentMethods($customer_id, ($page - 1) * $limit, $limit);
+		$results = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $customer_id]);
 
 		foreach ($results as $result) {
 			if (isset($result['image'])) {
@@ -904,7 +904,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$payment_total = $this->model_customer_customer->getTotalPaymentMethods($customer_id);
+		$payment_total = $this->model_sale_subscription->getTotalSubscriptions(['filter_customer_id' => $customer_id]);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $payment_total,

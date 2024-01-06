@@ -1,6 +1,5 @@
 <?php
-
-use \googleshopping\exception\Connection as ConnectionException;
+use \googleshopping\Exception\Connection as ConnectionException;
 use \googleshopping\Googleshopping;
 use \googleshopping\traits\LibraryLoader;
 use \googleshopping\traits\StoreLoader;

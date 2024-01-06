@@ -156,11 +156,11 @@ class Currency {
 	 *
 	 * @param string $currency
 	 *
-	 * @return string
+	 * @return int
 	 */
-	public function getDecimalPlace(string $currency): string {
+	public function getDecimalPlace(string $currency): int {
 		if (isset($this->currencies[$currency])) {
-			return $this->currencies[$currency]['decimal_place'];
+			return (int)$this->currencies[$currency]['decimal_place'];
 		} else {
 			return 0;
 		}

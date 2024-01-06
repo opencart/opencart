@@ -1,10 +1,9 @@
 <?php
-
 namespace googleshopping;
 
+use \googleshopping\Exception\Connection as ConnectionException;
+use \googleshopping\Exception\AccessForbidden as AccessForbiddenException;
 use \googleshopping\traits\StoreLoader;
-use \googleshopping\exception\Connection as ConnectionException;
-use \googleshopping\exception\AccessForbidden as AccessForbiddenException;
 
 class Googleshopping extends Library {
     use StoreLoader;

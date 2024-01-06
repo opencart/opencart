@@ -149,9 +149,9 @@ class Tax {
 	 *
 	 * @param int $tax_rate_id
 	 *
-	 * @return string
+	 * @return false|string
 	 */
-	public function getRateName(int $tax_rate_id): string {
+	public function getRateName(int $tax_rate_id) {
 		$tax_query = $this->db->query("SELECT `name` FROM `" . DB_PREFIX . "tax_rate` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 
 		if ($tax_query->num_rows) {

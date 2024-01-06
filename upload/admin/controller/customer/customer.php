@@ -1412,28 +1412,30 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		$login_infos = $this->model_customer_customer->getAuthorizes($customer_authorize_id);
+		$authorizes = $this->model_customer_customer->getAuthorizes($customer_authorize_id);
 
-		if (!$login_infos) {
+		if (!$authorizes) {
 			$json['error'] = $this->language->get('error_authorize');
 		}
 
 		if (!$json) {
 			$this->model_customer_customer->deleteAuthorize($customer_authorize_id);
 
-			$tokenExists = false;
-			foreach ($login_infos as $login_info) {
+			$status = false;
+
+			foreach ($authorizes as $authorize) {
 				// If the token is still present, then we enforce the customer to log out automatically.
-				if ($login_info['token'] == $token) {
+				if ($authorize['token'] == $token) {
 					$this->session->data['success'] = $this->language->get('text_success');
 
 					$json['redirect'] = $this->url->link('common/login', '', true);
-					$tokenExists = true;
+
+					$status = true;
 					break;
 				}
 			}
 
-			if (!$tokenExists) {
+			if (!$status) {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}

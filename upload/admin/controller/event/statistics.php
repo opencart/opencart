@@ -9,9 +9,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * addReview
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 *
@@ -26,9 +26,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * deleteReview
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 *
@@ -43,9 +43,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * addReturn
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 *
@@ -60,9 +60,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * deleteReturn
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 *

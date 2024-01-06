@@ -9,7 +9,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Language
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -219,8 +219,8 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Language
 	 *
-	 * @param int   $language_id
-	 * @param array $data
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -356,7 +356,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Languages
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */

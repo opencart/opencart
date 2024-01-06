@@ -9,7 +9,7 @@ class Search extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Search
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

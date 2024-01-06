@@ -9,7 +9,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Banner
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -32,8 +32,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Banner
 	 *
-	 * @param int   $banner_id
-	 * @param array $data
+	 * @param int                  $banner_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -79,7 +79,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Banners
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

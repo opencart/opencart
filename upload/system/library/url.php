@@ -19,7 +19,7 @@ class Url {
 	 */
 	private string $url;
 	/**
-	 * @var array
+	 * @var array<int, \Opencart\System\Engine\Controller>
 	 */
 	private array $rewrite = [];
 

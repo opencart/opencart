@@ -10,9 +10,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Customer
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -34,9 +34,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Customer
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -58,9 +58,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Password
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -95,9 +95,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Login
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -123,9 +123,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Forgotten
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -153,9 +153,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Transaction
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -184,9 +184,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Affiliate
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -208,9 +208,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Affiliate
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -232,9 +232,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Address
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -256,9 +256,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Address
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -280,9 +280,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Address
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -304,9 +304,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Return
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -338,8 +338,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add History
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */

@@ -9,7 +9,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Status
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +34,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Status
 	 *
-	 * @param int   $return_status_id
-	 * @param array $data
+	 * @param int                  $return_status_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Statuses
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

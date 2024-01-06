@@ -113,7 +113,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -174,7 +174,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -221,7 +221,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -268,7 +268,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -299,7 +299,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -338,7 +338,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -369,7 +369,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -418,7 +418,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -453,7 +453,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -506,7 +506,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

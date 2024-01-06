@@ -9,7 +9,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Status
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +34,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Subscription Status
 	 *
-	 * @param int   $subscription_status_id
-	 * @param array $data
+	 * @param int                  $subscription_status_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Statuses
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

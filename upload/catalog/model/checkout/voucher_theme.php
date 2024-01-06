@@ -22,7 +22,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Voucher Themes
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

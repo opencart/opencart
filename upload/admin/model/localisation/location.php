@@ -9,7 +9,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Location
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Location
 	 *
-	 * @param int   $location_id
-	 * @param array $data
+	 * @param int                  $location_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -58,7 +58,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Locations
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

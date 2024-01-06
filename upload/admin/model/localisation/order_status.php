@@ -9,7 +9,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order Status
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +34,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Order Status
 	 *
-	 * @param int   $order_status_id
-	 * @param array $data
+	 * @param int                  $order_status_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order Statuses
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

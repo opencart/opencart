@@ -7,7 +7,7 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Sale extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return float
 	 */
@@ -163,7 +163,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -226,7 +226,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -273,7 +273,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -334,7 +334,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -383,7 +383,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -444,7 +444,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

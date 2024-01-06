@@ -9,7 +9,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Zone
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -24,8 +24,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Zone
 	 *
-	 * @param int   $zone_id
-	 * @param array $data
+	 * @param int                  $zone_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -64,7 +64,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zones
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -152,7 +152,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

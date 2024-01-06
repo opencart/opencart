@@ -92,7 +92,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Install
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -167,7 +167,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Installs
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -216,7 +216,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Installs
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

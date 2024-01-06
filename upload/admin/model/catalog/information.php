@@ -9,7 +9,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Information
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -51,8 +51,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Information
 	 *
-	 * @param int   $information_id
-	 * @param array $data
+	 * @param int                  $information_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -127,7 +127,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Information(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

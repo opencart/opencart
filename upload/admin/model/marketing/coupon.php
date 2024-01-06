@@ -9,7 +9,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Coupon
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -36,8 +36,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Coupon
 	 *
-	 * @param int   $coupon_id
-	 * @param array $data
+	 * @param int                  $coupon_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -104,7 +104,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Coupons
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

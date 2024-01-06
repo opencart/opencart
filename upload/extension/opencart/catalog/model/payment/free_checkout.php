@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
  */
 class FreeCheckout extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $address
+	 * @param array<mixed> $address
 	 *
 	 * @return array<string, mixed>
 	 */

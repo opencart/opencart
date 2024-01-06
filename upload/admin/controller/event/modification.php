@@ -9,8 +9,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * Controller
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -23,8 +23,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * Model
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -42,8 +42,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * View
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -56,8 +56,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	/**
 	 * Library
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */

@@ -15,7 +15,7 @@ class Weight {
 	 */
 	private object $config;
 	/**
-	 * @var array
+	 * @var array<string, array<string, mixed>>
 	 */
 	private array $weights = [];
 

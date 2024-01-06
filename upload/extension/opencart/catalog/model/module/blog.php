@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Module;
  */
 class Blog extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -15,9 +15,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * model/localisation/currency/addCurrency
 	 * model/localisation/currency/editCurrency
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */

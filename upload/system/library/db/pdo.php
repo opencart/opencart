@@ -11,7 +11,7 @@ class PDO {
 	 */
 	private ?\PDO $connection;
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private array $data = [];
 	/**

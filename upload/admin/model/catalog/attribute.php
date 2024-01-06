@@ -13,7 +13,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Create a new attribute record in the database.
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int returns the primary key of the new attribute record
 	 */
@@ -34,8 +34,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Edit attribute record in the database.
 	 *
-	 * @param int   $attribute_id primary key of the attribute record to edit
-	 * @param array $data         array of data
+	 * @param int                  $attribute_id primary key of the attribute record to edit
+	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
 	 */
@@ -83,7 +83,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 * @param array $data array of filters
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

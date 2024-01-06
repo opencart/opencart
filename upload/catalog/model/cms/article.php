@@ -30,7 +30,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -120,7 +120,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -188,8 +188,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * addComment
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int                  $article_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -217,8 +217,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * getComments
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int                  $article_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -280,8 +280,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int                  $article_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -306,8 +306,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Rating
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int                  $article_id
+	 * @param array<string, mixed> $data
 	 */
 	public function addRating(int $article_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$data['rating'] . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");

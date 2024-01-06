@@ -9,7 +9,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Tax Class
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -32,8 +32,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Tax Class
 	 *
-	 * @param int   $tax_class_id
-	 * @param array $data
+	 * @param int                  $tax_class_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -81,7 +81,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Classes
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

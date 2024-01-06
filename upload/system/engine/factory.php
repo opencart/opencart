@@ -73,8 +73,8 @@ class Factory {
 	/**
 	 * Library
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string       $route
+	 * @param array<mixed> $args
 	 *
 	 * @return object
 	 */

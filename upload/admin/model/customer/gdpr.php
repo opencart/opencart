@@ -32,7 +32,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Gdpr(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -100,7 +100,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Gdpr(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

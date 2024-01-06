@@ -9,7 +9,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Antispam
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Antispam
 	 *
-	 * @param int   $antispam_id
-	 * @param array $data
+	 * @param int                  $antispam_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -58,7 +58,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Antispam(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -109,7 +109,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Antispam(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

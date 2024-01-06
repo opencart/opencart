@@ -37,7 +37,7 @@ namespace Opencart\System\Engine;
  */
 class Registry {
 	/**
-	 * @var array
+	 * @var array<string, object>
 	 */
 	private array $data = [];
 

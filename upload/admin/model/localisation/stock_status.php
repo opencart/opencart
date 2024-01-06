@@ -9,7 +9,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Stock Status
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +34,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Stock Status
 	 *
-	 * @param int   $stock_status_id
-	 * @param array $data
+	 * @param int                  $stock_status_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Statuses
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

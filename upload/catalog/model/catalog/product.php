@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Catalog;
  */
 class Product extends \Opencart\System\Engine\Model {
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected array $statement = [];
 
@@ -54,7 +54,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -406,7 +406,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -519,7 +519,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Specials
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

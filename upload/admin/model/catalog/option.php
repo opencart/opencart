@@ -9,7 +9,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -40,8 +40,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Option
 	 *
-	 * @param int   $option_id
-	 * @param array $data
+	 * @param int                  $option_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -104,7 +104,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

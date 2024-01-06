@@ -9,7 +9,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Topic
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int $topic
 	 */
@@ -42,8 +42,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Topic
 	 *
-	 * @param int   $topic_id
-	 * @param array $data
+	 * @param int                  $topic_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -117,7 +117,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Topics
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

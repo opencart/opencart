@@ -15,7 +15,7 @@ class Currency {
 	 */
 	private object $language;
 	/**
-	 * @var array
+	 * @var array<string, array<string, mixed>>
 	 */
 	private array $currencies = [];
 

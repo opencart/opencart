@@ -9,7 +9,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Methods
 	 *
-	 * @param array $shipping_address
+	 * @param array<string, mixed> $shipping_address
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */

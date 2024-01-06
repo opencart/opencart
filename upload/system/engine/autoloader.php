@@ -14,7 +14,7 @@ namespace Opencart\System\Engine;
  */
 class Autoloader {
 	/**
-	 * @var array
+	 * @var array<string, array<string, mixed>>
 	 */
 	private array $path = [];
 

@@ -46,9 +46,9 @@ class Setting extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Setting
 	 *
-	 * @param string $code
-	 * @param array  $data
-	 * @param int    $store_id
+	 * @param string               $code
+	 * @param array<string, mixed> $data
+	 * @param int                  $store_id
 	 *
 	 * @return void
 	 */
@@ -99,10 +99,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Value
 	 *
-	 * @param string       $code
-	 * @param string       $key
-	 * @param array|string $value
-	 * @param int          $store_id
+	 * @param string              $code
+	 * @param string              $key
+	 * @param array<mixed>|string $value
+	 * @param int                 $store_id
 	 *
 	 * @return void
 	 */

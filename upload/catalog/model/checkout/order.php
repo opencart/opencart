@@ -9,7 +9,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -64,8 +64,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Order
 	 *
-	 * @param int   $order_id
-	 * @param array $data
+	 * @param int                  $order_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -296,7 +296,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

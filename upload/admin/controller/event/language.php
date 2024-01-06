@@ -13,8 +13,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * view/ * /before
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string                $route
+	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
@@ -33,8 +33,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * controller/ * /before
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string       $route
+	 * @param array<mixed> $args
 	 *
 	 * @return void
 	 */
@@ -53,9 +53,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * // controller/ * / * /after
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string       $route
+	 * @param array<mixed> $args
+	 * @param mixed        $output
 	 *
 	 * @return void
 	 */

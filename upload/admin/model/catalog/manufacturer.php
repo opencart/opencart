@@ -9,7 +9,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Manufacturer
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -47,8 +47,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Manufacturer
 	 *
-	 * @param int   $manufacturer_id
-	 * @param array $data
+	 * @param int                  $manufacturer_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -116,7 +116,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturers
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

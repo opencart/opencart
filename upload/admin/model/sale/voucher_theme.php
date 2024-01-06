@@ -9,7 +9,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Voucher Theme
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -30,8 +30,8 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Voucher Theme
 	 *
-	 * @param int   $voucher_theme_id
-	 * @param array $data
+	 * @param int                  $voucher_theme_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -77,7 +77,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Voucher Themes
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

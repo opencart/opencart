@@ -9,7 +9,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rewards
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

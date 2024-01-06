@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Extension;
  */
 class Feed extends \Opencart\System\Engine\Controller {
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private array $error = [];
 

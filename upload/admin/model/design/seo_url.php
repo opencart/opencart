@@ -9,7 +9,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Seo Url
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Seo Url
 	 *
-	 * @param int   $seo_url_id
-	 * @param array $data
+	 * @param int                  $seo_url_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -58,7 +58,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -132,7 +132,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Seo Urls
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

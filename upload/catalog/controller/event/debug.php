@@ -7,8 +7,8 @@ namespace Opencart\Catalog\Controller\Event;
  */
 class Debug extends \Opencart\System\Engine\Controller {
 	/**
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -19,8 +19,8 @@ class Debug extends \Opencart\System\Engine\Controller {
 	/**
 	 * Before
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -36,9 +36,9 @@ class Debug extends \Opencart\System\Engine\Controller {
 	/**
 	 * After
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */

@@ -10,9 +10,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -49,7 +49,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	/**
 	 * Export
 	 *
-	 * @param array $gdpr_info
+	 * @param array<string, mixed> $gdpr_info
 	 *
 	 * @throws \Exception
 	 *
@@ -228,7 +228,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	/**
 	 * Approve
 	 *
-	 * @param array $gdpr_info
+	 * @param array<string, mixed> $gdpr_info
 	 *
 	 * @throws \Exception
 	 *
@@ -322,7 +322,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	/**
 	 * Deny
 	 *
-	 * @param array $gdpr_info
+	 * @param array<string, mixed> $gdpr_info
 	 *
 	 * @throws \Exception
 	 *
@@ -416,7 +416,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	/**
 	 * Remove
 	 *
-	 * @param array $gdpr_info
+	 * @param array<string, mixed> $gdpr_info
 	 *
 	 * @throws \Exception
 	 *

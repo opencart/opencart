@@ -9,7 +9,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Translation
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -20,8 +20,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Translation
 	 *
-	 * @param int   $translation_id
-	 * @param array $data
+	 * @param int                  $translation_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -56,7 +56,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Translations
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

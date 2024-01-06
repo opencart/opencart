@@ -742,7 +742,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/modification');
 
 			foreach ($selected as $modification_id) {
-				$this->model_setting_modification->deleteMdification($modification_id);
+				$this->model_setting_modification->deleteModification($modification_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

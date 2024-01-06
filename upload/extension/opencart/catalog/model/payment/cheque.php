@@ -9,7 +9,7 @@ class Cheque extends \Opencart\System\Engine\Model {
 	/**
 	 * @param array $address
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/cheque');

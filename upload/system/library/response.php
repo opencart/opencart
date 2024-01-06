@@ -16,7 +16,7 @@ namespace Opencart\System\Library;
  */
 class Response {
 	/**
-	 * @var array
+	 * @var array<int, string>
 	 */
 	private array $headers = [];
 	/**
@@ -40,7 +40,7 @@ class Response {
 	/**
 	 * getHeaders
 	 *
-	 * @return array
+	 * @return array<int, string>
 	 */
 	public function getHeaders(): array {
 		return $this->headers;

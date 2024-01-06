@@ -66,7 +66,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getLengthClasses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -121,7 +121,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $length_class_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getLengthClass(int $length_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lc`.`length_class_id` = '" . (int)$length_class_id . "' AND `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -134,7 +134,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $unit
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getDescriptionByUnit(string $unit): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -147,7 +147,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $length_class_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getDescriptions(int $length_class_id): array {
 		$length_class_data = [];

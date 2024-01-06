@@ -60,7 +60,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_group_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getAttributeGroup(int $attribute_group_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
@@ -73,7 +73,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getAttributeGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = agd.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -117,7 +117,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_group_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $attribute_group_id): array {
 		$attribute_group_data = [];

@@ -66,7 +66,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getWeightClasses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -121,7 +121,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $weight_class_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getWeightClass(int $weight_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wc`.`weight_class_id` = '" . (int)$weight_class_id . "' AND `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -134,7 +134,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $unit
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getDescriptionByUnit(string $unit): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -147,7 +147,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $weight_class_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getDescriptions(int $weight_class_id): array {
 		$weight_class_data = [];

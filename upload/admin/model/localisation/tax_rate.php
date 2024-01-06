@@ -64,7 +64,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_rate_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getTaxRate(int $tax_rate_id): array {
 		$query = $this->db->query("SELECT `tr`.`tax_rate_id`, `tr`.`name` AS name, `tr`.`rate`, `tr`.`type`, `tr`.`geo_zone_id`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr`.`tax_rate_id` = '" . (int)$tax_rate_id . "'");
@@ -77,7 +77,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTaxRates(array $data = []): array {
 		$sql = "SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`)";
@@ -123,7 +123,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_rate_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getCustomerGroups(int $tax_rate_id): array {
 		$tax_customer_group_data = [];

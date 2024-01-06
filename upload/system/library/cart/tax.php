@@ -167,7 +167,7 @@ class Tax {
 	 * @param float $value
 	 * @param int   $tax_class_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRates(float $value, int $tax_class_id): array {
 		$tax_rate_data = [];

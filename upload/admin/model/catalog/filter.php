@@ -93,7 +93,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $filter_group_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getGroup(int $filter_group_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group` `fg` LEFT JOIN `" . DB_PREFIX . "filter_group_description` `fgd` ON (`fg`.`filter_group_id` = `fgd`.`filter_group_id`) WHERE `fg`.`filter_group_id` = '" . (int)$filter_group_id . "' AND `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -106,7 +106,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` `fg` LEFT JOIN `" . DB_PREFIX . "filter_group_description` `fgd` ON (`fg`.`filter_group_id` = `fgd`.`filter_group_id`) WHERE `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -150,7 +150,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $filter_group_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getGroupDescriptions(int $filter_group_id): array {
 		$filter_group_data = [];
@@ -169,7 +169,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $filter_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getFilter(int $filter_id): array {
 		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "filter_group_description` `fgd` WHERE `f`.`filter_group_id` = `fgd`.`filter_group_id` AND `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` `f` LEFT JOIN `" . DB_PREFIX . "filter_description` `fd` ON (`f`.`filter_id` = `fd`.`filter_id`) WHERE `f`.`filter_id` = '" . (int)$filter_id . "' AND `fd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -182,7 +182,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getFilters(array $data): array {
 		$sql = "SELECT *, (SELECT name FROM `" . DB_PREFIX . "filter_group_description` `fgd` WHERE `f`.`filter_group_id` = `fgd`.`filter_group_id` AND `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` `f` LEFT JOIN `" . DB_PREFIX . "filter_description` `fd` ON (`f`.`filter_id` = `fd`.`filter_id`) WHERE `fd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -215,7 +215,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $filter_group_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getDescriptions(int $filter_group_id): array {
 		$filter_data = [];

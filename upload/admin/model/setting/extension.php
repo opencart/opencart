@@ -9,7 +9,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Extensions
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getExtensions(): array {
 		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");
@@ -22,7 +22,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $type
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getExtensionsByType(string $type): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
@@ -36,7 +36,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 * @param string $type
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getExtensionByCode(string $type, string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
@@ -130,7 +130,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $extension_install_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getInstall(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
@@ -143,7 +143,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $extension_download_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getInstallByExtensionDownloadId(int $extension_download_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
@@ -156,7 +156,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getInstallByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `code` = '" . $this->db->escape($code) . "'");
@@ -169,7 +169,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getInstalls(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
@@ -260,7 +260,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $extension_install_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getPathsByExtensionInstallId(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `extension_path_id` ASC");
@@ -273,7 +273,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $path
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getPaths(string $path): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "' ORDER BY `path` ASC");

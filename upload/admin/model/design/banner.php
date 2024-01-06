@@ -68,7 +68,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $banner_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getBanner(int $banner_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "banner` WHERE `banner_id` = '" . (int)$banner_id . "'");
@@ -81,7 +81,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getBanners(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "banner`";
@@ -125,7 +125,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $banner_id
 	 *
-	 * @return array
+	 * @return array<int, array<int, array<string, mixed>>>
 	 */
 	public function getImages(int $banner_id): array {
 		$banner_image_data = [];

@@ -9,7 +9,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Extensions
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getExtensions(): array {
 		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");
@@ -22,7 +22,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $type
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getExtensionsByType(string $type): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "'");
@@ -36,7 +36,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 * @param string $type
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getExtensionByCode(string $type, string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");

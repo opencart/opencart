@@ -364,7 +364,7 @@ class Image {
 	 *
 	 * @param string $color
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	private function html2rgb(string $color): array {
 		if ($color[0] == '#') {

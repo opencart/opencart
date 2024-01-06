@@ -36,7 +36,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $gdpr_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getGdpr(int $gdpr_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
@@ -49,7 +49,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getGdprByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `code` = '" . $this->db->escape($code) . "'");
@@ -62,7 +62,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $email
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getGdprsByEmail(string $email): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `email` = '" . $this->db->escape($email) . "'");
@@ -73,7 +73,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Expires
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getExpires(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `status` = '2' AND DATE(`date_added`) <= DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "') ORDER BY `date_added` DESC");

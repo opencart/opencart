@@ -9,7 +9,7 @@ class Bestseller extends \Opencart\Catalog\Model\Catalog\Product {
 	/**
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getBestSellers(int $limit): array {
 		// Storing some sub queries so that we are not typing them out multiple times.

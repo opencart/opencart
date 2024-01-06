@@ -73,7 +73,7 @@ class Cart {
 	/**
 	 * getProducts
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getProducts(): array {
 		if (!$this->data) {
@@ -442,7 +442,7 @@ class Cart {
 	/**
 	 * getSubscriptions
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getSubscriptions(): array {
 		$product_data = [];
@@ -491,7 +491,7 @@ class Cart {
 	/**
 	 * getTaxes
 	 *
-	 * @return array
+	 * @return array<int, float>
 	 */
 	public function getTaxes(): array {
 		$tax_data = [];

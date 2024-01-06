@@ -22,7 +22,7 @@ class File {
 	 *
 	 * @param string $session_id
 	 *
-	 * @return array
+	 * @return array<mixed>
 	 */
 	public function read(string $session_id): array {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);

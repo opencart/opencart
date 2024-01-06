@@ -27,7 +27,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getWishlist(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");

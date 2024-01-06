@@ -31,7 +31,7 @@ class Redis {
 	 *
 	 * @param string $session_id
 	 *
-	 * @return array
+	 * @return array<mixed>
 	 */
 	public function read(string $session_id): array {
 		$data = $this->redis->get($this->prefix . $session_id);

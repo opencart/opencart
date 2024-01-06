@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Event;
 /**
  * Class Modification
  *
- * @package Opencart\Admin\Controller\Event
+ * @package Opencart\Catalog\Controller\Event
  */
 class Modification extends \Opencart\System\Engine\Controller {
 	/**

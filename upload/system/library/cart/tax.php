@@ -13,7 +13,7 @@ class Tax {
 	/**
 	 * @var object
 	 */
-	private object  $config;
+	private object $config;
 	/**
 	 * @var array
 	 */

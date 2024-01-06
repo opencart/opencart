@@ -432,8 +432,9 @@ class Order extends \Opencart\System\Engine\Model {
 					if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
 						$this->load->model('extension/' . $extension['extension'] . '/fraud/' . $extension['code']);
 
-						if (isset($this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']}->check)) {
-							$fraud_status_id = $this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']}->check($order_info);
+						$model = $this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']} ?? null;
+						if ($model && is_callable($model->check) || method_exists($model, 'check')) {
+							$fraud_status_id = $model->check($order_info);
 
 							if ($fraud_status_id) {
 								$order_status_id = $fraud_status_id;
@@ -455,9 +456,10 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
-					if (isset($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->confirm)) {
+					$model = $this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']} ?? null;
+					if ($model && is_callable($model->confirm) || method_exists($model, 'confirm')) {
 						// Confirm coupon, vouchers and reward points
-						$fraud_status_id = $this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->confirm($order_info, $order_total);
+						$fraud_status_id = $model->confirm($order_info, $order_total);
 
 						// If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned.
 						if ($fraud_status_id) {
@@ -555,8 +557,9 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
-					if (isset($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm)) {
-						$this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm($order_id);
+					$model = $this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']} ?? null;
+					if ($model && is_callable($model->unconfirm) || method_exists($model, 'unconfirm')) {
+						$model->unconfirm($order_id);
 					}
 				}
 			}

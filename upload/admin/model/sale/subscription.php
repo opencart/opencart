@@ -79,6 +79,17 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Subscription By Customer Payment ID
+	 *
+	 * @param int $customer_payment_id
+	 *
+	 * @return void
+	 */
+	public function deleteSubscriptionByCustomerPaymentId(int $customer_payment_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `customer_payment_id ` = '" . $customer_payment_id);
+	}
+
+	/**
 	 * Get Subscription
 	 *
 	 * @param int $subscription_id

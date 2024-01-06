@@ -939,9 +939,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('customer/customer');
+			$this->load->model('sale/subscription');
 
-			$this->model_customer_customer->deletePaymentMethod($customer_payment_id);
+			$this->model_sale_subscription->deleteSubscriptionByCustomerPaymentId($customer_payment_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

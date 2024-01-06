@@ -7,21 +7,21 @@ namespace Opencart\System\Library\Cart;
  */
 class Customer {
 	/**
-	 * @var \Opencart\System\Library\DB
+	 * @var object
 	 */
-	private \Opencart\System\Library\DB $db;
+	private object $db;
 	/**
-	 * @var \Opencart\System\Engine\Config
+	 * @var object
 	 */
-	private \Opencart\System\Engine\Config $config;
+	private object $config;
 	/**
-	 * @var \Opencart\System\Library\Request
+	 * @var object
 	 */
-	private \Opencart\System\Library\Request $request;
+	private object $request; // Do not change to object as it causes errors
 	/**
-	 * @var \Opencart\System\Library\Session
+	 * @var object
 	 */
-	private \Opencart\System\Library\Session $session;
+	private object $session;
 	/**
 	 * @var int
 	 */

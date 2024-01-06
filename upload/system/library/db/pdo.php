@@ -118,10 +118,12 @@ class PDO {
 	/**
 	 * getLastId
 	 *
-	 * @return int
+	 * @return ?int
 	 */
-	public function getLastId(): int {
-		return $this->connection->lastInsertId();
+	public function getLastId(): ?int {
+		$id = $this->connection->lastInsertId();
+
+		return $id ? (int)$id : null;
 	}
 
 	/**

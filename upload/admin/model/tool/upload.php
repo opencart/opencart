@@ -80,7 +80,7 @@ class ModelToolUpload extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalUploads() {
+	public function getTotalUploads($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "upload";
 
 		$implode = array();

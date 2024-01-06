@@ -68,7 +68,9 @@ class Url {
 		}
 
 		foreach ($this->rewrite as $rewrite) {
-			$url = $rewrite->rewrite($url);
+			if (method_exists($rewrite, 'rewrite')) {
+				$url = $rewrite->rewrite($url);
+			}
 		}
 
 		if (!$js) {

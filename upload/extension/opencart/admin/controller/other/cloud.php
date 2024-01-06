@@ -58,7 +58,7 @@ class Cloud extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/opencart/other/cloud')) {
-			$json['error'] = $this->language->get('error_permission');
+			$json['error']['permission'] = $this->language->get('error_permission');
 		}
 
 		if ((oc_strlen($this->request->post['other_cloud_key']) < 3) || (oc_strlen($this->request->post['other_cloud_key']) > 64)) {

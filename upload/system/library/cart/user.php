@@ -7,17 +7,17 @@ namespace Opencart\System\Library\Cart;
  */
 class User {
 	/**
-	 * @var \Opencart\System\Library\DB
+	 * @var object
 	 */
-	private \Opencart\System\Library\DB $db;
+	private object $db;
 	/**
-	 * @var \Opencart\System\Library\Request
+	 * @var object
 	 */
-	private \Opencart\System\Library\Request $request;
+	private object $request;
 	/**
-	 * @var \Opencart\System\Library\Session
+	 * @var object
 	 */
-	private \Opencart\System\Library\Session $session;
+	private object $session;
 	/**
 	 * @var int
 	 */

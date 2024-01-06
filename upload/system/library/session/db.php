@@ -14,8 +14,8 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class DB {
-	private \Opencart\System\Library\DB $db;
-	private \Opencart\System\Engine\Config $config;
+	private object $db;
+	private object $config;
 
 	/**
 	 * Constructor

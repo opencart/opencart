@@ -7,29 +7,29 @@ namespace Opencart\System\Library\Cart;
  */
 class Cart {
 	/**
-	 * @var \Opencart\System\Library\DB
+	 * @varobject
 	 */
-	private \Opencart\System\Library\DB $db;
+	private object $db;
 	/**
-	 * @var \Opencart\System\Engine\Config
+	 * @var object
 	 */
-	private \Opencart\System\Engine\Config $config;
+	private object $config;
 	/**
-	 * @var \Opencart\System\Library\Cart\Customer
+	 * @var object
 	 */
-	private \Opencart\System\Library\Cart\Customer $customer;
+	private object $customer;
 	/**
-	 * @var \Opencart\System\Library\Session
+	 * @var object
 	 */
-	private \Opencart\System\Library\Session $session;
+	private object $session;
 	/**
-	 * @var \Opencart\System\Library\Cart\Tax
+	 * @var object
 	 */
-	private \Opencart\System\Library\Cart\Tax $tax;
+	private object $tax;
 	/**
-	 * @var \Opencart\System\Library\Cart\Weight
+	 * @var object
 	 */
-	private \Opencart\System\Library\Cart\Weight $weight;
+	private object $weight;
 	/**
 	 * @var array
 	 */

@@ -7,13 +7,13 @@ namespace Opencart\System\Library\Cart;
  */
 class Weight {
 	/**
-	 * @var \Opencart\System\Library\DB
+	 * @var object
 	 */
-	private \Opencart\System\Library\DB $db;
+	private object $db;
 	/**
-	 * @var \Opencart\System\Engine\Config
+	 * @var object $config
 	 */
-	private \Opencart\System\Engine\Config $config;
+	private object $config;
 	/**
 	 * @var array
 	 */

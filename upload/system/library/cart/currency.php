@@ -7,13 +7,13 @@ namespace Opencart\System\Library\Cart;
  */
 class Currency {
 	/**
-	 * @var \Opencart\System\Library\DB
+	 * @var object
 	 */
-	private \Opencart\System\Library\DB $db;
+	private object $db;
 	/**
-	 * @var \Opencart\System\Library\Language
+	 * @var object
 	 */
-	private \Opencart\System\Library\Language $language;
+	private object $language;
 	/**
 	 * @var array
 	 */

@@ -155,8 +155,8 @@ class Customer {
 		$this->email = '';
 		$this->telephone = '';
 		$this->newsletter = false;
-		$this->safe = 0;
-		$this->commenter = 0;
+		$this->safe = false;
+		$this->commenter = false;
 	}
 
 	/**

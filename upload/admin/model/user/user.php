@@ -380,13 +380,12 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize
 	 *
-	 * @param int $user_id
 	 * @param int $user_authorize_id
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function getAuthorize(int $user_id, int $user_authorize_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `user_authorize_id` = '" . (int)$user_authorize_id . "'");
+	public function getAuthorize(int $user_authorize_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_authorize` WHERE `user_authorize_id` = '" . (int)$user_authorize_id . "'");
 
 		return $query->row;
 	}

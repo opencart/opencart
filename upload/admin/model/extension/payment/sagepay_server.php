@@ -245,7 +245,7 @@ class ModelExtensionPaymentSagepayServer extends Model {
 
 		$response_info = explode(chr(10), $response);
 
-		foreach ($response_info as $string) {
+		foreach ($response_info as $i => $string) {
 			if (strpos($string, '=') && isset($i)) {
 				$parts = explode('=', $string, 2);
 				$data['RepeatResponseData_' . $i][trim($parts[0])] = trim($parts[1]);

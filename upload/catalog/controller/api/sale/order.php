@@ -434,18 +434,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			// Order Totals
-			$totals = [];
-			$taxes = $this->cart->getTaxes();
-			$total = 0;
+			$counter = new \Opencart\System\Engine\Counter($this->cart->getTaxes());
 
 			$this->load->model('checkout/cart');
 
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+			$this->model_checkout_cart->getTotals($counter);
 
 			$total_data = [
-				'totals' => $totals,
-				'taxes'  => $taxes,
-				'total'  => $total
+				'totals' => $counter->totals,
+				'taxes'  => $counter->taxes,
+				'total'  => $counter->total
 			];
 
 			$order_data = array_merge($order_data, $total_data);

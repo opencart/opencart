@@ -208,15 +208,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['totals'] = [];
 
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
+		$counter = new \Opencart\System\Engine\Counter($this->cart->getTaxes());
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+			$this->model_checkout_cart->getTotals($counter->totals);
 
-			foreach ($totals as $result) {
+			foreach ($counter->totals as $result) {
 				$data['totals'][] = [
 					'title' => $result['title'],
 					'text'  => $price_status ? $this->currency->format($result['value'], $this->session->data['currency']) : ''

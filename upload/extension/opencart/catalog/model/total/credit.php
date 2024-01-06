@@ -7,22 +7,20 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Credit extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param float $total
+	 * @param \Opencart\System\Engine\Counter $counter
 	 *
 	 * @return void
 	 */
-	public function getTotal(array &$totals, array &$taxes, float &$total): void {
+	public function getTotal(\Opencart\System\Engine\Counter $counter): void {
 		$this->load->language('extension/opencart/total/credit');
 
 		$balance = $this->customer->getBalance();
 
 		if ((float)$balance) {
-			$credit = min($balance, $total);
+			$credit = min($balance, $counter->total);
 
 			if ((float)$credit > 0) {
-				$totals[] = [
+				$counter->totals[] = [
 					'extension'  => 'opencart',
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),
@@ -30,7 +28,7 @@ class Credit extends \Opencart\System\Engine\Model {
 					'sort_order' => (int)$this->config->get('total_credit_sort_order')
 				];
 
-				$total -= $credit;
+				$counter->total -= $credit;
 			}
 		}
 	}

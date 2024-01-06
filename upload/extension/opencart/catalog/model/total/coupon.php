@@ -7,13 +7,11 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Coupon extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param float $total
+	 * @param \Opencart\System\Engine\Counter $counter
 	 *
 	 * @return void
 	 */
-	public function getTotal(array &$totals, array &$taxes, float &$total): void {
+	public function getTotal(\Opencart\System\Engine\Counter $counter): void {
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('extension/opencart/total/coupon', 'coupon');
 
@@ -63,7 +61,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+									$counter->taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 								}
 							}
 						}
@@ -78,7 +76,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 						foreach ($tax_rates as $tax_rate) {
 							if ($tax_rate['type'] == 'P') {
-								$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+								$counter->taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 							}
 						}
 					}
@@ -87,12 +85,12 @@ class Coupon extends \Opencart\System\Engine\Model {
 				}
 
 				// If discount greater than total
-				if ($discount_total > $total) {
-					$discount_total = $total;
+				if ($discount_total > $counter->total) {
+					$discount_total = $counter->total;
 				}
 
 				if ($discount_total > 0) {
-					$totals[] = [
+					$counter->totals[] = [
 						'extension'  => 'opencart',
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('coupon_text_coupon'), $this->session->data['coupon']),
@@ -100,7 +98,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 						'sort_order' => (int)$this->config->get('total_coupon_sort_order')
 					];
 
-					$total -= $discount_total;
+					$counter->total -= $discount_total;
 				}
 			}
 		}

@@ -13,13 +13,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/confirm');
 
 		// Order Totals
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
+		$counter = new \Opencart\System\Engine\Counter($this->cart->getTaxes());
 
 		$this->load->model('checkout/cart');
 
-		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+		$this->model_checkout_cart->getTotals($counter);
 
 		$status = ($this->customer->isLogged() || !$this->config->get('config_customer_price'));
 
@@ -175,9 +173,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			$total_data = [
-				'totals' => $totals,
-				'taxes'  => $taxes,
-				'total'  => $total
+				'totals' => $counter->totals,
+				'taxes'  => $counter->taxes,
+				'total'  => $counter->total
 			];
 
 			$order_data = array_merge($order_data, $total_data);
@@ -389,7 +387,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$data['totals'] = [];
 
-		foreach ($totals as $total) {
+		foreach ($counter->totals as $total) {
 			$data['totals'][] = [
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])

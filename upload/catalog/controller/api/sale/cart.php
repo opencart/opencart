@@ -19,13 +19,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['error']['stock'] = $this->language->get('error_stock');
 		}
 
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
+		$counter = new \Opencart\System\Engine\Counter($this->cart->getTaxes());
 
 		$this->load->model('checkout/cart');
 
-		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+		$this->model_checkout_cart->getTotals($counter);
 
 		$json['products'] = [];
 
@@ -86,7 +84,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json['totals'] = [];
 
-		foreach ($totals as $total) {
+		foreach ($counter->totals as $total) {
 			$json['totals'][] = [
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])

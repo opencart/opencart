@@ -7,20 +7,18 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Total extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param float $total
+	 * @param \Opencart\System\Engine\Counter $counter
 	 *
 	 * @return void
 	 */
-	public function getTotal(array &$totals, array &$taxes, float &$total): void {
+	public function getTotal(\Opencart\System\Engine\Counter $counter): void {
 		$this->load->language('extension/opencart/total/total');
 
-		$totals[] = [
+		$counter->totals[] = [
 			'extension'  => 'opencart',
 			'code'       => 'total',
 			'title'      => $this->language->get('text_total'),
-			'value'      => $total,
+			'value'      => $counter->total,
 			'sort_order' => (int)$this->config->get('total_total_sort_order')
 		];
 	}

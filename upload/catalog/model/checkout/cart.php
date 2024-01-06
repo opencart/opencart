@@ -122,13 +122,11 @@ class Cart extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals
 	 *
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param int   $total
+	 * @param \Opencart\System\Engine\Counter $counter
 	 *
 	 * @return void
 	 */
-	public function getTotals(array &$totals, array &$taxes, int &$total): void {
+	public function getTotals(\Opencart\System\Engine\Counter $counter): void {
 		$sort_order = [];
 
 		$this->load->model('setting/extension');
@@ -145,17 +143,16 @@ class Cart extends \Opencart\System\Engine\Model {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
 
-				// __call magic method cannot pass-by-reference so we get PHP to call it as an anonymous function.
-				($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
+				$this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal($counter);
 			}
 		}
 
 		$sort_order = [];
 
-		foreach ($totals as $key => $value) {
+		foreach ($counter->totals as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $totals);
+		array_multisort($sort_order, SORT_ASC, $counter->totals);
 	}
 }

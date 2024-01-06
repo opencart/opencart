@@ -12,17 +12,15 @@ class Cart extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/cart');
 
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
+		$counter = new \Opencart\System\Engine\Counter($this->cart->getTaxes());
 
 		$this->load->model('checkout/cart');
 
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+			$this->model_checkout_cart->getTotals($counter);
 		}
 
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($counter->total, $this->session->data['currency']));
 
 		// Products
 		$data['products'] = [];
@@ -105,7 +103,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Totals
 		$data['totals'] = [];
 
-		foreach ($totals as $total) {
+		foreach ($counter->totals as $total) {
 			$data['totals'][] = [
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])

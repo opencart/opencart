@@ -7,16 +7,14 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Tax extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param float $total
+	 * @param \Opencart\System\Engine\Counter $counter
 	 *
 	 * @return void
 	 */
-	public function getTotal(array &$totals, array &$taxes, float &$total): void {
-		foreach ($taxes as $key => $value) {
+	public function getTotal(\Opencart\System\Engine\Counter $counter): void {
+		foreach ($counter->taxes as $key => $value) {
 			if ($value > 0) {
-				$totals[] = [
+				$counter->totals[] = [
 					'extension'  => 'opencart',
 					'code'       => 'tax',
 					'title'      => $this->tax->getRateName($key),
@@ -24,7 +22,7 @@ class Tax extends \Opencart\System\Engine\Model {
 					'sort_order' => (int)$this->config->get('total_tax_sort_order')
 				];
 
-				$total += $value;
+				$counter->total += $value;
 			}
 		}
 	}

@@ -7,13 +7,11 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Voucher extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param float $total
+	 * @param \Opencart\System\Engine\Counter $counter
 	 *
 	 * @return void
 	 */
-	public function getTotal(array &$totals, array &$taxes, float &$total): void {
+	public function getTotal(\Opencart\System\Engine\Counter $counter): void {
 		if (isset($this->session->data['voucher'])) {
 			$this->load->language('extension/opencart/total/voucher', 'voucher');
 
@@ -22,10 +20,10 @@ class Voucher extends \Opencart\System\Engine\Model {
 			$voucher_info = $this->model_checkout_voucher->getVoucher($this->session->data['voucher']);
 
 			if ($voucher_info) {
-				$amount = min($voucher_info['amount'], $total);
+				$amount = min($voucher_info['amount'], $counter->total);
 
 				if ($amount > 0) {
-					$totals[] = [
+					$counter->totals[] = [
 						'extension'  => 'opencart',
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
@@ -33,7 +31,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 						'sort_order' => (int)$this->config->get('total_voucher_sort_order')
 					];
 
-					$total -= $amount;
+					$counter->total -= $amount;
 				} else {
 					unset($this->session->data['voucher']);
 				}

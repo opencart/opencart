@@ -18,7 +18,7 @@ class Image {
 	 */
 	private string $file;
 	/**
-	 * @var false|\GdImage|resource
+	 * @var mixed
 	 */
 	private $image;
 	/**
@@ -86,7 +86,7 @@ class Image {
 	/**
 	 * getImage
 	 *
-	 * @return \GdImage|resource|null
+	 * @return mixed
 	 */
 	public function getImage() {
 		return $this->image ?: null;

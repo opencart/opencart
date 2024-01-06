@@ -29,7 +29,7 @@ class RegistryPropertyReflectionExtension implements PropertiesClassReflectionEx
 		$broker = Broker::getInstance();
 
 		$type = null;
-		foreach (['Admin', 'Catalog'] as $domain) {
+		foreach (['Admin', 'Catalog', 'Install'] as $domain) {
 			$className1 = '\\Opencart\\' . $domain . '\\' . $classType . '\\' . $commonName;
 			$className2 = preg_replace('/\\\\(?=[^\\\\]+$)/', '', $className1, 1);
 			foreach ([$className1, $className2] as $className) {

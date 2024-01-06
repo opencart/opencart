@@ -47,7 +47,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $antispam_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getAntispam(int $antispam_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "antispam` WHERE `antispam_id` = '" . (int)$antispam_id . "'");
@@ -60,7 +60,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getAntispams(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "antispam`";

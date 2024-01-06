@@ -70,7 +70,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $event_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getEvent(int $event_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "'");
@@ -83,7 +83,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getEventByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
@@ -96,7 +96,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getEvents(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";

@@ -36,7 +36,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getVoucher(string $code): array {
 		$status = true;

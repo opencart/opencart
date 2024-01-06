@@ -11,7 +11,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $store_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getStore(int $store_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "store` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -24,7 +24,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $url
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getStoreByHostname(string $url): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape($url) . "'");
@@ -35,7 +35,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getStores(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";

@@ -26,15 +26,15 @@ class Document {
 	 */
 	private string $keywords = '';
 	/**
-	 * @var array
+	 * @var array<string, array<string, string>>
 	 */
 	private array $links = [];
 	/**
-	 * @var array
+	 * @var array<string, array<string, string>>
 	 */
 	private array $styles = [];
 	/**
-	 * @var array
+	 * @var array<int, array<string, array<string, string>>>
 	 */
 	private array $scripts = [];
 
@@ -114,7 +114,7 @@ class Document {
 	/**
 	 * getLinks
 	 *
-	 * @return array
+	 * @return array<string, array<string, string>>
 	 */
 	public function getLinks(): array {
 		return $this->links;
@@ -140,7 +140,7 @@ class Document {
 	/**
 	 * getStyles
 	 *
-	 * @return array
+	 * @return array<string, array<string, string>>
 	 */
 	public function getStyles(): array {
 		return $this->styles;
@@ -163,7 +163,7 @@ class Document {
 	 *
 	 * @param string $position
 	 *
-	 * @return array
+	 * @return array<string, array<string, string>>
 	 */
 	public function getScripts(string $position = 'header'): array {
 		if (isset($this->scripts[$position])) {

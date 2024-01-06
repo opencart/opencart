@@ -116,7 +116,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getInformation(int $information_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -129,7 +129,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getInformations(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -183,7 +183,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $information_id): array {
 		$information_description_data = [];
@@ -208,7 +208,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getStores(int $information_id): array {
 		$information_store_data = [];
@@ -227,7 +227,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id
 	 *
-	 * @return array
+	 * @return array<int, array<int, string>>
 	 */
 	public function getSeoUrls(int $information_id): array {
 		$information_seo_url_data = [];
@@ -246,7 +246,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getLayouts(int $information_id): array {
 		$information_layout_data = [];

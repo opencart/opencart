@@ -66,7 +66,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_status_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getReturnStatus(int $return_status_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -79,7 +79,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getReturnStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -122,7 +122,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_status_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $return_status_id): array {
 		$return_status_data = [];

@@ -11,7 +11,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getOrder(int $order_id): array {
 		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
@@ -161,7 +161,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getOrders(array $data = []): array {
 		$sql = "SELECT `o`.`order_id`, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS customer, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS order_status, `o`.`store_name`, `o`.`custom_field`, `o`.`payment_method`, `o`.`payment_custom_field`, `o`.`shipping_method`, `o`.`shipping_custom_field`, `o`.`total`, `o`.`currency_code`, `o`.`currency_value`, `o`.`date_added`, `o`.`date_modified` FROM `" . DB_PREFIX . "order` `o`";
@@ -272,7 +272,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getOrdersBySubscriptionId(int $subscription_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -298,7 +298,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getProducts(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY order_product_id ASC");
@@ -327,7 +327,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getOptions(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -341,7 +341,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getSubscription(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -354,7 +354,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getVouchers(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -367,7 +367,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $voucher_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getVoucherByVoucherId(int $voucher_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
@@ -380,7 +380,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTotals(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order`");
@@ -663,7 +663,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getHistories(int $order_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -712,7 +712,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int   $start
 	 * @param int   $end
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getEmailsByProductsOrdered(array $products, int $start, int $end): array {
 		$implode = [];

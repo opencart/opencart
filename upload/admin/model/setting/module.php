@@ -50,7 +50,7 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $module_id
 	 *
-	 * @return array
+	 * @return array<mixed>
 	 */
 	public function getModule(int $module_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
@@ -65,7 +65,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Modules
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getModules(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `code`");
@@ -78,7 +78,7 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getModulesByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");

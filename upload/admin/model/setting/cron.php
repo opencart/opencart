@@ -73,7 +73,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $cron_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCron(int $cron_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
@@ -86,7 +86,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCronByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
@@ -99,7 +99,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCrons(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";

@@ -11,7 +11,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $article_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getArticle(int $article_id): array {
 		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
@@ -32,7 +32,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getArticles(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
@@ -206,7 +206,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $article_comment_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getComment(int $article_comment_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_comment_id . "' AND `status` = '1'");
@@ -220,7 +220,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int   $article_id
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";

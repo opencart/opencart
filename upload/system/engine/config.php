@@ -18,11 +18,11 @@ class Config {
 	 */
 	protected string $directory;
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private array $path = [];
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private array $data = [];
 
@@ -76,6 +76,8 @@ class Config {
 	 * Load
 	 *
 	 * @param string $filename
+	 *
+	 * @return array<string, string>
 	 */
 	public function load(string $filename): array {
 		$file = $this->directory . $filename . '.php';

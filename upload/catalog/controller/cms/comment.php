@@ -43,8 +43,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		// Create a login token to prevent brute force attacks
 		$data['comment_add'] = $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&comment_token=' . $this->session->data['comment_token'], true);
-		$data['like'] = $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true);
-		$data['dislike'] = $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true);
+		$data['like'] = $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true);
+		$data['dislike'] = $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true);
 
 		$this->load->model('cms/article');
 
@@ -158,8 +158,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'comment'            => nl2br($result['comment']),
 				'author'             => $result['author'],
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'like'               => $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=1', true),
-				'dislike'            => $this->url->link('cms/comment.rating', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=0', true),
+				'like'               => $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=1', true),
+				'dislike'            => $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=0', true),
 				'reply'              => $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'], true),
 				'reply_add'          => $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'], true),
 				'reply_total'        => $this->model_cms_article->getTotalComments($article_id, ['parent_id' => $result['article_comment_id']])
@@ -218,12 +218,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
-		}
-
-		if ($this->customer->isLogged() || $this->config->get('config_comment_guest')) {
-			$data['comment_guest'] = true;
-		} else {
-			$data['comment_guest'] = false;
 		}
 
 		$limit = 5;
@@ -403,7 +397,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function rating(): void {
+	public function rate(): void {
 		$this->load->language('cms/comment');
 
 		$json = [];
@@ -443,19 +437,23 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		// Comment to rate
-		$article_comment_info = $this->model_cms_article->getComment($article_comment_id);
+		if ($article_comment_id) {
+			$article_comment_info = $this->model_cms_article->getComment($article_comment_id);
 
-		if (!$article_comment_info) {
-			$json['error'] = $this->language->get('error_article_comment');
+			if (!$article_comment_info) {
+				$json['error'] = $this->language->get('error_article_comment');
+			}
 		}
+
+		// Delete previous rating if there is one
+		$this->model_cms_article->deleteRating($article_id, $article_comment_id);
 
 		if (!$json) {
 			// Anti-Spam
-			$rating_data = $this->request->post + [
+			$rating_data = [
 				'article_comment_id' => $article_comment_id,
-				'customer_id'        => $this->customer->getId(),
-				'rating'             => $rating,
-				'ip'                 => $this->request->server['REMOTE_ADDR']
+				'article_id'         => $article_id,
+				'rating'             => $rating
 			];
 
 			$this->load->model('cms/article');

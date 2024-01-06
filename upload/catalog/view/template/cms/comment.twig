@@ -1,7 +1,7 @@
 <div class="text-center">
   {% if logged %}
-    <button type="button" value="{{ like }}" id="input-rating-like" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
-    <button type="button" value="{{ dislike }}" id="input-rating-dislike" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
+    <button type="button" value="{{ like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
+    <button type="button" value="{{ dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
     <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-secondary">{{ button_comment }}</button>
   {% else %}
     <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></a>
@@ -183,7 +183,7 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
 });
 
 // Rating
-let rating = function(e) {
+$('#comment-container').on('click', '[data-oc-toggle=\'rate\']', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -212,9 +212,5 @@ let rating = function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-}
-
-$('#input-rating-like, #input-rating-dislike').on('click', rating);
-
-$('#comment').on('click', '[data-oc-toggle=\'rate\']', rating);
+});
 //--></script>

@@ -701,11 +701,11 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'article_id',
+				'name' => 'article_comment_id',
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'article_comment_id',
+				'name' => 'article_id',
 				'type' => 'int(11)'
 			],
 			[
@@ -720,7 +720,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'rating',
-				'type' => 'tinyint(11)'
+				'type' => 'tinyint(1)'
 			],
 			[
 				'name' => 'ip',

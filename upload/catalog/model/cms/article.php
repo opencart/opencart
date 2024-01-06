@@ -209,7 +209,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getComment(int $article_comment_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_comment_id . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `status` = '1'");
 
 		return $query->row;
 	}
@@ -310,6 +310,10 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param array $data
 	 */
 	public function addRating(int $article_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `ip` = '" . $this->db->escape((string)$data['ip']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$data['rating'] . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
+	}
+
+	public function deleteRating(int $article_id, int $article_comment_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_rating` WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 	}
 }

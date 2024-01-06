@@ -155,7 +155,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$results = $this->model_localisation_language->getLanguagesByExtension($this->request->get['extension']);
+		$results = $this->model_localisation_language->getLanguagesByExtensions($this->request->get['extension']);
 
 		foreach ($results as $result) {
 			if ($result['code'] == $this->config->get('config_language_admin')) {

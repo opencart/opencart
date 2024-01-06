@@ -316,8 +316,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rating
 	 *
-	 * @param int   $article_id
-	 * @param int   $article_comment_id
+	 * @param int $article_id
+	 * @param int $article_comment_id
 	 */
 	public function deleteRating(int $article_id, int $article_comment_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_rating` WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");

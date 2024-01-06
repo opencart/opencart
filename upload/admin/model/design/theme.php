@@ -38,7 +38,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @param int    $store_id
 	 * @param string $route
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getTheme(int $store_id, string $route): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
@@ -52,7 +52,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getThemes(int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

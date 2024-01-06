@@ -46,7 +46,7 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getIps(int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

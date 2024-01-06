@@ -112,7 +112,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCustomField(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cf`.`custom_field_id` = '" . (int)$custom_field_id . "' AND `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -125,7 +125,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCustomFields(array $data = []): array {
 		if (empty($data['filter_customer_group_id'])) {
@@ -192,7 +192,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $custom_field_id): array {
 		$custom_field_data = [];
@@ -211,7 +211,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_value_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getValue(int $custom_field_value_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value` `cfv` LEFT JOIN `" . DB_PREFIX . "custom_field_value_description` `cfvd` ON (`cfv`.`custom_field_value_id` = `cfvd`.`custom_field_value_id`) WHERE `cfv`.`custom_field_value_id` = '" . (int)$custom_field_value_id . "' AND `cfvd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -224,7 +224,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getValues(int $custom_field_id): array {
 		$custom_field_value_data = [];
@@ -246,7 +246,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCustomerGroups(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -259,7 +259,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getValueDescriptions(int $custom_field_id): array {
 		$custom_field_value_data = [];

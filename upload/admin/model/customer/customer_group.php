@@ -64,7 +64,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_group_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCustomerGroup(int $customer_group_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cg`.`customer_group_id` = '" . (int)$customer_group_id . "' AND `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -77,7 +77,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCustomerGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -121,7 +121,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_group_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $customer_group_id): array {
 		$customer_group_data = [];

@@ -26,7 +26,7 @@ class Language {
 	 */
 	protected array $path = [];
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected array $data = [];
 	/**
@@ -89,7 +89,7 @@ class Language {
 	 *
 	 * @param string $prefix
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function all(string $prefix = ''): array {
 		if (!$prefix) {
@@ -125,7 +125,7 @@ class Language {
 	 * @param string $prefix
 	 * @param string $code     Language code
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function load(string $filename, string $prefix = '', string $code = ''): array {
 		if (!$code) {

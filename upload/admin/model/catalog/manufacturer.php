@@ -105,7 +105,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $manufacturer_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getManufacturer(int $manufacturer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -118,7 +118,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getManufacturers(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
@@ -166,7 +166,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $manufacturer_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getStores(int $manufacturer_id): array {
 		$manufacturer_store_data = [];
@@ -185,7 +185,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $manufacturer_id
 	 *
-	 * @return array
+	 * @return array<int, array<int, string>>
 	 */
 	public function getSeoUrls(int $manufacturer_id): array {
 		$manufacturer_seo_url_data = [];
@@ -204,7 +204,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $manufacturer_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getLayouts(int $manufacturer_id): array {
 		$manufacturer_layout_data = [];

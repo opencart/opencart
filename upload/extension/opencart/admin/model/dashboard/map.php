@@ -7,7 +7,7 @@ namespace Opencart\Admin\Model\Extension\Opencart\Dashboard;
  */
 class Map extends \Opencart\System\Engine\Model {
 	/**
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTotalOrdersByCountry(): array {
 		$implode = [];

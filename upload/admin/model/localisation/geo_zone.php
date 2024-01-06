@@ -74,7 +74,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $geo_zone_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getGeoZone(int $geo_zone_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
@@ -87,7 +87,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getGeoZones(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "geo_zone`";
@@ -152,7 +152,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $geo_zone_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getZoneToGeoZones(int $geo_zone_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");

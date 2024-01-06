@@ -16,7 +16,7 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getLanguage(int $language_id): array {
 		if (isset($this->data[$language_id])) {
@@ -49,7 +49,7 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getLanguageByCode(string $code): array {
 		if (isset($this->data[$code])) {
@@ -80,7 +80,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Languages
 	 *
-	 * @return array
+	 * @return array<string, array<string, mixed>>
 	 */
 	public function getLanguages(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`";

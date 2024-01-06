@@ -47,7 +47,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_group_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getUserGroup(int $user_group_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
@@ -63,7 +63,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getUserGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user_group` ORDER BY `name`";

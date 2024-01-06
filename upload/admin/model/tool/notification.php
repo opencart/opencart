@@ -47,7 +47,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $notification_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getNotification(int $notification_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "notification` WHERE `notification_id` = '" . (int)$notification_id . "'");
@@ -60,7 +60,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getNotifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "notification`";

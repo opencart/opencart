@@ -9,9 +9,9 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startups
 	 *
-	 * @return mixed
+	 * @return array<int, array<string, mixed>>
 	 */
-	public function getStartups() {
+	public function getStartups(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE `status` = '1' ORDER BY `sort_order` ASC");
 
 		return $query->rows;

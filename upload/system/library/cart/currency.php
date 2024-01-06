@@ -43,9 +43,9 @@ class Currency {
 	 * @param float  $value
 	 * @param bool   $format
 	 *
-	 * @return string
+	 * @return float|string
 	 */
-	public function format(float $number, string $currency, float $value = 0, bool $format = true): string {
+	public function format(float $number, string $currency, float $value = 0, bool $format = true) {
 		if (!isset($this->currencies[$currency])) {
 			return '';
 		}

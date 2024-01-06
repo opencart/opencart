@@ -11,7 +11,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCoupon(string $code): array {
 		$status = true;

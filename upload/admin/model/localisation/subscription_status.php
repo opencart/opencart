@@ -67,7 +67,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_status_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getSubscriptionStatus(int $subscription_status_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -80,7 +80,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getSubscriptionStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -123,7 +123,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_status_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $subscription_status_id): array {
 		$subscription_status_data = [];

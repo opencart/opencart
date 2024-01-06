@@ -211,7 +211,7 @@ class Loader {
 	 * @param string $prefix
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function language(string $route, string $prefix = '', string $code = ''): array {
 		// Sanitize the call
@@ -263,7 +263,7 @@ class Loader {
 	 *
 	 * @param string $route
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function config(string $route): array {
 		// Sanitize the call

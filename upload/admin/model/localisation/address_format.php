@@ -47,7 +47,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $address_format_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getAddressFormat(int $address_format_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address_format` WHERE `address_format_id` = '" . (int)$address_format_id . "'");
@@ -60,7 +60,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getAddressFormats(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "address_format`";

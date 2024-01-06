@@ -45,7 +45,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $translation_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getTranslation(int $translation_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "translation` WHERE `translation_id` = '" . (int)$translation_id . "'");
@@ -58,7 +58,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTranslations(array $data = []): array {
 		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t`";

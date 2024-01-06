@@ -9,7 +9,7 @@ class Backup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tables
 	 *
-	 * @return array
+	 * @return array<int, string>
 	 */
 	public function getTables(): array {
 		$table_data = [];
@@ -32,7 +32,7 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * @param int    $start
 	 * @param int    $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRecords(string $table, int $start = 0, int $limit = 100): array {
 		if ($start < 0) {

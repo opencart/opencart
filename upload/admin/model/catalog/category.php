@@ -272,7 +272,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCategory(int $category_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT GROUP_CONCAT(`cd1`.`name` ORDER BY `level` SEPARATOR ' > ') FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = cd1.`category_id` AND `cp`.`category_id` != `cp`.`path_id`) WHERE `cp`.`category_id` = `c`.`category_id` AND `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY `cp`.`category_id`) AS `path` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`c`.`category_id` = `cd2`.`category_id`) WHERE `c`.`category_id` = '" . (int)$category_id . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -296,7 +296,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getPaths(int $category_id): array {
 		$query = $this->db->query("SELECT `category_id`, `path_id`, `level` FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
@@ -309,7 +309,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCategories(array $data = []): array {
 		$sql = "SELECT `cp`.`category_id` AS `category_id`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' > ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -359,7 +359,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $category_id): array {
 		$category_description_data = [];
@@ -384,7 +384,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getFilters(int $category_id): array {
 		$category_filter_data = [];
@@ -403,7 +403,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<int, array<int, string>>
 	 */
 	public function getSeoUrls(int $category_id): array {
 		$category_seo_url_data = [];
@@ -422,7 +422,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getStores(int $category_id): array {
 		$category_store_data = [];
@@ -441,7 +441,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getLayouts(int $category_id): array {
 		$category_layout_data = [];

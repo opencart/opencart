@@ -80,7 +80,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCoupon(int $coupon_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "coupon` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
@@ -93,7 +93,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCouponByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "coupon` WHERE `code` = '" . $this->db->escape($code) . "'");
@@ -106,7 +106,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCoupons(array $data = []): array {
 		$sql = "SELECT `coupon_id`, `name`, `code`, `discount`, `date_start`, `date_end`, `status` FROM `" . DB_PREFIX . "coupon`";
@@ -154,7 +154,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getProducts(int $coupon_id): array {
 		$coupon_product_data = [];
@@ -173,7 +173,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id
 	 *
-	 * @return array
+	 * @return array<int, int>
 	 */
 	public function getCategories(int $coupon_id): array {
 		$coupon_category_data = [];
@@ -203,7 +203,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getHistories(int $coupon_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

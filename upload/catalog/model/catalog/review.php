@@ -27,7 +27,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getReviewsByProductId(int $product_id, int $start = 0, int $limit = 20): array {
 		if ($start < 0) {

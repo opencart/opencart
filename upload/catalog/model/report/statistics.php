@@ -9,7 +9,7 @@ class Statistics extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Statistics
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getStatistics(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "statistics`");

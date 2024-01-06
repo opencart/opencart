@@ -86,7 +86,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCustomer(int $customer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -103,7 +103,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $email
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getCustomerByEmail(string $email): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
@@ -120,7 +120,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCustomers(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `name`, `cgd`.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` `c` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`c`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -307,7 +307,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $address_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getAddress(int $address_id): array {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
@@ -368,7 +368,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
@@ -461,7 +461,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getHistories(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -522,7 +522,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTransactions(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -609,7 +609,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRewards(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -671,7 +671,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getIps(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -717,7 +717,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $email
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getTotalLoginAttempts(string $email): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape(oc_strtolower($email)) . "'");
@@ -789,7 +789,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int    $customer_id
 	 * @param string $token
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getAuthorizeByToken(int $customer_id, string $token): array {
 		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "') AS `attempts` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
@@ -815,7 +815,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getAuthorizes(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

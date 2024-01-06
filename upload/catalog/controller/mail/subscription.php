@@ -90,9 +90,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				// order ID; only as a new order ID added by an extension
 				if ($value['customer_id'] == $subscription['customer_id'] && $value['order_id'] == $subscription['order_id']) {
 					// Payment Methods
-					$this->load->model('account/payment_method');
+					$this->load->model('sale/subscription');
 
-					$payment_method = $this->model_account_payment_method->getPaymentMethod($value['customer_id'], $value['customer_payment_id']);
+					$payment_method = $this->model_sale_subscription->getTotalSubscriptions(['filter_customer_id' => $value['customer_id']]);
 
 					if ($payment_method) {
 						// Subscription

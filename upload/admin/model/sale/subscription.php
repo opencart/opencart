@@ -139,6 +139,14 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
 		}
 
+		if (!empty($data['filter_customer_payment_id'])) {
+			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
+		}
+
 		if (!empty($data['filter_customer'])) {
 			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
@@ -219,6 +227,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_order_id'])) {
 			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
 		}
 
 		if (!empty($data['filter_customer'])) {

@@ -660,8 +660,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Product data
 		if (!empty($subscription_info)) {
-			$this->load->model('sale/order');
-			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
+			$this->load->model('account/order');
+			$product_info = $this->model_account_order->getProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
 
 		if (!empty($product_info['name'])) {
@@ -788,10 +788,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
 
-		if (!$subscription_info) {
-			$this->load->model('customer/customer');
+		if ($subscription_info) {
+			$this->load->model('sale/subscription');
 
-			$payment_method_info = $this->model_customer_customer->getPaymentMethod($subscription_info['customer_id'], $this->request->post['customer_payment_id']);
+			$payment_method_info = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $subscription_info['customer_id'], 'filter_customer_payment_id' => $this->request->post['customer_payment_id']]);
 
 			if (!$payment_method_info) {
 				$json['error'] = $this->language->get('error_payment_method');

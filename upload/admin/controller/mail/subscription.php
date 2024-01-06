@@ -68,13 +68,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_status_id);
 
 					if ($subscription_status_info) {
-						// Customers
-						$this->load->model('customer/customer');
-
 						// Customer payment
-						$customer_payment_info = $this->model_customer_customer->getPaymentMethod($subscription['customer_id'], $subscription['customer_payment_id']);
+						$customer_payment_info = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $subscription['customer_id'], 'filter_customer_payment_id' => $subscription['customer_payment_id']]);
 
 						if ($customer_payment_info) {
+							// Customers
+							$this->load->model('customer/customer');
+
 							// Since the customer payment is integrated into the customer/customer page,
 							// we need to gather the customer's information rather than the order
 							$customer_info = $this->model_customer_customer->getCustomer($subscription['customer_id']);
@@ -230,8 +230,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscriptions = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
 		if ($subscriptions) {
+			$this->load->model('customer/customer');
+
 			foreach ($subscriptions as $subscription) {
-				$transaction_total = $this->model_sale_subscription->getTotalTransactions($subscription_id);
+				$transaction_total = $this->model_customer_customer->getTotalTransactionsByOrderId($subscription['order_id']);
 
 				if ($transaction_total) {
 					// Orders

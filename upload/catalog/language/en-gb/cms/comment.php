@@ -14,9 +14,9 @@ $_['text_date_added_asc']   = 'Date Added (Oldest)';
 $_['text_date_added_desc']  = 'Date Added (Latest)';
 $_['text_like']             = 'Like!';
 $_['text_dislike']          = 'Dislike!';
-$_['text_success']          = 'Thank you for your comment!';
-$_['text_queue']            = 'Your comment has been added to our moderation queue!';
-$_['text_rating']           = 'Thank you for your rating!';
+$_['text_success']          = 'Success: Thank you for your comment!';
+$_['text_queue']            = 'Success: Your comment has been added to our moderation queue!';
+$_['text_rating']           = 'Success: Thank you for your rating!';
 
 // Entry
 $_['entry_author']          = 'Your Name';

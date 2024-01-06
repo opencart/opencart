@@ -7,7 +7,7 @@ namespace Opencart\System\Library\Cart;
  */
 class Cart {
 	/**
-	 * @varobject
+	 * @var object
 	 */
 	private object $db;
 	/**

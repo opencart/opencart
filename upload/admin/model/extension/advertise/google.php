@@ -1,6 +1,5 @@
 <?php
-
-use \googleshopping\exception\Connection as ConnectionException;
+use \googleshopping\Exception\Connection as ConnectionException;
 use \googleshopping\Googleshopping;
 
 class ModelExtensionAdvertiseGoogle extends Model {

@@ -7,7 +7,7 @@
 namespace Opencart\Admin\Controller\Extension\Opayo\Payment;
 class Opayo extends \Opencart\System\Engine\Controller {
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 * @var string
 	 */
 	private array $error = [];
@@ -169,9 +169,9 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 				return $this->load->view('extension/opayo/payment/order', $data);
 			}
-		} else {
-			return '';
 		}
+		
+		return '';
 	}
 
 	/**

@@ -19,14 +19,14 @@ class Error extends \Opencart\System\Engine\Controller {
 	/**
 	 * Error
 	 *
-	 * @param string $code
+	 * @param int    $code
 	 * @param string $message
 	 * @param string $file
-	 * @param string $line
+	 * @param int    $line
 	 *
 	 * @return bool
 	 */
-	public function error(string $code, string $message, string $file, string $line): bool {
+	public function error(int $code, string $message, string $file, int $line): bool {
 		switch ($code) {
 			case E_NOTICE:
 			case E_USER_NOTICE:

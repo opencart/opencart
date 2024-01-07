@@ -79,7 +79,7 @@ $response = new \Opencart\System\Library\Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
-set_error_handler(function($code, $message, $file, $line, array $errcontext) {
+set_error_handler(function(int $code, string $message, string $file, int $line) {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;

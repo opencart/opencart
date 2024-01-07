@@ -31,7 +31,7 @@ $log = new \Opencart\System\Library\Log($config->get('error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function(string $code, string $message, string $file, string $line) use ($log, $config) {
+set_error_handler(function(int $code, string $message, string $file, int $line) use ($log, $config) {
 	switch ($code) {
 		case E_NOTICE:
 		case E_USER_NOTICE:

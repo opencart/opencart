@@ -52,16 +52,15 @@ $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
 set_error_handler(/**
- * @param int                  $code
- * @param string               $message
- * @param string               $file
- * @param int                  $line
- * @param array<string, mixed> $errcontext
+ * @param int    $code
+ * @param string $message
+ * @param string $file
+ * @param int    $line
  *
  * @throws \ErrorException
  *
  * @return false
- */ function($code, $message, $file, $line, array $errcontext): bool {
+ */ function(int $code, string $message, string $file, int $line): bool {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;

@@ -45,5 +45,5 @@ $_['action_event'] = array(
 	),
 	'view/*/after' => array(
 		'event/language'
-	),
+	)
 );

@@ -109,7 +109,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Card
 	 *
-	 * @param array $card_data
+	 * @param array<string, mixed> $card_data
 	 *
 	 * @return int
 	 */

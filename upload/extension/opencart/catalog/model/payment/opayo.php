@@ -221,7 +221,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $opayo_order_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	private function getOrderTransactions(int $opayo_order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "opayo_order_transaction` WHERE `opayo_order_id` = '" . (int)$opayo_order_id . "'");

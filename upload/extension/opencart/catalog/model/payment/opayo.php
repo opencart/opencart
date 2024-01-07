@@ -236,7 +236,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Subscription Payment
 	 *
-	 * @param array  $item
+	 * @param array<string, mixed>  $item
 	 * @param string $vendor_tx_code
 	 *
 	 * @return void

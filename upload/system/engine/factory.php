@@ -32,7 +32,7 @@ class Factory {
 	 *
 	 * @param string $route
 	 *
-	 * @return \Opencart\System\Engine\Controller
+	 * @return \Opencart\System\Engine\Controller|\Exception
 	 */
 	public function controller(string $route): ?object {
 		// Sanitize the call

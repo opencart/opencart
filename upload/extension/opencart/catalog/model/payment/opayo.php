@@ -9,9 +9,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Method
 	 *
-	 * @param array $address
+	 * @param array<string, mixed> $address
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getMethod(array $address): array {
 		$this->load->language('extension/opayo/payment/opayo');

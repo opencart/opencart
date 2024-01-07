@@ -346,7 +346,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param string $url
 	 * @param array  $payment_data
 	 *
-	 * @return array
+	 * @return array<array, string>
 	 */
 	public function sendCurl(string $url, array $payment_data): array {
 		$curl = curl_init($url);

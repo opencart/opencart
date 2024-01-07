@@ -607,7 +607,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	private function getProfile(int $subscription_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = " . (int)$subscription_id);

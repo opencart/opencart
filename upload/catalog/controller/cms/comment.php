@@ -460,6 +460,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 			$this->model_cms_article->addRating($article_id, $rating_data);
 
+			if (!$article_comment_id) {
+				$this->model_cms_article->editRating($article_id, $rating);
+			}
+
 			$json['success'] = $this->language->get('text_rating');
 		}
 

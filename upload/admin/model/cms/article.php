@@ -117,19 +117,9 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 */
 	public function getArticle(int $article_id): array {
-		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		$article_data = $this->cache->get('article.' . md5($sql));
-
-		if (!$article_data) {
-			$query = $this->db->query($sql);
-
-			$article_data = $query->row;
-
-			$this->cache->set('article.' . md5($sql), $article_data);
-		}
-
-		return $article_data;
+		return $query->row;
 	}
 
 	/**

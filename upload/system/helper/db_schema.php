@@ -620,6 +620,12 @@ function oc_db_schema() {
 				]
 			],
 			[
+				'name' => 'customer_id',
+				'key'  => [
+					'customer_id'
+				]
+			],
+			[
 				'name' => 'parent_id',
 				'key'  => [
 					'parent_id'
@@ -718,8 +724,7 @@ function oc_db_schema() {
 			],
 			[
 				'name'    => 'customer_id',
-				'type'    => 'int(11)',
-				'default' => 0
+				'type'    => 'int(11)'
 			],
 			[
 				'name' => 'rating',
@@ -739,33 +744,27 @@ function oc_db_schema() {
 		],
 		'foreign' => [
 			[
-				'key'   => 'article_id',
-				'table' => 'article',
-				'field' => 'article_id'
-			],
-			[
 				'key'   => 'article_comment_id',
 				'table' => 'article_comment',
 				'field' => 'article_comment_id'
 			],
 			[
-				'key'   => 'customer_id',
-				'table' => 'customer',
-				'field' => 'customer_id'
+				'key'   => 'article_id',
+				'table' => 'article',
+				'field' => 'article_id'
 			],
 			[
 				'key'   => 'store_id',
 				'table' => 'store',
 				'field' => 'store_id'
+			],
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
 			]
 		],
 		'index' => [
-			[
-				'name' => 'article_id',
-				'key'  => [
-					'article_id'
-				]
-			],
 			[
 				'name' => 'article_comment_id',
 				'key'  => [
@@ -773,15 +772,21 @@ function oc_db_schema() {
 				]
 			],
 			[
-				'name' => 'customer_id',
+				'name' => 'article_id',
 				'key'  => [
-					'customer_id'
+					'article_id'
 				]
 			],
 			[
 				'name' => 'store_id',
 				'key'  => [
 					'store_id'
+				]
+			],
+			[
+				'name' => 'customer_id',
+				'key'  => [
+					'customer_id'
 				]
 			]
 		],

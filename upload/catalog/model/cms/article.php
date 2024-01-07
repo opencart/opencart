@@ -14,19 +14,9 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 */
 	public function getArticle(int $article_id): array {
-		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'");
 
-		$article_data = $this->cache->get('article.' . md5($sql));
-
-		if (!$article_data) {
-			$query = $this->db->query($sql);
-
-			$article_data = $query->row;
-
-			$this->cache->set('article.' . md5($sql), $article_data);
-		}
-
-		return $article_data;
+		return $query->row;
 	}
 
 	/**
@@ -310,6 +300,26 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data
 	 */
 	public function addRating(int $article_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$data['rating'] . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Add Rating
+	 *
+	 * @param int   $article_id
+	 * @param array $data
+	 */
+	public function editRating(int $article_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$data['rating'] . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Add Rating
+	 *
+	 * @param int   $article_id
+	 * @param array $data
+	 */
+	public function editArticleRating(int $article_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$data['article_comment_id'] . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$data['rating'] . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
 	}
 

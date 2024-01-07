@@ -42,7 +42,9 @@ class Url {
 	 * @return void
 	 */
 	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
-		$this->rewrite[] = $rewrite;
+		if (is_callable($rewrite, 'rewrite')) {
+			$this->rewrite[] = $rewrite;
+		}
 	}
 
 	/**

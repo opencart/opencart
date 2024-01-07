@@ -75,6 +75,8 @@ class Opayo extends \Opencart\System\Engine\Model {
 				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_opayo_sort_orderr')
 			];
+		} else {
+			return [];
 		}
 
 		return $method_data;

@@ -387,14 +387,14 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Set Payment Data
 	 *
-	 * @param array      $order_info
-	 * @param array      $opayo_order_info
-	 * @param float      $price
-	 * @param int        $subscription_id
-	 * @param string     $subscription_name
-	 * @param string     $recurring_expiry
-	 * @param int        $recurring_frequency
-	 * @param mixed|null $i
+	 * @param array<string, mixed> $order_info
+	 * @param array<string, mixed> $opayo_order_info
+	 * @param float                $price
+	 * @param int                  $subscription_id
+	 * @param string               $subscription_name
+	 * @param string               $recurring_expiry
+	 * @param int                  $recurring_frequency
+	 * @param mixed|null           $i
 	 *
 	 * @return array<string, mixed>
 	 */

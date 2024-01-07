@@ -403,6 +403,8 @@ class Opayo extends \Opencart\System\Engine\Controller {
 				// Loop through any products that are subscription items
 				foreach ($subscriptions as $item) {
 					$item['subscription']['option'] = $item['option'];
+					$item['subscription']['product_id'] = $item['product_id'];
+					$item['subscription']['quantity'] = $item['quantity'];
 
 					$item = array_merge($item, $order_data);
 
@@ -552,6 +554,8 @@ class Opayo extends \Opencart\System\Engine\Controller {
 					// Loop through any products that are subscription items
 					foreach ($subscriptions as $item) {
 						$item['subscription']['option'] = $item['option'];
+						$item['subscription']['product_id'] = $item['product_id'];
+						$item['subscription']['quantity'] = $item['quantity'];
 
 						$item = array_merge($item, $order_data);
 

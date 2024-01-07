@@ -44,7 +44,7 @@ class Factory {
 		if (class_exists($class)) {
 			return new $class($this->registry);
 		} else {
-			throw new \Exception('Error: Could not load controller ' . $route . '!');
+			return new \Exception('Error: Could not load controller ' . $route . '!');
 		}
 	}
 

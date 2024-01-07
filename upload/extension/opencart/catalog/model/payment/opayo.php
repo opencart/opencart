@@ -396,7 +396,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param int        $recurring_frequency
 	 * @param mixed|null $i
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	private function setPaymentData(array $order_info, array $opayo_order_info, float $price, int $subscription_id, string $subscription_name, string $recurring_expiry, int $recurring_frequency, $i = null): array {
 		// Setting
@@ -632,7 +632,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param array<mixed> $payment_data
 	 * @param ?int         $i
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function sendCurl(string $url, array $payment_data, $i = null): array {
 		$curl = curl_init($url);

@@ -628,9 +628,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Send Curl
 	 *
-	 * @param string $url
-	 * @param array  $payment_data
-	 * @param ?null  $i
+	 * @param string       $url
+	 * @param array<mixed> $payment_data
+	 * @param ?int         $i
 	 *
 	 * @return array
 	 */
@@ -656,7 +656,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 		$response_info = explode(chr(10), $response);
 
 		foreach ($response_info as $string) {
-			if (strpos($string, '=') && isset($i)) {
+			if (strpos($string, '=') && $i !== null) {
 				$parts = explode('=', $string, 2);
 				$data['RepeatResponseData_' . $i][trim($parts[0])] = trim($parts[1]);
 			} elseif (strpos($string, '=')) {

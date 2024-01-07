@@ -85,7 +85,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getCards(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "opayo_card` WHERE `customer_id` = '" . (int)$customer_id . "' ORDER BY `card_id`");

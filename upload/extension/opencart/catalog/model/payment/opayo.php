@@ -208,7 +208,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int    $opayo_order_id
 	 * @param string $type
-	 * @param array  $order_info
+	 * @param array<string, mixed>  $order_info
 	 *
 	 * @return void
 	 */

@@ -42,7 +42,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *
-	 * @param array $address
+	 * @param array<string, mixed> $address
 	 *
 	 * @return array<string, mixed>
 	 */

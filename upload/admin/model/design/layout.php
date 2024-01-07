@@ -9,7 +9,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -36,8 +36,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Layout
 	 *
-	 * @param int   $layout_id
-	 * @param array $data
+	 * @param int                  $layout_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -95,7 +95,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -9,7 +9,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Event
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -94,7 +94,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Events
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

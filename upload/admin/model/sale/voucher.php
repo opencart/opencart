@@ -9,7 +9,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Voucher
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Voucher
 	 *
-	 * @param int   $voucher_id
-	 * @param array $data
+	 * @param int                  $voucher_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -72,7 +72,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Vouchers
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

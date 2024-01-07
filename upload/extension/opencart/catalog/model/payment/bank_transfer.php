@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
  */
 class BankTransfer extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $address
+	 * @param array<string, mixed> $address
 	 *
 	 * @return array<string, mixed>
 	 */

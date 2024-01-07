@@ -9,7 +9,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Reasons
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

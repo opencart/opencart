@@ -9,7 +9,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Methods
 	 *
-	 * @param array $payment_address
+	 * @param array<string, mixed> $payment_address
 	 *
 	 * @return array<string, mixed>
 	 */

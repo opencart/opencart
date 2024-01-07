@@ -9,7 +9,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Tax Rate
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -30,8 +30,8 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Tax Rate
 	 *
-	 * @param int   $tax_rate_id
-	 * @param array $data
+	 * @param int                  $tax_rate_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -75,7 +75,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Rates
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

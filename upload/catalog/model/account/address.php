@@ -9,8 +9,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address
 	 *
-	 * @param int   $customer_id
-	 * @param array $data
+	 * @param int                  $customer_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -29,8 +29,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address
 	 *
-	 * @param int   $address_id
-	 * @param array $data
+	 * @param int                  $address_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

@@ -7,9 +7,9 @@ namespace Opencart\Catalog\Controller\Event;
  */
 class Theme extends \Opencart\System\Engine\Controller {
 	/**
-	 * @param string $route
-	 * @param array  $args
-	 * @param string $code
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param string            $code
 	 *
 	 * @return void
 	 */

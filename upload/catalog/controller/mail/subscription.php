@@ -7,9 +7,9 @@ namespace Opencart\Catalog\Controller\Mail;
  */
 class Subscription extends \Opencart\System\Engine\Controller {
 	/**
-	 * @param string $route
-	 * @param array  $args
-	 * @param array  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param array<mixed>      $output
 	 *
 	 *  addHistory
 	 *
@@ -381,8 +381,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Alert
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @throws \Exception
 	 *

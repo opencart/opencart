@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Startup;
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**
-	 * @var array
+	 * @var array<string, array<string, string>>
 	 */
 	private static array $languages = [];
 
@@ -51,10 +51,10 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Fill the language up with default values
 	 *
-	 * @param string $route
-	 * @param string $prefix
-	 * @param string $code
-	 * @param array  $output
+	 * @param string       $route
+	 * @param string       $prefix
+	 * @param string       $code
+	 * @param array<mixed> $output
 	 *
 	 * @return void
 	 */

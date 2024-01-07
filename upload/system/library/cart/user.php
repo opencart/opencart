@@ -43,7 +43,7 @@ class User {
 	 */
 	private int $user_group_id = 0;
 	/**
-	 * @var array
+	 * @var array<string, array<int, string>>
 	 */
 	private array $permission = [];
 

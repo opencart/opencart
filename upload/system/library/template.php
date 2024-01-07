@@ -48,9 +48,9 @@ class Template {
 	/**
 	 * Render
 	 *
-	 * @param string $filename
-	 * @param array  $data
-	 * @param string $code
+	 * @param string               $filename
+	 * @param array<string, mixed> $data
+	 * @param string               $code
 	 *
 	 * @return string
 	 */

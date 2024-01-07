@@ -9,9 +9,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Approve
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @throws \Exception
 	 *
@@ -107,9 +107,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Deny
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @throws \Exception
 	 *

@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
  */
 class Banner extends \Opencart\System\Engine\Controller {
 	/**
-	 * @param array $setting
+	 * @param array<string, mixed> $setting
 	 *
 	 * @return string
 	 */

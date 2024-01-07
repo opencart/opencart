@@ -6,12 +6,15 @@ namespace Opencart\System\Library\Mail;
  * Basic PHP mail class
  */
 class Mail {
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected array $option = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param array $option
+	 * @param array<string, mixed> $option
 	 */
 	public function __construct(array &$option = []) {
 		$this->option = &$option;

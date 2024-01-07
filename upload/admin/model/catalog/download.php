@@ -9,7 +9,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Download
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -28,8 +28,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Download
 	 *
-	 * @param int   $download_id
-	 * @param array $data
+	 * @param int                  $download_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -71,7 +71,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Downloads
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

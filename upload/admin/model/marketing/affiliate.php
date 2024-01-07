@@ -9,7 +9,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Affiliate
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -20,8 +20,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Affiliate
 	 *
-	 * @param int   $customer_id
-	 * @param array $data
+	 * @param int                  $customer_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -90,7 +90,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Affiliates
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -177,7 +177,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Affiliates
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

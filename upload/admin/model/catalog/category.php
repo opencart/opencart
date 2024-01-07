@@ -9,7 +9,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Category
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -83,8 +83,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Category
 	 *
-	 * @param int   $category_id
-	 * @param array $data
+	 * @param int                  $category_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -307,7 +307,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

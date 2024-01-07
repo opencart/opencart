@@ -8,9 +8,9 @@ namespace Opencart\Catalog\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/editCode/after
 	/**
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @throws \Exception
 	 *

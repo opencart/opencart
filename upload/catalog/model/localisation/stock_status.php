@@ -22,7 +22,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Statuses
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

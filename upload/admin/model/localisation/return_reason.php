@@ -9,7 +9,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Reason
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +34,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Reason
 	 *
-	 * @param int   $return_reason_id
-	 * @param array $data
+	 * @param int                  $return_reason_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Reasons
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -10,9 +10,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * History
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @throws \Exception
 	 *
@@ -167,9 +167,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Transaction
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @throws \Exception
 	 *

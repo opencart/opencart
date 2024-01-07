@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Transaction extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

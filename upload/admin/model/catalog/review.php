@@ -9,7 +9,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Review
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -31,8 +31,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Review
 	 *
-	 * @param int   $review_id
-	 * @param array $data
+	 * @param int                  $review_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -102,7 +102,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reviews
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -169,7 +169,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reviews
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

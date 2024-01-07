@@ -11,9 +11,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	 *
 	 * admin/model/user/user/editCode/after
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @throws \Exception
 	 *

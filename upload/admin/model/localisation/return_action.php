@@ -9,7 +9,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Action
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -32,8 +32,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Action
 	 *
-	 * @param int   $return_action_id
-	 * @param array $data
+	 * @param int                  $return_action_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -76,7 +76,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Actions
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

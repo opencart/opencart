@@ -7,6 +7,9 @@ namespace Opencart\System\Library\Template;
  */
 class Template {
 	protected string $directory = '';
+	/**
+	 * @var array<string, string>
+	 */
 	protected array $path = [];
 
 	/**
@@ -28,9 +31,9 @@ class Template {
 	/**
 	 * Render
 	 *
-	 * @param string $filename
-	 * @param array  $data
-	 * @param string $code
+	 * @param string               $filename
+	 * @param array<string, mixed> $data
+	 * @param string               $code
 	 *
 	 * @return string
 	 */

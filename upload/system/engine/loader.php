@@ -176,9 +176,9 @@ class Loader {
 	 *
 	 * Loads the template file and generates the html code.
 	 *
-	 * @param string $route
-	 * @param array  $data
-	 * @param string $code
+	 * @param string               $route
+	 * @param array<string, mixed> $data
+	 * @param string               $code
 	 *
 	 * @return string
 	 */
@@ -233,8 +233,8 @@ class Loader {
 	/**
 	 * Library
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string       $route
+	 * @param array<mixed> $args
 	 *
 	 * @return object
 	 */

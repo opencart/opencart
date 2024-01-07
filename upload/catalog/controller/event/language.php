@@ -9,8 +9,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	// view/*/before
 	// Dump all the language vars into the template.
 	/**
-	 * @param string $route
-	 * @param array  $args
+	 * @param string                $route
+	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
@@ -27,8 +27,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Before
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -45,9 +45,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * After
 	 *
-	 * @param string $route
-	 * @param array  $args
-	 * @param mixed  $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */

@@ -19,7 +19,7 @@ class Twig {
 	 */
 	protected string $directory;
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected array $path = [];
 
@@ -55,9 +55,9 @@ class Twig {
 	/**
 	 * Render
 	 *
-	 * @param string $filename
-	 * @param array  $data
-	 * @param string $code
+	 * @param string               $filename
+	 * @param array<string, mixed> $data
+	 * @param string               $code
 	 *
 	 * @return string
 	 */

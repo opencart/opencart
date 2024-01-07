@@ -9,7 +9,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Article
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -49,8 +49,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Article
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int                  $article_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -135,7 +135,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Articles
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -341,7 +341,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Comments
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -400,7 +400,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Comments
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

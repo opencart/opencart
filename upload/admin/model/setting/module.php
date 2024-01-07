@@ -9,8 +9,8 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Module
 	 *
-	 * @param string $code
-	 * @param array  $data
+	 * @param string               $code
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -25,8 +25,8 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Module
 	 *
-	 * @param int   $module_id
-	 * @param array $data
+	 * @param int                  $module_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

@@ -9,7 +9,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Country
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -24,8 +24,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Country
 	 *
-	 * @param int   $country_id
-	 * @param array $data
+	 * @param int                  $country_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -90,7 +90,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Countries
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -163,7 +163,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Countries
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

@@ -9,7 +9,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Group
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -28,8 +28,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Customer Group
 	 *
-	 * @param int   $customer_group_id
-	 * @param array $data
+	 * @param int                  $customer_group_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -75,7 +75,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Groups
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

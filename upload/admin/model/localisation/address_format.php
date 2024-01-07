@@ -9,7 +9,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address Format
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address Format
 	 *
-	 * @param int   $address_format_id
-	 * @param array $data
+	 * @param int                  $address_format_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -58,7 +58,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address Formats
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -85,7 +85,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Address Formats
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

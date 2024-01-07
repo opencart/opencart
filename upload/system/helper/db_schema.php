@@ -54,6 +54,9 @@ function oc_db_create(string $db_driver, string $db_hostname, string $db_usernam
 	return true;
 }
 
+/**
+ * @return array<int, array<string, mixed>>
+ */
 function oc_db_schema() {
 	$tables = [];
 

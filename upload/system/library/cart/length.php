@@ -15,7 +15,7 @@ class Length {
 	 */
 	private object $config;
 	/**
-	 * @var array
+	 * @var array<int, array<string, mixed>>
 	 */
 	private array $lengths = [];
 

@@ -7,7 +7,7 @@ namespace Opencart\System\Library\Cart;
  */
 class Cart {
 	/**
-	 * @varobject
+	 * @var object
 	 */
 	private object $db;
 	/**
@@ -31,7 +31,7 @@ class Cart {
 	 */
 	private object $weight;
 	/**
-	 * @var array
+	 * @var array<int, array<string, mixed>>
 	 */
 	private array $data = [];
 
@@ -361,12 +361,12 @@ class Cart {
 	/**
 	 * Add
 	 *
-	 * @param int   $product_id
-	 * @param int   $quantity
-	 * @param array $option
-	 * @param int   $subscription_plan_id
-	 * @param bool  $override
-	 * @param float $price
+	 * @param int          $product_id
+	 * @param int          $quantity
+	 * @param array<mixed> $option
+	 * @param int          $subscription_plan_id
+	 * @param bool         $override
+	 * @param float        $price
 	 *
 	 * @return void
 	 */

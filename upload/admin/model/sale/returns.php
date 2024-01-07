@@ -9,7 +9,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return
 	 *
-	 * @param int   $return_id
-	 * @param array $data
+	 * @param int                  $return_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -59,7 +59,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Returns
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -147,7 +147,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

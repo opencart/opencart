@@ -11,8 +11,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * Trigger catalog/model/checkout/order/addHistory/before
 	 *
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
@@ -58,10 +58,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @param array  $order_info
-	 * @param int    $order_status_id
-	 * @param string $comment
-	 * @param bool   $notify
+	 * @param array<string, mixed> $order_info
+	 * @param int                  $order_status_id
+	 * @param string               $comment
+	 * @param bool                 $notify
 	 *
 	 * @throws \Exception
 	 *
@@ -374,10 +374,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * catalog/model/checkout/order/addHistory/before
 	 *
-	 * @param array  $order_info
-	 * @param int    $order_status_id
-	 * @param string $comment
-	 * @param bool   $notify
+	 * @param array<string, mixed> $order_info
+	 * @param int                  $order_status_id
+	 * @param string               $comment
+	 * @param bool                 $notify
 	 *
 	 * @throws \Exception
 	 *
@@ -475,8 +475,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @param string $route
-	 * @param array  $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
 	 *
 	 * Event called catalog/model/checkout/order/addHistory/before
 	 *

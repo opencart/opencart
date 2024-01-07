@@ -22,7 +22,7 @@ class Session {
 	 */
 	protected string $session_id;
 	/**
-	 * @var array
+	 * @var array<mixed>
 	 */
 	public array $data = [];
 

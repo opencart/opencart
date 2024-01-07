@@ -9,7 +9,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Weight Class
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -30,8 +30,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Weight Class
 	 *
-	 * @param int   $weight_class_id
-	 * @param array $data
+	 * @param int                  $weight_class_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -64,7 +64,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Weight Classes
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

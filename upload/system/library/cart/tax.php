@@ -13,9 +13,9 @@ class Tax {
 	/**
 	 * @var object
 	 */
-	private object  $config;
+	private object $config;
 	/**
-	 * @var array
+	 * @var array<int, array<int, array<string, mixed>>>
 	 */
 	private array $tax_rates = [];
 

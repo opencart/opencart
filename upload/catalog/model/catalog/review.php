@@ -9,8 +9,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Review
 	 *
-	 * @param int   $product_id
-	 * @param array $data
+	 * @param int                  $product_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

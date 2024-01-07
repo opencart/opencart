@@ -14,13 +14,16 @@ namespace Opencart\System\Library;
  */
 class Mail {
 	private object $adaptor;
+	/**
+	 * @var array<string, mixed>
+	 */
 	private array $option = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $adaptor
-	 * @param array  $option
+	 * @param string               $adaptor
+	 * @param array<string, mixed> $option
 	 */
 	public function __construct(string $adaptor = 'mail', array $option = []) {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
@@ -37,7 +40,7 @@ class Mail {
 	/**
 	 * setTo
 	 *
-	 * @param array|string $to
+	 * @param array<string>|string $to
 	 *
 	 * @return void
 	 */

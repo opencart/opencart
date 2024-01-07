@@ -9,7 +9,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -40,8 +40,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Filter
 	 *
-	 * @param int   $filter_group_id
-	 * @param array $data
+	 * @param int                  $filter_group_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -104,7 +104,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Groups
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -180,7 +180,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filters
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

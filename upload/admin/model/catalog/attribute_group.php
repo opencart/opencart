@@ -9,7 +9,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Attribute Group
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -28,8 +28,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Attribute Group
 	 *
-	 * @param int   $attribute_group_id
-	 * @param array $data
+	 * @param int                  $attribute_group_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -71,7 +71,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attribute Groups
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

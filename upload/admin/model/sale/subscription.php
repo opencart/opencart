@@ -9,8 +9,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Subscription
 	 *
-	 * @param int   $subscription_id
-	 * @param array $data
+	 * @param int                  $subscription_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -129,7 +129,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -223,7 +223,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

@@ -8,11 +8,11 @@ namespace Opencart\System\Library\Mail;
  */
 class Smtp {
 	/**
-	 * @var array
+	 * @var array<string, mixed>
 	 */
 	protected array $option = [];
 	/**
-	 * @var array|int[]
+	 * @var array<string, false|int>
 	 */
 	protected array $default = [
 		'smtp_port'    => 25,
@@ -24,7 +24,7 @@ class Smtp {
 	/**
 	 * Constructor
 	 *
-	 * @param array $option
+	 * @param array<string, mixed> $option
 	 */
 	public function __construct(array &$option = []) {
 		foreach ($this->default as $key => $value) {

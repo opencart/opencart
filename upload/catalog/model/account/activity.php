@@ -9,8 +9,8 @@ class Activity extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Activity
 	 *
-	 * @param string $key
-	 * @param array  $data
+	 * @param string               $key
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

@@ -159,7 +159,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Orders
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -391,7 +391,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -554,7 +554,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Sales
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return float
 	 */
@@ -708,9 +708,9 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Emails By Products Ordered
 	 *
-	 * @param array $products
-	 * @param int   $start
-	 * @param int   $end
+	 * @param array<int> $products
+	 * @param int        $start
+	 * @param int        $end
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -729,7 +729,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Emails By Products Ordered
 	 *
-	 * @param array $products
+	 * @param array<int> $products
 	 *
 	 * @return int
 	 */

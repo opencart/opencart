@@ -9,7 +9,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -163,8 +163,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Product
 	 *
-	 * @param int   $product_id
-	 * @param array $data
+	 * @param int                  $product_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -418,8 +418,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Variant
 	 *
-	 * @param int   $master_id
-	 * @param array $data
+	 * @param int                  $master_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -556,9 +556,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Variant
 	 *
-	 * @param int   $master_id
-	 * @param int   $product_id
-	 * @param array $data
+	 * @param int                  $master_id
+	 * @param int                  $product_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -694,8 +694,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Variants
 	 *
-	 * @param int   $master_id
-	 * @param array $data
+	 * @param int                  $master_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -871,7 +871,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1287,7 +1287,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

@@ -9,7 +9,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add User
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit User
 	 *
-	 * @param int   $user_id
-	 * @param array $data
+	 * @param int                  $user_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -127,7 +127,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Users
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -206,7 +206,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -277,8 +277,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Login
 	 *
-	 * @param int   $user_id
-	 * @param array $data
+	 * @param int                  $user_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -333,8 +333,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Authorize
 	 *
-	 * @param int   $user_id
-	 * @param array $data
+	 * @param int                  $user_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

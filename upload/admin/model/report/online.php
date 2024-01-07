@@ -9,7 +9,7 @@ class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Online
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -52,7 +52,7 @@ class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Online
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

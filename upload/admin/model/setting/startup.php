@@ -9,7 +9,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Startup
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -82,7 +82,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startups
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -22,7 +22,7 @@ class Language {
 	 */
 	protected string $directory;
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected array $path = [];
 	/**
@@ -30,7 +30,7 @@ class Language {
 	 */
 	protected array $data = [];
 	/**
-	 * @var array
+	 * @var array<string, array<string, array<string, mixed>>>
 	 */
 	protected array $cache = [];
 

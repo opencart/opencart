@@ -9,7 +9,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Custom Field
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -48,8 +48,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Custom Field
 	 *
-	 * @param int   $custom_field_id
-	 * @param array $data
+	 * @param int                  $custom_field_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -123,7 +123,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Custom Fields
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

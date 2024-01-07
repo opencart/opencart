@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Fraud;
  */
 class Ip extends \Opencart\System\Engine\Model {
 	/**
-	 * @param array $order_info
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return int
 	 */

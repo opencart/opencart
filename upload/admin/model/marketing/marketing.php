@@ -9,7 +9,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Marketing
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -22,8 +22,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Marketing
 	 *
-	 * @param int   $marketing_id
-	 * @param array $data
+	 * @param int                  $marketing_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -71,7 +71,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Marketing(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -146,7 +146,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Marketing(s)
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

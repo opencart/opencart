@@ -45,39 +45,29 @@ class PgSQL {
 	 *
 	 * @param string $sql
 	 *
-	 * @return mixed
+	 * @return \stdClass
 	 */
-	public function query(string $sql) {
+	public function query(string $sql): \stdClass {
 		$resource = pg_query($this->connection, $sql);
 
-		if ($resource) {
-			if (is_resource($resource)) {
-				$i = 0;
-
-				$data = [];
-
-				while ($result = pg_fetch_assoc($resource)) {
-					$data[$i] = $result;
-
-					$i++;
-				}
-
-				pg_free_result($resource);
-
-				$query = new \stdClass();
-				$query->row = $data[0] ?? [];
-				$query->rows = $data;
-				$query->num_rows = $i;
-
-				unset($data);
-
-				return $query;
-			} else {
-				return true;
-			}
-		} else {
+		if ($resource === false) {
 			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
 		}
+
+		$data = [];
+
+		while ($result = pg_fetch_assoc($resource)) {
+			$data[] = $result;
+		}
+
+		pg_free_result($resource);
+
+		$query = new \stdClass();
+		$query->row = $data[0] ?? [];
+		$query->rows = $data;
+		$query->num_rows = count($data);
+
+		return $query;
 	}
 
 	/**

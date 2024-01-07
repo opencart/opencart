@@ -151,7 +151,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param int   $order_id
 	 * @param float $amount
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function release(int $order_id, float $amount): array {
 		$opayo_order = $this->getOrder($order_id);

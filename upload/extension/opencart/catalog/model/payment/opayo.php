@@ -485,15 +485,15 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Calculate Schedule
 	 *
-	 * @param string $frequency
-	 * @param string $next_payment
-	 * @param string $cycle
+	 * @param string    $frequency
+	 * @param \Datetime $next_payment
+	 * @param string    $cycle
 	 *
-	 * @return
+	 * @return \Datetime
 	 */
 	private function calculateSchedule(string $frequency, string $next_payment, string $cycle) {
 		if ($frequency == 'semi_month') {
-			$day = date_format($next_payment, 'd');
+			$day = $next_payment->format($next_payment, 'd');
 			$value = 15 - $day;
 			$is_even = false;
 

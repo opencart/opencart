@@ -588,7 +588,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Profiles
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	private function getProfiles(): array {
 		$query = $this->db->query("SELECT `or`.`order_recurring_id` FROM `" . DB_PREFIX . "order_recurring` `or` JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`) WHERE `o`.`payment_code` = 'opayo'");

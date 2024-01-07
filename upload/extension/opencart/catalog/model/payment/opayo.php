@@ -181,8 +181,8 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Update Order
 	 *
-	 * @param array $order_info
-	 * @param array $data
+	 * @param array<string, mixed> $order_info
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */

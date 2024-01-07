@@ -119,7 +119,9 @@ class Loader {
 				$proxy = new \Opencart\System\Engine\Proxy();
 
 				foreach (get_class_methods($class) as $method) {
-					if ((substr($method, 0, 2) != '__') && is_callable([$class, $method])) {
+					$reflection = new \ReflectionMethod($class, $method);
+
+					if ((substr($method, 0, 2) != '__') && $reflection->isPublic()) {
 						// https://wiki.php.net/rfc/variadics
 						$proxy->{$method} = function(&...$args) use ($route, $method) {
 							$route = $route . '/' . $method;

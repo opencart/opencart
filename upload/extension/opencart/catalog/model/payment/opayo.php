@@ -272,29 +272,29 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 		$opayo_order_info = $this->getOrder($this->session->data['order_id']);
 
-		$next_payment = new DateTime('now');
-		$trial_end = new DateTime('now');
-		$subscription_end = new DateTime('now');
+		$next_payment = new \DateTime('now');
+		$trial_end = new \DateTime('now');
+		$subscription_end = new \DateTime('now');
 
 		if (($item['subscription']['trial'] == 1) && ($item['subscription']['trial_duration'] != 0)) {
 			$next_payment = $this->calculateSchedule($item['subscription']['trial_frequency'], $next_payment, $item['subscription']['trial_cycle']);
 			$trial_end = $this->calculateSchedule($item['subscription']['trial_frequency'], $trial_end, $item['subscription']['trial_cycle'] * $item['subscription']['trial_duration']);
 		} elseif ($item['subscription']['trial'] == 1) {
 			$next_payment = $this->calculateSchedule($item['subscription']['trial_frequency'], $next_payment, $item['subscription']['trial_cycle']);
-			$trial_end = new DateTime('0000-00-00');
+			$trial_end = new \DateTime('0000-00-00');
 		}
 
 		if (date_format($trial_end, 'Y-m-d H:i:s') > date_format($subscription_end, 'Y-m-d H:i:s') && $item['subscription']['duration'] != 0) {
-			$subscription_end = new DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
+			$subscription_end = new \DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
 			$subscription_end = $this->calculateSchedule($item['subscription']['frequency'], $subscription_end, $item['subscription']['cycle'] * $item['subscription']['duration']);
 		} elseif (date_format($trial_end, 'Y-m-d H:i:s') == date_format($subscription_end, 'Y-m-d H:i:s') && $item['subscription']['duration'] != 0) {
 			$next_payment = $this->calculateSchedule($item['subscription']['frequency'], $next_payment, $item['subscription']['cycle']);
 			$subscription_end = $this->calculateSchedule($item['subscription']['frequency'], $subscription_end, $item['subscription']['cycle'] * $item['subscription']['duration']);
 		} elseif (date_format($trial_end, 'Y-m-d H:i:s') > date_format($subscription_end, 'Y-m-d H:i:s') && $item['subscription']['duration'] == 0) {
-			$subscription_end = new DateTime('0000-00-00');
+			$subscription_end = new \DateTime('0000-00-00');
 		} elseif (date_format($trial_end, 'Y-m-d H:i:s') == date_format($subscription_end, 'Y-m-d H:i:s') && $item['subscription']['duration'] == 0) {
 			$next_payment = $this->calculateSchedule($item['subscription']['frequency'], $next_payment, $item['subscription']['cycle']);
-			$subscription_end = new DateTime('0000-00-00');
+			$subscription_end = new \DateTime('0000-00-00');
 		}
 
 		if (date_format($trial_end, 'Y-m-d H:i:s') >= date_format($subscription_end, 'Y-m-d H:i:s')) {
@@ -303,7 +303,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			$recurring_expiry = date_format($subscription_end, 'Y-m-d');
 		}
 
-		$recurring_frequency = date_diff(new DateTime('now'), new DateTime(date_format($next_payment, 'Y-m-d H:i:s')))->days;
+		$recurring_frequency = date_diff(new \DateTime('now'), new \DateTime(date_format($next_payment, 'Y-m-d H:i:s')))->days;
 
 		$response_data = $this->setPaymentData($order_info, $opayo_order_info, $price, $subscription_id, $item['subscription']['name'], $recurring_expiry, $recurring_frequency);
 
@@ -333,11 +333,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 		foreach ($subscriptions as $subscription) {
 			$subscription_order = $this->getSubscriptionOrder($subscription['subscription_id']);
 
-			$today = new DateTime('now');
-			$unlimited = new DateTime('0000-00-00');
-			$next_payment = new DateTime($subscription_order['next_payment']);
-			$trial_end = new DateTime($subscription_order['trial_end']);
-			$subscription_end = new DateTime($subscription_order['subscription_end']);
+			$today = new \DateTime('now');
+			$unlimited = new \DateTime('0000-00-00');
+			$next_payment = new \DateTime($subscription_order['next_payment']);
+			$trial_end = new \DateTime($subscription_order['trial_end']);
+			$subscription_end = new \DateTime($subscription_order['subscription_end']);
 
 			$order_info = $this->model_account_order->getOrder($subscription['order_id']);
 
@@ -363,7 +363,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 				$recurring_expiry = date_format($subscription_end, 'Y-m-d');
 			}
 
-			$recurring_frequency = date_diff(new DateTime('now'), new DateTime(date_format($next_payment, 'Y-m-d H:i:s')))->days;
+			$recurring_frequency = date_diff(new \DateTime('now'), new \DateTime(date_format($next_payment, 'Y-m-d H:i:s')))->days;
 
 			$response_data = $this->setPaymentData($order_info, $opayo_order_info, $price, $subscription['subscription_id'], $subscription['subscription_name'], $recurring_expiry, $recurring_frequency, $i);
 

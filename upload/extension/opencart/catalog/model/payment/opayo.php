@@ -321,7 +321,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Cron Payment
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function cronPayment(): array {
 		$this->load->model('account/order');

@@ -392,10 +392,10 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 				$subscriptions = $this->cart->getSubscriptions();
 
+				$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
+
 				// Loop through any products that are subscription items
 				foreach ($subscriptions as $item) {
-					$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
-
 					foreach ($order_products as $order_product) {
 						$order_subscription = $this->model_checkout_order->getSubscription($this->session->data['order_id'], $order_product['order_product_id']);
 
@@ -556,10 +556,10 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 					$subscriptions = $this->cart->getSubscriptions();
 
+					$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
+
 					// Loop through any products that are subscription items
 					foreach ($subscriptions as $item) {
-						$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
-
 						foreach ($order_products as $order_product) {
 							$order_subscription = $this->model_checkout_order->getSubscription($this->session->data['order_id'], $order_product['order_product_id']);
 

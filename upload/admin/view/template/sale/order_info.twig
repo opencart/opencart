@@ -167,7 +167,9 @@
                 <div class="form-floating">
                   <select name="currency" id="input-currency" class="form-select">
                     {% for currency in currencies %}
-                      <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
+                      {% if currency.status %}
+                        <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
+                      {% endif %}                    
                     {% endfor %}
                   </select> <label for="input-currency">{{ entry_currency }}</label>
                 </div>

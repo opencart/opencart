@@ -19,7 +19,7 @@ class Url {
 	 */
 	private string $url;
 	/**
-	 * @var array<int, \Opencart\System\Engine\Controller>
+	 * @var array
 	 */
 	private array $rewrite = [];
 
@@ -41,7 +41,7 @@ class Url {
 	 *
 	 * @return void
 	 */
-	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
+	public function addRewrite(object $rewrite): void {
 		if (is_callable([$rewrite, 'rewrite'])) {
 			$this->rewrite[] = $rewrite;
 		}

@@ -9,17 +9,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	/**
 	 * @var string
 	 */
-	private string $separator = '';
-
-	public function __construct(\Opencart\System\Engine\Registry $registry) {
-		parent::__construct($registry);
-
-		if (VERSION >= '4.0.2.0') {
-			$this->separator = '.';
-		} else {
-			$this->separator = '|';
-		}
-	}
+	private string $separator = '.';
 
 	/**
 	 * Index

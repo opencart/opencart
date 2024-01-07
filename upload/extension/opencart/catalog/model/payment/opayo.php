@@ -535,7 +535,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * Add Subscription Order
 	 *
 	 * @param int    $order_id
-	 * @param array  $response_data
+	 * @param array<string, mixed>  $response_data
 	 * @param int    $subscription_id
 	 * @param string $trial_end
 	 * @param string $subscription_end

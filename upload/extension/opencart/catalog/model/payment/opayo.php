@@ -244,7 +244,6 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function subscriptionPayment(array $item, string $vendor_tx_code): void {
-		$this->load->model('checkout/subscription');
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/opayo');
 
@@ -257,8 +256,6 @@ class Opayo extends \Opencart\System\Engine\Model {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$subscription_id = $order_info['subscription_id'];
-
-		$this->model_checkout_subscription->editReference($subscription_id, $vendor_tx_code);
 
 		$opayo_order_info = $this->getOrder($this->session->data['order_id']);
 

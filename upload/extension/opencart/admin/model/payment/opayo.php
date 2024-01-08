@@ -26,7 +26,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			  `void_status` int(1) DEFAULT NULL,
 			  `settle_type` int(1) DEFAULT NULL,
 			  `rebate_status` int(1) DEFAULT NULL,
-			  `currency_code` char(3) NOT NULL,
+			  `currency_code` varchar(3) NOT NULL,
 			  `total` decimal(15,4) NOT NULL,
 			  `card_id` int(11),
 			  PRIMARY KEY (`opayo_order_id`),
@@ -58,7 +58,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			  `next_payment` datetime NOT NULL,
 			  `trial_end` datetime DEFAULT NULL,
 			  `subscription_end` datetime DEFAULT NULL,
-			  `currency_code` char(3) NOT NULL,
+			  `currency_code` varchar(3) NOT NULL,
 			  `total` DECIMAL(15,4) NOT NULL,
 			  PRIMARY KEY (`opayo_order_subscription_id`),
 			  KEY (`order_id`)

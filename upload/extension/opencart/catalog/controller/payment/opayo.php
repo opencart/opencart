@@ -349,66 +349,16 @@ class Opayo extends \Opencart\System\Engine\Controller {
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $setting['general']['order_status_id'], $message, false);
 
 			if ($setting['general']['transaction_method'] == 'PAYMENT') {
-				// Subscription
-				$order_data = [];
-
-				$order_data['subscription']['store_id'] = $order_info['store_id'];
-				$order_data['subscription']['customer_id'] = $order_info['customer_id'];
-				$order_data['subscription']['payment_address_id'] = $order_info['payment_address_id'];
-				$order_data['subscription']['payment_method'] = $order_info['payment_method'];
-				$order_data['subscription']['shipping_address_id'] = $order_info['shipping_address_id'];
-				$order_data['subscription']['shipping_method'] = $order_info['shipping_method'];
-				$order_data['subscription']['comment'] = $order_info['comment'];
-				$order_data['subscription']['affiliate_id'] = $order_info['affiliate_id'];
-				$order_data['subscription']['marketing_id'] = $order_info['marketing_id'];
-				$order_data['subscription']['tracking'] = $order_info['tracking'];
-				$order_data['subscription']['language_id'] = $order_info['language_id'];
-				$order_data['subscription']['currency_id'] = $order_info['currency_id'];
-				$order_data['subscription']['ip'] = $this->request->server['REMOTE_ADDR'];
-
-				if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
-					$forwarded_ip = $this->request->server['HTTP_X_FORWARDED_FOR'];
-				} elseif (!empty($this->request->server['HTTP_CLIENT_IP'])) {
-					$forwarded_ip = $this->request->server['HTTP_CLIENT_IP'];
-				} else {
-					$forwarded_ip = '';
-				}
-
-				if (isset($this->request->server['HTTP_USER_AGENT'])) {
-					$user_agent = $this->request->server['HTTP_USER_AGENT'];
-				} else {
-					$user_agent = '';
-				}
-
-				if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
-					$accept_language = $this->request->server['HTTP_ACCEPT_LANGUAGE'];
-				} else {
-					$accept_language = '';
-				}
-
-				$order_data['subscription']['forwarded_ip'] = $forwarded_ip;
-				$order_data['subscription']['user_agent'] = $user_agent;
-				$order_data['subscription']['accept_language'] = $accept_language;
-
-				$subscriptions = $this->cart->getSubscriptions();
+				$this->load->model('checkout/subscription');
 
 				$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
 
 				// Loop through any products that are subscription items
-				foreach ($subscriptions as $item) {
-					foreach ($order_products as $order_product) {
-						$order_subscription = $this->model_checkout_order->getSubscription($this->session->data['order_id'], $order_product['order_product_id']);
+				foreach ($order_products as $order_product) {
+					$order_subscription = $this->model_checkout_subscription->getSubscriptionByOrderProductId($this->session->data['order_id'], $order_product['order_product_id']);
 
-						if ($order_subscription && $order_subscription['subscription_plan_id'] == $order_product['subscription_plan_id']) {
-							$item['subscription']['order_product_id'] = $item['order_product_id'];
-							$item['subscription']['product_id'] = $item['product_id'];
-							$item['subscription']['option'] = $item['option'];
-							$item['subscription']['quantity'] = $item['quantity'];
-
-							$item = array_merge($item, $order_data);
-
-							$this->model_extension_opayo_payment_opayo->subscriptionPayment($item, $payment_data['VendorTxCode']);
-						}
+					if ($order_subscription && $order_subscription['order_product_id'] == $order_product['order_product_id']) {
+						$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $payment_data['VendorTxCode']);
 					}
 				}
 			}
@@ -509,70 +459,20 @@ class Opayo extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($setting['general']['transaction_method'] == 'PAYMENT') {
-					// Subscription
-					$order_data = [];
-
-					$order_data['subscription']['store_id'] = $order_info['store_id'];
-					$order_data['subscription']['customer_id'] = $order_info['customer_id'];
-					$order_data['subscription']['payment_address_id'] = $order_info['payment_address_id'];
-					$order_data['subscription']['payment_method'] = $order_info['payment_method'];
-					$order_data['subscription']['shipping_address_id'] = $order_info['shipping_address_id'];
-					$order_data['subscription']['shipping_method'] = $order_info['shipping_method'];
-					$order_data['subscription']['comment'] = $order_info['comment'];
-					$order_data['subscription']['affiliate_id'] = $order_info['affiliate_id'];
-					$order_data['subscription']['marketing_id'] = $order_info['marketing_id'];
-					$order_data['subscription']['tracking'] = $order_info['tracking'];
-					$order_data['subscription']['language_id'] = $order_info['language_id'];
-					$order_data['subscription']['currency_id'] = $order_info['currency_id'];
-					$order_data['subscription']['ip'] = $this->request->server['REMOTE_ADDR'];
-
-					if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
-						$forwarded_ip = $this->request->server['HTTP_X_FORWARDED_FOR'];
-					} elseif (!empty($this->request->server['HTTP_CLIENT_IP'])) {
-						$forwarded_ip = $this->request->server['HTTP_CLIENT_IP'];
-					} else {
-						$forwarded_ip = '';
-					}
-
-					if (isset($this->request->server['HTTP_USER_AGENT'])) {
-						$user_agent = $this->request->server['HTTP_USER_AGENT'];
-					} else {
-						$user_agent = '';
-					}
-
-					if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
-						$accept_language = $this->request->server['HTTP_ACCEPT_LANGUAGE'];
-					} else {
-						$accept_language = '';
-					}
-
-					$order_data['subscription']['forwarded_ip'] = $forwarded_ip;
-					$order_data['subscription']['user_agent'] = $user_agent;
-					$order_data['subscription']['accept_language'] = $accept_language;
-
 					$payment_data = [];
 
-					$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . date('YmdHis') . mt_rand(1, 999);
-
-					$subscriptions = $this->cart->getSubscriptions();
+					$this->load->model('checkout/subscription');
 
 					$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
 
+					$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . date('YmdHis') . mt_rand(1, 999);
+
 					// Loop through any products that are subscription items
-					foreach ($subscriptions as $item) {
-						foreach ($order_products as $order_product) {
-							$order_subscription = $this->model_checkout_order->getSubscription($this->session->data['order_id'], $order_product['order_product_id']);
+					foreach ($order_products as $order_product) {
+						$order_subscription = $this->model_checkout_subscription->getSubscriptionByOrderProductId($this->session->data['order_id'], $order_product['order_product_id']);
 
-							if ($order_subscription && $order_subscription['subscription_plan_id'] == $order_product['subscription_plan_id']) {
-								$item['subscription']['order_product_id'] = $item['order_product_id'];
-								$item['subscription']['product_id'] = $item['product_id'];
-								$item['subscription']['option'] = $item['option'];
-								$item['subscription']['quantity'] = $item['quantity'];
-
-								$item = array_merge($item, $order_data);
-
-								$this->model_extension_opayo_payment_opayo->subscriptionPayment($item, $payment_data['VendorTxCode']);
-							}
+						if ($order_subscription && $order_subscription['order_product_id'] == $order_product['order_product_id']) {
+							$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $payment_data['VendorTxCode']);
 						}
 					}
 				}

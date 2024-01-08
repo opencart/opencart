@@ -269,11 +269,8 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 		if ($item['subscription']['trial'] == 1) {
 			$price = $item['subscription']['trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['subscription']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['subscription']['trial_cycle'], $item['subscription']['trial_frequency'], $item['subscription']['trial_duration']);
 		} else {
 			$price = $item['subscription']['price'];
-			$trial_text = '';
 		}
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

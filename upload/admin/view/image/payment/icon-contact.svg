@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="39" viewBox="0 0 50 39">
+  <g id="icon_Contact_Paypal" data-name="icon Contact Paypal" transform="translate(-750 -729)">
+    <rect id="Rectangle_263" data-name="Rectangle 263" width="50" height="39" rx="3" transform="translate(750 729)" fill="#0070e0"/>
+    <g id="Group_519" data-name="Group 519">
+      <circle id="Ellipse_52" data-name="Ellipse 52" cx="6" cy="6" r="6" transform="translate(756.5 734.5)" fill="#fff"/>
+      <g id="Group_518" data-name="Group 518">
+        <circle id="Ellipse_53" data-name="Ellipse 53" cx="1.5" cy="1.5" r="1.5" transform="translate(761 736.75)" fill="#003087"/>
+        <path id="Rectangle_274" data-name="Rectangle 274" d="M2,0H4A2,2,0,0,1,6,2V2A1,1,0,0,1,5,3H1A1,1,0,0,1,0,2V2A2,2,0,0,1,2,0Z" transform="translate(759.5 740.75)" fill="#003087"/>
+      </g>
+    </g>
+    <rect id="Rectangle_275" data-name="Rectangle 275" width="8.457" height="2" rx="1" transform="translate(771.543 737.25)" fill="#003087"/>
+    <rect id="Rectangle_276" data-name="Rectangle 276" width="7" height="2" rx="1" transform="translate(781 737.25)" fill="#003087"/>
+    <rect id="Rectangle_277" data-name="Rectangle 277" width="9.457" height="2" rx="1" transform="translate(771.543 741.75)" fill="#fff"/>
+    <g id="Group_523" data-name="Group 523">
+      <g id="Group_521" data-name="Group 521">
+        <circle id="Ellipse_54" data-name="Ellipse 54" cx="6" cy="6" r="6" transform="translate(781.5 750.5)" fill="#fff"/>
+        <g id="Group_520" data-name="Group 520">
+          <circle id="Ellipse_55" data-name="Ellipse 55" cx="1.5" cy="1.5" r="1.5" transform="translate(786 752.75)" fill="#003087"/>
+          <path id="Rectangle_278" data-name="Rectangle 278" d="M2,0H4A2,2,0,0,1,6,2V2A1,1,0,0,1,5,3H1A1,1,0,0,1,0,2V2A2,2,0,0,1,2,0Z" transform="translate(784.5 756.75)" fill="#003087"/>
+        </g>
+      </g>
+      <g id="Group_522" data-name="Group 522">
+        <rect id="Rectangle_279" data-name="Rectangle 279" width="5.745" height="2" rx="1" transform="translate(773 753.25)" fill="#003087"/>
+        <rect id="Rectangle_280" data-name="Rectangle 280" width="10" height="2" rx="1" transform="translate(762 753.25)" fill="#003087"/>
+        <rect id="Rectangle_281" data-name="Rectangle 281" width="14.202" height="2" rx="1" transform="translate(764.543 757.75)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

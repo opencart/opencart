@@ -1,0 +1,649 @@
+{{ header }}
+<div class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if attention %}
+    <div class="alert alert-info alert-dismissible"><i class="fas fa-info-circle"></i> {{ attention }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endif %}
+  {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endif %}
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endif %}
+  <div class="row">
+    {{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <div class="card mb-3">
+        <div class="card-header">
+          <h4 class="mb-0">
+            {{ text_checkout_payment_address }}
+            <div class="button-payment-address float-end" role="button"><i class="fas fa-pencil-alt"></i></div>
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <fieldset id="account">
+                <legend>{{ text_your_details }}</legend>
+                <table class="table table-bordered">
+                  {% if customer.firstname %}
+                    <tr>
+                      <td><b>{{ entry_firstname }}</b></td>
+                      <td>{{ customer.firstname }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if customer.lastname %}
+                    <tr>
+                      <td><b>{{ entry_lastname }}</b></td>
+                      <td>{{ customer.lastname }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if customer.email %}
+                    <tr>
+                      <td><b>{{ entry_email }}</b></td>
+                      <td>{{ customer.email }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if customer.telephone %}
+                    <tr>
+                      <td><b>{{ entry_telephone }}</b></td>
+                      <td>{{ customer.telephone }}</td>
+                    </tr>
+                  {% endif %}
+                  {% for custom_field in custom_fields %}
+                    {% if custom_field.location == 'account' %}
+                      <tr>
+                        <td><b>{{ custom_field.name }}</b></td>
+                        <td>{{ custom_field.value }}</td>
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
+                </table>
+              </fieldset>
+            </div>
+            <div class="col-sm-6">
+              <fieldset id="address">
+                <legend>{{ text_your_address }}</legend>
+                <table class="table table-bordered">
+                  {% if payment_address.company %}
+                    <tr>
+                      <td><b>{{ entry_company }}</b></td>
+                      <td>{{ payment_address.company }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if payment_address.address_1 %}
+                    <tr>
+                      <td><b>{{ entry_address_1 }}</b></td>
+                      <td>{{ payment_address.address_1 }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if payment_address.address_2 %}
+                    <tr>
+                      <td><b>{{ entry_address_2 }}</b></td>
+                      <td>{{ payment_address.address_2 }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if payment_address.city %}
+                    <tr>
+                      <td><b>{{ entry_city }}</b></td>
+                      <td>{{ payment_address.city }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if payment_address.postcode %}
+                    <tr>
+                      <td><b>{{ entry_postcode }}</b></td>
+                      <td>{{ payment_address.postcode }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if payment_address.country %}
+                    <tr>
+                      <td><b>{{ entry_country }}</b></td>
+                      <td>{{ payment_address.country }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if payment_address.zone %}
+                    <tr>
+                      <td><b>{{ entry_zone }}</b></td>
+                      <td>{{ payment_address.zone }}</td>
+                    </tr>
+                  {% endif %}
+                  {% for custom_field in custom_fields %}
+                    {% if custom_field.location == 'address' %}
+                      <tr>
+                        <td><b>{{ custom_field.name }}</b></td>
+                        <td>{{ custom_field.value }}</td>
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
+                </table>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if has_shipping %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <h4 class="mb-0">
+              {{ text_checkout_shipping_address }}
+              <div class="button-shipping-address float-end" role="button"><i class="fas fa-pencil-alt"></i></div>
+            </h4>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              {% if shipping_address.firstname %}
+                <tr>
+                  <td><b>{{ entry_firstname }}</b></td>
+                  <td>{{ shipping_address.firstname }}</td>
+                </tr>
+              {% endif %}
+              {% if shipping_address.lastname %}
+                <tr>
+                  <td><b>{{ entry_lastname }}</b></td>
+                  <td>{{ shipping_address.lastname }}</td>
+                </tr>
+              {% endif %}
+              {% if shipping_address.company %}
+                <tr>
+                  <td><b>{{ entry_company }}</b></td>
+                  <td>{{ shipping_address.company }}</td>
+                </tr>
+              {% endif %}
+              {% if shipping_address.address_1 %}
+                <tr>
+                  <td><b>{{ entry_address_1 }}</b></td>
+                  <td>{{ shipping_address.address_1 }}</td>
+                </tr>
+              {% endif %}
+            {% if shipping_address.address_2 %}
+              <tr>
+                <td><b>{{ entry_address_2 }}</b></td>
+                <td>{{ shipping_address.address_2 }}</td>
+              </tr>
+            {% endif %}
+            {% if shipping_address.city %}
+              <tr>
+                <td><b>{{ entry_city }}</b></td>
+                <td>{{ shipping_address.city }}</td>
+              </tr>
+            {% endif %}
+            {% if shipping_address.postcode %}
+              <tr>
+                <td><b>{{ entry_postcode }}</b></td>
+                <td>{{ shipping_address.postcode }}</td>
+              </tr>
+            {% endif %}
+            {% if shipping_address.country %}
+              <tr>
+                <td><b>{{ entry_country }}</b></td>
+                <td>{{ shipping_address.country }}</td>
+              </tr>
+            {% endif %}
+            {% if shipping_address.zone %}
+              <tr>
+                <td><b>{{ entry_zone }}</b></td>
+                <td>{{ shipping_address.zone }}</td>
+              </tr>
+            {% endif %}	
+            {% for custom_field in custom_fields %}
+              {% if custom_field.location == 'address' %}
+                <tr>
+                  <td><b>{{ custom_field.name }}</b></td>
+                  <td>{{ custom_field.value }}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      {% endif %}
+      {% if has_shipping %}
+        {% if not shipping_methods %}
+          <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_no_shipping }}</div>
+        {% else %}
+          <form action="{{ action_shipping }}" method="post" id="shipping-form">
+            <div class="card mb-3">
+              <div class="card-header">
+                <h4 class="mb-0">{{ text_checkout_shipping_method }}</h4>
+              </div>
+              <div class="card-body">
+                {% for shipping_method in shipping_methods %}
+                  <p><strong>{% if shipping_method.name %}{{ shipping_method.name }}{% else %}{{ shipping_method.title }}{% endif %}</strong></p>
+                  {% if not shipping_method.error %}
+                    {% for quote in shipping_method.quote %}
+                      <div class="form-check">
+                        {% if quote.code == code or not code %}
+                          {% set code = quote.code %}
+                          <input type="radio" name="shipping_method" value="{{ quote.code }}" id="input-shipping-method-{{ quote.code }}" checked="checked" />
+                        {% else %}
+                          <input type="radio" name="shipping_method" value="{{ quote.code }}" id="input-shipping-method-{{ quote.code }}" />
+                        {% endif %}
+                        <label for="input-shipping-method-{{ quote.code }}">{% if quote.name %}{{ quote.name }}{% else %}{{ quote.title }}{% endif %} - {{ quote.text }}</label>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <div class="alert alert-danger">{{ shipping_method.error }}</div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </form>
+        {% endif %}
+      {% endif %}
+      <div class="card mb-3">
+        <div class="card-header">
+          <h4 class="mb-0">{{ text_checkout_payment_method }}</h4>
+        </div>
+        <div class="card-body">
+          {% for payment_method in payment_methods %}
+            {% if payment_method.code == 'paypal' %}
+              <p><strong>{% if payment_method.name %}{{ payment_method.name }}{% else %}{{ payment_method.title }}{% endif %}</strong></p>
+              {% if not payment_method.error %}
+                {% if payment_method.option %}
+                  {% for option in payment_method.option %}
+                    <div class="form-check">
+                      {% if option.code == 'paypal.paypal' %}
+                        <input type="radio" name="payment_method" value="{{ option.code }}" id="input-payment-method-{{ option.code }}" checked="checked" />
+                        <label for="input-payment-method-{{ option.code }}">{{ option.name }}</label>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="form-check">
+                    <input type="radio" name="payment_method" value="{{ payment_method.code }}" id="input-payment-method-{{ payment_method.code }}" checked="checked" />
+                    <label for="input-payment-method-{{ payment_method.code }}">{% if payment_method.name %}{{ payment_method.name }}{% else %}{{ payment_method.title }}{% endif %}</label>
+                  </div>
+                {% endif %}
+              {% else %}
+                <div class="alert alert-danger">{{ payment_method.error }}</div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="table-responsive mb-3">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">{{ column_image }}</td>
+              <td class="text-start">{{ column_name }}</td>
+              <td class="text-start">{{ column_model }}</td>
+              <td class="text-center">{{ column_quantity }}</td>
+              <td class="text-end">{{ column_price }}</td>
+              <td class="text-end">{{ column_total }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+              <tr>
+                <td class="text-center">
+                  {% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}
+                </td>
+                <td class="text-start">
+                  <a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
+                  {% if product.option %}
+                    {% for option in product.option %}				
+                      <br/>
+                      <small> - {{ option.name }}: {{ option.value }}</small>
+                    {% endfor %}
+                  {% endif %}
+                  {% if product.reward %}
+                    <br/>
+                    <small>{{ text_points }}: {{ product.reward }}</small>
+                  {% endif %}
+                  {% if product.subscription %}
+                    <br/>
+                    <small>{{ text_subscription }}: {{ product.subscription }}</small>
+                  {% endif %}
+                </td>
+                <td class="text-start">{{ product.model }}</td>
+                <td class="text-center">{{ product.quantity }}</td>
+                <td class="text-end">{{ product.price }}</td>
+                <td class="text-end">{{ product.total }}</td>
+              </tr>
+            {% endfor %}
+            {% for voucher in vouchers %}
+              <tr>
+                <td></td>
+                <td class="text-start">{{ voucher.description }}</td>
+                <td class="text-start"></td>
+                <td class="text-center">1</td>
+                <td class="text-end">{{ voucher.amount }}</td>
+                <td class="text-end">{{ voucher.amount }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot id="checkout-total">
+            {% for total in totals %}
+            <tr>
+              <td colspan="5" class="text-end"><strong>{{ total.title }}</strong></td>
+              <td class="text-end">{{ total.text }}</td>
+            </tr>
+            {% endfor %}
+          </tfoot>
+        </table>
+      </div>
+      {% if modules %}
+        <h2>{{ text_next }}</h2>
+        <p>{{ text_next_choice }}</p>
+        <div id="accordion" class="accordion">
+          {% for module in modules %}
+            {{ module }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <br/>
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-end"><a href="{{ action_confirm }}" id="paypal-confirm" class="btn btn-primary">{{ button_confirm }}</a></div>
+      </div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<script type="text/javascript">
+$('input[name=\'shipping_method\').change(function() {
+	$('#shipping-form').submit();
+});
+
+$(document).on('click', '.button-payment-address', function(event) {
+	$('#payment-address').remove();
+	$('body').append('<div id="payment-address" class="modal fade"></div>');
+	$('#payment-address').load('index.php?route=extension/paypal/payment/paypal{{ separator }}paymentAddress&language={{ language }} #payment-address >', onLoadPaymentAddress);
+});
+
+$(document).on('click', '.button-shipping-address', function(event) {
+	$('#shipping-address').remove();
+	$('body').append('<div id="shipping-address" class="modal fade"></div>');
+	$('#shipping-address').load('index.php?route=extension/paypal/payment/paypal{{ separator }}shippingAddress&language={{ language }} #shipping-address >', onLoadShippingAddress);
+});
+
+$('#paypal-confirm').bind('click', function() {
+    $('#paypal-confirm').prop('disabled', true).button('loading');
+});
+
+function onLoadPaymentAddress() {
+	// Sort the custom fields
+	$('#payment-address #account .row[data-sort]').detach().each(function() {
+		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#payment-address #account .row').length) {
+			$('#payment-address #account .row').eq($(this).attr('data-sort')).before(this);
+		}
+
+		if ($(this).attr('data-sort') > $('#payment-address #account .row').length) {
+			$('#payment-address #account .row:last').after(this);
+		}
+
+		if ($(this).attr('data-sort') == $('#payment-address #account .row').length) {
+			$('#payment-address #account .row:last').after(this);
+		}
+
+		if ($(this).attr('data-sort') < -$('#payment-address #account .row').length) {
+			$('#payment-address #account .row:first').before(this);
+		}
+	});
+
+	$('#payment-address #address .row[data-sort]').detach().each(function() {
+		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#payment=address #address .row').length) {
+			$('#payment-address #address .row').eq($(this).attr('data-sort')).before(this);
+		}
+
+		if ($(this).attr('data-sort') > $('#payment-address #address .row').length) {
+			$('#payment-address #address .row:last').after(this);
+		}
+
+		if ($(this).attr('data-sort') == $('#payment-address #address .row').length) {
+			$('#payment-address #address .row:last').after(this);
+		}
+
+		if ($(this).attr('data-sort') < -$('#payment-address #address .row').length) {
+			$('#payment-address #address .row:first').before(this);
+		}
+	});
+
+	$('#payment-address #input-payment-country').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + this.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('#payment-address #input-payment-country').prop('disabled', true);
+			},
+			complete: function() {
+				$('#payment-address #input-payment-country').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json.postcode_required == '1') {
+					$('#payment-address #input-payment-postcode').parent().addClass('required');
+				} else {
+					$('#payment-address #input-payment-postcode').parent().removeClass('required');
+				}
+
+				html = '<option value="">{{ text_select }}</option>';
+
+				if (json.zone && json.zone != '') {
+					for (i = 0; i < json.zone.length; i++) {
+						html += '<option value="' + json.zone[i].zone_id + '"';
+
+						if (json.zone[i].zone_id == '{{ payment_address.zone_id }}') {
+							html += ' selected="selected"';
+						}
+
+						html += '>' + json.zone[i].name + '</option>';
+					}
+				} else {
+					html += '<option value="0" selected="selected">{{ text_none }}</option>';
+				}
+
+				$('#payment-address #input-payment-zone').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('#payment-address #input-payment-country').trigger('change');
+	
+	$('.date').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    });
+
+    $('.time').daterangepicker({
+        singleDatePicker: true,
+        datePicker: false,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
+    });
+
+    $('.datetime').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
+    });
+	
+	$('#payment-address .button-confirm').on('click', function(event) {
+		$.ajax({
+			type: 'post',
+			url: 'index.php?route=extension/paypal/payment/paypal{{ separator }}confirmPaymentAddress&language={{ language }}',
+			data: $('#payment-address [name]'),
+			dataType: 'json',
+			beforeSend: function() {
+                $('#payment-address .button-confirm').prop('disabled', true).addClass('loading');
+            },
+            complete: function() {
+                $('#payment-address .button-confirm').prop('disabled', false).removeClass('loading');
+            },
+			success: function(json) {				
+				$('#payment-address').find('.is-invalid').removeClass('is-invalid');
+                $('#payment-address').find('.invalid-feedback').removeClass('d-block');
+						
+				if (json.error) {					
+					for (key in json.error) {
+                        $('#payment-address #input-payment-' + key).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#payment-address #error-payment-' + key).html(json.error[key]).addClass('d-block');
+					}
+				}
+				
+				if (json.url) {
+					location = json.url;
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+	
+	$('#payment-address').modal('show');
+}
+
+function onLoadShippingAddress() {
+	// Sort the custom fields
+	$('#shipping-address .row[data-sort]').detach().each(function() {
+		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#shipping-address .row').length - 2) {
+			$('#shipping-address .row').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
+		}
+
+		if ($(this).attr('data-sort') > $('#shipping-address .row').length - 2) {
+			$('#shipping-address .row:last').after(this);
+		}
+
+		if ($(this).attr('data-sort') == $('#collapse-shipping-address .row').length - 2) {
+			$('#collapse-shipping-address .row:last').after(this);
+		}
+
+		if ($(this).attr('data-sort') < -$('#shipping-address .row').length - 2) {
+			$('#shipping-address .row:first').before(this);
+		}
+	});
+	
+	$('#shipping-address #input-shipping-country').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + this.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('#shipping-address #input-shipping-country').prop('disabled', true);
+			},
+			complete: function() {
+				$('#shipping-address #input-shipping-country').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json.postcode_required == '1') {
+					$('#shipping-address #input-shipping-postcode').parent().addClass('required');
+				} else {
+					$('#shipping-address #input-shipping-postcode').parent().removeClass('required');
+				}
+
+				html = '<option value="">{{ text_select }}</option>';
+
+				if (json.zone && json.zone != '') {
+					for (i = 0; i < json.zone.length; i++) {
+						html += '<option value="' + json.zone[i].zone_id + '"';
+
+						if (json.zone[i].zone_id == '{{ shipping_address.zone_id }}') {
+							html += ' selected="selected"';
+						}
+
+						html += '>' + json.zone[i].name + '</option>';
+					}
+				} else {
+					html += '<option value="0" selected="selected">{{ text_none }}</option>';
+				}
+
+				$('#shipping-address #input-shipping-zone').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('#shipping-address #input-shipping-country').trigger('change');
+	
+	$('.date').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    });
+
+    $('.time').daterangepicker({
+        singleDatePicker: true,
+        datePicker: false,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
+    });
+
+    $('.datetime').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
+    });
+		
+	$('#shipping-address .button-confirm').on('click', function(event) {
+		$.ajax({
+			type: 'post',
+			url: 'index.php?route=extension/paypal/payment/paypal{{ separator }}confirmShippingAddress&language={{ language }}',
+			data: $('#shipping-address [name]'),
+			dataType: 'json',
+			success: function(json) {
+				$('#shipping-address').find('.is-invalid').removeClass('is-invalid');
+                $('#shipping-address').find('.invalid-feedback').removeClass('d-block');
+							
+				if (json.error) {
+					for (key in json.error) {
+                        $('#shipping-address #input-shipping-' + key).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#shipping-address #error-shipping-' + key).html(json.error[key]).addClass('d-block');
+                    }
+				}
+				
+				if (json.url) {
+					location = json.url;
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+	
+	$('#shipping-address').modal('show');
+}
+</script>
+{{ footer }}

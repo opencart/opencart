@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38.263" height="39" viewBox="0 0 38.263 39">
+  <g id="icon_Order_Statuses" data-name="icon Order Statuses" transform="translate(-639 -653)">
+    <rect id="Rectangle_258" data-name="Rectangle 258" width="31" height="39" rx="3" transform="translate(639 653)" fill="#0070e0"/>
+    <rect id="Rectangle_259" data-name="Rectangle 259" width="15" height="12.571" rx="1" transform="translate(644 658)" fill="#fff"/>
+    <rect id="Rectangle_260" data-name="Rectangle 260" width="20" height="2" rx="1" transform="translate(644 674)" fill="#fff"/>
+    <rect id="Rectangle_261" data-name="Rectangle 261" width="17" height="2" rx="1" transform="translate(644 678)" fill="#fff"/>
+    <rect id="Rectangle_262" data-name="Rectangle 262" width="11" height="4" rx="1" transform="translate(644 683)" fill="#003087"/>
+    <g id="Group_511" data-name="Group 511" transform="translate(-1.263 -1.263)">
+      <path id="Path_547" data-name="Path 547" d="M664,665.263a7.262,7.262,0,0,0,7.263,7.263V658A7.262,7.262,0,0,0,664,665.263Z" fill="#fff"/>
+      <path id="Path_548" data-name="Path 548" d="M677.263,665.263A7.262,7.262,0,0,1,670,672.525V658A7.262,7.262,0,0,1,677.263,665.263Z" transform="translate(1.263)" fill="#003087"/>
+      <path id="Path_549" data-name="Path 549" d="M675.152,661.92h0a.806.806,0,0,0-1.141,0l-3.444,3.444-1.885-1.885a.807.807,0,0,0-1.141,1.14l2.435,2.435a.867.867,0,0,0,1.181,0l3.995-3.994A.807.807,0,0,0,675.152,661.92Z" transform="translate(0.696 0.775)" fill="#0070e0"/>
+    </g>
+  </g>
+</svg>

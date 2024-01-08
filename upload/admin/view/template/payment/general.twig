@@ -1,0 +1,265 @@
+{{ header }}{{ column_left }}
+<div id="content" class="payment-paypal">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-payment" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title_main }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    {% if text_version %}
+      <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_version }}</div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ save }}" method="post" id="form-payment" data-oc-toggle="ajax">
+          <a href="{{ href_dashboard }}" class="back-dashboard"><i class="icon icon-back-dashboard"></i>{{ text_tab_dashboard }}</a>
+          <ul class="nav nav-tabs">
+            <li class="nav-tab"><a href="{{ href_general }}" class="tab active"><i class="tab-icon tab-icon-general"></i><span class="tab-title">{{ text_tab_general }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_contact }}" class="tab"><i class="tab-icon tab-icon-contact"></i><span class="tab-title">{{ text_tab_contact }}</span></a></li>
+          </ul>
+          <div class="section-content">
+            <button type="button" class="btn btn-danger button-disconnect">{{ button_disconnect }}</button>
+            <hr class="hr" />
+            <button type="button" href="#all-settings" class="btn btn-default button-all-settings collapsed" data-bs-toggle="collapse" role="button">{{ button_all_settings }}<i class="icon icon-all-settings"></i></button>	
+            <div id="all-settings" class="all-settings collapse">
+              <div class="row mb-3">
+                <label class="col-form-label" for="input-connect">{{ entry_connect }}</label>
+                <div class="col col-md-12">
+                  <p class="alert alert-info">{{ text_connect }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-12 col-md-6">
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-status">{{ entry_status }}</label>
+                    <div id="input-status" class="input-group">
+                      <input type="hidden" name="payment_paypal_status" value="0" />
+                      <input type="checkbox" name="payment_paypal_status" value="1" class="switch" {% if status %}checked="checked"{% endif %} />
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-12 col-md-6">
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-debug">{{ entry_debug }}</label>
+                    <div id="input-general-debug" class="input-group">
+                      <input type="hidden" name="payment_paypal_setting[general][debug]" value="0" />{% set setting_general = setting.general %}
+                      <input type="checkbox" name="payment_paypal_setting[general][debug]" value="1" class="switch" {% if setting_general.debug %}checked="checked"{% endif %} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-12 col-md-6">
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-sale-analytics-range">{{ entry_sale_analytics_range }}</label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[general][sale_analytics_range]" id="input-general-sale-analytics-range" class="form-select">
+                        {% for sale_analytics_range in setting.sale_analytics_range %}
+                          {% if sale_analytics_range.code == setting_general.sale_analytics_range %}
+                            <option value="{{ sale_analytics_range.code }}" selected="selected">{{ attribute(_context, sale_analytics_range.name) }}</option>
+                          {% else %}
+                            <option value="{{ sale_analytics_range.code }}">{{ attribute(_context, sale_analytics_range.name) }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-checkout-mode"><span data-bs-toggle="tooltip" title="{{ help_checkout_mode }}">{{ entry_checkout_mode }}</span></label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[general][checkout_mode]" id="input-general-checkout-mode" class="form-select">
+                        {% for checkout_mode in setting.checkout_mode %}
+                          {% if checkout_mode.code == setting_general.checkout_mode %}
+                            <option value="{{ checkout_mode.code }}" selected="selected">{{ attribute(_context, checkout_mode.name) }}</option>
+                          {% else %}
+                            <option value="{{ checkout_mode.code }}">{{ attribute(_context, checkout_mode.name) }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-transaction-method">{{ entry_transaction_method }}</label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[general][transaction_method]" id="input-general-transaction-method" class="form-select">
+                        {% for transaction_method in setting.transaction_method %}
+                          {% if transaction_method.code == setting_general.transaction_method %}
+                            <option value="{{ transaction_method.code }}" selected="selected">{{ attribute(_context, transaction_method.name) }}</option>
+                          {% else %}
+                            <option value="{{ transaction_method.code }}">{{ attribute(_context, transaction_method.name) }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                    <div class="input-group">
+                      <select name="payment_paypal_geo_zone_id" id="input-geo-zone" class="form-select">
+                        <option value="0">{{ text_all_zones }}</option>
+                        {% for geo_zone in geo_zones %}
+                          {% if geo_zone.geo_zone_id == geo_zone_id %}
+                            <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                          {% else %}
+                            <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                    <div class="input-group">
+                      <input type="text" name="payment_paypal_sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-12 col-md-6">
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-country-code"><span data-bs-toggle="tooltip" title="{{ help_country_code }}">{{ entry_country_code }}</span></label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[general][country_code]" id="input-general-country-code" class="form-select">
+                        {% for country in countries %}
+                          {% if country.status %}
+                            {% if country.iso_code_2 == setting_general.country_code %}
+                              <option value="{{ country.iso_code_2 }}" selected="selected">{{ country.name }}</option>
+                            {% else %}
+                              <option value="{{ country.iso_code_2 }}">{{ country.name }}</option>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-currency-code"><span data-bs-toggle="tooltip" title="{{ help_currency_code }}">{{ entry_currency_code }}</span></label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[general][currency_code]" id="input-general-currency-code" class="form-select">
+                        {% for currency in setting.currency %}
+                          {% if currency.status %}
+                            {% if currency.code == setting_general.currency_code %}
+                              <option value="{{ currency.code }}" selected="selected">{{ attribute(_context, currency.name) }}</option>
+                            {% else %}
+                              <option value="{{ currency.code }}">{{ attribute(_context, currency.name) }}</option>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-currency-value"><span data-bs-toggle="tooltip" title="{{ help_currency_value }}">{{ entry_currency_value }}</span></label>
+                    <div class="input-group">
+                      <input type="text" name="payment_paypal_setting[general][currency_value]" value="{{ setting_general.currency_value }}" placeholder="{{ entry_currency_value }}" id="input-general-currency-value" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-card-currency-code"><span data-bs-toggle="tooltip" title="{{ help_card_currency_code }}">{{ entry_card_currency_code }}</span></label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[general][card_currency_code]" id="input-general-card-currency-code" class="form-select">
+                        {% for currency in setting.currency %}
+                          {% if currency.card_status %}
+                            {% if currency.code == setting_general.card_currency_code %}
+                              <option value="{{ currency.code }}" selected="selected">{{ attribute(_context, currency.name) }}</option>
+                            {% else %}
+                              <option value="{{ currency.code }}">{{ attribute(_context, currency.name) }}</option>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-general-card-currency-value"><span data-bs-toggle="tooltip" title="{{ help_card_currency_value }}">{{ entry_card_currency_value }}</span></label>
+                    <div class="input-group">
+                      <input type="text" name="payment_paypal_setting[general][card_currency_value]" value="{{ setting_general.card_currency_value }}" placeholder="{{ entry_card_currency_value }}" id="input-general-card-currency-value" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-12">
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-cron-url"><span data-bs-toggle="tooltip" title="{{ help_cron_url }}">{{ entry_cron_url }}</span></label>
+                    <input type="hidden" name="payment_paypal_setting[general][cron_token]" value="{{ setting_general.cron_token }}" />
+                    <div class="input-group">
+                      <input type="text" value="{{ cron_url }}" readonly="readonly" id="input-cron-url" class="form-control" />
+                      <button type="button" data-bs-toggle="tooltip" title="{{ button_copy_url }}" class="btn btn-light copy-cron-url" field_id="input-cron-url"><i class="fas fa-clipboard"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('.payment-paypal .switch').bootstrapSwitch({
+    'onColor': 'success',
+    'onText': '{{ text_on }}',
+    'offText': '{{ text_off }}'
+});
+
+$('.payment-paypal').delegate('.copy-cron-url', 'click', function(event) {
+	event.preventDefault();
+	
+	navigator.clipboard.writeText($('#' + $(this).attr('field_id')).val());
+});
+
+$('.payment-paypal').on('click', '.button-disconnect', function() {
+	if (confirm('{{ text_confirm }}')) {		
+		$.ajax({
+			type: 'post',
+			url: '{{ disconnect_url }}',
+			data: '',
+			dataType: 'json',
+			success: function(json) {
+				location.reload();
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+
+$('.payment-paypal').on('click', '.button-agree', function() {	
+	$.ajax({
+		type: 'post',
+		url: '{{ agree_url }}',
+		data: '',
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert').remove();
+			
+			if (json.success) {
+				$('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json.success + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+</script>
+{{ footer }}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="39" viewBox="0 0 50 39">
+  <g id="icon_Buttons" data-name="icon Buttons" transform="translate(-628 -458)">
+    <path id="Rectangle_242" data-name="Rectangle 242" d="M3,0H47a3,3,0,0,1,3,3V7a0,0,0,0,1,0,0H0A0,0,0,0,1,0,7V3A3,3,0,0,1,3,0Z" transform="translate(628 458)" fill="#003087"/>
+    <path id="Rectangle_243" data-name="Rectangle 243" d="M0,0H50a0,0,0,0,1,0,0V25a3,3,0,0,1-3,3H3a3,3,0,0,1-3-3V0A0,0,0,0,1,0,0Z" transform="translate(628 469)" fill="#0070e0"/>
+    <g id="Group_504" data-name="Group 504">
+      <circle id="Ellipse_47" data-name="Ellipse 47" cx="1.269" cy="1.269" r="1.269" transform="translate(631 460.231)" fill="#fff"/>
+      <circle id="Ellipse_48" data-name="Ellipse 48" cx="1.269" cy="1.269" r="1.269" transform="translate(635.231 460.231)" fill="#fff"/>
+      <circle id="Ellipse_49" data-name="Ellipse 49" cx="1.269" cy="1.269" r="1.269" transform="translate(639.462 460.231)" fill="#fff"/>
+    </g>
+    <rect id="Rectangle_244" data-name="Rectangle 244" width="17" height="17" rx="3" transform="translate(635 474)" fill="#fff"/>
+    <g id="Group_505" data-name="Group 505">
+      <rect id="Rectangle_245" data-name="Rectangle 245" width="15" height="4" rx="1" transform="translate(657 484)" fill="#003087"/>
+      <rect id="Rectangle_246" data-name="Rectangle 246" width="15" height="4" rx="1" transform="translate(657 477)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

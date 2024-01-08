@@ -95,7 +95,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function void(int $order_id): array {
 		$opayo_order = $this->getOrder($order_id);
@@ -151,7 +151,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param int   $order_id
 	 * @param float $amount
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function release(int $order_id, float $amount): array {
 		$opayo_order = $this->getOrder($order_id);
@@ -210,7 +210,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param int   $order_id
 	 * @param float $amount
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function rebate(int $order_id, float $amount): array {
 		$opayo_order = $this->getOrder($order_id);
@@ -346,7 +346,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param string       $url
 	 * @param array<mixed> $payment_data
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function sendCurl(string $url, array $payment_data): array {
 		$curl = curl_init($url);
@@ -383,7 +383,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Log
 	 *
-	 * @param string       $title
+	 * @param string  $title
 	 * @param ?string $data
 	 *
 	 * @return void

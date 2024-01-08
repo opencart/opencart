@@ -11,7 +11,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @var string
 	 */
 	private array $error = [];
-	private string $separator = '';	
+	private string $separator = '';
 
 	/**
 	 * Index
@@ -155,7 +155,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 				return $this->load->view('extension/opayo/payment/order', $data);
 			}
 		}
-		
+
 		return '';
 	}
 

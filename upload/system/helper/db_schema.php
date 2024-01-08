@@ -723,8 +723,8 @@ function oc_db_schema() {
 				'default' => 0
 			],
 			[
-				'name'    => 'customer_id',
-				'type'    => 'int(11)'
+				'name' => 'customer_id',
+				'type' => 'int(11)'
 			],
 			[
 				'name' => 'rating',

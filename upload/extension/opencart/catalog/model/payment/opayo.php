@@ -258,8 +258,6 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 		$subscription_id = $order_info['subscription_id'];
 
-		$this->model_checkout_subscription->editReference($subscription_id, $vendor_tx_code);
-
 		$opayo_order_info = $this->getOrder($this->session->data['order_id']);
 
 		$next_payment = new \DateTime('now');

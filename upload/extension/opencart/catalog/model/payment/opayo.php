@@ -266,7 +266,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 		$item['subscription']['description'] = $subscription_description;
 
 		// Create new subscription and set to pending status as no payment has been made yet.
-		$subscription_id = $this->model_checkout_subscription->addSubscription($this->session->data['order_id'], $item['subscription']);
+		$subscription_id = $this->model_checkout_subscription->addSubscription(['order_id' => $this->session->data['order_id']] + $item['subscription']);
 
 		$this->model_checkout_subscription->editReference($subscription_id, $vendor_tx_code);
 

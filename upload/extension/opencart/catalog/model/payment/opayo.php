@@ -236,25 +236,6 @@ class Opayo extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Subscriptions By Order Id
-	 *
-	 * @param int $order_id
-	 *
-	 * @return array
-	 */
-	public function getSubscriptionsByOrderId(int $order_id): array {
-		$subscription_data = [];
-
-		$query = $this->db->query("SELECT `s`.`subscription_id` FROM `" . DB_PREFIX . "subscription` `s` JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`) WHERE `s`.`order_id` = '" . (int)$order_id . "' AND `o`.`subscription_id` > '0' AND `o`.`payment_method` LIKE '%paypal%'");
-
-		foreach ($query->rows as $subscription) {
-			$subscription_data[] = $this->getSubscription($subscription['subscription_id']);
-		}
-
-		return $subscription_data;
-	}
-
-	/**
 	 * Subscription Payment
 	 *
 	 * @param array<string, mixed> $item

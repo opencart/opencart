@@ -155,7 +155,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addOrder(int $order_id, array $response_data, array $payment_data, int $card_id): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "opayo_order` SET `order_id` = '" . (int)$order_id . "', `VPSTxId` = '" . $this->db->escape($response_data['VPSTxId']) . "', `VendorTxCode` = '" . $this->db->escape($payment_data['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($response_data['SecurityKey']) . "', `TxAuthNo` = '" . $this->db->escape($response_data['TxAuthNo']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($payment_data['Currency']) . "', `total` = '" . $this->currency->format($payment_data['Amount'], $payment_data['Currency'], false, false) . "', `card_id` = '" . (int)$card_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "opayo_order` SET `order_id` = '" . (int)$order_id . "', `vps_tx_id` = '" . $this->db->escape($response_data['VPSTxId']) . "', `vendor_tx_code` = '" . $this->db->escape($payment_data['VendorTxCode']) . "', `security_key` = '" . $this->db->escape($response_data['SecurityKey']) . "', `tx_auth_no` = '" . $this->db->escape($response_data['TxAuthNo']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($payment_data['Currency']) . "', `total` = '" . $this->currency->format($payment_data['Amount'], $payment_data['Currency'], false, false) . "', `card_id` = '" . (int)$card_id . "'");
 
 		return $this->db->getLastId();
 	}
@@ -189,7 +189,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function updateOrder(array $order_info, array $data): int {
-		$this->db->query("UPDATE `" . DB_PREFIX . "opayo_order` SET `SecurityKey` = '" . $this->db->escape($data['SecurityKey']) . "',  `VPSTxId` = '" . $this->db->escape($data['VPSTxId']) . "', `TxAuthNo` = '" . $this->db->escape($data['TxAuthNo']) . "' WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "opayo_order` SET `security_key` = '" . $this->db->escape($data['SecurityKey']) . "',  `vps_tx_id` = '" . $this->db->escape($data['VPSTxId']) . "', `tx_auth_no` = '" . $this->db->escape($data['TxAuthNo']) . "' WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
 
 		return $this->db->getLastId();
 	}
@@ -426,10 +426,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($subscription_name, 0, 100);
-		$payment_data['RelatedVPSTxId'] = trim($opayo_order_info['VPSTxId'], '{}');
-		$payment_data['RelatedVendorTxCode'] = $opayo_order_info['VendorTxCode'];
-		$payment_data['RelatedSecurityKey'] = $opayo_order_info['SecurityKey'];
-		$payment_data['RelatedTxAuthNo'] = $opayo_order_info['TxAuthNo'];
+		$payment_data['RelatedVPSTxId'] = trim($opayo_order_info['vps_tx_id'], '{}');
+		$payment_data['RelatedVendorTxCode'] = $opayo_order_info['vendor_tx_code'];
+		$payment_data['RelatedSecurityKey'] = $opayo_order_info['security_key'];
+		$payment_data['RelatedTxAuthNo'] = $opayo_order_info['tx_auth_no'];
 		$payment_data['COFUsage'] = 'SUBSEQUENT';
 		$payment_data['InitiatedType'] = 'MIT';
 		$payment_data['MITType'] = 'RECURRING';
@@ -548,7 +548,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	private function addSubscriptionOrder(int $order_id, array $response_data, int $subscription_id, string $trial_end, string $subscription_end): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "opayo_order_subscription` SET `order_id` = '" . (int)$order_id . "', `subscription_id` = '" . (int)$subscription_id . "', `VPSTxId` = '" . $this->db->escape($response_data['VPSTxId']) . "', `VendorTxCode` = '" . $this->db->escape($response_data['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($response_data['SecurityKey']) . "', `TxAuthNo` = '" . $this->db->escape($response_data['TxAuthNo']) . "', `date_added` = now(), `date_modified` = now(), `next_payment` = now(), `trial_end` = '" . $trial_end . "', `subscription_end` = '" . $subscription_end . "', `currency_code` = '" . $this->db->escape($response_data['Currency']) . "', `total` = '" . $this->currency->format($response_data['Amount'], $response_data['Currency'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "opayo_order_subscription` SET `order_id` = '" . (int)$order_id . "', `subscription_id` = '" . (int)$subscription_id . "', `vps_tx_id` = '" . $this->db->escape($response_data['VPSTxId']) . "', `vendor_tx_code` = '" . $this->db->escape($response_data['VendorTxCode']) . "', `security_key` = '" . $this->db->escape($response_data['SecurityKey']) . "', `tx_auth_no` = '" . $this->db->escape($response_data['TxAuthNo']) . "', `date_added` = now(), `date_modified` = now(), `next_payment` = now(), `trial_end` = '" . $trial_end . "', `subscription_end` = '" . $subscription_end . "', `currency_code` = '" . $this->db->escape($response_data['Currency']) . "', `total` = '" . $this->currency->format($response_data['Amount'], $response_data['Currency'], false, false) . "'");
 	}
 
 	/**

@@ -14,64 +14,64 @@ class Opayo extends \Opencart\System\Engine\Model {
 	public function install(): void {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_order` (
-			  `opayo_order_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `order_id` INT(11) NOT NULL,
-			  `VPSTxId` VARCHAR(50),
-			  `VendorTxCode` VARCHAR(50) NOT NULL,
-			  `SecurityKey` CHAR(50) NOT NULL,
-			  `TxAuthNo` INT(50),
-			  `date_added` DATETIME NOT NULL,
-			  `date_modified` DATETIME NOT NULL,
-			  `release_status` INT(1) DEFAULT NULL,
-			  `void_status` INT(1) DEFAULT NULL,
-			  `settle_type` INT(1) DEFAULT NULL,
-			  `rebate_status` INT(1) DEFAULT NULL,
-			  `currency_code` CHAR(3) NOT NULL,
-			  `total` DECIMAL( 10, 2 ) NOT NULL,
-			  `card_id` INT(11),
+			  `opayo_order_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `order_id` int(11) NOT NULL,
+			  `vps_tx_id` varchar(50),
+			  `vendor_tx_code` varchar(50) NOT NULL,
+			  `security_key` varchar(50) NOT NULL,
+			  `tx_auth_no` varchar(50),
+			  `date_added` datetime NOT NULL,
+			  `date_modified` datetime NOT NULL,
+			  `release_status` int(1) DEFAULT NULL,
+			  `void_status` int(1) DEFAULT NULL,
+			  `settle_type` int(1) DEFAULT NULL,
+			  `rebate_status` int(1) DEFAULT NULL,
+			  `currency_code` varchar(3) NOT NULL,
+			  `total` decimal(15,4) NOT NULL,
+			  `card_id` int(11),
 			  PRIMARY KEY (`opayo_order_id`),
 			  KEY (`order_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_order_transaction` (
-			  `opayo_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `opayo_order_id` INT(11) NOT NULL,
-			  `date_added` DATETIME NOT NULL,
+			  `opayo_order_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `opayo_order_id` int(11) NOT NULL,
+			  `date_added` datetime NOT NULL,
 			  `type` ENUM('auth', 'payment', 'rebate', 'void') DEFAULT NULL,
-			  `amount` DECIMAL( 10, 2 ) NOT NULL,
+			  `amount` decimal(15,4) NOT NULL,
 			  PRIMARY KEY (`opayo_order_transaction_id`),
 			  KEY (`opayo_order_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_order_subscription` (
-			  `opayo_order_subscription_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `order_id` INT(11) NOT NULL,
-			  `subscription_id` INT(11) NOT NULL,
-			  `VPSTxId` VARCHAR(50),
-			  `VendorTxCode` VARCHAR(50) NOT NULL,
-			  `SecurityKey` CHAR(50) NOT NULL,
-			  `TxAuthNo` INT(50),
-			  `date_added` DATETIME NOT NULL,
-			  `date_modified` DATETIME NOT NULL,
-			  `next_payment` DATETIME NOT NULL,
-			  `trial_end` DATETIME DEFAULT NULL,
-			  `subscription_end` DATETIME DEFAULT NULL,
-			  `currency_code` CHAR(3) NOT NULL,
-			  `total` DECIMAL( 10, 2 ) NOT NULL,
+			  `opayo_order_subscription_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `order_id` int(11) NOT NULL,
+			  `subscription_id` int(11) NOT NULL,
+			  `vps_tx_id` varchar(50),
+			  `vendor_tx_code` varchar(50) NOT NULL,
+			  `security_key` varchar(50) NOT NULL,
+			  `tx_auth_no` varchar(50),
+			  `date_added` datetime NOT NULL,
+			  `date_modified` datetime NOT NULL,
+			  `next_payment` datetime NOT NULL,
+			  `trial_end` datetime DEFAULT NULL,
+			  `subscription_end` datetime DEFAULT NULL,
+			  `currency_code` varchar(3) NOT NULL,
+			  `total` DECIMAL(15,4) NOT NULL,
 			  PRIMARY KEY (`opayo_order_subscription_id`),
 			  KEY (`order_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_card` (
-			  `card_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `customer_id` INT(11) NOT NULL,
-			  `token` VARCHAR(50) NOT NULL,
-			  `digits` VARCHAR(4) NOT NULL,
-			  `expiry` VARCHAR(5) NOT NULL,
-			  `type` VARCHAR(50) NOT NULL,
+			  `card_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `customer_id` int(11) NOT NULL,
+			  `token` varchar(50) NOT NULL,
+			  `digits` varchar(4) NOT NULL,
+			  `expiry` varchar(5) NOT NULL,
+			  `type` varchar(50) NOT NULL,
 			  PRIMARY KEY (`card_id`),
 			  KEY (`customer_id`),
 			  KEY (`token`)
@@ -122,10 +122,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 			$void_data['TxType'] = 'VOID';
 			$void_data['Vendor'] = $this->config->get('payment_opayo_vendor');
-			$void_data['VendorTxCode'] = $opayo_order['VendorTxCode'];
-			$void_data['VPSTxId'] = $opayo_order['VPSTxId'];
-			$void_data['SecurityKey'] = $opayo_order['SecurityKey'];
-			$void_data['TxAuthNo'] = $opayo_order['TxAuthNo'];
+			$void_data['VendorTxCode'] = $opayo_order['vendor_tx_code'];
+			$void_data['VPSTxId'] = $opayo_order['vps_tx_id'];
+			$void_data['SecurityKey'] = $opayo_order['security_key'];
+			$void_data['TxAuthNo'] = $opayo_order['tx_auth_no'];
 
 			return $this->sendCurl($url, $void_data);
 		} else {
@@ -180,10 +180,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 			$release_data['TxType'] = 'RELEASE';
 			$release_data['Vendor'] = $this->config->get('payment_opayo_vendor');
-			$release_data['VendorTxCode'] = $opayo_order['VendorTxCode'];
-			$release_data['VPSTxId'] = $opayo_order['VPSTxId'];
-			$release_data['SecurityKey'] = $opayo_order['SecurityKey'];
-			$release_data['TxAuthNo'] = $opayo_order['TxAuthNo'];
+			$release_data['VendorTxCode'] = $opayo_order['vendor_tx_code'];
+			$release_data['VPSTxId'] = $opayo_order['vps_tx_id'];
+			$release_data['SecurityKey'] = $opayo_order['security_key'];
+			$release_data['TxAuthNo'] = $opayo_order['tx_auth_no'];
 			$release_data['Amount'] = $amount;
 
 			return $this->sendCurl($url, $release_data);
@@ -241,10 +241,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 			$refund_data['Amount'] = $amount;
 			$refund_data['Currency'] = $opayo_order['currency_code'];
 			$refund_data['Description'] = substr($this->config->get('config_name'), 0, 100);
-			$refund_data['RelatedVPSTxId'] = $opayo_order['VPSTxId'];
-			$refund_data['RelatedVendorTxCode'] = $opayo_order['VendorTxCode'];
-			$refund_data['RelatedSecurityKey'] = $opayo_order['SecurityKey'];
-			$refund_data['RelatedTxAuthNo'] = $opayo_order['TxAuthNo'];
+			$refund_data['RelatedVPSTxId'] = $opayo_order['vps_tx_id'];
+			$refund_data['RelatedVendorTxCode'] = $opayo_order['vendor_tx_code'];
+			$refund_data['RelatedSecurityKey'] = $opayo_order['security_key'];
+			$refund_data['RelatedTxAuthNo'] = $opayo_order['tx_auth_no'];
 
 			return $this->sendCurl($url, $refund_data);
 		} else {

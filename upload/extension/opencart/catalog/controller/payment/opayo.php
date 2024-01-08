@@ -453,7 +453,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 				$url = 'https://test.sagepay.com/gateway/service/direct3dcallback.vsp';
 			}
 
-			$this->request->post['VPSTxId'] = $opayo_order_info['VPSTxId'];
+			$this->request->post['VPSTxId'] = $opayo_order_info['vps_tx_id'];
 
 			$response_data = $this->model_extension_opayo_payment_opayo->sendCurl($url, $this->request->post);
 

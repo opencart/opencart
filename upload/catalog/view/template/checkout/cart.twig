@@ -87,8 +87,10 @@ $('#shopping-cart').observe(function(e) {
     $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
 });
 
-$('#header-cart').observe(function(e) {
-    $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+$('#header-cart').on('submit', 'form', function(e) {
+    window.setTimeout(function() {
+        $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+    }, 3000);
 });
 //--></script>
 {{ footer }}

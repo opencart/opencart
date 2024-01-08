@@ -27,6 +27,7 @@ $(document).ready(function() {
     var oc_tooltip = function() {
         // Get tooltip instance
         tooltip = bootstrap.Tooltip.getInstance(this);
+
         if (!tooltip) {
             // Apply to current element
             tooltip = bootstrap.Tooltip.getOrCreateInstance(this);

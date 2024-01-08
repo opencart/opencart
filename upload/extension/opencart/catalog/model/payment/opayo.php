@@ -147,10 +147,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order
 	 *
-	 * @param int   $order_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $response_data
 	 * @param array<string, mixed> $payment_data
-	 * @param int   $card_id
+	 * @param int                  $card_id
 	 *
 	 * @return int
 	 */
@@ -208,9 +208,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order Transaction
 	 *
-	 * @param int    $opayo_order_id
-	 * @param string $type
-	 * @param array<string, mixed>  $order_info
+	 * @param int                  $opayo_order_id
+	 * @param string               $type
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */
@@ -236,10 +236,29 @@ class Opayo extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscriptions By Order Id
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 */
+	public function getSubscriptionsByOrderId(int $order_id): array {
+		$subscription_data = [];
+
+		$query = $this->db->query("SELECT `s`.`subscription_id` FROM `" . DB_PREFIX . "subscription` `s` JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`) WHERE `s`.`order_id` = '" . (int)$order_id . "' AND `o`.`subscription_id` > '0' AND `o`.`payment_method` LIKE '%paypal%'");
+
+		foreach ($query->rows as $subscription) {
+			$subscription_data[] = $this->getSubscription($subscription['subscription_id']);
+		}
+
+		return $subscription_data;
+	}
+
+	/**
 	 * Subscription Payment
 	 *
-	 * @param array<string, mixed>  $item
-	 * @param string $vendor_tx_code
+	 * @param array<string, mixed> $item
+	 * @param string               $vendor_tx_code
 	 *
 	 * @return void
 	 */
@@ -257,21 +276,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 			$trial_text = '';
 		}
 
-		$subscription_amt = $this->currency->format($this->tax->calculate($item['subscription']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-		$subscription_description = $trial_text . sprintf($this->language->get('text_subscription'), $subscription_amt, $item['subscription']['cycle'], $item['subscription']['frequency']);
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if ($item['subscription']['duration'] > 0) {
-			$subscription_description .= sprintf($this->language->get('text_length'), $item['subscription']['duration']);
-		}
-
-		$item['subscription']['description'] = $subscription_description;
-
-		// Create new subscription and set to pending status as no payment has been made yet.
-		$subscription_id = $this->model_checkout_subscription->addSubscription($this->session->data['order_id'], $item['subscription']);
+		$subscription_id = $order_info['subscription_id'];
 
 		$this->model_checkout_subscription->editReference($subscription_id, $vendor_tx_code);
-
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$opayo_order_info = $this->getOrder($this->session->data['order_id']);
 
@@ -540,11 +549,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Order
 	 *
-	 * @param int    $order_id
-	 * @param array<string, mixed>  $response_data
-	 * @param int    $subscription_id
-	 * @param string $trial_end
-	 * @param string $subscription_end
+	 * @param int                  $order_id
+	 * @param array<string, mixed> $response_data
+	 * @param int                  $subscription_id
+	 * @param string               $trial_end
+	 * @param string               $subscription_end
 	 *
 	 * @return void
 	 */
@@ -580,10 +589,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Transaction
 	 *
-	 * @param int   $subscription_id
-	 * @param int   $order_id
+	 * @param int                  $subscription_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $response_data
-	 * @param int   $type
+	 * @param int                  $type
 	 *
 	 * @return void
 	 */

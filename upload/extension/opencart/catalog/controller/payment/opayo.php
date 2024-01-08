@@ -453,7 +453,11 @@ class Opayo extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($setting['general']['transaction_method'] == 'PAYMENT') {
+					$payment_data = [];
+					
 					$subscriptions = $this->cart->getSubscriptions();
+
+					$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . date('YmdHis') . mt_rand(1, 999);
 
 					// Loop through any products that are subscription items
 					foreach ($subscriptions as $item) {

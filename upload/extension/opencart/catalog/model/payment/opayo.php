@@ -147,10 +147,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order
 	 *
-	 * @param int   $order_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $response_data
 	 * @param array<string, mixed> $payment_data
-	 * @param int   $card_id
+	 * @param int                  $card_id
 	 *
 	 * @return int
 	 */
@@ -208,9 +208,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order Transaction
 	 *
-	 * @param int    $opayo_order_id
-	 * @param string $type
-	 * @param array<string, mixed>  $order_info
+	 * @param int                  $opayo_order_id
+	 * @param string               $type
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */
@@ -238,13 +238,14 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Subscription Payment
 	 *
-	 * @param array<string, mixed>  $item
-	 * @param string $vendor_tx_code
+	 * @param array<string, mixed> $item
+	 * @param string               $vendor_tx_code
 	 *
 	 * @return void
 	 */
 	public function subscriptionPayment(array $item, string $vendor_tx_code): void {
 		$this->load->model('checkout/subscription');
+		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/opayo');
 
 		if ($item['subscription']['trial'] == 1) {
@@ -265,12 +266,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 		$item['subscription']['description'] = $subscription_description;
 
-		// Create new subscription and set to pending status as no payment has been made yet.
-		$subscription_id = $this->model_checkout_subscription->addSubscription($this->session->data['order_id'], $item['subscription']);
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+		$subscription_id = $order_info['subscription_id'];
 
 		$this->model_checkout_subscription->editReference($subscription_id, $vendor_tx_code);
-
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$opayo_order_info = $this->getOrder($this->session->data['order_id']);
 
@@ -539,11 +539,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Order
 	 *
-	 * @param int    $order_id
-	 * @param array<string, mixed>  $response_data
-	 * @param int    $subscription_id
-	 * @param string $trial_end
-	 * @param string $subscription_end
+	 * @param int                  $order_id
+	 * @param array<string, mixed> $response_data
+	 * @param int                  $subscription_id
+	 * @param string               $trial_end
+	 * @param string               $subscription_end
 	 *
 	 * @return void
 	 */
@@ -579,10 +579,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Transaction
 	 *
-	 * @param int   $subscription_id
-	 * @param int   $order_id
+	 * @param int                  $subscription_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $response_data
-	 * @param int   $type
+	 * @param int                  $type
 	 *
 	 * @return void
 	 */

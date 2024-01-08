@@ -33,7 +33,7 @@ class Twig {
 		// We have to add the C directory as the base directory because twig can only accept the first namespace/,
 		// rather than a multiple namespace system, which took me less than a minute to write. If symphony is like
 		// this, then I have no idea why people use the framework.
-		$this->loader = new \Twig\Loader\FilesystemLoader('/', $this->root);
+		$this->loader = new \Twig\Loader\FilesystemLoader('./', $this->root);
 	}
 
 	/**

@@ -1,23 +1,8 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\PayPal\Payment;
 class PayPal extends \Opencart\System\Engine\Controller {
-	private $error = [];
-	private $separator = '';
-
-	public function __construct($registry) {
-		parent::__construct($registry);
-
-		$this->separator = '.';
-
-		if (version_compare(PHP_VERSION, '7.1', '>=')) {
-			ini_set('precision', 14);
-			ini_set('serialize_precision', 14);
-		}
-
-		if (empty($this->config->get('paypal_version')) || (!empty($this->config->get('paypal_version')) && ($this->config->get('paypal_version') < '2.2.0'))) {
-			$this->update();
-		}
-	}
+	private array $error = [];
+	private string $separator = '';
 
 	public function index(): string {
 		$this->load->model('extension/paypal/payment/paypal');

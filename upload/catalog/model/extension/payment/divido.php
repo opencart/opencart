@@ -3,9 +3,6 @@ class ModelExtensionPaymentDivido extends Model {
 	const CACHE_KEY_PLANS = 'divido_plans';
 
 	public function setMerchant($api_key) {
-		if ($api_key) {
-			Divido::setMerchant($api_key);
-		}
 	}
 
 	public function getMethod($payment_address, $total) {
@@ -152,8 +149,6 @@ class ModelExtensionPaymentDivido extends Model {
 		if (!$api_key) {
 			throw new Exception("No Divido api-key defined");
 		}
-
-		Divido::setMerchant($api_key);
 
 		$response = Divido_Finances::all();
 		if ($response->status != 'ok') {

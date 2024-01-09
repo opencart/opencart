@@ -116,7 +116,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
 		$payment_data['Vendor'] = $this->config->get('payment_opayo_vendor');
-		$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . date('YmdHis') . mt_rand(1, 999);
+		$payment_data['VendorTxCode'] = $subscription_id . 'RSD' . (new DateTimeImmutable())->setTimestamp(time())->format('Ymdhis') . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
@@ -468,7 +468,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 					$order_products = $this->model_checkout_order->getProducts($this->session->data['order_id']);
 
-					$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . date('YmdHis') . mt_rand(1, 999);
+					$payment_data['VendorTxCode'] = $order_info['subscription_id'] . 'RSD' . (new DateTimeImmutable())->setTimestamp(time())->format('Ymdhis') . mt_rand(1, 999);
 
 					// Loop through any products that are subscription items
 					foreach ($order_products as $order_product) {
@@ -547,31 +547,5 @@ class Opayo extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Cron
-	 *
-	 * @return void
-	 */
-	public function cron(): void {
-		// Setting
-		$_config = new \Opencart\System\Engine\Config();
-		$_config->addPath(DIR_EXTENSION . 'opayo/system/config/');
-		$_config->load('opayo');
-
-		$config_setting = $_config->get('opayo_setting');
-
-		$setting = array_replace_recursive((array)$config_setting, (array)$this->config->get('payment_opayo_setting'));
-
-		if (isset($this->request->get['token']) && hash_equals($setting['cron']['token'], $this->request->get['token'])) {
-			$this->load->model('extension/opayo/payment/opayo');
-
-			$orders = $this->model_extension_opayo_payment_opayo->cronPayment();
-
-			$this->model_extension_opayo_payment_opayo->updateCronRunTime();
-
-			$this->model_extension_opayo_payment_opayo->log('Repeat Orders', $orders);
-		}
 	}
 }

@@ -1,0 +1,184 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+					<ul class="nav nav-tabs">
+						<li class="nav-tab active"><a href="#tab-general" data-toggle="tab">{{ text_tab_general }}</a></li>
+						<li class="nav-tab"><a href="#tab-cron" data-toggle="tab">{{ text_tab_cron }}</a></li>
+					</ul>
+					
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab-general">
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-vendor">{{ entry_vendor }}</label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_opayo_vendor" value="{{ vendor }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control" />
+									{% if error_vendor %}
+									<div class="text-danger">{{ error_vendor }}</div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+								<div class="col-sm-10">
+									<select name="payment_opayo_status" id="input-status" class="form-control">
+										{% if status %}
+										<option value="1" selected="selected">{{ text_enabled }}</option>
+										<option value="0">{{ text_disabled }}</option>
+										{% else %}
+										<option value="1">{{ text_enabled }}</option>
+										<option value="0" selected="selected">{{ text_disabled }}</option>
+										{% endif %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-general-environment">{{ entry_environment }}</label>
+								<div class="col-sm-10">
+									<select name="payment_opayo_setting[general][environment]" id="input-general-environment" class="form-control">
+										{% for environment in setting['environment'] %}
+										{% if environment['code'] == setting['general']['environment'] %}
+										<option value="{{ environment['code'] }}" selected="selected">{{ attribute(_context, environment['name']) }}</option>
+										{% else %}
+										<option value="{{ environment['code'] }}">{{ attribute(_context, environment['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-general-transaction-method"><span data-toggle="tooltip" title="{{ help_transaction_method }}">{{ entry_transaction_method }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_opayo_setting[general][transaction_method]" id="input-general-transaction-method" class="form-control">
+										{% for transaction_method in setting['transaction_method'] %}
+										{% if transaction_method['code'] == setting['general']['transaction_method'] %}
+										<option value="{{ transaction_method['code'] }}" selected="selected">{{ attribute(_context, transaction_method['name']) }}</option>
+										{% else %}
+										<option value="{{ transaction_method['code'] }}">{{ attribute(_context, transaction_method['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-general-card-save">{{ entry_card_save }}</label>
+								<div class="col-sm-10">
+									<div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ help_card_save }}</div>
+									<select name="payment_opayo_setting[general][card_save]" id="input-general-card-save" class="form-control">
+										{% if setting['general']['card_save'] %}
+										<option value="1" selected="selected">{{ text_enabled }}</option>
+										<option value="0">{{ text_disabled }}</option>
+										{% else %}
+										<option value="1">{{ text_enabled }}</option>
+										<option value="0" selected="selected">{{ text_disabled }}</option>
+										{% endif %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-general-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_opayo_setting[general][debug]" id="input-general-debug" class="form-control">
+										{% if setting['general']['debug'] %}
+										<option value="1" selected="selected">{{ text_enabled }}</option>
+										<option value="0">{{ text_disabled }}</option>
+										{% else %}
+										<option value="1">{{ text_enabled }}</option>
+										<option value="0" selected="selected">{{ text_disabled }}</option>
+										{% endif %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-general-order-status">{{ entry_order_status }}</label>
+								<div class="col-sm-10">
+									<select name="payment_opayo_setting['general']['order_status_id']" id="input-general-order-status" class="form-control">
+										{% for order_status in order_statuses %}
+										{% if order_status['order_status_id'] == setting['general']['order_status_id'] %}
+										<option value="{{ order_status['order_status_id'] }}" selected="selected">{{ order_status['name'] }}</option>
+										{% else %}
+										<option value="{{ order_status['order_status_id'] }}">{{ order_status['name'] }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_opayo_total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+								<div class="col-sm-10">
+									<select name="payment_opayo_geo_zone_id" id="input-geo-zone" class="form-control">
+										<option value="0">{{ text_all_zones }}</option>
+										{% for geo_zone in geo_zones %}
+										{% if geo_zone['geo_zone_id'] == geo_zone_id %}
+										<option value="{{ geo_zone['geo_zone_id'] }}" selected="selected">{{ geo_zone['name'] }}</option>
+										{% else %}
+										<option value="{{ geo_zone['geo_zone_id'] }}">{{ geo_zone['name'] }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>							
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_opayo_sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+								</div>
+							</div>
+						</div>	
+						<div class="tab-pane" id="tab-cron">
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-cron-token"><span data-toggle="tooltip" title="{{ help_cron_token }}">{{ entry_cron_token }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_opayo_setting[cron][token]" value="{{ setting['cron']['token'] }}" placeholder="{{ entry_cron_token }}" id="input-cron-token" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-cron-url"><span data-toggle="tooltip" title="{{ help_cron_url }}">{{ entry_cron_url }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_opayo_setting[cron][url]" value="{{ setting['cron']['url'] }}" placeholder="{{ entry_cron_url }}" id="input-cron-url" class="form-control" />
+								</div>
+							</div>
+							{% if setting['cron']['last_run'] %}
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{ entry_cron_last_run }}</label>
+								<div class="col-sm-10">{{ setting['cron']['last_run'] }}</div>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

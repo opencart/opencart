@@ -472,6 +472,8 @@ class PayPal {
 			}
 
 			return (array)$this->last_response;
+		} else {
+			return [];
 		}
 	}
 

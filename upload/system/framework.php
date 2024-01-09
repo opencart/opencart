@@ -55,6 +55,7 @@ $registry->set('event', $event);
 
 // Event Register
 if ($config->has('action_event')) {
+	$log->write("framework: config->get('action_event')='".print_r($config->get('action_event'),true)."'");
 	foreach ($config->get('action_event') as $key => $value) {
 		foreach ($value as $priority => $action) {
 			$event->register($key, new Action($action), $priority);

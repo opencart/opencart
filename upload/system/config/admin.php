@@ -42,8 +42,5 @@ $_['action_event'] = array(
 	'view/*/before' => array(
 		999  => 'event/language',
 		1000 => 'event/theme'
-	),
-	'view/*/before' => array(
-		'event/language'
 	)
 );

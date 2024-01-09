@@ -1,6 +1,6 @@
 <?php
 class ControllerEventLanguage extends Controller {
-	public function index(&$route, &$args) {
+	public function index(&$route, &$args, &$template_code='') {
 		foreach ($this->language->all() as $key => $value) {
 			if (!isset($args[$key])) {
 				$args[$key] = $value;

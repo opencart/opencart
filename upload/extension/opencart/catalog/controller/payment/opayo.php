@@ -477,7 +477,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 						if ($order_subscription && $order_subscription['order_product_id'] == $order_product['order_product_id']) {
 							$order_subscription['subscription'] = $order_subscription;
 							$order_subscription['subscription']['name'] = $order_product['name'];
-							
+
 							$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $payment_data['VendorTxCode']);
 						}
 					}

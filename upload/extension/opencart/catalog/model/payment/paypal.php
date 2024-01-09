@@ -126,7 +126,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 	 * @param array $option
 	 * @param int   $subscription_plan_id
 	 *
-	 * @return array
+	 * @return int
 	 */
 	public function hasProductInCart(int $product_id, array $option = [], int $subscription_plan_id = 0): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cart` WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
@@ -402,10 +402,10 @@ class PayPal extends \Opencart\System\Engine\Model {
 		$subscription_id = $subscription_data['subscription_id'];
 		$subscription_name = '';
 
-		if ($subscription_data['trial_status'] && $subscription_data['trial_duration'] && $subscription['trial_remaining']) {
+		if ($subscription_data['trial_status'] && $subscription_data['trial_duration'] && $subscription_data['trial_remaining']) {
 			$trial_remaining = $subscription_data['trial_duration'] - 1;
 			$remaining = $subscription_data['duration'];
-		} elseif ($subscription_data['duration'] && $subscription['remaining']) {
+		} elseif ($subscription_data['duration'] && $subscription_data['remaining']) {
 			$trial_remaining = $subscription_data['trial_duration'];
 			$remaining = $subscription_data['duration'] - 1;
 		} else {

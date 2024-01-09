@@ -205,7 +205,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 			$data['environment'] = 'production';
 		}
 
-		$data['seller_nonce'] = $this->token(50);
+		$data['seller_nonce'] = oc_token(50);
 
 		$data['configure_url'] = [
 			'production' => [
@@ -2098,26 +2098,11 @@ class PayPal extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($data));
 	}
 
-	private function validate(): array|bool {
+	private function validate(): array {
 		if (!$this->user->hasPermission('modify', 'extension/paypal/payment/paypal')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;
-	}
-
-	private function token($length = 32): string {
-		// Create random token
-		$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-		$max = strlen($string) - 1;
-
-		$token = '';
-
-		for ($i = 0; $i < $length; $i++) {
-			$token .= $string[mt_rand(0, $max)];
-		}
-
-		return $token;
 	}
 }

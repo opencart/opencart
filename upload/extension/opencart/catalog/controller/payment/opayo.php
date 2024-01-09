@@ -357,11 +357,11 @@ class Opayo extends \Opencart\System\Engine\Controller {
 				foreach ($order_products as $order_product) {
 					$order_subscription = $this->model_checkout_subscription->getSubscriptionByOrderProductId($this->session->data['order_id'], $order_product['order_product_id']);
 
-					if ($order_subscription && $order_subscription['order_product_id'] == $order_product['order_product_id']) {
-						$order_subscription['subscription'] = $order_subscription;
+					if ($order_subscription) {
+						$order_subscription['subscription'] = $order_subscription;							
 						$order_subscription['subscription']['name'] = $order_product['name'];
-
-						$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $payment_data['VendorTxCode']);
+						
+						$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $order_info, $payment_data['VendorTxCode']);
 					}
 				}
 			}
@@ -474,11 +474,11 @@ class Opayo extends \Opencart\System\Engine\Controller {
 					foreach ($order_products as $order_product) {
 						$order_subscription = $this->model_checkout_subscription->getSubscriptionByOrderProductId($this->session->data['order_id'], $order_product['order_product_id']);
 
-						if ($order_subscription && $order_subscription['order_product_id'] == $order_product['order_product_id']) {
-							$order_subscription['subscription'] = $order_subscription;
+						if ($order_subscription) {
+							$order_subscription['subscription'] = $order_subscription;							
 							$order_subscription['subscription']['name'] = $order_product['name'];
 							
-							$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $payment_data['VendorTxCode']);
+							$this->model_extension_opayo_payment_opayo->subscriptionPayment($order_subscription, $order_info, $payment_data['VendorTxCode']);
 						}
 					}
 				}

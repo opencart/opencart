@@ -243,17 +243,12 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function subscriptionPayment(array $item, string $vendor_tx_code): void {
-		$this->load->model('checkout/order');
-		$this->load->model('extension/payment/opayo');
-
+	public function subscriptionPayment(array $item, $order_info, string $vendor_tx_code): void {
 		if ($item['subscription']['trial'] == 1) {
 			$price = $item['subscription']['trial_price'];
 		} else {
 			$price = $item['subscription']['price'];
 		}
-
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$subscription_id = $order_info['subscription_id'];
 
@@ -312,8 +307,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 */
 	public function cronPayment(): array {
 		$this->load->model('account/order');
+		$this->load->model('account/subscription');
 
-		$subscriptions = $this->getProfiles();
+		$subscriptions = $this->model_account_subscription->getSubscriptions(1, $this->config->get('config_pagination'));
+
 		$cron_data = [];
 		$i = 0;
 
@@ -327,6 +324,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			$subscription_end = new \DateTime($subscription_order['subscription_end']);
 
 			$order_info = $this->model_account_order->getOrder($subscription['order_id']);
+			$order_product = $this->model_account_order->getProduct($subscription['order_id'], $subscription['order_product_id']);
 
 			if ((date_format($today, 'Y-m-d H:i:s') > date_format($next_payment, 'Y-m-d H:i:s')) && (date_format($trial_end, 'Y-m-d H:i:s') > date_format($today, 'Y-m-d H:i:s') || date_format($trial_end, 'Y-m-d H:i:s') == date_format($unlimited, 'Y-m-d H:i:s'))) {
 				$price = $this->currency->format($subscription['trial_price'], $order_info['currency_code'], false, false);
@@ -334,9 +332,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 				$cycle = $subscription['trial_cycle'];
 				$next_payment = $this->calculateSchedule($frequency, $next_payment, $cycle);
 			} elseif ((date_format($today, 'Y-m-d H:i:s') > date_format($next_payment, 'Y-m-d H:i:s')) && (date_format($subscription_end, 'Y-m-d H:i:s') > date_format($today, 'Y-m-d H:i:s') || date_format($subscription_end, 'Y-m-d H:i:s') == date_format($unlimited, 'Y-m-d H:i:s'))) {
-				$price = $this->currency->format($subscription['subscription_price'], $order_info['currency_code'], false, false);
-				$frequency = $subscription['subscription_frequency'];
-				$cycle = $subscription['subscription_cycle'];
+				$price = $this->currency->format($subscription['price'], $order_info['currency_code'], false, false);
+				$frequency = $subscription['frequency'];
+				$cycle = $subscription['cycle'];
 				$next_payment = $this->calculateSchedule($frequency, $next_payment, $cycle);
 			} else {
 				continue;
@@ -352,7 +350,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 
 			$recurring_frequency = date_diff(new \DateTime('now'), new \DateTime(date_format($next_payment, 'Y-m-d H:i:s')))->days;
 
-			$response_data = $this->setPaymentData($order_info, $opayo_order_info, $price, $subscription['subscription_id'], $subscription['subscription_name'], $recurring_expiry, $recurring_frequency, $i);
+			$response_data = $this->setPaymentData($order_info, $opayo_order_info, $price, $subscription['subscription_id'], $order_product['name'], $recurring_expiry, $recurring_frequency, $i);
 
 			$cron_data[] = $response_data;
 
@@ -572,36 +570,6 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 */
 	private function addSubscriptionTransaction(int $subscription_id, int $order_id, array $response_data, int $type): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_transaction` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$order_id . "', `date_added` = NOW(), `amount` = '" . (float)$response_data['Amount'] . "', `type` = '" . (int)$type . "', `reference` = '" . $this->db->escape($response_data['VendorTxCode']) . "'");
-	}
-
-	/**
-	 * Get Profiles
-	 *
-	 * @return array<int, array<string, mixed>>
-	 */
-	private function getProfiles(): array {
-		$query = $this->db->query("SELECT `or`.`order_recurring_id` FROM `" . DB_PREFIX . "order_recurring` `or` JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`) WHERE `o`.`payment_code` = 'opayo'");
-
-		$subscriptions = [];
-
-		foreach ($query->rows as $subscription) {
-			$subscriptions[] = $this->getProfile($subscription['subscription_id']);
-		}
-
-		return $subscriptions;
-	}
-
-	/**
-	 * Get Profile
-	 *
-	 * @param int $subscription_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	private function getProfile(int $subscription_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = " . (int)$subscription_id);
-
-		return $query->row;
 	}
 
 	/**

@@ -39,15 +39,13 @@ class PDO {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 
-		if ($pdo) {
-			$this->connection = $pdo;
+		$this->connection = $pdo;
 
-			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
-			$this->query("SET FOREIGN_KEY_CHECKS = 0");
+		$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
+		$this->query("SET FOREIGN_KEY_CHECKS = 0");
 
-			// Sync PHP and DB time zones
-			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
-		}
+		// Sync PHP and DB time zones
+		$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 	}
 
 	/**

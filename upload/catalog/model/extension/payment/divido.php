@@ -2,8 +2,7 @@
 class ModelExtensionPaymentDivido extends Model {
 	const CACHE_KEY_PLANS = 'divido_plans';
 
-	public function setMerchant($api_key) {
-	}
+	public function setMerchant($api_key) {}
 
 	public function getMethod($payment_address, $total) {
 		$this->load->language('extension/payment/divido');

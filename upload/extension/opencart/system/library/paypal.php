@@ -61,7 +61,7 @@ class PayPal {
 	}
 
 	//OUT: access token, if no return - check errors
-	public function getClientToken(): bool {
+	public function getClientToken(): string {
 		$command = '/v1/identity/generate-token';
 
 		$result = $this->execute('POST', $command);

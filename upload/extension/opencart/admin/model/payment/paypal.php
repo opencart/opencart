@@ -18,11 +18,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 			$implode[] = "'" . (int)$order_status_id . "'";
 		}
 
-		if (VERSION >= '4.0.2.0') {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND `payment_method` LIKE '%paypal%'");
-		} else {
-			$query = $this->db->query("SELECT SUM(`total`) AS total FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND `payment_code` = 'paypal'");
-		}
+		$query = $this->db->query("SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND `payment_method` LIKE '%paypal%'");
 
 		return (float)$query->row['total'];
 	}
@@ -49,11 +45,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		if (VERSION >= '4.0.2.0') {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, HOUR(`date_added`) AS `hour` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
-		} else {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_code` = 'paypal', `total`, 0)) AS `paypal_total`, HOUR(`date_added`) AS `hour` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
-		}
+		$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, HOUR(`date_added`) AS `hour` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
 
 		foreach ($query->rows as $result) {
 			$sale_data[$result['hour']] = [
@@ -92,11 +84,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		if (VERSION >= '4.0.2.0') {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
-		} else {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_code` = 'paypal', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
-		}
+		$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$sale_data[date('w', strtotime($result['date_added']))] = [
@@ -133,11 +121,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		if (VERSION >= '4.0.2.0') {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
-		} else {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_code` = 'paypal', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
-		}
+		$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$sale_data[date('j', strtotime($result['date_added']))] = [
@@ -172,11 +156,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		if (VERSION >= '4.0.2.0') {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
-		} else {
-			$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_code` = 'paypal', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
-		}
+		$query = $this->db->query("SELECT SUM(`total`) AS `total`, SUM(IF (`payment_method` LIKE '%paypal%', `total`, 0)) AS `paypal_total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(',', $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$sale_data[date('n', strtotime($result['date_added']))] = [
@@ -388,18 +368,16 @@ class PayPal extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function install(): void {
-		if (VERSION >= '4.0.2.0') {
-			$this->db->query("
-				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_subscription_transaction` (
-				`paypal_transaction_subscription_id` INT(11) NOT NULL AUTO_INCREMENT,
-				`subscription_id` INT(11) NOT NULL,
-				`order_id` INT(11) NOT NULL,
-				`transaction_id` INT(11) NOT NULL,
-				`amount` DECIMAL(15,4) NOT NULL,
-				`date_added` DATETIME NOT NULL,
-				PRIMARY KEY (`paypal_transaction_subscription_id`)
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
-		}
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_subscription_transaction` (
+			`paypal_transaction_subscription_id` INT(11) NOT NULL AUTO_INCREMENT,
+			`subscription_id` INT(11) NOT NULL,
+			`order_id` INT(11) NOT NULL,
+			`transaction_id` INT(11) NOT NULL,
+			`amount` DECIMAL(15,4) NOT NULL,
+			`date_added` DATETIME NOT NULL,
+			PRIMARY KEY (`paypal_transaction_subscription_id`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");		
 
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_checkout_integration_order` (`order_id` INT(11) NOT NULL, `transaction_id` VARCHAR(20) NOT NULL, `transaction_status` VARCHAR(20) NULL, `payment_method` VARCHAR(20) NULL, `vault_id` VARCHAR(50) NULL, `vault_customer_id` VARCHAR(50) NULL, `environment` VARCHAR(20) NULL, PRIMARY KEY (`order_id`, `transaction_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
 	}
@@ -411,9 +389,6 @@ class PayPal extends \Opencart\System\Engine\Model {
 	 */
 	public function uninstall(): void {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_checkout_integration_order`");
-
-		if (VERSION >= '4.0.2.0') {
-			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_subscription_transaction`");
-		}
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_subscription_transaction`");
 	}
 }

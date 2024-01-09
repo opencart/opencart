@@ -1575,7 +1575,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 
 				$option_data[] = [
 					'name'  => $option['name'],
-					'value' => ($this->strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+					'value' => (strlen($value) > 20 ? substr($value, 0, 20) . '..' : $value)
 				];
 			}
 
@@ -3088,27 +3088,27 @@ class PayPal extends \Opencart\System\Engine\Controller {
 	}
 
 	private function validatePaymentAddress(): bool {
-		if (($this->strlen(trim($this->request->post['firstname'])) < 1) || ($this->strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((strlen(trim($this->request->post['firstname'])) < 1) || (strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (($this->strlen(trim($this->request->post['lastname'])) < 1) || ($this->strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((strlen(trim($this->request->post['lastname'])) < 1) || (strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (($this->strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->config->get('config_telephone_required') && (($this->strlen($this->request->post['telephone']) < 3) || ($this->strlen($this->request->post['telephone']) > 32))) {
+		if ($this->config->get('config_telephone_required') && ((strlen($this->request->post['telephone']) < 3) || (strlen($this->request->post['telephone']) > 32))) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if (($this->strlen(trim($this->request->post['address_1'])) < 3) || ($this->strlen(trim($this->request->post['address_1'])) > 128)) {
+		if ((strlen(trim($this->request->post['address_1'])) < 3) || (strlen(trim($this->request->post['address_1'])) > 128)) {
 			$this->error['address_1'] = $this->language->get('error_address_1');
 		}
 
-		if (($this->strlen(trim($this->request->post['city'])) < 2) || ($this->strlen(trim($this->request->post['city'])) > 128)) {
+		if ((strlen(trim($this->request->post['city'])) < 2) || (strlen(trim($this->request->post['city'])) > 128)) {
 			$this->error['city'] = $this->language->get('error_city');
 		}
 
@@ -3116,7 +3116,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 
 		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && ($this->strlen(trim($this->request->post['postcode'])) < 2 || $this->strlen(trim($this->request->post['postcode'])) > 10)) {
+		if ($country_info && $country_info['postcode_required'] && (strlen(trim($this->request->post['postcode'])) < 2 || strlen(trim($this->request->post['postcode'])) > 10)) {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 
@@ -3147,19 +3147,19 @@ class PayPal extends \Opencart\System\Engine\Controller {
 	}
 
 	private function validateShippingAddress(): bool {
-		if (($this->strlen(trim($this->request->post['firstname'])) < 1) || ($this->strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((strlen(trim($this->request->post['firstname'])) < 1) || (strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (($this->strlen(trim($this->request->post['lastname'])) < 1) || ($this->strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((strlen(trim($this->request->post['lastname'])) < 1) || (strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (($this->strlen(trim($this->request->post['address_1'])) < 3) || ($this->strlen(trim($this->request->post['address_1'])) > 128)) {
+		if ((strlen(trim($this->request->post['address_1'])) < 3) || (strlen(trim($this->request->post['address_1'])) > 128)) {
 			$this->error['address_1'] = $this->language->get('error_address_1');
 		}
 
-		if (($this->strlen(trim($this->request->post['city'])) < 2) || ($this->strlen(trim($this->request->post['city'])) > 128)) {
+		if ((strlen(trim($this->request->post['city'])) < 2) || (strlen(trim($this->request->post['city'])) > 128)) {
 			$this->error['city'] = $this->language->get('error_city');
 		}
 
@@ -3167,7 +3167,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 
 		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && ($this->strlen(trim($this->request->post['postcode'])) < 2 || Helper\Utf8\strlen(trim($this->request->post['postcode'])) > 10)) {
+		if ($country_info && $country_info['postcode_required'] && (strlen(trim($this->request->post['postcode'])) < 2 || strlen(trim($this->request->post['postcode'])) > 10)) {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 
@@ -3285,9 +3285,5 @@ class PayPal extends \Opencart\System\Engine\Controller {
 		}
 
 		return false;
-	}
-
-	private function strlen(string $str): int {
-		return (int)oc_strlen($str);
 	}
 }

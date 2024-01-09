@@ -595,10 +595,6 @@ $_['paypal_setting'] = [
 			'code' => 'bancontact',
 			'name' => 'text_bancontact'
 		],
-		'bancontact' => [
-			'code' => 'bancontact',
-			'name' => 'text_bancontact'
-		],
 		'blik' => [
 			'code' => 'blik',
 			'name' => 'text_blik'

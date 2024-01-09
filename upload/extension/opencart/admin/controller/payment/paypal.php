@@ -2098,7 +2098,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($data));
 	}
 
-	private function validate(): array {
+	private function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/paypal/payment/paypal')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

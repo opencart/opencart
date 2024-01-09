@@ -565,6 +565,7 @@ class Order extends \Opencart\System\Engine\Model {
 			$implode = [];
 
 			$order_statuses = explode(',', $data['filter_order_status']);
+			$order_statuses = array_filter($order_statuses);
 
 			foreach ($order_statuses as $order_status_id) {
 				$implode[] = "`order_status_id` = '" . (int)$order_status_id . "'";

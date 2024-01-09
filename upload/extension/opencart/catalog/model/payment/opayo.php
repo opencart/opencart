@@ -480,6 +480,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 */
 	private function calculateSchedule(string $frequency, \DateTime $next_payment, int $cycle) {
 		$next_payment = clone $next_payment;
+		
 		if ($frequency == 'semi_month') {
 			$day = $next_payment->format('d');
 			$value = 15 - $day;

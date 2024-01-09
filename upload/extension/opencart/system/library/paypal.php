@@ -39,7 +39,7 @@ class PayPal {
 
 	//IN:  token info
 	//OUT: access token, if no return - check errors
-	public function setAccessToken(array $token_info): bool|string {
+	public function setAccessToken(array $token_info): string {
 		$command = '/v1/oauth2/token';
 
 		$params = $token_info;
@@ -51,7 +51,7 @@ class PayPal {
 
 			return $this->access_token;
 		} else {
-			return false;
+			return '';
 		}
 	}
 

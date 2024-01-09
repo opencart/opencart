@@ -18,8 +18,6 @@ class ModelExtensionPaymentDivido extends Model {
 			throw new Exception("No Divido api-key defined");
 		}
 
-		Divido::setMerchant($api_key);
-
 		$response = Divido_Finances::all();
 		if ($response->status != 'ok') {
 			throw new Exception("Can't get list of finance plans from Divido!");

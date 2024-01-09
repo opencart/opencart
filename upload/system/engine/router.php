@@ -77,5 +77,7 @@ final class Router {
 			
 			return $action;
 		}
+
+		return null;
 	}
 }

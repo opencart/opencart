@@ -174,9 +174,9 @@ class PayPal extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $code
 	 *
-	 * @return array|bool
+	 * @return array
 	 */
-	public function getCountryByCode(string $code): array|bool {
+	public function getCountryByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
@@ -284,12 +284,12 @@ class PayPal extends \Opencart\System\Engine\Model {
 	/**
 	 * checkVersion
 	 *
-	 * return @array|bool
+	 * return @array
 	 *
 	 * @param string $opencart_version
 	 * @param string $paypal_version
 	 */
-	public function checkVersion(string $opencart_version, string $paypal_version): array|bool {
+	public function checkVersion(string $opencart_version, string $paypal_version): array {
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, 'https://www.opencart.com/index.php?route=api/promotion/paypalCheckoutIntegration&opencart=' . $opencart_version . '&paypal=' . $paypal_version);
@@ -310,7 +310,7 @@ class PayPal extends \Opencart\System\Engine\Model {
 		if ($result) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 

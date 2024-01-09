@@ -61,7 +61,6 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
 				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
-				'METHOD'       => 'SetExpressCheckout',
 				'METHOD'       => 'ManageRecurringPaymentsProfileStatus',
 				'PROFILEID'    => $recurring_info['reference'],
 				'ACTION'       => 'Cancel'

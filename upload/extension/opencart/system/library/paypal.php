@@ -61,7 +61,7 @@ class PayPal {
 	}
 
 	//OUT: access token, if no return - check errors
-	public function getClientToken(): bool|string {
+	public function getClientToken(): bool {
 		$command = '/v1/identity/generate-token';
 
 		$result = $this->execute('POST', $command);
@@ -69,12 +69,12 @@ class PayPal {
 		if (!empty($result['client_token'])) {
 			return $result['client_token'];
 		} else {
-			return false;
+			return '';
 		}
 	}
 
 	//OUT: merchant info, if no return - check errors
-	public function getUserInfo(): array|bool {
+	public function getUserInfo(): array {
 		$command = '/v1/identity/oauth2/userinfo';
 
 		$params = [
@@ -86,13 +86,13 @@ class PayPal {
 		if (!empty($result['user_id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  partner id
 	//OUT: merchant info, if no return - check errors
-	public function getSellerCredentials(string $partner_id): array|bool {
+	public function getSellerCredentials(string $partner_id): array {
 		$command = '/v1/customer/partners/' . $partner_id . '/merchant-integrations/credentials';
 
 		$result = $this->execute('GET', $command);
@@ -100,13 +100,13 @@ class PayPal {
 		if (!empty($result['client_id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  partner id, merchant id
 	//OUT: merchant info, if no return - check errors
-	public function getSellerStatus(string $partner_id, string $merchant_id): array|bool {
+	public function getSellerStatus(string $partner_id, string $merchant_id): array {
 		$command = '/v1/customer/partners/' . $partner_id . '/merchant-integrations/' . $merchant_id;
 
 		$result = $this->execute('GET', $command);
@@ -114,12 +114,12 @@ class PayPal {
 		if (!empty($result['merchant_id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  webhook info
-	public function createWebhook(array $webhook_info): array|bool {
+	public function createWebhook(array $webhook_info): array {
 		$command = '/v1/notifications/webhooks';
 
 		$params = $webhook_info;
@@ -129,13 +129,13 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  webhook id
 	//OUT: webhook info, if no return - check errors
-	public function updateWebhook(string $webhook_id, array $webhook_info): array|bool {
+	public function updateWebhook(string $webhook_id, array $webhook_info): array {
 		$command = '/v1/notifications/webhooks/' . $webhook_id;
 
 		$params = $webhook_info;
@@ -145,7 +145,7 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
@@ -160,7 +160,7 @@ class PayPal {
 
 	//IN:  webhook id
 	//OUT: webhook info, if no return - check errors
-	public function getWebhook(string $webhook_id): array|bool {
+	public function getWebhook(string $webhook_id): array {
 		$command = '/v1/notifications/webhooks/' . $webhook_id;
 
 		$result = $this->execute('GET', $command);
@@ -168,12 +168,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//OUT: webhooks info, if no return - check errors
-	public function getWebhooks(): array|bool {
+	public function getWebhooks(): array {
 		$command = '/v1/notifications/webhooks';
 
 		$result = $this->execute('GET', $command);
@@ -181,13 +181,13 @@ class PayPal {
 		if (!empty($result['webhooks'])) {
 			return $result['webhooks'];
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  webhook event id
 	//OUT: webhook event info, if no return - check errors
-	public function getWebhookEvent(string $webhook_event_id): array|bool {
+	public function getWebhookEvent(string $webhook_event_id): array {
 		$command = '/v1/notifications/webhooks-events/' . $webhook_event_id;
 
 		$result = $this->execute('GET', $command);
@@ -195,12 +195,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//OUT: webhook events info, if no return - check errors
-	public function getWebhookEvents(): array|bool {
+	public function getWebhookEvents(): array {
 		$command = '/v1/notifications/webhooks-events';
 
 		$result = $this->execute('GET', $command);
@@ -208,12 +208,12 @@ class PayPal {
 		if (!empty($result['events'])) {
 			return $result['events'];
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  order info
-	public function createOrder(array $order_info): array|bool {
+	public function createOrder(array $order_info): array {
 		$command = '/v2/checkout/orders';
 
 		$params = $order_info;
@@ -223,7 +223,7 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
@@ -241,7 +241,7 @@ class PayPal {
 
 	//IN:  order id
 	//OUT: order info, if no return - check errors
-	public function getOrder(string $order_id): array|bool {
+	public function getOrder(string $order_id): array {
 		$command = '/v2/checkout/orders/' . $order_id;
 
 		$result = $this->execute('GET', $command);
@@ -249,12 +249,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  order id
-	public function setOrderAuthorize(string $order_id): array|bool {
+	public function setOrderAuthorize(string $order_id): array {
 		$command = '/v2/checkout/orders/' . $order_id . '/authorize';
 
 		$result = $this->execute('POST', $command);
@@ -262,12 +262,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  order id
-	public function setOrderCapture(string $order_id): array|bool {
+	public function setOrderCapture(string $order_id): array {
 		$command = '/v2/checkout/orders/' . $order_id . '/capture';
 
 		$result = $this->execute('POST', $command);
@@ -275,12 +275,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  transaction id
-	public function setPaymentCapture($transaction_id) {
+	public function setPaymentCapture($transaction_id): array {
 		$command = '/v2/payments/authorizations/' . $transaction_id . '/capture';
 
 		$result = $this->execute('POST', $command);
@@ -288,12 +288,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  transaction id
-	public function setPaymentReauthorize($transaction_id) {
+	public function setPaymentReauthorize($transaction_id): array {
 		$command = '/v2/payments/authorizations/' . $transaction_id . '/reauthorize';
 
 		$result = $this->execute('POST', $command);
@@ -301,12 +301,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  transaction id
-	public function setPaymentVoid($transaction_id) {
+	public function setPaymentVoid($transaction_id): array {
 		$command = '/v2/payments/authorizations/' . $transaction_id . '/void';
 
 		$result = $this->execute('POST', $command);
@@ -314,12 +314,12 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
 	//IN:  transaction id
-	public function setPaymentRefund($transaction_id) {
+	public function setPaymentRefund($transaction_id): array {
 		$command = '/v2/payments/captures/' . $transaction_id . '/refund';
 
 		$result = $this->execute('POST', $command);
@@ -327,7 +327,7 @@ class PayPal {
 		if (!empty($result['id'])) {
 			return $result;
 		} else {
-			return false;
+			return [];
 		}
 	}
 
@@ -342,7 +342,7 @@ class PayPal {
 	}
 
 	//OUT: last response
-	public function getResponse(): array|bool {
+	public function getResponse(): array {
 		return $this->last_response;
 	}
 

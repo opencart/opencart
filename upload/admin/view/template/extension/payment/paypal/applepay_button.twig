@@ -31,6 +31,7 @@
 					<ul class="nav nav-tabs">
 						<li class="nav-tab"><a href="{{ href_general }}" class="tab"><i class="tab-icon tab-icon-general"></i><span class="tab-title">{{ text_tab_general }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab active"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
@@ -200,9 +201,9 @@ $('.payment-paypal').on('click', '.button-download-host', function() {
 		dataType: 'json',
 		success: function(json) {
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 				
-				$('html, body').animate({ scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -223,7 +224,7 @@ $('.payment-paypal').on('click', '.button-save', function() {
 			if (json['success']) {
 				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 				
-				$('html, body').animate({ scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
+				$('html, body').animate({scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -242,7 +243,7 @@ $('.payment-paypal').on('click', '.button-agree', function() {
 			$('.payment-paypal .alert').remove();
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

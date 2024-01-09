@@ -144,6 +144,62 @@ class ModelExtensionPaymentPayPal extends Model {
 				
 		return $query->row;
 	}
+		
+	public function editPayPalOrder($data) {
+		$sql = "UPDATE `" . DB_PREFIX . "paypal_checkout_integration_order` SET";
+
+		$implode = array();
+		
+		if (!empty($data['transaction_id'])) {
+			$implode[] = "`transaction_id` = '" . $this->db->escape($data['transaction_id']) . "'";
+		}
+					
+		if (!empty($data['transaction_status'])) {
+			$implode[] = "`transaction_status` = '" . $this->db->escape($data['transaction_status']) . "'";
+		}
+		
+		if (!empty($data['payment_method'])) {
+			$implode[] = "`payment_method` = '" . $this->db->escape($data['payment_method']) . "'";
+		}
+		
+		if (!empty($data['vault_id'])) {
+			$implode[] = "`vault_id` = '" . $this->db->escape($data['vault_id']) . "'";
+		}
+		
+		if (!empty($data['vault_customer_id'])) {
+			$implode[] = "`vault_customer_id` = '" . $this->db->escape($data['vault_customer_id']) . "'";
+		}
+		
+		if (!empty($data['environment'])) {
+			$implode[] = "`environment` = '" . $this->db->escape($data['environment']) . "'";
+		}
+				
+		if ($implode) {
+			$sql .= implode(", ", $implode);
+		}
+
+		$sql .= " WHERE `order_id` = '" . (int)$data['order_id'] . "'";
+		
+		$this->db->query($sql);
+	}
+		
+	public function deletePayPalOrder($order_id) {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "paypal_checkout_integration_order` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+	
+	public function getPayPalOrder($order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_checkout_integration_order` WHERE `order_id` = '" . (int)$order_id . "'");
+		
+		if ($query->num_rows) {
+			return $query->row;
+		} else {
+			return array();
+		}
+	}
+	
+	public function editOrderRecurringStatus($order_recurring_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (int)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
+	}
 	
 	public function setAgreeStatus() {
 		$this->db->query("UPDATE " . DB_PREFIX . "country SET status = '0' WHERE (iso_code_2 = 'CU' OR iso_code_2 = 'IR' OR iso_code_2 = 'SY' OR iso_code_2 = 'KP')");
@@ -212,7 +268,6 @@ class ModelExtensionPaymentPayPal extends Model {
 	}
 	
 	public function log($data, $title = null) {
-		// Setting
 		$_config = new Config();
 		$_config->load('paypal');
 			
@@ -224,5 +279,15 @@ class ModelExtensionPaymentPayPal extends Model {
 			$log = new Log('paypal.log');
 			$log->write('PayPal debug (' . $title . '): ' . json_encode($data));
 		}
+	}
+	
+	public function install() {
+		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_checkout_integration_order` (`order_id` INT(11) NOT NULL, `transaction_id` VARCHAR(20) NOT NULL, `transaction_status` VARCHAR(20) NULL, `payment_method` VARCHAR(20) NULL, `vault_id` VARCHAR(50) NULL, `vault_customer_id` VARCHAR(50) NULL, `environment` VARCHAR(20) NULL, PRIMARY KEY (`order_id`, `transaction_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_checkout_integration_order_recurring` (`paypal_order_recurring_id` INT(11) NOT NULL AUTO_INCREMENT, `order_id` INT(11) NOT NULL, `order_recurring_id` INT(11) NOT NULL, `date_added` DATETIME NOT NULL, `date_modified` DATETIME NOT NULL, `next_payment` DATETIME NOT NULL, `trial_end` DATETIME DEFAULT NULL, `subscription_end` DATETIME DEFAULT NULL, `currency_code` CHAR(3) NOT NULL, `total` DECIMAL(10, 2) NOT NULL, PRIMARY KEY (`paypal_order_recurring_id`), KEY (`order_id`), KEY (`order_recurring_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+	}
+	
+	public function uninstall() {
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_checkout_integration_order`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_checkout_integration_order_recurring`");
 	}
 }

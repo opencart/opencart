@@ -10,7 +10,6 @@ class ControllerExtensionPaymentPayPalPayLater extends Controller {
 		if ($this->config->get('payment_paypal_status') && $this->config->get('payment_paypal_client_id') && $this->config->get('payment_paypal_secret') && $agree_status) {
 			$this->load->language('extension/payment/paypal');
 							
-			// Setting
 			$_config = new Config();
 			$_config->load('paypal');
 			
@@ -81,12 +80,13 @@ class ControllerExtensionPaymentPayPalPayLater extends Controller {
 
 			return $this->load->view('extension/payment/paypal/paypal_paylater', $data);
 		}
+		
+		return '';
 	}
 	
 	public function modal() {
 		$this->load->language('extension/payment/paypal');
 							
-		// Setting
 		$_config = new Config();
 		$_config->load('paypal');
 			

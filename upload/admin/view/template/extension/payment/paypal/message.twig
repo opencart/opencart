@@ -31,6 +31,7 @@
 					<ul class="nav nav-tabs">
 						<li class="nav-tab"><a href="{{ href_general }}" class="tab"><i class="tab-icon tab-icon-general"></i><span class="tab-title">{{ text_tab_general }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
 						<li class="nav-tab active"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
@@ -74,44 +75,6 @@
 													<div class="form-check-input"></div>
 													<label class="payment-label">{{ text_payment_method_cod }}</label>
 												</div>	
-											</div>
-										</div>
-										{% endif %}
-										{% if (message['page_code'] == 'home') %}
-										<div class="section-home">
-											<div class="section-title">{{ text_home }}</div>
-											<div class="table-menu">
-												<div class="table-row">
-													<div class="table-col">{{ text_menu_desktops }}</div>
-													<div class="table-col">{{ text_menu_laptops }}</div>
-													<div class="table-col">{{ text_menu_components }}</div>
-													<div class="table-col">{{ text_menu_tablets }}</div>
-													<div class="table-col">{{ text_menu_software }}</div>
-													<div class="table-col">{{ text_menu_cameras }}</div>
-												</div>
-											</div>
-											<div id="paypal_message_home" class="paypal-message">
-												<div id="paypal_message_home_container" class="paypal-message-container paypal-spinner"></div>
-											</div>	
-										</div>
-										{% endif %}
-										{% if (message['page_code'] == 'product') %}
-										<div class="section-product">
-											<div class="row">
-												<div class="col col-sm-6">
-													<div class="product-image"></div>
-												</div>
-												<div class="col col-sm-6">
-													<div class="product-name">{{ text_product_name }}</div>
-													<div class="product-price">{{ text_product_price }}</div>
-													<div id="paypal_message_product" class="paypal-message">
-														<div id="paypal_message_product_container" class="paypal-message-container paypal-spinner"></div>
-													</div>
-													<div class="product-manufacturer">{{ text_product_manufacturer }}</div>
-													<div class="product-model">{{ text_product_model }}</div>
-													<div class="product-stock">{{ text_product_stock }}</div>
-													<button type="button" class="btn button-cart">{{ button_cart }}</button>												
-												</div>
 											</div>
 										</div>
 										{% endif %}
@@ -166,6 +129,45 @@
 											</div>												
 										</div>
 										{% endif %}
+										{% if (message['page_code'] == 'product') %}
+										<div class="section-product">
+											<div class="row">
+												<div class="col col-sm-6">
+													<div class="product-image"></div>
+												</div>
+												<div class="col col-sm-6">
+													<div class="product-name">{{ text_product_name }}</div>
+													<div class="product-price">{{ text_product_price }}</div>
+													<div id="paypal_message_product" class="paypal-message">
+														<div id="paypal_message_product_container" class="paypal-message-container paypal-spinner"></div>
+													</div>
+													<div class="product-manufacturer">{{ text_product_manufacturer }}</div>
+													<div class="product-model">{{ text_product_model }}</div>
+													<div class="product-stock">{{ text_product_stock }}</div>
+													<button type="button" class="btn button-cart">{{ button_cart }}</button>												
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										{% if (message['page_code'] == 'home') %}
+										<div class="section-home">
+											<div class="section-title">{{ text_home }}</div>
+											<div class="table-menu">
+												<div class="table-row">
+													<div class="table-col">{{ text_menu_desktops }}</div>
+													<div class="table-col">{{ text_menu_laptops }}</div>
+													<div class="table-col">{{ text_menu_components }}</div>
+													<div class="table-col">{{ text_menu_tablets }}</div>
+													<div class="table-col">{{ text_menu_software }}</div>
+													<div class="table-col">{{ text_menu_cameras }}</div>
+												</div>
+											</div>
+											<div id="paypal_message_home" class="paypal-message">
+												<div id="paypal_message_home_container" class="paypal-message-container paypal-spinner"></div>
+											</div>	
+										</div>
+										{% endif %}
+										
 									</div>
 									<div class="col col-lg-6">
 										<div class="section-message-setting">
@@ -368,7 +370,7 @@ $('.payment-paypal').on('click', '.button-save', function() {
 			if (json['success']) {
 				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 				
-				$('html, body').animate({ scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
+				$('html, body').animate({scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -387,7 +389,7 @@ $('.payment-paypal').on('click', '.button-agree', function() {
 			$('.payment-paypal .alert').remove();
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

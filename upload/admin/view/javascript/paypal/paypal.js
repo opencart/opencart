@@ -20,6 +20,11 @@ var PayPalAPI = (function () {
 			$('#paypal_button_' + paypal_data['page_code'] + '_container').addClass('paypal-spinner');
 		}
 		
+		if (paypal_data['components'].includes('googlepay')) {
+			$('#googlepay_button_container').html('');
+			$('#googlepay_button_container').addClass('paypal-spinner');
+		}
+		
 		if (paypal_data['components'].includes('applepay')) {
 			$('#applepay_button_container').html('');
 			$('#applepay_button_container').addClass('paypal-spinner');
@@ -122,6 +127,14 @@ var PayPalAPI = (function () {
 			}
 			
 			$('#paypal_button_' + paypal_data['page_code'] + '_container').removeClass('paypal-spinner');
+		}
+		
+		if (paypal_data['components'].includes('googlepay') && $('#googlepay_button').length && !$('#googlepay_button_container').html()) {
+			if (google && PayPalSDK.Googlepay) {
+				initGooglePaySDK().catch(console.log);
+			}
+			
+			$('#googlepay_button_container').removeClass('paypal-spinner');
 		}
 		
 		if (paypal_data['components'].includes('applepay') && $('#applepay_button').length && !$('#applepay_button_container').html()) {
@@ -351,6 +364,58 @@ var PayPalAPI = (function () {
 		if (paypal_callback && typeof paypal_callback == 'function') {
 			paypal_callback();
 		}
+	};
+	
+	var initGooglePaySDK = async function() {
+		const {allowedPaymentMethods, merchantInfo, apiVersion, apiVersionMinor, countryCode} = await PayPalSDK.Googlepay().config();
+		
+		const paymentsClient = new google.payments.api.PaymentsClient({
+			environment: 'TEST'
+		});
+		   		
+		paymentsClient.isReadyToPay({allowedPaymentMethods, apiVersion, apiVersionMinor}).then(function(response) {
+			if (response.result) {							
+				$('#googlepay_button').css('text-align', paypal_data['googlepay_button_align']);
+				
+				var googlepay_button_style = [];
+				
+				if ((paypal_data['googlepay_button_width'] == '200px') && (paypal_data['googlepay_button_type'] == 'buy')) {
+					paypal_data['googlepay_button_width'] = '250px';
+				}
+					
+				if (paypal_data['googlepay_button_width']) {
+					googlepay_button_style.push('display: inline-block');
+					googlepay_button_style.push('width: ' + paypal_data['googlepay_button_width']);
+				} else {
+					googlepay_button_style.push('display: block');
+					googlepay_button_style.push('width: auto');
+				}
+						
+				googlepay_button_style.push('aspect-ratio: 7.5');
+									
+				$('#googlepay_button_container').attr('style', googlepay_button_style.join('; '));
+				
+				if (paypal_data['googlepay_button_shape'] == 'pill') {
+					$('#googlepay_button_container').removeClass('shape-rect');
+					$('#googlepay_button_container').addClass('shape-pill');
+				} else {
+					$('#googlepay_button_container').removeClass('shape-pill');
+					$('#googlepay_button_container').addClass('shape-rect');
+				}
+								
+				const googlepay_button = paymentsClient.createButton({
+					buttonColor: paypal_data['googlepay_button_color'],
+					buttonType: paypal_data['googlepay_button_type'],
+					buttonLocale: paypal_data['locale'].split('_')[0],
+					buttonSizeMode: 'fill',
+					onClick: function() {}
+				});
+				
+				document.querySelector('#googlepay_button_container').appendChild(googlepay_button);
+			}
+		}).catch(function(error) {
+			console.log(error);
+		});
 	};
 		
 	var init = function(data, callback = '') {

@@ -5,13 +5,15 @@ var PayPalAPI = (function () {
 	var paypal_callback;
 	
 	var showPayPalAlert = function(data) {
-		$('#paypal_form .alert').remove();
+		$('.alert-dismissible').remove();
 		
 		if (data['error'] && data['error']['warning']) {
 			if ($('#paypal_form').length) {
-				$('#paypal_form').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + data['error']['warning'] + '</div>');
+				$('#paypal_form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + data['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
-				alert(data['error']['warning']);
+				$('#content').parent().before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + data['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('html, body').animate({scrollTop: 0}, 'slow');
 			}
 		}
 	};
@@ -99,7 +101,6 @@ var PayPalAPI = (function () {
 		src_data['merchant-id'] = paypal_data['merchant_id'];
 		src_data['currency'] = paypal_data['currency_code'];
 		src_data['intent'] = paypal_data['transaction_method'];
-		src_data['locale'] = paypal_data['locale'];
 				
 		if (paypal_data['button_enable_funding'] && paypal_data['button_enable_funding'].length) {
 			src_data['enable-funding'] = paypal_data['button_enable_funding'].join(',');
@@ -239,6 +240,18 @@ var PayPalAPI = (function () {
 			}
 						
 			$('#paypal_button_container').removeClass('paypal-spinner');
+		}
+		
+		if (paypal_data['components'].includes('googlepay') && $('#googlepay_button').length && !$('#googlepay_button_container').html()) {
+			if (google && PayPalSDK.Googlepay) {
+				initGooglePaySDK().catch(console.log);
+			} else {
+				$('#googlepay_button').remove();
+				
+				console.log('This device does not support Google Pay');
+			}
+			
+			$('#googlepay_button_container').removeClass('paypal-spinner');
 		}
 		
 		if (paypal_data['components'].includes('applepay') && $('#applepay_button').length && !$('#applepay_button_container').html()) {
@@ -484,6 +497,164 @@ var PayPalAPI = (function () {
 		if (paypal_callback && typeof paypal_callback == 'function') {
 			paypal_callback();
 		}
+	};
+	
+	var initGooglePaySDK = async function() {
+		const {allowedPaymentMethods, merchantInfo, apiVersion, apiVersionMinor, countryCode} = await PayPalSDK.Googlepay().config();
+		
+		const paymentsClient = new google.payments.api.PaymentsClient({
+			paymentDataCallbacks: {
+				onPaymentAuthorized: function(paymentData) {
+					return new Promise(async function(resolve, reject) {
+						try {
+							paypal_order_id = false;
+							
+							$.ajax({
+								method: 'post',
+								url: 'index.php?route=extension/payment/paypal/createOrder',
+								data: {'page_code' : paypal_data['page_code'], 'payment_type' : 'googlepay_button'},
+								dataType: 'json',
+								async: false,
+								success: function(json) {				
+									showPayPalAlert(json);
+								
+									paypal_order_id = json['paypal_order_id'];
+								},
+								error: function(xhr, ajaxOptions, thrownError) {
+									console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+								}
+							});
+							
+							const confirmOrderResponse = await PayPalSDK.Googlepay().confirmOrder({
+								orderId: paypal_order_id,
+								paymentMethodData: paymentData.paymentMethodData
+							});
+							
+							if (confirmOrderResponse.status === 'PAYER_ACTION_REQUIRED') {
+								console.log('Confirm Payment Completed Payer Action Required');
+								
+								PayPalSDK.Googlepay().initiatePayerAction({orderId: paypal_order_id}).then(async () => {
+									$.ajax({
+										method: 'post',
+										url: 'index.php?route=extension/payment/paypal/approveOrder',
+										data: {'page_code' : paypal_data['page_code'], 'payment_type' : 'googlepay_button', 'paypal_order_id': paypal_order_id},
+										dataType: 'json',
+										async: false,
+										success: function(json) {					
+											showPayPalAlert(json);
+													
+											if (json['url']) {
+												location = json['url'];
+											}
+										},
+										error: function(xhr, ajaxOptions, thrownError) {
+											console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+										}
+									});	
+								});
+								
+								resolve({transactionState: 'SUCCESS'});	
+							} else if (confirmOrderResponse.status === 'APPROVED') {
+								console.log('Confirm Payment Approved');
+								
+								$.ajax({
+									method: 'post',
+									url: 'index.php?route=extension/payment/paypal/approveOrder',
+									data: {'page_code' : paypal_data['page_code'], 'payment_type' : 'googlepay_button', 'paypal_order_id': paypal_order_id},
+									dataType: 'json',
+									async: false,
+									success: function(json) {					
+										showPayPalAlert(json);
+													
+										if (json['url']) {
+											location = json['url'];
+										}
+									},
+									error: function(xhr, ajaxOptions, thrownError) {
+										console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+									}
+								});	
+								
+								resolve({transactionState: 'SUCCESS'});	
+							} else {
+								resolve({
+									transactionState: 'ERROR',
+									error: {
+										intent: 'PAYMENT_AUTHORIZATION',
+										message: 'TRANSACTION FAILED',
+									}
+								});
+							}
+						} catch (error) {
+							resolve({
+								transactionState: 'ERROR',
+								error: {
+									intent: 'PAYMENT_AUTHORIZATION',
+									message: error.message,
+								}
+							});
+						}
+					});
+				}
+			}
+		});
+		   		
+		paymentsClient.isReadyToPay({allowedPaymentMethods, apiVersion, apiVersionMinor}).then(function(response) {
+			if (response.result) {							
+				$('#googlepay_button').css('text-align', paypal_data['googlepay_button_align']);
+				
+				var googlepay_button_style = [];
+					
+				if (paypal_data['googlepay_button_width']) {
+					googlepay_button_style.push('display: inline-block');
+					googlepay_button_style.push('width: ' + paypal_data['googlepay_button_width']);
+				} else {
+					googlepay_button_style.push('display: block');
+					googlepay_button_style.push('width: auto');
+				}
+						
+				googlepay_button_style.push('aspect-ratio: 7.5');
+									
+				$('#googlepay_button_container').attr('style', googlepay_button_style.join('; '));
+				
+				if (paypal_data['googlepay_button_shape'] == 'pill') {
+					$('#googlepay_button_container').removeClass('shape-rect');
+					$('#googlepay_button_container').addClass('shape-pill');
+				} else {
+					$('#googlepay_button_container').removeClass('shape-pill');
+					$('#googlepay_button_container').addClass('shape-rect');
+				}
+								
+				const googlepay_button = paymentsClient.createButton({
+					buttonColor: paypal_data['googlepay_button_color'],
+					buttonType: paypal_data['googlepay_button_type'],
+					buttonLocale: paypal_data['locale'].split('_')[0],
+					buttonSizeMode: 'fill',
+					onClick: function() {
+						const paymentDataRequest = Object.assign({}, {apiVersion, apiVersionMinor});
+						
+						paymentDataRequest.allowedPaymentMethods = allowedPaymentMethods;
+						paymentDataRequest.transactionInfo = {
+							countryCode: countryCode,
+							currencyCode: paypal_data['currency_code'],
+							totalPriceStatus: 'FINAL',
+							totalPrice: paypal_data['googlepay_amount'],
+							totalPriceLabel: 'Total'
+						}
+						
+						paymentDataRequest.merchantInfo = merchantInfo;
+
+						paymentDataRequest.callbackIntents = ['PAYMENT_AUTHORIZATION'];
+					
+						paymentsClient.loadPaymentData(paymentDataRequest);
+					}
+				});
+				
+				document.querySelector('#googlepay_button_container').appendChild(googlepay_button);
+			}
+		}).catch(function(error) {
+			console.log(error);
+		});
 	};
 	
 	var initApplePaySDK = async function() {

@@ -181,6 +181,14 @@
 	border: 1px solid #919697;
 	border-radius: 3px;
 }
+.payment-paypal .panel-default .input-group .form-control:first-child {
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+.payment-paypal .panel-default .input-group .form-control:last-child {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
 .payment-paypal .panel-default .form-control:focus {
 	border-color: #488DE6;
 	-webkit-box-shadow: none;
@@ -188,6 +196,26 @@
 }
 .payment-paypal .panel-default textarea.form-control, .payment-paypal .panel-default .form-control[multiple] {
 	height: auto;
+}
+.payment-paypal .panel-default .input-group-addon, .payment-paypal .panel-default .input-group-btn > .btn {
+	font-size: 13px;
+	color: #000000;
+	border: 1px solid #919697;
+	border-radius: 3px;
+}
+.payment-paypal .panel-default .input-group-btn > .btn {
+	height: 42px;
+	padding: 11px 22px;
+}
+.payment-paypal .panel-default .input-group-addon:first-child, .payment-paypal .panel-default .input-group-btn:first-child > .btn {
+    border-right: 0px;
+	border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+.payment-paypal .panel-default .input-group-addon:last-child, .payment-paypal .panel-default .input-group-btn:last-child > .btn {
+    border-left: 0px;
+	border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
 }
 .payment-paypal .panel-default .form-check-input {
 	display: inline-block;
@@ -317,6 +345,10 @@
 	width: 37px;
 	background-image: url('../../image/payment/paypal/icon-button.svg');
 }
+.payment-paypal .panel-default .tab .tab-icon-googlepay-button {
+	width: 37px;
+	background-image: url('../../image/payment/paypal/icon-googlepay-button.svg');
+}
 .payment-paypal .panel-default .tab .tab-icon-applepay-button {
 	width: 37px;
 	background-image: url('../../image/payment/paypal/icon-applepay-button.svg');
@@ -394,6 +426,12 @@
 	padding: 0px 0px;
 }
 .payment-paypal .panel-default .section-button-setting .legend {
+	padding: 10px 0px;
+}
+.payment-paypal .panel-default .section-googlepay-button-setting {
+	padding: 0px 0px;
+}
+.payment-paypal .panel-default .section-googlepay-button-setting .legend {
 	padding: 10px 0px;
 }
 .payment-paypal .panel-default .section-applepay-button-setting {
@@ -686,6 +724,23 @@
 	.payment-paypal .panel-default .paypal-button .paypal-button-container {
 		width: 100% !important;
 	}
+}
+.payment-paypal .panel-default .googlepay-button {
+	position: relative;
+}
+@media (max-width: 476px) {
+	.payment-paypal .panel-default .googlepay-button .googlepay-button-container {
+		width: 100% !important;
+	}
+}
+.payment-paypal .panel-default .googlepay-button-container .gpay-card-info-container-fill {
+	height: 100%;
+}
+.payment-paypal .panel-default .googlepay-button-container.shape-pill .gpay-card-info-container {
+	border-radius: 1000px;
+}
+.payment-paypal .panel-default .googlepay-button-container.shape-rect .gpay-card-info-container {
+	border-radius: 4px;
 }
 .payment-paypal .panel-default .applepay-button {
 	position: relative;

@@ -57,6 +57,13 @@
 							</a>
 						</div>
 						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_googlepay_button }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if googlepay_button_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-googlepay-button"></i>
+								<span class="tab-title">{{ text_tab_googlepay_button }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
 							<a href="{{ href_applepay_button }}" class="tab">
 								<i class="tab-icon-status tab-icon-status-{% if applepay_button_status %}on{% else %}off{% endif %}"></i>
 								<i class="tab-icon tab-icon-applepay-button"></i>
@@ -221,7 +228,7 @@ $('.payment-paypal').on('click', '.button-save', function() {
 			if (json['success']) {
 				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 				
-				$('html, body').animate({ scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
+				$('html, body').animate({scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -240,7 +247,7 @@ $('.payment-paypal').on('click', '.button-agree', function() {
 			$('.payment-paypal .alert').remove();
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

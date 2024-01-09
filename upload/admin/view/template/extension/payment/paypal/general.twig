@@ -31,6 +31,7 @@
 					<ul class="nav nav-tabs">
 						<li class="nav-tab active"><a href="{{ href_general }}" class="tab"><i class="tab-icon tab-icon-general"></i><span class="tab-title">{{ text_tab_general }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
@@ -177,6 +178,16 @@
 										<label class="control-label" for="input_general_card_currency_value"><span data-toggle="tooltip" title="{{ help_card_currency_value }}">{{ entry_card_currency_value }}</span></label>
 										<input type="text" name="payment_paypal_setting[general][card_currency_value]" value="{{ setting['general']['card_currency_value'] }}" placeholder="{{ entry_card_currency_value }}" id="input_general_card_currency_value" class="form-control" />										
 									</div>
+									<div class="form-group">
+										<label class="control-label" for="input_cron_url"><span data-toggle="tooltip" title="{{ help_cron_url }}">{{ entry_cron_url }}</span></label>
+										<input type="hidden" name="payment_paypal_setting[general][cron_token]" value="{{ setting['general']['cron_token'] }}" />
+										<div class="input-group">
+											<input type="text" value="{{ cron_url }}" readonly="readonly" id="input_cron_url" class="form-control" />
+											<span class="input-group-btn">
+												<button type="button" data-toggle="tooltip" title="{{ button_copy_url }}" class="btn btn-default copy-cron-url" field_id="input_cron_url"><i class="fa fa-clipboard"></i></button>
+											</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -192,6 +203,12 @@ $('.payment-paypal .switch').bootstrapSwitch({
     'onColor': 'success',
     'onText': '{{ text_on }}',
     'offText': '{{ text_off }}'
+});
+
+$('.payment-paypal').delegate('.copy-cron-url', 'click', function(event) {
+	event.preventDefault();
+	
+	navigator.clipboard.writeText($('#' + $(this).attr('field_id')).val());
 });
 
 $('.payment-paypal').on('click', '.button-disconnect', function() {
@@ -223,7 +240,7 @@ $('.payment-paypal').on('click', '.button-save', function() {
 			if (json['success']) {
 				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 				
-				$('html, body').animate({ scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
+				$('html, body').animate({scrollTop: $('.payment-paypal > .container-fluid .alert-success').offset().top}, 'slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -242,7 +259,7 @@ $('.payment-paypal').on('click', '.button-agree', function() {
 			$('.payment-paypal .alert').remove();
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i><button type="button" class="close" data-dismiss="alert">&times;</button> ' + json['success'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

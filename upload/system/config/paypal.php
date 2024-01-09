@@ -1,6 +1,6 @@
 <?php 
 $_['paypal_setting'] = array(
-	'version' => '2.0.2',
+	'version' => '2.2.0',
 	'partner' => array(
 		'production' => array(
 			'partner_id' => 'TY2Q25KP2PX9L',
@@ -22,7 +22,9 @@ $_['paypal_setting'] = array(
 		'currency_code' => 'USD',
 		'currency_value' => '1',
 		'card_currency_code' => 'USD',
-		'card_currency_value' => '1'
+		'card_currency_value' => '1',
+		'webhook_token' => '',
+		'cron_token' => ''
 	),
 	'button' => array(
 		'checkout' => array(
@@ -50,35 +52,6 @@ $_['paypal_setting'] = array(
 				'venmo' => 0
 			)
 		),
-		'product' => array(
-			'page_code' => 'product',
-			'page_name' => 'text_product',
-			'status' => true,
-			'insert_tag' => '#content #product #button-cart',
-			'insert_type' => 'after',
-			'align' => 'center',
-			'size' => 'responsive',
-			'color' => 'gold',
-			'shape' => 'rect',
-			'label' => 'paypal',
-			'tagline' => 'false',
-			'funding' => array(
-				'paylater' => 0,
-				'card' => 0,
-				'credit' => 0,
-				'bancontact' => 0,
-				'blik' => 0,
-				'eps' => 0,
-				'giropay' => 0,
-				'ideal' => 0,
-				'mercadopago' => 0,
-				'mybank' => 0,
-				'p24' => 0,
-				'sepa' => 0,
-				'sofort' => 0,
-				'venmo' => 0
-			)
-		),
 		'cart' => array(
 			'page_code' => 'cart',
 			'page_name' => 'text_cart',
@@ -90,26 +63,32 @@ $_['paypal_setting'] = array(
 			'color' => 'gold',
 			'shape' => 'rect',
 			'label' => 'paypal',
-			'tagline' => 'false',
-			'funding' => array(
-				'paylater' => 0,
-				'card' => 0,
-				'bancontact' => 0,
-				'blik' => 0,
-				'eps' => 0,
-				'giropay' => 0,
-				'ideal' => 0,
-				'mercadopago' => 0,
-				'mybank' => 0,
-				'p24' => 0,
-				'sepa' => 0,
-				'sofort' => 0,
-				'venmo' => 0
-			),
+			'tagline' => 'false'
+		),
+		'product' => array(
+			'page_code' => 'product',
+			'page_name' => 'text_product',
+			'status' => true,
+			'insert_tag' => '#content #product #button-cart',
+			'insert_type' => 'after',
+			'align' => 'center',
+			'size' => 'responsive',
+			'color' => 'gold',
+			'shape' => 'rect',
+			'label' => 'paypal',
+			'tagline' => 'false'
 		)
 	),
+	'googlepay_button' => array(
+		'status' => false,
+		'align' => 'right',
+		'size' => 'large',
+		'color' => 'black',
+		'shape' => 'rect',
+		'type' => 'buy'
+	),
 	'applepay_button' => array(
-		'status' => true,
+		'status' => false,
 		'align' => 'right',
 		'size' => 'large',
 		'color' => 'black',
@@ -145,14 +124,14 @@ $_['paypal_setting'] = array(
 			'flex_color' => 'blue',
 			'flex_ratio' => '8x1'
 		),
-		'home' => array(
-			'page_code' => 'home',
-			'page_name' => 'text_home',
+		'cart' => array(
+			'page_code' => 'cart',
+			'page_name' => 'text_cart',
 			'status' => true,
-			'insert_tag' => '#common-home',
-			'insert_type' => 'prepend',
-			'align' => 'center',
-			'size' => 'responsive',
+			'insert_tag' => '#content',
+			'insert_type' => 'append',
+			'align' => 'right',
+			'size' => 'large',
 			'layout' => 'text',
 			'text_color' => 'black',
 			'text_size' => '12',
@@ -173,14 +152,14 @@ $_['paypal_setting'] = array(
 			'flex_color' => 'blue',
 			'flex_ratio' => '8x1'
 		),
-		'cart' => array(
-			'page_code' => 'cart',
-			'page_name' => 'text_cart',
+		'home' => array(
+			'page_code' => 'home',
+			'page_name' => 'text_home',
 			'status' => true,
-			'insert_tag' => '#content',
-			'insert_type' => 'append',
-			'align' => 'right',
-			'size' => 'large',
+			'insert_tag' => '#common-home',
+			'insert_type' => 'prepend',
+			'align' => 'center',
+			'size' => 'responsive',
 			'layout' => 'text',
 			'text_color' => 'black',
 			'text_size' => '12',
@@ -616,6 +595,10 @@ $_['paypal_setting'] = array(
 			'code' => 'bancontact',
 			'name' => 'text_bancontact'
 		),
+		'bancontact' => array(
+			'code' => 'bancontact',
+			'name' => 'text_bancontact'
+		),
 		'blik' => array(
 			'code' => 'blik',
 			'name' => 'text_blik'
@@ -656,6 +639,86 @@ $_['paypal_setting'] = array(
 			'code' => 'venmo',
 			'name' => 'text_venmo'
 		)
+	),
+	'googlepay_button_align' => array(
+		'left' => array(
+			'code' => 'left',
+			'name' => 'text_align_left'
+		),
+		'center' => array(
+			'code' => 'center',
+			'name' => 'text_align_center'
+		),
+		'right' => array(
+			'code' => 'right',
+			'name' => 'text_align_right'
+		)
+	),
+	'googlepay_button_size' => array(
+		'small' => array(
+			'code' => 'small',
+			'name' => 'text_small'
+		),
+		'medium' => array(
+			'code' => 'medium',
+			'name' => 'text_medium'
+		),
+		'large' => array(
+			'code' => 'large',
+			'name' => 'text_large'
+		),
+		'responsive' => array(
+			'code' => 'responsive',
+			'name' => 'text_responsive'
+		)
+	),
+	'googlepay_button_color' => array(
+		'black' => array(
+			'code' => 'black',
+			'name' => 'text_black'
+		),
+		'white' => array(
+			'code' => 'white',
+			'name' => 'text_white'
+		)
+	),
+	'googlepay_button_shape' => array(
+		'pill' => array(
+			'code' => 'pill',
+			'name' => 'text_pill'
+		),
+		'rect' => array(
+			'code' => 'rect',
+			'name' => 'text_rect'
+		)
+	),
+	'googlepay_button_type' => array(
+		'buy' => array(
+			'code' => 'buy',
+			'name' => 'text_buy'
+		),
+		'donate' => array(
+			'code' => 'donate',
+			'name' => 'text_donate'
+		),
+		'plain' => array(
+			'code' => 'plain',
+			'name' => 'text_plain'
+		),
+		'pay' => array(
+			'code' => 'pay',
+			'name' => 'text_pay'
+		),
+		'checkout' => array(
+			'code' => 'checkout',
+			'name' => 'text_checkout'
+		)
+	),
+	'googlepay_button_width' => array(
+		'small' => '200px',
+		'medium' => '250px',
+		'large' => '350px',
+		'responsive' => ''
 	),
 	'applepay_button_align' => array(
 		'left' => array(

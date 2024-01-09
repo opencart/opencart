@@ -7,11 +7,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 	public function __construct($registry) {
 		parent::__construct($registry);
 
-		if (VERSION >= '4.0.2.0') {
-			$this->separator = '.';
-		} else {
-			$this->separator = '|';
-		}
+		$this->separator = '.';
 
 		if (version_compare(PHP_VERSION, '7.1', '>=')) {
 			ini_set('precision', 14);
@@ -29,21 +25,19 @@ class PayPal extends \Opencart\System\Engine\Controller {
 		$agree_status = $this->model_extension_paypal_payment_paypal->getAgreeStatus();
 
 		if ($this->config->get('payment_paypal_status') && $this->config->get('payment_paypal_client_id') && $this->config->get('payment_paypal_secret') && !$this->webhook() && !$this->cron() && $agree_status) {
-			if (VERSION >= '4.0.2.0') {
-				if (!empty($this->session->data['payment_method']['code'])) {
-					if ($this->session->data['payment_method']['code'] == 'paypal.paylater') {
-						return $this->load->controller('extension/paypal/payment/paypal_paylater');
-					}
-
-					if ($this->session->data['payment_method']['code'] == 'paypal.googlepay') {
-						return $this->load->controller('extension/paypal/payment/paypal_googlepay');
-					}
-
-					if ($this->session->data['payment_method']['code'] == 'paypal.applepay') {
-						return $this->load->controller('extension/paypal/payment/paypal_applepay');
-					}
+			if (!empty($this->session->data['payment_method']['code'])) {
+				if ($this->session->data['payment_method']['code'] == 'paypal.paylater') {
+					return $this->load->controller('extension/paypal/payment/paypal_paylater');
 				}
-			}
+
+				if ($this->session->data['payment_method']['code'] == 'paypal.googlepay') {
+					return $this->load->controller('extension/paypal/payment/paypal_googlepay');
+				}
+
+				if ($this->session->data['payment_method']['code'] == 'paypal.applepay') {
+					return $this->load->controller('extension/paypal/payment/paypal_applepay');
+				}
+			}			
 
 			$this->load->language('extension/paypal/payment/paypal');
 
@@ -408,14 +402,8 @@ class PayPal extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					if (VERSION >= '4.0.2.0') {
-						if (isset($this->session->data['payment_method']['code']) && ($this->session->data['payment_method']['code'] == 'paypal_paylater')) {
-							$data['button_funding_source'] = 'paylater';
-						}
-					} else {
-						if (isset($this->session->data['payment_method']) && ($this->session->data['payment_method'] == 'paypal_paylater')) {
-							$data['button_funding_source'] = 'paylater';
-						}
+					if (isset($this->session->data['payment_method']['code']) && ($this->session->data['payment_method']['code'] == 'paypal_paylater')) {
+						$data['button_funding_source'] = 'paylater';
 					}
 				}
 
@@ -792,12 +780,8 @@ class PayPal extends \Opencart\System\Engine\Controller {
 					$shipping_total = 0;
 
 					if (isset($this->session->data['shipping_method'])) {
-						if (VERSION >= '4.0.2.0') {
-							$shipping = explode('.', $this->session->data['shipping_method']['code']);
-						} else {
-							$shipping = explode('.', $this->session->data['shipping_method']);
-						}
-
+						$shipping = explode('.', $this->session->data['shipping_method']['code']);
+						
 						if (isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 							$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
@@ -1086,11 +1070,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 					}
 
 					if ($this->customer->isLogged() && $this->customer->getAddressId()) {
-						if (VERSION >= '4.0.2.0') {
-							$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->session->data['customer']['customer_id'], $this->customer->getAddressId());
-						} else {
-							$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-						}
+						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->session->data['customer']['customer_id'], $this->customer->getAddressId());						
 					} else {
 						$this->session->data['payment_address']['address_id'] = 0;
 						$this->session->data['payment_address']['firstname'] = ($paypal_order_info['payer']['name']['given_name'] ?? '');
@@ -1119,11 +1099,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 
 					if ($this->cart->hasShipping()) {
 						if ($this->customer->isLogged() && $this->customer->getAddressId()) {
-							if (VERSION >= '4.0.2.0') {
-								$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->session->data['customer']['customer_id'], $this->customer->getAddressId());
-							} else {
-								$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-							}
+							$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->session->data['customer']['customer_id'], $this->customer->getAddressId());
 						} else {
 							$this->session->data['shipping_address']['address_id'] = 0;
 
@@ -1688,16 +1664,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 							$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($data['shipping_address']);
 
 							if ($quote) {
-								if (VERSION >= '4.0.2.0') {
-									$method_data[$result['code']] = $quote;
-								} else {
-									$method_data[$result['code']] = [
-										'title'      => $quote['title'],
-										'quote'      => $quote['quote'],
-										'sort_order' => $quote['sort_order'],
-										'error'      => $quote['error']
-									];
-								}
+								$method_data[$result['code']] = $quote;
 							}
 						}
 					}
@@ -1719,19 +1686,11 @@ class PayPal extends \Opencart\System\Engine\Controller {
 							$key1 = key($method_data);
 							$key2 = key($method_data[$key1]['quote']);
 
-							if (VERSION >= '4.0.2.0') {
-								$this->session->data['shipping_method'] = $method_data[$key1]['quote'][$key2];
-							} else {
-								$this->session->data['shipping_method'] = $method_data[$key1]['quote'][$key2]['code'];
-							}
+							$this->session->data['shipping_method'] = $method_data[$key1]['quote'][$key2];
 						}
 
-						if (VERSION >= '4.0.2.0') {
-							$data['code'] = $this->session->data['shipping_method']['code'];
-						} else {
-							$data['code'] = $this->session->data['shipping_method'];
-						}
-
+						$data['code'] = $this->session->data['shipping_method']['code'];
+						
 						$data['action_shipping'] = $this->url->link('extension/paypal/payment/paypal' . $this->separator . 'confirmShipping', 'language=' . $this->config->get('config_language'));
 					}
 				} else {
@@ -1759,18 +1718,10 @@ class PayPal extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-				if (VERSION >= '4.0.2.0') {
-					$payment_methods = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethods($data['payment_address']);
+				$payment_methods = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethods($data['payment_address']);
 
-					if ($payment_methods) {
-						$method_data[$result['code']] = $payment_methods;
-					}
-				} else {
-					$payment_method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($data['payment_address']);
-
-					if ($payment_method) {
-						$method_data[$result['code']] = $payment_method;
-					}
+				if ($payment_methods) {
+					$method_data[$result['code']] = $payment_methods;
 				}
 			}
 		}
@@ -1792,11 +1743,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
-		if (VERSION >= '4.0.2.0') {
-			$this->session->data['payment_method'] = $method_data['paypal']['option']['paypal'];
-		} else {
-			$this->session->data['payment_method'] = $method_data['paypal']['code'];
-		}
+		$this->session->data['payment_method'] = $method_data['paypal']['option']['paypal'];
 
 		// Custom Fields
 		$this->load->model('account/custom_field');
@@ -1998,34 +1945,14 @@ class PayPal extends \Opencart\System\Engine\Controller {
 			$order_data['payment_custom_field'] = ($this->session->data['payment_address']['custom_field'] ?? []);
 
 			if (isset($this->session->data['payment_method'])) {
-				if (VERSION >= '4.0.2.0') {
-					$payment = explode('.', $this->session->data['payment_method']['code']);
+				$payment = explode('.', $this->session->data['payment_method']['code']);
 
-					if (isset($payment[0]) && isset($payment[1]) && isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
-						$payment_method_info = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]];
-					}
-				} else {
-					if (isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
-						$payment_method_info = $this->session->data['payment_methods'][$this->session->data['payment_method']];
-					}
+				if (isset($payment[0]) && isset($payment[1]) && isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
+					$payment_method_info = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]];
 				}
 			}
 
-			if (VERSION >= '4.0.2.0') {
-				$order_data['payment_method'] = $payment_method_info;
-			} else {
-				if (isset($payment_method_info['title'])) {
-					$order_data['payment_method'] = $payment_method_info['title'];
-				} else {
-					$order_data['payment_method'] = '';
-				}
-
-				if (isset($payment_method_info['code'])) {
-					$order_data['payment_code'] = $payment_method_info['code'];
-				} else {
-					$order_data['payment_code'] = '';
-				}
-			}
+			$order_data['payment_method'] = $payment_method_info;
 
 			if ($this->cart->hasShipping()) {
 				$order_data['shipping_address_id'] = $this->session->data['shipping_address']['address_id'];
@@ -2044,32 +1971,14 @@ class PayPal extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_custom_field'] = ($this->session->data['shipping_address']['custom_field'] ?? []);
 
 				if (isset($this->session->data['shipping_method'])) {
-					if (VERSION >= '4.0.2.0') {
-						$shipping = explode('.', $this->session->data['shipping_method']['code']);
-					} else {
-						$shipping = explode('.', $this->session->data['shipping_method']);
-					}
+					$shipping = explode('.', $this->session->data['shipping_method']['code']);
 
 					if (isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 						$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 					}
 				}
 
-				if (VERSION >= '4.0.2.0') {
-					$order_data['shipping_method'] = $shipping_method_info;
-				} else {
-					if (isset($shipping_method_info['title'])) {
-						$order_data['shipping_method'] = $shipping_method_info['title'];
-					} else {
-						$order_data['shipping_method'] = '';
-					}
-
-					if (isset($shipping_method_info['code'])) {
-						$order_data['shipping_code'] = $shipping_method_info['code'];
-					} else {
-						$order_data['shipping_code'] = '';
-					}
-				}
+				$order_data['shipping_method'] = $shipping_method_info;
 			} else {
 				$order_data['shipping_address_id'] = 0;
 				$order_data['shipping_firstname'] = '';
@@ -2086,12 +1995,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
 
-				if (VERSION >= '4.0.2.0') {
-					$order_data['shipping_method'] = [];
-				} else {
-					$order_data['shipping_method'] = '';
-					$order_data['shipping_code'] = '';
-				}
+				$order_data['shipping_method'] = [];
 			}
 
 			$order_data['products'] = [];
@@ -2113,27 +2017,23 @@ class PayPal extends \Opencart\System\Engine\Controller {
 
 				$subscription_data = [];
 
-				if ((VERSION >= '4.0.2.0') && $product['subscription']) {
-					$subscription_data = [
-						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-						'name'                 => $product['subscription']['name'],
-						'trial_price'          => $product['subscription']['trial_price'],
-						'trial_tax'            => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
-						'trial_frequency'      => $product['subscription']['trial_frequency'],
-						'trial_cycle'          => $product['subscription']['trial_cycle'],
-						'trial_duration'       => $product['subscription']['trial_duration'],
-						'trial_remaining'      => $product['subscription']['trial_remaining'],
-						'trial_status'         => $product['subscription']['trial_status'],
-						'price'                => $product['subscription']['price'],
-						'tax'                  => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id']),
-						'frequency'            => $product['subscription']['frequency'],
-						'cycle'                => $product['subscription']['cycle'],
-						'duration'             => $product['subscription']['duration']
-					];
-				} else {
-					$subscription_data = $product['subscription'];
-				}
-
+				$subscription_data = [
+					'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
+					'name'                 => $product['subscription']['name'],
+					'trial_price'          => $product['subscription']['trial_price'],
+					'trial_tax'            => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
+					'trial_frequency'      => $product['subscription']['trial_frequency'],
+					'trial_cycle'          => $product['subscription']['trial_cycle'],
+					'trial_duration'       => $product['subscription']['trial_duration'],
+					'trial_remaining'      => $product['subscription']['trial_remaining'],
+					'trial_status'         => $product['subscription']['trial_status'],
+					'price'                => $product['subscription']['price'],
+					'tax'                  => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id']),
+					'frequency'            => $product['subscription']['frequency'],
+					'cycle'                => $product['subscription']['cycle'],
+					'duration'             => $product['subscription']['duration']
+				];
+				
 				$order_data['products'][] = [
 					'product_id'   => $product['product_id'],
 					'master_id'    => $product['master_id'],
@@ -2347,11 +2247,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 			$shipping_total = 0;
 
 			if (isset($this->session->data['shipping_method'])) {
-				if (VERSION >= '4.0.2.0') {
-					$shipping = explode('.', $this->session->data['shipping_method']['code']);
-				} else {
-					$shipping = explode('.', $this->session->data['shipping_method']);
-				}
+				$shipping = explode('.', $this->session->data['shipping_method']['code']);
 
 				if (isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 					$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
@@ -3182,11 +3078,7 @@ class PayPal extends \Opencart\System\Engine\Controller {
 
 				return false;
 			} else {
-				if (VERSION >= '4.0.2.0') {
-					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-				} else {
-					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]]['code'];
-				}
+				$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 				$this->session->data['success'] = $this->language->get('text_shipping_updated');
 
@@ -3396,12 +3288,6 @@ class PayPal extends \Opencart\System\Engine\Controller {
 	}
 
 	private function strlen(string $str): int {
-		if (VERSION >= '4.0.2.0') {
-			return (int)oc_strlen($str);
-		} elseif (VERSION >= '4.0.1.0') {
-			return (int)Helper\Utf8\strlen($str);
-		} else {
-			return (int)utf8_strlen($str);
-		}
+		return (int)oc_strlen($str);
 	}
 }

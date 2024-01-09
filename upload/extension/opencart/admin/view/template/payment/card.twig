@@ -1,0 +1,221 @@
+{{ header }}{{ column_left }}
+<div id="content" class="payment-paypal">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-payment" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title_main }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    {% if text_version %}
+      <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_version }}</div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form action="{{ save }}" method="post" id="form-payment" data-oc-toggle="ajax">
+          <a href="{{ href_dashboard }}" class="back-dashboard"><i class="icon icon-back-dashboard"></i>{{ text_tab_dashboard }}</a>
+          <ul class="nav nav-tabs">
+            <li class="nav-tab"><a href="{{ href_general }}" class="tab"><i class="tab-icon tab-icon-general"></i><span class="tab-title">{{ text_tab_general }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_card }}" class="tab active"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
+            <li class="nav-tab"><a href="{{ href_contact }}" class="tab"><i class="tab-icon tab-icon-contact"></i><span class="tab-title">{{ text_tab_contact }}</span></a></li>
+          </ul>
+          <div class="section-content">
+            <div class="row">
+              <div class="col col-lg-6">
+                <div class="section-checkout">
+                  <div class="section-title">{{ text_checkout }}</div>
+                  <div class="table-totals">
+                    <div class="row">
+                      <div class="col offset-md-6 col-md-6">
+                        <div class="row row-total">
+                          <div class="col col-6 col-title">{{ text_cart_sub_total }}</div>
+                          <div class="col col-6 col-price">{{ text_cart_product_total_value }}</div>
+                        </div>
+                        <div class="row row-total">
+                          <div class="col col-6 col-title">{{ text_cart_total }}</div>
+                          <div class="col col-6 col-price">{{ text_cart_product_total_value }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="paypal-card" class="paypal-card">
+                    <div id="paypal-card-container" class="paypal-card-container paypal-spinner">
+                      <div id="paypal-card-form" class="paypal-card-form">
+                        <div class="card-info-number clearfix">
+                          <label for="card_number" class="card-label">{{ entry_card_number }}</label>
+                          <div id="card-number" class="card-input-container">
+                            <div id="card-image"></div>
+                          </div>
+                        </div>
+                        <div class="card-info-date-cvv clearfix">
+                          <div class="card-info-date">
+                            <label for="expiration_date" class="card-label">{{ entry_expiration_date }}</label>
+                            <div id="expiration-date" class="card-input-container"></div>
+                          </div>
+                          <div class="card-info-cvv">
+                            <label for="cvv" class="card-label">{{ entry_cvv }}</label>
+                            <div id="cvv" class="card-input-container"></div>
+                          </div>
+                        </div>
+                        <button id="paypal-button-submit" class="btn" value="submit">{{ button_pay }}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-6">
+                <div class="section-card-setting">
+                  <div class="row">
+                    <div class="col col-md-6">
+                      <legend class="legend">{{ text_card_settings }}</legend>
+                    </div>
+                    <div class="col col-md-6">
+                      <div class="input-group-status">
+                        <label class="col-form-label" for="input-card-status"><span data-bs-toggle="tooltip" title="{{ help_card_status }}">{{ entry_status }}</span></label>
+                        <input type="hidden" name="payment_paypal_setting[card][status]" value="0" />{% set setting_card = setting.card %}
+                        <input type="checkbox" name="payment_paypal_setting[card][status]" value="1" class="switch" {% if setting_card.status %}checked="checked"{% endif %} />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-card-align">{{ entry_card_align }}</label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[card][align]" id="input-card-align" class="form-select control-paypal-card">
+                        {% for card_align in setting.card_align %}
+                          {% if card_align.code == setting_card.align %}
+                            <option value="{{ card_align.code }}" selected="selected">{{ attribute(_context, card_align.name) }}</option>
+                          {% else %}
+                            <option value="{{ card_align.code }}">{{ attribute(_context, card_align.name) }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-card-size">{{ entry_card_size }}</label>
+                    <div class="input-group">
+                      <select name="payment_paypal_setting[card][size]" id="input-card-size" class="form-select control-paypal-card">
+                        {% for card_size in setting.card_size %}
+                          {% if card_size.code == setting_card.size %}
+                            <option value="{{ card_size.code }}" selected="selected">{{ attribute(_context, card_size.name) }}</option>
+                          {% else %}
+                            <option value="{{ card_size.code }}">{{ attribute(_context, card_size.name) }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label" for="input-card-secure_status"><span data-bs-toggle="tooltip" title="{{ help_card_secure_status }}">{{ entry_card_secure_status }}</span></label>
+                    <div id="input-secure-status" class="input-group">
+                      <input type="hidden" name="payment_paypal_setting[card][secure_status]" value="0" />
+                      <input type="checkbox" name="payment_paypal_setting[card][secure_status]" value="1" class="switch" {% if setting_card.secure_status %}checked="checked"{% endif %} />
+                    </div>
+                  </div>
+                  <hr class="hr" />
+                  <button type="button" href="#all-settings" class="btn btn-default button-all-settings collapsed" data-bs-toggle="collapse" role="button">{{ button_all_settings }}<i class="icon icon-all-settings"></i></button>	
+                  <div id="all-settings" class="all-settings collapse">
+                    <div class="row mb-3">
+                      <label class="col-form-label" for="input-card-secure_scenario">{{ entry_card_secure_scenario }}</label>
+                      <div class="col col-md-12">
+                        <p class="alert alert-info">{{ help_card_secure_scenario }}</p>
+                      </div>
+                    </div>
+                    {% for card_secure_scenario in setting.card_secure_scenario %}
+                      <div class="row mb-3">
+                        <label class="col-form-label" for="input-card-secure_scenario_{{ card_secure_scenario.code }}">{{ attribute(_context, card_secure_scenario.name) }}</label>	
+                        <div class="input-group">
+                          <select name="payment_paypal_setting[card][secure_scenario][{{ card_secure_scenario.code }}]" id="input-card-secure-scenario-{{ card_secure_scenario.code }}" class="form-select">
+                          <option value="1" {% if setting_card.secure_scenario[card_secure_scenario.code] %}selected="selected"{% endif %}>{{ text_accept }}{% if card_secure_scenario.recommended %} {{ text_recommended }}{% endif %}</option>
+                          <option value="0" {% if not setting_card.secure_scenario[card_secure_scenario.code] %}selected="selected"{% endif %}>{{ text_decline }}{% if not card_secure_scenario.recommended %} {{ text_recommended }}{% endif %}</option>
+                          </select>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var card_width = JSON.parse('{{ setting.card_width|json_encode() }}');
+
+updatePayPalCard();
+
+$('.payment-paypal .switch').bootstrapSwitch({
+    'onColor': 'success',
+    'onText': '{{ text_on }}',
+    'offText': '{{ text_off }}'
+});
+
+$('.payment-paypal').on('change', '.control-paypal-card', function() {
+	updatePayPalCard();
+});
+
+$('.payment-paypal').on('click', '.button-agree', function() {
+	$.ajax({
+		type: 'post',
+		url: '{{ agree_url }}',
+		data: '',
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert').remove();
+			
+			if (json.success) {
+				$('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json.success + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function updatePayPalCard() {								
+	var paypal_data = {};
+	
+	{% set setting_general = setting.general %}
+
+	paypal_data.client_id = '{{ client_id }}';
+	paypal_data.secret = '{{ secret }}';
+	paypal_data.merchant_id = '{{ merchant_id }}';
+	paypal_data.environment = '{{ environment }}';
+	paypal_data.partner_attribution_id = '{{ partner_attribution_id }}';
+	paypal_data.locale = '{{ locale }}';
+	paypal_data.currency_code = '{{ currency_code }}';
+	paypal_data.currency_value = '{{ currency_value }}';
+	paypal_data.decimal_place = '{{ decimal_place }}';
+	paypal_data.client_token = '{{ client_token }}';
+	paypal_data.transaction_method = '{{ setting_general.transaction_method }}';
+	paypal_data.components = .hosted-fields;
+	paypal_data.card_align = $('.payment-paypal #input-card-align').val();
+	paypal_data.card_size = $('.payment-paypal #input-card-size').val();
+		
+	paypal_data.card_width = card_width[paypal_data.card_size];
+			
+	PayPalAPI.init(paypal_data);
+}
+</script>
+{{ footer }}

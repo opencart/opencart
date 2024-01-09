@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="39" viewBox="0 0 50 39">
+  <g id="icon_Pay_Later_messaging" data-name="icon Pay Later messaging" transform="translate(-628 -587)">
+    <path id="Rectangle_233" data-name="Rectangle 233" d="M3,0H47a3,3,0,0,1,3,3V7a0,0,0,0,1,0,0H0A0,0,0,0,1,0,7V3A3,3,0,0,1,3,0Z" transform="translate(628 587)" fill="#003087"/>
+    <path id="Rectangle_234" data-name="Rectangle 234" d="M0,0H50a0,0,0,0,1,0,0V25a3,3,0,0,1-3,3H3a3,3,0,0,1-3-3V0A0,0,0,0,1,0,0Z" transform="translate(628 598)" fill="#0070e0"/>
+    <g id="Group_500" data-name="Group 500">
+      <circle id="Ellipse_44" data-name="Ellipse 44" cx="1.269" cy="1.269" r="1.269" transform="translate(631 589.231)" fill="#fff"/>
+      <circle id="Ellipse_45" data-name="Ellipse 45" cx="1.269" cy="1.269" r="1.269" transform="translate(635.231 589.231)" fill="#fff"/>
+      <circle id="Ellipse_46" data-name="Ellipse 46" cx="1.269" cy="1.269" r="1.269" transform="translate(639.462 589.231)" fill="#fff"/>
+    </g>
+    <rect id="Rectangle_235" data-name="Rectangle 235" width="36" height="4" rx="1" transform="translate(635 602)" fill="#fff"/>
+    <g id="Group_501" data-name="Group 501">
+      <rect id="Rectangle_236" data-name="Rectangle 236" width="9" height="2" rx="1" transform="translate(649 609)" fill="#003087"/>
+      <rect id="Rectangle_237" data-name="Rectangle 237" width="9" height="2" rx="1" transform="translate(660 609)" fill="#fff"/>
+      <rect id="Rectangle_238" data-name="Rectangle 238" width="14" height="2" rx="1" transform="translate(649 612)" fill="#fff"/>
+      <rect id="Rectangle_239" data-name="Rectangle 239" width="6" height="2" rx="1" transform="translate(665 612)" fill="#fff"/>
+    </g>
+    <rect id="Rectangle_240" data-name="Rectangle 240" width="22" height="4" rx="1" transform="translate(649 617)" fill="#003087"/>
+  </g>
+</svg>

@@ -1,0 +1,105 @@
+{{ header }}{{ column_left }}
+<div id="content" class="payment-paypal">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title_main }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    {% if text_version %}
+      <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_version }}</div>
+    {% endif %}
+    <div class="card card-auth">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <div class="section-connect">
+          <div class="icon icon-logo"></div>
+          <div class="welcome">{{ text_welcome }}</div>
+          <a href="{{ configure_url[environment].ppcp }}" target="_blank" class="btn btn-primary button-connect-ppcp" data-paypal-button="PPLtBlue" data-paypal-onboard-complete="onBoardedCallback">{{ button_connect }}</a>
+          <div class="checkout-express">{{ text_checkout_express }}</div>
+          <div class="support">{{ text_support }}</div>
+          <div class="row">
+            <div class="col offset-sm-4 col-sm-4">
+              <div class="row">
+                <label class="col-form-label text-start" for="input-environment">{{ entry_environment }}</label>
+                <div class="input-group">
+                  <select name="payment_paypal_environment" id="input-environment" class="form-select">
+                    {% if environment == 'production' %}
+                      <option value="production" selected="selected">{{ text_production }}</option>
+                      <option value="sandbox">{{ text_sandbox }}</option>
+                    {% else %}
+                      <option value="production">{{ text_production }}</option>
+                      <option value="sandbox" selected="selected">{{ text_sandbox }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
+<script type="text/javascript">
+$('#input-environment').on('change', function() {
+	var environment = $(this).val();
+	
+	if (environment == 'production') {
+		$('.button-connect-ppcp').attr('href', '{{ configure_url.production.ppcp }}');
+		$('.button-connect-express-checkout').attr('href', '{{ configure_url.production.express_checkout }}');
+	} else {
+		$('.button-connect-ppcp').attr('href', '{{ configure_url.sandbox.ppcp }}');
+		$('.button-connect-express_checkout').attr('href', '{{ configure_url.sandbox.express_checkout }}');
+	}	
+});
+
+$('.payment-paypal').on('click', '.button-agree', function() {	
+	$.ajax({
+		type: 'post',
+		url: '{{ agree_url }}',
+		data: '',
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .alert').remove();
+			
+			if (json.success) {
+				$('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json.success + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function onBoardedCallback(authorization_code, shared_id) {
+	var environment = $('#input-environment').val();
+	
+	$.ajax({
+		url: '{{ callback_url }}',
+		type: 'post',
+		data: 'environment=' + environment + '&authorization_code=' + authorization_code + '&shared_id=' + shared_id + '&seller_nonce={{ seller_nonce }}',
+		dataType: 'json',
+		success: function(json) {
+			
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+</script>
+{{ footer }}

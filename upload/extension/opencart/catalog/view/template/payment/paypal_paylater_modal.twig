@@ -1,0 +1,19 @@
+<div id="paypal-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ text_paypal_paylater_title }}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="paypal-form">
+          {% if button_status %}
+            <div id="paypal-button" class="paypal-button pt-4 pd-4 w-100 mb-3 clearfix">
+              <div id="paypal-button-container" class="paypal-button-container paypal-spinner"></div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+{% if checkout_mode == 'multi_button' %}
+  <div id="paypal-form">
+	{% if googlepay_button_status %}
+	  <div id="googlepay-button" class="googlepay-button pt-4 pd-4 w-100 mb-3 clearfix">
+		<div id="googlepay-button-container" class="googlepay-button-container paypal-spinner"></div>
+	  </div>
+	{% endif %}
+  </div>
+  <script type="text/javascript">
+  if (typeof PayPalAPI !== 'undefined') {
+	  PayPalAPI.init();
+  }	
+  </script>
+{% else %}
+  <div class="d-inline-block pt-2 pd-2 w-100 text-end">
+	<button type="button" id="button-confirm" class="btn btn-primary paypal-googlepay-button-confirm">{{ button_confirm }}</button>
+  </div>
+  <script type="text/javascript">
+  $(document).on('click', '.paypal-googlepay-button-confirm', function(event) {
+	  $('.paypal-googlepay-button-confirm').prop('disabled', true).addClass('loading');
+	
+	  $('#paypal-modal').remove();
+	
+	  $('body').append('<div id="paypal-modal" class="modal fade"></div>');
+	
+	  $('#paypal-modal').load('index.php?route=extension/paypal/payment/paypal_googlepay{{ separator }}modal&language={{ language }} #paypal-modal >', function() {		
+		  $('.paypal-googlepay-button-confirm').prop('disabled', false).removeClass('loading');
+		
+		  $('#paypal-modal').modal('show');
+		
+		  if (typeof PayPalAPI !== 'undefined') {
+			  PayPalAPI.init();
+		  }
+	  });
+  });
+  </script>
+{% endif %}

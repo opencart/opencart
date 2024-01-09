@@ -151,27 +151,27 @@ class ModelExtensionPaymentPayPal extends Model {
 		$implode = array();
 		
 		if (!empty($data['transaction_id'])) {
-			$implode[] .= "`transaction_id` = '" . $this->db->escape($data['transaction_id']) . "'";
+			$implode[] = "`transaction_id` = '" . $this->db->escape($data['transaction_id']) . "'";
 		}
 					
 		if (!empty($data['transaction_status'])) {
-			$implode[] .= "`transaction_status` = '" . $this->db->escape($data['transaction_status']) . "'";
+			$implode[] = "`transaction_status` = '" . $this->db->escape($data['transaction_status']) . "'";
 		}
 		
 		if (!empty($data['payment_method'])) {
-			$implode[] .= "`payment_method` = '" . $this->db->escape($data['payment_method']) . "'";
+			$implode[] = "`payment_method` = '" . $this->db->escape($data['payment_method']) . "'";
 		}
 		
 		if (!empty($data['vault_id'])) {
-			$implode[] .= "`vault_id` = '" . $this->db->escape($data['vault_id']) . "'";
+			$implode[] = "`vault_id` = '" . $this->db->escape($data['vault_id']) . "'";
 		}
 		
 		if (!empty($data['vault_customer_id'])) {
-			$implode[] .= "`vault_customer_id` = '" . $this->db->escape($data['vault_customer_id']) . "'";
+			$implode[] = "`vault_customer_id` = '" . $this->db->escape($data['vault_customer_id']) . "'";
 		}
 		
 		if (!empty($data['environment'])) {
-			$implode[] .= "`environment` = '" . $this->db->escape($data['environment']) . "'";
+			$implode[] = "`environment` = '" . $this->db->escape($data['environment']) . "'";
 		}
 				
 		if ($implode) {

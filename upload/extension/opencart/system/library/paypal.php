@@ -475,11 +475,7 @@ class PayPal {
 		}
 	}
 
-	private function buildQuery(array|string $params, bool $json): string {
-		if (is_string($params)) {
-			return $params;
-		}
-
+	private function buildQuery(array $params, bool $json) {
 		if ($json) {
 			return json_encode($params);
 		} else {

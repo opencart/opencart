@@ -206,8 +206,9 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment Rating
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int $article_id
+	 * @param int $article_comment_id
+	 * @param int $rating
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `rating` = '" . (int)$rating . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "'");
@@ -318,8 +319,9 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Rating
 	 *
-	 * @param int                  $article_id
-	 * @param array<string, mixed> $data
+	 * @param int  $article_id
+	 * @param int  $article_comment_id
+	 * @param bool $rating
 	 */
 	public function addRating(int $article_id, int $article_comment_id, bool $rating): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$article_comment_id . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$rating . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");

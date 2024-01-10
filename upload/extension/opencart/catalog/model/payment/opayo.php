@@ -387,11 +387,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param string               $subscription_name
 	 * @param string               $recurring_expiry
 	 * @param int                  $recurring_frequency
-	 * @param mixed|null           $i
+	 * @param int|null             $i
 	 *
 	 * @return array<string, mixed>
 	 */
-	private function setPaymentData(array $order_info, array $opayo_order_info, float $price, int $subscription_id, string $subscription_name, string $recurring_expiry, int $recurring_frequency, $i = null): array {
+	private function setPaymentData(array $order_info, array $opayo_order_info, float $price, int $subscription_id, string $subscription_name, string $recurring_expiry, int $recurring_frequency, ?int $i = null): array {
 		// Setting
 		$_config = new \Opencart\System\Engine\Config();
 		$_config->addPath(DIR_EXTENSION . 'opayo/system/config/');
@@ -629,7 +629,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<string, array<string, string>|string>
 	 */
-	public function sendCurl(string $url, array $payment_data, $i = null): array {
+	public function sendCurl(string $url, array $payment_data, ?int $i = null): array {
 		$curl = curl_init($url);
 
 		curl_setopt($curl, CURLOPT_PORT, 443);
@@ -651,11 +651,14 @@ class Opayo extends \Opencart\System\Engine\Model {
 		$response_info = explode(chr(10), $response);
 
 		foreach ($response_info as $string) {
-			if (strpos($string, '=') && $i !== null) {
-				$parts = explode('=', $string, 2);
+			if (strpos($string, '=') === false) {
+				continue;
+			}
+			$parts = explode('=', $string, 2);
+
+			if ($i !== null) {
 				$data['RepeatResponseData_' . $i][trim($parts[0])] = trim($parts[1]);
-			} elseif (strpos($string, '=')) {
-				$parts = explode('=', $string, 2);
+			} else {
 				$data[trim($parts[0])] = trim($parts[1]);
 			}
 		}

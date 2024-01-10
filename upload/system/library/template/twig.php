@@ -112,9 +112,7 @@ class Twig {
 
 			$twig = new \Twig\Environment($loader, $config);
 
-			if ($config['debug']) {
-				$twig->addExtension(new \Twig\Extension\DebugExtension());
-			}
+			$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 			return $twig->render($file, $data);
 		} catch (\Twig\Error\SyntaxError $e) {

@@ -34,7 +34,7 @@ class Document {
 	 */
 	private array $styles = [];
 	/**
-	 * @var array<int, array<string, array<string, string>>>
+	 * @var array<string, array<string, array<string, string>>>
 	 */
 	private array $scripts = [];
 

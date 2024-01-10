@@ -29,6 +29,8 @@ $_['button_replies']        = 'Show Replies';
 $_['button_more']           = 'See more replies...';
 $_['button_login']          = 'Login to Comment';
 $_['button_login_reply']    = 'Login to Reply';
+$_['button_like']           = 'Like';
+$_['button_dislike']        = 'Dislike';
 
 // Error
 $_['error_article']         = 'Warning: Article could not be found!';

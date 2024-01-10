@@ -532,6 +532,10 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
+				'name' => 'rating',
+				'type' => 'int(11)'
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)'
 			],

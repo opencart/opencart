@@ -373,10 +373,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 
 			$comment_data = $this->request->post + [
-				'customer_id' => $this->customer->getId(),
-				'parent_id'   => $parent_id,
-				'ip'          => $this->request->server['REMOTE_ADDR'],
-				'status'      => $status
+				'parent_id' => $parent_id,
+				'status'    => $status
 			];
 
 			$this->model_cms_article->addComment($article_id, $comment_data);
@@ -414,8 +412,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$article_comment_id = 0;
 		}
 
-		if (isset($this->request->get['rating'])) {
-			$rating = (bool)$this->request->get['rating'];
+		if (isset($this->request->get['rate'])) {
+			$rating = (bool)$this->request->get['rate'];
 		} else {
 			$rating = 0;
 		}
@@ -445,23 +443,31 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Delete previous rating if there is one
-		$this->model_cms_article->deleteRating($article_id, $article_comment_id);
-
 		if (!$json) {
-			// Anti-Spam
-			$rating_data = [
-				'article_comment_id' => $article_comment_id,
-				'article_id'         => $article_id,
-				'rating'             => $rating
-			];
+			// Delete previous rating if there is one
+			$this->model_cms_article->deleteRating($article_id, $article_comment_id);
 
-			$this->load->model('cms/article');
+			$this->model_cms_article->addRating($article_id, $article_comment_id, $rating);
 
-			$this->model_cms_article->addRating($article_id, $rating_data);
+			$like = 0;
+			$dislike = 0;
+
+			$results = $this->model_cms_article->getRatings($article_id, $article_comment_id);
+
+			foreach ($results as $result) {
+				if ($result['rating'] == 1) {
+					$like = $result['total'];
+				}
+
+				if ($result['rating'] == 0) {
+					$dislike = $result['total'];
+				}
+			}
 
 			if (!$article_comment_id) {
-				$this->model_cms_article->editRating($article_id, $rating);
+				$this->model_cms_article->editRating($article_id, $like - $dislike);
+			} else {
+				$this->model_cms_article->editCommentRating($article_id, $article_comment_id, $like - $dislike);
 			}
 
 			$json['success'] = $this->language->get('text_rating');

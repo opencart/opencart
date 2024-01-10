@@ -1379,7 +1379,7 @@ CREATE TABLE `oc_event` (
   `trigger` text NOT NULL,
   `action` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `sort_order` int(3) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`event_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

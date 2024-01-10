@@ -47,7 +47,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				return new \Opencart\System\Engine\Action('common/authorize');
 			}
 
-			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
+			if (!$token_info['status'] && $token_info['attempts'] > 2) {
 				return new \Opencart\System\Engine\Action('common/authorize.unlock');
 			}
 		}

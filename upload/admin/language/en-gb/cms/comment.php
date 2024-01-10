@@ -23,7 +23,7 @@ $_['entry_date_to']    = 'Date To';
 
 // Button
 $_['button_spam']      = 'Spam';
-$_['button_refresh']   = 'Calculating ratings';
+$_['button_rating']    = 'Calculate Ratings';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify article comments!';

@@ -92,6 +92,16 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Rating
+	 *
+	 * @param int   $article_id
+	 * @param array $data
+	 */
+	public function editRating(int $article_id, int $rating): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `rating` = '" . (int)$rating . "' WHERE `article_id` = '" . (int)$article_id . "'");
+	}
+
+	/**
 	 * Delete Article
 	 *
 	 * @param int $article_id
@@ -138,6 +148,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'ad.name',
+			'a.author',
+			'a.rating',
 			'a.date_added'
 		];
 
@@ -270,7 +282,13 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalArticles(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`");
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}
@@ -300,6 +318,16 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (bool)$status . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
 
 		$this->cache->delete('topic');
+	}
+
+	/**
+	 * Edit Comment Rating
+	 *
+	 * @param int   $article_id
+	 * @param array $data
+	 */
+	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `rating` = '" . (int)$rating . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "'");
 	}
 
 	/**
@@ -336,7 +364,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getComments(array $data = []): array {
-		$sql = "SELECT *, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`)";
+		$sql = "SELECT *, `ac`.`rating`, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`)";
 
 		$implode = [];
 
@@ -430,5 +458,27 @@ class Article extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Ratings
+	 *
+	 * @param int $article_id
+	 * @param int $article_comment_id
+	 *
+	 * @return array
+	 */
+	public function getRatings(int $article_id, int $article_comment_id = 0): array {
+		$sql = "SELECT rating, COUNT(*) AS total FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";
+
+		if ($article_comment_id) {
+			$sql .= " AND `article_comment_id` = '" . (int)$article_comment_id . "'";
+		}
+
+		$sql .= " GROUP BY rating";
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
 	}
 }

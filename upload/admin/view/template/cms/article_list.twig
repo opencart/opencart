@@ -6,6 +6,7 @@
           <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
           <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'ad.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
           <td class="text-start"><a href="{{ sort_author }}"{% if sort == 'a.author' %} class="{{ order|lower }}"{% endif %}>{{ column_author }}</a></td>
+          <td class="text-end"><a href="{{ sort_rating }}"{% if sort == 'a.rating' %} class="{{ order|lower }}"{% endif %}>{{ column_rating }}</a></td>
           <td class="text-end"><a href="{{ sort_date_added }}"{% if sort == 'a.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
           <td class="text-end">{{ column_action }}</td>
         </tr>
@@ -23,6 +24,7 @@
                   <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}</td>
               <td class="text-start">{{ article.author }}</td>
+              <td class="text-end">{{ article.rating }}</td>
               <td class="text-end">{{ article.date_added }}</td>
               <td class="text-end"><a href="{{ article.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>

@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-comment').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" id="button-refresh" data-bs-toggle="tooltip" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
+        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
         <button type="submit" form="form-comment" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
         <button type="submit" form="form-comment" formaction="{{ spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
         <button type="submit" form="form-comment" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
@@ -38,7 +38,7 @@
               </div>
               <div class="mb-3">
                 <label for="input-status" class="form-label">{{ entry_status }}</label>
-                <select name="filter_status" class="form-control">
+                <select name="filter_status" id="input-status" class="form-control">
                   <option value=""></option>
                   <option value="0">{{ text_disabled }}</option>
                   <option value="1">{{ text_enabled }}</option>
@@ -193,6 +193,55 @@ $('#input-email').autocomplete({
     'select': function(item) {
         $('#input-email').val(item['label']);
     }
+});
+
+$('#button-rating').on('click', function () {
+    var element = this;
+
+    $(element).button('loading');
+
+    var next = 'index.php?route=cms/comment.rating&user_token={{ user_token }}';
+
+    var rate = function () {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function (json) {
+                console.log(json);
+
+                $('.invalid-feedback').removeClass('d-block');
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(rate);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
+            }
+        });
+    };
+
+    chain.attach(rate);
 });
 //--></script>
 {{ footer }}

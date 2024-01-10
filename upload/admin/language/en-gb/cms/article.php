@@ -9,10 +9,13 @@ $_['text_add']                = 'Add Article';
 $_['text_edit']               = 'Edit Article';
 $_['text_default']            = 'Default';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['text_rating']             = 'Success: You have modified article ratings!';
+$_['text_next']               = 'Success: You have modified %s - %s article ratings!';
 
 // Column
 $_['column_name']             = 'Article Name';
 $_['column_author']           = 'Author';
+$_['column_rating']           = 'Rating';
 $_['column_date_added']       = 'Date Added';
 $_['column_action']           = 'Action';
 
@@ -31,6 +34,9 @@ $_['entry_sort_order']        = 'Sort Order';
 $_['entry_status']            = 'Status';
 $_['entry_keyword']           = 'Keyword';
 $_['entry_layout']            = 'Layout Override';
+
+// Button
+$_['button_rating']           = 'Calculate Ratings';
 
 // Error
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';

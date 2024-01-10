@@ -113,8 +113,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int $article_id
+	 * @param int $rating
 	 */
 	public function editRating(int $article_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `rating` = '" . (int)$rating . "' WHERE `article_id` = '" . (int)$article_id . "'");

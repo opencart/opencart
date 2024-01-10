@@ -98,13 +98,13 @@ class Tax {
 	/**
 	 * Calculate
 	 *
-	 * @param float $value
-	 * @param int   $tax_class_id
-	 * @param bool  $calculate
+	 * @param float       $value
+	 * @param int         $tax_class_id
+	 * @param bool|string $calculate
 	 *
 	 * @return float
 	 */
-	public function calculate(float $value, int $tax_class_id, bool $calculate = true): float {
+	public function calculate(float $value, int $tax_class_id, $calculate = true): float {
 		if ($tax_class_id && $calculate) {
 			$amount = 0;
 

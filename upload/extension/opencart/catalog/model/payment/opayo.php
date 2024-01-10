@@ -126,6 +126,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int    $card_id
+	 * @param string $token
+	 *
 	 * @return array<string, mixed>
 	 */
 	public function getCard(int $card_id, string $token): array {

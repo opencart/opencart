@@ -469,7 +469,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int $article_id
 	 * @param int $article_comment_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRatings(int $article_id, int $article_comment_id = 0): array {
 		$sql = "SELECT rating, COUNT(*) AS total FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";

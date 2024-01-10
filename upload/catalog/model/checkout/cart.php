@@ -122,9 +122,9 @@ class Cart extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals
 	 *
-	 * @param array $totals
-	 * @param array $taxes
-	 * @param int   $total
+	 * @param array<int, array<string, mixed>> $totals
+	 * @param array<int, float>                $taxes
+	 * @param int                              $total
 	 *
 	 * @return void
 	 */

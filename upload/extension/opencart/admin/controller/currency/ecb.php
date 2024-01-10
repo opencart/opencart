@@ -116,7 +116,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 					$value = $currencies['EUR'];
 				}
 
-				if ($currencies) {
+				if (count($currencies) > 1) {
 					$this->load->model('localisation/currency');
 
 					$results = $this->model_localisation_currency->getCurrencies();

@@ -36,12 +36,7 @@ class Session {
 		$class = 'Opencart\System\Library\Session\\' . $adaptor;
 
 		if (class_exists($class)) {
-			if ($registry) {
-				$this->adaptor = new $class($registry);
-			} else {
-				$this->adaptor = new $class();
-			}
-
+			$this->adaptor = new $class($registry);
 			register_shutdown_function([&$this, 'close']);
 			register_shutdown_function([&$this, 'gc']);
 		} else {

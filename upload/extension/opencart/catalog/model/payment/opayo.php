@@ -147,10 +147,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order
 	 *
-	 * @param int   $order_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $response_data
 	 * @param array<string, mixed> $payment_data
-	 * @param int   $card_id
+	 * @param int                  $card_id
 	 *
 	 * @return int
 	 */
@@ -208,9 +208,9 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order Transaction
 	 *
-	 * @param int    $opayo_order_id
-	 * @param string $type
-	 * @param array<string, mixed>  $order_info
+	 * @param int                  $opayo_order_id
+	 * @param string               $type
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */
@@ -238,39 +238,24 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Subscription Payment
 	 *
-	 * @param array<string, mixed>  $item
-	 * @param string $vendor_tx_code
+	 * @param array<string, mixed> $item
+	 * @param string               $vendor_tx_code
 	 *
 	 * @return void
 	 */
 	public function subscriptionPayment(array $item, string $vendor_tx_code): void {
-		$this->load->model('checkout/subscription');
+		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/opayo');
 
 		if ($item['subscription']['trial'] == 1) {
 			$price = $item['subscription']['trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['subscription']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['subscription']['trial_cycle'], $item['subscription']['trial_frequency'], $item['subscription']['trial_duration']);
 		} else {
 			$price = $item['subscription']['price'];
-			$trial_text = '';
 		}
-
-		$subscription_amt = $this->currency->format($this->tax->calculate($item['subscription']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
-		$subscription_description = $trial_text . sprintf($this->language->get('text_subscription'), $subscription_amt, $item['subscription']['cycle'], $item['subscription']['frequency']);
-
-		if ($item['subscription']['duration'] > 0) {
-			$subscription_description .= sprintf($this->language->get('text_length'), $item['subscription']['duration']);
-		}
-
-		$item['subscription']['description'] = $subscription_description;
-
-		// Create new subscription and set to pending status as no payment has been made yet.
-		$subscription_id = $this->model_checkout_subscription->addSubscription($this->session->data['order_id'], $item['subscription']);
-
-		$this->model_checkout_subscription->editReference($subscription_id, $vendor_tx_code);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+		$subscription_id = $order_info['subscription_id'];
 
 		$opayo_order_info = $this->getOrder($this->session->data['order_id']);
 
@@ -489,16 +474,15 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string    $frequency
 	 * @param \Datetime $next_payment
-	 * @param string    $cycle
+	 * @param int       $cycle
 	 *
 	 * @return \Datetime
 	 */
-	private function calculateSchedule(string $frequency, string $next_payment, string $cycle) {
+	private function calculateSchedule(string $frequency, \DateTime $next_payment, int $cycle) {
+		$next_payment = clone $next_payment;
+
 		if ($frequency == 'semi_month') {
-			// https://stackoverflow.com/a/35473574
-			$day = date_create_from_format('j M, Y', $next_payment->date);
-			$day = date_create($day);
-			$day = date_format($day, 'd');
+			$day = $next_payment->format('d');
 			$value = 15 - $day;
 			$is_even = false;
 
@@ -539,11 +523,11 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Order
 	 *
-	 * @param int    $order_id
-	 * @param array<string, mixed>  $response_data
-	 * @param int    $subscription_id
-	 * @param string $trial_end
-	 * @param string $subscription_end
+	 * @param int                  $order_id
+	 * @param array<string, mixed> $response_data
+	 * @param int                  $subscription_id
+	 * @param string               $trial_end
+	 * @param string               $subscription_end
 	 *
 	 * @return void
 	 */
@@ -579,10 +563,10 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Transaction
 	 *
-	 * @param int   $subscription_id
-	 * @param int   $order_id
+	 * @param int                  $subscription_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $response_data
-	 * @param int   $type
+	 * @param int                  $type
 	 *
 	 * @return void
 	 */
@@ -637,7 +621,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param array<mixed> $payment_data
 	 * @param ?int         $i
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function sendCurl(string $url, array $payment_data, $i = null): array {
 		$curl = curl_init($url);

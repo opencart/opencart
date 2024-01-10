@@ -382,14 +382,18 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'cms/comment')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
 			$this->load->model('cms/article');
-
-
 
 			foreach ($selected as $article_comment_id) {
 				$this->model_cms_article->deleteComment($article_comment_id);

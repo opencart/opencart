@@ -4,7 +4,7 @@ services:
         tags:
             - phpstan.broker.propertiesClassReflectionExtension
 parameters:
-    level: 1
+    level: 3
     paths:
         - ./upload/
     excludePaths:
@@ -12,5 +12,7 @@ parameters:
         - ./upload/system/storage/vendor/
     tmpDir: .cache
     ignoreErrors:
+        - '#Access to an undefined property Opencart\\System\\Engine\\Proxy<Opencart\\Catalog\\Model\\Checkout\\Cart>::\$getTotals\.#'
+        - '#Call to an undefined method object::[a-zA-Z]+\(\)\.#'
         - '#Constant [A-Z_]+ not found\.#'
         - '#Variable \$\S+ might not be defined\.#'

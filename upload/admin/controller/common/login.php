@@ -61,9 +61,7 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			$url = '';
 
-			if ($this->request->get) {
-				$url .= http_build_query($args);
-			}
+			$url .= http_build_query($args);
 
 			$data['redirect'] = $this->url->link($route, $url);
 		} else {

@@ -110,6 +110,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$implode = [];
 
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = array_filter($words);
 
 				foreach ($words as $word) {
 					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
@@ -132,6 +133,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$implode = [];
 
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = array_filter($words);
 
 				foreach ($words as $word) {
 					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
@@ -462,6 +464,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$implode = [];
 
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = array_filter($words);
 
 				foreach ($words as $word) {
 					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
@@ -484,6 +487,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$implode = [];
 
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = array_filter($words);
 
 				foreach ($words as $word) {
 					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";

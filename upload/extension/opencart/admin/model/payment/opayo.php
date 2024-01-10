@@ -31,7 +31,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			  `card_id` int(11),
 			  PRIMARY KEY (`opayo_order_id`),
 			  KEY (`order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_order_transaction` (
@@ -42,7 +42,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			  `amount` decimal(15,4) NOT NULL,
 			  PRIMARY KEY (`opayo_order_transaction_id`),
 			  KEY (`opayo_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_order_subscription` (
@@ -62,7 +62,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			  `total` DECIMAL(15,4) NOT NULL,
 			  PRIMARY KEY (`opayo_order_subscription_id`),
 			  KEY (`order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "opayo_card` (
@@ -75,7 +75,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 			  PRIMARY KEY (`card_id`),
 			  KEY (`customer_id`),
 			  KEY (`token`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;");
 	}
 
 	/**
@@ -95,7 +95,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function void(int $order_id): array {
 		$opayo_order = $this->getOrder($order_id);
@@ -151,7 +151,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param int   $order_id
 	 * @param float $amount
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function release(int $order_id, float $amount): array {
 		$opayo_order = $this->getOrder($order_id);
@@ -210,7 +210,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param int   $order_id
 	 * @param float $amount
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function rebate(int $order_id, float $amount): array {
 		$opayo_order = $this->getOrder($order_id);
@@ -346,7 +346,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 * @param string       $url
 	 * @param array<mixed> $payment_data
 	 *
-	 * @return array<string, string>
+	 * @return array<string, array<string, string>|string>
 	 */
 	public function sendCurl(string $url, array $payment_data): array {
 		$curl = curl_init($url);
@@ -383,7 +383,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Log
 	 *
-	 * @param string       $title
+	 * @param string  $title
 	 * @param ?string $data
 	 *
 	 * @return void

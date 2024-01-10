@@ -33,6 +33,7 @@ class Article extends \Opencart\System\Engine\Model {
 			$implode = [];
 
 			$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+			$words = array_filter($words);
 
 			foreach ($words as $word) {
 				$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
@@ -133,6 +134,7 @@ class Article extends \Opencart\System\Engine\Model {
 			$implode = [];
 
 			$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+			$words = array_filter($words);
 
 			foreach ($words as $word) {
 				$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";

@@ -187,23 +187,17 @@ class Smtp {
 				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
 			}
 
-			if (!empty($this->option['smtp_username']) && !empty($this->option['smtp_password'])) {
-				fwrite($handle, 'AUTH LOGIN' . "\r\n");
+			fwrite($handle, 'AUTH LOGIN' . "\r\n");
 
-				$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
+			$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
 
-				fwrite($handle, base64_encode($this->option['smtp_username']) . "\r\n");
+			fwrite($handle, base64_encode($this->option['smtp_username']) . "\r\n");
 
-				$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
+			$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
 
-				fwrite($handle, base64_encode($this->option['smtp_password']) . "\r\n");
+			fwrite($handle, base64_encode($this->option['smtp_password']) . "\r\n");
 
-				$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
-			} else {
-				fwrite($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
-
-				$this->handleReply($handle, 250, 'Error: HELO not accepted from server!');
-			}
+			$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
 
 			if ($this->option['verp']) {
 				fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>XVERP' . "\r\n");

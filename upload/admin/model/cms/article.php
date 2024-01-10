@@ -94,8 +94,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int $article_id
+	 * @param int $rating
 	 */
 	public function editRating(int $article_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `rating` = '" . (int)$rating . "' WHERE `article_id` = '" . (int)$article_id . "'");
@@ -279,9 +279,11 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Articles
 	 *
+	 * @param array<string, mixed> $data
+	 *
 	 * @return int
 	 */
-	public function getTotalArticles(): int {
+	public function getTotalArticles(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
 
 		if (!empty($data['filter_name'])) {
@@ -323,8 +325,9 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment Rating
 	 *
-	 * @param int   $article_id
-	 * @param array $data
+	 * @param int $article_id
+	 * @param int $article_comment_id
+	 * @param int $rating
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `rating` = '" . (int)$rating . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "'");

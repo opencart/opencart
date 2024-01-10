@@ -52,10 +52,11 @@ class Voucher extends \Opencart\System\Engine\Model {
 	public function confirm(array $order_info, array $order_total): int {
 		$code = '';
 
-		$start = strpos($order_total['title'], '(') + 1;
+		$start = strpos($order_total['title'], '(');
 		$end = strrpos($order_total['title'], ')');
 
-		if ($start && $end) {
+		if ($start !== false && $end !== false) {
+			$start++;
 			$code = substr($order_total['title'], $start, $end - $start);
 		}
 

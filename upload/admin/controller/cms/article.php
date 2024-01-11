@@ -433,7 +433,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function rating(): void {
-		$this->load->language('cms/comment');
+		$this->load->language('cms/article');
 
 		$json = [];
 
@@ -448,7 +448,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$limit = 100;
+			$limit = 1;
 
 			$filter_data = [
 				'sort'  => 'date_added',
@@ -483,10 +483,10 @@ class Article extends \Opencart\System\Engine\Controller {
 			$article_total = $this->model_cms_article->getTotalArticles();
 
 			$start = ($page - 1) * $limit;
-			$end = $start + $limit;
+			$end = ($start > ($article_total - $limit)) ? $article_total : ($start + $limit);
 
 			if ($end < $article_total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $article_total);
+				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
 
 				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {

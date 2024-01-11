@@ -215,7 +215,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$limit = 200;
 
 			$start = ($page - 1) * $limit;
-			$end = $start > ($total - $limit) ? $total : ($start + $limit);
+			$end = ($start > ($total - $limit)) ? $total : ($start + $limit);
 
 			for ($i = $start; $i < $end; $i++) {
 				$destination = substr($files[$i], strlen($base_old));
@@ -360,7 +360,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$limit = 200;
 
 			$start = ($page - 1) * $limit;
-			$end = $start > ($total - $limit) ? $total : ($start + $limit);
+			$end = ($start > ($total - $limit)) ? $total : ($start + $limit);
 
 			// 4. Copy the files across
 			foreach (array_slice($files, $start, $end) as $file) {
@@ -375,7 +375,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (($page * $limit) <= $total) {
+			if ($end <= $total) {
 				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
 			} else {
 				// Update the old config files

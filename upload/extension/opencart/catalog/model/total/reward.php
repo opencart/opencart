@@ -76,11 +76,11 @@ class Reward extends \Opencart\System\Engine\Model {
 
 		$points = 0.0;
 
-		$start = strpos($order_total['title'], '(') + 1;
+		$start = strpos($order_total['title'], '(');
 		$end = strrpos($order_total['title'], ')');
 
-		if ($start && $end) {
-			$points = (float)substr($order_total['title'], $start, $end - $start);
+		if ($start !== false && $end !== false) {
+			$points = (float)substr($order_total['title'], $start + 1, $end - ($start + 1));
 		}
 
 		$this->load->model('account/customer');

@@ -207,10 +207,10 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 			if ($emails) {
 				$start = ($page - 1) * $limit;
-				$end = $start + $limit;
+				$end = $start > ($email_total - $limit) ? $email_total : ($start + $limit);
 
 				if ($end < $email_total) {
-					$json['text'] = sprintf($this->language->get('text_sent'), $start ?: 1, $email_total);
+					$json['text'] = sprintf($this->language->get('text_sent'), $start ?: 1, $end, $email_total);
 
 					$json['next'] = $this->url->link('marketing/contact.send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 				} else {

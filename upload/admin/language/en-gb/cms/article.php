@@ -4,13 +4,12 @@ $_['heading_title']           = 'Articles';
 
 // Text
 $_['text_success']            = 'Success: You have modified articles!';
+$_['text_next']               = 'Success: You have modified %s to %s of %s article ratings!';
 $_['text_list']               = 'Article List';
 $_['text_add']                = 'Add Article';
 $_['text_edit']               = 'Edit Article';
 $_['text_default']            = 'Default';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
-$_['text_rating']             = 'Success: You have modified article ratings!';
-$_['text_next']               = 'Success: You have modified %s - %s article ratings!';
 
 // Column
 $_['column_name']             = 'Article Name';

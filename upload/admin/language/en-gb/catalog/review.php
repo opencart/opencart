@@ -4,7 +4,7 @@ $_['heading_title']     = 'Reviews';
 
 // Text
 $_['text_success']      = 'Success: You have modified reviews!';
-$_['text_next']         = 'Success: You have modified %s product ratings out of %s!';
+$_['text_next']         = 'Success: You have modified %s to %s of %s product ratings!';
 $_['text_list']         = 'Review List';
 $_['text_add']          = 'Add Review';
 $_['text_edit']         = 'Edit Review';

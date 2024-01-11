@@ -209,6 +209,7 @@ $('#button-rating').on('click', function () {
             success: function (json) {
                 console.log(json);
 
+                $('.alert-dismissible').remove();
                 $('.invalid-feedback').removeClass('d-block');
 
                 if (json['error']) {

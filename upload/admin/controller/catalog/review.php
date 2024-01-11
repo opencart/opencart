@@ -561,11 +561,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/product');
 			$this->load->model('catalog/review');
 
-			$total = $this->model_catalog_product->getTotalProducts();
 			$limit = 10;
-
-			$start = ($page - 1) * $limit;
-			$end = $start > ($total - $limit) ? $total : ($start + $limit);
 
 			$product_data = [
 				'start' => ($page - 1) * $limit,
@@ -578,12 +574,17 @@ class Review extends \Opencart\System\Engine\Controller {
 				$this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($result['product_id']));
 			}
 
-			if ($total && $end < $total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
+			$product_total = $this->model_catalog_product->getTotalProducts();
+
+			$start = ($page - 1) * $limit;
+			$end = $start > ($product_total - $limit) ? $product_total : ($start + $limit);
+
+			if ($end < $product_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $product_total);
 
 				$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
-				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
+				$json['success'] = $this->language->get('text_success');
 
 				$json['next'] = '';
 			}

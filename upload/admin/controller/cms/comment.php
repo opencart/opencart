@@ -393,7 +393,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$limit = 100;
+			$limit = 1;
 
 			$filter_data = [
 				'sort'  => 'date_added',
@@ -428,12 +428,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$comment_total = $this->model_cms_article->getTotalComments();
 
 			$start = ($page - 1) * $limit;
-			$end = $start + $limit;
+			$end = ($start > ($comment_total - $limit)) ? $comment_total : ($start + $limit);
 
 			if ($end < $comment_total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $comment_total);
+				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $comment_total);
 
-				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('cms/comment.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 

@@ -39,11 +39,11 @@ $('#button-rating').on('click', function () {
     var rate = function () {
         return $.ajax({
             url: next,
-            type: 'post',
-            data: $('#content form').serialize(),
             dataType: 'json',
             success: function (json) {
                 console.log(json);
+
+                $('.alert-dismissible').remove();
 
                 $('.invalid-feedback').removeClass('d-block');
 

@@ -8,7 +8,6 @@ namespace Opencart\Admin\Controller\Extension\Opayo\Payment;
 class Opayo extends \Opencart\System\Engine\Controller {
 	/**
 	 * @var array<string, string>
-	 * @var string
 	 */
 	private array $error = [];
 	private string $separator = '';

@@ -125,6 +125,12 @@ class Opayo extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "opayo_card` SET `token` = '" . $this->db->escape($token) . "' WHERE `card_id` = '" . (int)$card_id . "'");
 	}
 
+	/**
+	 * @param int    $card_id
+	 * @param string $token
+	 *
+	 * @return array<string, mixed>
+	 */
 	public function getCard(int $card_id, string $token): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "opayo_card` WHERE (`card_id` = '" . (int)$card_id . "' OR `token` = '" . $this->db->escape($token) . "') AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 

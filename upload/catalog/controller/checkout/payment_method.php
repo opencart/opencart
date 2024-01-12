@@ -199,16 +199,18 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
+			$json['error'] = $this->language->get('error_order');
+		}
+
 		if (!$json) {
 			$this->session->data['comment'] = $this->request->post['comment'];
 
 			$this->load->model('checkout/order');
 
-			$order_info = $this->model_checkout_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->model_checkout_order->editComment($order_id, $this->request->post['comment']);
-			}
+			$this->model_checkout_order->editComment($order_id, $this->request->post['comment']);
 
 			$json['success'] = $this->language->get('text_comment');
 		}

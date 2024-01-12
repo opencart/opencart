@@ -14,6 +14,7 @@ $_['text_comment']           = 'Success: Comment added!';
 $_['entry_payment_method']   = 'Choose payment method...';
 
 // Error
+$_['error_order']            = 'Order not found! Please refresh the page.';
 $_['error_customer']         = 'Customer required!';
 $_['error_payment_address']  = 'Payment address required!';
 $_['error_shipping_address'] = 'Shipping address required!';

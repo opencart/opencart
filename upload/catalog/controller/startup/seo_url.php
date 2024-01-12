@@ -86,15 +86,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		foreach ($parts as $part) {
 			$pair = explode('=', $part);
 
-			if (isset($pair[0])) {
-				$key = (string)$pair[0];
-			}
-
-			if (isset($pair[1])) {
-				$value = (string)$pair[1];
-			} else {
-				$value = '';
-			}
+			$key = $pair[0];
+			$value = $pair[1] ?? '';
 
 			$result = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
 

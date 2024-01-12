@@ -679,6 +679,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$products = $this->model_sale_order->getProducts($order_id);
 
+		if (!empty($order_info)) {
+			$data['currency_code'] = $order_info['currency_code'];
+			$currency_value = $order_info['currency_value'];
+		} else {
+			$data['currency_code'] = $this->config->get('config_currency');
+			$currency_value = 1;
+		}
+
 		foreach ($products as $product) {
 			$option_data = [];
 
@@ -748,8 +756,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				'subscription'             => $subscription,
 				'subscription_description' => $description,
 				'quantity'                 => $product['quantity'],
-				'price'                    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'total'                    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'price'                    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
+				'total'                    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
 				'reward'                   => $product['reward']
 			];
 		}
@@ -762,7 +770,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($vouchers as $voucher) {
 			$data['order_vouchers'][] = [
 				'description' => $voucher['description'],
-				'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+				'amount'      => $this->currency->format($voucher['amount'], $data['currency_code'], $currency_value),
 				'href'        => $this->url->link('sale/voucher.form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
 			];
 		}
@@ -775,7 +783,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($totals as $total) {
 			$data['order_totals'][] = [
 				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
+				'text'  => $this->currency->format($total['value'], $data['currency_code'], $currency_value)
 			];
 		}
 
@@ -869,12 +877,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
-		if (!empty($order_info)) {
-			$data['currency_code'] = $order_info['currency_code'];
-		} else {
-			$data['currency_code'] = $this->config->get('config_currency');
-		}
 
 		// Coupon, Voucher, Reward
 		$data['total_coupon'] = '';

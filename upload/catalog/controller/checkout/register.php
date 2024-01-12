@@ -453,7 +453,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$address_id = 0;
 				}
 
-				if ($payment_country_info) {
+				if (!empty($payment_country_info)) {
 					$country = $payment_country_info['name'];
 					$iso_code_2 = $payment_country_info['iso_code_2'];
 					$iso_code_3 = $payment_country_info['iso_code_3'];
@@ -532,7 +532,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						$lastname = $this->request->post['shipping_lastname'];
 					}
 
-					if ($shipping_country_info) {
+					if (!empty($shipping_country_info)) {
 						$country = $shipping_country_info['name'];
 						$iso_code_2 = $shipping_country_info['iso_code_2'];
 						$iso_code_3 = $shipping_country_info['iso_code_3'];

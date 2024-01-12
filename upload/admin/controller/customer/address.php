@@ -189,7 +189,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['address_custom_field'] = [];
 		}
 
-		if (isset($this->request->get['address_id'])) {
+		if (isset($this->request->get['address_id']) && !empty($address_info)) {
 			$data['default'] = $address_info['default'];
 		} else {
 			$data['default'] = true;

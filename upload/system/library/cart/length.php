@@ -43,13 +43,13 @@ class Length {
 	/**
 	 * Convert
 	 *
-	 * @param float  $value
-	 * @param string $from
-	 * @param string $to
+	 * @param float $value
+	 * @param int   $from
+	 * @param int   $to
 	 *
 	 * @return float
 	 */
-	public function convert(float $value, string $from, string $to): float {
+	public function convert(float $value, int $from, int $to): float {
 		if ($from == $to) {
 			return $value;
 		}

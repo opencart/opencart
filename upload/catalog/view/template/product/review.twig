@@ -65,6 +65,7 @@ $('#form-review').on('submit', function(e) {
         },
         success: function(json) {
             $('.alert-dismissible').remove();
+
             $('#form-review').find('.is-invalid').removeClass('is-invalid');
             $('#form-review').find('.invalid-feedback').removeClass('d-block');
 

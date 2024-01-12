@@ -43,6 +43,7 @@ $('#form-api').on('submit', function(e) {
             console.log(json);
 
             $('.alert-dismissible').remove();
+
             $('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {

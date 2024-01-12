@@ -14,7 +14,7 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 		  `product_id` INT(11) NOT NULL,
 		  `viewed` INT(11) NOT NULL,
 		  PRIMARY KEY (`product_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
 	}
 
 	/**

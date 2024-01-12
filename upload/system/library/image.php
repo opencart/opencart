@@ -270,6 +270,8 @@ class Image {
 				$watermark_pos_x = ($this->width - $watermark->getWidth());
 				$watermark_pos_y = ($this->height - $watermark->getHeight());
 				break;
+			default:
+				throw new \Exception('Unknown position');
 		}
 
 		imagealphablending($this->image, true);

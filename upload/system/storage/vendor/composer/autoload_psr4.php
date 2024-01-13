@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname(dirname(dirname(dirname($vendorDir))));
 
 return array(
+    'Wechat\\' => array($vendorDir . '/zoujingli/wechat-php-sdk/Wechat'),
     'WePay\\' => array($vendorDir . '/zoujingli/wechat-developer/WePay'),
     'WeMini\\' => array($vendorDir . '/zoujingli/wechat-developer/WeMini'),
     'WeChat\\' => array($vendorDir . '/zoujingli/wechat-developer/WeChat'),

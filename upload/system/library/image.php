@@ -233,6 +233,8 @@ class Image {
 	 * @return void
 	 */
 	public function watermark(self $watermark, string $position = 'bottomright'): void {
+
+
 		switch ($position) {
 			case 'topleft':
 				$watermark_pos_x = 0;
@@ -271,7 +273,9 @@ class Image {
 				$watermark_pos_y = ($this->height - $watermark->getHeight());
 				break;
 			default:
-				throw new \Exception('Unknown position');
+				$watermark_pos_x = 0;
+				$watermark_pos_y = 0;
+				break;
 		}
 
 		imagealphablending($this->image, true);

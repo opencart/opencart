@@ -654,7 +654,7 @@ class Opayo extends \Opencart\System\Engine\Model {
 	 *
 	 * @return bool
 	 */
-	public function subscriptionPayments(): bool {
+	public function charge(): bool {
 		/*
 		 * Used by the checkout to state the module
 		 * supports subscription subscriptions.

@@ -29,8 +29,20 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		];
 
 		// Get all
-		$this->load->model('checkout/subscription');
+		$this->load->model('account/address');
+		$this->load->model('account/affiliate');
+		$this->load->model('account/customer');
+		$this->load->model('account/subscription');
+		$this->load->model('catalog/product');
 		$this->load->model('checkout/order');
+		$this->load->model('checkout/payment_method');
+		$this->load->model('checkout/shipping_method');
+		$this->load->model('checkout/subscription');
+		$this->load->model('localisation/language');
+		$this->load->model('localisation/currency');
+		$this->load->model('marketing/marketing');
+		$this->load->model('setting/extension');
+		$this->load->model('setting/store');
 
 		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
@@ -40,17 +52,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if (($result['trial_status'] && $result['trial_remaining']) || ($result['duration'] && $result['remaining'])) {
 				$error = '';
 
-				// 1. Language
-				$this->load->model('localisation/language');
-
 				$language_info = $this->model_localisation_language->getLanguage($result['language_id']);
 
 				if (!$language_info) {
 					$error = $this->language->get('error_language');
 				}
-
-				// 2. Currency
-				$this->load->model('localisation/currency');
 
 				$currency_info = $this->model_localisation_currency->getCurrency($result['currency_id']);
 
@@ -60,13 +66,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				// 3. Create new instance of a store
 				if (!$error) {
-					$this->load->model('setting/store');
-
 					$store = $this->model_setting_store->createStoreInstance($result['store_id'], $language_info['code']);
 
 					// Login
-					$this->load->model('account/customer');
-
 					$customer_info = $this->model_account_customer->getCustomer($result['customer_id']);
 
 					if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
@@ -79,8 +81,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				// 4. Add product
 				if (!$error) {
-					$this->load->model('catalog/product');
-
 					$product_info = $this->model_catalog_product->getProduct($result['product_id']);
 
 					if ($product_info) {
@@ -98,8 +98,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				// 5. Add Shipping Address
 				if (!$error && $store->cart->hasShipping()) {
-					$this->load->model('account/address');
-
 					$shipping_address_info = $this->model_account_address->getAddress($result['customer_id'], $result['shipping_address_id']);
 
 					if ($shipping_address_info) {
@@ -110,8 +108,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					// 5. Shipping Methods
 					if (!$error) {
-						$this->load->model('checkout/shipping_method');
-
 						$shipping_methods = $this->model_checkout_shipping_method->getMethods($shipping_address_info);
 
 						// Validate shipping method
@@ -132,8 +128,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				// 6. Payment Address
 				if (!$error) {
 					if ($this->config->get('config_checkout_payment_address')) {
-						$this->load->model('account/address');
-
 						$payment_address_info = $this->model_account_address->getAddress($order_info['customer_id'], $result['payment_address_id']);
 
 						if ($payment_address_info) {
@@ -148,8 +142,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				// 7. Payment Methods
 				if (!$error) {
-					$this->load->model('checkout/payment_method');
-
 					$payment_methods = $this->model_checkout_payment_method->getMethods($store->session->data['payment_address']);
 
 					// Validate payment methods
@@ -312,8 +304,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 						// Affiliate
 						if ($this->config->get('config_affiliate_status')) {
-							$this->load->model('account/affiliate');
-
 							$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->session->data['tracking']);
 
 							if ($affiliate_info) {
@@ -322,8 +312,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 								$order_data['tracking'] = $this->session->data['tracking'];
 							}
 						}
-
-						$this->load->model('marketing/marketing');
 
 						$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->session->data['tracking']);
 
@@ -346,13 +334,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['user_agent'] = $result['user_agent'];
 					$order_data['accept_language'] = $result['accept_language'];
 
-					$this->load->model('checkout/order');
-
 					$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
 					// Validate if payment extension installed
-					$this->load->model('setting/extension');
-
 					$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $payment[0]);
 
 					// Load payment method used by the subscription
@@ -401,7 +385,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							}
 
 							if ($date_next) {
-								$this->load->model('checkout/subscription');
 								$this->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
 							}
 

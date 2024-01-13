@@ -173,6 +173,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'author'             => $result['author'],
 				'customer_edit'      => $result['customer_id'] ? $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']) : '',
 				'comment'            => nl2br($result['comment']),
+				'rating'             => $result['rating'],
 				'status'             => $result['status'],
 				'date_added'         => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'approve'            => $approve,
@@ -393,7 +394,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$limit = 1;
+			$limit = 100;
 
 			$filter_data = [
 				'sort'  => 'date_added',

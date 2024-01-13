@@ -226,6 +226,8 @@ $('#button-rating').on('click', function () {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $(element).button('reset');
+
+                    $('#comment').load($('#form-comment').attr('data-oc-load'));
                 }
 
                 if (json['next']) {

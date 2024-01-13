@@ -9,6 +9,10 @@
 
 /**
 * Proxy class
+ *
+ * @template TWraps of Model
+ *
+ * @mixin TWraps
 */
 class Proxy extends \stdClass {
     /**

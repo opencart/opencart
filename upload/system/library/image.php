@@ -233,8 +233,6 @@ class Image {
 	 * @return void
 	 */
 	public function watermark(self $watermark, string $position = 'bottomright'): void {
-
-
 		switch ($position) {
 			case 'topleft':
 				$watermark_pos_x = 0;

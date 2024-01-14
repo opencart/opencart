@@ -1,5 +1,6 @@
 <?php
 class ControllerExtensionPaymentSecureTradingWs extends Controller {
+	private $data = array();
 	private $error = array();
 
 	public function index() {

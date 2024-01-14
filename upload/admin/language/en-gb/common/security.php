@@ -6,8 +6,10 @@ $_['heading_title']             = 'Important Security Notification!';
 $_['text_install']              = 'Installation directory';
 $_['text_install_description']  = 'Your installation directory needs deleting!';
 $_['text_install_success']      = 'Success: Install directory has been deleted!';
+
 $_['text_storage']              = 'Storage path';
 $_['text_storage_description']  = 'It is very important that you move the storage directory outside of the web directory (e.g. public_html, www or htdocs).';
+$_['text_storage_move']         = 'Moving %s to %s of %s storage files';
 $_['text_storage_success']      = 'Success: Storage directory has been moved!';
 $_['text_admin']                = 'Rename admin directory';
 $_['text_admin_description']    = 'Please type in a new admin directory name in the field below.';

@@ -15,6 +15,7 @@
       "php": ">=7.3.0",
       "scssphp/scssphp": "^1.11.0",
       "zoujingli/wechat-developer": "^1.2",
-      "twig/twig": "^3.3"
+      "twig/twig": "^3.3",
+        "zoujingli/wechat-php-sdk": "^1.3"
     }
 }

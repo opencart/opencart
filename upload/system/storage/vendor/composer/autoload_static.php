@@ -22,6 +22,7 @@ class ComposerStaticInit505ae6f2a3616473de90938541c4614d
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
+            'Wechat\\' => 7,
             'WePay\\' => 6,
             'WeMini\\' => 7,
             'WeChat\\' => 7,
@@ -68,6 +69,10 @@ class ComposerStaticInit505ae6f2a3616473de90938541c4614d
     );
 
     public static $prefixDirsPsr4 = array (
+        'Wechat\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zoujingli/wechat-php-sdk/Wechat',
+        ),
         'WePay\\' => 
         array (
             0 => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay',

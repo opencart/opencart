@@ -11,6 +11,7 @@ return array(
     'WeMini\\' => array($vendorDir . '/zoujingli/wechat-developer/WeMini'),
     'WeChat\\' => array($vendorDir . '/zoujingli/wechat-developer/WeChat'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
+    'Tools\\PHPStan\\' => array($baseDir . '/tools/phpstan'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Php72\\' => array($vendorDir . '/symfony/polyfill-php72'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),

@@ -17,5 +17,10 @@
       "zoujingli/wechat-developer": "^1.2",
       "twig/twig": "^3.3",
         "zoujingli/wechat-php-sdk": "^1.3"
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Tools\\PHPStan\\": "tools/phpstan/"
+      }
     }
 }

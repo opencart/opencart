@@ -291,6 +291,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function admin(): void {
 		$this->load->language('common/security');
 
+		$json = [];
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -302,8 +304,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		} else {
 			$name = 'admin';
 		}
-
-		$json = [];
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
 			$base_old = DIR_OPENCART . 'admin/';
@@ -376,6 +376,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($end <= $total) {
+				$json['text'] = $this->language->get('error_permission');
+
 				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
 			} else {
 				// Update the old config files

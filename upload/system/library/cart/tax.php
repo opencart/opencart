@@ -111,11 +111,7 @@ class Tax {
 			$tax_rates = $this->getRates($value, $tax_class_id);
 
 			foreach ($tax_rates as $tax_rate) {
-				if ($calculate != 'P' && $calculate != 'F') {
-					$amount += $tax_rate['amount'];
-				} elseif ($tax_rate['type'] == $calculate) {
-					$amount += $tax_rate['amount'];
-				}
+				$amount += $tax_rate['amount'];
 			}
 
 			return $value + $amount;

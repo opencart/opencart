@@ -114,6 +114,6 @@ class Session {
 	 * @return void
 	 */
 	public function gc(): void {
-		$this->adaptor->gc($this->session_id);
+		$this->adaptor->gc();
 	}
 }

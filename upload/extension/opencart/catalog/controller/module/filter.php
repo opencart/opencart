@@ -16,7 +16,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$parts = [];
 		}
 
-		$category_id = end($parts);
+		$category_id = (int)end($parts);
 
 		$this->load->model('catalog/category');
 

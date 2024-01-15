@@ -139,8 +139,8 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 				$opayo_order['total_released'] = $this->model_extension_opayo_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
 
-				$opayo_order['total_formatted'] = $this->currency->format($opayo_order['total'], $opayo_order['currency_code'], false, false);
-				$opayo_order['total_released_formatted'] = $this->currency->format($opayo_order['total_released'], $opayo_order['currency_code'], false, false);
+				$opayo_order['total_formatted'] = $this->currency->format($opayo_order['total'], $opayo_order['currency_code'], 0.0, false);
+				$opayo_order['total_released_formatted'] = $this->currency->format($opayo_order['total_released'], $opayo_order['currency_code'], 0.0, false);
 
 				$data['opayo_order'] = $opayo_order;
 				$data['auto_settle'] = $opayo_order['settle_type'];

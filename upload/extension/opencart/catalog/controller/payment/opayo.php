@@ -117,7 +117,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
 		$payment_data['Vendor'] = $this->config->get('payment_opayo_vendor');
 		$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . date('YmdHis') . mt_rand(1, 999);
-		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
+		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 0.0, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
 		$payment_data['TxType'] = $setting['general']['transaction_method'];
@@ -207,17 +207,17 @@ class Opayo extends \Opencart\System\Engine\Controller {
 			$str_basket
 					.= ":" . str_replace(":", " ", $product['name'] . " " . $product['model'])
 					. ":" . $product['quantity']
-					. ":" . $this->currency->format($product['price'], $order_info['currency_code'], false, false)
-					. ":" . $this->currency->format($product['tax'], $order_info['currency_code'], false, false)
-					. ":" . $this->currency->format(($product['price'] + $product['tax']), $order_info['currency_code'], false, false)
-					. ":" . $this->currency->format(($product['price'] + $product['tax']) * $product['quantity'], $order_info['currency_code'], false, false);
+					. ":" . $this->currency->format($product['price'], $order_info['currency_code'], 0.0, false)
+					. ":" . $this->currency->format($product['tax'], $order_info['currency_code'], 0.0, false)
+					. ":" . $this->currency->format(($product['price'] + $product['tax']), $order_info['currency_code'], 0.0, false)
+					. ":" . $this->currency->format(($product['price'] + $product['tax']) * $product['quantity'], $order_info['currency_code'], 0.0, false);
 			$cart_rows++;
 		}
 
 		$order_totals = $this->model_account_order->getTotals($this->session->data['order_id']);
 
 		foreach ($order_totals as $total) {
-			$str_basket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], false, false);
+			$str_basket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], 0.0, false);
 
 			$cart_rows++;
 		}

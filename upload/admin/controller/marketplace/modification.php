@@ -203,7 +203,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editValue('config', 'config_maintenance', true);
+			$this->model_setting_setting->editValue('config', 'config_maintenance', '1');
 
 			// Clear all modification files
 			$files = [];

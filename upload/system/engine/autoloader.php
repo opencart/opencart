@@ -22,7 +22,7 @@ class Autoloader {
 	 * Constructor
 	 */
 	public function __construct() {
-		spl_autoload_register([$this, 'load']);
+		spl_autoload_register(function(string $class): void { $this->load($class); });
 		spl_autoload_extensions('.php');
 	}
 

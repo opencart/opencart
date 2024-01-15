@@ -21,8 +21,10 @@ class Security extends \Opencart\System\Engine\Controller {
 			$data['install'] = '';
 		}
 
+		$path = DIR_SYSTEM . 'storage/';
+
 		// Check storage directory exists
-		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
+		if (DIR_STORAGE == $path) {
 			// Check install directory exists
 			$data['storage'] = DIR_STORAGE;
 
@@ -45,16 +47,31 @@ class Security extends \Opencart\System\Engine\Controller {
 			$data['storage'] = '';
 		}
 
+		if (is_dir($path) && DIR_APPLICATION != $path) {
+			$data['storage_delete'] = true;
+		} else {
+			$data['storage_delete'] = '';
+		}
+
 		// Check admin directory ia renamed
-		if (DIR_APPLICATION == DIR_OPENCART . 'admin/') {
+		$path = DIR_OPENCART . 'admin/';
+
+		if (DIR_APPLICATION == $path) {
 			$data['admin'] = 'admin';
 		} else {
 			$data['admin'] = '';
 		}
 
+		// Check admin directory ia deleted
+		if (is_dir($path) && DIR_APPLICATION != $path) {
+			$data['admin_delete'] = true;
+		} else {
+			$data['admin_delete'] = '';
+		}
+
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if ($data['install'] || $data['storage'] || $data['admin']) {
+		if ($data['install'] || $data['storage'] || $data['storage_delete'] || $data['admin'] || $data['admin_delete']) {
 			return $this->load->view('common/security', $data);
 		} else {
 			return '';
@@ -375,8 +392,8 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($end <= $total) {
-				$json['text'] = $this->language->get('error_permission');
+			if ($end < $total) {
+				$json['text'] = sprintf($this->language->get('text_storage_move'), $start, $end, $total);
 
 				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
 			} else {
@@ -422,10 +439,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Destructor
-	 */
-	public function __destruct() {
+	public function delete() {
 		// Remove old admin if exists
 		$path = DIR_OPENCART . 'admin/';
 

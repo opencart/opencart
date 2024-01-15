@@ -277,7 +277,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 				$card_id = $this->model_extension_opayo_payment_opayo->addCard($card_data);
 			} elseif (!empty($payment_data['Token'])) {
-				$card = $this->model_extension_opayo_payment_opayo->getCard(false, $payment_data['Token']);
+				$card = $this->model_extension_opayo_payment_opayo->getCard($payment_data['Token']);
 				$card_id = $card['card_id'];
 			}
 
@@ -334,7 +334,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 				$card_id = $this->model_extension_opayo_payment_opayo->addCard($card_data);
 			} elseif (!empty($payment_data['Token'])) {
-				$card = $this->model_extension_opayo_payment_opayo->getCard(false, $payment_data['Token']);
+				$card = $this->model_extension_opayo_payment_opayo->getCard($payment_data['Token']);
 				$card_id = $card['card_id'];
 			}
 
@@ -515,7 +515,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 		$setting = array_replace_recursive((array)$config_setting, (array)$this->config->get('payment_opayo_setting'));
 
-		$card = $this->model_extension_opayo_payment_opayo->getCard(false, $this->request->post['opayo_card_token']);
+		$card = $this->model_extension_opayo_payment_opayo->getCard($this->request->post['opayo_card_token']);
 
 		if (!empty($card['token'])) {
 			if ($setting['general']['environment'] == 'live') {

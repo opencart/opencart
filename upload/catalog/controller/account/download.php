@@ -78,7 +78,7 @@ class Download extends \Opencart\System\Engine\Controller {
 					'order_id'   => $result['order_id'],
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
-					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+					'size'       => round((float)substr((string)$size, 0, strpos((string)$size, '.') + 4), 2) . $suffix[$i],
 					'href'       => $this->url->link('account/download.download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&download_id=' . $result['download_id'])
 				];
 			}

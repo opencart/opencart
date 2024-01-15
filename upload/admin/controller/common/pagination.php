@@ -55,7 +55,7 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			if ($page - 1 === 1) {
 				$data['prev'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
 			} else {
-				$data['prev'] = str_replace('{page}', $page - 1, $url);
+				$data['prev'] = str_replace('{page}', (string)($page - 1), $url);
 			}
 		} else {
 			$data['first'] = '';
@@ -86,14 +86,14 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			for ($i = $start; $i <= $end; $i++) {
 				$data['links'][] = [
 					'page' => $i,
-					'href' => str_replace('{page}', $i, $url)
+					'href' => str_replace('{page}', (string)$i, $url)
 				];
 			}
 		}
 
 		if ($num_pages > $page) {
-			$data['next'] = str_replace('{page}', $page + 1, $url);
-			$data['last'] = str_replace('{page}', $num_pages, $url);
+			$data['next'] = str_replace('{page}', (string)($page + 1), $url);
+			$data['last'] = str_replace('{page}', (string)$num_pages, $url);
 		} else {
 			$data['next'] = '';
 			$data['last'] = '';

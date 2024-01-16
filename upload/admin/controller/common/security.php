@@ -14,19 +14,50 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/security');
 
-		// Check install directory exists
-		if (is_dir(DIR_OPENCART . 'install/')) {
-			$data['install'] = DIR_OPENCART . 'install/';
+		$data['list'] = $this->controller_common_security->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		if ($data['list']) {
+			return $this->load->view('common/security', $data);
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('common/security');
+
+		$this->response->setOutput($this->controller_common_security->getList());
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
+		$this->load->language('common/security');
+
+		// Install directory exists
+		$path = DIR_OPENCART . 'install/';
+
+		if (is_dir($path)) {
+			$data['install'] = $path;
 		} else {
 			$data['install'] = '';
 		}
 
+		// Storage directory exists
 		$path = DIR_SYSTEM . 'storage/';
 
-		// Check storage directory exists
 		if (DIR_STORAGE == $path) {
-			// Check install directory exists
-			$data['storage'] = DIR_STORAGE;
+			$data['storage'] = $path;
 
 			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
 
@@ -43,14 +74,46 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			rsort($data['paths']);
-		} else {
+		} elseif (is_dir($path)) {
 			$data['storage'] = '';
-		}
 
-		if (is_dir($path) && DIR_APPLICATION != $path) {
-			$data['storage_delete'] = true;
-		} else {
-			$data['storage_delete'] = '';
+			// Remove old storage directory in the system folder
+			$files = [];
+
+			// Make path into an array
+			$directory = [$path];
+
+			// While the path array is still populated keep looping through
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
+
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$directory[] = $file;
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
+				}
+			}
+
+			// Start deleting old storage location files.
+			rsort($files);
+
+			foreach ($files as $file) {
+				// If file just delete
+				if (is_file($file)) {
+					unlink($file);
+				}
+
+				// If directory use the remove directory function
+				if (is_dir($file)) {
+					rmdir($file);
+				}
+			}
+
+			rmdir($path);
 		}
 
 		// Check admin directory ia renamed
@@ -58,21 +121,53 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if (DIR_APPLICATION == $path) {
 			$data['admin'] = 'admin';
-		} else {
+		} elseif (is_dir($path)) {
 			$data['admin'] = '';
-		}
 
-		// Check admin directory ia deleted
-		if (is_dir($path) && DIR_APPLICATION != $path) {
-			$data['admin_delete'] = true;
-		} else {
-			$data['admin_delete'] = '';
+			// Remove old admin directory in the default folder
+			$files = [];
+
+			// Make path into an array
+			$directory = [$path];
+
+			// While the path array is still populated keep looping through
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
+
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$directory[] = $file;
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
+				}
+			}
+
+			// 4. reverse file order
+			rsort($files);
+
+			// 5. Delete the old admin directory
+			foreach ($files as $file) {
+				// If file just delete
+				if (is_file($file)) {
+					unlink($file);
+				}
+
+				// If directory use the remove directory function
+				if (is_dir($file)) {
+					rmdir($file);
+				}
+			}
+
+			rmdir($path);
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if ($data['install'] || $data['storage'] || $data['storage_delete'] || $data['admin'] || $data['admin_delete']) {
-			return $this->load->view('common/security', $data);
+		if ($data['install'] || $data['storage'] || $data['admin']) {
+			return $this->load->view('common/security_list', $data);
 		} else {
 			return '';
 		}
@@ -148,6 +243,8 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function storage(): void {
 		$this->load->language('common/security');
 
+		$json = [];
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -165,8 +262,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		} else {
 			$path = '';
 		}
-
-		$json = [];
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
 			$base_old = DIR_STORAGE;
@@ -193,6 +288,16 @@ class Security extends \Opencart\System\Engine\Controller {
 			if ($page > 1 && !is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
+
+
+
+
+
+			if (preg_replace('/[^a-zA-Z0-9_\.]/', '', $name)) {
+				$json['error'] = $this->language->get('error_storage');
+			}
+
+
 
 			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
 				$json['error'] = $this->language->get('error_writable');
@@ -247,25 +352,10 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($end < $total) {
+				$json['text'] = sprintf($this->language->get('text_storage_move'), $start, $end, $total);
+
 				$json['next'] = $this->url->link('common/security.storage', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&path=' . $path . '&page=' . ($page + 1), true);
 			} else {
-				// Start deleting old storage location files.
-				rsort($files);
-
-				foreach ($files as $file) {
-					// If file just delete
-					if (is_file($file)) {
-						unlink($file);
-					}
-
-					// If directory use the remove directory function
-					if (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				rmdir($base_old);
-
 				// Modify the config files
 				$files = [
 					DIR_APPLICATION . 'config.php',
@@ -393,7 +483,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($end < $total) {
-				$json['text'] = sprintf($this->language->get('text_storage_move'), $start, $end, $total);
+				$json['text'] = sprintf($this->language->get('text_admin_move'), $start, $end, $total);
 
 				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
 			} else {
@@ -430,6 +520,8 @@ class Security extends \Opencart\System\Engine\Controller {
 
 				fclose($file);
 
+				$this->session->data['success'] = $this->language->get('text_admin_success');
+
 				// 6. redirect to the new admin
 				$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, -6) . $name . '/index.php?route=common/login');
 			}
@@ -437,51 +529,5 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function delete() {
-		// Remove old admin if exists
-		$path = DIR_OPENCART . 'admin/';
-
-		if (is_dir($path) && DIR_APPLICATION != $path) {
-			// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
-			$files = [];
-
-			// Make path into an array
-			$directory = [$path];
-
-			// While the path array is still populated keep looping through
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
-
-				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$directory[] = $file;
-					}
-
-					// Add the file to the files to be deleted array
-					$files[] = $file;
-				}
-			}
-
-			// 4. reverse file order
-			rsort($files);
-
-			// 5. Delete the old admin directory
-			foreach ($files as $file) {
-				// If file just delete
-				if (is_file($file)) {
-					unlink($file);
-				}
-
-				// If directory use the remove directory function
-				if (is_dir($file)) {
-					rmdir($file);
-				}
-			}
-
-			rmdir($path);
-		}
 	}
 }

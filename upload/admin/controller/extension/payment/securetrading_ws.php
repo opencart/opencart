@@ -379,7 +379,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 					$this->model_extension_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'reversed', 0.00);
 					$this->model_extension_payment_securetrading_ws->updateVoidStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
 
-					$this->data = array(
+					$post_data = array(
 						'order_status_id' => $this->config->get('payment_securetrading_ws_authorisation_reversed_order_status_id'),
 						'notify' => false,
 						'comment' => '',
@@ -387,7 +387,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 					$this->load->model('sale/order');
 
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $this->data);
+					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $post_data);
 
 					$json['msg'] = $this->language->get('text_authorisation_reversed');
 					$json['data']['created'] = date("Y-m-d H:i:s");

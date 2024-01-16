@@ -383,12 +383,12 @@ class Opayo extends \Opencart\System\Engine\Model {
 	/**
 	 * Log
 	 *
-	 * @param string  $title
-	 * @param ?string $data
+	 * @param string $title
+	 * @param mixed  $data
 	 *
 	 * @return void
 	 */
-	public function log(string $title, ?string $data): void {
+	public function log(string $title, $data): void {
 		$_config = new \Opencart\System\Engine\Config();
 		$_config->addPath(DIR_EXTENSION . 'opayo/system/config/');
 		$_config->load('opayo');

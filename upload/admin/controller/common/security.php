@@ -279,25 +279,14 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
-			// Make sure the no directory with same name already exists
-			if ($page == 1 && is_dir($base_new)) {
-				$json['error'] = $this->language->get('error_storage_exists');
+			if (!str_starts_with($name, 'storage')) {
+				$json['error'] = $this->language->get('error_storage_name');
 			}
 
 			// Make sure the new directory created exists
 			if ($page > 1 && !is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
-
-
-
-
-
-			//if (preg_replace('/[^a-zA-Z0-9_\.]/', '', $name)) {
-			//	$json['error'] = $this->language->get('error_storage');
-		//	}
-
-
 
 			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
 				$json['error'] = $this->language->get('error_writable');
@@ -418,6 +407,19 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			if (!is_dir($base_old)) {
 				$json['error'] = $this->language->get('error_admin');
+			}
+
+			$blocked = [
+				'admin',
+				'catalog',
+				'extension',
+				'image',
+				'install',
+				'system'
+			];
+
+			if (!in_array($name, $blocked)) {
+				$json['error'] = $this->language->get('error_admin_exists');
 			}
 
 			if ($page == 1 && is_dir($base_new)) {

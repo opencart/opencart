@@ -293,9 +293,9 @@ class Security extends \Opencart\System\Engine\Controller {
 
 
 
-			if (preg_replace('/[^a-zA-Z0-9_\.]/', '', $name)) {
-				$json['error'] = $this->language->get('error_storage');
-			}
+			//if (preg_replace('/[^a-zA-Z0-9_\.]/', '', $name)) {
+			//	$json['error'] = $this->language->get('error_storage');
+		//	}
 
 
 

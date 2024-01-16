@@ -26,6 +26,9 @@ $_['entry_name']               = 'Directory Name';
 $_['button_move']              = 'Move';
 $_['button_rename']            = 'Rename';
 
+// Help
+$_['help_storage']             = 'Storage directory must begin with storage';
+
 // Error
 $_['error_permission']         = 'Warning: You do not have permission to modify security!';
 $_['error_install']            = 'Warning: Install directory does not exist!';

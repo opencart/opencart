@@ -32,12 +32,12 @@
             <div class="mb-3">
               <label class="form-label">{{ entry_path_new }}</label>
               <div class="input-group">
-                <select name="path" class="form-select">
+                <select id="input-path" class="form-select">
                   {% for path in paths %}
                     <option value="{{ path }}">{{ path }}</option>
                   {% endfor %}
                 </select>
-                <input type="text" name="name" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
+                <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
               </div>
               <div class="form-text">{{ help_storage }}</div>
             </div>

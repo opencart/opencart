@@ -78,7 +78,7 @@ class ColumnRight extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($part[2])) {
-				$setting_info = $this->model_setting_module->getModule($part[2]);
+				$setting_info = $this->model_setting_module->getModule((int)$part[2]);
 
 				if ($setting_info && $setting_info['status']) {
 					$output = $this->load->controller('extension/' . $part[0] . '/module/' . $part[1], $setting_info);

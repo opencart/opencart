@@ -388,7 +388,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=paid' . $url, true)
 		);
 
-
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_purchased'),
 			'value' => 'purchased',
@@ -441,7 +440,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'value' => 'rating',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
 		);
-
 
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_name'),

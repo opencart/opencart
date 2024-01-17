@@ -46,7 +46,6 @@ $registry = new Registry();
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
-
 function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (!(error_reporting() & $errno)) {
@@ -56,7 +55,6 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
 }
 
 set_error_handler('handleError');
-
 
 function usage() {
 	echo "Usage:\n";
@@ -76,7 +74,6 @@ function usage() {
 	));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
-
 
 function get_options($argv) {
 	$defaults = array(
@@ -99,7 +96,6 @@ function get_options($argv) {
 	}
 	return array_merge($defaults, $options);
 }
-
 
 function valid($options) {
 	$required = array(
@@ -127,7 +123,6 @@ function valid($options) {
 	return array($valid, $missing);
 }
 
-
 function install($options) {
 	$check = check_requirements();
 	if ($check[0]) {
@@ -139,7 +134,6 @@ function install($options) {
 		exit(1);
 	}
 }
-
 
 function check_requirements() {
 	$error = null;
@@ -177,7 +171,6 @@ function check_requirements() {
 
 	return array($error === null, $error);
 }
-
 
 function setup_db($data) {
 	$db = new DB($data['db_driver'], htmlspecialchars_decode($data['db_hostname']), htmlspecialchars_decode($data['db_username']), htmlspecialchars_decode($data['db_password']), htmlspecialchars_decode($data['db_database']), $data['db_port']);
@@ -232,7 +225,6 @@ function setup_db($data) {
 	}
 }
 
-
 function write_config_files($options) {
 	$output  = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
@@ -264,7 +256,6 @@ function write_config_files($options) {
 	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= 'define(\'DB_PORT\', \'' . addslashes($options['db_port']) . '\');' . "\n";
-
 
 	$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
@@ -309,14 +300,12 @@ function write_config_files($options) {
 	$output .= '// OpenCart API' . "\n";
 	$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
-
 	$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 
 	fwrite($file, $output);
 
 	fclose($file);
 }
-
 
 function dir_permissions() {
 	$dirs = array(
@@ -330,11 +319,9 @@ function dir_permissions() {
 	exec('chmod o+w -R ' . implode(' ', $dirs));
 }
 
-
 $argv = $_SERVER['argv'];
 $script = array_shift($argv);
 $subcommand = array_shift($argv);
-
 
 switch ($subcommand) {
 

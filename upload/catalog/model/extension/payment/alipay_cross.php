@@ -48,7 +48,6 @@ class ModelExtensionPaymentAlipayCross extends Model {
 		return $mysign;
 	}
 
-
 	public function buildRequestPara($alipay_config, $para_temp) {
 		$this->alipay_config = $alipay_config;
 

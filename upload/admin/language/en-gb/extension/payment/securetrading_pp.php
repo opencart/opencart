@@ -60,7 +60,6 @@ $_['help_total']                                 = 'The checkout total the order
 $_['button_reverse_authorisation']               = 'Reverse Authorisation';
 $_['button_refund']                              = 'Refund';
 
-
 // Order page - payment tab
 $_['text_payment_info']                          = 'Payment information';
 $_['text_release_status']                        = 'Payment released';

@@ -218,7 +218,6 @@ class ControllerExtensionPaymentSquareup extends Controller {
                             $item['recurring']['trial_duration'] = 0;
                         }
 
-
                         $this->model_extension_payment_squareup->createRecurring($item, $this->session->data['order_id'], $recurring_description, $transaction['id']);
                     }
                 }
@@ -251,5 +250,4 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    
-}
+    }

@@ -27,5 +27,3 @@ $_['entry_cc_choice']       = 'Choose an Existing Card';
 $_['button_add_card']       = 'Add Card';
 $_['button_new_card']       = 'Add New Card';
 
-
-

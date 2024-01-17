@@ -41,7 +41,6 @@ $_['entry_information_requested_status'] = 'Information Requested Status:';
 $_['entry_information_supplied_status']	 = 'Information Supplied Status:';
 $_['entry_chargeback_reversed_status']	 = 'Chargeback Reversed Status:';
 
-
 $_['entry_reversed_status']			     = 'Reversed Status:';
 $_['entry_voided_status']			     = 'Voided Status:';
 

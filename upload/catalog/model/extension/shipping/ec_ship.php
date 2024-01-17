@@ -430,16 +430,13 @@ class ModelExtensionShippingECShip extends Model {
 			$tm_created = gmdate('Y-m-d\TH:i:s\Z');
 			$tm_expires = gmdate('Y-m-d\TH:i:s\Z', gmdate('U') + 180);
 
-
 			// Generating, packing and encoding a random number
 			$simple_nonce = mt_rand();
 			$encoded_nonce = base64_encode(pack('H*', $simple_nonce));
 
-
 			$username   = $this->config->get('shipping_ec_ship_api_username');
 			$password   = $this->config->get('shipping_ec_ship_api_key');
 			$passdigest = base64_encode(pack('H*',sha1(pack('H*', $simple_nonce) . pack('a*', $tm_created) . pack('a*', $password))));
-
 
 			// Initializing namespaces
 			$ns_wsse       = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';

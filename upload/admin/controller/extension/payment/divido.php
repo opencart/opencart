@@ -166,7 +166,6 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->response->setOutput($this->load->view('extension/payment/divido', $data));
 	}
 
-
 	public function order() {
 		if (!$this->config->get('payment_divido_status')) {
 			return null;

@@ -128,7 +128,6 @@ class ControllerExtensionRecurringSquareup extends Controller {
                     $result['transaction_fail'][$payment['order_recurring_id']] = $this->currency->format($amount, $target_currency);
                 }
 
-
                 $order_status_id = $this->config->get('payment_squareup_status_' . $transaction_status);
 
                 if ($order_status_id) {

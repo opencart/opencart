@@ -15,7 +15,6 @@ $_['column_total']      = 'Total';
 $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
-
 // Entry
 $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';

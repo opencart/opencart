@@ -25,7 +25,6 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			'href' => $this->url->link('account/account', '', true)
 		);
 
-
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);

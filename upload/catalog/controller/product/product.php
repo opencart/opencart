@@ -51,7 +51,7 @@ class Product extends \Opencart\System\Engine\Controller {
 						$path .= '_' . $path_id;
 					}
 
-					$category_info = $this->model_catalog_category->getCategory($path_id);
+					$category_info = $this->model_catalog_category->getCategory((int)$path_id);
 
 					if ($category_info) {
 						$data['breadcrumbs'][] = [

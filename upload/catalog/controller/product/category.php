@@ -91,7 +91,7 @@ class Category extends \Opencart\System\Engine\Controller {
 					$path .= '_' . (int)$path_id;
 				}
 
-				$parent_info = $this->model_catalog_category->getCategory($path_id);
+				$parent_info = $this->model_catalog_category->getCategory((int)$path_id);
 
 				if ($parent_info) {
 					$data['breadcrumbs'][] = [

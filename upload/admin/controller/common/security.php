@@ -74,14 +74,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			rsort($data['paths']);
-		} elseif (is_dir($path)) {
-			$data['storage'] = '';
-		}
-
-		if (DIR_APPLICATION != $path && is_dir($path)) {
-			$data['storage_delete'] = $this->url->link('common/security.delete', 'user_token=' . $this->session->data['user_token'] . '&type=storage');
 		} else {
-			$data['storage_delete'] = '';
+			$data['storage'] = '';
 		}
 
 		// Check admin directory ia renamed
@@ -93,16 +87,32 @@ class Security extends \Opencart\System\Engine\Controller {
 			$data['admin'] = '';
 		}
 
-		// Delete old admin directory
-		if (DIR_APPLICATION != $path && is_dir($path)) {
-			$data['admin_delete'] = $this->url->link('common/security.delete', 'user_token=' . $this->session->data['user_token'] . '&type=admin');
-		} else {
-			$data['admin_delete'] = '';
+		$data['remove'] = [];
+
+		// Install
+		$path = DIR_OPENCART . 'install/';
+
+		if (is_dir($path)) {
+			$data['remove'][] = $path;
+		}
+
+		// Storage
+		$path = DIR_SYSTEM . 'storage/';
+
+		if (is_dir($path) && DIR_STORAGE != $path) {
+			$data['remove'][] = $path;
+		}
+
+		// Admin
+		$path = DIR_OPENCART . 'admin/';
+
+		if (is_dir($path) && DIR_APPLICATION != $path) {
+			$data['remove'][] = $path;
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if ($data['install'] || $data['storage'] || $data['admin']) {
+		if ($data['install'] || $data['storage'] || $data['admin'] || $data['remove']) {
 			return $this->load->view('common/security_list', $data);
 		} else {
 			return '';
@@ -474,79 +484,77 @@ class Security extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function delete(): void {
+	public function clear(): void {
 		$this->load->language('common/security');
 
 		$json = [];
-
-		if (isset($this->request->get['type'])) {
-			$type = (string)$this->request->get['type'];
-		} else {
-			$type = '';
-		}
 
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$allowed = [
-			'admin'   => DIR_OPENCART . 'admin/',
-			'storage' => DIR_SYSTEM . 'storage/'
-		];
-
-		if (!in_array($type, $allowed)) {
-			$json['error'] = $this->language->get('error_delete');
-		}
-
-		// Install directory exists
-		$path = DIR_OPENCART . 'install/';
-
-		// Check admin directory ia renamed
-		$path = ;
-
-		// Storage directory exists
-		$path = ;
-
-		if (!is_dir($path)) {
-			$json['error'] = $this->language->get('error_delete');
-		}
-
 		if (!$json) {
-			$files = [];
+			// Delete old admin directory
+			$remove = [];
 
-			// Make path into an array
-			$directory = [$path];
+			// Install directory exists
+			$path = DIR_OPENCART . 'install/';
 
-			// While the path array is still populated keep looping through
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
+			if (is_dir($path)) {
+				$remove[] = $path;
+			}
 
-				if (is_dir($next)) {
-					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-						// If directory add to path array
-						if (is_dir($file)) {
-							$directory[] = $file;
+			// Storage directory exists
+			$path = DIR_SYSTEM . 'storage/';
+
+			if (is_dir($path) && DIR_STORAGE != $path) {
+				$remove[] = $path;
+			}
+
+			// Admin directory exists
+			$path = DIR_OPENCART . 'admin/';
+
+			if (is_dir($path) && DIR_APPLICATION != $path) {
+				$remove[] = $path;
+			}
+
+			// Remove paths
+			$directory = $remove;
+
+			foreach ($directory as $path) {
+				$files = [];
+
+				// While the path array is still populated keep looping through
+				while (count($directory) != 0) {
+					$next = array_shift($directory);
+
+					if (is_dir($next)) {
+						foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+							// If directory add to path array
+							if (is_dir($file)) {
+								$directory[] = $file;
+							}
+
+							// Add the file to the files to be deleted array
+							$files[] = $file;
 						}
-
-						// Add the file to the files to be deleted array
-						$files[] = $file;
 					}
 				}
-			}
 
-			rsort($files);
+				rsort($files);
 
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
 				}
+
+				rmdir($path);
 			}
 
-			rmdir($path);
-
-			$json['success'] = $this->language->get('text_delete_success');
+			$json['success'] = $this->language->get('text_clear_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

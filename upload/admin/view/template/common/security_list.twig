@@ -19,18 +19,16 @@
     </div>
   {% endif %}
 
-
-
   {% if storage %}
     <div id="security-storage" class="accordion-item">
       <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><i class="fa-solid fa-folder"></i>&nbsp;&nbsp;{{ text_storage }}</button></h2>
       <div id="accordion-storage" class="accordion-collapse collapse" data-bs-parent="#accordion">
         <div class="modal-body">
+
           <form id="form-storage">
             <p>{{ text_storage_description }}</p>
             <div class="mb-3">
-              <label class="form-label">{{ entry_path_current }}</label>
-              <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
+              <label class="form-label">{{ entry_path_current }}</label> <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_path_new }}</label>
@@ -39,8 +37,7 @@
                   {% for path in paths %}
                     <option value="{{ path }}">{{ path }}</option>
                   {% endfor %}
-                </select>
-                <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
+                </select> <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
               </div>
               <div class="form-text">{{ help_storage }}</div>
             </div>
@@ -48,18 +45,18 @@
               <button type="button" id="button-storage" class="btn btn-danger"><span class="fa-solid fa-circle-right"></span> {{ button_move }}</button>
             </div>
           </form>
+
         </div>
       </div>
     </div>
   {% endif %}
-
-
 
   {% if admin %}
     <div id="security-admin" class="accordion-item">
       <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fa-solid fa-folder"></span>&nbsp;&nbsp;{{ text_admin }}</button></h2>
       <div id="accordion-admin" class="accordion-collapse collapse" data-bs-parent="#accordion">
         <div class="modal-body">
+
           <form id="form-admin">
             <p>{{ text_admin_description }}</p>
             <div class="mb-3">
@@ -72,12 +69,34 @@
               <button type="button" id="button-admin" class="btn btn-danger"><i class="fa-solid fa-circle-right"></i> {{ button_move }}</button>
             </div>
           </form>
+
         </div>
       </div>
     </div>
   {% endif %}
 
+  {% if remove %}
+    <div id="security-clear" class="accordion-item">
+      <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin-delete" class="accordion-button collapsed"><span class="fa-solid fa-folder"></span>&nbsp;&nbsp;{{ text_clear }}</button></h2>
+      <div id="accordion-admin-delete" class="accordion-collapse collapse" data-bs-parent="#accordion">
+        <div class="modal-body">
+          <form id="form-clear">
+            <p>{{ text_clear }}</p>
+            {% for path in remove %}
+              <div class="mb-3">
+                <div class="input-group">
+                  <div class="input-group-text">{{ text_path }}</div>
+                  <input type="text" value="{{ path }}" id="input-admin-delete" class="form-control is-invalid" readonly/>
+                </div>
+              </div>
+            {% endfor %}
+            <div class="text-end">
+              <button type="button" id="button-clear" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> {{ button_delete }}</button>
+            </div>
+          </form>
 
-
-
+        </div>
+      </div>
+    </div>
+  {% endif %}
 </div>

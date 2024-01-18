@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Descriptions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -70,6 +72,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Subscriptions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -109,6 +113,78 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Subscription Discounts
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getSubscriptionDiscounts(array $data = []): array {
+		$sql = "SELECT sdh.`subscription_discount_id`, c.`name`, c.`code`, COUNT(DISTINCT sdh.`order_id`) AS `orders`, SUM(sdh.`amount`) AS `total` FROM `" . DB_PREFIX . "subscription_discount_history` sdh LEFT JOIN `" . DB_PREFIX . "subscription_discount` sd ON (sdh.`subscription_discount_id` = sd.`subscription_discount_id`)";
+
+		$implode = [];
+
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(sdh.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(sdh.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sql .= " GROUP BY sdh.`subscription_discount_id` ORDER BY `total` DESC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Total Subscription Discounts
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return int
+	 */
+	public function getTotalSubscriptionDiscounts(array $data = []): int {
+		$sql = "SELECT COUNT(DISTINCT `subscription_discount_id`) AS `total` FROM `" . DB_PREFIX . "subscription_discount_history`";
+
+		$implode = [];
+
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
 		$query = $this->db->query($sql);

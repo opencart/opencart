@@ -33,6 +33,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/subscription', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_subscription_discount_report'),
+			'href' => $this->url->link('extension/opencart/report/subscription.report_subscription_discount', 'user_token=' . $this->session->data['user_token'])
+		];
+
 		$data['save'] = $this->url->link('extension/opencart/report/subscription.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -223,5 +228,108 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/report/subscription_list', $data);
+	}
+
+	/**
+	 * Report Subscription Discount
+	 *
+	 * @return void
+	 */
+	public function report_subscription_discount(): void {
+		$this->load->language('extension/opencart/report/subscription');
+
+		$data['list'] = $this->getReportSubscriptionDiscount();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/subscription_discount', $data));
+	}
+
+	/**
+	 * List Subscription Discount
+	 *
+	 * @return void
+	 */
+	public function list_subscription_discount(): void {
+		$this->load->language('extension/opencart/report/subscription');
+
+		$this->response->setOutput($this->getReportSubscriptionDiscount());
+	}
+
+	/**
+	 * Get Report Subscription Discount
+	 *
+	 * @return string
+	 */
+	public function getReportSubscriptionDiscount(): string {
+		if (isset($this->request->get['filter_date_start'])) {
+			$filter_date_start = $this->request->get['filter_date_start'];
+		} else {
+			$filter_date_start = '';
+		}
+
+		if (isset($this->request->get['filter_date_end'])) {
+			$filter_date_end = $this->request->get['filter_date_end'];
+		} else {
+			$filter_date_end = '';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['subscription_discounts'] = [];
+
+		$filter_data = [
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
+			'start'             => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'             => $this->config->get('config_pagination')
+		];
+
+		$this->load->model('extension/opencart/report/subscription');
+
+		$subscription_discount_total = $this->model_extension_opencart_report_subscription->getTotalSubscriptionDiscounts($filter_data);
+
+		$results = $this->model_extension_opencart_report_subscription->getSubscriptionDiscounts($filter_data);
+
+		foreach ($results as $result) {
+			$data['subscription_discounts'][] = [
+				'name'            => $result['name'],
+				'code'            => $result['code'],
+				'orders'          => $result['orders'],
+				'total'           => $this->currency->format($result['total'], $this->config->get('config_currency')),
+				'total_installed' => $this->config->get('total_subscription_status') ?? false,
+				'edit'            => $this->url->link('extension/opencart/total/subscription.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_discount_id=' . $result['subscription_discount_id'])
+			];
+		}
+
+		$url = '';
+
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
+		}
+
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $subscription_discount_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination'),
+			'url'   => $this->url->link('extension/opencart/report/subscription.report_subscription_discount', 'user_token=' . $this->session->data['user_token'] . '&code=subscription' . $url . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_discount_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($subscription_discount_total - $this->config->get('config_pagination'))) ? $subscription_discount_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $subscription_discount_total, ceil($subscription_discount_total / $this->config->get('config_pagination')));
+
+		$data['filter_date_start'] = $filter_date_start;
+		$data['filter_date_end'] = $filter_date_end;
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('extension/opencart/report/subscription_discount_list', $data);
 	}
 }

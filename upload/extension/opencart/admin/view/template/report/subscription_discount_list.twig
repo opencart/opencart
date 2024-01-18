@@ -10,14 +10,14 @@
       </tr>
     </thead>
     <tbody>
-      {% if coupons %}
-        {% for coupon in coupons %}
+      {% if subscription_discounts %}
+        {% for subscription_discount in subscription_discounts %}
           <tr>
-            <td class="text-start">{{ coupon.name }}</td>
-            <td class="text-start">{{ coupon.code }}</td>
-            <td class="text-end">{{ coupon.orders }}</td>
-            <td class="text-end">{{ coupon.total }}</td>
-            <td class="text-end"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+            <td class="text-start">{{ subscription_discount.name }}</td>
+            <td class="text-start">{{ subscription_discount.code }}</td>
+            <td class="text-end">{{ subscription_discount.orders }}</td>
+            <td class="text-end">{{ subscription_discount.total }}</td>
+            <td class="text-end">{% if subscription.total_installed %}<a href="{{ subscription_discount.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>{% endif %}</td>
           </tr>
         {% endfor %}
       {% else %}

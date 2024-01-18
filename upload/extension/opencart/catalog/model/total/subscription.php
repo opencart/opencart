@@ -131,9 +131,9 @@ class Subscription extends \Opencart\System\Engine\Model {
 				$status = false;
 			}
 
-			$this->load->model('account/order');
+			$this->load->model('account/subscription');
 
-			$subscription_total = $this->model_account_order->getTotalSubscriptions();
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
 
 			if ($subscription_query->row['uses_total'] > 0 && ($subscription_total >= $subscription_query->row['uses_total'])) {
 				$status = false;

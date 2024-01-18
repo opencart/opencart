@@ -50,7 +50,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_status');
 		}
 
-		if ($subscription) {
+		if ($subscription_discount) {
 			$subscription_discount_info = $this->model_extension_opencart_total_subscription->getDiscount($subscription_discount);
 
 			if (!$subscription_discount_info) {

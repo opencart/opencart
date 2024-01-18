@@ -182,7 +182,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		$implode = [];
 
-		if (!empty($data['subscription_discount_id'])) {
+		if (isset($data['subscription_discount_id']) && $data['subscription_discount_id'] != '') {
 			$implode[] = "`sdr`.`subscription_discount_id` = '" . (int)$subscription_discount_id . "'";
 		}
 

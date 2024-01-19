@@ -48,7 +48,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 							$recurring_data[$query->row['recurring_id']] = $query->row;
 						} elseif ($query->num_rows > 1) {
 							foreach ($query->rows as $result) {
-								$recurring_data[] = $query->rows;
+								$recurring_data[] = $result;
 							}							
 						}
 

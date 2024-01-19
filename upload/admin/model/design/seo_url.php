@@ -63,28 +63,28 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getSeoUrls(array $data = []): array {
-		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `su`.`store_id`) AS `store`, (SELECT `name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `su`.`language_id`) AS `language` FROM `" . DB_PREFIX . "seo_url` `su`";
+		$sql = "SELECT *, (SELECT `su`.* FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `su`.`store_id`) AS `store`, (SELECT `name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `su`.`language_id`) AS `language` FROM `" . DB_PREFIX . "seo_url` `su`";
 
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
+			$implode[] = "LCASE(`su`.`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		if (!empty($data['filter_key'])) {
-			$implode[] = "LCASE(`key`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_key'])) . "'";
+			$implode[] = "LCASE(`su`.`key`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_key'])) . "'";
 		}
 
 		if (!empty($data['filter_value'])) {
-			$implode[] = "LCASE(`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_value'])) . "'";
+			$implode[] = "LCASE(`su`.`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_value'])) . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
+			$implode[] = "`su`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
-			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
+			$implode[] = "`su`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
 		if ($implode) {
@@ -92,18 +92,18 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'keyword',
-			'key',
-			'value',
-			'sort_order',
-			'store_id',
-			'language_id'
+			'su.keyword',
+			'su.key',
+			'su.value',
+			'su.sort_order',
+			'su.store_id',
+			'su.language_id'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY `" . $data['sort'] . "`";
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `key`";
+			$sql .= " ORDER BY `su`.`key`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

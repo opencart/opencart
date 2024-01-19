@@ -323,11 +323,7 @@ class User extends \Opencart\System\Engine\Model {
 	public function getTotalLogins(int $user_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -452,10 +448,6 @@ class User extends \Opencart\System\Engine\Model {
 	public function getTotalAuthorizes(int $user_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 }

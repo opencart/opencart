@@ -164,11 +164,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function getTotalAttributes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute`");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**

@@ -92,11 +92,7 @@ class Review extends \Opencart\System\Engine\Model {
 	public function getRating(int $product_id): int {
 		$query = $this->db->query("SELECT AVG(`rating`) AS `total` FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '1'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**

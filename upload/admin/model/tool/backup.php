@@ -62,10 +62,6 @@ class Backup extends \Opencart\System\Engine\Model {
 	public function getTotalRecords(string $table): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . $table . "`");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 }

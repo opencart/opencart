@@ -262,11 +262,7 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalHistories(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -277,11 +273,7 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalOrders(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` `o` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `o`.`order_status_id` > '0' AND `o`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -294,11 +286,7 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalOrdersByProductId(int $product_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "' AND `op`.`product_id` = '" . (int)$product_id . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -311,11 +299,7 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalProductsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -328,11 +312,7 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalVouchersByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
+		return (int)$query->row['total'];
 	}
 
 	/**

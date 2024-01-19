@@ -49,7 +49,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 						} elseif ($query->num_rows > 1) {
 							foreach ($query->rows as $result) {
 								$recurring_data[] = $result;
-							}							
+							}
 						}
 
 						if ($recurring_data) {
@@ -96,7 +96,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 							foreach ($tax_rates as $tax_rate) {
 								$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 							}
-						}						
+						}
 					}
 
 					// If discount greater than total

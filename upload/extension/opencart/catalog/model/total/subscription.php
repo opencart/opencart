@@ -35,62 +35,68 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 					foreach ($cart as $product) {
 						if (in_array($product['product_id'], $subscription_discount_info['product'])) {
-							$discount = 0;
-
-							if ($implode) {
-								$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` `pr` INNER JOIN `" . DB_PREFIX . "recurring` `r` ON (`r`.`recurring_id` = `pr`.`recurring_id`) WHERE `pr`.`product_id` = '" . (int)$product['product_id'] . "' AND (" . implode(" OR ", $implode) . ") AND `r`.`status` = '1'");
-
-								if ($query->num_rows == 1) {
-									$recurring_data = [$query->row];
-								} elseif ($query->num_rows > 1) {
-									$recurring_data = $query->rows;
-								}
-
-								if ($recurring_data) {
-									$trial_end = new \DateTime('now');
-									$subscription_end = new \DateTime('now');
-
-									foreach ($recurring_data as $recurring) {
-										if (($recurring['trial'] == 1) && ($recurring['trial_duration'] != 0)) {
-											$trial_end = $this->calculateSchedule($recurring['trial_frequency'], $trial_end, $recurring['trial_cycle'] * $recurring['trial_duration']);
-										} elseif ($recurring['trial'] == 1) {
-											$trial_end = new \DateTime('0000-00-00');
-										}
-
-										if (date_format($trial_end, 'Y-m-d H:i:s') > date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] != 0) {
-											$subscription_end = new \DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
-											$subscription_end = $this->calculateSchedule($recurring['frequency'], $subscription_end, $recurring['cycle'] * $recurring['duration']);
-										} elseif (date_format($trial_end, 'Y-m-d H:i:s') == date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] != 0) {
-											$subscription_end = $this->calculateSchedule($recurring['frequency'], $subscription_end, $recurring['cycle'] * $recurring['duration']);
-										} elseif (date_format($trial_end, 'Y-m-d H:i:s') > date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] == 0) {
-											$subscription_end = new \DateTime('0000-00-00');
-										} elseif (date_format($trial_end, 'Y-m-d H:i:s') == date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] == 0) {
-											$subscription_end = new \DateTime('0000-00-00');
-										}
-
-										$recurring_expiry = date_format($subscription_end, 'Y-m-d');
-
-										$discount_expiry = date('Y-m-d', strtotime($subscription_discount_info['date_end']));
-
-										if ($discount_expiry <= $recurring_expiry) {
-											$discount = $product['total'] / 100 * $subscription_discount_info['discount'];
-											$discount_total += $discount;
-										}
-									}
-								}
-							} else {
-								$discount = $product['total'] / 100 * $subscription_discount_info['discount'];
-								$discount_total += $discount;
-							}
-
-							if ($product['tax_class_id']) {
-								$tax_rates = $this->tax->getRates($product['total'] - ($product['total'] - $discount), $product['tax_class_id']);
-
-								foreach ($tax_rates as $tax_rate) {
-									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
-								}
-							}
+							$implode[] = "`pr`.`product_id` = '" . (int)$product['product_id'] . "'";
 						}
+					}
+
+					if ($implode) {
+						$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` `pr` INNER JOIN `" . DB_PREFIX . "recurring` `r` ON (`r`.`recurring_id` = `pr`.`recurring_id`) WHERE (" . implode(" OR ", $implode) . ") AND `r`.`status` = '1'");
+
+						$recurring_data = [];
+
+						if ($query->num_rows == 1) {
+							$recurring_data[$query->row['recurring_id']] = $query->row;
+						} elseif ($query->num_rows > 1) {
+							foreach ($query->rows as $result) {
+								$recurring_data[] = $query->rows;
+							}							
+						}
+
+						if ($recurring_data) {
+							$trial_end = new \DateTime('now');
+							$subscription_end = new \DateTime('now');
+
+							foreach ($recurring_data as $recurring) {
+								$discount = 0;
+
+								if (($recurring['trial'] == 1) && ($recurring['trial_duration'] != 0)) {
+									$trial_end = $this->calculateSchedule($recurring['trial_frequency'], $trial_end, $recurring['trial_cycle'] * $recurring['trial_duration']);
+								} elseif ($recurring['trial'] == 1) {
+									$trial_end = new \DateTime('0000-00-00');
+								}
+
+								if (date_format($trial_end, 'Y-m-d H:i:s') > date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] != 0) {
+									$subscription_end = new \DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
+									$subscription_end = $this->calculateSchedule($recurring['frequency'], $subscription_end, $recurring['cycle'] * $recurring['duration']);
+								} elseif (date_format($trial_end, 'Y-m-d H:i:s') == date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] != 0) {
+									$subscription_end = $this->calculateSchedule($recurring['frequency'], $subscription_end, $recurring['cycle'] * $recurring['duration']);
+								} elseif (date_format($trial_end, 'Y-m-d H:i:s') > date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] == 0) {
+									$subscription_end = new \DateTime('0000-00-00');
+								} elseif (date_format($trial_end, 'Y-m-d H:i:s') == date_format($subscription_end, 'Y-m-d H:i:s') && $recurring['duration'] == 0) {
+									$subscription_end = new \DateTime('0000-00-00');
+								}
+
+								$recurring_expiry = date_format($subscription_end, 'Y-m-d');
+
+								$discount_expiry = date('Y-m-d', strtotime($subscription_discount_info['date_end']));
+
+								if ($discount_expiry <= $recurring_expiry) {
+									$discount = $product['total'] / 100 * $subscription_discount_info['discount'];
+									$discount_total += $discount;
+								}
+							}
+						} else {
+							$discount = $product['total'] / 100 * $subscription_discount_info['discount'];
+							$discount_total += $discount;
+						}
+
+						if ($product['tax_class_id']) {
+							$tax_rates = $this->tax->getRates($product['total'] - ($product['total'] - $discount), $product['tax_class_id']);
+
+							foreach ($tax_rates as $tax_rate) {
+								$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+							}
+						}						
 					}
 
 					// If discount greater than total

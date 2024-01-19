@@ -69,7 +69,11 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	public function getTotal(): int {
 		$query = $this->db->query("SELECT SUM(`viewed`) AS `total` FROM `" . DB_PREFIX . "product_viewed`");
 
-		return (int)$query->row['total'];
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 
 	/**

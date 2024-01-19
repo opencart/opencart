@@ -259,7 +259,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getRewardTotal(int $customer_id): int {
 		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return (int)$query->row['total'];
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 
 	/**

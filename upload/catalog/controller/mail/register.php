@@ -137,7 +137,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$emails = explode(',', (string)$this->config->get('config_mail_alert_email'));
 
 				foreach ($emails as $email) {
-					if (oc_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					if (oc_strlen($email) > 0 && oc_filter_email($email)) {
 						$mail->setTo(trim($email));
 						$mail->send();
 					}

@@ -240,7 +240,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
 
 					foreach ($emails as $email) {
-						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						if (oc_filter_email($email)) {
 							$mail->setTo(trim($email));
 							$mail->setFrom($store_email);
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));

@@ -33,7 +33,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize.send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ($email && $code && ($route == 'common/authorize.send') && oc_filter_email($email)) {
 			$this->load->language('mail/authorize');
 
 			$data['username'] = $this->user->getUsername();
@@ -94,7 +94,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ($email && $code && ($route == 'common/authorize.confirm') && oc_filter_email($email)) {
 			$this->load->language('mail/authorize_reset');
 
 			$data['username'] = $this->user->getUsername();

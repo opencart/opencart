@@ -247,7 +247,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: Username must be between 3 and 20 characters!' . "\n";
 		}
 
-		if ((oc_strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($option['email']) > 96) || !oc_filter_email($option['email'])) {
 			$error .= 'ERROR: E-Mail Address does not appear to be valid!' . "\n";
 		}
 

@@ -28,6 +28,9 @@ class File {
 	 * @return mixed
 	 */
 	public function get(string $key) {
+		//$key = md5($key);
+		//sprintf();
+
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {

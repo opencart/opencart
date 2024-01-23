@@ -42,7 +42,7 @@ function oc_punycode(string $string): string {
 	$parts = explode('@', $string);
 
 	foreach ($parts as $key => $part) {
-		$parts[$key] = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+		$parts[$key] = idn_to_ascii($part, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
 	}
 
 	return implode('@', $parts);

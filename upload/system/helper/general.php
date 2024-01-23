@@ -39,7 +39,13 @@ function oc_strtolower(string $string): string {
 }
 
 function oc_punycode(string $string): string {
-	return idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+	$parts = explode('@', $string);
+
+	foreach ($parts as $key => $part) {
+		$parts[$key] = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+	}
+
+	return implode('@', $parts);
 }
 
 // Other

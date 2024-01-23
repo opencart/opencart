@@ -38,6 +38,10 @@ function oc_strtolower(string $string): string {
 	return mb_strtolower($string);
 }
 
+function oc_punycode(string $string): string {
+	return idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+}
+
 // Other
 function oc_token(int $length = 32): string {
 	return substr(bin2hex(random_bytes($length)), 0, $length);

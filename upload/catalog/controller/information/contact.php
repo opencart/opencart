@@ -123,7 +123,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var(oc_punycode($this->request->post['email']), FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 

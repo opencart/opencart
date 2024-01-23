@@ -482,7 +482,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 
-		if ((oc_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($this->request->post['config_email']) > 96) || !filter_var(oc_punycode($this->request->post['config_email']), FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 

@@ -340,7 +340,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['to_name'] = $this->language->get('error_to_name');
 		}
 
-		if ((oc_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($this->request->post['to_email']) > 96) || !filter_var(oc_punycode($this->request->post['to_email']), FILTER_VALIDATE_EMAIL)) {
 			$json['error']['to_email'] = $this->language->get('error_email');
 		}
 
@@ -348,7 +348,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['from_name'] = $this->language->get('error_from_name');
 		}
 
-		if ((oc_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($this->request->post['from_email']) > 96) || !filter_var(oc_punycode($this->request->post['from_email']), FILTER_VALIDATE_EMAIL)) {
 			$json['error']['from_email'] = $this->language->get('error_email');
 		}
 

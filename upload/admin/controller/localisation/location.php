@@ -220,8 +220,6 @@ class Location extends \Opencart\System\Engine\Controller {
 			$data['location_id'] = 0;
 		}
 
-		$this->load->model('setting/store');
-
 		if (!empty($location_info)) {
 			$data['name'] = $location_info['name'];
 		} else {

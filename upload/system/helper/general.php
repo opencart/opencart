@@ -39,7 +39,7 @@ function oc_strtolower(string $string): string {
 }
 
 // Email
-function oc_filter_email(string $email): string {
+function oc_filter_email(string $email): bool {
 	if (oc_strrpos($email, '@') === false) return false;
 
 	$local = oc_substr($email, 0, oc_strrpos($email, '@'));

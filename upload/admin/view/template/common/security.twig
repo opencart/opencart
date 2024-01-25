@@ -130,10 +130,7 @@ $(document).ready(function() {
 });
 
 $('#button-refresh').on('click', function() {
-    // Show modal
-    var modal = new bootstrap.Modal($('#modal-security'));
-
-    modal.show();
+    $('#modal-security').modal('show');
 
     $('#accordion .accordion-header:first button').trigger('click');
 });
@@ -160,7 +157,7 @@ $('#button-install').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                modal.dispose();
+                $('#modal-security').modal('dispose');
 
                 $('#button-refresh').trigger('click');
             }
@@ -203,7 +200,7 @@ $('#button-storage').on('click', function() {
 
                     $(element).button('reset');
 
-                    modal.dispose();
+                    $('#modal-security').modal('dispose');
 
                     $('#button-refresh').trigger('click');
                 }
@@ -249,7 +246,7 @@ $('#button-storage-delete').on('click', function() {
 
                 $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
 
-                modal.dispose();
+                $('#modal-security').modal('dispose');
 
                 $('#button-refresh').trigger('click');
             }
@@ -296,7 +293,7 @@ $('#button-admin').on('click', function() {
 
                     $(element).button('reset');
 
-                    modal.dispose();
+                    $('#modal-security').modal('dispose');
 
                     $('#button-refresh').trigger('click');
                 }
@@ -339,8 +336,8 @@ $('#button-admin-delete').on('click', function() {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                
-                modal.dispose();
+
+                $('#modal-security').modal('dispose');
 
                 $('#button-refresh').trigger('click');
             }

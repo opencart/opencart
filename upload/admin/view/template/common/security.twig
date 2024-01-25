@@ -55,6 +55,8 @@ $('#button-install').on('click', function() {
                 $('#modal-security').modal('dispose');
 
                 $('#button-refresh').trigger('click');
+
+                $('#accordion .accordion-header:first button').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

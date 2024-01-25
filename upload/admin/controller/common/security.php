@@ -11,9 +11,33 @@ class Security extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function index(): string {
+	public function index(): void {
 		$this->load->language('common/security');
 
+		$data['list'] = $this->controller_common_security->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('common/security', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('common/security');
+
+		$this->response->setOutput($this->controller_common_security->getList());
+	}
+
+	/**
+	 * getList
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
 		// Install directory exists
 		$path = DIR_OPENCART . 'install/';
 
@@ -78,7 +102,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if ($data['install'] || $data['storage'] || $data['storage_delete'] || $data['admin'] || $data['admin_delete']) {
-			return $this->load->view('common/security', $data);
+			return $this->load->view('common/security_list', $data);
 		} else {
 			return '';
 		}

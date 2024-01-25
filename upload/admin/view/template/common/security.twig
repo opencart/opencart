@@ -118,11 +118,18 @@
         {% endif %}
 
       </div>
+
+      <button type="button" id="button-refresh" class="btn btn-danger hide"><i class="fa-solid fa-sync"></i></button>
+
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
+    $('#button-refresh').trigger('click');
+});
+
+$('#button-refresh').on('click', function() {
     // Show modal
     var modal = new bootstrap.Modal($('#modal-security'));
 
@@ -153,9 +160,9 @@ $('#button-install').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-storage').remove();
+                modal.dispose();
 
-                $('#accordion .accordion-header:first button').trigger('click');
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -196,9 +203,9 @@ $('#button-storage').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#security-storage').remove();
+                    modal.dispose();
 
-                    $('#accordion .accordion-header:first button').trigger('click');
+                    $('#button-refresh').trigger('click');
                 }
 
                 if (json['next']) {
@@ -242,9 +249,9 @@ $('#button-storage-delete').on('click', function() {
 
                 $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
 
-                $('#security-admin').remove();
+                modal.dispose();
 
-                $('#accordion .accordion-header:first button').trigger('click');
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -289,9 +296,9 @@ $('#button-admin').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#security-admin').remove();
+                    modal.dispose();
 
-                    $('#accordion .accordion-header:first button').trigger('click');
+                    $('#button-refresh').trigger('click');
                 }
 
                 if (json['next']) {
@@ -332,12 +339,10 @@ $('#button-admin-delete').on('click', function() {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                
+                modal.dispose();
 
-                $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
-
-                $('#security-admin').remove();
-
-                $('#accordion .accordion-header:first button').trigger('click');
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

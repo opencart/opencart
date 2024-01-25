@@ -33,7 +33,8 @@
                 <form id="form-storage">
                   <p>{{ text_storage_description }}</p>
                   <div class="mb-3">
-                    <label class="form-label">{{ entry_path_current }}</label> <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
+                    <label class="form-label">{{ entry_path_current }}</label>
+                    <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
                   </div>
                   <div class="mb-3">
                     <label class="form-label">{{ entry_path_new }}</label>
@@ -42,7 +43,8 @@
                         {% for path in paths %}
                           <option value="{{ path }}">{{ path }}</option>
                         {% endfor %}
-                      </select> <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
+                      </select>
+                      <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
                     </div>
                     <div class="form-text">{{ help_storage }}</div>
                   </div>
@@ -105,7 +107,7 @@
                 <p>{{ text_admin_delete_description }}</p>
                 <div class="input-group mb-3">
                   <div class="input-group-text">{{ text_path }}</div>
-                  <input type="text" value="{{ admin_path }}" class="form-control is-invalid" readonly/>
+                  <input type="text" value="{{ admin_delete }}" class="form-control is-invalid" readonly/>
                 </div>
                 <div class="text-end">
                   <button type="button" value="admin" id="button-admin-delete" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> {{ button_delete }}</button>

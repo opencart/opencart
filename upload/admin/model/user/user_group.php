@@ -82,4 +82,21 @@ class ModelUserUserGroup extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(json_encode($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 		}
 	}
+
+	function removePermissions( string $route ): void {
+		$user_groups = $this->getUserGroups();
+		foreach ($user_groups as $user_group) {
+			$user_group_id = $user_group['user_group_id'];
+			$permission = $user_group['permission'];
+			if (!empty($permission)) {
+				$permission = json_decode($permission,true);
+				if (!empty($permission['access'])) {
+					$this->removePermission($user_group_id, 'access', $route);
+				}
+				if (!empty($permission['modify'])) {
+					$this->removePermission($user_group_id, 'modify', $route);
+				}
+			}
+		}
+	}
 }

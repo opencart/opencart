@@ -43,6 +43,9 @@ class ControllerExtensionExtensionTheme extends Controller {
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/theme/' . $this->request->get['extension'] . '/uninstall');
 
+			$this->load->model('user/user_group');
+			$this->model_user_user_group->removePermissions('extension/theme/' . $this->request->get['extension']);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 		

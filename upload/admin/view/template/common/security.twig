@@ -19,6 +19,8 @@ $('#security').on('click', '#button-refresh', function() {
             $(element).button('reset');
         },
         success: function(html) {
+            $('#modal-security').modal('dispose');
+
             $('#security').html(html);
 
             $('#accordion .accordion-header:first button').trigger('click');

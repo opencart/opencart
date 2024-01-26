@@ -35,7 +35,7 @@ $('#security').on('click', '#button-refresh', function() {
     });
 });
 
-$('#button-install').on('click', function() {
+$('#security').on('click', '#button-install', function() {
     var element = this;
 
     $.ajax({
@@ -66,7 +66,7 @@ $('#button-install').on('click', function() {
     });
 });
 
-$('#button-storage').on('click', function() {
+$('#security').on('click', '#button-storage', function() {
     var element = this;
 
     $(element).button('loading');
@@ -118,7 +118,7 @@ $('#button-storage').on('click', function() {
     chain.attach(storage);
 });
 
-$('#button-storage-delete').on('click', function() {
+$('#security').on('click', '#button-storage-delete', function() {
     var element = this;
 
     $.ajax({
@@ -149,7 +149,7 @@ $('#button-storage-delete').on('click', function() {
     });
 });
 
-$('#button-admin').on('click', function() {
+$('#security').on('click', '#button-admin', function() {
     var element = this;
 
     $(element).button('loading');
@@ -205,7 +205,7 @@ $('#button-admin').on('click', function() {
     chain.attach(admin);
 });
 
-$('#button-admin-delete').on('click', function() {
+$('#security').on('click', '#button-admin-delete', function() {
     var element = this;
 
     $.ajax({

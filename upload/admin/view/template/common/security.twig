@@ -19,11 +19,9 @@ $('#security').on('click', '#button-refresh', function() {
             $(element).button('reset');
         },
         success: function(html) {
-            $('#modal-security').modal('dispose');
-
             $('#modal-security').remove();
 
-            $('#security').html(html);
+            $('#modal-security').replaceWith(html);
 
             $('#modal-security').modal('show');
 
@@ -48,6 +46,8 @@ $('#security').on('click', '#button-install', function() {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -131,6 +131,8 @@ $('#security').on('click', '#button-storage-delete', function() {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -218,6 +220,8 @@ $('#security').on('click', '#button-admin-delete', function() {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {

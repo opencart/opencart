@@ -23,6 +23,8 @@ $('#security').on('click', '#button-refresh', function() {
 
             $('#security').html(html);
 
+            $('#modal-security').modal('show');
+
             $('#accordion .accordion-header:first button').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {

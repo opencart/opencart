@@ -304,7 +304,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				rmdir($path);
+				rmdir($base_old);
 
 				// Modify the config files
 				$files = [

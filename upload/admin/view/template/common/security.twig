@@ -19,11 +19,7 @@ $('#security').on('click', '#button-refresh', function() {
             $(element).button('reset');
         },
         success: function(html) {
-            $('#modal-security').remove();
-
             $('#modal-security').replaceWith(html);
-
-            $('#modal-security').modal('show');
 
             $('#accordion .accordion-header:first button').trigger('click');
         },

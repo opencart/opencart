@@ -387,7 +387,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				'system'
 			];
 
-			if (!in_array($name, $blocked)) {
+			if (in_array($name, $blocked)) {
 				$json['error'] = sprintf($this->language->get('error_admin_allowed'), $name);
 			}
 

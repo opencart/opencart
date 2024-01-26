@@ -283,7 +283,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!is_file($base_new . $destination)) {
+				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);
 				}
 			}
@@ -451,7 +451,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!is_file($base_new . $destination)) {
+				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);
 				}
 			}

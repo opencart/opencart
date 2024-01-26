@@ -1,11 +1,12 @@
 <div id="security">{{ list }}</div>
-<button type="button" id="button-refresh" class="btn btn-danger hide"><i class="fa-solid fa-sync"></i></button>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-    $('#button-refresh').trigger('click');
+    $('#modal-security').modal('show');
+
+    $('#accordion .accordion-header:first button').trigger('click');
 });
 
-$('#button-refresh').on('click', function() {
+$('#security').on('click', '#button-refresh', function() {
     var element = this;
 
     $.ajax({
@@ -18,6 +19,10 @@ $('#button-refresh').on('click', function() {
             $(element).button('reset');
         },
         success: function(html) {
+            $('#modal-security').modal('dispose');
+
+            $('#modal-security').remove();
+
             $('#security').html(html);
 
             $('#modal-security').modal('show');
@@ -52,11 +57,7 @@ $('#button-install').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#modal-security').modal('dispose');
-
                 $('#button-refresh').trigger('click');
-
-                $('#accordion .accordion-header:first button').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -96,8 +97,6 @@ $('#button-storage').on('click', function() {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $(element).button('reset');
-
-                    $('#modal-security').modal('dispose');
 
                     $('#button-refresh').trigger('click');
                 }
@@ -140,10 +139,6 @@ $('#button-storage-delete').on('click', function() {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
-
-                $('#modal-security').modal('dispose');
 
                 $('#button-refresh').trigger('click');
             }
@@ -190,8 +185,6 @@ $('#button-admin').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#modal-security').modal('dispose');
-
                     $('#button-refresh').trigger('click');
                 }
 
@@ -233,8 +226,6 @@ $('#button-admin-delete').on('click', function() {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#modal-security').modal('dispose');
 
                 $('#button-refresh').trigger('click');
             }

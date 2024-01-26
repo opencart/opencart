@@ -11,14 +11,14 @@ class Security extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function index(): void {
+	public function index(): string {
 		$this->load->language('common/security');
 
 		$data['list'] = $this->controller_common_security->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->response->setOutput($this->load->view('common/security', $data));
+		return $this->load->view('common/security', $data);
 	}
 
 	/**

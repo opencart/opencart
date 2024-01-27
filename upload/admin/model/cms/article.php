@@ -211,20 +211,20 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $article_id primary key of the article record to be fetched
+	 * @param int $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $article_id, int $language_id, $data): void {
+	public function addDescription(int $article_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
 	 *	Delete Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $article_id primary key of the article record to be fetched
 	 *
 	 * @return void
 	 */
@@ -267,7 +267,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $information_id, $store_id): void {
+	public function addStore(int $information_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
@@ -419,7 +419,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Comments by article ID
 	 *
-	 * @param int $article_comment_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */

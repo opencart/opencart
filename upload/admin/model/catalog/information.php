@@ -185,22 +185,22 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $language_id
+	 * @param array<string, mixed> $data
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
-	public function addDescription(int $information_id, int $language_id, $data): void {
+	public function addDescription(int $information_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
 	 *	Delete Description
 	 *
+	 * @param int $information_id primary key of the information record to be fetched
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
-	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function deleteDescription(int $information_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -239,7 +239,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $information_id, $store_id): array {
+	public function addStore(int $information_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 

@@ -14,7 +14,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * @return ?int
 	 */
 	public function addSubscriptionStatus(array $data): ?int {
-		$subscription_status_id = null;
+		$subscription_status_id = 0;
 
 		foreach ($data['subscription_status'] as $language_id => $value) {
 			if (isset($subscription_status_id)) {

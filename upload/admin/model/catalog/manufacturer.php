@@ -180,7 +180,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $manufacturer_id, int $store_id): array {
+	public function addStore(int $manufacturer_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 

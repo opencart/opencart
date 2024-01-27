@@ -64,6 +64,19 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Seo Url by Key Value pair
+	 *
+	 * @param int $seo_url_id
+	 *
+	 * @return void
+	 */
+	public function deleteSeoUrlByKeyValue(string $key, string $value): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Seo Url
 	 *
 	 * @param int $seo_url_id

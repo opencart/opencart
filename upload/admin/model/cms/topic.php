@@ -197,8 +197,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $topic_id primary key of the attribute record to be fetched
 	 *
 	 * @return void
 	 */
@@ -235,7 +234,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -247,14 +246,13 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 *
 	 * @return void
 	 */
 	public function deleteStore(int $topic_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_store` SET `topic_id` = '" . (int)$topic_id . "'");
 	}
-
 
 	/**
 	 * Get Stores

@@ -23,24 +23,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 		return $this->db->getLastId();
 	}
-	/**
-	 * Get Seo Urls
-	 *
-	 * @param int $information_id
-	 *
-	 * @return array<int, array<int, string>>
-	 */
-	public function getSeoUrls(int $information_id): array {
-		$information_seo_url_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
-
-		foreach ($query->rows as $result) {
-			$information_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
-
-		return $information_seo_url_data;
-	}
+	
 	/**
 	 * Edit Seo Url
 	 *

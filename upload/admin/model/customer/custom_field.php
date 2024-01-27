@@ -190,12 +190,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
-	 * @param int $custom_field_id primary key of the attribute record to be fetched
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
+	 * @param int $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $custom_field_id, int $language_id, $data): void {
+	public function addDescription(int $custom_field_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_description` SET `custom_field_id` = '" . (int)$custom_field_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 
 	}
@@ -203,8 +204,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return void
 	 */

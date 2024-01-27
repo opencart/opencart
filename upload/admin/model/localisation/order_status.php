@@ -14,15 +14,15 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 * @return ?int
 	 */
 	public function addOrderStatus(array $data): ?int {
-		$order_status_id = null;
+		$order_status_id = 0;
 
 		foreach ($data['order_status'] as $language_id => $value) {
-			if (isset($order_status_id)) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `order_status_id` = '" . (int)$order_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
-			} else {
+			if ($order_status_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 
 				$order_status_id = $this->db->getLastId();
+			} else {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `order_status_id` = '" . (int)$order_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 			}
 		}
 

@@ -19,27 +19,27 @@ class Information extends \Opencart\System\Engine\Model {
 		$information_id = $this->db->getLastId();
 
 		foreach ($data['information_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->addDescription($information_id, $language_id, $value);
 		}
 
 		if (isset($data['information_store'])) {
 			foreach ($data['information_store'] as $store_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
+				$this->addStore($information_id, $store_id);
 			}
 		}
 
 		// SEO URL
-		if (isset($data['information_seo_url'])) {
-			foreach ($data['information_seo_url'] as $store_id => $language) {
-				foreach ($language as $language_id => $keyword) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'information_id', `value` = '" . (int)$information_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-				}
+		$this->load->model('design/seo_url');
+
+		foreach ($data['information_seo_url'] as $store_id => $language) {
+			foreach ($language as $language_id => $keyword) {
+				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'information_id', $information_id, $keyword);
 			}
 		}
 
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+				$this->addLayout($information_id, $store_id, $layout_id);
 			}
 		}
 
@@ -59,35 +59,35 @@ class Information extends \Opencart\System\Engine\Model {
 	public function editInformation(int $information_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
+		$this->deleteDescription($information_id);
 
 		foreach ($data['information_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->addDescription($information_id, $language_id, $value);
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
+		$this->deleteStore($information_id);
 
 		if (isset($data['information_store'])) {
 			foreach ($data['information_store'] as $store_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
+				$this->addStore($information_id, $store_id);
 			}
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
+		$this->load->model('design/seo_url');
 
-		if (isset($data['information_seo_url'])) {
-			foreach ($data['information_seo_url'] as $store_id => $language) {
-				foreach ($language as $language_id => $keyword) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'information_id', `value` = '" . (int)$information_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-				}
+		$this->model_design_seo_url->deleteSeoUrlByKeyValue('information_id', $information_id);
+
+		foreach ($data['information_seo_url'] as $store_id => $language) {
+			foreach ($language as $language_id => $keyword) {
+				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'information_id', $information_id, $keyword);
 			}
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");
+		$this->deleteLayout($information_id);
 
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+				$this->addLayout($information_id, $store_id, $layout_id);
 			}
 		}
 
@@ -103,10 +103,14 @@ class Information extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteInformation(int $information_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
+
+		$this->deleteDescription($information_id);
+		$this->deleteStore($information_id);
+		$this->deleteLayout($information_id);
+
+		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->deleteSeoUrlByKeyValue('information_id', $information_id);
 
 		$this->cache->delete('information');
 	}
@@ -179,6 +183,30 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Add Description
+	 *
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function addDescription(int $information_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function deleteDescription(int $information_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * @param int $information_id
@@ -204,6 +232,29 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Store
+	 *
+	 * @param int $information_id
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
+	public function addStore(int $information_id, $store_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
+	}
+
+	/**
+	 * Delete Store
+	 *
+	 * @param int $information_id
+	 *
+	 * @return void
+	 */
+	public function deleteStore(int $information_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "'");
+	}
+
+	/**
 	 * Get Stores
 	 *
 	 * @param int $information_id
@@ -223,22 +274,27 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Seo Urls
+	 * Add Layout
+	 *
+	 * @param int $information_id
+	 * @param int $store_id
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
+	public function addLayout(int $information_id, int $store_id, int $layout_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	/**
+	 * Delete Store
 	 *
 	 * @param int $information_id
 	 *
-	 * @return array<int, array<int, string>>
+	 * @return void
 	 */
-	public function getSeoUrls(int $information_id): array {
-		$information_seo_url_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
-
-		foreach ($query->rows as $result) {
-			$information_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
-
-		return $information_seo_url_data;
+	public function deleteLayout(int $information_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "'");
 	}
 
 	/**

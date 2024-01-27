@@ -19,7 +19,7 @@ class Download extends \Opencart\System\Engine\Model {
 		$download_id = $this->db->getLastId();
 
 		foreach ($data['download_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "download_description` SET `download_id` = '" . (int)$download_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+			$this->addDescription($download_id, $language_id, $value);
 		}
 
 		return $download_id;
@@ -36,10 +36,10 @@ class Download extends \Opencart\System\Engine\Model {
 	public function editDownload(int $download_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "' WHERE `download_id` = '" . (int)$download_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
+		$this->deleteDescription($download_id);
 
 		foreach ($data['download_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "download_description` SET `download_id` = '" . (int)$download_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+			$this->addDescription($download_id, $language_id, $value);
 		}
 	}
 
@@ -52,7 +52,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteDownload(int $download_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download` WHERE `download_id` = '" . (int)$download_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
+
+		$this->deleteDescription($download_id);
 	}
 
 	/**
@@ -114,6 +115,29 @@ class Download extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	/**
+	 *	Add Description
+	 *
+	 *
+	 * @param int $download_id primary key of the attribute record to be fetched
+	 *
+	 * @return void
+	 */
+	public function addDescription(int $download_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "download_description` SET `download_id` = '" . (int)$download_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 * @param int $download_id primary key of the attribute record to be fetched
+	 *
+	 * @return void
+	 */
+	public function deleteDescription(int $download_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
 	}
 
 	/**

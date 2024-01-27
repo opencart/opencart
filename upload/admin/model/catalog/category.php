@@ -19,7 +19,7 @@ class Category extends \Opencart\System\Engine\Model {
 		$category_id = $this->db->getLastId();
 
 		foreach ($data['category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->addDescription($category_id, $language_id, $value);
 		}
 
 		// MySQL Hierarchical Data Closure Table Pattern
@@ -37,13 +37,13 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['category_filter'])) {
 			foreach ($data['category_filter'] as $filter_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_filter` SET `category_id` = '" . (int)$category_id . "', `filter_id` = '" . (int)$filter_id . "'");
+				$this->addFilter($category_id, $filter_id);
 			}
 		}
 
 		if (isset($data['category_store'])) {
 			foreach ($data['category_store'] as $store_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "'");
+				$this->addStore($category_id, $store_id);
 			}
 		}
 
@@ -66,14 +66,14 @@ class Category extends \Opencart\System\Engine\Model {
 					$keyword = $seo_url_info['keyword'] . '/' . $keyword;
 				}
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value`= '" . $this->db->escape($path) . "', `keyword` = '" . $this->db->escape($keyword) . "'");
+				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'path', $category_id, $keyword);
 			}
 		}
 
 		// Set which layout to use with this category
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+				$this->addLayout($category_id, $store_id, $layout_id);
 			}
 		}
 
@@ -94,7 +94,7 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		foreach ($data['category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$this->addDescription($category_id, $language_id, $value);
 		}
 
 		// Old path
@@ -151,6 +151,8 @@ class Category extends \Opencart\System\Engine\Model {
 			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)$level . "'");
 		}
 
+
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_filter` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		if (isset($data['category_filter'])) {
@@ -191,6 +193,8 @@ class Category extends \Opencart\System\Engine\Model {
 				if ($parent_info) {
 					$keyword = $parent_info['keyword'] . '/' . $keyword;
 				}
+
+				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'path', $category_id, $keyword);
 
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value` = '" . $this->db->escape($path_new) . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 
@@ -281,30 +285,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Path
-	 *
-	 * @param int $category_id
-	 *
-	 * @return string
-	 */
-	public function getPath(int $category_id): string {
-		return implode('_', array_column($this->getPaths($category_id), 'path_id'));
-	}
-
-	/**
-	 * Get Paths
-	 *
-	 * @param int $category_id
-	 *
-	 * @return array<int, array<string, mixed>>
-	 */
-	public function getPaths(int $category_id): array {
-		$query = $this->db->query("SELECT `category_id`, `path_id`, `level` FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
-
-		return $query->rows;
-	}
-
-	/**
 	 * Get Categories
 	 *
 	 * @param array<string, mixed> $data
@@ -355,6 +335,30 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Add Description
+	 *
+	 *
+	 * @param int $category_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function addDescription(int $category_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function deleteDescription(int $category_id) : void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * @param int $category_id
@@ -379,6 +383,34 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_description_data;
 	}
 
+	public function addPath(int $category_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
+	}
+
+	/**
+	 * Get Path
+	 *
+	 * @param int $category_id
+	 *
+	 * @return string
+	 */
+	public function getPath(int $category_id): string {
+		return implode('_', array_column($this->getPaths($category_id), 'path_id'));
+	}
+
+	/**
+	 * Get Paths
+	 *
+	 * @param int $category_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getPaths(int $category_id): array {
+		$query = $this->db->query("SELECT `category_id`, `path_id`, `level` FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Filters
 	 *
@@ -399,25 +431,6 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Seo Urls
-	 *
-	 * @param int $category_id
-	 *
-	 * @return array<int, array<int, string>>
-	 */
-	public function getSeoUrls(int $category_id): array {
-		$category_seo_url_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($this->getPath($category_id)) . "'");
-
-		foreach ($query->rows as $result) {
-			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
-
-		return $category_seo_url_data;
-	}
-
-	/**
 	 * Get Stores
 	 *
 	 * @param int $category_id
@@ -434,6 +447,30 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		return $category_store_data;
+	}
+
+	/**
+	 * Add Layout
+	 *
+	 * @param int $information_id
+	 * @param int $store_id
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
+	public function addLayout(int $category_id, int $store_id, int $layout_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	/**
+	 * Delete Store
+	 *
+	 * @param int $information_id
+	 *
+	 * @return void
+	 */
+	public function deleteLayout(int $information_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "'");
 	}
 
 	/**

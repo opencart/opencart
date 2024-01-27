@@ -23,7 +23,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$attribute_id = $this->db->getLastId();
 
 		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+			$this->addDescription($attribute_id, $language_id, $value);
 		}
 
 		return $attribute_id;
@@ -44,8 +44,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
+		$this->deleteDescription($attribute_id);
+
 		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+			$this->addDescription($attribute_id, $language_id, $value);
 		}
 	}
 
@@ -60,7 +62,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+
+		$this->deleteDescription($attribute_id);
 	}
 
 	/**
@@ -131,6 +134,31 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	/**
+	 *	Add Description
+	 *
+	 * @param int $attribute_id primary key of the attribute record
+	 * @param int $language_id primary key of the attribute language
+	 *
+	 * @return void
+	 */
+	public function addDescription(int $attribute_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 *  Delete attribute description record in the database.
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return void
+	 */
+	public function deleteDescription(int $attribute_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 	}
 
 	/**

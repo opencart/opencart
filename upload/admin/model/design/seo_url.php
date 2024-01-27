@@ -9,7 +9,12 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Seo Url
 	 *
-	 * @param array<string, mixed> $data
+	 * @param int    $store_id
+	 * @param int    $language_id
+	 * @param string $key
+	 * @param string $value
+	 * @param string $keyword
+	 * @param int    $sort_order
 	 *
 	 * @return int
 	 */

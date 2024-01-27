@@ -14,6 +14,30 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/security');
 
+		$data['list'] = $this->controller_common_security->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('common/security', $data);
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('common/security');
+
+		$this->response->setOutput($this->controller_common_security->getList());
+	}
+
+	/**
+	 * getList
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
 		// Install directory exists
 		$path = DIR_OPENCART . 'install/';
 
@@ -78,7 +102,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if ($data['install'] || $data['storage'] || $data['storage_delete'] || $data['admin'] || $data['admin_delete']) {
-			return $this->load->view('common/security', $data);
+			return $this->load->view('common/security_list', $data);
 		} else {
 			return '';
 		}
@@ -259,7 +283,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!is_file($base_new . $destination)) {
+				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);
 				}
 			}
@@ -280,7 +304,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				rmdir($path);
+				rmdir($base_old);
 
 				// Modify the config files
 				$files = [
@@ -350,7 +374,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_admin');
 			}
 
-			if (is_dir($base_new)) {
+			if ($page == 1 && is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_admin_exists');
 			}
 
@@ -363,7 +387,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				'system'
 			];
 
-			if (!in_array($name, $blocked)) {
+			if (in_array($name, $blocked)) {
 				$json['error'] = sprintf($this->language->get('error_admin_allowed'), $name);
 			}
 
@@ -427,7 +451,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!is_file($base_new . $destination)) {
+				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);
 				}
 			}

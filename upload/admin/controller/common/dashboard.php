@@ -79,7 +79,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!empty($column)) {
+		if ($column) {
 			$data['rows'][] = $column;
 		}
 

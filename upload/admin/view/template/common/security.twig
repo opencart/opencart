@@ -1,137 +1,40 @@
-<div id="modal-security" class="modal show">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-danger"><i class="fa-solid fa-triangle-exclamation"></i> {{ heading_title }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div id="accordion" class="accordion">
-
-        {% if install %}
-          <div id="security-install" class="accordion-item">
-            <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><span class="fa-solid fa-trash-can me-1"></span> {{ text_install }}</button></h5>
-            <div id="accordion-install" class="accordion-collapse collapse" data-bs-parent="#accordion">
-              <div class="modal-body">
-                <p>{{ text_install_description }}</p>
-                <div class="input-group mb-3">
-                  <div class="input-group-text">{{ text_path }}</div>
-                  <input type="text" value="{{ install }}" class="form-control is-invalid" readonly/>
-                </div>
-                <div class="text-end">
-                  <button type="button" id="button-install" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> {{ button_delete }}</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-
-        {% if storage %}
-          <div id="security-storage" class="accordion-item">
-            <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><span class="fa-solid fa-folder me-1"></span> {{ text_storage }}</button></h2>
-            <div id="accordion-storage" class="accordion-collapse collapse" data-bs-parent="#accordion">
-              <div class="modal-body">
-                <form id="form-storage">
-                  <p>{{ text_storage_description }}</p>
-                  <div class="mb-3">
-                    <label class="form-label">{{ entry_path_current }}</label>
-                    <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">{{ entry_path_new }}</label>
-                    <div class="input-group">
-                      <select id="input-path" class="form-select">
-                        {% for path in paths %}
-                          <option value="{{ path }}">{{ path }}</option>
-                        {% endfor %}
-                      </select>
-                      <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
-                    </div>
-                    <div class="form-text">{{ help_storage }}</div>
-                  </div>
-                  <div class="text-end">
-                    <button type="button" id="button-storage" class="btn btn-danger"><span class="fa-solid fa-circle-right"></span> {{ button_move }}</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-
-        {% if storage %}
-          <div id="security-storage-delete" class="accordion-item">
-            <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage-delete" class="accordion-button collapsed"><span class="fa-solid fa-trash-can me-1"></span> {{ text_storage_delete }}</button></h5>
-            <div id="accordion-storage-delete" class="accordion-collapse collapse" data-bs-parent="#accordion">
-              <div class="modal-body">
-                <p>{{ text_storage_delete_description }}</p>
-                <div class="input-group mb-3">
-                  <div class="input-group-text">{{ text_path }}</div>
-                  <input type="text" value="{{ storage_delete }}" class="form-control is-invalid" readonly/>
-                </div>
-                <div class="text-end">
-                  <button type="button" value="storage" id="button-storage-delete" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> {{ button_delete }}</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-
-        {% if admin %}
-          <div id="security-admin" class="accordion-item">
-            <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fa-solid fa-folder me-1"></span> {{ text_admin }}</button></h2>
-            <div id="accordion-admin" class="accordion-collapse collapse" data-bs-parent="#accordion">
-              <div class="modal-body">
-
-                <form id="form-admin">
-                  <p>{{ text_admin_description }}</p>
-                  <div class="mb-3">
-                    <div class="input-group">
-                      <div class="input-group-text">{{ text_path }}</div>
-                      <input type="text" name="name" value="admin" placeholder="{{ entry_name }}" class="form-control is-invalid"/>
-                    </div>
-                  </div>
-                  <div class="text-end">
-                    <button type="button" id="button-admin" class="btn btn-danger"><i class="fa-solid fa-circle-right"></i> {{ button_move }}</button>
-                  </div>
-                </form>
-
-              </div>
-            </div>
-          </div>
-        {% endif %}
-
-        {% if admin %}
-          <div id="security-admin-delete" class="accordion-item">
-            <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin-delete" class="accordion-button collapsed"><span class="fa-solid fa-trash-can me-1"></span> {{ text_admin_delete }}</button></h2>
-            <div id="accordion-admin-delete" class="accordion-collapse collapse" data-bs-parent="#accordion">
-              <div class="modal-body">
-                <p>{{ text_admin_delete_description }}</p>
-                <div class="input-group mb-3">
-                  <div class="input-group-text">{{ text_path }}</div>
-                  <input type="text" value="{{ admin_path }}" class="form-control is-invalid" readonly/>
-                </div>
-                <div class="text-end">
-                  <button type="button" value="admin" id="button-admin-delete" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> {{ button_delete }}</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-
-      </div>
-    </div>
-  </div>
-</div>
+<div id="security">{{ list }}</div>
+<button type="button" id="button-refresh" class="btn btn-danger d-none"><i class="fa-solid fa-sync"></i></button>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-    // Show modal
-    var modal = new bootstrap.Modal($('#modal-security'));
-
-    modal.show();
+    $('#modal-security').modal('show');
 
     $('#accordion .accordion-header:first button').trigger('click');
 });
 
-$('#button-install').on('click', function() {
+$('#button-refresh').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=common/security.list&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $('#modal-security').modal('dispose');
+
+            $('#security').html(html);
+
+            $('#modal-security').modal('show');
+
+            $('#accordion .accordion-header:first button').trigger('click');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#security').on('click', '#button-install', function() {
     var element = this;
 
     $.ajax({
@@ -144,6 +47,8 @@ $('#button-install').on('click', function() {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -153,9 +58,7 @@ $('#button-install').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-storage').remove();
-
-                $('#accordion .accordion-header:first button').trigger('click');
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -164,7 +67,7 @@ $('#button-install').on('click', function() {
     });
 });
 
-$('#button-storage').on('click', function() {
+$('#security').on('click', '#button-storage', function() {
     var element = this;
 
     $(element).button('loading');
@@ -196,9 +99,7 @@ $('#button-storage').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
-
-                    $('#accordion .accordion-header:first button').trigger('click');
+                    $('#button-refresh').trigger('click');
                 }
 
                 if (json['next']) {
@@ -218,7 +119,40 @@ $('#button-storage').on('click', function() {
     chain.attach(storage);
 });
 
-$('#button-admin').on('click', function() {
+$('#security').on('click', '#button-storage-delete', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=storage',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#security').on('click', '#button-admin', function() {
     var element = this;
 
     $(element).button('loading');
@@ -254,9 +188,7 @@ $('#button-admin').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
-
-                    $('#accordion .accordion-header:first button').trigger('click');
+                    $('#button-refresh').trigger('click');
                 }
 
                 if (json['next']) {
@@ -276,11 +208,11 @@ $('#button-admin').on('click', function() {
     chain.attach(admin);
 });
 
-$('#button-storage-delete, #button-admin-delete').on('click', function() {
+$('#security').on('click', '#button-admin-delete', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=' + $(element).val(),
+        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=admin',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -289,6 +221,8 @@ $('#button-storage-delete, #button-admin-delete').on('click', function() {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -298,9 +232,7 @@ $('#button-storage-delete, #button-admin-delete').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#security').load('index.php?route=common/security.list&token={{ user_token }}');
-
-                $('#accordion .accordion-header:first button').trigger('click');
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

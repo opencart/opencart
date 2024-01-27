@@ -159,7 +159,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $weight_class_id primary key of the weight class record to be fetched
 	 *
 	 * @return void
 	 */
@@ -170,7 +170,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record to be fetched
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

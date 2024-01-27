@@ -11,14 +11,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data
 	 *
-	 * @return int
+	 * @return void
 	 */
-	public function addSeoUrl(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `keyword` = '" . $this->db->escape((string)$data['keyword']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
-
-		return $this->db->getLastId();
-	}
-
 	public function addSeoUrl(int $store_id, $language_id, $key, $value, $keyword, $sort_order): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'information_id', `value` = '" . (int)$information_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 	}

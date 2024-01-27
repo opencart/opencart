@@ -1,4 +1,4 @@
- <?php
+<?php
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter

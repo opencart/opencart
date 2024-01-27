@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Marketplace Catalog Service** service.
+ * @method \Aws\Result batchDescribeEntities(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDescribeEntitiesAsync(array $args = [])
  * @method \Aws\Result cancelChangeSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelChangeSetAsync(array $args = [])
  * @method \Aws\Result deleteResourcePolicy(array $args = [])

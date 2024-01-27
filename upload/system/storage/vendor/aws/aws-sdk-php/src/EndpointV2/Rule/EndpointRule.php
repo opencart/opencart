@@ -5,7 +5,7 @@ namespace Aws\EndpointV2\Rule;
 use Aws\EndpointV2\Ruleset\RulesetStandardLibrary;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 
-Class EndpointRule extends AbstractRule
+class EndpointRule extends AbstractRule
 {
     /** @var array */
     private $endpoint;

@@ -6,6 +6,7 @@ use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
+use Aws\EndpointV2\EndpointV2Middleware;
 use Aws\Exception\AwsException;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
@@ -240,7 +241,9 @@ class AwsClient implements AwsClientInterface
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
-        $this->addRequestBuilder();
+        if ($this->isUseEndpointV2()) {
+            $this->addEndpointV2Middleware();
+        }
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -445,7 +448,11 @@ class AwsClient implements AwsClientInterface
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(
-            Middleware::signer($this->credentialProvider, $resolver, $this->tokenProvider),
+            Middleware::signer($this->credentialProvider,
+                $resolver,
+                $this->tokenProvider,
+                $this->getConfig()
+            ),
             'signer'
         );
     }
@@ -512,24 +519,18 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    /**
-     * Adds the `builder` middleware such that a client's endpoint
-     * provider and endpoint resolution arguments can be passed.
-     */
-    private function addRequestBuilder()
+    private function addEndpointV2Middleware()
     {
-        $handlerList = $this->getHandlerList();
-        $serializer = $this->serializer;
-        $endpointProvider = $this->endpointProvider;
+        $list = $this->getHandlerList();
         $endpointArgs = $this->getEndpointProviderArgs();
 
-        $handlerList->prependBuild(
-            Middleware::requestBuilder(
-                $serializer,
-                $endpointProvider,
+        $list->prependBuild(
+            EndpointV2Middleware::wrap(
+                $this->endpointProvider,
+                $this->getApi(),
                 $endpointArgs
             ),
-            'builderV2'
+            'endpoint-resolution'
         );
     }
 

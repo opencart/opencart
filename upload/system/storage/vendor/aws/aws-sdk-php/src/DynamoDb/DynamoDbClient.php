@@ -115,6 +115,8 @@ use Aws\RetryMiddlewareV2;
  * @method \GuzzleHttp\Promise\Promise updateGlobalTableAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateGlobalTableSettings(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise updateGlobalTableSettingsAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result updateKinesisStreamingDestination(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise updateKinesisStreamingDestinationAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateTableReplicaAutoScaling(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise updateTableReplicaAutoScalingAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateTimeToLive(array $args = []) (supported in versions 2012-08-10)

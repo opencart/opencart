@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateAccountsAsync(array $args = [])
  * @method \Aws\Result disassociatePricingRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociatePricingRulesAsync(array $args = [])
+ * @method \Aws\Result getBillingGroupCostReport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getBillingGroupCostReportAsync(array $args = [])
  * @method \Aws\Result listAccountAssociations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAccountAssociationsAsync(array $args = [])
  * @method \Aws\Result listBillingGroupCostReports(array $args = [])

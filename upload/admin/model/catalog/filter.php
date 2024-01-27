@@ -213,8 +213,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int $filter_group_id primary key of the attribute record to be fetched
-	 * @param int $language_id
+	 * @param int                  $filter_group_id primary key of the attribute record to be fetched
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -222,16 +222,18 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function addDescription(int $filter_group_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group_description` SET `filter_group_id` = '" . (int)$filter_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
+
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $filter_group_id primary key of the attribute record to be fetched
+	 * @param int $filter_group_id primary key of the filter record to be fetched
 	 *
 	 * @return void
 	 */
 	public function deleteDescription(int $filter_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
+
 	/**
 	 * Get Descriptions
 	 *

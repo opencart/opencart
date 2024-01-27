@@ -25,7 +25,6 @@ class Option extends \Opencart\System\Engine\Model {
 		if (isset($data['option_value'])) {
 			foreach ($data['option_value'] as $option_value) {
 
-
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value` SET `option_id` = '" . (int)$option_id . "', `image` = '" . $this->db->escape(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8')) . "', `sort_order` = '" . (int)$option_value['sort_order'] . "'");
 
 				$option_value_id = $this->db->getLastId();
@@ -156,20 +155,20 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int                  $option_id   primary key of the option record to be fetched
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $option_id, int $language_id, $data): void {
+	public function addDescription(int $option_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `option_id` = '" . (int)$option_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
 	/**
 	 *	Delete Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $option_id primary key of the option record to be fetched
 	 *
 	 * @return void
 	 */

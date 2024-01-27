@@ -133,7 +133,9 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $length_class_id primary key of the length class record to be fetched
+	 * @param int $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -145,7 +147,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $length_class_id primary key of the length class record to be fetched
 	 *
 	 * @return void
 	 */

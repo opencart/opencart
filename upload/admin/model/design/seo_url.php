@@ -11,10 +11,12 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data
 	 *
-	 * @return void
+	 * @return int
 	 */
-	public function addSeoUrl(int $store_id, $language_id, $key, $value, $keyword, $sort_order): void {
+	public function addSeoUrl(int $store_id, $language_id, $key, $value, $keyword, $sort_order): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'information_id', `value` = '" . (int)$information_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
+
+		return $this->db->getLastId();
 	}
 	/**
 	 * Get Seo Urls

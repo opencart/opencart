@@ -233,8 +233,8 @@ class Category extends \Opencart\System\Engine\Model {
 			$this->deleteCategory($result['category_id']);
 		}
 
-		$this->deletePath($category_id);
 		$this->deleteDescription($category_id);
+		$this->deletePath($category_id);
 		$this->deleteFilter($category_id);
 		$this->deleteStore($category_id);
 		$this->deleteLayout($category_id);
@@ -243,8 +243,9 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_product->deleteCategoryByCategoryId($category_id);
 
+		$this->load->model('marketing/coupon');
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
+		$this->model_marketing_coupon->deleteCategoryByCategoryId($category_id);
 
 		$this->load->model('design/seo_url');
 

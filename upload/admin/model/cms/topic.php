@@ -276,7 +276,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
@@ -287,9 +287,9 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Layout
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 *
 	 * @return void
 	 */
@@ -297,10 +297,16 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
 	}
 
+	/**
+	 * Delete Layout
+	 *
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
-
 
 	/**
 	 * Get Total Topics

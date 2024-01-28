@@ -95,16 +95,27 @@ class Filter extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
 
-	public function addGroup(int $filter_group_id): array {
+	/**
+	 * Add Group
+	 * 
+	 * @param int $filter_group_id
+	 * 
+	 * @return void
+	 */
+	public function addGroup(int $filter_group_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
 	}
 
-
-
+	/**
+	 * Delete Group
+	 * 
+	 * @param int $filter_group_id
+	 * 
+	 * @return void
+	 */
 	public function deleteGroup(int $filter_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
-
 
 	/**
 	 * Get Group
@@ -233,6 +244,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $filter_group_id primary key of the attribute record to be fetched
 	 * @param int                  $language_id
+	 * @param int                  $filter_group_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -244,7 +256,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $filter_group_id primary key of the filter record to be fetched
+	 * @param int $filter_group_id primary key of the filter group record to be fetched
 	 *
 	 * @return void
 	 */
@@ -253,9 +265,9 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 *	Add Group Description
 	 *
-	 * @param int                  $filter_group_id primary key of the attribute record to be fetched
+	 * @param int                  $filter_group_id primary key of the filter group record to be fetched
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
@@ -268,7 +280,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $filter_group_id primary key of the filter record to be fetched
+	 * @param int $filter_group_id primary key of the filter group record to be fetched
 	 *
 	 * @return void
 	 */

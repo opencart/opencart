@@ -11,7 +11,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data
 	 *
-	 * @return int $topic
+	 * @return int
 	 */
 	public function addTopic(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -187,10 +187,12 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 *
 	 * @param int $topic_id
+	 * @param int $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $topic_id, int $language_id, $data): void {
+	public function addDescription(int $topic_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_description` SET `topic_id` = '" . (int)$topic_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
@@ -276,20 +278,20 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
 	 * @return void
 	 */
-	public function addLayout(int $topic_id, int $store_id, int $layout_id): array {
+	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 *
 	 * @return void
 	 */
@@ -297,6 +299,13 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
 	}
 
+	/**
+	 * Delete Layout By Layout Id
+	 * 
+	 * @param int $layout_id
+	 * 
+	 * @return void
+	 */
 	public function deleteLayoutByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}

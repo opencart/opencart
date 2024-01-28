@@ -52,7 +52,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Url by Key Value pair
 	 *
-	 * @param int $seo_url_id
+	 * @param string $key
+	 * @param string $value
 	 *
 	 * @return void
 	 */
@@ -187,7 +188,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls
 	 *
-	 * @param int $information_id
+	 * @param string $key
+	 * @param string $value
 	 *
 	 * @return array<int, array<int, string>>
 	 */

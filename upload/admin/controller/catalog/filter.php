@@ -241,7 +241,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($filter_group_info)) {
-			$data['filters'] = $this->model_catalog_filter->getDescriptions($this->request->get['filter_group_id']);
+			$data['filters'] = $this->model_catalog_filter->getFilters($this->request->get['filter_group_id']);
 		} else {
 			$data['filters'] = [];
 		}
@@ -293,9 +293,9 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/filter');
 
 			if (!$this->request->post['filter_group_id']) {
-				$json['filter_group_id'] = $this->model_catalog_filter->addFilter($this->request->post);
+				$json['filter_group_id'] = $this->model_catalog_filter->addGroup($this->request->post);
 			} else {
-				$this->model_catalog_filter->editFilter($this->request->post['filter_group_id'], $this->request->post);
+				$this->model_catalog_filter->editGroup($this->request->post['filter_group_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -328,8 +328,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/filter');
 
-			foreach ($selected as $filter_id) {
-				$this->model_catalog_filter->deleteFilter($filter_id);
+			foreach ($selected as $filter_group_id) {
+				$this->model_catalog_filter->deleteGroup($filter_group_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

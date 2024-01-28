@@ -197,8 +197,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $topic_id primary key of the attribute record to be fetched
 	 *
 	 * @return void
 	 */
@@ -235,7 +234,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -247,14 +246,13 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $topic_id
 	 *
 	 * @return void
 	 */
 	public function deleteStore(int $topic_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_store` SET `topic_id` = '" . (int)$topic_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_store` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
-
 
 	/**
 	 * Get Stores
@@ -274,6 +272,35 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		return $topic_store_data;
 	}
+
+	/**
+	 * Add Layout
+	 *
+	 * @param int $information_id
+	 * @param int $store_id
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
+	public function addLayout(int $topic_id, int $store_id, int $layout_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	/**
+	 * Delete Store
+	 *
+	 * @param int $information_id
+	 *
+	 * @return void
+	 */
+	public function deleteLayout(int $topic_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
+	}
+
+	public function deleteLayoutByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
+
 
 	/**
 	 * Get Total Topics

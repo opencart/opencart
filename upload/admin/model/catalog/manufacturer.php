@@ -37,7 +37,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		// Layouts
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
-				$this->addLayout($manufacturer_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($manufacturer_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -84,7 +86,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
-				$this->addLayout($manufacturer_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($manufacturer_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -180,7 +184,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $manufacturer_id, int $store_id): array {
+	public function addStore(int $manufacturer_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
@@ -192,7 +196,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $manufacturer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 	}
 
 	/**
@@ -224,7 +228,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $manufacturer_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `information_id` = '" . (int)$manufacturer_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -235,7 +239,11 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteLayout(int $manufacturer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+	}
+
+	public function deleteLayoutByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

@@ -402,10 +402,28 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_description_data;
 	}
 
+	/**
+	 * Add Path
+	 * 
+	 * @param int $category_id
+	 * @param int $path_id
+	 * @param int $level
+	 * 
+	 * @return void
+	 */
 	public function addPath(int $category_id, int $path_id, int $level): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
 	}
 
+	/**
+	 * Edit Path
+	 * 
+	 * @param int $category_id
+	 * @param int $path_id
+	 * @param int $level
+	 * 
+	 * @return void
+	 */
 	public function editPath(int $category_id, int $path_id, int $level): void {
 		$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
 	}
@@ -456,6 +474,13 @@ class Category extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * Get Paths By Path Id
+	 * 
+	 * @param int $path_id
+	 * 
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getPathsByPathId(int $path_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$path_id . "' ORDER BY `level` ASC");
 
@@ -464,20 +489,19 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
-	 * @param int $information_id
-	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $category_id
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
-	public function addFilter(int $category_id, int $filter_id): array {
+	public function addFilter(int $category_id, int $filter_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_filter` SET `category_id` = '" . (int)$category_id . "', `filter_id` = '" . (int)$filter_id . "'");
 	}
 
 	/**
 	 * Delete Filter
 	 *
-	 * @param int $information_id
+	 * @param int $category_id
 	 *
 	 * @return void
 	 */
@@ -507,7 +531,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $category_id
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -519,7 +543,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $category_id
 	 *
 	 * @return void
 	 */

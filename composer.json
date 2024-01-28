@@ -19,13 +19,12 @@
     "docs": "http://docs.opencart.com/"
   },
   "config": {
-    "vendor-dir": "system/storage/vendor/"
+    "vendor-dir": "upload/system/storage/vendor/"
   },
   "require": {
     "php": ">=7.4",
-    "scssphp/scssphp": "^1.10.0",
-    "twig/twig": "^3.3.7",
-    "aws/aws-sdk-php": "^3.142.1"
+    "scssphp/scssphp": "^1.12",
+    "twig/twig": "^3.8"
   },
   "autoload-dev": {
       "psr-4": {

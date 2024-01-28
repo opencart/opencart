@@ -39,7 +39,9 @@ class Information extends \Opencart\System\Engine\Model {
 
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
-				$this->addLayout($information_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($information_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -87,7 +89,9 @@ class Information extends \Opencart\System\Engine\Model {
 
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
-				$this->addLayout($information_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($information_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -239,7 +243,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $information_id, $store_id): array {
+	public function addStore(int $information_id, $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
@@ -251,7 +255,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $information_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
 	/**
@@ -294,7 +298,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteLayout(int $information_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
 	/**
@@ -314,6 +318,10 @@ class Information extends \Opencart\System\Engine\Model {
 		}
 
 		return $information_layout_data;
+	}
+
+	public function deleteLayoutByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

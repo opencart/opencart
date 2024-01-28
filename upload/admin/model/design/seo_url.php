@@ -13,33 +13,12 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function addSeoUrl(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `keyword` = '" . $this->db->escape((string)$data['keyword']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+	public function addSeoUrl(int $store_id, int $language_id, string $key, string $value, string $keyword, int $sort_order = 0): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "', `keyword` = '" . $this->db->escape($keyword) . "', `sort_order` = '" . (int)$sort_order . "'");
 
 		return $this->db->getLastId();
 	}
 
-	public function addSeoUrl(int $store_id, $language_id, $key, $value, $keyword, $sort_order): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'information_id', `value` = '" . (int)$information_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-	}
-	/**
-	 * Get Seo Urls
-	 *
-	 * @param int $information_id
-	 *
-	 * @return array<int, array<int, string>>
-	 */
-	public function getSeoUrls(int $information_id): array {
-		$information_seo_url_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
-
-		foreach ($query->rows as $result) {
-			$information_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
-
-		return $information_seo_url_data;
-	}
 	/**
 	 * Edit Seo Url
 	 *
@@ -48,8 +27,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function editSeoUrl(int $seo_url_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `keyword` = '" . $this->db->escape((string)$data['keyword']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
+	public function editSeoUrl(int $seo_url_id, int $store_id, int $language_id, string $key, string $value, string $keyword, int $sort_order = 0): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "', `keyword` = '" . $this->db->escape((string)$keyword) . "', `sort_order` = '" . (int)$sort_order . "' WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 	}
 
 	/**
@@ -70,10 +49,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteSeoUrlByKeyValue(string $key, string $value): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "'");
-
-		return $query->row;
+	public function deleteSeoUrlByKeyValue(string $key, string $value): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "'");
 	}
 
 	/**
@@ -85,6 +62,43 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 */
 	public function getSeoUrl(int $seo_url_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Seo Url By Key Value
+	 *
+	 * @param string $key
+	 * @param string $value
+	 * @param int    $store_id
+	 * @param int    $language_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Seo Url By Keyword
+	 *
+	 * @param string $keyword
+	 * @param int    $store_id
+	 * @param int    $language_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getSeoUrlByKeyword(string $keyword, int $store_id, int $language_id = 0): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE (`keyword` = '" . $this->db->escape($keyword) . "' OR LCASE(`keyword`) LIKE '" . $this->db->escape('%/' . oc_strtolower($keyword)) . "') AND `store_id` = '" . (int)$store_id . "'";
+
+		if ($language_id) {
+			$sql .= " AND `language_id` = '" . (int)$language_id . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return $query->row;
 	}
@@ -164,6 +178,26 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Urls
+	 *
+	 * @param int $information_id
+	 *
+	 * @return array<int, array<int, string>>
+	 */
+
+	public function getSeoUrlsByKeyValue(string $key, string $value): array {
+		$seo_url_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "'");
+
+		foreach ($query->rows as $result) {
+			$seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
+		}
+
+		return $seo_url_data;
+	}
+
+	/**
 	 * Get Total Seo Urls
 	 *
 	 * @param array<string, mixed> $data
@@ -202,42 +236,5 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Seo Url By Key Value
-	 *
-	 * @param string $key
-	 * @param string $value
-	 * @param int    $store_id
-	 * @param int    $language_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id, int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
-
-		return $query->row;
-	}
-
-	/**
-	 * Get Seo Url By Keyword
-	 *
-	 * @param string $keyword
-	 * @param int    $store_id
-	 * @param int    $language_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function getSeoUrlByKeyword(string $keyword, int $store_id, int $language_id = 0): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE (`keyword` = '" . $this->db->escape($keyword) . "' OR LCASE(`keyword`) LIKE '" . $this->db->escape('%/' . oc_strtolower($keyword)) . "') AND `store_id` = '" . (int)$store_id . "'";
-
-		if ($language_id) {
-			$sql .= " AND `language_id` = '" . (int)$language_id . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->row;
 	}
 }

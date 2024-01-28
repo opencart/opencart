@@ -42,7 +42,9 @@ class Article extends \Opencart\System\Engine\Model {
 		// Layouts
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
-				$this->addLayout($article_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($article_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -94,7 +96,9 @@ class Article extends \Opencart\System\Engine\Model {
 
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
-				$this->addLayout($article_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($article_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -277,7 +281,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $information_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
 	/**
@@ -308,8 +312,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addLayout(int $information_id, int $store_id, int $layout_id): array {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+	public function addLayout(int $article_id, int $store_id, int $layout_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_layout` SET `article_id` = '" . (int)$article_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -319,8 +323,12 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteLayout(int $information_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "'");
+	public function deleteLayout(int $article_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
+	}
+
+	public function deleteLayoutByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

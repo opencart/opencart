@@ -301,7 +301,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['article_id'])) {
 			$this->load->model('design/seo_url');
 
-			$data['article_seo_url'] = $this->model_design_seo_url->getSeoUrlByKeyValue('article_id', $this->request->get['article_id']);
+			$data['article_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('article_id', $this->request->get['article_id']);
 		} else {
 			$data['article_seo_url'] = [];
 		}

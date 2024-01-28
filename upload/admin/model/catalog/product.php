@@ -81,7 +81,12 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
 				if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
+
+					$this->addOption($product_id, $product_option);
+
 					if (isset($product_option['product_option_value'])) {
+
+
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `required` = '" . (int)$product_option['required'] . "'");
 
 						$product_option_id = $this->db->getLastId();
@@ -200,6 +205,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
+				$this->addFilter($product_id, $filter_id);
+
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_filter` SET `product_id` = '" . (int)$product_id . "', `filter_id` = '" . (int)$filter_id . "'");
 			}
 		}
@@ -345,7 +352,9 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
-				$this->addLayout($store_id, $layout_id, 'product_id', $product_id, $keyword);
+				if ($layout_id) {
+					$this->addLayout($store_id, $layout_id, 'product_id', $product_id, $keyword);
+				}
 
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_layout` SET `product_id` = '" . (int)$product_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 			}
@@ -1032,13 +1041,16 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
 	public function deleteCategory(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	public function deleteCategoryByCategoryId(int $category_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**
@@ -1068,8 +1080,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
-	public function addFilter(int $product_id, int $language_id, $data): void {
-
+	public function addFilter(int $product_id, int $filter_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_filter` SET `product_id` = '" . (int)$product_id . "', `filter_id` = '" . (int)$filter_id . "'");
 	}
 
 	/**
@@ -1081,7 +1093,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
 	public function deleteFilter(int $product_id): void {
-
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_filter` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**
@@ -1172,7 +1184,26 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
 	public function addOption(int $product_id, int $language_id, $data): void {
+		foreach ($data['product_option'] as $product_option) {
 
+			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
+
+
+				$this->addOption($product_id, $data);
+
+				if (isset($product_option['product_option_value'])) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `required` = '" . (int)$product_option['required'] . "'");
+
+					$product_option_id = $this->db->getLastId();
+
+					foreach ($product_option['product_option_value'] as $product_option_value) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `option_value_id` = '" . (int)$product_option_value['option_value_id'] . "', `quantity` = '" . (int)$product_option_value['quantity'] . "', `subtract` = '" . (int)$product_option_value['subtract'] . "', `price` = '" . (float)$product_option_value['price'] . "', `price_prefix` = '" . $this->db->escape($product_option_value['price_prefix']) . "', `points` = '" . (int)$product_option_value['points'] . "', `points_prefix` = '" . $this->db->escape($product_option_value['points_prefix']) . "', `weight` = '" . (float)$product_option_value['weight'] . "', `weight_prefix` = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+					}
+				}
+			} else {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `value` = '" . $this->db->escape($product_option['value']) . "', `required` = '" . (int)$product_option['required'] . "'");
+			}
+		}
 	}
 
 	/**
@@ -1242,7 +1273,20 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
 	public function addOptionValue(int $product_id, int $language_id, $data): void {
+		$this->addOption($product_id, $data);
 
+		if (isset($product_option['product_option_value'])) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `required` = '" . (int)$product_option['required'] . "'");
+
+			$product_option_id = $this->db->getLastId();
+
+			foreach ($product_option['product_option_value'] as $product_option_value) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `option_value_id` = '" . (int)$product_option_value['option_value_id'] . "', `quantity` = '" . (int)$product_option_value['quantity'] . "', `subtract` = '" . (int)$product_option_value['subtract'] . "', `price` = '" . (float)$product_option_value['price'] . "', `price_prefix` = '" . $this->db->escape($product_option_value['price_prefix']) . "', `points` = '" . (int)$product_option_value['points'] . "', `points_prefix` = '" . $this->db->escape($product_option_value['points_prefix']) . "', `weight` = '" . (float)$product_option_value['weight'] . "', `weight_prefix` = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+			}
+		}
+			} else {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `value` = '" . $this->db->escape($product_option['value']) . "', `required` = '" . (int)$product_option['required'] . "'");
+		}
 	}
 
 	/**
@@ -1545,6 +1589,10 @@ class Product extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteLayout(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` SET `product_id` = '" . (int)$product_id . "'");
+	}
+
+	public function deleteLayoutByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

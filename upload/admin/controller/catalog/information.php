@@ -279,7 +279,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['information_id'])) {
 			$this->load->model('design/seo_url');
 
-			$data['information_seo_url'] = $this->model_design_seo_url->getSeoUrlByKeyValue('information_id', $this->request->get['information_id']);
+			$data['information_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('information_id', $this->request->get['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}

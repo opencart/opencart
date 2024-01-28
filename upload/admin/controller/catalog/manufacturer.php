@@ -279,7 +279,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['manufacturer_id'])) {
 			$this->load->model('design/seo_url');
 
-			$data['manufacturer_seo_url'] = $this->model_design_seo_url->getSeoUrlByKeyValue('manufacturer_id', $this->request->get['manufacturer_id']);
+			$data['manufacturer_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('manufacturer_id', $this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_seo_url'] = [];
 		}

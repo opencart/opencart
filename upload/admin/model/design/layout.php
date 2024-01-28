@@ -78,31 +78,21 @@ class Layout extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_category->deleteLayoutByLayoutId($layout_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
-
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteLayoutByLayoutId($layout_id);
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		$this->load->model('catalog/information');
 
 		$this->model_catalog_information->deleteLayoutByLayoutId($layout_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
-
 		$this->load->model('cms/article');
 
 		$this->model_cms_article->deleteLayoutByLayoutId($layout_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
-
 		$this->load->model('cms/topic');
 
 		$this->model_cms_topic->deleteLayoutByLayoutId($layout_id);
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "tooptic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

@@ -73,7 +73,9 @@ class Category extends \Opencart\System\Engine\Model {
 		// Set which layout to use with this category
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
-				$this->addLayout($category_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($category_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -117,7 +119,7 @@ class Category extends \Opencart\System\Engine\Model {
 					$paths[] = $result['path_id'];
 				}
 
-				// Get whats left of the nodes current path
+				// Get what's left of the nodes current path
 				$results = $this->getPaths($category_path['category_id']);
 
 				foreach ($results as $result) {
@@ -128,7 +130,7 @@ class Category extends \Opencart\System\Engine\Model {
 				$level = 0;
 
 				foreach ($paths as $path_id) {
-					$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_path['category_id'] . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
+					$this->editPath($category_path['category_id'], $path_id, $level);
 
 					$level++;
 				}
@@ -148,9 +150,8 @@ class Category extends \Opencart\System\Engine\Model {
 				$level++;
 			}
 
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)$level . "'");
+			$this->editPath($category_id, $category_id, $level);
 		}
-
 
 		$this->deleteFilter($category_id);
 
@@ -177,10 +178,7 @@ class Category extends \Opencart\System\Engine\Model {
 			$path_new = $path_parent . '_' . $category_id;
 		}
 
-
-
 		// Get old data to so we know what to replace
-
 		$seo_url_data = $this->getSeoUrls($category_id);
 
 		// Delete the old path
@@ -210,7 +208,9 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
-				$this->addLayout($category_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->addLayout($category_id, $store_id, $layout_id);
+				}
 			}
 		}
 	}
@@ -227,16 +227,13 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->deletePath($category_id);
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$category_id . "'");
+		$results = $this->getPathsByPathId($category_id);
 
-		foreach ($query->rows as $result) {
+		foreach ($results as $result) {
 			$this->deleteCategory($result['category_id']);
 		}
 
-		$this->deleteCategory($result['category_id']);
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "'");
-
+		$this->deletePath($category_id);
 		$this->deleteDescription($category_id);
 		$this->deleteFilter($category_id);
 		$this->deleteStore($category_id);
@@ -244,9 +241,9 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->load->model('catalog/product');
 
-		$this->model_catalog_product->deleteCategoryByCatgeryId($category_id);
+		$this->model_catalog_product->deleteCategoryByCategoryId($category_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		$this->load->model('design/seo_url');
@@ -281,7 +278,7 @@ class Category extends \Opencart\System\Engine\Model {
 				$level++;
 			}
 
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', `level` = '" . (int)$level . "'");
+			$this->editPath($category['category_id'], $category['category_id'], $level);
 
 			$this->repairCategories($category['category_id']);
 		}
@@ -410,7 +407,7 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	public function editPath(int $category_id, int $path_id, int $level): void {
-
+		$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
 	}
 
 	/**
@@ -454,11 +451,16 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getPaths(int $category_id): array {
-		$query = $this->db->query("SELECT `category_id`, `path_id`, `level` FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
 
 		return $query->rows;
 	}
 
+	public function getPathsByPathId(int $path_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$path_id . "' ORDER BY `level` ASC");
+
+		return $query->rows;
+	}
 	/**
 	 * Add Filter
 	 *
@@ -480,7 +482,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteFilter(int $category_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_filter` SET `category_id` = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_filter` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**
@@ -522,7 +524,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $category_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**
@@ -565,7 +567,11 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteLayout(int $category_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "'");
+	}
+
+	public function deleteLayoutByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

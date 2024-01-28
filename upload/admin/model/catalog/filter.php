@@ -19,7 +19,7 @@ class Filter extends \Opencart\System\Engine\Model {
 		$filter_group_id = $this->db->getLastId();
 
 		foreach ($data['filter_group_description'] as $language_id => $value) {
-			$this->addDescription($filter_group_id, $language_id, $value);
+			$this->addGroupDescription($filter_group_id, $language_id, $value);
 		}
 
 		if (isset($data['filter'])) {
@@ -29,7 +29,7 @@ class Filter extends \Opencart\System\Engine\Model {
 				$filter_id = $this->db->getLastId();
 
 				foreach ($filter['filter_description'] as $language_id => $filter_description) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_description` SET `filter_id` = '" . (int)$filter_id . "', `language_id` = '" . (int)$language_id . "', `filter_group_id` = '" . (int)$filter_group_id . "', `name` = '" . $this->db->escape($filter_description['name']) . "'");
+					$this->addDescription($filter_id, $language_id, $filter_group_id, $filter_description);
 				}
 			}
 		}
@@ -48,11 +48,18 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function editFilter(int $filter_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
-		$this->deleteDescription($filter_group_id);
+		$this->deleteGroupDescription($filter_group_id);
 
 		foreach ($data['filter_group_description'] as $language_id => $value) {
-			$this->addDescription($filter_group_id, $language_id, $value);
+			$this->addGroupDescription($filter_group_id, $language_id, $value);
 		}
+
+		$this->deleteFilterByFIlterGroupId($filter_group_id);
+
+		$this->deleteStore($article_id);
+		$this->deleteLayout($article_id);
+		$this->deleteCommentsByArticleId($article_id);
+
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
@@ -87,6 +94,17 @@ class Filter extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
+
+	public function addGroup(int $filter_group_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
+	}
+
+
+
+	public function deleteGroup(int $filter_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
+	}
+
 
 	/**
 	 * Get Group
@@ -219,8 +237,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $filter_group_id, int $language_id, $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group_description` SET `filter_group_id` = '" . (int)$filter_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	public function addDescription(int $filter_id, int $language_id, int $filter_group_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_description` SET `filter_id` = '" . (int)$filter_id . "', `language_id` = '" . (int)$language_id . "', `filter_group_id` = '" . (int)$filter_group_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
 	/**
@@ -231,6 +249,30 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteDescription(int $filter_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
+	}
+
+	/**
+	 *	Add Description
+	 *
+	 * @param int                  $filter_group_id primary key of the attribute record to be fetched
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
+	 *
+	 * @return void
+	 */
+	public function addGroupDescription(int $filter_group_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group_description` SET `filter_group_id` = '" . (int)$filter_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 * @param int $filter_group_id primary key of the filter record to be fetched
+	 *
+	 * @return void
+	 */
+	public function deleteGroupDescription(int $filter_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
 

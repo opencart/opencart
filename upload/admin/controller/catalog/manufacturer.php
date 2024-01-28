@@ -277,7 +277,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['manufacturer_id'])) {
-			$data['manufacturer_seo_url'] = $this->model_catalog_manufacturer->getSeoUrls($this->request->get['manufacturer_id']);
+			$this->load->model('design/seo_url');
+
+			$data['manufacturer_seo_url'] = $this->model_design_seo_url->getSeoUrlByKeyValue('manufacturer_id', $this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_seo_url'] = [];
 		}

@@ -1026,7 +1026,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// SEO
 		if ($product_id) {
-			$data['product_seo_url'] = $this->model_catalog_product->getSeoUrls($product_id);
+			$this->load->model('design/seo_url');
+
+			$data['product_seo_url'] = $this->model_design_seo_url->getSeoUrlByKeyValue('product_id', $this->request->get['product_id']);
 		} else {
 			$data['product_seo_url'] = [];
 		}

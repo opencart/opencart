@@ -177,13 +177,16 @@ class Category extends \Opencart\System\Engine\Model {
 			$path_new = $path_parent . '_' . $category_id;
 		}
 
+
+
 		// Get old data to so we know what to replace
+
 		$seo_url_data = $this->getSeoUrls($category_id);
 
 		// Delete the old path
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($path_old) . "'");
-
 		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->deleteSeoUrlByKeyValue('path', $path_old);
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
@@ -239,6 +242,10 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->deleteStore($category_id);
 		$this->deleteLayout($category_id);
 
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->deleteCategoryByCatgeryId($category_id);
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
 
@@ -257,19 +264,19 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function repairCategories(int $parent_id = 0): void {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
+		$categories = $this->getCategoriesByParentId($parent_id);
 
-		foreach ($query->rows as $category) {
+		foreach ($categories as $category) {
 			// Delete the path below the current one
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category['category_id'] . "'");
+			$this->deletePath($category['category_id']);
 
 			// Fix for records with no paths
 			$level = 0;
 
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$parent_id . "' ORDER BY `level` ASC");
+			$paths = $this->getPaths($parent_id);
 
-			foreach ($query->rows as $result) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
+			foreach ($paths as $path) {
+				$this->addPath($category['category_id'], $path['path_id'], $level);
 
 				$level++;
 			}
@@ -343,6 +350,12 @@ class Category extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	public function getCategoriesByParentId(int $parent_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 *	Add Description
 	 *
@@ -351,7 +364,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
-	public function addDescription(int $category_id, int $language_id, $data): void {
+	public function addDescription(int $category_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
@@ -394,6 +407,10 @@ class Category extends \Opencart\System\Engine\Model {
 
 	public function addPath(int $category_id, int $path_id, int $level): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
+	}
+
+	public function editPath(int $category_id, int $path_id, int $level): void {
+
 	}
 
 	/**

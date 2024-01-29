@@ -42,6 +42,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
+	public function editSubscriptionPlanBySubscriptionPlanId(int $subscription_plan_id, int $subscription_plan_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+	}
+
 	/**
 	 * Edit Remaining
 	 *

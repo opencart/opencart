@@ -1672,6 +1672,10 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	public function deleteSubscriptionBySubscriptionPlanId(int $subscription_plan_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+	}
+
 	/**
 	 * Get Total Products
 	 *

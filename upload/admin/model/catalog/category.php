@@ -179,11 +179,11 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		// Get old data to so we know what to replace
-		$seo_url_data = $this->getSeoUrls($category_id);
-
-		// Delete the old path
 		$this->load->model('design/seo_url');
 
+		$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyValue('category_id', $category_id);
+
+		// Delete the old path
 		$this->model_design_seo_url->deleteSeoUrlByKeyValue('path', $path_old);
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
@@ -197,8 +197,13 @@ class Category extends \Opencart\System\Engine\Model {
 				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'path', $path_new, $keyword);
 
 				// Update sub category seo urls
-				if (isset($seo_url_data[$store_id][$language_id])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_url_data[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
+				if (isset($seo_urls[$store_id][$language_id])) {
+					$this->model_design_seo_url->editSeoUrlsByKeyValue('category_id', $category_id);
+
+
+
+
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_urls[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
 				}
 			}
 		}

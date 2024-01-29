@@ -68,8 +68,9 @@ class User extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteUser(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
+
+		$this->deleteAuthorizeByUserId($user_id);
+		$this->deleteLoginByUserId($user_id);
 	}
 
 	/**
@@ -286,6 +287,10 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
 	}
 
+	public function deleteLoginByUserId(int $user_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
+	}
+
 	/**
 	 * Get Logins
 	 *
@@ -375,6 +380,10 @@ class User extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteAuthorize(int $user_authorize_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_authorize_id` = '" . (int)$user_authorize_id . "'");
+	}
+
+	public function deleteAuthorizeByUserId(int $user_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
 
 	/**

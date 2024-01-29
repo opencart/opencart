@@ -45,7 +45,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function deleteGroup(int $filter_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
-		$this->deleteDescription($filter_group_id);
+		$this->deleteGroupDescription($filter_group_id);
 		$this->deleteFilter($filter_group_id);
 	}
 
@@ -168,16 +168,6 @@ class Filter extends \Opencart\System\Engine\Model {
 		return $filter_id;
 	}
 
-	public function editFilter(int $filter_id, int $filter_group_id, $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter` SET `filter_id` = '" . (int)$filter_id . "', `filter_group_id` = '" . (int)$filter_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
-
-		$this->deleteFilterDescription($filter_id);
-
-		foreach ($data['filter_description'] as $language_id => $filter_description) {
-			$this->addFilterDescription($filter_id, $language_id, $filter_group_id, $filter_description);
-		}
-	}
-
 	/**
 	 * Delete Filter
 	 *
@@ -204,10 +194,6 @@ class Filter extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_description` SET `filter_id` = '" . (int)$filter_id . "', `language_id` = '" . (int)$language_id . "', `filter_group_id` = '" . (int)$filter_group_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
-	public function editFilterDescription(int $filter_id, int $language_id, int $filter_group_id, $data): void {
-
-	}
-
 	/**
 	 *	Delete Description
 	 *
@@ -215,7 +201,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteFilterDescription(int $filter_group_id): void {
+	public function deleteFilterDescriptionByFilterId(int $filter_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
 
@@ -249,7 +235,6 @@ class Filter extends \Opencart\System\Engine\Model {
 
 		return $filter_data;
 	}
-
 
 	/**
 	 * Edit Filter

@@ -1,5 +1,5 @@
 <h2>{{ text_payment_info }}</h2>
-<div id="opayo-transaction-msg" class="alert alert-success" style="display:none;"></div>
+<div class="alert alert-success" style="display:none;" id="opayo-transaction-msg"></div>
 <table class="table table-striped table-bordered">
   <tr>
     <td>{{ text_order_ref }}</td>
@@ -23,10 +23,10 @@
         {% if opayo_order.void_status == 0 %}
           <div class="row mb-3">
             <div class="col-sm-3">
-              <input id="release-amount" type="text" width="10" class="form-control" value="{{ opayo_order.total }}" />
+              <input type="text" width="10" class="form-control" value="{{ opayo_order.total }}"  id="release-amount"/>
             </div>
             <div class="col-sm-3">
-              <a id="button-release" class="button btn btn-primary">{{ button_release }}</a> <span id="img-loading-release" class="btn btn-primary" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+              <a class="button btn btn-primary" id="button-release">{{ button_release }}</a> <span class="btn btn-primary" style="display:none;" id="img-loading-release"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
             </div>
           </div>
         {% endif %}
@@ -42,7 +42,7 @@
         <span class="void-text">{{ text_no }}</span>&nbsp;&nbsp;
         <div class="row mb-3">
           <div class="col-sm-3">
-            <a id="button-void" class="button btn btn-primary">{{ button_void }}</a> <span id="img-loading-void" class="btn btn-primary" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+            <a class="button btn btn-primary" id="button-void">{{ button_void }}</a> <span class="btn btn-primary" style="display:none;" id="img-loading-void"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
           </div>
         </div>
       {% else %}
@@ -60,10 +60,10 @@
         {% if opayo_order.total_released > 0 and opayo_order.void_status == 0 %}
           <div class="row mb-3">
             <div class="col-sm-3">
-              <input id="rebate-amount" type="text" width="10" class="form-control" />
+              <input type="text" width="10" class="form-control"  id="rebate-amount"/>
             </div>
             <div class="col-sm-3">
-              <a id="button-rebate" class="button btn btn-primary">{{ button_rebate }}</a> <span id="img-loading-rebate" class="btn btn-primary" style="display:none;"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
+              <a class="button btn btn-primary" id="button-rebate">{{ button_rebate }}</a> <span class="btn btn-primary" style="display:none;" id="img-loading-rebate"><i class="fas fa-circle-o-notch fa-spin fa-lg"></i></span>
             </div>
           </div>
         {% endif %}
@@ -73,7 +73,7 @@
   <tr>
     <td>{{ text_transactions }}:</td>
     <td>
-      <table id="opayo-transactions" class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered" id="opayo-transactions">
         <thead>
           <tr>
             <td class="text-left"><strong>{{ text_column_date_added }}</strong></td>

@@ -17,22 +17,22 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div id="filter-seo" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+      <div class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3" id="filter-seo">
         <div class="card filter-sticky">
           <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label id="input-keyword" for="input-keyword" class="form-label">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" class="form-control"/>
+                <label for="input-keyword" class="form-label" id="input-keyword">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label id="input-key" for="input-key" class="form-label">{{ entry_key }}</label> <input type="text" name="filter_key" value="{{ filter_key }}" placeholder="{{ entry_key }}" class="form-control"/>
+                <label for="input-key" class="form-label" id="input-key">{{ entry_key }}</label> <input type="text" name="filter_key" value="{{ filter_key }}" placeholder="{{ entry_key }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label id="input-value" for="input-value" class="form-label">{{ entry_value }}</label> <input type="text" name="filter_value" value="{{ filter_value }}" placeholder="{{ entry_value }}" class="form-control"/>
+                <label for="input-value" class="form-label" id="input-value">{{ entry_value }}</label> <input type="text" name="filter_value" value="{{ filter_value }}" placeholder="{{ entry_value }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label id="input-store" for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" class="form-select">
+                <label for="input-store" class="form-label" id="input-store">{{ entry_store }}</label> <select name="filter_store_id" class="form-select">
                   <option value=""></option>
                   <option value="0"{% if filter_store_id == '0' %} selected{% endif %}>{{ text_default }}</option>
                   {% for store in stores %}
@@ -41,7 +41,7 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label id="input-language" for="input-language" class="form-label">{{ entry_language }}</label> <select name="filter_language_id" class="form-select">
+                <label for="input-language" class="form-label" id="input-language">{{ entry_language }}</label> <select name="filter_language_id" class="form-select">
                   <option value=""></option>
                   {% for language in languages %}
                     <option value="{{ language.language_id }}"{% if language.language_id == filter_language_id %} selected{% endif %}>{{ language.name }}</option>
@@ -49,7 +49,7 @@
                 </select>
               </div>
               <div class="text-end">
-                <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="button" class="btn btn-light" id="button-filter"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -59,7 +59,7 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="seo-url" class="card-body">{{ list }}</div>
+          <div class="card-body" id="seo-url">{{ list }}</div>
         </div>
       </div>
     </div>

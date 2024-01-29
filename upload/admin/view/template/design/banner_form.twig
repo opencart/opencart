@@ -17,19 +17,19 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-banner" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-banner">
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
-              <div id="error-name" class="invalid-feedback"></div>
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name"/>
+              <div class="invalid-feedback" id="error-name"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
-                <input id="input-status" type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input type="hidden" name="status" value="0" id="input-status"/> <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
@@ -42,8 +42,8 @@
           <div class="tab-content">
             {% set image_row = 0 %}
             {% for language in languages %}
-              <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                <table id="image-{{ language.language_id }}" class="table table-bordered table-hover">
+              <div class="tab-pane{% if loop.first %} active{% endif %}" id="language-{{ language.language_id }}">
+                <table class="table table-bordered table-hover" id="image-{{ language.language_id }}">
                   <thead>
                     <tr>
                       <td class="text-start required">{{ entry_title }}</td>
@@ -60,20 +60,20 @@
                         <tr id="image-row-{{ image_row }}">
 
                           <td class="text-start">
-                            <input id="input-image-{{ language.language_id }}-{{ image_row }}-title" type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control"/>
-                            <div id="error-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div></td>
+                            <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control" id="input-image-{{ language.language_id }}-{{ image_row }}-title"/>
+                            <div class="invalid-feedback" id="error-image-{{ language.language_id }}-{{ image_row }}-title"></div></td>
 
-                          <td id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="text-start" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" class="form-control"/></td>
+                          <td class="text-start" style="width: 30%;" id="input-image-{{ language.language_id }}-{{ image_row }}-link"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" class="form-control"/></td>
                           <td class="text-center">
                             <div class="border rounded d-block" style="max-width: 300px;">
-                              <img id="thumb-image-{{ language.language_id }}-{{ image_row }}" src="{{ banner_image.thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                              <input id="input-image-{{ language.language_id }}-{{ image_row }}-image" type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}"/>
+                              <img src="{{ banner_image.thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-image-{{ language.language_id }}-{{ image_row }}"/>
+                              <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image-{{ language.language_id }}-{{ image_row }}-image"/>
                               <div class="d-grid">
                                 <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}-{{ image_row }}-image" data-oc-thumb="#thumb-image-{{ language.language_id }}-{{ image_row }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                                 <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}-{{ image_row }}-image" data-oc-thumb="#thumb-image-{{ language.language_id }}-{{ image_row }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                               </div>
                             </div></td>
-                          <td id="input-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+                          <td class="text-end" style="width: 10%;" id="input-image-{{ language.language_id }}-{{ image_row }}-sort-order"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                           <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>
                         {% set image_row = image_row + 1 %}
@@ -83,14 +83,14 @@
                   <tfoot>
                     <tr>
                       <td colspan="4"></td>
-                      <td id="button-banner-{{ language.language_id }}" class="text-end"><button type="button" data-language="{{ language.language_id }}" data-bs-toggle="tooltip" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                      <td class="text-end" id="button-banner-{{ language.language_id }}"><button type="button" data-language="{{ language.language_id }}" data-bs-toggle="tooltip" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
             {% endfor %}
           </div>
-          <input id="input-banner-id" type="hidden" name="banner_id" value="{{ banner_id }}"/>
+          <input type="hidden" name="banner_id" value="{{ banner_id }}" id="input-banner-id"/>
         </form>
       </div>
     </div>
@@ -104,21 +104,21 @@ $('button[id^=\'button-banner\']').on('click', function() {
 
     html = '<tr id="image-row-' + image_row + '">';
     html += '  <td class="text-start">';
-    html += '    <input id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title" type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title|escape('js') }}" class="form-control"/>';
-    html += '    <div id="error-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="invalid-feedback"></div>';
+    html += '    <input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title|escape('js') }}" class="form-control" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title"/>';
+    html += '    <div class="invalid-feedback" id="error-image-' + $(element).attr('data-language') + '-' + image_row + '-title"></div>';
     html += '  </td>';
-    html += '  <td id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link" class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-start" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-center">';
     html += '    <div class="border rounded d-block" style="max-width: 300px;">';
-    html += '      <img id="thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" src="{{ placeholder|escape('js') }}" alt="" title="" data-oc-placeholder="{{ placeholder|escape('js') }}" class="img-fluid"/>';
-    html += '      <input id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" type="hidden" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][image]" value=""/>';
+    html += '      <img src="{{ placeholder|escape('js') }}" alt="" title="" data-oc-placeholder="{{ placeholder|escape('js') }}" class="img-fluid" id="thumb-image-' + $(element).attr('data-language') + '-' + image_row + '"/>';
+    html += '      <input type="hidden" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][image]" value="" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-image"/>';
     html += '      <div class="d-grid">';
     html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" data-oc-thumb="#thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit|escape('js') }}</button>';
     html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" data-oc-thumb="#thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear|escape('js') }}</button>';
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
-    html += '  <td id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 

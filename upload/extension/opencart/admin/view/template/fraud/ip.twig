@@ -17,11 +17,11 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <form id="form-fraud" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-fraud">
           <div class="row mb-3">
             <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select id="input-order-status" name="fraud_ip_order_status_id" class="form-select">
+              <select name="fraud_ip_order_status_id" class="form-select" id="input-order-status">
                 {% for order_status in order_statuses %}
                   <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == fraud_ip_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                 {% endfor %}
@@ -34,7 +34,7 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="fraud_ip_status" value="0"/>
-                <input id="input-status" type="checkbox" name="fraud_ip_status" value="1" class="form-check-input"{% if fraud_ip_status %} checked{% endif %}/>
+                <input type="checkbox" name="fraud_ip_status" value="1" class="form-check-input" id="input-status"{% if fraud_ip_status %} checked{% endif %}/>
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
               <label for="input-ip" class="col-sm-2 col-form-label">{{ entry_ip }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <input id="input-ip" type="text" value="" placeholder="{{ entry_ip }}" class="form-control"/>
-                  <button id="button-ip-add" class="btn btn-primary" type="button">{{ button_ip_add }}</button>
+                  <input type="text" value="" placeholder="{{ entry_ip }}" class="form-control" id="input-ip"/>
+                  <button class="btn btn-primary" type="button" id="button-ip-add">{{ button_ip_add }}</button>
                 </div>
               </div>
             </div>

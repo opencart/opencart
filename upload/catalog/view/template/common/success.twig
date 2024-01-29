@@ -1,12 +1,12 @@
 {{ header }}
-<div id="common-success" class="container">
+<div class="container" id="common-success">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       {{ text_message }}
       <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

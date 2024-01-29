@@ -17,43 +17,43 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <form id="form-user" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-user">
           <fieldset>
             <legend>{{ text_user }}</legend>
             <div class="row mb-3 required">
               <label for="input-username" class="col-sm-2 col-form-label">{{ entry_username }}</label>
               <div class="col-sm-10">
-                <input id="input-username" type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" class="form-control"/>
-                <div id="error-username" class="invalid-feedback"></div>
+                <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" class="form-control" id="input-username"/>
+                <div class="invalid-feedback" id="error-username"></div>
               </div>
             </div>
             <div class="row mb-3 required">
               <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
               <div class="col-sm-10">
-                <input id="input-firstname" type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control"/>
-                <div id="error-firstname" class="invalid-feedback"></div>
+                <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control" id="input-firstname"/>
+                <div class="invalid-feedback" id="error-firstname"></div>
               </div>
             </div>
             <div class="row mb-3 required">
               <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
               <div class="col-sm-10">
-                <input id="input-lastname" type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control"/>
-                <div id="error-lastname" class="invalid-feedback"></div>
+                <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control" id="input-lastname"/>
+                <div class="invalid-feedback" id="error-lastname"></div>
               </div>
             </div>
             <div class="row mb-3 required">
               <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
               <div class="col-sm-10">
-                <input id="input-email" type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
-                <div id="error-email" class="invalid-feedback"></div>
+                <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" id="input-email"/>
+                <div class="invalid-feedback" id="error-email"></div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
               <div class="col-sm-10">
                 <div class="border rounded d-block" style="max-width: 300px;">
-                  <img id="thumb-image" src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                  <input id="input-image" type="hidden" name="image" value="{{ image }}"/>
+                  <img src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-image"/>
+                  <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                   <div class="d-grid">
                     <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                     <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -67,15 +67,15 @@
             <div class="row mb-3 required">
               <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
               <div class="col-sm-10">
-                <input id="input-password" type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control" autocomplete="new-password"/>
-                <div id="error-password" class="invalid-feedback"></div>
+                <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control" autocomplete="new-password" id="input-password"/>
+                <div class="invalid-feedback" id="error-password"></div>
               </div>
             </div>
             <div class="row mb-3 required">
               <label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
               <div class="col-sm-10">
-                <input id="input-confirm" type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" class="form-control"/>
-                <div id="error-confirm" class="invalid-feedback"></div>
+                <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" class="form-control" id="input-confirm"/>
+                <div class="invalid-feedback" id="error-confirm"></div>
               </div>
             </div>
           </fieldset>

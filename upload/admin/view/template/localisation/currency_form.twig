@@ -18,44 +18,44 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-currency" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-currency">
           <div class="row mb-3 required">
             <label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
             <div class="col-sm-10">
-              <input id="input-title" type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" class="form-control"/>
-              <div id="error-title" class="invalid-feedback"></div>
+              <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" class="form-control" id="input-title"/>
+              <div class="invalid-feedback" id="error-title"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
-              <input id="input-code" type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" class="form-control"/>
+              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" class="form-control" id="input-code"/>
               <div class="form-text">{{ help_code }}</div>
-              <div id="error-code" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-code"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
             <div class="col-sm-10">
-              <input id="input-symbol-left" type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" class="form-control"/>
+              <input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" class="form-control" id="input-symbol-left"/>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
             <div class="col-sm-10">
-              <input id="input-symbol-right" type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" class="form-control"/>
+              <input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" class="form-control" id="input-symbol-right"/>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
             <div class="col-sm-10">
-              <input id="input-decimal-place" type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" class="form-control"/>
+              <input type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" class="form-control" id="input-decimal-place"/>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
             <div class="col-sm-10">
-              <input id="input-value" type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" class="form-control"/>
+              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" class="form-control" id="input-value"/>
               <div class="form-text">{{ help_value }}</div>
             </div>
           </div>
@@ -64,11 +64,11 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
-                <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input type="checkbox" name="status" value="1" class="form-check-input" id="input-status"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
-          <input id="input-currency-id" type="hidden" name="currency_id" value="{{ currency_id }}"/>
+          <input type="hidden" name="currency_id" value="{{ currency_id }}" id="input-currency-id"/>
         </form>
       </div>
     </div>

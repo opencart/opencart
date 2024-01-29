@@ -17,32 +17,32 @@
 		<div class="card">
 			<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
 			<div class="card-body">
-				<form id="form-location" action="{{ save }}" method="post" data-oc-toggle="ajax">
+				<form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-location">
 					<div class="row mb-3 required">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
-							<input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
-							<div id="error-name" class="invalid-feedback"></div>
+							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name"/>
+							<div class="invalid-feedback" id="error-name"></div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
 						<label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
 						<div class="col-sm-10">
-							<textarea id="input-address" type="text" name="address" rows="5" placeholder="{{ entry_address }}" class="form-control">{{ address }}</textarea>
-							<div id="error-address" class="invalid-feedback"></div>
+							<textarea type="text" name="address" rows="5" placeholder="{{ entry_address }}" class="form-control" id="input-address">{{ address }}</textarea>
+							<div class="invalid-feedback" id="error-address"></div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
 						<label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
 						<div class="col-sm-10">
-							<input id="input-telephone" type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control"/>
+							<input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control" id="input-telephone"/>
 							<div class="form-text">{{ help_telephone }}</div>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
 						<div class="col-sm-10">
-							<input id="input-geocode" type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" class="form-control"/>
+							<input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" class="form-control" id="input-geocode"/>
 							<div class="form-text">{{ help_geocode }}</div>
 						</div>
 					</div>
@@ -50,8 +50,8 @@
 						<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 						<div class="col-sm-10">
 							<div class="border rounded d-block" style="max-width: 300px;">
-								<img id="thumb-image" src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-								<input id="input-image" type="hidden" name="image" value="{{ image }}"/>
+								<img src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-image"/>
+								<input type="hidden" name="image" value="{{ image }}" id="input-image"/>
 								<div class="d-grid">
 									<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
 									<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -62,18 +62,18 @@
 					<div class="row mb-3">
 						<label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
 						<div class="col-sm-10">
-							<textarea id="input-open" name="open" rows="5" placeholder="{{ entry_open }}" class="form-control">{{ open }}</textarea>
+							<textarea name="open" rows="5" placeholder="{{ entry_open }}" class="form-control" id="input-open">{{ open }}</textarea>
 							<div class="form-text">{{ help_open }}</div>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
 						<div class="col-sm-10">
-							<textarea id="input-comment" name="comment" rows="5" placeholder="{{ entry_comment }}" class="form-control">{{ comment }}</textarea>
+							<textarea name="comment" rows="5" placeholder="{{ entry_comment }}" class="form-control" id="input-comment">{{ comment }}</textarea>
 							<div class="form-text">{{ help_comment }}</div>
 						</div>
 					</div>
-					<input id="input-location-id" type="hidden" name="location_id" value="{{ location_id }}"/>
+					<input type="hidden" name="location_id" value="{{ location_id }}" id="input-location-id"/>
 				</form>
 			</div>
 		</div>

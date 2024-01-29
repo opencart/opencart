@@ -17,21 +17,21 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-module">
           <div class="row mb-3">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
-              <div id="error-name" class="invalid-feedback"></div>
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name"/>
+              <div class="invalid-feedback" id="error-name"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <input id="input-product" type="text" name="product" value="" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-product" class="dropdown-menu"></ul>
+              <input type="text" name="product" value="" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off" id="input-product"/>
+              <ul class="dropdown-menu" id="autocomplete-product"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="featured-product" class="table m-0">
+                <table class="table m-0" id="featured-product">
                   <tbody>
                     {% for product in products %}
                       <tr id="featured-product-{{ product.product_id }}">
@@ -48,7 +48,7 @@
           <div class="row mb-3">
             <label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
             <div class="col-sm-10">
-              <select id="input-axis" name="axis" class="form-select">
+              <select name="axis" class="form-select" id="input-axis">
                 <option value="horizontal"{% if axis == 'horizontal' %} selected{% endif %}>{{ text_horizontal }}</option>
                 <option value="vertical"{% if axis == 'vertical' %} selected{% endif %}>{{ text_vertical }}</option>
               </select>
@@ -57,15 +57,15 @@
           <div class="row mb-3">
             <label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
             <div class="col-sm-10">
-              <input id="input-width" type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" class="form-control"/>
-              <div id="error-width" class="invalid-feedback"></div>
+              <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" class="form-control" id="input-width"/>
+              <div class="invalid-feedback" id="error-width"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
             <div class="col-sm-10">
-              <input id="input-height" type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" class="form-control"/>
-              <div id="error-height" class="invalid-feedback"></div>
+              <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" class="form-control" id="input-height"/>
+              <div class="invalid-feedback" id="error-height"></div>
             </div>
           </div>
           <div class="row mb-3">
@@ -73,11 +73,11 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
-                <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input type="checkbox" name="status" value="1" class="form-check-input" id="input-status"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
-          <input id="input-module-id" type="hidden" name="module_id" value="{{ module_id }}"/>
+          <input type="hidden" name="module_id" value="{{ module_id }}" id="input-module-id"/>
         </form>
       </div>
     </div>

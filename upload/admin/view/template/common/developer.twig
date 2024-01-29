@@ -1,4 +1,4 @@
-<div id="modal-developer" class="modal fade">
+<div class="modal fade" id="modal-developer">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -29,7 +29,7 @@
               <td>{{ text_sass }}</td>
               <td>
                 <div class="form-check form-switch form-switch-lg">
-                  <input id="input-developer-sass" type="hidden" name="developer_sass" value="0"/> <input type="checkbox" name="developer_sass" value="1" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
+                  <input type="hidden" name="developer_sass" value="0" id="input-developer-sass"/> <input type="checkbox" name="developer_sass" value="1" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
                 </div>
               </td>
               <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>

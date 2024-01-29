@@ -1,5 +1,5 @@
 {{ header }}
-<div id="account-login" class="container">
+<div class="container" id="account-login">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -12,7 +12,7 @@
     <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <div class="row">
         <div class="col mb-3">
           <div class="border rounded p-3 d-flex flex-column h-100">
@@ -26,16 +26,16 @@
         </div>
         <div class="col mb-3">
           <div class="border rounded p-3 d-flex flex-column h-100">
-            <form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
+            <form action="{{ login }}" method="post" data-oc-toggle="ajax" id="form-login">
               <h2>{{ text_returning_customer }}</h2>
               <p><strong>{{ text_i_am_returning_customer }}</strong></p>
               <div class="mb-3">
                 <label for="input-email" class="col-form-label">{{ entry_email }}</label>
-                <input id="input-email" type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
+                <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" id="input-email"/>
               </div>
               <div class="mb-3">
                 <label for="input-password" class="col-form-label">{{ entry_password }}</label>
-                <input id="input-password" type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control mb-1"/>
+                <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control mb-1" id="input-password"/>
                 <a href="{{ forgotten }}">{{ text_forgotten }}</a>
               </div>
               {% if redirect %}

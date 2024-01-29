@@ -1,4 +1,4 @@
-<form id="form-notification" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#notification">
+<form method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#notification" id="form-notification">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -19,7 +19,7 @@
               <td class="text-start"><a href="{{ notification.view }}" class="text-primary{% if not notification.status %} font-weight-bold{% endif %}">{{ notification.title }}</a>
                 <br/>
                 <div class="text-muted">{{ notification.date_added }}</div></td>
-              <td id="button-view-{{ notification.notification_id }}" class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+              <td class="text-end" id="button-view-{{ notification.notification_id }}"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
             </tr>
             {% set notification_row = notification_row + 1 %}
           {% endfor %}

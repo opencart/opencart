@@ -2,10 +2,10 @@
   <div class="card-header">
     <i class="fa-solid fa-filter"></i> {{ heading_title }}
     <div class="float-end">
-      <button id="button-generate" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-rotate"></i> {{ button_generate }}</button>
+      <button type="button" class="btn btn-warning btn-sm" id="button-generate"><i class="fa-solid fa-rotate"></i> {{ button_generate }}</button>
     </div>
   </div>
-  <div id="product-viewed" class="card-body">{{ list }}</div>
+  <div class="card-body" id="product-viewed">{{ list }}</div>
 </div>
 <script type="text/javascript"><!--
 $('#product-viewed').on('click', '.pagination a', function (e) {

@@ -1,25 +1,25 @@
 <div class="row mb-3">
   <div class="col-sm-5">
-    <a id="button-parent" href="{{ parent }}" data-bs-toggle="tooltip" title="{{ button_parent }}" class="btn btn-light"><i class="fa-solid fa-level-up-alt"></i></a>
-    <a id="button-refresh" href="{{ refresh }}" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fa-solid fa-rotate"></i></a>
-    <button id="button-upload" type="button" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i></button>
-    <button id="button-folder" type="button" data-bs-toggle="tooltip" title="{{ button_folder }}" class="btn btn-light"><i class="fa-solid fa-folder"></i></button>
-    <button id="button-delete" type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
-    <input id="input-directory" type="hidden" name="directory" value="{{ directory }}"/>
+    <a href="{{ parent }}" data-bs-toggle="tooltip" title="{{ button_parent }}" class="btn btn-light" id="button-parent"><i class="fa-solid fa-level-up-alt"></i></a>
+    <a href="{{ refresh }}" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light" id="button-refresh"><i class="fa-solid fa-rotate"></i></a>
+    <button type="button" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary" id="button-upload"><i class="fa-solid fa-upload"></i></button>
+    <button type="button" data-bs-toggle="tooltip" title="{{ button_folder }}" class="btn btn-light" id="button-folder"><i class="fa-solid fa-folder"></i></button>
+    <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" id="button-delete"><i class="fa-regular fa-trash-can"></i></button>
+    <input type="hidden" name="directory" value="{{ directory }}" id="input-directory"/>
   </div>
   <div class="col-sm-7">
     <div class="input-group">
-      <input id="input-search" type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
-      <button id="button-search" type="button" data-bs-toggle="tooltip" title="{{ button_search }}" class="btn btn-primary"><i class="fa-solid fa-search"></i></button>
+      <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control" id="input-search">
+      <button type="button" data-bs-toggle="tooltip" title="{{ button_search }}" class="btn btn-primary" id="button-search"><i class="fa-solid fa-search"></i></button>
     </div>
   </div>
 </div>
-<div id="modal-folder" class="row mb-3" style="display: none;">
+<div class="row mb-3" style="display: none;" id="modal-folder">
   <div class="col-sm-12">
     <div class="input-group">
       <div class="input-group">
-        <input id="input-folder" type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">
-        <button id="button-create" type="button" title="{{ button_folder }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
+        <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control" id="input-folder">
+        <button type="button" title="{{ button_folder }}" class="btn btn-primary" id="button-create"><i class="fa-solid fa-plus-circle"></i></button>
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@
       </div>
       <div class="form-check">
         <label for="input-path-{{ path_row }}" class="form-check-label">{{ directory.name }}</label>
-        <input id="input-path-{{ path_row }}" type="checkbox" name="path[]" value="{{ directory.path }}" class="form-check-input"/>
+        <input type="checkbox" name="path[]" value="{{ directory.path }}" class="form-check-input" id="input-path-{{ path_row }}"/>
       </div>
     </div>
     {% set path_row = path_row + 1 %}
@@ -46,7 +46,7 @@
       </div>
       <div class="form-check">
         <label for="input-path-{{ path_row }}" class="form-check-label">{{ image.name }}</label>
-        <input id="input-path-{{ path_row }}" type="checkbox" name="path[]" value="{{ image.path }}" class="form-check-input"/>
+        <input type="checkbox" name="path[]" value="{{ image.path }}" class="form-check-input" id="input-path-{{ path_row }}"/>
       </div>
     </div>
     {% set path_row = path_row + 1 %}

@@ -17,11 +17,11 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <form id="form-payment" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-payment">
           <div class="row mb-3">
             <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select id="input-order-status" name="payment_cod_order_status_id" class="form-select">
+              <select name="payment_cod_order_status_id" class="form-select" id="input-order-status">
                 {% for order_status in order_statuses %}
                   <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_cod_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                 {% endfor %}
@@ -31,7 +31,7 @@
           <div class="row mb-3">
             <label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select id="input-geo-zone" name="payment_cod_geo_zone_id" class="form-select">
+              <select name="payment_cod_geo_zone_id" class="form-select" id="input-geo-zone">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
                   <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == payment_cod_geo_zone_id %} selected{% endif %}>{{ geo_zone.name }}</option>
@@ -44,14 +44,14 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="payment_cod_status" value="0"/>
-                <input id="input-status" type="checkbox" name="payment_cod_status" value="1" class="form-check-input"{% if payment_cod_status %} checked{% endif %}/>
+                <input type="checkbox" name="payment_cod_status" value="1" class="form-check-input" id="input-status"{% if payment_cod_status %} checked{% endif %}/>
               </div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input id="input-sort-order" type="text" name="payment_cod_sort_order" value="{{ payment_cod_sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
+              <input type="text" name="payment_cod_sort_order" value="{{ payment_cod_sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
             </div>
           </div>
         </form>

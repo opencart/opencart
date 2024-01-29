@@ -21,7 +21,7 @@
 								<h4 class="list-group-item-heading">{{ text_store }}</h4>
 							</div>
 							<div class="list-group-item">
-								<select id="input-store" name="store_id" class="form-select">
+								<select name="store_id" class="form-select" id="input-store">
 									<option value="0">{{ text_default }}</option>
 									{% for store in stores %}
 										<option value="{{ store.store_id }}">{{ store.name }}</option>
@@ -44,7 +44,7 @@
 								<div id="history"></div>
 							</fieldset>
 						</div>
-						<div id="code" style="display: none;">
+						<div style="display: none;" id="code">
 							<ul class="nav nav-tabs"></ul>
 							<div class="tab-content"></div>
 						</div>
@@ -189,10 +189,10 @@ $('#path').on('click', 'a.file', function (e) {
 
                     $('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-bs-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa-solid fa-minus-circle"></i></a></li>');
 
-                    html = '<div id="tab-' + tab_id + '" class="tab-pane">';
-                    html += '  <textarea id="input-code" name="code" rows="10" class="form-control"></textarea>';
-                    html += '  <input id="input-' + tab_id + '-store" type="hidden" name="store_id" value="' + $('#input-store').val() + '"/>';
-                    html += '  <input id="input-' + tab_id + '-path" type="hidden" name="path" value="' + $(element).attr('href') + '"/>';
+                    html = '<div class="tab-pane" id="tab-' + tab_id + '">';
+                    html += '  <textarea name="code" rows="10" class="form-control" id="input-code"></textarea>';
+                    html += '  <input type="hidden" name="store_id" value="' + $('#input-store').val() + '" id="input-' + tab_id + '-store"/>';
+                    html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" id="input-' + tab_id + '-path"/>';
                     html += '  <br/>';
                     html += '  <div class="float-end">';
                     html += '    <button type="button" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save|escape('js') }}</button>';
@@ -361,7 +361,7 @@ $('#history').on('click', '.btn-primary', function (e) {
 
                     $('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-bs-toggle="tab" class="nav-link">' + $(element).parent().parent().find('input[name=\'path\']').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa-solid fa-minus-circle"></i></a></li>');
 
-                    html = '<div id="tab-' + tab_id + '" class="tab-pane">';
+                    html = '<div class="tab-pane" id="tab-' + tab_id + '">';
                     html += '  <textarea name="code" rows="10"></textarea>';
                     html += '  <input type="hidden" name="store_id" value="' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '" />';
                     html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name=\'path\']').val() + '.twig" />';

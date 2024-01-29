@@ -17,27 +17,27 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-return">
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
           </ul>
           <div class="tab-content">
-            <div id="tab-general" class="tab-pane active">
+            <div class="tab-pane active" id="tab-general">
               <fieldset>
                 <legend>{{ text_order }}</legend>
                 <div class="row mb-3 required">
                   <label for="input-order-id" class="col-sm-2 col-form-label">{{ entry_order_id }}</label>
                   <div class="col-sm-10">
-                    <input id="input-order-id" type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" class="form-control"/>
-                    <div id="error-order-id" class="invalid-feedback"></div>
+                    <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" class="form-control" id="input-order-id"/>
+                    <div class="invalid-feedback" id="error-order-id"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-date-ordered" class="col-sm-2 col-form-label">{{ entry_date_ordered }}</label>
                   <div class="col-sm-10 col-md-4">
                     <div class="input-group">
-                      <input id="input-date-ordered" type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" class="form-control date"/>
+                      <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" class="form-control date" id="input-date-ordered"/>
                       <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                     </div>
                   </div>
@@ -45,37 +45,37 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input id="input-customer" type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
-                    <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off" id="input-customer"/>
+                    <ul class="dropdown-menu" id="autocomplete-customer"></ul>
                     <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                   <div class="col-sm-10">
-                    <input id="input-firstname" type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control"/>
-                    <div id="error-firstname" class="invalid-feedback"></div>
+                    <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control" id="input-firstname"/>
+                    <div class="invalid-feedback" id="error-firstname"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
                   <div class="col-sm-10">
-                    <input id="input-lastname" type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control"/>
-                    <div id="error-lastname" class="invalid-feedback"></div>
+                    <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control" id="input-lastname"/>
+                    <div class="invalid-feedback" id="error-lastname"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                   <div class="col-sm-10">
-                    <input id="input-email" type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
-                    <div id="error-email" class="invalid-feedback"></div>
+                    <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" id="input-email"/>
+                    <div class="invalid-feedback" id="error-email"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                   <div class="col-sm-10">
-                    <input id="input-telephone" type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control"/>
-                    <div id="error-telephone" class="invalid-feedback"></div>
+                    <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control" id="input-telephone"/>
+                    <div class="invalid-feedback" id="error-telephone"></div>
                   </div>
                 </div>
               </fieldset>
@@ -84,41 +84,41 @@
                 <div class="row mb-3 required">
                   <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
                   <div class="col-sm-10">
-                    <input id="input-product" type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
-                    <ul id="autocomplete-product" class="dropdown-menu"></ul>
-                    <input id="input-product-id" type="hidden" name="product_id" value="{{ product_id }}"/>
+                    <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off" id="input-product"/>
+                    <ul class="dropdown-menu" id="autocomplete-product"></ul>
+                    <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                     <div class="form-text">{{ help_product }}</div>
-                    <div id="error-product" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-product"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
                   <div class="col-sm-10">
-                    <input id="input-model" type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" class="form-control"/>
-                    <div id="error-model" class="invalid-feedback"></div>
+                    <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" class="form-control" id="input-model"/>
+                    <div class="invalid-feedback" id="error-model"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-quantity" class="col-sm-2 col-form-label">{{ entry_quantity }}</label>
                   <div class="col-sm-10">
-                    <input id="input-quantity" type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/>
+                    <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" class="form-control" id="input-quantity"/>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-return-reason" class="col-sm-2 col-form-label">{{ entry_return_reason }}</label>
                   <div class="col-sm-10">
-                    <select id="input-return-reason" name="return_reason_id" class="form-select">
+                    <select name="return_reason_id" class="form-select" id="input-return-reason">
                       {% for return_reason in return_reasons %}
                         <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected{% endif %}>{{ return_reason.name }}</option>
                       {% endfor %}
                     </select>
-                    <div id="error-return-reason" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-return-reason"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-opened" class="col-sm-2 col-form-label">{{ entry_opened }}</label>
                   <div class="col-sm-10">
-                    <select id="input-opened" name="opened" class="form-select">
+                    <select name="opened" class="form-select" id="input-opened">
                       <option value="1"{% if opened %} selected{% endif %}>{{ text_opened }}</option>
                       <option value="0"{% if not opened %} selected{% endif %}>{{ text_unopened }}</option>
                     </select>
@@ -127,13 +127,13 @@
                 <div class="row mb-3">
                   <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea id="input-comment" name="comment" rows="5" placeholder="{{ entry_comment }}" class="form-control">{{ comment }}</textarea>
+                    <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" class="form-control" id="input-comment">{{ comment }}</textarea>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-return-action" class="col-sm-2 col-form-label">{{ entry_return_action }}</label>
                   <div class="col-sm-10">
-                    <select id="input-return-action" name="return_action_id" class="form-select">
+                    <select name="return_action_id" class="form-select" id="input-return-action">
                       <option value="0"></option>
                       {% for return_action in return_actions %}
                         <option value="{{ return_action.return_action_id }}"{% if return_action.return_action_id == return_action_id %} selected{% endif %}>{{ return_action.name }}</option>
@@ -145,7 +145,7 @@
                   <div class="row mb-3">
                     <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
                     <div class="col-sm-10">
-                      <select id="input-return-status" name="return_status_id" class="form-select">
+                      <select name="return_status_id" class="form-select" id="input-return-status">
                         {% for return_status in return_statuses %}
                           <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
                         {% endfor %}
@@ -155,7 +155,7 @@
                 {% endif %}
               </fieldset>
             </div>
-            <div id="tab-history" class="tab-pane">
+            <div class="tab-pane" id="tab-history">
               <fieldset>
                 <legend>{{ text_history }}</legend>
                 <div id="history">{{ history }}</div>
@@ -165,7 +165,7 @@
                 <div class="row mb-3">
                   <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
                   <div class="col-sm-10">
-                    <select id="input-return-status" name="return_status_id" class="form-select">
+                    <select name="return_status_id" class="form-select" id="input-return-status">
                       {% for return_status in return_statuses %}
                         <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
                       {% endfor %}
@@ -176,23 +176,23 @@
                   <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input id="input-notify" type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" class="form-check-input"/>
+                      <input type="hidden" name="notify" value="0" id="input-notify"/> <input type="checkbox" name="notify" value="1" class="form-check-input"/>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea id="input-history" name="comment" rows="8" placeholder="{{ entry_comment }}" class="form-control"></textarea>
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" class="form-control" id="input-history"></textarea>
                   </div>
                 </div>
                 <div class="text-end">
-                  <button id="button-history" type="button" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
+                  <button type="button" class="btn btn-primary" id="button-history"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
             </div>
           </div>
-          <input id="input-return-id" type="hidden" name="return_id" value="{{ return_id }}"/>
+          <input type="hidden" name="return_id" value="{{ return_id }}" id="input-return-id"/>
         </form>
       </div>
     </div>

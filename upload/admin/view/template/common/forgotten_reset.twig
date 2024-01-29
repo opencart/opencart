@@ -8,15 +8,15 @@
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-redo"></i> {{ heading_title }}</div>
           <div class="card-body">
-            <form id="form-forgotten" action="{{ reset }}" method="post" data-oc-toggle="ajax">
+            <form action="{{ reset }}" method="post" data-oc-toggle="ajax" id="form-forgotten">
               <p>{{ text_password }}</p>
               <div class="mb-3">
                 <label for="input-password" class="form-label">{{ entry_password }}</label>
-                <input id="input-password" type="password" name="password" value="" class="form-control"/>
+                <input type="password" name="password" value="" class="form-control" id="input-password"/>
               </div>
               <div class="mb-3">
                 <label for="input-confirm" class="form-label">{{ entry_confirm }}</label>
-                <input id="input-confirm" type="password" name="confirm" value="" class="form-control"/>
+                <input type="password" name="confirm" value="" class="form-control" id="input-confirm"/>
               </div>
               <div class="text-end">
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>

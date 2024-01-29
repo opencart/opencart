@@ -1,4 +1,4 @@
-<form id="form-startup" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#startup">
+<form method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#startup" id="form-startup">
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<thead>
@@ -45,7 +45,7 @@
 </form>
 {% for startup in startups %}
 	{% if startup.description %}
-		<div id="modal-startup-{{ startup.startup_id }}" class="modal">
+		<div class="modal" id="modal-startup-{{ startup.startup_id }}">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">

@@ -18,7 +18,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-attribute" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-attribute">
 
           <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
@@ -26,31 +26,31 @@
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input id="input-name-{{ language.language_id }}" type="text" name="attribute_description[{{ language.language_id }}][name]" value="{{ attribute_description[language.language_id] ? attribute_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+                  <input type="text" name="attribute_description[{{ language.language_id }}][name]" value="{{ attribute_description[language.language_id] ? attribute_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name-{{ language.language_id }}"/>
                 </div>
-                <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                <div class="invalid-feedback" id="error-name-{{ language.language_id }}"></div>
               {% endfor %}
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-attribute-group" class="col-sm-2 col-form-label required">{{ entry_attribute_group }}</label>
             <div class="col-sm-10">
-              <select id="input-attribute-group" name="attribute_group_id" class="form-select">
+              <select name="attribute_group_id" class="form-select" id="input-attribute-group">
                 <option value="0"></option>
                 {% for attribute_group in attribute_groups %}
                   <option value="{{ attribute_group.attribute_group_id }}"{% if attribute_group.attribute_group_id == attribute_group_id %} selected{% endif %}>{{ attribute_group.name }}</option>
                 {% endfor %}
               </select>
-              <div id="error-attribute-group" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-attribute-group"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input id="input-sort-order" type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
+              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
             </div>
           </div>
-          <input id="input-attribute-id" type="hidden" name="attribute_id" value="{{ attribute_id }}"/>
+          <input type="hidden" name="attribute_id" value="{{ attribute_id }}" id="input-attribute-id"/>
         </form>
       </div>
     </div>

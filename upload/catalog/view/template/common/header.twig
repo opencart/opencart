@@ -35,7 +35,7 @@
   {% endfor %}
 </head>
 <body>
-<div id="alert" class="toast-container position-fixed top-0 end-0 p-3"></div>
+<div class="toast-container position-fixed top-0 end-0 p-3" id="alert"></div>
 <nav id="top">
   <div class="container">
     <div class="nav float-start">
@@ -64,7 +64,7 @@
             </ul>
           </div>
         </li>
-        <li id="wishlist-total" class="list-inline-item"><a href="{{ wishlist }}" title="{{ text_wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-md-inline">{{ text_wishlist }}</span></a></li>
+        <li class="list-inline-item" id="wishlist-total"><a href="{{ wishlist }}" title="{{ text_wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-md-inline">{{ text_wishlist }}</span></a></li>
         <li class="list-inline-item"><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-md-inline">{{ text_shopping_cart }}</span></a></li>
         <li class="list-inline-item"><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-md-inline">{{ text_checkout }}</span></a></li>
       </ul>
@@ -84,7 +84,7 @@
         </div>
       </div>
       <div class="col-md-5">{{ search }}</div>
-      <div id="header-cart" class="col-md-4 col-lg-3 mb-2">{{ cart }}</div>
+      <div class="col-md-4 col-lg-3 mb-2" id="header-cart">{{ cart }}</div>
     </div>
   </div>
 </header>

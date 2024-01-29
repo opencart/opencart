@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
-            <form id="form-authorize" action="{{ action }}" method="post" data-oc-toggle="ajax">
+            <form action="{{ action }}" method="post" data-oc-toggle="ajax" id="form-authorize">
               {% if error_warning %}
                 <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
               {% endif %}
@@ -20,10 +20,10 @@
               <div class="mb-3">
                 <label for="input-code" class="form-label">{{ entry_code }}</label>
                 <div class="input-group">
-                  <input id="input-code" type="text" name="code" value="" placeholder="{{ entry_code }}" class="form-control"/>
-                  <button id="button-send" type="button" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_resend }}</button>
+                  <input type="text" name="code" value="" placeholder="{{ entry_code }}" class="form-control" id="input-code"/>
+                  <button type="button" class="btn btn-danger" id="button-send"><i class="fa-solid fa-mail-bulk"></i> {{ button_resend }}</button>
                 </div>
-                <div id="error-code" class="invalid-feedback"></div>
+                <div class="invalid-feedback" id="error-code"></div>
               </div>
               <div class="text-end">
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button>

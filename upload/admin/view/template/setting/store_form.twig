@@ -17,7 +17,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-store" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-store">
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-store" data-bs-toggle="tab" class="nav-link">{{ tab_store }}</a></li>
@@ -26,39 +26,39 @@
             <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
           </ul>
           <div class="tab-content">
-            <div id="tab-general" class="tab-pane active">
+            <div class="tab-pane active" id="tab-general">
               <div class="row mb-3 required">
                 <label for="input-url" class="col-sm-2 col-form-label">{{ entry_url }}</label>
                 <div class="col-sm-10">
-                  <input id="input-url" type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" class="form-control"/>
+                  <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" class="form-control" id="input-url"/>
                   <div class="form-text">{{ help_url }}</div>
-                  <div id="error-url" class="invalid-feedback"></div>
+                  <div class="invalid-feedback" id="error-url"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-meta-title" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
-                  <input id="input-meta-title" type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" class="form-control"/>
-                  <div id="error-meta-title" class="invalid-feedback"></div>
+                  <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" class="form-control" id="input-meta-title"/>
+                  <div class="invalid-feedback" id="error-meta-title"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-meta-description" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
                 <div class="col-sm-10">
-                  <textarea id="input-meta-description" name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" class="form-control">{{ config_meta_description }}</textarea>
+                  <textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" class="form-control" id="input-meta-description">{{ config_meta_description }}</textarea>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-meta-keyword" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
                 <div class="col-sm-10">
-                  <textarea id="input-meta-keyword" name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" class="form-control">{{ config_meta_keyword }}</textarea>
+                  <textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" class="form-control" id="input-meta-keyword">{{ config_meta_keyword }}</textarea>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
                 <div class="col-sm-10">
                   <div class="border rounded d-block" style="max-width: 300px;">
-                    <img id="thumb-logo" src="{{ logo }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input id="input-logo" type="hidden" name="config_logo" value="{{ config_logo }}"/>
+                    <img src="{{ logo }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-logo"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
                     <div class="d-grid">
                       <button type="button" data-oc-toggle="image" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                       <button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -69,18 +69,18 @@
               <div class="row mb-3">
                 <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
                 <div class="col-sm-10">
-                  <select id="input-theme" name="config_theme" class="form-select">
+                  <select name="config_theme" class="form-select" id="input-theme">
                     {% for theme in themes %}
                       <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected{% endif %}>{{ theme.text }}</option>
                     {% endfor %}
                   </select>
                   <br/>
-                  <img id="theme" src="" alt="" class="img-thumbnail"/></div>
+                  <img src="" alt="" class="img-thumbnail" id="theme"/></div>
               </div>
               <div class="row mb-3">
                 <label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
                 <div class="col-sm-10">
-                  <select id="input-layout" name="config_layout_id" class="form-select">
+                  <select name="config_layout_id" class="form-select" id="input-layout">
                     {% for layout in layouts %}
                       <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected{% endif %}>{{ layout.name }}</option>
                     {% endfor %}
@@ -88,54 +88,54 @@
                 </div>
               </div>
             </div>
-            <div id="tab-store" class="tab-pane">
+            <div class="tab-pane" id="tab-store">
               <div class="row mb-3 required">
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
-                  <input id="input-name" type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" class="form-control"/>
-                  <div id="error-name" class="invalid-feedback"></div>
+                  <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name"/>
+                  <div class="invalid-feedback" id="error-name"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
                 <div class="col-sm-10">
-                  <input id="input-owner" type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" class="form-control"/>
-                  <div id="error-owner" class="invalid-feedback"></div>
+                  <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" class="form-control" id="input-owner"/>
+                  <div class="invalid-feedback" id="error-owner"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
                 <div class="col-sm-10">
-                  <textarea id="input-address" name="config_address" rows="5" placeholder="{{ entry_address }}" class="form-control">{{ config_address }}</textarea>
-                  <div id="error-address" class="invalid-feedback"></div>
+                  <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" class="form-control" id="input-address">{{ config_address }}</textarea>
+                  <div class="invalid-feedback" id="error-address"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
                 <div class="col-sm-10">
-                  <input id="input-geocode" type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" class="form-control"/>
+                  <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" class="form-control" id="input-geocode"/>
                   <div class="form-text">{{ help_geocode }}</div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                 <div class="col-sm-10">
-                  <input id="input-email" type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" class="form-control"/>
-                  <div id="error-email" class="invalid-feedback"></div>
+                  <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" class="form-control" id="input-email"/>
+                  <div class="invalid-feedback" id="error-email"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
-                  <input id="input-telephone" type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" class="form-control"/>
-                  <div id="error-telephone" class="invalid-feedback"></div>
+                  <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" class="form-control" id="input-telephone"/>
+                  <div class="invalid-feedback" id="error-telephone"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                 <div class="col-sm-10">
                   <div class="border rounded d-block" style="max-width: 300px;">
-                    <img id="thumb-image" src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input id="input-image" type="hidden" name="config_image" value="{{ config_image }}"/>
+                    <img src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-image"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
                     <div class="d-grid">
                       <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                       <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -146,14 +146,14 @@
               <div class="row mb-3">
                 <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
                 <div class="col-sm-10">
-                  <textarea id="input-open" name="config_open" rows="5" placeholder="{{ entry_open }}" class="form-control">{{ config_open }}</textarea>
+                  <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" class="form-control" id="input-open">{{ config_open }}</textarea>
                   <div class="form-text">{{ help_open }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                 <div class="col-sm-10">
-                  <textarea id="input-comment" name="config_comment" rows="5" placeholder="{{ entry_comment }}" class="form-control">{{ config_comment }}</textarea>
+                  <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" class="form-control" id="input-comment">{{ config_comment }}</textarea>
                   <div class="form-text">{{ help_comment }}</div>
                 </div>
               </div>
@@ -164,7 +164,7 @@
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for location in locations %}
                         <div class="form-check">
-                          <input id="input-location-{{ location.location_id }}" type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
+                          <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input" id="input-location-{{ location.location_id }}"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -173,13 +173,13 @@
                 </div>
               {% endif %}
             </div>
-            <div id="tab-local" class="tab-pane">
+            <div class="tab-pane" id="tab-local">
               <fieldset>
                 <legend>{{ text_region }}</legend>
                 <div class="row mb-3">
                   <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                   <div class="col-sm-10">
-                    <select id="input-country" name="config_country_id" class="form-select">
+                    <select name="config_country_id" class="form-select" id="input-country">
                       {% for country in countries %}
                         <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
                       {% endfor %}
@@ -189,7 +189,7 @@
                 <div class="row mb-3">
                   <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                   <div class="col-sm-10">
-                    <select id="input-zone" name="config_zone_id" class="form-select"></select>
+                    <select name="config_zone_id" class="form-select" id="input-zone"></select>
                   </div>
                 </div>
               </fieldset>
@@ -198,7 +198,7 @@
                 <div class="row mb-3">
                   <label for="input-language-catalog" class="col-sm-2 col-form-label">{{ entry_language }}</label>
                   <div class="col-sm-10">
-                    <select id="input-language-catalog" name="config_language_catalog" class="form-select">
+                    <select name="config_language_catalog" class="form-select" id="input-language-catalog">
                       {% for language in languages %}
                         <option value="{{ language.code }}"{% if language.code == config_language_catalog %} selected{% endif %}>{{ language.name }}</option>
                       {% endfor %}
@@ -211,7 +211,7 @@
                 <div class="row mb-3">
                   <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
                   <div class="col-sm-10">
-                    <select id="input-currency" name="config_currency" class="form-select">
+                    <select name="config_currency" class="form-select" id="input-currency">
                       {% for currency in currencies %}
                         <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
                       {% endfor %}
@@ -221,33 +221,33 @@
                 </div>
               </fieldset>
             </div>
-            <div id="tab-option" class="tab-pane">
-              <div id="accordion-option" class="accordion">
+            <div class="tab-pane" id="tab-option">
+              <div class="accordion" id="accordion-option">
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-product">{{ text_product }}</button></h2>
-                  <div id="collapse-product" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                  <div class="accordion-collapse collapse" data-bs-parent="#accordion-option" id="collapse-product">
                     <div class="accordion-body">
                       <div class="row mb-3 required">
                         <label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
                         <div class="col-sm-10">
-                          <input id="input-product-description-length" type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" class="form-control"/>
+                          <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" class="form-control" id="input-product-description-length"/>
                           <div class="form-text">{{ help_product_description_length }}</div>
-                          <div id="error-product-description-length" class="invalid-feedback"></div>
+                          <div class="invalid-feedback" id="error-product-description-length"></div>
                         </div>
                       </div>
                       <div class="row mb-3 required">
                         <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
                         <div class="col-sm-10">
-                          <input id="input-pagination" type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" class="form-control"/>
+                          <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" class="form-control" id="input-pagination"/>
                           <div class="form-text">{{ help_pagination }}</div>
-                          <div id="error-pagination" class="invalid-feedback"></div>
+                          <div class="invalid-feedback" id="error-pagination"></div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-product-count" type="hidden" name="config_product_count" value="0"/> <input type="checkbox" name="config_product_count" value="1" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
+                            <input type="hidden" name="config_product_count" value="0" id="input-product-count"/> <input type="checkbox" name="config_product_count" value="1" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_product_count }}</div>
                         </div>
@@ -257,12 +257,12 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-legal">{{ text_legal }}</button></h2>
-                  <div id="collapse-legal" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                  <div class="accordion-collapse collapse" data-bs-parent="#accordion-option" id="collapse-legal">
                     <div class="accordion-body">
                       <div class="row mb-3">
                         <label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
                         <div class="col-sm-10">
-                          <select id="input-gdpr" name="config_gdpr_id" class="form-select">
+                          <select name="config_gdpr_id" class="form-select" id="input-gdpr">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
                               <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected{% endif %}>{{ information.title }}</option>
@@ -276,20 +276,20 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-tax">{{ text_tax }}</button></h2>
-                  <div id="collapse-tax" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                  <div class="accordion-collapse collapse" data-bs-parent="#accordion-option" id="collapse-tax">
                     <div class="accordion-body">
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-tax" type="hidden" name="config_tax" value="0"/> <input type="checkbox" name="config_tax" value="1" class="form-check-input"{% if config_tax %} checked{% endif %}/>
+                            <input type="hidden" name="config_tax" value="0" id="input-tax"/> <input type="checkbox" name="config_tax" value="1" class="form-check-input"{% if config_tax %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
                         <div class="col-sm-10">
-                          <select id="input-tax-default" name="config_tax_default" class="form-select">
+                          <select name="config_tax_default" class="form-select" id="input-tax-default">
                             <option value="">{{ text_none }}</option>
                             <option value="shipping"{% if config_tax_default == 'shipping' %} selected{% endif %}>{{ text_shipping }}</option>
                             <option value="payment"{% if config_tax_default == 'payment' %} selected{% endif %}>{{ text_payment }}</option>
@@ -300,7 +300,7 @@
                       <div class="row mb-3">
                         <label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
                         <div class="col-sm-10">
-                          <select id="input-tax-customer" name="config_tax_customer" class="form-select">
+                          <select name="config_tax_customer" class="form-select" id="input-tax-customer">
                             <option value="">{{ text_none }}</option>
                             <option value="shipping"{% if config_tax_customer == 'shipping' %} selected{% endif %}>{{ text_shipping }}</option>
                             <option value="payment"{% if config_tax_customer == 'payment' %} selected{% endif %}>{{ text_payment }}</option>
@@ -313,12 +313,12 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-account">{{ text_account }}</button></h2>
-                  <div id="collapse-account" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                  <div class="accordion-collapse collapse" data-bs-parent="#accordion-option" id="collapse-account">
                     <div class="accordion-body">
                       <div class="row mb-3">
                         <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
                         <div class="col-sm-10">
-                          <select id="input-customer-group" name="config_customer_group_id" class="form-select">
+                          <select name="config_customer_group_id" class="form-select" id="input-customer-group">
                             {% for customer_group in customer_groups %}
                               <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
@@ -329,22 +329,22 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
                         <div class="col-sm-10">
-                          <div id="input-customer-group-display" class="form-control" style="height: 150px; overflow: auto;">
+                          <div class="form-control" style="height: 150px; overflow: auto;" id="input-customer-group-display">
                             {% for customer_group in customer_groups %}
                               <div class="form-check">
-                                <input id="input-customer-group-{{ customer_group.customer_group_id }}" type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                                <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input" id="input-customer-group-{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id in config_customer_group_display %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                               </div>
                             {% endfor %}
                           </div>
                           <div class="form-text">{{ help_customer_group_display }}</div>
-                          <div id="error-customer-group-display" class="invalid-feedback"></div>
+                          <div class="invalid-feedback" id="error-customer-group-display"></div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-customer-price" type="hidden" name="config_customer_price" value="0"/> <input type="checkbox" name="config_customer_price" value="1" class="form-check-input"{% if config_customer_price %} checked{% endif %}/>
+                            <input type="hidden" name="config_customer_price" value="0" id="input-customer-price"/> <input type="checkbox" name="config_customer_price" value="1" class="form-check-input"{% if config_customer_price %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_customer_price }}</div>
                         </div>
@@ -352,7 +352,7 @@
                       <div class="row mb-3">
                         <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
                         <div class="col-sm-10">
-                          <select id="input-account" name="config_account_id" class="form-select">
+                          <select name="config_account_id" class="form-select" id="input-account">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
                               <option value="{{ information.information_id }}"{% if information.information_id == config_account_id %} selected{% endif %}>{{ information.title }}</option>
@@ -366,13 +366,13 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-checkout">{{ text_checkout }}</button></h2>
-                  <div id="collapse-checkout" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                  <div class="accordion-collapse collapse" data-bs-parent="#accordion-option" id="collapse-checkout">
                     <div class="accordion-body">
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-cart-weight" type="hidden" name="config_cart_weight" value="0"/> <input type="checkbox" name="config_cart_weight" value="1" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
+                            <input type="hidden" name="config_cart_weight" value="0" id="input-cart-weight"/> <input type="checkbox" name="config_cart_weight" value="1" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
@@ -380,7 +380,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-checkout-guest" type="hidden" name="config_checkout_guest" value="0"/> <input type="checkbox" name="config_checkout_guest" value="1" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
+                            <input type="hidden" name="config_checkout_guest" value="0" id="input-checkout-guest"/> <input type="checkbox" name="config_checkout_guest" value="1" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_guest }}</div>
                         </div>
@@ -388,7 +388,7 @@
                       <div class="row mb-3">
                         <label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
                         <div class="col-sm-10">
-                          <select id="input-checkout" name="config_checkout_id" class="form-select">
+                          <select name="config_checkout_id" class="form-select" id="input-checkout">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
                               <option value="{{ information.information_id }}"{% if information.information_id == config_checkout_id %} selected{% endif %}>{{ information.title }}</option>
@@ -402,13 +402,13 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-stock">{{ text_stock }}</button></h2>
-                  <div id="collapse-stock" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                  <div class="accordion-collapse collapse" data-bs-parent="#accordion-option" id="collapse-stock">
                     <div class="accordion-body">
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-stock-display" type="hidden" name="config_stock_display" value="0"/> <input type="checkbox" name="config_stock_display" value="1" class="form-check-input"{% if config_stock_display %} checked{% endif %}/>
+                            <input type="hidden" name="config_stock_display" value="0" id="input-stock-display"/> <input type="checkbox" name="config_stock_display" value="1" class="form-check-input"{% if config_stock_display %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_display }}</div>
                         </div>
@@ -417,7 +417,7 @@
                         <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input id="input-stock-checkout" type="hidden" name="config_stock_checkout" value="0"/> <input type="checkbox" name="config_stock_checkout" value="1" class="form-check-input"{% if config_stock_checkout %} checked{% endif %}/>
+                            <input type="hidden" name="config_stock_checkout" value="0" id="input-stock-checkout"/> <input type="checkbox" name="config_stock_checkout" value="1" class="form-check-input"{% if config_stock_checkout %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_checkout }}</div>
                         </div>
@@ -427,181 +427,181 @@
                 </div>
               </div>
             </div>
-            <div id="tab-image" class="tab-pane">
+            <div class="tab-pane" id="tab-image">
               <fieldset>
                 <legend>{{ text_image }}</legend>
                 <div class="row mb-3 required">
                   <label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-category" class="row">
+                    <div class="row" id="input-image-category">
                       <div class="col-sm-6">
-                        <input id="input-image-category-width" type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-category-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-category-height" type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-category-height"/>
                       </div>
                     </div>
-                    <div id="error-image-category" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-category"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-thumb" class="row">
+                    <div class="row" id="input-image-thumb">
                       <div class="col-sm-6">
-                        <input id="input-image-thumb-width" type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-thumb-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-thumb-height" type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-thumb-height"/>
                       </div>
                     </div>
-                    <div id="error-image-thumb" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-thumb"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-popup" class="row">
+                    <div class="row" id="input-image-popup">
                       <div class="col-sm-6">
-                        <input id="input-image-popup-width" type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-popup-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-popup-height" type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-popup-height"/>
                       </div>
                     </div>
-                    <div id="error-image-popup" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-popup"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-product" class="row">
+                    <div class="row" id="input-image-product">
                       <div class="col-sm-6">
-                        <input id="input-image-product-width" type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-product-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-product-height" type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-product-height"/>
                       </div>
                     </div>
-                    <div id="error-image-product" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-product"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-additional" class="row">
+                    <div class="row" id="input-image-additional">
                       <div class="col-sm-6">
-                        <input id="input-image-additional-width" type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-additional-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-additional-height" type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-additional-height"/>
                       </div>
                     </div>
-                    <div id="error-image-additional" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-additional"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-related-width" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-related" class="row">
+                    <div class="row" id="input-image-related">
                       <div class="col-sm-6">
-                        <input id="input-image-related-width" type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-related-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-related-height" type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-related-height"/>
                       </div>
                     </div>
-                    <div id="error-image-related" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-related"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-article-width" class="col-sm-2 col-form-label">{{ entry_image_article }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-article" class="row">
+                    <div class="row" id="input-image-article">
                       <div class="col-sm-6">
-                        <input id="input-image-article-width" type="text" name="config_image_article_width" value="{{ config_image_article_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_article_width" value="{{ config_image_article_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-article-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-article-height" type="text" name="config_image_article_height" value="{{ config_image_article_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_article_height" value="{{ config_image_article_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-article-height"/>
                       </div>
                     </div>
-                    <div id="error-image-article" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-article"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-topic-width" class="col-sm-2 col-form-label">{{ entry_image_topic }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-topic" class="row">
+                    <div class="row" id="input-image-topic">
                       <div class="col-sm-6">
-                        <input id="input-image-topic-width" type="text" name="config_image_topic_width" value="{{ config_image_topic_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_topic_width" value="{{ config_image_topic_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-topic-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-topic-height" type="text" name="config_image_topic_height" value="{{ config_image_topic_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_topic_height" value="{{ config_image_topic_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-topic-height"/>
                       </div>
                     </div>
-                    <div id="error-image-topic" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-topic"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-compare-width" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-compare" class="row">
+                    <div class="row" id="input-image-compare">
                       <div class="col-sm-6">
-                        <input id="input-image-compare-width" type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-compare-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-compare-height" type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-compare-height"/>
                       </div>
                     </div>
-                    <div id="error-image-compare" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-compare"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-wishlist-width" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-wishlist" class="row">
+                    <div class="row" id="input-image-wishlist">
                       <div class="col-sm-6">
-                        <input id="input-image-wishlist-width" type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-wishlist-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-wishlist-height" type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-wishlist-height"/>
                       </div>
                     </div>
-                    <div id="error-image-wishlist" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-wishlist"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-cart-width" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-cart" class="row">
+                    <div class="row" id="input-image-cart">
                       <div class="col-sm-6">
-                        <input id="input-image-cart-width" type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-cart-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-cart-height" type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-cart-height"/>
                       </div>
                     </div>
-                    <div id="error-image-cart" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-cart"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-image-location-width" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
                   <div class="col-sm-10">
-                    <div id="input-image-location" class="row">
+                    <div class="row" id="input-image-location">
                       <div class="col-sm-6">
-                        <input id="input-image-location-width" type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" class="form-control"/>
+                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" class="form-control" id="input-image-location-width"/>
                       </div>
                       <div class="col-sm-6">
-                        <input id="input-image-location-height" type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" class="form-control" id="input-image-location-height"/>
                       </div>
                     </div>
-                    <div id="error-image-location" class="invalid-feedback"></div>
+                    <div class="invalid-feedback" id="error-image-location"></div>
                   </div>
                 </div>
               </fieldset>
             </div>
           </div>
-          <input id="input-store-id" type="hidden" name="store_id" value="{{ store_id }}"/></form>
+          <input type="hidden" name="store_id" value="{{ store_id }}" id="input-store-id"/></form>
       </div>
     </div>
   </div>

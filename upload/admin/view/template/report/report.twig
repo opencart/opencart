@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-body bg-light">
             <div class="input-group">
-              <select name="report" id="input-report" class="form-select">
+              <select name="report" class="form-select" id="input-report">
                 {% for report in reports %}
                   <option value="{{ report.href }}"{% if code == report.code %} selected{% endif %}>{{ report.text }}</option>
                 {% endfor %}

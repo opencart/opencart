@@ -7,7 +7,7 @@
         <div id="filter-group-{{ filter_group.filter_group_id }}">
           {% for filter in filter_group.filter %}
             <div class="form-check">
-              <input id="input-filter-{{ filter.filter_id }}" type="checkbox" name="filter[]" value="{{ filter.filter_id }}" class="form-check-input"{% if filter.filter_id in filter_category %} checked{% endif %}/>
+              <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" class="form-check-input" id="input-filter-{{ filter.filter_id }}"{% if filter.filter_id in filter_category %} checked{% endif %}/>
               <label for="input-filter-{{ filter.filter_id }}" class="form-check-label">{{ filter.name }}</label>
             </div>
           {% endfor %}
@@ -16,7 +16,7 @@
     {% endfor %}
   </div>
   <div class="card-footer text-right">
-    <button id="button-filter" type="button" class="btn btn-primary"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+    <button type="button" class="btn btn-primary" id="button-filter"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
   </div>
 </div>
 <script type="text/javascript"><!--

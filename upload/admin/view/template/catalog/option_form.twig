@@ -17,7 +17,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-option" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-option">
           <fieldset>
             <legend>{{ text_option }}</legend>
             <div class="row mb-3 required">
@@ -26,16 +26,16 @@
                 {% for language in languages %}
                   <div class="input-group">
                     <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                    <input id="input-name-{{ language.language_id }}" type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+                    <input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name-{{ language.language_id }}"/>
                   </div>
-                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                  <div class="invalid-feedback" id="error-name-{{ language.language_id }}"></div>
                 {% endfor %}
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
               <div class="col-sm-10">
-                <select id="input-type" name="type" class="form-select">
+                <select name="type" class="form-select" id="input-type">
                   <optgroup label="{{ text_choose }}">
                     <option value="select"{% if type == 'select' %} selected{% endif %}>{{ text_select }}</option>
                     <option value="radio"{% if type == 'radio' %} selected{% endif %}>{{ text_radio }}</option>
@@ -59,13 +59,13 @@
             <div class="row mb-3">
               <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
-                <input id="input-sort-order" type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
+                <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
               </div>
             </div>
           </fieldset>
           <fieldset>
             <legend>{{ text_value }}</legend>
-            <table id="option-value" class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="option-value">
               <thead>
                 <tr>
                   <td class="text-start required">{{ entry_option_value }}</td>
@@ -82,14 +82,14 @@
                       {% for language in languages %}
                         <div class="input-group">
                           <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                          <input id="input-option-value-{{ option_value_row }}-{{ language.language_id }}" type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" class="form-control"/>
+                          <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" class="form-control" id="input-option-value-{{ option_value_row }}-{{ language.language_id }}"/>
                         </div>
-                        <div id="error-option-value-{{ option_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
+                        <div class="invalid-feedback" id="error-option-value-{{ option_value_row }}-{{ language.language_id }}"></div>
                       {% endfor %}</td>
                     <td class="text-center">
                       <div class="border rounded d-block" style="max-width: 300px;">
-                        <img id="thumb-image-{{ option_value_row }}" src="{{ option_value.thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                        <input id="input-image-{{ option_value_row }}" type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}"/>
+                        <img src="{{ option_value.thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-image-{{ option_value_row }}"/>
+                        <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image-{{ option_value_row }}"/>
                         <div class="d-grid">
                           <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                           <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -109,7 +109,7 @@
               </tfoot>
             </table>
           </fieldset>
-          <input id="input-option-id" type="hidden" name="option_id" value="{{ option_id }}"/>
+          <input type="hidden" name="option_id" value="{{ option_id }}" id="input-option-id"/>
         </form>
       </div>
     </div>
@@ -134,14 +134,14 @@ function addOptionValue() {
   {% for language in languages %}
     html += '    <div class="input-group">';
     html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';
-    html += '      <input id="input-option-value-' + option_value_row + '-{{ language.language_id }}" type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control"/>';
+    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value|escape('js') }}" class="form-control" id="input-option-value-' + option_value_row + '-{{ language.language_id }}"/>';
     html += '    </div>';
-    html += '    <div id="error-option-value-' + option_value_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';
+    html += '    <div class="invalid-feedback" id="error-option-value-' + option_value_row + '-{{ language.language_id }}"></div>';
   {% endfor %}
     html += '  </td>';
     html += '  <td class="text-center"><div class="border rounded d-block" style="max-width: 300px;">';
-    html += '    <img id="thumb-image-' + option_value_row + '" src="{{ placeholder|escape('js') }}" alt="" title="" data-oc-placeholder="{{ placeholder|escape('js') }}" class="img-fluid"/>';
-    html += '    <input id="input-image-' + option_value_row + '" type="hidden" name="option_value[' + option_value_row + '][image]" value=""/>';
+    html += '    <img src="{{ placeholder|escape('js') }}" alt="" title="" data-oc-placeholder="{{ placeholder|escape('js') }}" class="img-fluid" id="thumb-image-' + option_value_row + '"/>';
+    html += '    <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image-' + option_value_row + '"/>';
     html += '    <div class="d-grid">';
     html += '      <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit|escape('js') }}</button>';
     html += '      <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear|escape('js') }}</button>';

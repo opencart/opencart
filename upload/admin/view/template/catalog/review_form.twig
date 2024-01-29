@@ -17,29 +17,29 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-review" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-review">
           <div class="row mb-3 required">
             <label for="input-author" class="col-sm-2 col-form-label">{{ entry_author }}</label>
             <div class="col-sm-10">
-              <input id="input-author" type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" class="form-control"/>
-              <div id="error-author" class="invalid-feedback"></div>
+              <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" class="form-control" id="input-author"/>
+              <div class="invalid-feedback" id="error-author"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <input id="input-product" type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
-              <input id="input-product-id" type="hidden" name="product_id" value="{{ product_id }}"/>
-              <ul id="autocomplete-product" class="dropdown-menu"></ul>
+              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off" id="input-product"/>
+              <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+              <ul class="dropdown-menu" id="autocomplete-product"></ul>
               <div class="form-text">{{ help_product }}</div>
-              <div id="error-product" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-product"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-text" class="col-sm-2 col-form-label">{{ entry_text }}</label>
             <div class="col-sm-10">
-              <textarea id="input-text" name="text" rows="8" placeholder="{{ entry_text }}" class="form-control">{{ text }}</textarea>
-              <div id="error-text" class="invalid-feedback"></div>
+              <textarea name="text" rows="8" placeholder="{{ entry_text }}" class="form-control" id="input-text">{{ text }}</textarea>
+              <div class="invalid-feedback" id="error-text"></div>
             </div>
           </div>
           <div class="row mb-3 required">
@@ -47,29 +47,29 @@
             <div class="col-sm-10">
               <div id="input-rating">
                 <div class="form-check form-check-inline">
-                  <input id="input-rating-1" type="radio" name="rating" value="1" class="form-check-input"{% if rating == 1 %} checked{% endif %}/> <label for="input-rating-1" class="form-check-label">1</label>
+                  <input type="radio" name="rating" value="1" class="form-check-input" id="input-rating-1"{% if rating == 1 %} checked{% endif %}/> <label for="input-rating-1" class="form-check-label">1</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input id="input-rating-2" type="radio" name="rating" value="2" class="form-check-input"{% if rating == 2 %} checked{% endif %}/> <label for="input-rating-2" class="form-check-label">2</label>
+                  <input type="radio" name="rating" value="2" class="form-check-input" id="input-rating-2"{% if rating == 2 %} checked{% endif %}/> <label for="input-rating-2" class="form-check-label">2</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input id="input-rating-3" type="radio" name="rating" value="3" class="form-check-input"{% if rating == 3 %} checked{% endif %}/> <label for="input-rating-3" class="form-check-label">3</label>
+                  <input type="radio" name="rating" value="3" class="form-check-input" id="input-rating-3"{% if rating == 3 %} checked{% endif %}/> <label for="input-rating-3" class="form-check-label">3</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input id="input-rating-4" type="radio" name="rating" value="4" class="form-check-input"{% if rating == 4 %} checked{% endif %}/> <label for="input-rating-4" class="form-check-label">4</label>
+                  <input type="radio" name="rating" value="4" class="form-check-input" id="input-rating-4"{% if rating == 4 %} checked{% endif %}/> <label for="input-rating-4" class="form-check-label">4</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input id="input-rating-5" type="radio" name="rating" value="5" class="form-check-input"{% if rating == 5 %} checked{% endif %}/> <label for="input-rating-5" class="form-check-label">5</label>
+                  <input type="radio" name="rating" value="5" class="form-check-input" id="input-rating-5"{% if rating == 5 %} checked{% endif %}/> <label for="input-rating-5" class="form-check-label">5</label>
                 </div>
               </div>
-              <div id="error-rating" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-rating"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-date-added" class="col-sm-2 col-form-label">{{ entry_date_added }}</label>
             <div class="col-sm-10 col-md-4">
               <div class="input-group">
-                <input id="input-date-added" type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" class="form-control datetime"/>
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" class="form-control datetime" id="input-date-added"/>
                 <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
             </div>
@@ -78,11 +78,11 @@
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
-                <input id="input-status" type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input type="hidden" name="status" value="0" id="input-status"/> <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
-          <input id="input-review-id" type="hidden" name="review_id" value="{{ review_id }}"/>
+          <input type="hidden" name="review_id" value="{{ review_id }}" id="input-review-id"/>
         </form>
       </div>
     </div>

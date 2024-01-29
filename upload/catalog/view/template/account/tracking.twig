@@ -1,33 +1,33 @@
 {{ header }}
-<div id="account-tracking" class="container">
+<div class="container" id="account-tracking">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_description }}</p>
       <form>
         <div class="row mb-3">
           <label for="input-code" class="col-md-2 col-form-label">{{ entry_code }}</label>
           <div class="col-md-10">
-            <textarea id="input-code" cols="40" rows="5" placeholder="{{ entry_code }}" class="form-control">{{ code }}</textarea>
+            <textarea cols="40" rows="5" placeholder="{{ entry_code }}" class="form-control" id="input-code">{{ code }}</textarea>
           </div>
         </div>
         <div class="row mb-3">
           <label for="input-generator" class="col-md-2 col-form-label">{{ entry_generator }}</label>
           <div class="col-md-10">
-            <input id="input-generator" type="text" name="product" value="" placeholder="{{ entry_generator }}" data-oc-target="autocomplete-generator" class="form-control" autocomplete="off"/>
-            <ul id="autocomplete-generator" class="dropdown-menu"></ul>
+            <input type="text" name="product" value="" placeholder="{{ entry_generator }}" data-oc-target="autocomplete-generator" class="form-control" autocomplete="off" id="input-generator"/>
+            <ul class="dropdown-menu" id="autocomplete-generator"></ul>
             <div class="text-muted">{{ help_generator }}</div>
           </div>
         </div>
         <div class="row mb-3">
           <label for="input-link" class="col-md-2 col-form-label">{{ entry_link }}</label>
           <div class="col-md-10">
-            <textarea id="input-link" name="link" cols="40" rows="5" placeholder="{{ entry_link }}" class="form-control"></textarea>
+            <textarea name="link" cols="40" rows="5" placeholder="{{ entry_link }}" class="form-control" id="input-link"></textarea>
           </div>
         </div>
       </form>

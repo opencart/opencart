@@ -1,12 +1,12 @@
 {{ header }}
-<div id="error-not-found" class="container">
+<div class="container" id="error-not-found">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
     <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_error }}</p>
       <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

@@ -10,7 +10,7 @@
 					<a href="#collapse-{{ i }}" data-bs-toggle="collapse" class="parent collapsed"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
 				{% endif %}
 				{% if menu.children %}
-					<ul id="collapse-{{ i }}" class="collapse">
+					<ul class="collapse" id="collapse-{{ i }}">
 						{% set j = 0 %}
 						{% for children_1 in menu.children %}
 							<li>{% if children_1.href %}
@@ -19,7 +19,7 @@
 									<a href="#collapse-{{ i }}-{{ j }}" data-bs-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>
 								{% endif %}
 								{% if children_1.children %}
-									<ul id="collapse-{{ i }}-{{ j }}" class="collapse">
+									<ul class="collapse" id="collapse-{{ i }}-{{ j }}">
 										{% set k = 0 %}
 										{% for children_2 in children_1.children %}
 											<li>{% if children_2.href %}
@@ -28,7 +28,7 @@
 													<a href="#collapse-{{ i }}-{{ j }}-{{ k }}" data-bs-toggle="collapse" class="parent collapsed">{{ children_2.name }}</a>
 												{% endif %}
 												{% if children_2.children %}
-													<ul id="collapse-{{ i }}-{{ j }}-{{ k }}" class="collapse">
+													<ul class="collapse" id="collapse-{{ i }}-{{ j }}-{{ k }}">
 														{% for children_3 in children_2.children %}
 															<li><a href="{{ children_3.href }}">{{ children_3.name }}</a></li>
 														{% endfor %}

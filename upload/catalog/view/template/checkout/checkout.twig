@@ -1,12 +1,12 @@
 {{ header }}
-<div id="checkout-checkout" class="container">
+<div class="container" id="checkout-checkout">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <div class="row">
         {% if register or payment_address or shipping_address %}
@@ -24,9 +24,9 @@
         {% endif %}
         <div class="col">
           {% if shipping_method %}
-            <div id="checkout-shipping-method" class="mb-3">{{ shipping_method }}</div>
+            <div class="mb-3" id="checkout-shipping-method">{{ shipping_method }}</div>
           {% endif %}
-          <div id="checkout-payment-method" class="mb-4">{{ payment_method }}</div>
+          <div class="mb-4" id="checkout-payment-method">{{ payment_method }}</div>
           <div id="checkout-confirm">{{ confirm }}</div>
         </div>
       </div>

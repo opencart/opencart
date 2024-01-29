@@ -17,16 +17,16 @@
 		<div class="card">
 			<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
 			<div class="card-body">
-				<form id="form-voucher-theme" action="{{ save }}" method="post" data-oc-toggle="ajax">
+				<form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-voucher-theme">
 					<div class="row mb-3 required">
 						<label class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							{% for language in languages %}
 								<div class="input-group">
 									<div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-									<input id="input-name-{{ language.language_id }}" type="text" name="voucher_theme_description[{{ language.language_id }}][name]" value="{{ voucher_theme_description[language.language_id] ? voucher_theme_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+									<input type="text" name="voucher_theme_description[{{ language.language_id }}][name]" value="{{ voucher_theme_description[language.language_id] ? voucher_theme_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name-{{ language.language_id }}"/>
 								</div>
-								<div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+								<div class="invalid-feedback" id="error-name-{{ language.language_id }}"></div>
 							{% endfor %}
 						</div>
 					</div>
@@ -34,17 +34,17 @@
 						<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 						<div class="col-sm-10">
 							<div class="border rounded d-block" style="max-width: 300px;">
-								<img id="thumb-image" src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-								<input id="input-image" type="hidden" name="image" value="{{ image }}"/>
+								<img src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid" id="thumb-image"/>
+								<input type="hidden" name="image" value="{{ image }}" id="input-image"/>
 								<div class="d-grid">
 									<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
 									<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
 								</div>
 							</div>
-							<div id="error-image" class="invalid-feedback"></div>
+							<div class="invalid-feedback" id="error-image"></div>
 						</div>
 					</div>
-					<input id="input-voucher-theme-id" type="hidden" name="voucher_theme_id" value="{{ voucher_theme_id }}"/>
+					<input type="hidden" name="voucher_theme_id" value="{{ voucher_theme_id }}" id="input-voucher-theme-id"/>
 				</form>
 			</div>
 		</div>

@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button id="button-send" type="button" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> {{ button_send }}</button></div>
+        <button type="button" class="btn btn-primary" id="button-send"><i class="fa-solid fa-envelope"></i> {{ button_send }}</button></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -20,7 +20,7 @@
           <div class="row mb-3">
             <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
-              <select id="input-store" name="store_id" class="form-select">
+              <select name="store_id" class="form-select" id="input-store">
                 <option value="0">{{ text_default }}</option>
                 {% for store in stores %}
                   <option value="{{ store.store_id }}">{{ store.name }}</option>
@@ -31,7 +31,7 @@
           <div class="row mb-3">
             <label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
             <div class="col-sm-10">
-              <select id="input-to" name="to" class="form-select">
+              <select name="to" class="form-select" id="input-to">
                 <option value="newsletter">{{ text_newsletter }}</option>
                 <option value="customer_all">{{ text_customer_all }}</option>
                 <option value="customer_group">{{ text_customer_group }}</option>
@@ -42,49 +42,49 @@
               </select>
             </div>
           </div>
-          <div id="to-customer-group" class="row mb-3 to">
+          <div class="row mb-3 to" id="to-customer-group">
             <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
-              <select id="input-customer-group" name="customer_group_id" class="form-select">
+              <select name="customer_group_id" class="form-select" id="input-customer-group">
                 {% for customer_group in customer_groups %}
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                 {% endfor %}
               </select>
             </div>
           </div>
-          <div id="to-customer" class="row mb-3 to">
+          <div class="row mb-3 to" id="to-customer">
             <label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
             <div class="col-sm-10">
-              <input id="input-customer" type="text" name="customers" value="" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+              <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off" id="input-customer"/>
+              <ul class="dropdown-menu" id="autocomplete-customer"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-customer" class="table m-0">
+                <table class="table m-0" id="mail-customer">
                   <tbody></tbody>
                 </table>
               </div>
               <div class="form-text">{{ help_customer }}</div>
             </div>
           </div>
-          <div id="to-affiliate" class="row mb-3 to">
+          <div class="row mb-3 to" id="to-affiliate">
             <label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
             <div class="col-sm-10">
-              <input id="input-affiliate" type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
+              <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off" id="input-affiliate"/>
+              <ul class="dropdown-menu" id="autocomplete-affiliate"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-affiliate" class="table m-0">
+                <table class="table m-0" id="mail-affiliate">
                   <tbody></tbody>
                 </table>
               </div>
               <div class="form-text">{{ help_affiliate }}</div>
             </div>
           </div>
-          <div id="to-product" class="row mb-3 to">
+          <div class="row mb-3 to" id="to-product">
             <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <input id="input-product" type="text" name="products" value="" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
-              <ul id="autocomplete-product" class="dropdown-menu"></ul>
+              <input type="text" name="products" value="" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off" id="input-product"/>
+              <ul class="dropdown-menu" id="autocomplete-product"></ul>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-product" class="table m-0">
+                <table class="table m-0" id="mail-product">
                   <tbody></tbody>
                 </table>
               </div>
@@ -94,8 +94,8 @@
           <div class="row mb-3 required">
             <label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
             <div class="col-sm-10">
-              <input id="input-subject" type="text" name="subject" value="" placeholder="{{ entry_subject }}" class="form-control"/>
-              <div id="error-subject" class="invalid-feedback"></div>
+              <input type="text" name="subject" value="" placeholder="{{ entry_subject }}" class="form-control" id="input-subject"/>
+              <div class="invalid-feedback" id="error-subject"></div>
             </div>
           </div>
           <div class="row mb-3 required">
@@ -103,7 +103,7 @@
             <div class="col-sm-10">
               <div id="input-message">
                 <textarea name="message" placeholder="{{ entry_message }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
-                <div id="error-message" class="invalid-feedback"></div>
+                <div class="invalid-feedback" id="error-message"></div>
               </div>
             </div>
           </div>

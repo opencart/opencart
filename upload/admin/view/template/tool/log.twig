@@ -27,11 +27,11 @@
         <div class="tab-content">
           {% set i = 0 %}
           {% for log in logs %}
-            <div id="tab-log-{{ i }}" class="tab-pane{% if i == 0 %} active{% endif %}">
+            <div class="tab-pane{% if i == 0 %} active{% endif %}" id="tab-log-{{ i }}">
               {% if log.error %}
                 <div class="alert alert-danger">{{ log.error }}</div>
               {% endif %}
-              <textarea id="input-log-{{ i }}" name="log" wrap="off" rows="15" class="form-control" readonly>{{ log.output }}</textarea>
+              <textarea name="log" wrap="off" rows="15" class="form-control" readonly id="input-log-{{ i }}">{{ log.output }}</textarea>
               <br/>
               <div class="row row-cols-2">
                 <div class="col">

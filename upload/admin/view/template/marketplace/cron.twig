@@ -22,15 +22,15 @@
         <div class="mb-3">
           <div class="input-group">
             <div class="input-group-text">{{ entry_cron }}</div>
-            <input id="input-cron" type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" class="form-control"/>
-            <button id="button-copy" type="button" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fa-regular fa-copy"></i></button>
+            <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" class="form-control" id="input-cron"/>
+            <button type="button" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light" id="button-copy"><i class="fa-regular fa-copy"></i></button>
           </div>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="cron" class="card-body">{{ list }}</div>
+      <div class="card-body" id="cron">{{ list }}</div>
     </div>
   </div>
 </div>

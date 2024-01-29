@@ -18,8 +18,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 		$attribute_group_id = $this->db->getLastId();
 
-		foreach ($data['attribute_group_description'] as $language_id => $value) {
-			$this->addDescription($attribute_group_id, $language_id, $value);
+		foreach ($data['attribute_group_description'] as $language_id => $attribute_group_description) {
+			$this->addDescription($attribute_group_id, $language_id, $attribute_group_description);
 		}
 
 		return $attribute_group_id;
@@ -38,8 +38,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($attribute_group_id);
 
-		foreach ($data['attribute_group_description'] as $language_id => $value) {
-			$this->addDescription($attribute_group_id, $language_id, $value);
+		foreach ($data['attribute_group_description'] as $language_id => $attribute_group_description) {
+			$this->addDescription($attribute_group_id, $language_id, $attribute_group_description);
 		}
 	}
 
@@ -114,6 +114,17 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Attribute Groups
+	 *
+	 * @return int
+	 */
+	public function getTotalAttributeGroups(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 *
@@ -154,16 +165,5 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteDescription(int $attribute_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
-	}
-
-	/**
-	 * Get Total Attribute Groups
-	 *
-	 * @return int
-	 */
-	public function getTotalAttributeGroups(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group`");
-
-		return (int)$query->row['total'];
 	}
 }

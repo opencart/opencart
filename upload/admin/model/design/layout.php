@@ -148,6 +148,17 @@ class Layout extends \Opencart\System\Engine\Model {
 
 		return $query->rows;
 	}
+	
+	/**
+	 * Get Total Layouts
+	 *
+	 * @return int
+	 */
+	public function getTotalLayouts(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "layout`");
+
+		return (int)$query->row['total'];
+	}
 
 	/**
 	 * Add Store
@@ -207,7 +218,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteModule(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
 
+	public function deleteModuleByCode(int $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` = '" . $this->db->escape($code) . "' OR `code` LIKE '" . $this->db->escape($code . '.%') . "'");
 	}
 
 	/**
@@ -221,16 +235,5 @@ class Layout extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' ORDER BY `position` ASC, `sort_order` ASC");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Layouts
-	 *
-	 * @return int
-	 */
-	public function getTotalLayouts(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "layout`");
-
-		return (int)$query->row['total'];
 	}
 }

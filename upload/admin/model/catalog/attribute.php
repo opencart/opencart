@@ -22,8 +22,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$attribute_id = $this->db->getLastId();
 
-		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->addDescription($attribute_id, $language_id, $value);
+		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
+			$this->addDescription($attribute_id, $language_id, $attribute_description);
 		}
 
 		return $attribute_id;
@@ -46,8 +46,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($attribute_id);
 
-		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->addDescription($attribute_id, $language_id, $value);
+		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
+			$this->addDescription($attribute_id, $language_id, $attribute_description);
 		}
 	}
 
@@ -137,6 +137,38 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Get Total Attributes
+	 *
+	 *	Get the total number of attribute records in the database.
+	 *
+	 * @return int total number of attribute records
+	 */
+	public function getTotalAttributes(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute`");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 *	Get Total Attributes By Attribute Group ID
+	 *
+	 *	Get the total number of attribute records with group ID in the database.
+	 *
+	 * @param int $attribute_group_id foreign key of the attribute record to be fetched
+	 *
+	 * @return int total number of attribute records that have attribute group ID
+	 */
+	public function getTotalAttributesByAttributeGroupId(int $attribute_group_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 * @param int $attribute_id primary key of the attribute record
@@ -180,37 +212,5 @@ class Attribute extends \Opencart\System\Engine\Model {
 		}
 
 		return $attribute_data;
-	}
-
-	/**
-	 *	Get Total Attributes
-	 *
-	 *	Get the total number of attribute records in the database.
-	 *
-	 * @return int total number of attribute records
-	 */
-	public function getTotalAttributes(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute`");
-
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
-	}
-
-	/**
-	 *	Get Total Attributes By Attribute Group ID
-	 *
-	 *	Get the total number of attribute records with group ID in the database.
-	 *
-	 * @param int $attribute_group_id foreign key of the attribute record to be fetched
-	 *
-	 * @return int total number of attribute records that have attribute group ID
-	 */
-	public function getTotalAttributesByAttributeGroupId(int $attribute_group_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
-
-		return (int)$query->row['total'];
 	}
 }

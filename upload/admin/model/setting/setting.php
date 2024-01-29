@@ -53,7 +53,7 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editSetting(string $code, array $data, int $store_id = 0): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+		$this->deleteSetting($code, $store_id);
 
 		foreach ($data as $key => $value) {
 			if (substr($key, 0, strlen($code)) == $code) {

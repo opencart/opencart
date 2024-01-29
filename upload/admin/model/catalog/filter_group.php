@@ -11,8 +11,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 
 		$filter_group_id = $this->db->getLastId();
 
-		foreach ($data['filter_group_description'] as $language_id => $value) {
-			$this->addDescription($filter_group_id, $language_id, $value);
+		foreach ($data['filter_group_description'] as $language_id => $filter_group_description) {
+			$this->addDescription($filter_group_id, $language_id, $filter_group_description);
 		}
 
 		$this->cache->delete('filter_group');
@@ -25,8 +25,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($filter_group_id);
 
-		foreach ($data['filter_group_description'] as $language_id => $value) {
-			$this->addDescription($filter_group_id, $language_id, $value);
+		foreach ($data['filter_group_description'] as $language_id => $filter_group_description) {
+			$this->addDescription($filter_group_id, $language_id, $filter_group_description);
 		}
 
 		$this->cache->delete('filter_group');

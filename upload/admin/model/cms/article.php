@@ -269,8 +269,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $information_id, int $store_id): array {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
+	public function addStore(int $article_id, int $store_id): array {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -280,8 +280,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteStore(int $information_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
+	public function deleteStore(int $article_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
 	/**

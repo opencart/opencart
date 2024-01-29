@@ -355,7 +355,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			foreach ($filters as $filter) {
 				$json[] = [
 					'filter_id' => $filter['filter_id'],
-					'name'      => strip_tags(html_entity_decode($filter['group'] . ' &gt; ' . $filter['name'], ENT_QUOTES, 'UTF-8'))
+					'name'      => strip_tags(html_entity_decode($filter['filter_group'] . ' &gt; ' . $filter['name'], ENT_QUOTES, 'UTF-8'))
 				];
 			}
 		}

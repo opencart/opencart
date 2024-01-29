@@ -258,4 +258,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
+
+	public function deleteReport(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
 }

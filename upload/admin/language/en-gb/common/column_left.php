@@ -32,6 +32,7 @@ $_['text_log']                 = 'Error Logs';
 $_['text_event']               = 'Events';
 $_['text_extension']           = 'Extensions';
 $_['text_filter']              = 'Filters';
+$_['text_filter_group']        = 'Filter Groups';
 $_['text_geo_zone']            = 'Geo Zones';
 $_['text_gdpr']                = 'GDPR';
 $_['text_information']         = 'Information';

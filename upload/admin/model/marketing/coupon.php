@@ -204,7 +204,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $coupon_category_data;
 	}
 
-	public function deleteCategoryByCategoryId(int $category_id): void {
+	public function deleteCategoriesByCategoryId(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 

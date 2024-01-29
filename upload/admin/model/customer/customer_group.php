@@ -55,10 +55,19 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($customer_group_id);
 
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->deleteDiscountByCustomerGroupId($customer_group_id);
+		$this->model_catalog_product->deleteSpecialByCustomerGroupId($customer_group_id);
+		$this->model_catalog_product->deleteRewardByCustomerGroupId($customer_group_id);
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_special` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rate_to_customer_group` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+
+		$this->load->model('localisation/tax_rate');
+
+		$this->model_localisation_tax_rate->deleteCustomerGroupByCustomerGroupId($customer_group_id);
 	}
 
 	/**

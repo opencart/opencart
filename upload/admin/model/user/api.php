@@ -21,7 +21,7 @@ class Api extends \Opencart\System\Engine\Model {
 		if (isset($data['api_ip'])) {
 			foreach ($data['api_ip'] as $ip) {
 				if ($ip) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
+					$this->addIp($api_id, $ip);
 				}
 			}
 		}
@@ -40,12 +40,12 @@ class Api extends \Opencart\System\Engine\Model {
 	public function editApi(int $api_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `api_id` = '" . (int)$api_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
+		$this->deleteIp($api_id);
 
 		if (isset($data['api_ip'])) {
 			foreach ($data['api_ip'] as $ip) {
 				if ($ip) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
+					$this->addIp($api_id, $ip);
 				}
 			}
 		}
@@ -60,6 +60,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteApi(int $api_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api` WHERE `api_id` = '" . (int)$api_id . "'");
+
+
 	}
 
 	/**
@@ -142,6 +144,10 @@ class Api extends \Opencart\System\Engine\Model {
 	 */
 	public function addIp(int $api_id, string $ip): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
+	}
+
+	public function deleteIp(int $api_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
 	}
 
 	/**

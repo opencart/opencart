@@ -31,7 +31,7 @@
                 <div class="row mb-3">
                   <div class="col">
                     <label for="input-db-driver" class="form-label">{{ entry_db_driver }}</label>
-                    <select name="db_driver" class="form-control" onchange="javascript:document.getElementById('db-advanced').style.display=(this.value=='mysqli')?'block':'none';" id="input-db-driver">
+                    <select name="db_driver" class="form-control" onchange="javascript:document.getElementById('db-advanced').style.display=(this.value=='mysqli') ? 'block' : 'none';" id="input-db-driver">
                       {% for driver in drivers %}
                         <option value="{{ driver.value }}"{% if db_driver == driver.value %} selected{% endif %}>{{ driver.text }}</option>
                       {% endfor %}
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="row mb-3">
-                  <div class="accordion" style="display:{{ db_driver =='mysqli'?'block':'none' }};" id="db-advanced">
+                  <div class="accordion" style="display:{{ db_driver =='mysqli' ? 'block' : 'none' }};" id="db-advanced">
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="db-advanced-heading">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#db-advanced-collapse" aria-expanded="false" aria-controls="db-advanced-collapse">

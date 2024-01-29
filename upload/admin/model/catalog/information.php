@@ -18,8 +18,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 		$information_id = $this->db->getLastId();
 
-		foreach ($data['information_description'] as $language_id => $value) {
-			$this->addDescription($information_id, $language_id, $value);
+		foreach ($data['information_description'] as $language_id => $information_description) {
+			$this->addDescription($information_id, $language_id, $information_description);
 		}
 
 		if (isset($data['information_store'])) {
@@ -63,8 +63,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($information_id);
 
-		foreach ($data['information_description'] as $language_id => $value) {
-			$this->addDescription($information_id, $language_id, $value);
+		foreach ($data['information_description'] as $language_id => $information_description) {
+			$this->addDescription($information_id, $language_id, $information_description);
 		}
 
 		$this->deleteStore($information_id);

@@ -24,7 +24,7 @@ class Option extends \Opencart\System\Engine\Model {
 
 		if (isset($data['option_value'])) {
 			foreach ($data['option_value'] as $option_value) {
-				$this->addOtionValue($option_id, $option_value);
+				$this->addValue($option_id, $option_value);
 			}
 		}
 
@@ -186,13 +186,13 @@ class Option extends \Opencart\System\Engine\Model {
 		$option_value_id = $this->db->getLastId();
 
 		foreach ($data['option_value_description'] as $language_id => $option_value_description) {
-			$this->addOtionValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+			$this->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
 		}
 
 		return $option_value_id;
 	}
 
-	public function deleteValue(int $option_id, array $data): void {
+	public function deleteValue(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 
 		$this->deleteValueDescription($option_id);
@@ -235,14 +235,13 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_data;
 	}
 
-	public function addValueDescription(int $option_id, int $option_value_id, int $language_id, array $data): void {
+	public function addValueDescription(int $option_value_id, int $language_id, int $option_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
-	public function deleteValueDescription(int $option_id, array $data): void {
+	public function deleteValueDescription(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value_description` WHERE `option_id` = '" . (int)$option_id . "'");
 	}
-
 
 	/**
 	 * Get Value Descriptions

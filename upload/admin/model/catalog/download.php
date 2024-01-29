@@ -18,8 +18,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 		$download_id = $this->db->getLastId();
 
-		foreach ($data['download_description'] as $language_id => $value) {
-			$this->addDescription($download_id, $language_id, $value);
+		foreach ($data['download_description'] as $language_id => $download_description) {
+			$this->addDescription($download_id, $language_id, $download_description);
 		}
 
 		return $download_id;
@@ -38,8 +38,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($download_id);
 
-		foreach ($data['download_description'] as $language_id => $value) {
-			$this->addDescription($download_id, $language_id, $value);
+		foreach ($data['download_description'] as $language_id => $download_description) {
+			$this->addDescription($download_id, $language_id, $download_description);
 		}
 	}
 

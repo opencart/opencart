@@ -18,8 +18,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$category_id = $this->db->getLastId();
 
-		foreach ($data['category_description'] as $language_id => $value) {
-			$this->addDescription($category_id, $language_id, $value);
+		foreach ($data['category_description'] as $language_id => $category_description) {
+			$this->addDescription($category_id, $language_id, $category_description);
 		}
 
 		// MySQL Hierarchical Data Closure Table Pattern
@@ -95,8 +95,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($category_id);
 
-		foreach ($data['category_description'] as $language_id => $value) {
-			$this->addDescription($category_id, $language_id, $value);
+		foreach ($data['category_description'] as $language_id => $category_description) {
+			$this->addDescription($category_id, $language_id, $category_description);
 		}
 
 		// Old path
@@ -360,6 +360,17 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Categories
+	 *
+	 * @return int
+	 */
+	public function getTotalCategories(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 *
@@ -597,17 +608,6 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		return $category_layout_data;
-	}
-
-	/**
-	 * Get Total Categories
-	 *
-	 * @return int
-	 */
-	public function getTotalCategories(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category`");
-
-		return (int)$query->row['total'];
 	}
 
 	/**

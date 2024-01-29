@@ -55,21 +55,6 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Filter
-	 *
-	 * @param int $filter_group_id
-	 *
-	 * @return void
-	 */
-	public function deleteFilterByFilterGroupId(int $filter_group_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
-
-		$this->deleteDescriptionsByFilterGroupId($filter_group_id);
-
-		$this->cache->delete('filter');
-	}
-
-	/**
 	 * Get Group
 	 *
 	 * @param int $filter_group_id
@@ -133,7 +118,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalFilters(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter_group`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter`");
 
 		return (int)$query->row['total'];
 	}
@@ -179,16 +164,5 @@ class Filter extends \Opencart\System\Engine\Model {
 		}
 
 		return $filter_data;
-	}
-
-	/**
-	 *	Delete Description
-	 *
-	 * @param int $filter_group_id primary key of the filter record to be fetched
-	 *
-	 * @return void
-	 */
-	public function deleteDescriptionsByFilterGroupId(int $filter_group_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 	}
 }

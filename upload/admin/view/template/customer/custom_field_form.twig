@@ -197,10 +197,10 @@ var custom_field_value_row = {{ custom_field_value_row }};
 
 function addCustomFieldValue() {
     html = '<tr id="custom-field-value-row-' + custom_field_value_row + '">';
-    html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
+    html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value=""/>';
   {% for language in languages %}
     html += '    <div class="input-group">';
-    html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';
+    html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}"/></div>';
     html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value|escape('js') }}" class="form-control" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}"/>';
     html += '    </div>';
     html += '    <div class="invalid-feedback" id="error-custom-field-value-{{ custom_field_value_row }}-{{ language.language_id }}"></div>';

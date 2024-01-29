@@ -1638,7 +1638,7 @@ $('#button-attribute').on('click', function() {
     html += '  <td class="text-start">';
   {% for language in languages %}
     html += '<div class="input-group">';
-    html += '  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name|escape('js') }}" /></div>';
+    html += '  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name|escape('js') }}"/></div>';
     html += '  <textarea name="product_attribute[' + attribute_row + '][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text|escape('js') }}" class="form-control" id="input-text-' + attribute_row + '-{{ language.language_id }}"></textarea>';
     html += '</div>';
   {% endfor %}
@@ -1677,10 +1677,10 @@ $('#input-option').autocomplete({
     'select': function(item) {
         html = '<fieldset id="option-row-' + option_row + '">';
         html += '  <legend class="float-none">' + item['label'] + ' <button type="button" class="btn btn-danger float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fa-solid fa-minus-circle"></i></button></legend>';
-        html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
-        html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
-        html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
-        html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value=""/>';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '"/>';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '"/>';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '"/>';
 
         html += '  <div class="row mb-3">';
         html += '    <label for="input-required-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_required|escape('js') }}</label>';

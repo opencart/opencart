@@ -206,7 +206,7 @@ $('#history').on('click', '.btn-warning', function () {
 $('#button-upload').on('click', function () {
     $('#form-upload').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" style="display: none;" id="form-upload"><input type="file" name="upload" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" style="display: none;" id="form-upload"><input type="file" name="upload"/></form>');
 
     $('#form-upload input[name=\'upload\']').trigger('click');
 

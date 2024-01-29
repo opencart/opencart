@@ -143,10 +143,10 @@ function updateOpayo() {
 		$('#opayo-form #browser-info').remove();
 			
 		html = ' <div  id="browser-info"> ';
-		html += '<input type="hidden" name="BrowserColorDepth" value="' + window.screen.colorDepth + '" />';
-		html += '<input type="hidden" name="BrowserScreenHeight" value="' + window.screen.height + '" />';
-		html += '<input type="hidden" name="BrowserScreenWidth" value="' + window.screen.width + '" />';
-		html += '<input type="hidden" name="BrowserTZ" value="' + new Date().getTimezoneOffset() + '" />';
+		html += '<input type="hidden" name="BrowserColorDepth" value="' + window.screen.colorDepth + '"/>';
+		html += '<input type="hidden" name="BrowserScreenHeight" value="' + window.screen.height + '"/>';
+		html += '<input type="hidden" name="BrowserScreenWidth" value="' + window.screen.width + '"/>';
+		html += '<input type="hidden" name="BrowserTZ" value="' + new Date().getTimezoneOffset() + '"/>';
 		html += ' </div>';
 			
 		$('#opayo-form').append(html);
@@ -170,26 +170,26 @@ function updateOpayo() {
 					html = ' <form action="' + json.ACSURL + '" method="post"  id="3dauth-form"> ';
 
 					if (json.CReq) {
-						html += '<input type="hidden" name="creq" value="' + json.CReq + '" />';
+						html += '<input type="hidden" name="creq" value="' + json.CReq + '"/>';
 					}
 						
 					if (json.ACSTransID) {
-						html += '<input type="hidden" name="acsTransID" value="' + json.ACSTransID + '" />';
+						html += '<input type="hidden" name="acsTransID" value="' + json.ACSTransID + '"/>';
 					}
 						
 					if (json.DSTransID) {
-						html += '<input type="hidden" name="dsTransID" value="' + json.DSTransID + '" />';
+						html += '<input type="hidden" name="dsTransID" value="' + json.DSTransID + '"/>';
 					}
 						
 					if (json.MD) {
-						html += '<input type="hidden" name="MD" value="' + json.MD + '" />';
+						html += '<input type="hidden" name="MD" value="' + json.MD + '"/>';
 					}
 						
 					if (json.PaReq) {
-						html += '<input type="hidden" name="PaReq" value="' + json.PaReq + '" />';
+						html += '<input type="hidden" name="PaReq" value="' + json.PaReq + '"/>';
 					}
 						
-					html += '<input type="hidden" name="TermUrl" value="' + json.TermUrl + '" />';
+					html += '<input type="hidden" name="TermUrl" value="' + json.TermUrl + '"/>';
 					html += ' </form>';
 						
 					$('#opayo-form').append(html);

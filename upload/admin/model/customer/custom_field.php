@@ -25,7 +25,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 		if (isset($data['custom_field_customer_group'])) {
 			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
 				if (isset($custom_field_customer_group['customer_group_id'])) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_customer_group` SET `custom_field_id` = '" . (int)$custom_field_id . "', `customer_group_id` = '" . (int)$custom_field_customer_group['customer_group_id'] . "', `required` = '" . (int)(isset($custom_field_customer_group['required']) ? 1 : 0) . "'");
+					$this->addCustomerGroup($custom_field_id, $custom_field_customer_group);
 				}
 			}
 		}
@@ -62,12 +62,12 @@ class CustomField extends \Opencart\System\Engine\Model {
 			$this->addDescription($custom_field_id, $language_id, $value);
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+		$this->deleteCustomerGroup($custom_field_id);
 
 		if (isset($data['custom_field_customer_group'])) {
 			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
 				if (isset($custom_field_customer_group['customer_group_id'])) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_customer_group` SET `custom_field_id` = '" . (int)$custom_field_id . "', `customer_group_id` = '" . (int)$custom_field_customer_group['customer_group_id'] . "', `required` = '" . (int)(isset($custom_field_customer_group['required']) ? 1 : 0) . "'");
+					$this->addCustomerGroup($custom_field_id, $custom_field_customer_group);
 				}
 			}
 		}
@@ -188,6 +188,17 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Custom Fields
+	 *
+	 * @return int
+	 */
+	public function getTotalCustomFields(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 *
@@ -197,14 +208,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 */
 	public function addDescription(int $custom_field_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_description` SET `custom_field_id` = '" . (int)$custom_field_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
-
 	}
 
 	/**
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $custom_field_id primary key of the attribute record to be fetched
 	 *
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
@@ -230,6 +240,27 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		return $custom_field_data;
+	}
+
+	public function addCustomerGroup(int $custom_field_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_customer_group` SET `custom_field_id` = '" . (int)$custom_field_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `required` = '" . (int)(isset($data['required']) ? 1 : 0) . "'");
+	}
+
+	public function deleteCustomerGroup(int $custom_field_id): void {
+		$this->db->query("delete FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+	}
+
+	/**
+	 * Get Customer Groups
+	 *
+	 * @param int $custom_field_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getCustomerGroups(int $custom_field_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+
+		return $query->rows;
 	}
 
 	/**
@@ -268,19 +299,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Customer Groups
-	 *
-	 * @param int $custom_field_id
-	 *
-	 * @return array<int, array<string, mixed>>
-	 */
-	public function getCustomerGroups(int $custom_field_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
-
-		return $query->rows;
-	}
-
-	/**
 	 * Get Value Descriptions
 	 *
 	 * @param int $custom_field_id
@@ -309,16 +327,5 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		return $custom_field_value_data;
-	}
-
-	/**
-	 * Get Total Custom Fields
-	 *
-	 * @return int
-	 */
-	public function getTotalCustomFields(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
-
-		return (int)$query->row['total'];
 	}
 }

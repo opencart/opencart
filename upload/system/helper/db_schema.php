@@ -3030,10 +3030,6 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'filter_group_id',
-				'type' => 'int(11)'
-			],
-			[
 				'name' => 'name',
 				'type' => 'varchar(64)'
 			]
@@ -3047,11 +3043,6 @@ function oc_db_schema() {
 				'key'   => 'language_id',
 				'table' => 'language',
 				'field' => 'language_id'
-			],
-			[
-				'key'   => 'filter_group_id',
-				'table' => 'filter_group',
-				'field' => 'filter_group_id'
 			]
 		],
 		'engine'  => 'InnoDB',

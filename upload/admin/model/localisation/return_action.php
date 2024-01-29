@@ -40,7 +40,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editReturnAction(int $return_action_id, array $data): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
+		$this->deleteReturnAction($return_action_id);
 
 		foreach ($data['return_action'] as $language_id => $value) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `return_action_id` = '" . (int)$return_action_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");

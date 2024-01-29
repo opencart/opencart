@@ -50,7 +50,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteAffiliate(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+		$this->deleteReport($customer_id);
 	}
 
 	/**
@@ -246,6 +247,10 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	public function deleteReport(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
 	/**
 	 * Get Total Reports
 	 *
@@ -257,9 +262,5 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];
-	}
-
-	public function deleteReport(int $customer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 }

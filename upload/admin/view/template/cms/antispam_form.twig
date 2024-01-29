@@ -21,11 +21,11 @@
           <div class="row mb-3 required">
             <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
             <div class="col-sm-10">
-              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+              <input id="input-keyword" type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" class="form-control"/>
               <div id="error-keyword" class="invalid-feedback"></div>
             </div>
           </div>
-          <input type="hidden" name="antispam_id" value="{{ antispam_id }}" id="input-antispam-id"/>
+          <input id="input-antispam-id" type="hidden" name="antispam_id" value="{{ antispam_id }}"/>
         </form>
       </div>
     </div>

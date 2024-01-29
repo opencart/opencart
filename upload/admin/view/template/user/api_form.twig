@@ -28,15 +28,15 @@
               <div class="row mb-3 required">
                 <label for="input-username" class="col-sm-2 col-form-label">{{ entry_username }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+                  <input id="input-username" type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" class="form-control"/>
                   <div id="error-username" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
                 <div class="col-sm-10">
-                  <textarea name="key" placeholder="{{ entry_key }}" rows="5" id="input-key" class="form-control mb-1">{{ key }}</textarea>
-                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fa-solid fa-rotate"></i> {{ button_generate }}</button>
+                  <textarea id="input-key" name="key" placeholder="{{ entry_key }}" rows="5" class="form-control mb-1">{{ key }}</textarea>
+                  <button id="button-generate" type="button" class="btn btn-primary"><i class="fa-solid fa-rotate"></i> {{ button_generate }}</button>
                   <div id="error-key" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -45,7 +45,7 @@
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
                     <input type="hidden" name="status" value="0"/>
-                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
                   </div>
                 </div>
               </div>
@@ -73,7 +73,7 @@
                   <tfoot>
                     <tr>
                       <td></td>
-                      <td class="text-end"><button type="button" id="button-ip" data-bs-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                      <td id="button-ip" class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -112,7 +112,7 @@
               </div>
             </div>
           </div>
-          <input type="hidden" name="api_id" value="{{ api_id }}" id="input-api-id"/>
+          <input id="input-api-id" type="hidden" name="api_id" value="{{ api_id }}"/>
         </form>
       </div>
     </div>

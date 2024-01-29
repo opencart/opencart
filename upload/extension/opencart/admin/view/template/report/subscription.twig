@@ -5,14 +5,14 @@
         <div class="card-body">
         <form id="form-filter">
           <div class="mb-3">
-            <label for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-select">
+            <label id="input-group" for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" class="form-select">
               {% for group in groups %}
                 <option value="{{ group.value }}"{% if group.value == filter_group %} selected{% endif %}>{{ group.text }}</option>
               {% endfor %}
             </select>
           </div>
           <div class="mb-3">
-            <label for="input-subscription-status" class="col-form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
+            <label id="input-subscription-status" for="input-subscription-status" class="col-form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" class="form-select">
               <option value="0">{{ text_all_status }}</option>
                 {% for subscription_status in subscription_statuses %}
                   <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
@@ -22,19 +22,19 @@
           <div class="mb-3">
             <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
             <div class="input-group">
-              <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
+              <input id="input-date-start" type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" class="form-control date"/>
               <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
             </div>
           </div>
           <div class="mb-3">
             <label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
             <div class="input-group">
-              <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
+              <input id="input-date-end" type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" class="form-control date"/>
               <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
             </div>
           </div>
           <div class="text-end">
-            <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+            <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
             <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
           </div>
         </form>

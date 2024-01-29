@@ -6,11 +6,11 @@
       <form id="form-filter">
         <div class="mb-3">
           <label for="input-customer" class="col-form-label">{{ entry_customer }}</label>
-          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+          <input id="input-customer" type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
           <ul id="autocomplete-customer" class="dropdown-menu"></ul>
         </div>
         <div class="mb-3">
-          <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
+          <label id="input-order-status" for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" class="form-select">
             <option value="0">{{ text_all_status }}</option>
             {% for order_status in order_statuses %}
               <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
@@ -20,19 +20,19 @@
         <div class="mb-3">
           <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
           <div class="input-group">
-            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
+            <input id="input-date-start" type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" class="form-control date"/>
             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
           </div>
         </div>
         <div class="mb-3">
           <label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
           <div class="input-group">
-            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
+            <input id="input-date-end" type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" class="form-control date"/>
             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
           </div>
         </div>
         <div class="text-end">
-          <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+          <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
           <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
         </div>
       </form>

@@ -21,7 +21,7 @@
           <div class="row mb-3">
             <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="fraud_ip_order_status_id" id="input-order-status" class="form-select">
+              <select id="input-order-status" name="fraud_ip_order_status_id" class="form-select">
                 {% for order_status in order_statuses %}
                   <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == fraud_ip_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                 {% endfor %}
@@ -34,7 +34,7 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="fraud_ip_status" value="0"/>
-                <input type="checkbox" name="fraud_ip_status" value="1" id="input-status" class="form-check-input"{% if fraud_ip_status %} checked{% endif %}/>
+                <input id="input-status" type="checkbox" name="fraud_ip_status" value="1" class="form-check-input"{% if fraud_ip_status %} checked{% endif %}/>
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
               <label for="input-ip" class="col-sm-2 col-form-label">{{ entry_ip }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
-                  <button class="btn btn-primary" id="button-ip-add" type="button">{{ button_ip_add }}</button>
+                  <input id="input-ip" type="text" value="" placeholder="{{ entry_ip }}" class="form-control"/>
+                  <button id="button-ip-add" class="btn btn-primary" type="button">{{ button_ip_add }}</button>
                 </div>
               </div>
             </div>

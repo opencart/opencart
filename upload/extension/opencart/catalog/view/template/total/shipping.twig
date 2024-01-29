@@ -7,7 +7,7 @@
         <div class="row mb-3 required">
           <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
           <div class="col-md-8">
-            <select name="country_id" id="input-country" class="form-select">
+            <select id="input-country" name="country_id" class="form-select">
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -19,19 +19,19 @@
         <div class="row mb-3 required">
           <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
           <div class="col-md-8">
-            <select name="zone_id" id="input-zone" class="form-select"></select>
+            <select id="input-zone" name="zone_id" class="form-select"></select>
             <div id="error-zone" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
+            <input id="input-postcode" type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" class="form-control"/>
             <div id="error-postcode" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="text-end">
-          <button type="submit" id="button-quote" class="btn btn-primary">{{ button_quote }}</button>
+          <button id="button-quote" type="submit" class="btn btn-primary">{{ button_quote }}</button>
         </div>
       </form>
     </div>
@@ -106,7 +106,7 @@
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button id="button-shipping-method" type="submit" class="btn btn-primary">{{ button_shipping }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';

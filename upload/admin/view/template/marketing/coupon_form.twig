@@ -30,14 +30,14 @@
               <div class="row mb-3 required">
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
                   <div id="error-name" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <input id="input-code" type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" class="form-control"/>
                   <div class="form-text">{{ help_code }}</div>
                   <div id="error-code" class="invalid-feedback"></div>
                 </div>
@@ -45,7 +45,7 @@
               <div class="row mb-3">
                 <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
                 <div class="col-sm-10">
-                  <select name="type" id="input-type" class="form-select">
+                  <select id="input-type" name="type" class="form-select">
                     {% if type == 'P' %}
                       <option value="P" selected>{{ text_percent }}</option>
                     {% else %}
@@ -63,13 +63,13 @@
               <div class="row mb-3">
                 <label for="input-discount" class="col-sm-2 col-form-label">{{ entry_discount }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" id="input-discount" class="form-control"/>
+                  <input id="input-discount" type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" class="form-control"/>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-total" class="col-sm-2 col-form-label">{{ entry_total }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                  <input id="input-total" type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" class="form-control"/>
                   <div class="form-text">{{ help_total }}</div>
                 </div>
               </div>
@@ -78,7 +78,7 @@
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
                     <input type="hidden" name="logged" value="0"/>
-                    <input type="checkbox" name="logged" value="1" id="input-logged" class="form-check-input"{% if logged %} checked{% endif %}/>
+                    <input id="input-logged" type="checkbox" name="logged" value="1" class="form-check-input"{% if logged %} checked{% endif %}/>
                   </div>
                   <div class="form-text">{{ help_logged }}</div>
                 </div>
@@ -88,14 +88,14 @@
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
                     <input type="hidden" name="shipping" value="0"/>
-                    <input type="checkbox" name="shipping" value="1" id="input-shipping" class="form-check-input"{% if shipping %} checked{% endif %}/>
+                    <input id="input-shipping" type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                   </div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+                  <input id="input-product" type="text" name="product" value="" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-product" class="dropdown-menu"></ul>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
                     <table id="coupon-product" class="table m-0">
@@ -115,7 +115,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
+                  <input id="input-category" type="text" name="category" value="" placeholder="{{ entry_category }}" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-category" class="dropdown-menu"></ul>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
                     <table id="coupon-category" class="table m-0">
@@ -136,7 +136,7 @@
                 <label for="input-date-start" class="col-sm-2 col-form-label">{{ entry_date_start }}</label>
                 <div class="col-sm-10 col-md-4">
                   <div class="input-group">
-                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
+                    <input id="input-date-start" type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" class="form-control date"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                 </div>
@@ -145,7 +145,7 @@
                 <label for="input-date-end" class="col-sm-2 col-form-label">{{ entry_date_end }}</label>
                 <div class="col-sm-10 col-md-4">
                   <div class="input-group">
-                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
+                    <input id="input-date-end" type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" class="form-control date"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                 </div>
@@ -153,14 +153,14 @@
               <div class="row mb-3">
                 <label for="input-uses-total" class="col-sm-2 col-form-label">{{ entry_uses_total }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
+                  <input id="input-uses-total" type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" class="form-control"/>
                   <div class="form-text">{{ help_uses_total }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-uses-customer" class="col-sm-2 col-form-label">{{ entry_uses_customer }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
+                  <input id="input-uses-customer" type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" class="form-control"/>
                   <div class="form-text">{{ help_uses_customer }}</div>
                 </div>
               </div>
@@ -169,7 +169,7 @@
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
                     <input type="hidden" name="status" value="0"/>
-                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
                   </div>
                 </div>
               </div>
@@ -181,7 +181,7 @@
               </fieldset>
             </div>
           </div>
-          <input type="hidden" name="coupon_id" value="{{ coupon_id }}" id="input-coupon-id"/>
+          <input id="input-coupon-id" type="hidden" name="coupon_id" value="{{ coupon_id }}"/>
         </form>
       </div>
     </div>

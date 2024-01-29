@@ -37,19 +37,19 @@
         <form id="form-comment" action="" data-oc-target="" data-oc-trigger="">
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            <input id="input-author" type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" class="form-control"/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
             <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <textarea id="input-comment" name="comment" rows="5" placeholder="{{ entry_comment }}" class="form-control">{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
           {{ captcha }}
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="button-comment" form="form-comment" class="btn btn-primary">{{ button_comment }}</button>
+        <button id="button-comment" type="submit" form="form-comment" class="btn btn-primary">{{ button_comment }}</button>
       </div>
     </div>
   </div>

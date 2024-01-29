@@ -4,9 +4,9 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-affiliate').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" id="button-calculate" data-bs-toggle="tooltip" title="{{ button_calculate }}" class="btn btn-warning"><i class="fa-solid fa-sync"></i></button>
-        <button type="submit" form="form-affiliate" formaction="{{ csv }}" id="button-csv" data-bs-toggle="tooltip" title="{{ button_csv }}" class="btn btn-info"><i class="fa-solid fa-file-csv"></i></button>
-        <button type="submit" form="form-affiliate" formaction="{{ complete }}" data-oc-toggle="ajax" id="button-complete" data-bs-toggle="tooltip" title="{{ button_complete }}" class="btn btn-success"><i class="fa-solid fa-credit-card"></i></button>
+        <button id="button-calculate" type="button" data-bs-toggle="tooltip" title="{{ button_calculate }}" class="btn btn-warning"><i class="fa-solid fa-sync"></i></button>
+        <button id="button-csv" type="submit" form="form-affiliate" formaction="{{ csv }}" data-bs-toggle="tooltip" title="{{ button_csv }}" class="btn btn-info"><i class="fa-solid fa-file-csv"></i></button>
+        <button id="button-complete" type="submit" form="form-affiliate" formaction="{{ complete }}" data-oc-toggle="ajax" data-bs-toggle="tooltip" title="{{ button_complete }}" class="btn btn-success"><i class="fa-solid fa-credit-card"></i></button>
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
         <button type="submit" form="form-affiliate" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
@@ -26,14 +26,14 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+                <label id="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-customer" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-tracking" class="form-label">{{ entry_tracking }}</label> <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
+                <label id="input-tracking" for="input-tracking" class="form-label">{{ entry_tracking }}</label> <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-payment-method" class="form-label">{{ entry_payment_method }}</label> <select name="filter_payment_method" id="input-payment-method" class="form-select">
+                <label id="input-payment-method" for="input-payment-method" class="form-label">{{ entry_payment_method }}</label> <select name="filter_payment_method" class="form-select">
                   <option value=""></option>
                   {% for payment_method in payment_methods %}
                     <option value="{{ payment_method.value }}"{% if filter_payment_method == payment_method.value %} selected{% endif %}>{{ payment_method.text }}</option>
@@ -41,38 +41,38 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-commission" class="form-label">{{ entry_commission }}</label> <input type="text" name="filter_commission" value="{{ filter_commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control"/>
+                <label id="input-commission" for="input-commission" class="form-label">{{ entry_commission }}</label> <input type="text" name="filter_commission" value="{{ filter_commission }}" placeholder="{{ entry_commission }}" class="form-control"/>
               </div>
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                  <input id="input-date-from" type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                  <input id="input-date-to" type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                <label id="input-status" for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" class="form-select">
                   <option value=""></option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                   <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-limit" class="form-label">{{ entry_limit }}</label> <select name="limit" id="input-limit" class="form-select">
+                <label id="input-limit" for="input-limit" class="form-label">{{ entry_limit }}</label> <select name="limit" class="form-select">
                   {% for limits in limits %}
                     <option value="{{ limits.value }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
                   {% endfor %}
                 </select>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>

@@ -9,17 +9,17 @@
         <form id="form-api">
           <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_signup }}</div>
           <div class="mb-3">
-            <label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+            <label id="input-username" for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" class="form-control"/>
             <div id="error-username" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-secret" class="form-label">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
+            <label id="input-secret" for="input-secret" class="form-label">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" class="form-control"></textarea>
             <div id="error-secret" class="invalid-feedback"></div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" form="form-api" id="button-save" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+        <button id="button-save" type="submit" form="form-api" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
       </div>
     </div>
   </div>

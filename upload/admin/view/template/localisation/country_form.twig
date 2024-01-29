@@ -20,26 +20,26 @@
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
+              <input id="input-iso-code-2" type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" class="form-control"/>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
+              <input id="input-iso-code-3" type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" class="form-control"/>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
             <div class="col-sm-10">
-              <select name="address_format_id" id="input-address-format" class="form-select">
+              <select id="input-address-format" name="address_format_id" class="form-select">
                 {% for address_format in address_formats %}
                   <option value="{{ address_format.address_format_id }}"{% if address_format.address_format_id == address_format_id %} selected{% endif %}>{{ address_format.name }}</option>
                 {% endfor %}
@@ -50,7 +50,7 @@
             <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
             <div class="col-sm-10">
               <div class="btn-group">
-                <input type="radio" name="postcode_required" value="1" id="input-postcode-required-yes" class="btn-check"{% if postcode_required %} checked{% endif %}/> <label for="input-postcode-required-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="postcode_required" value="0" id="input-postcode-required-no" class="btn-check"{% if not postcode_required %} checked{% endif %}/> <label for="input-postcode-required-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                <input id="input-postcode-required-yes" type="radio" name="postcode_required" value="1" class="btn-check"{% if postcode_required %} checked{% endif %}/> <label id="input-postcode-required-no" for="input-postcode-required-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="postcode_required" value="0" class="btn-check"{% if not postcode_required %} checked{% endif %}/> <label for="input-postcode-required-no" class="btn btn-outline-secondary">{{ text_no }}</label>
               </div>
             </div>
           </div>
@@ -59,11 +59,11 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
-                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
-          <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>
+          <input id="input-country-id" type="hidden" name="country_id" value="{{ country_id }}"/>
         </form>
       </div>
     </div>

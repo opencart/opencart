@@ -24,13 +24,13 @@
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="return_reason[{{ language.language_id }}][name]" value="{{ return_reason[language.language_id] ? return_reason[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                  <input id="input-name-{{ language.language_id }}" type="text" name="return_reason[{{ language.language_id }}][name]" value="{{ return_reason[language.language_id] ? return_reason[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 </div>
                 <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
               {% endfor %}
             </div>
           </div>
-          <input type="hidden" name="return_reason_id" value="{{ return_reason_id }}" id="input-return-reason-id"/>
+          <input id="input-return-reason-id" type="hidden" name="return_reason_id" value="{{ return_reason_id }}"/>
         </form>
       </div>
     </div>

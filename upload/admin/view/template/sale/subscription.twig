@@ -21,17 +21,17 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label for="input-subscription-id" class="form-label">{{ entry_subscription_id }}</label> <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" id="input-subscription-id" class="form-control"/>
+                <label id="input-subscription-id" for="input-subscription-id" class="form-label">{{ entry_subscription_id }}</label> <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+                <label id="input-order-id" for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+                <label id="input-customer" for="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-customer" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-subscription-status" class="form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
+                <label id="input-subscription-status" for="input-subscription-status" class="form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" class="form-select">
                   <option value=""></option>
                   {% for subscription_status in subscription_statuses %}
                     <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
@@ -41,19 +41,19 @@
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                  <input id="input-date-from" type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                  <input id="input-date-to" type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>

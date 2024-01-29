@@ -20,8 +20,8 @@
               <div class="mb-3">
                 <label for="input-code" class="form-label">{{ entry_code }}</label>
                 <div class="input-group">
-                  <input type="text" name="code" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_resend }}</button>
+                  <input id="input-code" type="text" name="code" value="" placeholder="{{ entry_code }}" class="form-control"/>
+                  <button id="button-send" type="button" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_resend }}</button>
                 </div>
                 <div id="error-code" class="invalid-feedback"></div>
               </div>

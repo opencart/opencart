@@ -25,7 +25,7 @@
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="attribute_group_description[{{ language.language_id }}][name]" value="{{ attribute_group_description[language.language_id] ? attribute_group_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" placeholder="{{ entry_name }}" class="form-control"/>
+                  <input id="input-name-{{ language.language_id }}" type="text" name="attribute_group_description[{{ language.language_id }}][name]" value="{{ attribute_group_description[language.language_id] ? attribute_group_description[language.language_id].name }}" placeholder="{{ entry_name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 </div>
                 <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
               {% endfor %}
@@ -34,10 +34,10 @@
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <input id="input-sort-order" type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
             </div>
           </div>
-          <input type="hidden" name="attribute_group_id" value="{{ attribute_group_id }}" id="input-attribute-group-id"/>
+          <input id="input-attribute-group-id" type="hidden" name="attribute_group_id" value="{{ attribute_group_id }}"/>
         </form>
       </div>
     </div>

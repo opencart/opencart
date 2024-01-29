@@ -21,14 +21,14 @@
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
             <div class="col-sm-10">
-              <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control"/>
+              <input id="input-description" type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" class="form-control"/>
               <div id="error-description" class="invalid-feedback"></div>
             </div>
           </div>
@@ -60,12 +60,12 @@
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-end"><button type="button" id="button-geo-zone" data-bs-toggle="tooltip" title="{{ button_geo_zone_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                  <td id="button-geo-zone" class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_geo_zone_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
           </fieldset>
-          <input type="hidden" name="geo_zone_id" value="{{ geo_zone_id }}" id="input-geo-zone-id"/>
+          <input id="input-geo-zone-id" type="hidden" name="geo_zone_id" value="{{ geo_zone_id }}"/>
         </form>
       </div>
     </div>

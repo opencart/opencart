@@ -27,7 +27,7 @@
             <label class="form-label">{{ entry_admin }}</label>
             <div class="input-group">
               <div class="input-group-text">{{ server }}</div>
-              <input type="text" name="admin" value="admin" id="input-admin" class="form-control">
+              <input id="input-admin" type="text" name="admin" value="admin" class="form-control">
             </div>
           </div>
         </fieldset>
@@ -42,7 +42,7 @@
           </div>
         </fieldset>
         <div class="row">
-          <div class="col text-end"><button type="button" id="button-continue" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
+          <div id="button-continue" class="col text-end"><button type="button" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
         </div>
       </div>
     </div>

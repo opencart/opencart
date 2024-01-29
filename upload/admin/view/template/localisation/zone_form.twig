@@ -21,20 +21,20 @@
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
-              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              <input id="input-code" type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" class="form-control"/>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
             <div class="col-sm-10">
-              <select name="country_id" id="input-country" class="form-select">
+              <select id="input-country" name="country_id" class="form-select">
                 {% for country in countries %}
                   <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
                 {% endfor %}
@@ -46,11 +46,11 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
-                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
-          <input type="hidden" name="zone_id" value="{{ zone_id }}" id="input-zone-id"/>
+          <input id="input-zone-id" type="hidden" name="zone_id" value="{{ zone_id }}"/>
         </form>
       </div>
     </div>

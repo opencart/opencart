@@ -25,27 +25,27 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                <label id="input-name" for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-code" class="form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                <label id="input-code" for="input-code" class="form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" class="form-control"/>
               </div>
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                  <input id="input-date-from" type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                  <input id="input-date-to" type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>

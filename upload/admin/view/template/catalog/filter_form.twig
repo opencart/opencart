@@ -24,7 +24,7 @@
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="filter_description[{{ language.language_id }}][name]" value="{{ filter_description[language.language_id] ? filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                  <input id="input-name-{{ language.language_id }}" type="text" name="filter_description[{{ language.language_id }}][name]" value="{{ filter_description[language.language_id] ? filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 </div>
                 <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
               {% endfor %}
@@ -33,7 +33,7 @@
           <div class="row mb-3">
             <label for="input-filter-group" class="col-sm-2 col-form-label">{{ entry_filter_group }}</label>
             <div class="col-sm-10">
-              <select name="filter_group_id" id="input-filter-group" class="form-select">
+              <select id="input-filter-group" name="filter_group_id" class="form-select">
                 {% for filter_group in filter_groups %}
                   <option value="{{ filter_group.filter_group_id }}"{% if filter_group.filter_group_id == filter_group_id %} selected{% endif %}>{{ filter_group.name }}</option>
                 {% endfor %}
@@ -43,10 +43,10 @@
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <input id="input-sort-order" type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
             </div>
           </div>
-          <input type="hidden" name="filter_id" value="{{ filter_id }}" id="input-filter-id"/>
+          <input id="input-filter-id" type="hidden" name="filter_id" value="{{ filter_id }}"/>
         </form>
       </div>
     </div>

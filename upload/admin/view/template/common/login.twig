@@ -19,14 +19,14 @@
                 <label for="input-username" class="form-label">{{ entry_username }}</label>
                 <div class="input-group">
                   <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
-                  <input type="text" name="username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+                  <input id="input-username" type="text" name="username" value="" placeholder="{{ entry_username }}" class="form-control"/>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-password" class="form-label">{{ entry_password }}</label>
                 <div class="input-group mb-2">
                   <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
-                  <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
+                  <input id="input-password" type="password" name="password" value="" placeholder="{{ entry_password }}" class="form-control"/>
                 </div>
                 {% if forgotten %}
                 <div class="mb-3"><a href="{{ forgotten }}">{{ text_forgotten }}</a></div>

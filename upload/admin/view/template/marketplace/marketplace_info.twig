@@ -4,9 +4,9 @@
 		<div class="container-fluid">
 			<div class="float-end">
         {% if signature %}
-					<button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+					<button id="button-api" type="button" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
 				{% else %}
-					<button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+					<button id="button-api" type="button" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
 				{% endif %}
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
 			</div>
@@ -54,10 +54,10 @@
 								<fieldset>
 									<legend>{{ text_comment_add }}</legend>
 									<div class="mb-3">
-										<textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-history-comment" class="form-control"></textarea>
+										<textarea id="input-history-comment" name="comment" rows="5" placeholder="{{ text_write }}" class="form-control"></textarea>
 									</div>
 									<div class="text-end">
-										<button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
+										<button id="button-comment" type="button" class="btn btn-primary">{{ button_comment }}</button>
 									</div>
 								</fieldset>
 								<br/>
@@ -72,7 +72,7 @@
 						<div id="buy" class="card mb-3">
 							<div class="card-body">
 								{% if license == '1' and not purchased %}
-									<button type="button" id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
+									<button id="button-buy" type="button" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
 								{% endif %}
 								<div id="price" class="row">
 									<div class="col-lg-5"><strong>{{ text_price }}</strong></div>
@@ -185,11 +185,11 @@ $('#button-buy').on('click', function (e) {
     html += '        <p>{{ text_secure|escape('js') }}</p>';
     html += '        <div class="mb-3">';
     html += '          <label for="input-pin">{{ entry_pin|escape('js') }}</label>';
-    html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin|escape('js') }}" id="input-pin" class="form-control"/>';
+    html += '          <input id="input-pin" type="password" name="pin" value="" placeholder="{{ entry_pin|escape('js') }}" class="form-control"/>';
     html += '        </div>';
     html += '        <div class="mb-3 text-end">';
     html += '          <div class="text-end"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin|escape('js') }}</a></div>';
-    html += '          <button type="button" id="button-purchase" class="btn btn-primary btn-lg">{{ button_purchase|escape('js') }}</button>';
+    html += '          <button id="button-purchase" type="button" class="btn btn-primary btn-lg">{{ button_purchase|escape('js') }}</button>';
     html += '        </div>';
     html += '      </div>';
     html += '    </div>';

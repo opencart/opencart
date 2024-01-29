@@ -23,19 +23,19 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label class="form-label">{{ entry_username }}</label> <input type="text" name="filter_username" value="{{ filter_username }}" placeholder="{{ entry_username }}" id="input-username" data-oc-target="autocomplete-username" class="form-control" autocomplete="off"/>
+                <label id="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="filter_username" value="{{ filter_username }}" placeholder="{{ entry_username }}" data-oc-target="autocomplete-username" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-username" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+                <label id="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-name" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label class="form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
+                <label id="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-email" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-user-group" class="form-label">{{ entry_user_group }}</label> <select name="filter_user_group_id" id="input-user-group" class="form-select">
+                <label id="input-user-group" for="input-user-group" class="form-label">{{ entry_user_group }}</label> <select name="filter_user_group_id" class="form-select">
                   <option value=""></option>
                   {% for user_group in user_groups %}
                     <option value="{{ user_group.user_group_id }}"{% if user_group.user_group_id == filter_user_group_id %} selected{% endif %}>{{ user_group.name }}</option>
@@ -43,17 +43,17 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                <label id="input-status" for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" class="form-select">
                   <option value=""></option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                   <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
+                <label id="input-ip" for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>

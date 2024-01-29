@@ -28,7 +28,7 @@
               <div class="row mb-3 required">
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
                   <div id="error-name" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -38,7 +38,7 @@
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                       <div class="form-check">
-                        <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in manufacturer_store %} checked{% endif %}/> <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
+                        <input id="input-store-{{ store.store_id }}" type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in manufacturer_store %} checked{% endif %}/> <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -48,8 +48,8 @@
                 <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                 <div class="col-sm-10">
                   <div class="border rounded d-block" style="max-width: 300px;">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                    <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <img id="thumb-image" src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
+                    <input id="input-image" type="hidden" name="image" value="{{ image }}"/>
                     <div class="d-grid">
                       <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                       <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -60,7 +60,7 @@
               <div class="row mb-3">
                 <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                  <input id="input-sort-order" type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
                 </div>
               </div>
             </div>
@@ -81,7 +81,7 @@
                         <td class="text-start">{% for language in languages %}
                             <div class="input-group">
                               <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                              <input type="text" name="manufacturer_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if manufacturer_seo_url[store.store_id][language.language_id] %}{{ manufacturer_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
+                              <input id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" type="text" name="manufacturer_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if manufacturer_seo_url[store.store_id][language.language_id] %}{{ manufacturer_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
                             </div>
                             <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
                           {% endfor %}</td>
@@ -117,7 +117,7 @@
               </div>
             </div>
           </div>
-          <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" id="input-manufacturer-id"/>
+          <input id="input-manufacturer-id" type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
         </form>
       </div>
     </div>

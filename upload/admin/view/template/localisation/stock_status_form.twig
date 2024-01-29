@@ -24,13 +24,13 @@
 							{% for language in languages %}
 								<div class="input-group">
 									<div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-									<input type="text" name="stock_status[{{ language.language_id }}][name]" value="{{ stock_status[language.language_id] ? stock_status[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+									<input id="input-name-{{ language.language_id }}" type="text" name="stock_status[{{ language.language_id }}][name]" value="{{ stock_status[language.language_id] ? stock_status[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
 								</div>
 								<div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
 							{% endfor %}
 						</div>
 					</div>
-					<input type="hidden" name="stock_status_id" value="{{ stock_status_id }}" id="input-stock-status-id"/>
+					<input id="input-stock-status-id" type="hidden" name="stock_status_id" value="{{ stock_status_id }}"/>
 				</form>
 			</div>
 		</div>

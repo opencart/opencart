@@ -22,7 +22,7 @@
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
@@ -30,7 +30,7 @@
           <div class="row mb-3 required">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
-              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              <input id="input-code" type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" class="form-control"/>
               <div id="error-code" class="invalid-feedback"></div>
             </div>
           </div>
@@ -38,14 +38,14 @@
           <div class="row mb-3">
             <label for="input-extension" class="col-sm-2 col-form-label">{{ entry_extension }}</label>
             <div class="col-sm-10">
-              <input type="text" name="extension" value="{{ extension }}" id="input-extension" class="form-control" readonly/>
+              <input id="input-extension" type="text" name="extension" value="{{ extension }}" class="form-control" readonly/>
             </div>
           </div>
 
           <div class="row mb-3 required">
             <label for="input-locale" class="col-sm-2 col-form-label">{{ entry_locale }}</label>
             <div class="col-sm-10">
-              <input type="text" name="locale" value="{{ locale }}" placeholder="{{ entry_locale }}" id="input-locale" class="form-control"/>
+              <input id="input-locale" type="text" name="locale" value="{{ locale }}" placeholder="{{ entry_locale }}" class="form-control"/>
               <div class="form-text">{{ help_locale }}</div>
               <div id="error-locale" class="invalid-feedback"></div>
             </div>
@@ -56,7 +56,7 @@
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
-                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
               <div class="form-text">{{ help_status }}</div>
             </div>
@@ -65,11 +65,11 @@
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <input id="input-sort-order" type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
             </div>
           </div>
 
-          <input type="hidden" name="language_id" value="{{ language_id }}" id="input-language-id"/>
+          <input id="input-language-id" type="hidden" name="language_id" value="{{ language_id }}"/>
         </form>
       </div>
     </div>

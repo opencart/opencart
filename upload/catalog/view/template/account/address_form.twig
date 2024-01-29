@@ -13,54 +13,54 @@
           <div class="row mb-3 required">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+              <input id="input-firstname" type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control"/>
               <div id="error-firstname" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+              <input id="input-lastname" type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control"/>
               <div id="error-lastname" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
             <div class="col-sm-10">
-              <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control"/>
+              <input id="input-company" type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" class="form-control"/>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-address-1" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control"/>
+              <input id="input-address-1" type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" class="form-control"/>
               <div id="error-address-1" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-address-2" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2" class="form-control"/>
+              <input id="input-address-2" type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" class="form-control"/>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>
             <div class="col-sm-10">
-              <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control"/>
+              <input id="input-city" type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" class="form-control"/>
               <div id="error-city" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-postcode" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>
             <div class="col-sm-10">
-              <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
+              <input id="input-postcode" type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" class="form-control"/>
               <div id="error-postcode" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
             <div class="col-sm-10">
-              <select name="country_id" id="input-country" class="form-select">
+              <select id="input-country" name="country_id" class="form-select">
                 <option value="0">{{ text_select }}</option>
                 {% for country in countries %}
                   <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -72,7 +72,7 @@
           <div class="row mb-3 required">
             <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
             <div class="col-sm-10">
-              <select name="zone_id" id="input-zone" class="form-select"></select>
+              <select id="input-zone" name="zone_id" class="form-select"></select>
               <div id="error-zone" class="invalid-feedback"></div>
             </div>
           </div>
@@ -83,7 +83,7 @@
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+                  <select id="input-custom-field-{{ custom_field.custom_field_id }}" name="custom_field[{{ custom_field.custom_field_id }}]" class="form-select">
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <option value="{{ custom_field_value.custom_field_value_id }}"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
@@ -101,7 +101,7 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -117,7 +117,7 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -130,7 +130,7 @@
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <input id="input-custom-field-{{ custom_field.custom_field_id }}" type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -140,7 +140,7 @@
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
+                  <textarea id="input-custom-field-{{ custom_field.custom_field_id }}" name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" class="form-control">{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -152,7 +152,7 @@
                 <div class="col-sm-10">
                   <div>
                     <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-                    <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <input id="input-custom-field-{{ custom_field.custom_field_id }}" type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% endif %}"/>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -164,7 +164,7 @@
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
+                    <input id="input-custom-field-{{ custom_field.custom_field_id }}" type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" class="form-control date"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -177,7 +177,7 @@
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
+                    <input id="input-custom-field-{{ custom_field.custom_field_id }}" type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" class="form-control time"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -190,7 +190,7 @@
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
+                    <input id="input-custom-field-{{ custom_field.custom_field_id }}" type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" class="form-control datetime"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -204,10 +204,10 @@
             <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
             <div class="col-sm-10">
               <div class="form-check-inline">
-                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/> <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
+                <input id="input-default-yes" type="radio" name="default" value="1" class="form-check-input"{% if default %} checked{% endif %}/> <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check-inline">
-                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/> <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
+                <input id="input-default-no" type="radio" name="default" value="0" class="form-check-input"{% if not default %} checked{% endif %}/> <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>

@@ -23,7 +23,7 @@
             <div class="row mb-3 required">
               <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                <input id="input-name" type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 <div id="error-name" class="invalid-feedback"></div>
               </div>
             </div>
@@ -224,7 +224,7 @@
               </div>
             </div>
           </fieldset>
-          <input type="hidden" name="layout_id" value="{{ layout_id }}" id="input-layout-id"/>
+          <input id="input-layout-id" type="hidden" name="layout_id" value="{{ layout_id }}"/>
         </form>
       </div>
     </div>

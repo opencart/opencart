@@ -1,10 +1,10 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
   <div class="input-group">
-    <span class="input-group-text"><i class="fa fa-truck"></i></span><input type="text" name="shipping_method" value="{{ shipping_method }}" placeholder="{{ entry_shipping_method }}" id="input-shipping-method" class="form-control" readonly/>
-    <button type="button" id="button-shipping-methods" class="btn btn-primary">{{ button_choose }}</button>
+    <span id="input-shipping-method" class="input-group-text"><i class="fa fa-truck"></i></span><input type="text" name="shipping_method" value="{{ shipping_method }}" placeholder="{{ entry_shipping_method }}" class="form-control" readonly/>
+    <button id="button-shipping-methods" type="button" class="btn btn-primary">{{ button_choose }}</button>
   </div>
-  <input type="hidden" name="code" value="{{ code }}" id="input-shipping-code"/>
+  <input id="input-shipping-code" type="hidden" name="code" value="{{ code }}"/>
   <div id="error-shipping-method" class="invalid-feedback"></div>
 </fieldset>
 <script type="text/javascript"><!--
@@ -71,7 +71,7 @@ $('#button-shipping-methods').on('click', function() {
                     }
 
                     html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
+                    html += '            <button id="button-shipping-method" type="submit" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
                     html += '          </div>';
                     html += '        </form>';
                     html += '      </div>';

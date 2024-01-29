@@ -3,7 +3,7 @@
     <nav id="menu" class="navbar navbar-expand-lg navbar-light bg-primary">
       <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#narbar-menu"><i class="fa-solid fa-bars"></i></button>
-      <div class="collapse navbar-collapse" id="narbar-menu">
+      <div id="narbar-menu" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           {% for category in categories %}
             {% if category.children %}

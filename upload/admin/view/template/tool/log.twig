@@ -31,7 +31,7 @@
               {% if log.error %}
                 <div class="alert alert-danger">{{ log.error }}</div>
               {% endif %}
-              <textarea name="log" wrap="off" rows="15" id="input-log-{{ i }}" class="form-control" readonly>{{ log.output }}</textarea>
+              <textarea id="input-log-{{ i }}" name="log" wrap="off" rows="15" class="form-control" readonly>{{ log.output }}</textarea>
               <br/>
               <div class="row row-cols-2">
                 <div class="col">

@@ -23,15 +23,15 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+                <label id="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-name" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label class="form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
+                <label id="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-email" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-select">
+                <label id="input-customer-group" for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" class="form-select">
                   <option value=""></option>
                   {% for customer_group in customer_groups %}
                     <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == filter_customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
@@ -39,31 +39,31 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                <label id="input-status" for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" class="form-select">
                   <option value=""></option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                   <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
+                <label id="input-ip" for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" class="form-control"/>
               </div>
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                  <input id="input-date-from" type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                  <input id="input-date-to" type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" class="form-control date"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button id="button-filter" type="button" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>

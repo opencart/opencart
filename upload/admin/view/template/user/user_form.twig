@@ -30,14 +30,14 @@
                 <div class="row mb-3 required">
                   <label for="input-username" class="col-sm-2 col-form-label">{{ entry_username }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+                    <input id="input-username" type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" class="form-control"/>
                     <div id="error-username" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-user-group" class="col-sm-2 col-form-label">{{ entry_user_group }}</label>
                   <div class="col-sm-10">
-                    <select name="user_group_id" id="input-user-group" class="form-select">
+                    <select id="input-user-group" name="user_group_id" class="form-select">
                       {% for user_group in user_groups %}
                         <option value="{{ user_group.user_group_id }}"{% if user_group.user_group_id == user_group_id %} selected{% endif %}>{{ user_group.name }}</option>
                       {% endfor %}
@@ -47,21 +47,21 @@
                 <div class="row mb-3 required">
                   <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+                    <input id="input-firstname" type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control"/>
                     <div id="error-firstname" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+                    <input id="input-lastname" type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control"/>
                     <div id="error-lastname" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                    <input id="input-email" type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control"/>
                     <div id="error-email" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -69,8 +69,8 @@
                   <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                   <div class="col-sm-10">
                     <div class="border rounded d-block" style="max-width: 300px;">
-                      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                      <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                      <img id="thumb-image" src="{{ thumb }}" alt="" title="" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
+                      <input id="input-image" type="hidden" name="image" value="{{ image }}"/>
                       <div class="d-grid">
                         <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                         <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -84,14 +84,14 @@
                 <div class="row mb-3 required">
                   <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
                   <div class="col-sm-10">
-                    <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="new-password"/>
+                    <input id="input-password" type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control" autocomplete="new-password"/>
                     <div id="error-password" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
                   <div class="col-sm-10">
-                    <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>
+                    <input id="input-confirm" type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" class="form-control"/>
                     <div id="error-confirm" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -103,12 +103,12 @@
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
                       <input type="hidden" name="status" value="0"/>
-                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                      <input id="input-status" type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
               </fieldset>
-              <input type="hidden" name="user_id" value="{{ user_id }}" id="input-user-id"/>
+              <input id="input-user-id" type="hidden" name="user_id" value="{{ user_id }}"/>
             </div>
             <div id="tab-authorize" class="tab-pane">
               <fieldset>

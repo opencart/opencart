@@ -43,7 +43,7 @@
                   <div class="input-group">
                     <button type="button" class="btn btn-primary" id="button-upload"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                     <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" class="form-control" id="input-filename"/>
-                    <button type="button" class="btn btn-outline-secondary"{% if not filename %} disabled{% endif %} id="button-download"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
+                    <button type="button" class="btn btn-outline-secondary" id="button-download"{% if not filename %}" disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</button>
                   </div>
                   <div class="form-text">{{ help_filename }}</div>
                   <div class="invalid-feedback" id="error-filename"></div>

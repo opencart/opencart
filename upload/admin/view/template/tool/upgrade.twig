@@ -52,8 +52,8 @@
         <fieldset>
           <legend>{{ text_status }}</legend>
           <div class="input-group input-group-lg">
-            <button type="button" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %} id="button-upgrade"><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
-            <input type="text" value="{{ text_ready }}" class="form-control bg-white" readonly id="input-upgrade"/>
+            <button type="button" class="btn btn-warning btn-lg" id="button-upgrade"{% if not upgrade %} disabled{% endif %}><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <input type="text" value="{{ text_ready }}" class="form-control bg-white" id="input-upgrade" readonly/>
           </div>
         </fieldset>
       </div>

@@ -374,31 +374,31 @@ class Layout extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			$store_total = $this->model_setting_store->getTotalStoresByLayoutId($layout_id);
+			$store_total = $this->model_setting_store->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($store_total) {
 				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
-			$product_total = $this->model_catalog_product->getTotalProductsByLayoutId($layout_id);
+			$product_total = $this->model_catalog_product->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($product_total) {
 				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 
-			$category_total = $this->model_catalog_category->getTotalCategoriesByLayoutId($layout_id);
+			$category_total = $this->model_catalog_category->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($category_total) {
 				$json['error'] = sprintf($this->language->get('error_category'), $category_total);
 			}
 
-			$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturersByLayoutId($layout_id);
+			$manufacturer_total = $this->model_catalog_manufacturer->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($manufacturer_total) {
 				$json['error'] = sprintf($this->language->get('error_manufacturer'), $manufacturer_total);
 			}
 
-			$information_total = $this->model_catalog_information->getTotalInformationsByLayoutId($layout_id);
+			$information_total = $this->model_catalog_information->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($information_total) {
 				$json['error'] = sprintf($this->language->get('error_information'), $information_total);

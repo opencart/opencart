@@ -74,7 +74,7 @@ class Topic extends \Opencart\System\Engine\Model {
 		// SEO URL
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('topic_id', $topic_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);
 
 		foreach ($data['topic_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
@@ -100,7 +100,7 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('topic_id', $topic_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);
 
 		$this->cache->delete('topic');
 	}
@@ -180,6 +180,17 @@ class Topic extends \Opencart\System\Engine\Model {
 		}
 
 		return $topic_data;
+	}
+
+	/**
+	 * Get Total Topics
+	 *
+	 * @return int
+	 */
+	public function getTotalTopics(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic`");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -304,18 +315,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteLayoutByLayoutId(int $layout_id): void {
+	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
-	}
-
-	/**
-	 * Get Total Topics
-	 *
-	 * @return int
-	 */
-	public function getTotalTopics(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic`");
-
-		return (int)$query->row['total'];
 	}
 }

@@ -84,12 +84,9 @@ class Product extends \Opencart\System\Engine\Model {
 					if (isset($product_option['product_option_value'])) {
 						$product_option_id = $this->addOption($product_id, $product_option);
 
-
-
-
 						foreach ($product_option['product_option_value'] as $product_option_value) {
 
-							$this->addOption($product_id, $product_option);
+							$this->addValue($product_id, $product_option_value);
 
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `option_value_id` = '" . (int)$product_option_value['option_value_id'] . "', `quantity` = '" . (int)$product_option_value['quantity'] . "', `subtract` = '" . (int)$product_option_value['subtract'] . "', `price` = '" . (float)$product_option_value['price'] . "', `price_prefix` = '" . $this->db->escape($product_option_value['price_prefix']) . "', `points` = '" . (int)$product_option_value['points'] . "', `points_prefix` = '" . $this->db->escape($product_option_value['points_prefix']) . "', `weight` = '" . (float)$product_option_value['weight'] . "', `weight_prefix` = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
 						}
@@ -222,13 +219,9 @@ class Product extends \Opencart\System\Engine\Model {
 		// Downloads
 		$this->deleteDownload($product_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$product_id . "'");
-
 		if (isset($data['product_download'])) {
 			foreach ($data['product_download'] as $download_id) {
 				$this->addDownload($product_id, $download_id);
-
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_download` SET `product_id` = '" . (int)$product_id . "', `download_id` = '" . (int)$download_id . "'");
 			}
 		}
 
@@ -318,8 +311,6 @@ class Product extends \Opencart\System\Engine\Model {
 		// Images
 		$this->deleteImage($product_id);
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_image` WHERE `product_id` = '" . (int)$product_id . "'");
-
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $product_image) {
 				$this->addImage($product_id, $product_image);
@@ -338,7 +329,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// SEO URL
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('product_id', $product_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
 
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
@@ -436,12 +427,18 @@ class Product extends \Opencart\System\Engine\Model {
 		//$this->db->query("DELETE FROM `" . DB_PREFIX . "product_related` WHERE `product_id` = '" . (int)$product_id . "'");
 		//$this->db->query("DELETE FROM `" . DB_PREFIX . "product_related` WHERE `related_id` = '" . (int)$product_id . "'");
 		//$this->db->query("DELETE FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "'");
+		//$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "'");
+		//$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` WHERE `product_id` = '" . (int)$product_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` WHERE `product_id` = '" . (int)$product_id . "'");
+
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "'");
+
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'product_id' AND `value` = '" . (int)$product_id . "'");
+
+
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_product` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '0' WHERE `master_id` = '" . (int)$product_id . "'");
@@ -985,6 +982,111 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
+
+	/**
+	 * Get Total Products
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return int
+	 */
+	public function getTotalProducts(array $data = []): int {
+		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_master_id'])) {
+			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
+		}
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_model'])) {
+			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
+		}
+
+		if (isset($data['filter_price']) && $data['filter_price'] !== '') {
+			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . "'";
+		}
+
+		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
+			$sql .= " AND `p`.`quantity` = '" . (int)$data['filter_quantity'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Products By Manufacturer ID
+	 *
+	 * @param int $manufacturer_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProductsByManufacturerId(int $manufacturer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Products By Tax Class ID
+	 *
+	 * @param int $tax_class_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProductsByTaxClassId(int $tax_class_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Products By Stock Status ID
+	 *
+	 * @param int $stock_status_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProductsByStockStatusId(int $stock_status_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Products By Weight Class ID
+	 *
+	 * @param int $weight_class_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProductsByWeightClassId(int $weight_class_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Products By Length Class ID
+	 *
+	 * @param int $length_class_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProductsByLengthClassId(int $length_class_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
 	/**
 	 *	Add Description
 	 *
@@ -1185,6 +1287,19 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Products By Attribute ID
+	 *
+	 * @param int $attribute_id
+	 *
+	 * @return int
+	 */
+	public function getTotalAttributesByAttributeId(int $attribute_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 *
@@ -1271,6 +1386,19 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Products By Option ID
+	 *
+	 * @param int $option_id
+	 *
+	 * @return int
+	 */
+	public function getTotalOptionsByOptionId(int $option_id): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 *
@@ -1281,13 +1409,8 @@ class Product extends \Opencart\System\Engine\Model {
 	public function addOptionValue(int $product_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `option_value_id` = '" . (int)$product_option_value['option_value_id'] . "', `quantity` = '" . (int)$product_option_value['quantity'] . "', `subtract` = '" . (int)$product_option_value['subtract'] . "', `price` = '" . (float)$product_option_value['price'] . "', `price_prefix` = '" . $this->db->escape($product_option_value['price_prefix']) . "', `points` = '" . (int)$product_option_value['points'] . "', `points_prefix` = '" . $this->db->escape($product_option_value['points_prefix']) . "', `weight` = '" . (float)$product_option_value['weight'] . "', `weight_prefix` = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
 
-
-
-
 		if (isset($product_option['product_option_value'])) {
 			$this->addOption($product_id, $data);
-
-
 
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `required` = '" . (int)$product_option['required'] . "'");
 
@@ -1296,16 +1419,11 @@ class Product extends \Opencart\System\Engine\Model {
 			foreach ($product_option['product_option_value'] as $product_option_value) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `option_value_id` = '" . (int)$product_option_value['option_value_id'] . "', `quantity` = '" . (int)$product_option_value['quantity'] . "', `subtract` = '" . (int)$product_option_value['subtract'] . "', `price` = '" . (float)$product_option_value['price'] . "', `price_prefix` = '" . $this->db->escape($product_option_value['price_prefix']) . "', `points` = '" . (int)$product_option_value['points'] . "', `points_prefix` = '" . $this->db->escape($product_option_value['points_prefix']) . "', `weight` = '" . (float)$product_option_value['weight'] . "', `weight_prefix` = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
 			}
-
 		}
 
+		//	$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `value` = '" . $this->db->escape($product_option['value']) . "', `required` = '" . (int)$product_option['required'] . "'");
 
-	//	$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `value` = '" . $this->db->escape($product_option['value']) . "', `required` = '" . (int)$product_option['required'] . "'");
-
-
-
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `value` = '" . $this->db->escape($product_option['value']) . "', `required` = '" . (int)$product_option['required'] . "'");
-
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$product_option['option_id'] . "', `value` = '" . $this->db->escape($product_option['value']) . "', `required` = '" . (int)$product_option['required'] . "'");
 	}
 
 	/**
@@ -1346,6 +1464,19 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT `option_value_id` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Get Total Products By Option Value ID
+	 *
+	 * @param int $option_value_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProductsByOptionValueId(int $option_value_id): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_value_id` = '" . (int)$option_value_id . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -1546,6 +1677,19 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Products By Download ID
+	 *
+	 * @param int $download_id
+	 *
+	 * @return int
+	 */
+	public function getTotalDownloadsByDownloadId(int $download_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `download_id` = '" . (int)$download_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Store
 	 *
 	 * @param int $product_id
@@ -1611,8 +1755,12 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` SET `product_id` = '" . (int)$product_id . "'");
 	}
 
-	public function deleteLayoutByLayoutId(int $layout_id): void {
+	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	public function deleteLayoutsByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -1632,6 +1780,19 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return $product_layout_data;
+	}
+
+	/**
+	 * Get Total Products By Layout ID
+	 *
+	 * @param int $layout_id
+	 *
+	 * @return int
+	 */
+	public function getTotalLayoutsByLayoutId(int $layout_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -1694,138 +1855,8 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function deleteSubscriptionBySubscriptionPlanId(int $subscription_plan_id): void {
+	public function deleteSubscriptionsBySubscriptionPlanId(int $subscription_plan_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
-	}
-
-	/**
-	 * Get Total Products
-	 *
-	 * @param array<string, mixed> $data
-	 *
-	 * @return int
-	 */
-	public function getTotalProducts(array $data = []): int {
-		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
-		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
-		}
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_model'])) {
-			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
-		}
-
-		if (isset($data['filter_price']) && $data['filter_price'] !== '') {
-			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . "'";
-		}
-
-		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
-			$sql .= " AND `p`.`quantity` = '" . (int)$data['filter_quantity'] . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Tax Class ID
-	 *
-	 * @param int $tax_class_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByTaxClassId(int $tax_class_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Stock Status ID
-	 *
-	 * @param int $stock_status_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByStockStatusId(int $stock_status_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Weight Class ID
-	 *
-	 * @param int $weight_class_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByWeightClassId(int $weight_class_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Length Class ID
-	 *
-	 * @param int $length_class_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByLengthClassId(int $length_class_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Download ID
-	 *
-	 * @param int $download_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByDownloadId(int $download_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `download_id` = '" . (int)$download_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Manufacturer ID
-	 *
-	 * @param int $manufacturer_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByManufacturerId(int $manufacturer_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Attribute ID
-	 *
-	 * @param int $attribute_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByAttributeId(int $attribute_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
-		return (int)$query->row['total'];
 	}
 
 	/**
@@ -1835,47 +1866,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function getTotalProductsBySubscriptionPlanId(int $subscription_plan_id): int {
+	public function getTotalSubscriptionsBySubscriptionPlanId(int $subscription_plan_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Layout ID
-	 *
-	 * @param int $layout_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByLayoutId(int $layout_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Option ID
-	 *
-	 * @param int $option_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByOptionId(int $option_id): int {
-		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Products By Option Value ID
-	 *
-	 * @param int $option_value_id
-	 *
-	 * @return int
-	 */
-	public function getTotalProductsByOptionValueId(int $option_value_id): int {
-		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_value_id` = '" . (int)$option_value_id . "'");
 
 		return (int)$query->row['total'];
 	}

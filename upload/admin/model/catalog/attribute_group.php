@@ -137,6 +137,18 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Delete Description
+	 *
+	 *
+	 * @param int $attribute_group_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function deleteDescription(int $attribute_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * @param int $attribute_group_id
@@ -153,17 +165,5 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		}
 
 		return $attribute_group_data;
-	}
-
-	/**
-	 *	Delete Description
-	 *
-	 *
-	 * @param int $attribute_group_id primary key of the attribute record to be fetched
-	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
-	 */
-	public function deleteDescription(int $attribute_group_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 	}
 }

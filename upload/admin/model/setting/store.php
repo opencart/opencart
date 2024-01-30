@@ -19,17 +19,21 @@ class Store extends \Opencart\System\Engine\Model {
 		$store_id = $this->db->getLastId();
 
 		// Layout Route
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '0'");
+		$this->load->model('design/layout');
 
-		foreach ($query->rows as $layout_route) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_route` SET `layout_id` = '" . (int)$layout_route['layout_id'] . "', `route` = '" . $this->db->escape($layout_route['route']) . "', `store_id` = '" . (int)$store_id . "'");
+		$results = $this->model_design_layout->getRoutesByStoreId(0);
+
+		foreach ($results as $result) {
+			$this->model_design_layout->addRoute($result['layout_id'], $result + ['store_id' => $store_id]);
 		}
 
 		// SEO URL
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '0'");
+		$this->load->model('design/layout');
 
-		foreach ($query->rows as $seo_url) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$seo_url['language_id'] . "', `key` = '" . $this->db->escape($seo_url['key']) . "', `value` = '" . $this->db->escape($seo_url['value']) . "', `keyword` = '" . $this->db->escape($seo_url['keyword']) . "', `sort_order` = '" . $this->db->escape($seo_url['sort_order']) . "'");
+		$results = $this->model_design_layout->getSeoUrlsByStoreId(0);
+
+		foreach ($results as $result) {
+			$this->model_design_layout->addSeoUrl($store_id, $result['language_id'], $result['key'], $result['value'], $result['keyword'], $result['sort_order']);
 		}
 
 		$this->cache->delete('store');
@@ -61,29 +65,46 @@ class Store extends \Opencart\System\Engine\Model {
 	public function deleteStore(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "store` WHERE `store_id` = '" . (int)$store_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ip` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_search` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_report` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "marketing_report` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_report` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `store_id` = '" . (int)$store_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
+		// Category
+		$this->load->model('catalog/category');
+
+		$this->model_catalog_category->deleteLayoutsByStoreId($store_id);
+		$this->model_catalog_category->deleteStoresByStoreId($store_id);
+
+		$this->load->model('catalog/information');
+
+		$this->model_catalog_information->deleteLayoutsByStoreId($store_id);
+		$this->model_catalog_information->deleteStoresByStoreId($store_id);
+
+		$this->load->model('catalog/manufacturer');
+
+		$this->model_catalog_manufacturer->deleteLayoutsByStoreId($store_id);
+		$this->model_catalog_manufacturer->deleteStoresByStoreId($store_id);
+
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->deleteLayoutsByStoreId($store_id);
+		$this->model_catalog_product->deleteStoresByStoreId($store_id);
+
+		$this->load->model('customer/gdpr');
+
+		$this->model_customer_gdpr->deleteGdprByStoreId($store_id);
+
+		$this->load->model('design/theme');
+
+		$this->model_design_theme->deleteThemesByStoreId($store_id);
+
+		$this->load->model('design/translation');
+
+		$this->model_design_translation->deleteTranslationsByStoreId($store_id);
+
+		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->deleteSeoUrlsByStoreId($store_id);
+
+		$this->load->model('setting/setting');
+
+		$this->model_setting_setting->deleteSettingByStoreId($store_id);
 
 		$this->cache->delete('store');
 	}
@@ -213,7 +234,7 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry->set('template', $template);
 
 		// Adding language var to the GET variable so there is a default language
-		$registry->request->get['language'] = $language;
+		$request->get['language'] = $language;
 
 		// Language
 		$language = new \Opencart\System\Library\Language($config->get('language_code'));

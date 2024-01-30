@@ -134,6 +134,17 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Options
+	 *
+	 * @return int
+	 */
+	public function getTotalOptions(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "option`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 * @param int $option_id primary key
@@ -185,8 +196,10 @@ class Option extends \Opencart\System\Engine\Model {
 
 		$option_value_id = $this->db->getLastId();
 
-		foreach ($data['option_value_description'] as $language_id => $option_value_description) {
-			$this->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+		if (isset($data['option_value_description'])) {
+			foreach ($data['option_value_description'] as $language_id => $option_value_description) {
+				$this->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+			}
 		}
 
 		return $option_value_id;
@@ -195,7 +208,7 @@ class Option extends \Opencart\System\Engine\Model {
 	public function deleteValue(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 
-		$this->deleteValueDescription($option_id);
+		$this->deleteValueDescriptionByOptionId($option_id);
 	}
 
 	/**
@@ -239,7 +252,7 @@ class Option extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
-	public function deleteValueDescription(int $option_id): void {
+	public function deleteValueDescriptionByOptionId(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value_description` WHERE `option_id` = '" . (int)$option_id . "'");
 	}
 
@@ -273,16 +286,5 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 
 		return $option_value_data;
-	}
-
-	/**
-	 * Get Total Options
-	 *
-	 * @return int
-	 */
-	public function getTotalOptions(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "option`");
-
-		return (int)$query->row['total'];
 	}
 }

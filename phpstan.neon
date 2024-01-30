@@ -4,7 +4,7 @@ services:
         tags:
             - phpstan.broker.propertiesClassReflectionExtension
 parameters:
-    level: 0
+    level: 1
     paths:
         - ./upload/
     excludePaths:

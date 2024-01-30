@@ -178,11 +178,15 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	public function addCategory(int $coupon_id, int $category_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_category` SET `coupon_id` = '" . (int)$coupon_id . "', `category_id ` = '" . (int)$category_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_category` SET `coupon_id` = '" . (int)$coupon_id . "', `category_id` = '" . (int)$category_id . "'");
 	}
 
 	public function deleteCategory(int $coupon_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
+	}
+
+	public function deleteCategoriesByCategoryId(int $category_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**
@@ -202,10 +206,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 		}
 
 		return $coupon_category_data;
-	}
-
-	public function deleteCategoriesByCategoryId(int $category_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**

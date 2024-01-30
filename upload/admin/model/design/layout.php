@@ -76,23 +76,23 @@ class Layout extends \Opencart\System\Engine\Model {
 
 		$this->load->model('catalog/category');
 
-		$this->model_catalog_category->deleteLayoutByLayoutId($layout_id);
+		$this->model_catalog_category->deleteLayoutsByLayoutId($layout_id);
 
 		$this->load->model('catalog/product');
 
-		$this->model_catalog_product->deleteLayoutByLayoutId($layout_id);
+		$this->model_catalog_product->deleteLayoutsByLayoutId($layout_id);
 
 		$this->load->model('catalog/information');
 
-		$this->model_catalog_information->deleteLayoutByLayoutId($layout_id);
+		$this->model_catalog_information->deleteLayoutsByLayoutId($layout_id);
 
 		$this->load->model('cms/article');
 
-		$this->model_cms_article->deleteLayoutByLayoutId($layout_id);
+		$this->model_cms_article->deleteLayoutsByLayoutId($layout_id);
 
 		$this->load->model('cms/topic');
 
-		$this->model_cms_topic->deleteLayoutByLayoutId($layout_id);
+		$this->model_cms_topic->deleteLayoutsByLayoutId($layout_id);
 	}
 
 	/**
@@ -175,13 +175,20 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $layout_id
 	 *
 	 * @return void
 	 */
 	public function deleteRoute(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
 
+	public function deleteRoutesByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	public function deleteRoutesByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -193,6 +200,12 @@ class Layout extends \Opencart\System\Engine\Model {
 	 */
 	public function getRoutes(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
+
+		return $query->rows;
+	}
+
+	public function getRoutesByStoreId(int $store_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		return $query->rows;
 	}
@@ -212,7 +225,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $layout_id
 	 *
 	 * @return void
 	 */

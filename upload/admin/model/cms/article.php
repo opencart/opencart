@@ -83,7 +83,7 @@ class Article extends \Opencart\System\Engine\Model {
 		// SEO URL
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('article_id', $article_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', $article_id);
 
 		foreach ($data['article_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
@@ -132,7 +132,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('article_id', $article_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', $article_id);
 
 		$this->cache->delete('article');
 	}
@@ -208,6 +208,25 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		return $article_data;
+	}
+
+	/**
+	 * Get Total Articles
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return int
+	 */
+	public function getTotalArticles(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -327,7 +346,7 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
-	public function deleteLayoutByLayoutId(int $layout_id): void {
+	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
@@ -351,32 +370,13 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Articles
-	 *
-	 * @param array<string, mixed> $data
-	 *
-	 * @return int
-	 */
-	public function getTotalArticles(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Articles By Layout ID
+	 * Get Total Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *
 	 * @return int
 	 */
-	public function getTotalArticlesByLayoutId(int $layout_id): int {
+	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return (int)$query->row['total'];

@@ -53,8 +53,12 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteSeoUrlByKeyValue(string $key, string $value): void {
+	public function deleteSeoUrlsByKeyValue(string $key, string $value): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "'");
+	}
+
+	public function deleteSeoUrlsByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -199,6 +203,12 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		}
 
 		return $seo_url_data;
+	}
+
+	public function getSeoUrlsByStoreId(int $store_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

@@ -32,6 +32,10 @@ class Theme extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `theme_id` = '" . (int)$theme_id . "'");
 	}
 
+	public function deleteThemesByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "'");
+	}
+
 	/**
 	 * Get Theme
 	 *

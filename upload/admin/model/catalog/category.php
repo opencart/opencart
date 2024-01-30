@@ -184,7 +184,7 @@ class Category extends \Opencart\System\Engine\Model {
 		$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyValue('category_id', $category_id);
 
 		// Delete the old path
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('path', $path_old);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
@@ -201,9 +201,11 @@ class Category extends \Opencart\System\Engine\Model {
 					$this->model_design_seo_url->editSeoUrlsByKeyValue('category_id', $category_id);
 
 
+					//editSeoUrlKeyword
 
-
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_urls[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_urls[$store_id][$language_id]) + 1) . ")) 
+					
+					WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
 				}
 			}
 		}
@@ -230,16 +232,7 @@ class Category extends \Opencart\System\Engine\Model {
 	public function deleteCategory(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category` WHERE `category_id` = '" . (int)$category_id . "'");
 
-		$this->deletePath($category_id);
-
-		$results = $this->getPathsByPathId($category_id);
-
-		foreach ($results as $result) {
-			$this->deleteCategory($result['category_id']);
-		}
-
 		$this->deleteDescription($category_id);
-		$this->deletePath($category_id);
 		$this->deleteFilter($category_id);
 		$this->deleteStore($category_id);
 		$this->deleteLayout($category_id);
@@ -254,7 +247,16 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlByKeyValue('path', $this->getPath($category_id));
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $this->getPath($category_id));
+
+		// Delete connected paths
+		$results = $this->getPathsByPathId($category_id);
+
+		foreach ($results as $result) {
+			$this->deleteCategory($result['category_id']);
+		}
+
+		$this->deletePath($category_id);
 
 		$this->cache->delete('category');
 	}
@@ -544,6 +546,10 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
+	public function deleteStoresByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+	}
+
 	/**
 	 * Get Stores
 	 *
@@ -587,8 +593,12 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
-	public function deleteLayoutByLayoutId(int $layout_id): void {
+	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	public function deleteLayoutsByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -617,7 +627,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function getTotalCategoriesByLayoutId(int $layout_id): int {
+	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return (int)$query->row['total'];

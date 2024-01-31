@@ -829,9 +829,6 @@ class Product extends \Opencart\System\Engine\Model {
 				$product_data['product_reward'] = $this->model_catalog_product->getRewards($product['product_id']);
 			}
 
-			// SEO
-			$product_data['product_seo_url'] = $this->model_catalog_product->getSeoUrls($product['product_id']);
-
 			// Specials
 			if (isset($override['product_special'])) {
 				$product_data['product_special'] = $this->model_catalog_product->getSpecials($product['product_id']);

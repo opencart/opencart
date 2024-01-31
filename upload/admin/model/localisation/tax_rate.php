@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class TaxRate
+ * Class Tax Rate
  *
  * @package Opencart\Admin\Model\Localisation
  */

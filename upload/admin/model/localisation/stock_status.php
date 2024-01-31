@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class StockStatus
+ * Class Stock Status
  *
  * @package Opencart\Admin\Model\Localisation
  */

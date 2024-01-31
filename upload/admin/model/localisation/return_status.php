@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class ReturnStatus
+ * Class Return Status
  *
  * @package Opencart\Admin\Model\Localisation
  */

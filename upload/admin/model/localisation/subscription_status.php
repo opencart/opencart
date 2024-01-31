@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class SubscriptionStatus
+ * Class Subscription Status
  *
  * @package Opencart\Admin\Model\Localisation
  */

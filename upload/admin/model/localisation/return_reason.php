@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class ReturnReason
+ * Class Return Reason
  *
  * @package Opencart\Admin\Model\Localisation
  */

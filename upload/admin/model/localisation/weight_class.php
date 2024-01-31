@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class WeightClass
+ * Class Weight Class
  *
  * @package Opencart\Admin\Model\Localisation
  */

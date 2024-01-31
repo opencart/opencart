@@ -101,26 +101,26 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$start = ($page - 1) * $limit;
 
 		if ($paths) {
+			$url = '';
+
+			if (isset($this->request->get['target'])) {
+				$url .= '&target=' . $this->request->get['target'];
+			}
+
+			if (isset($this->request->get['thumb'])) {
+				$url .= '&thumb=' . $this->request->get['thumb'];
+			}
+
+			if (isset($this->request->get['ckeditor'])) {
+				$url .= '&ckeditor=' . $this->request->get['ckeditor'];
+			}
+
 			// Split the array based on current page number and max number of items per page of 10
 			foreach (array_slice($paths, $start, $limit) as $path) {
 				$path = str_replace('\\', '/', realpath($path));
 
-				if (substr($path, 0, strlen($path)) == $path) {
+				if (substr($path, 0, strlen($base)) == $base) {
 					$name = basename($path);
-
-					$url = '';
-
-					if (isset($this->request->get['target'])) {
-						$url .= '&target=' . $this->request->get['target'];
-					}
-
-					if (isset($this->request->get['thumb'])) {
-						$url .= '&thumb=' . $this->request->get['thumb'];
-					}
-
-					if (isset($this->request->get['ckeditor'])) {
-						$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-					}
 
 					if (is_dir($path)) {
 						$data['directories'][] = [

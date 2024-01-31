@@ -147,7 +147,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function addZoneToGeoZones(int $geo_zone_id): void {
+	public function addZoneToGeoZones(int $geo_zone_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
 		return $query->rows;

@@ -119,6 +119,30 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * Get Total Tax Rates
+	 *
+	 * @return int
+	 */
+	public function getTotalTaxRates(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Tax Rates By Geo Zone ID
+	 *
+	 * @param int $geo_zone_id
+	 *
+	 * @return int
+	 */
+	public function getTotalTaxRatesByGeoZoneId(int $geo_zone_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
 	public function addCustomerGroup(int $tax_rate_id, $customer_group_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rate_to_customer_group` SET `tax_rate_id` = '" . (int)$tax_rate_id . "', `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}
@@ -148,29 +172,5 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		}
 
 		return $tax_customer_group_data;
-	}
-
-	/**
-	 * Get Total Tax Rates
-	 *
-	 * @return int
-	 */
-	public function getTotalTaxRates(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate`");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Tax Rates By Geo Zone ID
-	 *
-	 * @param int $geo_zone_id
-	 *
-	 * @return int
-	 */
-	public function getTotalTaxRatesByGeoZoneId(int $geo_zone_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
-
-		return (int)$query->row['total'];
 	}
 }

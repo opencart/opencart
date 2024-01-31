@@ -81,7 +81,33 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 
-		deleteAddress(int $address_id);
+
+
+		$this->deleteAuthorize($customer_id);
+		$this->deleteHistory($customer_id);
+		$this->deleteReward($customer_id);
+		$this->deleteTransaction($customer_id);
+		$this->deleteWishlist($customer_id);
+		$this->deleteIp($customer_id);
+
+		$this->load->model('marketing/coupon');
+
+		$this->model_marketing_coupon->deleteCategoryByCategoryId($category_id);
+
+		$this->deleteAddress($customer_id);
+
+		$this->deleteActivity($customer_id);
+
+		$this->load->model('marketing/coupon');
+
+		$this->deleteAffiliate($customer_id);
+		$this->deleteAffiliateReport($customer_id);
+
+		$this->deleteApproval($customer_id);
+
+
+
+
 	}
 
 	/**
@@ -258,6 +284,23 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Customers By Customer Group ID
+	 *
+	 * @param int $customer_group_id
+	 *
+	 * @return int
+	 */
+	public function getTotalCustomersByCustomerGroupId(int $customer_group_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
 	 * Add Address
 	 *
 	 * @param int                  $customer_id
@@ -301,8 +344,14 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAddress(int $address_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
+	public function deleteAddress(int $customer_id, int $address_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($address_id) {
+			$sql .= " AND `address_id` = '" . (int)$address_id . "'";
+		}
+
+		$this->db->query($sql);
 	}
 
 	/**
@@ -426,23 +475,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Customers By Customer Group ID
-	 *
-	 * @param int $customer_group_id
-	 *
-	 * @return int
-	 */
-	public function getTotalCustomersByCustomerGroupId(int $customer_group_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
 	}
 
 	/**

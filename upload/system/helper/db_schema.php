@@ -7592,6 +7592,10 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'geo_zone_id',
+				'type' => 'int(11)'
+			],
+			[
 				'name' => 'country_id',
 				'type' => 'int(11)'
 			],
@@ -7599,16 +7603,17 @@ function oc_db_schema() {
 				'name'    => 'zone_id',
 				'type'    => 'int(11)',
 				'default' => '0'
-			],
-			[
-				'name' => 'geo_zone_id',
-				'type' => 'int(11)'
 			]
 		],
 		'primary' => [
 			'zone_to_geo_zone_id'
 		],
 		'foreign' => [
+			[
+				'key'   => 'geo_zone_id',
+				'table' => 'geo_zone',
+				'field' => 'geo_zone_id'
+			],
 			[
 				'key'   => 'country_id',
 				'table' => 'country',
@@ -7618,11 +7623,6 @@ function oc_db_schema() {
 				'key'   => 'zone_id',
 				'table' => 'zone',
 				'field' => 'zone_id'
-			],
-			[
-				'key'   => 'geo_zone_id',
-				'table' => 'geo_zone',
-				'field' => 'geo_zone_id'
 			]
 		],
 		'engine'  => 'InnoDB',

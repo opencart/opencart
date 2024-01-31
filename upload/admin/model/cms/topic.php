@@ -304,8 +304,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteLayout(int $topic_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
+	public function deleteLayout(int $article_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
 	/**

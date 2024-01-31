@@ -158,6 +158,10 @@ class Coupon extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_product` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
 	}
 
+	public function deleteProductsByProductId(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_product` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
 	/**
 	 * Get Products
 	 *

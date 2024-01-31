@@ -131,6 +131,17 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Weight Classes
+	 *
+	 * @return int
+	 */
+	public function getTotalWeightClasses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Get Description By Unit
 	 *
 	 * @param string $unit
@@ -187,16 +198,5 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		}
 
 		return $weight_class_data;
-	}
-
-	/**
-	 * Get Total Weight Classes
-	 *
-	 * @return int
-	 */
-	public function getTotalWeightClasses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class`");
-
-		return (int)$query->row['total'];
 	}
 }

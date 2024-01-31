@@ -196,9 +196,11 @@ class Option extends \Opencart\System\Engine\Model {
 
 		$option_value_id = $this->db->getLastId();
 
-		if (isset($data['option_value_description'])) {
-			foreach ($data['option_value_description'] as $language_id => $option_value_description) {
-				$this->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+		if ($data['option_value_id']) {
+			if (isset($data['option_value_description'])) {
+				foreach ($data['option_value_description'] as $language_id => $option_value_description) {
+					$this->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+				}
 			}
 		}
 

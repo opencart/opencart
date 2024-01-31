@@ -103,11 +103,9 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->deleteAffiliate($customer_id);
 		$this->deleteAffiliateReport($customer_id);
 
-		$this->deleteApproval($customer_id);
+		$this->load->model('customer/customer_approval');
 
-
-
-
+		$this->model_customer_customer_approval->deleteApproval($customer_id);
 	}
 
 	/**

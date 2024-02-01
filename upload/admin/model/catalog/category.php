@@ -202,7 +202,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 
 					//editSeoUrlKeyword
-					$this->model_design_seo_url->getSeoUrlsByKeyValue('category_id', $category_id . );
+					$this->model_design_seo_url->getSeoUrlsByKeyValue('category_id', $category_id);
 
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_urls[$store_id][$language_id]) + 1) . ")) 

@@ -7,6 +7,8 @@ namespace Opencart\Install\Controller\Common;
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {

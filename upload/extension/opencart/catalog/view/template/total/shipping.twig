@@ -1,37 +1,37 @@
 <div class="accordion-item">
   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-shipping">{{ heading_title }}</button></h2>
-  <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
+  <div class="accordion-collapse collapse" data-bs-parent="#accordion" id="collapse-shipping">
     <div class="accordion-body">
       <form id="form-quote">
         <p>{{ text_destination }}</p>
         <div class="row mb-3 required">
           <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
           <div class="col-md-8">
-            <select name="country_id" id="input-country" class="form-select">
+            <select name="country_id" class="form-select" id="input-country">
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
               {% endfor %}
             </select>
-            <div id="error-country" class="invalid-feedback"></div>
+            <div class="invalid-feedback" id="error-country"></div>
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
           <div class="col-md-8">
-            <select name="zone_id" id="input-zone" class="form-select"></select>
-            <div id="error-zone" class="invalid-feedback"></div>
+            <select name="zone_id" class="form-select" id="input-zone"></select>
+            <div class="invalid-feedback" id="error-zone"></div>
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
-            <div id="error-postcode" class="invalid-feedback"></div>
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" class="form-control" id="input-postcode"/>
+            <div class="invalid-feedback" id="error-postcode"></div>
           </div>
         </div>
         <div class="text-end">
-          <button type="submit" id="button-quote" class="btn btn-primary">{{ button_quote }}</button>
+          <button type="submit" class="btn btn-primary" id="button-quote">{{ button_quote }}</button>
         </div>
       </form>
     </div>
@@ -70,7 +70,7 @@
               if (json['shipping_methods']) {
                   $('#modal-shipping').remove();
 
-                  html = '<div id="modal-shipping" class="modal">';
+                  html = '<div class="modal" id="modal-shipping">';
                   html += '  <div class="modal-dialog">';
                   html += '    <div class="modal-content">';
                   html += '      <div class="modal-header">';
@@ -106,7 +106,7 @@
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button type="submit" class="btn btn-primary" id="button-shipping-method">{{ button_shipping }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';

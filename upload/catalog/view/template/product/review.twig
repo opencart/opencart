@@ -3,12 +3,12 @@
   <h2>{{ text_write }}</h2>
   {% if review_guest %}
     <div class="mb-3 required">
-      <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ customer }}" id="input-author" class="form-control"/>
-      <div id="error-author" class="invalid-feedback"></div>
+      <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="author" value="{{ customer }}" class="form-control" id="input-author"/>
+      <div class="invalid-feedback" id="error-author"></div>
     </div>
     <div class="mb-3 required">
-      <label for="input-text" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
-      <div id="error-text" class="invalid-feedback"></div>
+      <label for="input-text" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" class="form-control" id="input-text"></textarea>
+      <div class="invalid-feedback" id="error-text"></div>
       <div class="invalid-feedback">{{ text_note }}</div>
     </div>
     <div class="row mb-3 required">
@@ -26,11 +26,11 @@
         <input type="radio" name="rating" value="5" class="form-check-input"/>
         &nbsp;{{ entry_good }}
       </div>
-      <div id="error-rating" class="invalid-feedback"></div>
+      <div class="invalid-feedback" id="error-rating"></div>
     </div>
     {{ captcha }}
     <div class="text-end">
-      <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
+      <button type="submit" class="btn btn-primary" id="button-review">{{ button_continue }}</button>
     </div>
   {% else %}
     {{ text_login }}

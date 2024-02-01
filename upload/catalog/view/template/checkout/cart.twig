@@ -1,5 +1,5 @@
 {{ header }}
-<div id="checkout-cart" class="container">
+<div class="container" id="checkout-cart">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -15,13 +15,13 @@
     <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
       <div id="shopping-cart">{{ list }}</div>
       {% if modules %}
         <h2>{{ text_next }}</h2>
         <p>{{ text_next_choice }}</p>
-        <div id="accordion" class="accordion">
+        <div class="accordion" id="accordion">
           {% for module in modules %}
             {{ module }}
           {% endfor %}

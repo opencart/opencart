@@ -34,14 +34,14 @@
 </head>
 <body>
 <div id="container">
-  <div id="alert" class="toast-container position-fixed top-0 end-0 p-3"></div>
-  <header id="header" class="navbar navbar-expand navbar-light bg-light">
+  <div class="toast-container position-fixed top-0 end-0 p-3" id="alert"></div>
+  <header class="navbar navbar-expand navbar-light bg-light" id="header">
     <div class="container-fluid">
       <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
       {% if logged %}
-        <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fa-solid fa-bars"></i></button>
+        <button type="button" class="btn btn-link d-inline-block d-lg-none" id="button-menu"><i class="fa-solid fa-bars"></i></button>
         <ul class="nav navbar-nav">
-          <li id="nav-notification" class="nav-item dropdown">
+          <li class="nav-item dropdown" id="nav-notification">
             <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="fa-regular fa-bell"></i>{% if notification_total %} <span class="badge bg-danger">{{ notification_total }}</span>{% endif %}</a>
             <div class="dropdown-menu dropdown-menu-end">
               {% if notifications %}
@@ -54,8 +54,8 @@
               {% endif %}
             </div>
           </li>
-          <li id="nav-language" class="nav-item dropdown">{{ language }}</li>
-          <li id="nav-profile" class="nav-item dropdown">
+          <li class="nav-item dropdown" id="nav-language">{{ language }}</li>
+          <li class="nav-item dropdown" id="nav-profile">
             <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ firstname }} {{ lastname }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fa-solid fa-caret-down fa-fw"></i></span></a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a href="{{ profile }}" class="dropdown-item"><i class="fa-solid fa-user-circle fa-fw"></i> {{ text_profile }}</a></li>
@@ -71,7 +71,7 @@
               <li><a href="https://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fa-solid fa-comments fa-fw"></i> {{ text_support }}</a></li>
             </ul>
           </li>
-          <li id="nav-logout" class="nav-item"><a href="{{ logout }}" class="nav-link"><i class="fa-solid fa-sign-out"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
+          <li class="nav-item" id="nav-logout"><a href="{{ logout }}" class="nav-link"><i class="fa-solid fa-sign-out"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
         </ul>
       {% endif %}
     </div>

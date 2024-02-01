@@ -17,20 +17,20 @@
 		<div class="card">
 			<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
 			<div class="card-body">
-				<form id="form-total" action="{{ save }}" method="post" data-oc-toggle="ajax">
+				<form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-total">
 					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
 							<div class="form-check form-switch form-switch-lg">
 								<input type="hidden" name="report_sale_tax_status" value="0"/>
-								<input type="checkbox" name="report_sale_tax_status" value="1" id="input-status" class="form-check-input"{% if report_sale_tax_status %} checked{% endif %}/>
+								<input type="checkbox" name="report_sale_tax_status" value="1" class="form-check-input"{% if report_sale_tax_status %} checked{% endif %} id="input-status"/>
 							</div>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="report_sale_tax_sort_order" value="{{ report_sale_tax_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+							<input type="text" name="report_sale_tax_sort_order" value="{{ report_sale_tax_sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
 						</div>
 					</div>
 				</form>

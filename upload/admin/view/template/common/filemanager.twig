@@ -1,5 +1,5 @@
-<div id="modal-image" class="modal">
-  <div id="filemanager" class="modal-dialog modal-lg">
+<div class="modal" id="modal-image">
+  <div class="modal-dialog modal-lg" id="filemanager">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ heading_title }}</h5>
@@ -62,7 +62,7 @@
   $('#modal-image').on('click', '#button-upload', function () {
       $('#form-upload').remove();
 
-      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple"/></form>');
+      $('body').prepend('<form enctype="multipart/form-data" style="display: none;" id="form-upload"><input type="file" name="file[]" value="" multiple="multiple"/></form>');
 
       $('#form-upload input[name=\'file[]\']').trigger('click');
 

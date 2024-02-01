@@ -1,5 +1,5 @@
 {{ header }}
-<div id="product-category" class="container">
+<div class="container" id="product-category">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -7,7 +7,7 @@
   </ul>
   <div class="row">
     {{ column_left }}
-    <div id="content" class="col">
+    <div class="col" id="content">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if image %}
@@ -19,21 +19,21 @@
       <hr/>
       <h3>{{ text_refine }}</h3>
       <div class="input-group dropdown mb-3">
-        <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
+        <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" class="form-control" id="input-search"/>
         {% if topics %}
-          <select name="topic_id" id="input-topic" class="form-select" onchange="">
+          <select name="topic_id" class="form-select" onchange="" id="input-topic">
             <option value="">{{ text_all }}</option>
             {% for topic in topics %}
               <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
             {% endfor %}
           </select>
         {% endif %}
-        <button id="button-search" class="btn btn-primary">{{ button_search }}</button>
+        <button class="btn btn-primary" id="button-search">{{ button_search }}</button>
       </div>
       <div class="row mb-3">
         <div class="col-lg offset-lg-8">
           <div class="input-group">
-            <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select" onchange="location = this.value;">
+            <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select class="form-select" onchange="location = this.value;" id="input-sort">
               {% for sorts in sorts %}
                 <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
               {% endfor %}

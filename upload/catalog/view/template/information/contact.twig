@@ -1,12 +1,12 @@
 {{ header }}
-<div id="information-contact" class="container">
+<div class="container" id="information-contact">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <h3>{{ text_location }}</h3>
       <div class="card">
@@ -51,7 +51,7 @@
       </div>
       {% if locations %}
         <h3>{{ text_store }}</h3>
-        <div id="accordion" class="card-group">
+        <div class="card-group" id="accordion">
           {% for location in locations %}
             <div class="card">
               <div class="card-header">
@@ -99,28 +99,28 @@
           {% endfor %}
         </div>
       {% endif %}
-      <form id="form-contact" action="{{ send }}" method="post" data-oc-toggle="ajax">
+      <form action="{{ send }}" method="post" data-oc-toggle="ajax" id="form-contact">
         <fieldset>
           <legend>{{ text_contact }}</legend>
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control"/>
-              <div id="error-name" class="invalid-feedback"></div>
+              <input type="text" name="name" value="{{ name }}" class="form-control" id="input-name"/>
+              <div class="invalid-feedback" id="error-name"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
-              <div id="error-email" class="invalid-feedback"></div>
+              <input type="text" name="email" value="{{ email }}" class="form-control" id="input-email"/>
+              <div class="invalid-feedback" id="error-email"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-enquiry" class="col-sm-2 col-form-label">{{ entry_enquiry }}</label>
             <div class="col-sm-10">
-              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea>
-              <div id="error-enquiry" class="invalid-feedback"></div>
+              <textarea name="enquiry" rows="10" class="form-control" id="input-enquiry"></textarea>
+              <div class="invalid-feedback" id="error-enquiry"></div>
             </div>
           </div>
           {{ captcha }}

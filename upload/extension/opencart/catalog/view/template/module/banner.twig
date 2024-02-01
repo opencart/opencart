@@ -1,4 +1,4 @@
-<div id="carousel-banner-{{ module }}" class="carousel slide{% if effect == 'fade' %} carousel-fade{% endif %}" data-bs-ride="carousel">
+<div class="carousel slide{% if effect == 'fade' %} carousel-fade{% endif %}" data-bs-ride="carousel" id="carousel-banner-{{ module }}">
   {% if indicators and banners|batch(items)|length > 1 %}
     <div class="carousel-indicators">
       {% set banner_row = 0 %}

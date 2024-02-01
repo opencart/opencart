@@ -17,7 +17,7 @@
   <div class="col-4">
     <div class="input-group">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
-      <select id="input-sort" class="form-select">
+      <select class="form-select" id="input-sort">
         {% for sorts in sorts %}
           <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
         {% endfor %}
@@ -26,7 +26,7 @@
   </div>
 </div>
 <div id="comment">{{ list }}</div>
-<div id="modal-comment" class="modal">
+<div class="modal" id="modal-comment">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -34,22 +34,22 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment" action="" data-oc-target="" data-oc-trigger="">
+        <form action="" data-oc-target="" data-oc-trigger="" id="form-comment">
           <div class="mb-3 required">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
-            <div id="error-author" class="invalid-feedback"></div>
+            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" class="form-control" id="input-author"/>
+            <div class="invalid-feedback" id="error-author"></div>
           </div>
           <div class="mb-3 required">
             <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
-            <div id="error-comment" class="invalid-feedback"></div>
+            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" class="form-control" id="input-comment">{{ comment }}</textarea>
+            <div class="invalid-feedback" id="error-comment"></div>
           </div>
           {{ captcha }}
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="button-comment" form="form-comment" class="btn btn-primary">{{ button_comment }}</button>
+        <button type="submit" form="form-comment" class="btn btn-primary" id="button-comment">{{ button_comment }}</button>
       </div>
     </div>
   </div>

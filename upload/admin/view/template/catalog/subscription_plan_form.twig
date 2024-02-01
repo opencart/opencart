@@ -17,15 +17,15 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-subscription-plan" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-subscription-plan">
           <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="subscription_plan_description[{{ language.language_id }}][name]" value="{{ subscription_plan_description[language.language_id] ? subscription_plan_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
-                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                  <input type="text" name="subscription_plan_description[{{ language.language_id }}][name]" value="{{ subscription_plan_description[language.language_id] ? subscription_plan_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name-{{ language.language_id }}"/>
+                  <div class="invalid-feedback" id="error-name-{{ language.language_id }}"></div>
                 </div>
               {% endfor %}
             </div>
@@ -35,22 +35,22 @@
             <div class="row mb-3">
               <label for="input-trial-duration" class="col-sm-2 col-form-label">{{ entry_trial_duration }}</label>
               <div class="col-sm-10">
-                <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
+                <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" class="form-control" id="input-trial-duration"/>
                 <div class="form-text">{{ help_trial_duration }}</div>
-                <div id="error-trial-duration" class="invalid-feedback"></div>
+                <div class="invalid-feedback" id="error-trial-duration"></div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-trial-cycle" class="col-sm-2 col-form-label">{{ entry_trial_cycle }}</label>
               <div class="col-sm-10">
-                <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
+                <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" class="form-control" id="input-trial-cycle"/>
                 <div class="form-text">{{ help_trial_cycle }}</div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-trial-frequency" class="col-sm-2 col-form-label">{{ entry_trial_frequency }}</label>
               <div class="col-sm-10">
-                <select name="trial_frequency" id="input-trial-frequency" class="form-select">
+                <select name="trial_frequency" class="form-select" id="input-trial-frequency">
                   {% for frequency_option in frequencies %}
                     <option value="{{ frequency_option.value }}"{% if trial_frequency == frequency_option.value %} selected{% endif %}>{{ frequency_option.text }}</option>
                   {% endfor %}
@@ -63,7 +63,7 @@
               <div class="col-sm-10">
                 <div class="form-check form-switch form-switch-lg">
                   <input type="hidden" name="trial_status" value="0"/>
-                  <input type="checkbox" name="trial_status" value="1" id="input-notify" class="form-check-input"{% if trial_status %} checked{% endif %}/>
+                  <input type="checkbox" name="trial_status" value="1" class="form-check-input"{% if trial_status %} checked{% endif %} id="input-notify"/>
                 </div>
               </div>
             </div>
@@ -73,21 +73,21 @@
             <div class="row mb-3">
               <label for="input-duration" class="col-sm-2 col-form-label">{{ entry_duration }}</label>
               <div class="col-sm-10">
-                <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
+                <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" class="form-control" id="input-duration"/>
                 <div class="form-text">{{ help_duration }}</div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-cycle" class="col-sm-2 col-form-label">{{ entry_cycle }}</label>
               <div class="col-sm-10">
-                <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
+                <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" class="form-control" id="input-cycle"/>
                 <div class="form-text">{{ help_cycle }}</div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-frequency" class="col-sm-2 col-form-label">{{ entry_frequency }}</label>
               <div class="col-sm-10">
-                <select name="frequency" id="input-frequency" class="form-select">
+                <select name="frequency" class="form-select" id="input-frequency">
                   {% for frequency_option in frequencies %}
                     <option value="{{ frequency_option.value }}"{% if frequency == frequency_option.value %} selected{% endif %}>{{ frequency_option.text }}</option>
                   {% endfor %}
@@ -100,14 +100,14 @@
               <div class="col-sm-10">
                 <div class="form-check form-switch form-switch-lg">
                   <input type="hidden" name="status" value="0"/>
-                  <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                  <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %} id="input-status"/>
                 </div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
-                <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
               </div>
             </div>
           </fieldset>

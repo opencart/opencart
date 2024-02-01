@@ -1,5 +1,5 @@
 {{ header }}
-<div id="product-compare" class="container">
+<div class="container" id="product-compare">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -11,7 +11,7 @@
     </div>
   {% endif %}
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    <div class="col" id="content">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if products %}
         <table class="table table-bordered">
@@ -119,7 +119,7 @@
             {% for product in products %}
               <td class="text-center">
                 <form action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#header-cart">
-                  <button type="submit" id="button-confirm" class="btn btn-primary btn-block">{{ button_cart }}</button>
+                  <button type="submit" class="btn btn-primary btn-block" id="button-confirm">{{ button_cart }}</button>
                   <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/> <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a>
                 </form>
               </td>

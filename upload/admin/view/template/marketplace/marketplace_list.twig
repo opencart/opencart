@@ -5,9 +5,9 @@
       <div class="float-end">
 
         {% if signature %}
-          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+          <button type="button" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info" id="button-api"><i class="fa-solid fa-cog"></i></button>
         {% else %}
-          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+          <button type="button" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger" id="button-api"><i class="fa-solid fa-triangle-exclamation"></i></button>
         {% endif %}
 
       </div>
@@ -30,8 +30,8 @@
       <div class="card-body">
         <div class="card bg-light">
           <div class="card-body">
-            <div id="extension-filter" class="input-group dropdown">
-              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
+            <div class="input-group dropdown" id="extension-filter">
+              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" class="form-control" id="input-search"/>
               {% for category in categories %}
                 {% if category.value == filter_category %}
                   <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fa-solid fa-caret-down"></i></button>
@@ -42,7 +42,7 @@
                   <a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
                 {% endfor %}
               </div>
-              <button type="button" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fa-solid fa-filter"></i></button>
+              <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary" id="button-filter"><i class="fa-solid fa-filter"></i></button>
             </div>
             <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
           </div>

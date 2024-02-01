@@ -17,11 +17,11 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-seo-url" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-seo-url">
           <div class="row mb-3">
             <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-select">
+              <select name="store_id" class="form-select" id="input-store">
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
@@ -31,7 +31,7 @@
           <div class="row mb-3">
             <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
             <div class="col-sm-10">
-              <select name="language_id" id="input-language" class="form-select">
+              <select name="language_id" class="form-select" id="input-language">
                 {% for language in languages %}
                   <option value="{{ language.language_id }}"{% if language.language_id == language_id %} selected{% endif %}>{{ language.name }}</option>
                 {% endfor %}
@@ -41,29 +41,29 @@
           <div class="row mb-3 required">
             <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
-              <div id="error-key" class="invalid-feedback"></div>
+              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" class="form-control" id="input-key"/>
+              <div class="invalid-feedback" id="error-key"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
             <div class="col-sm-10">
-              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
-              <div id="error-value" class="invalid-feedback"></div>
+              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" class="form-control" id="input-value"/>
+              <div class="invalid-feedback" id="error-value"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
             <div class="col-sm-10">
-              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" class="form-control" id="input-keyword"/>
               <div class="form-text">{{ help_keyword }}</div>
-              <div id="error-keyword" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-keyword"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
               <div class="form-text">{{ help_sort_order }}</div>
             </div>
           </div>

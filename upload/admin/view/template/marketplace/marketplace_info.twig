@@ -4,9 +4,9 @@
 		<div class="container-fluid">
 			<div class="float-end">
         {% if signature %}
-					<button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+					<button type="button" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info" id="button-api"><i class="fa-solid fa-cog"></i></button>
 				{% else %}
-					<button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+					<button type="button" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger" id="button-api"><i class="fa-solid fa-triangle-exclamation"></i></button>
 				{% endif %}
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
 			</div>
@@ -18,7 +18,7 @@
 			</ol>
 		</div>
 	</div>
-	<div id="marketplace-extension-info" class="container-fluid">
+	<div class="container-fluid" id="marketplace-extension-info">
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}</div>
     {% endif %}
@@ -28,7 +28,7 @@
 				<div class="row extension-info">
 					<div class="col-md-8 col-lg-9">
 						{% if banner %}
-							<div id="banner" class="text-center img-thumbnail mb-3"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></div>
+							<div class="text-center img-thumbnail mb-3" id="banner"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></div>
 						{% endif %}
 						<div class="row thumbnails">
 							{% for image in images %}
@@ -42,22 +42,22 @@
 							<li class="nav-item"><a href="#tab-comment" class="nav-link" data-bs-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
 						</ul>
 						<div class="tab-content">
-							<div id="tab-description" class="tab-pane fade show active">{{ description }}</div>
-							<div id="tab-documentation" class="tab-pane fade">{{ documentation }}</div>
-							<div id="tab-download" class="tab-pane fade">
+							<div class="tab-pane fade show active" id="tab-description">{{ description }}</div>
+							<div class="tab-pane fade" id="tab-documentation">{{ documentation }}</div>
+							<div class="tab-pane fade" id="tab-download">
 								<fieldset>
 									<legend>{{ text_available }}</legend>
 									<div id="download"></div>
 								</fieldset>
 							</div>
-							<div id="tab-comment" class="tab-pane">
+							<div class="tab-pane" id="tab-comment">
 								<fieldset>
 									<legend>{{ text_comment_add }}</legend>
 									<div class="mb-3">
-										<textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-history-comment" class="form-control"></textarea>
+										<textarea name="comment" rows="5" placeholder="{{ text_write }}" class="form-control" id="input-history-comment"></textarea>
 									</div>
 									<div class="text-end">
-										<button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
+										<button type="button" class="btn btn-primary" id="button-comment">{{ button_comment }}</button>
 									</div>
 								</fieldset>
 								<br/>
@@ -69,12 +69,12 @@
 						</div>
 					</div>
 					<div class="col-md-4 col-lg-3">
-						<div id="buy" class="card mb-3">
+						<div class="card mb-3" id="buy">
 							<div class="card-body">
 								{% if license == '1' and not purchased %}
-									<button type="button" id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
+									<button type="button" class="btn btn-success btn-lg btn-block" id="button-buy">{{ button_purchase }}</button>
 								{% endif %}
-								<div id="price" class="row">
+								<div class="row" id="price">
 									<div class="col-lg-5"><strong>{{ text_price }}</strong></div>
 									<div class="col-lg-7 text-end">{% if license %}
 											{{ price }}
@@ -118,10 +118,10 @@
 								</div>
 							</div>
 						</div>
-						<div id="sales" class="card mb-3">
+						<div class="card mb-3" id="sales">
 							<div class="card-body"><i class="fa-solid fa-shopping-cart"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
 						</div>
-						<div id="sales" class="card mb-3">
+						<div class="card mb-3" id="sales">
 							<div class="card-body"><i class="fa-solid fa-download"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
 						</div>
 						<div class="card mb-3">
@@ -173,7 +173,7 @@ $('#button-buy').on('click', function (e) {
 
     $('#modal-purchase').remove();
 
-    html = '<div id="modal-purchase" class="modal">';
+    html = '<div class="modal" id="modal-purchase">';
     html += '  <div class="modal-dialog">';
     html += '    <div class="modal-content">';
     html += '      <div class="modal-header">';
@@ -185,11 +185,11 @@ $('#button-buy').on('click', function (e) {
     html += '        <p>{{ text_secure|escape('js') }}</p>';
     html += '        <div class="mb-3">';
     html += '          <label for="input-pin">{{ entry_pin|escape('js') }}</label>';
-    html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin|escape('js') }}" id="input-pin" class="form-control"/>';
+    html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin|escape('js') }}" class="form-control" id="input-pin"/>';
     html += '        </div>';
     html += '        <div class="mb-3 text-end">';
     html += '          <div class="text-end"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin|escape('js') }}</a></div>';
-    html += '          <button type="button" id="button-purchase" class="btn btn-primary btn-lg">{{ button_purchase|escape('js') }}</button>';
+    html += '          <button type="button" class="btn btn-primary btn-lg" id="button-purchase">{{ button_purchase|escape('js') }}</button>';
     html += '        </div>';
     html += '      </div>';
     html += '    </div>';

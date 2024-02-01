@@ -43,7 +43,7 @@
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_customer }}</strong>
                     <br/>
-                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    <div target="_blank" id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}">{{ firstname }} {{ lastname }}</a></div>
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -138,7 +138,7 @@
               </div>
             </div>
 
-            <div id="shipping-address" class="col">
+            <div class="col" id="shipping-address">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_shipping_address }}</strong>
@@ -186,7 +186,7 @@
 
           <div class="row">
 
-            <div id="shipping-method" class="col-md">
+            <div class="col-md" id="shipping-method">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_shipping_method }}</strong>
@@ -199,11 +199,11 @@
                   </div>
                 </div>
                 <input type="hidden" name="shipping_code" value="{{ shipping_code }}" id="input-shipping-code"/>
-                <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+                <button type="button" class="btn btn-outline-primary" id="button-shipping-methods"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
 
-            <div id="payment-method" class="col-md">
+            <div class="col-md" id="payment-method">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_payment_method }}</strong>
@@ -216,7 +216,7 @@
                   </div>
                 </div>
                 <input type="hidden" name="payment_code" value="{{ payment_code }}" id="input-payment-code"/>
-                <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+                <button type="button" class="btn btn-outline-primary" id="button-payment-methods"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
 
@@ -264,7 +264,7 @@
           {% endfor %}
         </ul>
         <div class="tab-content">
-          <div id="tab-history" class="tab-pane active">
+          <div class="tab-pane active" id="tab-history">
             <fieldset>
               <legend>{{ text_history }}</legend>
               <div id="history">{{ history }}</div>
@@ -275,7 +275,7 @@
                 <div class="row mb-3">
                   <label for="input-subscription-status" class="col-sm-2 col-form-label">{{ entry_subscription_status }}</label>
                   <div class="col-sm-10">
-                    <select name="subscription_status_id" id="input-subscription-status" class="form-select">
+                    <select name="subscription_status_id" class="form-select" id="input-subscription-status">
                       {% for subscription_status in subscription_statuses %}
                         <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                       {% endfor %}
@@ -286,7 +286,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_override }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="override" value="0"/> <input type="checkbox" name="override" value="1" id="input-override" class="form-check-input">
+                      <input type="hidden" name="override" value="0"/> <input type="checkbox" name="override" value="1" class="form-check-input" id="input-override">
                     </div>
                     <div class="form-text">{{ help_override }}</div>
                   </div>
@@ -295,30 +295,30 @@
                   <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
+                      <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" class="form-check-input" id="input-notify"/>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" class="form-control" id="input-comment"></textarea>
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="submit" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
+                  <button type="submit" class="btn btn-primary" id="button-history"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
             </form>
           </div>
-          <div id="tab-order" class="tab-pane">
+          <div class="tab-pane" id="tab-order">
             <fieldset>
               <legend>{{ text_order }}</legend>
               <div id="order">{{ orders }}</div>
             </fieldset>
           </div>
           {% for tab in tabs %}
-            <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
+            <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
           {% endfor %}
         </div>
       </div>
@@ -326,7 +326,7 @@
   </div>
 </div>
 <form id="form-subscription">
-  <div id="modal-customer" class="modal">
+  <div class="modal" id="modal-customer">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -337,19 +337,19 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/><a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off" id="input-customer"/><a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-            <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+            <ul class="dropdown-menu" id="autocomplete-customer"></ul>
           </div>
           <div class="text-end">
-            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="button" class="btn btn-primary" id="button-customer"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div id="modal-subscription-plan" class="modal">
+  <div class="modal" id="modal-subscription-plan">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -358,45 +358,45 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="input-subscription-plan" class="form-label">{{ entry_subscription_plan }}</label> <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
+            <label for="input-subscription-plan" class="form-label">{{ entry_subscription_plan }}</label> <select name="subscription_plan_id" class="form-select" id="input-subscription-plan">
               <option value="0" selected>{{ text_none }}</option>
               {% for subscription_plan in subscription_plans %}
                 <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
               {% endfor %}
             </select>
-            <div id="error-subscription-plan" class="invalid-feedback"></div>
+            <div class="invalid-feedback" id="error-subscription-plan"></div>
           </div>
           <fieldset>
             <legend>{{ text_trial }}</legend>
             <div class="mb-3">
-              <label for="input-trial-price" class="form-label">{{ entry_trial_price }}</label> <input type="text" name="trial_price" value="{{ trial_price }}" placeholder="{{ entry_trial_price }}" id="input-trial-price" class="form-control"/>
+              <label for="input-trial-price" class="form-label">{{ entry_trial_price }}</label> <input type="text" name="trial_price" value="{{ trial_price }}" placeholder="{{ entry_trial_price }}" class="form-control" id="input-trial-price"/>
               <div class="form-text">{{ help_trial_price }}</div>
             </div>
             <div class="mb-3">
-              <label for="input-trial-duration" class="form-label">{{ entry_trial_duration }}</label> <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
-              <div id="error-trial-duration" class="invalid-feedback"></div>
+              <label for="input-trial-duration" class="form-label">{{ entry_trial_duration }}</label> <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" class="form-control" id="input-trial-duration"/>
+              <div class="invalid-feedback" id="error-trial-duration"></div>
             </div>
             <div class="mb-3">
-              <label for="input-trial-remaining" class="form-label">{{ entry_trial_remaining }}</label> <input type="text" name="remaining" value="{{ trial_remaining }}" placeholder="{{ entry_trial_remaining }}" id="input-trial-remaining" class="form-control"/>
-              <div id="error-trial-remaining" class="invalid-feedback"></div>
+              <label for="input-trial-remaining" class="form-label">{{ entry_trial_remaining }}</label> <input type="text" name="remaining" value="{{ trial_remaining }}" placeholder="{{ entry_trial_remaining }}" class="form-control" id="input-trial-remaining"/>
+              <div class="invalid-feedback" id="error-trial-remaining"></div>
             </div>
             <div class="mb-3">
-              <label for="input-trial-cycle" class="form-label">{{ entry_trial_cycle }}</label> <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
-              <div id="error-trial-cycle" class="invalid-feedback"></div>
+              <label for="input-trial-cycle" class="form-label">{{ entry_trial_cycle }}</label> <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" class="form-control" id="input-trial-cycle"/>
+              <div class="invalid-feedback" id="error-trial-cycle"></div>
             </div>
             <div class="mb-3">
-              <label for="input-trial-frequency" class="form-label">{{ entry_trial_frequency }}</label> <select name="trial_frequency" id="input-trial-frequency" class="form-select">
+              <label for="input-trial-frequency" class="form-label">{{ entry_trial_frequency }}</label> <select name="trial_frequency" class="form-select" id="input-trial-frequency">
                 {% for frequency in frequencies %}
                   <option value="{{ frequency.value }}"{% if frequency.value == trial_frequency %} selected{% endif %}>{{ frequency.text }}</option>
                 {% endfor %}
               </select>
-              <div id="error-trial-frequency" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-trial-frequency"></div>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_trial_status }}</label>
               <div class="form-check form-switch form-switch-lg">
                 <input type="hidden" name="trial_status" value="0"/>
-                <input type="checkbox" name="trial_status" value="1" id="input-trial-status" class="form-check-input"{% if trial_status %} checked{% endif %}/>
+                <input type="checkbox" name="trial_status" value="1" class="form-check-input"{% if trial_status %} checked{% endif %} id="input-trial-status"/>
               </div>
             </div>
           </fieldset>
@@ -404,31 +404,31 @@
             <legend>{{ text_subscription }}</legend>
             <div class="mb-3">
               <label for="input-price" class="form-label">{{ entry_price }}</label>
-              <input type="text" name="trial_price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+              <input type="text" name="trial_price" value="{{ price }}" placeholder="{{ entry_price }}" class="form-control" id="input-price"/>
             </div>
             <div class="mb-3">
               <label for="input-duration" class="form-label">{{ entry_duration }}</label>
-              <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
-              <div id="error-duration" class="invalid-feedback"></div>
+              <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" class="form-control" id="input-duration"/>
+              <div class="invalid-feedback" id="error-duration"></div>
             </div>
             <div class="mb-3">
               <label for="input-remaining" class="form-label">{{ entry_remaining }}</label>
-              <input type="text" name="remaining" value="{{ remaining }}" placeholder="{{ entry_remaining }}" id="input-remaining" class="form-control"/>
-              <div id="error-remaining" class="invalid-feedback"></div>
+              <input type="text" name="remaining" value="{{ remaining }}" placeholder="{{ entry_remaining }}" class="form-control" id="input-remaining"/>
+              <div class="invalid-feedback" id="error-remaining"></div>
             </div>
             <div class="mb-3">
               <label for="input-cycle" class="form-label">{{ entry_cycle }}</label>
-              <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
-              <div id="error-cycle" class="invalid-feedback"></div>
+              <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" class="form-control" id="input-cycle"/>
+              <div class="invalid-feedback" id="error-cycle"></div>
             </div>
             <div class="mb-3">
               <label for="input-frequency" class="form-label">{{ entry_frequency }}</label>
-              <select name="frequency" id="input-frequency" class="form-select">
+              <select name="frequency" class="form-select" id="input-frequency">
                 {% for frequency in frequencies %}
                   <option value="{{ frequency.value }}"{% if frequency.value == frequency %} selected{% endif %}>{{ frequency.text }}</option>
                 {% endfor %}
               </select>
-              <div id="error-frequency" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-frequency"></div>
             </div>
           </fieldset>
 
@@ -436,22 +436,22 @@
             <legend>{{ text_date_next }}</legend>
             <div class="mb-3">
               <div class="input-group">
-                <input type="text" name="date_next" value="{{ date_next }}" placeholder="{{ entry_date_next }}" id="input-date-next" class="form-control date"/>
+                <input type="text" name="date_next" value="{{ date_next }}" placeholder="{{ entry_date_next }}" class="form-control date" id="input-date-next"/>
                 <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
               <div class="form-text">{{ help_date_next }}</div>
-              <div id="error-date-next" class="invalid-feedback"></div>
+              <div class="invalid-feedback" id="error-date-next"></div>
             </div>
           </fieldset>
           <div class="text-end">
-            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="button" class="btn btn-primary" id="button-customer"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="modal-payment-address" class="modal">
+  <div class="modal" id="modal-payment-address">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -461,7 +461,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
-            <select name="payment_address" id="input-payment-address" class="form-select">
+            <select name="payment_address" class="form-select" id="input-payment-address">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -469,14 +469,14 @@
             </select>
           </div>
           <div class="text-end">
-            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="button" class="btn btn-primary" id="button-customer"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="modal-shipping-address" class="modal">
+  <div class="modal" id="modal-shipping-address">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -486,7 +486,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
-            <select name="shipping_address" id="input-shipping-address" class="form-select">
+            <select name="shipping_address" class="form-select" id="input-shipping-address">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -494,7 +494,7 @@
             </select>
           </div>
           <div class="text-end">
-            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="button" class="btn btn-primary" id="button-customer"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
           </div>
         </div>
       </div>

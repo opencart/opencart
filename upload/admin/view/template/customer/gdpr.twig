@@ -19,25 +19,25 @@
   <div class="container-fluid">
     <div class="alert alert-warning"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</div>
     <div class="row">
-      <div id="filter-gdpr" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+      <div class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3" id="filter-gdpr">
         <div class="card filter-sticky">
           <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
                 <label class="form-label">{{ entry_email }}</label>
-                <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
-                <ul id="autocomplete-email" class="dropdown-menu"></ul>
+                <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" data-oc-target="autocomplete-email" class="form-control" autocomplete="off" id="input-email"/>
+                <ul class="dropdown-menu" id="autocomplete-email"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-action" class="col-form-label">{{ entry_action }}</label> <select name="filter_action" id="input-action" class="form-select">
+                <label for="input-action" class="col-form-label">{{ entry_action }}</label> <select name="filter_action" class="form-select" id="input-action">
                   <option value=""></option>
                   <option value="export">{{ text_export }}</option>
                   <option value="remove">{{ text_remove }}</option>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" class="form-select" id="input-status">
                   <option value=""></option>
                   <option value="0">{{ text_unverified }}</option>
                   <option value="1">{{ text_pending }}</option>
@@ -49,19 +49,19 @@
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                  <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" class="form-control date" id="input-date-from"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
                 <div class="input-group">
-                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                  <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" class="form-control date" id="input-date-to"/>
                   <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                 </div>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="button" class="btn btn-light" id="button-filter"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>

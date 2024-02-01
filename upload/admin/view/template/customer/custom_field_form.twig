@@ -17,7 +17,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-custom-field" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-custom-field">
           <fieldset>
             <legend>{{ text_custom_field }}</legend>
             <div class="row mb-3 required">
@@ -26,16 +26,16 @@
                 {% for language in languages %}
                   <div class="input-group">
                     <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                    <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                    <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name-{{ language.language_id }}"/>
                   </div>
-                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                  <div class="invalid-feedback" id="error-name-{{ language.language_id }}"></div>
                 {% endfor %}
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
               <div class="col-sm-10">
-                <select name="location" id="input-location" class="form-select">
+                <select name="location" class="form-select" id="input-location">
                   <option value="account"{% if location == 'account' %} selected{% endif %}>{{ text_account }}</option>
                   <option value="address"{% if location == 'address' %} selected{% endif %}>{{ text_address }}</option>
                   <option value="affiliate"{% if location == 'affiliate' %} selected{% endif %}>{{ text_affiliate }}</option>
@@ -45,7 +45,7 @@
             <div class="row mb-3">
               <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
               <div class="col-sm-10">
-                <select name="type" id="input-type" class="form-select">
+                <select name="type" class="form-select" id="input-type">
                   <optgroup label="{{ text_choose }}">
                     <option value="select"{% if type == 'select' %} selected{% endif %}>{{ text_select }}</option>
                     <option value="radio"{% if type == 'radio' %} selected{% endif %}>{{ text_radio }}</option>
@@ -69,13 +69,13 @@
             <div class="row mb-3" id="display-value">
               <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
               <div class="col-sm-10">
-                <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
+                <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" class="form-control" id="input-value"/>
               </div>
             </div>
             <div class="row mb-3" id="display-validation">
               <label for="input-validation" class="col-sm-2 col-form-label">{{ entry_validation }}</label>
               <div class="col-sm-10">
-                <input type="text" name="validation" id="input-validation" value="{{ validation }}" placeholder="{{ text_regex }}" class="form-control"/>
+                <input type="text" name="validation" value="{{ validation }}" placeholder="{{ text_regex }}" class="form-control" id="input-validation"/>
                 <div class="form-text">{{ help_regex }}</div>
               </div>
             </div>
@@ -86,7 +86,7 @@
                   {% set customer_group_row = 0 %}
                   {% for customer_group in customer_groups %}
                     <div class="form-check">
-                      <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_customer_group %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                      <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_customer_group %} checked{% endif %} id="input-customer-group-{{ customer_group.customer_group_id }}"/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                     </div>
                     {% set customer_group_row = customer_group_row + 1 %}
                   {% endfor %}</div>
@@ -99,7 +99,7 @@
                   {% set customer_group_row = 0 %}
                   {% for customer_group in customer_groups %}
                     <div class="form-check">
-                      <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" id="input-required-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_required %} checked{% endif %}/> <label for="input-required-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                      <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_required %} checked{% endif %} id="input-required-{{ customer_group.customer_group_id }}"/> <label for="input-required-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                     </div>
                     {% set customer_group_row = customer_group_row + 1 %}
                   {% endfor %}
@@ -111,14 +111,14 @@
               <div class="col-sm-10">
                 <div class="form-check form-switch form-switch-lg">
                   <input type="hidden" name="status" value="0"/>
-                  <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                  <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %} id="input-status"/>
                 </div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
-                <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" id="input-sort-order"/>
                 <div class="form-text">{{ help_sort_order }}</div>
               </div>
             </div>
@@ -143,9 +143,9 @@
                         {% for language in languages %}
                           <div class="input-group">
                             <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                            <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{{ custom_field_value.custom_field_value_description[language.language_id] ? custom_field_value.custom_field_value_description[language.language_id].name }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" placeholder="{{ entry_custom_value }}" class="form-control"/>
+                            <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{{ custom_field_value.custom_field_value_description[language.language_id] ? custom_field_value.custom_field_value_description[language.language_id].name }}" placeholder="{{ entry_custom_value }}" class="form-control" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}"/>
                           </div>
-                          <div id="error-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
+                          <div class="invalid-feedback" id="error-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}"></div>
                         {% endfor %}</td>
                       <td class="text-end"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                       <td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -179,15 +179,15 @@ $('#input-type').on('change', function () {
     }
 
     if (this.value == 'date') {
-        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control date"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" class="form-control date" id="input-value"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
     } else if (this.value == 'time') {
-        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control time"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" class="form-control time" id="input-value"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
     } else if (this.value == 'datetime') {
-        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control datetime"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" class="form-control datetime" id="input-value"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
     } else if (this.value == 'textarea') {
-        $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
+        $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value|escape('js') }}" class="form-control" id="input-value">' + $('#input-value').val() + '</textarea>');
     } else {
-        $('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control"/>');
+        $('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" class="form-control" id="input-value"/>');
     }
 });
 
@@ -201,9 +201,9 @@ function addCustomFieldValue() {
   {% for language in languages %}
     html += '    <div class="input-group">';
     html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';
-    html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value|escape('js') }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="form-control"/>';
+    html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value|escape('js') }}" class="form-control" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}"/>';
     html += '    </div>';
-    html += '    <div id="error-custom-field-value-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>';
+    html += '    <div class="invalid-feedback" id="error-custom-field-value-{{ custom_field_value_row }}-{{ language.language_id }}"></div>';
   {% endfor %}
     html += '  </td>';
     html += '  <td class="text-end"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" class="form-control"/></td>';

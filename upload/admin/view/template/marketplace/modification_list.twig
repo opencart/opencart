@@ -1,4 +1,4 @@
-<form id="form-modification" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#modification">
+<form method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#modification" id="form-modification">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -59,7 +59,7 @@
   </div>
 </form>
 {% for modification in modifications %}
-  <div id="modal-modification-{{ modification.modification_id }}" class="modal modal-lg">
+  <div class="modal modal-lg" id="modal-modification-{{ modification.modification_id }}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

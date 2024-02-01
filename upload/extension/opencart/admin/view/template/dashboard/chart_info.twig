@@ -1,14 +1,14 @@
 <div class="card mb-3">
   <div class="card-header">
     <div class="float-end"><a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-regular fa-calendar"></i> <i class="fa-solid fa-caret-down"></i></a>
-      <div id="range" class="dropdown-menu dropdown-menu-right">
+      <div class="dropdown-menu dropdown-menu-right" id="range">
         <a href="day" class="dropdown-item">{{ text_day }}</a> <a href="week" class="dropdown-item">{{ text_week }}</a> <a href="month" class="dropdown-item active">{{ text_month }}</a> <a href="year" class="dropdown-item">{{ text_year }}</a>
       </div>
     </div>
     <i class="fa-solid fa-chart-bar"></i> {{ heading_title }}
   </div>
   <div class="card-body">
-    <div id="chart-sale" style="width: 100%; height: 260px;"></div>
+    <div style="width: 100%; height: 260px;" id="chart-sale"></div>
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script>
@@ -57,7 +57,7 @@ $('#range a').on('click', function (e) {
                 $('.tooltip').remove();
 
                 if (item) {
-                    $('<div id="tooltip" class="tooltip top show"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+                    $('<div class="tooltip top show" id="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
 
                     $('#tooltip').css({
                         position: 'absolute',

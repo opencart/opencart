@@ -18,34 +18,34 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div id="filter-product" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+      <div class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3" id="filter-product">
         <div class="card filter-sticky">
           <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
-                <ul id="autocomplete-name" class="dropdown-menu"></ul>
+                <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" data-oc-target="autocomplete-name" class="form-control" autocomplete="off" id="input-name"/>
+                <ul class="dropdown-menu" id="autocomplete-name"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-model" class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" data-oc-target="autocomplete-model" class="form-control" autocomplete="off"/>
-                <ul id="autocomplete-model" class="dropdown-menu"></ul>
+                <label for="input-model" class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" data-oc-target="autocomplete-model" class="form-control" autocomplete="off" id="input-model"/>
+                <ul class="dropdown-menu" id="autocomplete-model"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-price" class="form-label">{{ entry_price }}</label> <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+                <label for="input-price" class="form-label">{{ entry_price }}</label> <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" class="form-control" id="input-price"/>
               </div>
               <div class="mb-3">
-                <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+                <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" class="form-control" id="input-quantity"/>
               </div>
               <div class="mb-3">
-                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" class="form-select" id="input-status">
                   <option value=""></option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                   <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="button" class="btn btn-light" id="button-filter"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -55,7 +55,7 @@
       <div class="col col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="product" class="card-body">{{ list }}</div>
+          <div class="card-body" id="product">{{ list }}</div>
         </div>
       </div>
     </div>

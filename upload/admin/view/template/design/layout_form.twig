@@ -17,18 +17,18 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-layout" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-layout">
           <fieldset>
             <legend>{{ text_route }}</legend>
             <div class="row mb-3 required">
               <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-                <div id="error-name" class="invalid-feedback"></div>
+                <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name"/>
+                <div class="invalid-feedback" id="error-name"></div>
               </div>
             </div>
             <br/>
-            <table id="route" class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="route">
               <thead>
                 <tr>
                   <td class="text-start">{{ entry_store }}</td>
@@ -65,7 +65,7 @@
             {% set module_row = 0 %}
             <div class="row">
               <div class="col-lg-3 col-md-4 col-sm-12">
-                <table id="module-column-left" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="module-column-left">
                   <thead>
                     <tr>
                       <td class="text-center">{{ text_column_left }}</td>
@@ -105,7 +105,7 @@
                 </table>
               </div>
               <div class="col-lg-6 col-md-4 col-sm-12">
-                <table id="module-content-top" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="module-content-top">
                   <thead>
                     <tr>
                       <td class="text-center">{{ text_content_top }}</td>
@@ -143,7 +143,7 @@
                     </tr>
                   </tfoot>
                 </table>
-                <table id="module-content-bottom" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="module-content-bottom">
                   <thead>
                     <tr>
                       <td class="text-center">{{ text_content_bottom }}</td>
@@ -183,7 +183,7 @@
                 </table>
               </div>
               <div class="col-lg-3 col-md-4 col-sm-12">
-                <table id="module-column-right" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="module-column-right">
                   <thead>
                     <tr>
                       <td class="text-center">{{ text_column_right }}</td>

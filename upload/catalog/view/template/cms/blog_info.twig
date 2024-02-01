@@ -1,5 +1,5 @@
 {{ header }}
-<div id="cms-blog" class="container">
+<div class="container" id="cms-blog">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -7,7 +7,7 @@
   </ul>
   <div class="row">
     {{ column_left }}
-    <div id="content" class="col">
+    <div class="col" id="content">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if image %}

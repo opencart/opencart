@@ -17,27 +17,27 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-tax-class" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-tax-class">
           <fieldset>
             <legend>{{ text_tax_class }}</legend>
             <div class="row mb-3 required">
               <label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
               <div class="col-sm-10">
-                <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
-                <div id="error-title" class="invalid-feedback"></div>
+                <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" class="form-control" id="input-title"/>
+                <div class="invalid-feedback" id="error-title"></div>
               </div>
             </div>
             <div class="row mb-3 required">
               <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
               <div class="col-sm-10">
-                <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control"/>
-                <div id="error-description" class="invalid-feedback"></div>
+                <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" class="form-control" id="input-description"/>
+                <div class="invalid-feedback" id="error-description"></div>
               </div>
             </div>
           </fieldset>
           <fieldset>
             <legend>{{ text_tax_rate }}</legend>
-            <table id="tax-rule" class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="tax-rule">
               <thead>
                 <tr>
                   <td class="text-start">{{ entry_rate }}</td>
@@ -81,7 +81,7 @@
               <tfoot>
                 <tr>
                   <td colspan="3"></td>
-                  <td class="text-end"><button type="button" id="button-tax-rule" data-bs-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary" id="button-tax-rule"><i class="fa-solid fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>

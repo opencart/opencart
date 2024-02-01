@@ -1,4 +1,4 @@
-<form id="form-event" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#event">
+<form method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#event" id="form-event">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -42,7 +42,7 @@
   </div>
 </form>
 {% for event in events %}
-  <div id="modal-event-{{ event.event_id }}" class="modal">
+  <div class="modal" id="modal-event-{{ event.event_id }}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

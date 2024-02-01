@@ -17,38 +17,38 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
-        <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-module">
               <div class="row mb-3 required">
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-                  <div id="error-name" class="invalid-feedback"></div>
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" class="form-control" id="input-name"/>
+                  <div class="invalid-feedback" id="error-name"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-limit" class="col-sm-2 col-form-label">{{ entry_limit }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control"/>
+                  <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" class="form-control" id="input-limit"/>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
-                  <div id="error-width" class="invalid-feedback"></div>
+                  <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" class="form-control" id="input-width"/>
+                  <div class="invalid-feedback" id="error-width"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
-                  <div id="error-height" class="invalid-feedback"></div>
+                  <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" class="form-control" id="input-height"/>
+                  <div class="invalid-feedback" id="error-height"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-order" class="col-sm-2 col-form-label">{{ entry_order }}</label>
                 <div class="col-sm-10">
-                  <select name="order" id="input-order" class="form-select">
+                  <select name="order" class="form-select" id="input-order">
                     <option value="DESC"{% if order == "DESC" %} selected {% endif %}>{{ text_desc }}</option>
                     <option value="ASC"{% if order == "ASC" %} selected {% endif %}>{{ text_asc }}</option>
                   </select>
@@ -57,7 +57,7 @@
               <div class="row mb-3">
                 <label for="input-sort" class="col-sm-2 col-form-label">{{ entry_sort }}</label>
                 <div class="col-sm-10">
-                  <select name="sort" id="input-sort" class="form-select">
+                  <select name="sort" class="form-select" id="input-sort">
                     <option value="ad.name"{% if sort == "ad.name" %} selected {% endif %}>{{ text_sort_name }}</option>
                     <option value="a.date_added"{% if sort == "a.date_added" %} selected {% endif %}>{{ text_sort_date }}</option>
                   </select>
@@ -67,7 +67,7 @@
                 <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
-                    <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" class="form-check-input"{% if status %} checked{% endif %} id="input-status"/>
                   </div>
                 </div>
               </div>

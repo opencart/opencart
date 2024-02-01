@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Mail;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 * 
 	 * Mail class for orders
 	 *
 	 * Trigger catalog/model/checkout/order/addHistory/before

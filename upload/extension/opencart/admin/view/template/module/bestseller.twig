@@ -136,6 +136,7 @@ $('#button-sync').on('click', function () {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 $(element).button('reset');
+
                 $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
             }
         });

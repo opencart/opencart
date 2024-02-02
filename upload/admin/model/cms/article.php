@@ -35,7 +35,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 		foreach ($data['article_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'article_id', $article_id, $keyword);
+				$this->model_design_seo_url->addSeoUrl('article_id', $article_id, $keyword, $store_id, $language_id);
 			}
 		}
 
@@ -87,7 +87,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 		foreach ($data['article_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'article_id', $article_id, $keyword);
+				$this->model_design_seo_url->addSeoUrl('article_id', $article_id, $keyword, $store_id, $language_id);
 			}
 		}
 

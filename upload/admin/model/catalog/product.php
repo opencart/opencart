@@ -128,7 +128,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'product_id', $product_id, $keyword);
+					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -290,7 +290,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl($store_id, $language_id, 'product_id', $product_id, $keyword);
+					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -301,7 +301,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($store_id, $layout_id, 'product_id', $product_id, $keyword);
+					$this->addLayout($product_id, $store_id, $layout_id);
 				}
 			}
 		}

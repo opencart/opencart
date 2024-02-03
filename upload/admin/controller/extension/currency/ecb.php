@@ -53,7 +53,7 @@ class ControllerExtensionCurrencyEcb extends Controller {
 		$data['text_edit'] = str_replace('%1',$this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'], true), $data['text_edit']);
 		$data['text_edit'] = str_replace('%2',$this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true), $data['text_edit']);
 
-		$data['currency_ecb_cron'] = 'wget -q &quot;'.HTTPS_CATALOG.'index.php?route=extension/currency/ecb/refresh&quot;';
+		$data['currency_ecb_cron'] = 'curls -s &quot;' . HTTPS_CATALOG . 'index.php?route=extension/currency/ecb/refresh&quot;';
 
 		if (isset($this->request->post['currency_ecb_ip'])) {
 			$data['currency_ecb_ip'] = $this->request->post['currency_ecb_ip'];

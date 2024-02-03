@@ -1365,7 +1365,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$subscription_data = [];
+			$subscription_plan_data = [];
 
 			$product_subscriptions = $this->model_catalog_product->getSubscriptions($result['product_id']);
 
@@ -1373,7 +1373,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
-					$subscription_data[] = [
+					$subscription_plan_data[] = [
 						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
 						'name'                 => $subscription_plan_info['name']
 					];
@@ -1385,7 +1385,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 				'model'        => $result['model'],
 				'option'       => $option_data,
-				'subscription' => $subscription_data,
+				'subscription' => $subscription_plan_data,
 				'price'        => $result['price']
 			];
 		}

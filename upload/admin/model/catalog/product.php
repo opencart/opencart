@@ -383,7 +383,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$this->model_marketing_coupon->deleteProductByProductId($product_id);
 
-		$this->editMasterIdByMasterId($product_id, 0);
+		$this->resetMasterId($product_id);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '0' WHERE `master_id` = '" . (int)$product_id . "'");
 
@@ -819,6 +819,10 @@ class Product extends \Opencart\System\Engine\Model {
 	 */
 	public function editRating(int $product_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `rating` = '" . (int)$rating . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	public function resetMasterId(int $product_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '0', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**

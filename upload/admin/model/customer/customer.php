@@ -471,7 +471,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
-
 	/**
 	 * Get Histories
 	 *
@@ -813,8 +812,14 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAuthorize(int $customer_authorize_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
+	public function deleteAuthorize(int $customer_id, int $customer_authorize_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($customer_authorize_id) {
+			$sql .= " AND `customer_authorize_id` = '" . (int)$customer_authorize_id . "'";
+		}
+
+		$this->db->query($sql);
 	}
 
 	/**

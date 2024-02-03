@@ -72,7 +72,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 		$this->load->model('sale/subscription');
 
-		$this->model_sale_subscription->editSubscriptionPlanBySubscriptionPlanId($subscription_plan_id, 0);
+		$this->model_sale_subscription->resetSubscriptionPlan($subscription_plan_id);
 	}
 
 	/**

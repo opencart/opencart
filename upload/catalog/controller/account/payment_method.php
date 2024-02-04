@@ -136,7 +136,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('account/payment_method');
+			$this->load->model('setting/extension');
 
 			$payment_method_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 

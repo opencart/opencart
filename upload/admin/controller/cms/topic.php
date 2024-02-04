@@ -285,7 +285,9 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['topic_id'])) {
-			$data['topic_seo_url'] = $this->model_cms_topic->getSeoUrls($this->request->get['topic_id']);
+			$this->load->model('design/seo_url');
+
+			$data['topic_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('topic_id', $this->request->get['topic_id']);
 		} else {
 			$data['topic_seo_url'] = [];
 		}

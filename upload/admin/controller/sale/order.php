@@ -1949,7 +1949,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->deleteReward($order_id);
+			$this->model_customer_customer->deleteRewardByOrderId($order_id);
 
 			$json['success'] = $this->language->get('text_reward_remove');
 		}

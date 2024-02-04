@@ -22,8 +22,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$attribute_id = $this->db->getLastId();
 
-		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
+			$this->addDescription($attribute_id, $language_id, $attribute_description);
 		}
 
 		return $attribute_id;
@@ -44,8 +44,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		$this->deleteDescription($attribute_id);
+
+		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
+			$this->addDescription($attribute_id, $language_id, $attribute_description);
 		}
 	}
 
@@ -60,7 +62,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+
+		$this->deleteDescription($attribute_id);
 	}
 
 	/**
@@ -134,27 +137,6 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Descriptions
-	 *
-	 *	Get the record of the attribute record in the database.
-	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
-	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
-	 */
-	public function getDescriptions(int $attribute_id): array {
-		$attribute_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
-		foreach ($query->rows as $result) {
-			$attribute_data[$result['language_id']] = ['name' => $result['name']];
-		}
-
-		return $attribute_data;
-	}
-
-	/**
 	 *	Get Total Attributes
 	 *
 	 *	Get the total number of attribute records in the database.
@@ -184,5 +166,51 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 *	Add Description
+	 *
+	 * @param int $attribute_id primary key of the attribute record
+	 * @param int $language_id primary key of the attribute language
+	 *
+	 * @return void
+	 */
+	public function addDescription(int $attribute_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 *  Delete attribute description record in the database.
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return void
+	 */
+	public function deleteDescription(int $attribute_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+	}
+
+	/**
+	 *	Get Descriptions
+	 *
+	 *	Get the record of the attribute record in the database.
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function getDescriptions(int $attribute_id): array {
+		$attribute_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+
+		foreach ($query->rows as $result) {
+			$attribute_data[$result['language_id']] = ['name' => $result['name']];
+		}
+
+		return $attribute_data;
 	}
 }

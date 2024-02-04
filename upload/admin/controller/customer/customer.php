@@ -1421,7 +1421,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->deleteAuthorize($customer_authorize_id);
+			$this->model_customer_customer->deleteAuthorize($authorize_info['customer_id'], $customer_authorize_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

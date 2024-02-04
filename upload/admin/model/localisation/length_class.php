@@ -19,7 +19,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$length_class_id = $this->db->getLastId();
 
 		foreach ($data['length_class_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class_description` SET `length_class_id` = '" . (int)$length_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "', `unit` = '" . $this->db->escape($value['unit']) . "'");
+			$this->addDescription($length_class_id, $language_id, $value);
 		}
 
 		$this->cache->delete('length_class');
@@ -38,10 +38,10 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	public function editLengthClass(int $length_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "' WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
+		$this->deleteDescription($length_class_id);
 
 		foreach ($data['length_class_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class_description` SET `length_class_id` = '" . (int)$length_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "', `unit` = '" . $this->db->escape($value['unit']) . "'");
+			$this->addDescription($length_class_id, $language_id, $value);
 		}
 
 		$this->cache->delete('length_class');
@@ -56,7 +56,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteLengthClass(int $length_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
+
+		$this->deleteDescription($length_class_id);
 
 		$this->cache->delete('length_class');
 	}
@@ -130,16 +131,28 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Description By Unit
+	 *	Add Description
 	 *
-	 * @param string $unit
 	 *
-	 * @return array<string, mixed>
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
-	public function getDescriptionByUnit(string $unit): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	public function addDescription(int $length_class_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class_description` SET `length_class_id` = '" . (int)$length_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `unit` = '" . $this->db->escape($data['unit']) . "'");
 
-		return $query->row;
+	}
+
+	/**
+	 *	Delete Description
+	 *
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 *
+	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 */
+	public function deleteDescription(int $length_class_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 	}
 
 	/**
@@ -162,6 +175,19 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		}
 
 		return $length_class_data;
+	}
+
+	/**
+	 * Get Description By Unit
+	 *
+	 * @param string $unit
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getDescriptionByUnit(string $unit): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
 	}
 
 	/**

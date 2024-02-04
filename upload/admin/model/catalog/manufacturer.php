@@ -18,24 +18,28 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 		$manufacturer_id = $this->db->getLastId();
 
+		// Store
 		if (isset($data['manufacturer_store'])) {
 			foreach ($data['manufacturer_store'] as $store_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
+				$this->addStore($manufacturer_id, $store_id);
 			}
 		}
 
 		// SEO URL
-		if (isset($data['manufacturer_seo_url'])) {
-			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
-				foreach ($language as $language_id => $keyword) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'manufacturer_id', `value` = '" . (int)$manufacturer_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-				}
+		$this->load->model('design/seo_url');
+
+		foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
+			foreach ($language as $language_id => $keyword) {
+				$this->model_design_seo_url->addSeoUrl('manufacturer_id', $manufacturer_id, $keyword, $store_id, $language_id);
 			}
 		}
 
+		// Layouts
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+				if ($layout_id) {
+					$this->addLayout($manufacturer_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -55,29 +59,36 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function editManufacturer(int $manufacturer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		// Store
+		$this->deleteStore($manufacturer_id);
 
 		if (isset($data['manufacturer_store'])) {
 			foreach ($data['manufacturer_store'] as $store_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
+				$this->addStore($manufacturer_id, $store_id);
 			}
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
+		// SEO URL
+		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', $manufacturer_id);
 
 		if (isset($data['manufacturer_seo_url'])) {
 			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'manufacturer_id', `value` = '" . (int)$manufacturer_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
+					$this->model_design_seo_url->addSeoUrl('manufacturer_id', $manufacturer_id, $keyword, $store_id, $language_id);
 				}
 			}
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		// Layouts
+		$this->deleteLayout($manufacturer_id);
 
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+				if ($layout_id) {
+					$this->addLayout($manufacturer_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -93,9 +104,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
+
+		$this->deleteStore($manufacturer_id);
+		$this->deleteLayout($manufacturer_id);
+
+		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', $manufacturer_id);
 
 		$this->cache->delete('manufacturer');
 	}
@@ -162,6 +177,44 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Manufacturers
+	 *
+	 * @return int
+	 */
+	public function getTotalManufacturers(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Add Store
+	 *
+	 * @param int $information_id
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
+	public function addStore(int $manufacturer_id, int $store_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
+	}
+
+	/**
+	 * Delete Store
+	 *
+	 * @param int $information_id
+	 *
+	 * @return void
+	 */
+	public function deleteStore(int $manufacturer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+	}
+
+	public function deleteStoresByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+	}
+
+	/**
 	 * Get Stores
 	 *
 	 * @param int $manufacturer_id
@@ -181,22 +234,35 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Seo Urls
+	 * Add Layout
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $information_id
+	 * @param int $store_id
+	 * @param int $layout_id
 	 *
-	 * @return array<int, array<int, string>>
+	 * @return void
 	 */
-	public function getSeoUrls(int $manufacturer_id): array {
-		$manufacturer_seo_url_data = [];
+	public function addLayout(int $manufacturer_id, int $store_id, int $layout_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+	}
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
+	/**
+	 * Delete Store
+	 *
+	 * @param int $information_id
+	 *
+	 * @return void
+	 */
+	public function deleteLayout(int $manufacturer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+	}
 
-		foreach ($query->rows as $result) {
-			$manufacturer_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
-		}
+	public function deleteLayoutsByLayoutId(int $layout_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
 
-		return $manufacturer_seo_url_data;
+	public function deleteLayoutsByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -219,24 +285,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Manufacturers
-	 *
-	 * @return int
-	 */
-	public function getTotalManufacturers(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
 	 * Get Total Manufacturers By Layout ID
 	 *
 	 * @param int $layout_id
 	 *
 	 * @return int
 	 */
-	public function getTotalManufacturersByLayoutId(int $layout_id): int {
+	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return (int)$query->row['total'];

@@ -69,6 +69,13 @@ class Review extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	public function deleteReviewsByProductId(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "'");
+
+		$this->cache->delete('product');
+	}
+
+
 	/**
 	 * Get Review
 	 *

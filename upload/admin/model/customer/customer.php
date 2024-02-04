@@ -68,17 +68,24 @@ class Customer extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteCustomer(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_activity` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+		$this->deleteActivity($customer_id);
+
+		$this->deleteAddress($customer_id);
+		$this->deleteAuthorize($customer_id);
+		$this->deleteHistory($customer_id);
+		$this->deleteReward($customer_id);
+		$this->deleteTransaction($customer_id);
+		$this->deleteWishlist($customer_id);
+		$this->deleteIp($customer_id);
+
+		$this->load->model('marketing/affiliate');
+
+		$this->model_marketing_affiliate->deleteAffiliate($customer_id);
+
+		$this->load->model('customer/customer_approval');
+
+		$this->model_customer_customer_approval->deleteApprovalByCustomerId($customer_id);
 	}
 
 	/**
@@ -255,6 +262,23 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Customers By Customer Group ID
+	 *
+	 * @param int $customer_group_id
+	 *
+	 * @return int
+	 */
+	public function getTotalCustomersByCustomerGroupId(int $customer_group_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
 	 * Add Address
 	 *
 	 * @param int                  $customer_id
@@ -298,8 +322,14 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAddress(int $address_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
+	public function deleteAddress(int $customer_id, int $address_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($address_id) {
+			$sql .= " AND `address_id` = '" . (int)$address_id . "'";
+		}
+
+		$this->db->query($sql);
 	}
 
 	/**
@@ -426,23 +456,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Customers By Customer Group ID
-	 *
-	 * @param int $customer_group_id
-	 *
-	 * @return int
-	 */
-	public function getTotalCustomersByCustomerGroupId(int $customer_group_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
-	}
-
-	/**
 	 * Add History
 	 *
 	 * @param int    $customer_id
@@ -452,6 +465,10 @@ class Customer extends \Opencart\System\Engine\Model {
 	 */
 	public function addHistory(int $customer_id, string $comment): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_history` SET `customer_id` = '" . (int)$customer_id . "', `comment` = '" . $this->db->escape(strip_tags($comment)) . "', `date_added` = NOW()");
+	}
+
+	public function deleteHistory(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -490,6 +507,10 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	public function deleteWishlist(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
 	/**
 	 * Add Transaction
 	 *
@@ -502,6 +523,10 @@ class Customer extends \Opencart\System\Engine\Model {
 	 */
 	public function addTransaction(int $customer_id, string $description = '', float $amount = 0, int $order_id = 0): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
+	}
+
+	public function deleteTransaction(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -591,6 +616,10 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `points` = '" . (int)$points . "', `description` = '" . $this->db->escape($description) . "', `date_added` = NOW()");
 	}
 
+	public function deleteReward(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
 	/**
 	 * Delete Reward
 	 *
@@ -598,7 +627,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteReward(int $order_id): void {
+	public function deleteRewardByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > '0'");
 	}
 
@@ -662,6 +691,10 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > '0'");
 
 		return (int)$query->row['total'];
+	}
+
+	public function deleteIp(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -779,8 +812,14 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAuthorize(int $customer_authorize_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
+	public function deleteAuthorize(int $customer_id, int $customer_authorize_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($customer_authorize_id) {
+			$sql .= " AND `customer_authorize_id` = '" . (int)$customer_authorize_id . "'";
+		}
+
+		$this->db->query($sql);
 	}
 
 	/**

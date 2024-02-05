@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Common;
  */
 class Pagination extends \Opencart\System\Engine\Controller {
 	/**
-	 * @param array<string, mixed> $setting
+	 * @param array $setting
 	 *
 	 * @return string
 	 */
@@ -67,8 +67,8 @@ class Pagination extends \Opencart\System\Engine\Controller {
 				$start = 1;
 				$end = $num_pages;
 			} else {
-				$start = $page - floor($num_links / 2);
-				$end = $page + floor($num_links / 2);
+				$start = $page - (int)floor($num_links / 2);
+				$end = $page + (int)floor($num_links / 2);
 
 				if ($start < 1) {
 					$end += abs($start) + 1;
@@ -82,10 +82,17 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			}
 
 			for ($i = $start; $i <= $end; $i++) {
-				$data['links'][] = [
-					'page' => $i,
-					'href' => str_replace('{page}', $i, $url)
-				];
+				if ($i === 1) {
+					$data['links'][] = [
+						'page' => $i,
+						'href' => str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url)
+					];
+				} else {
+					$data['links'][] = [
+						'page' => $i,
+						'href' => str_replace('{page}', $i, $url)
+					];
+				}
 			}
 		}
 

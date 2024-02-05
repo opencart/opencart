@@ -100,9 +100,7 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		// Old path
-		$results = $this->getPaths($category_id);
-
-		$category_path = implode('_', array_column($results, 'path_id'));
+		$path_old = $this->getPath($category_id);
 
 		// Delete the category paths
 		$this->deletePath($category_id);
@@ -117,7 +115,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$paths = [];
 
-		// Built new path
+		// Build new path
 		$results = $this->getPaths($data['parent_id']);
 
 		foreach ($results as $result) {
@@ -142,6 +140,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->addPath($category_id, $category_id, $level);
 
+		// Filters
 		$this->deleteFilter($category_id);
 
 		if (isset($data['category_filter'])) {
@@ -150,33 +149,34 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Stores
 		$this->deleteStore($category_id);
 
 		if (isset($data['category_store'])) {
 			foreach ($data['category_store'] as $store_id) {
-				$this->addStore($category_id, $store_id);+
+				$this->addStore($category_id, $store_id);
 			}
 		}
 
-
 		// Seo urls on categories need to be done differently to they include the full keyword path
-		$path_parent = $this->getPath($data['parent_id']);
+		$path_new = $this->getPath($data['parent_id']);
 
-		if (!$path_parent) {
+		if (!$path_new) {
 			$path = $category_id;
 		} else {
-			$path = $path_parent . '_' . $category_id;
+			$path = $path_new . '_' . $category_id;
 		}
 
-		// Get old data to so we know what to replace
 		$this->load->model('design/seo_url');
+
+		$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old);
 
 		// Delete the old path
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$parent_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path_parent, $store_id, $language_id);
+				$parent_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path, $store_id, $language_id);
 
 				if ($parent_info) {
 					$keyword = $parent_info['keyword'] . '/' . $keyword;
@@ -184,41 +184,22 @@ class Category extends \Opencart\System\Engine\Model {
 
 				$this->model_design_seo_url->addSeoUrl('path', $path, $keyword, $store_id, $language_id);
 
-				// Update sub category seo urls
+				// Get old Length
+				if (isset($seo_url[$store_id][$language_id])) {
+					$length = strlen($seo_url[$store_id][$language_id]);
+				} else {
+					$length = 0;
+				}
+
 				$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old . '\_%', $store_id, $language_id);
 
 				foreach ($results as $result) {
+					$this->model_design_seo_url->deleteSeoUrl($result['seo_url_id']);
 
-					$this->model_design_seo_url->getSeoUrlByKeyword();
-
-					$this->model_design_seo_url->editSeoUrl($result['seo_url_id'], 'path', $path . '_' . substr($result['value'], strlen($path_old . '_')), $keyword . '/' . substr($result['keyword'], strrpos($result['keyword'], '/')), $result['store_id'], $result['language_id']);
-
-					//editSeoUrlKeyword
-					$this->model_design_seo_url->getSeoUrlsByKeyValue('category_id', $category_id);
-
-
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_urls[$store_id][$language_id]) + 1) . ")) 
-					
-					WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
-
+					$this->model_design_seo_url->addSeoUrl('path', $path . '_' . substr($result['value'], strlen($path_old . '_')), $keyword . '/' . substr($result['keyword'], $length), $result['store_id'], $result['language_id']);
 				}
 			}
 		}
-
-		// Update sub category seo urls
-
-		// Update sub category seo urls
-		if (isset($seo_urls[$store_id][$language_id])) {
-			//editSeoUrlKeyword
-			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old . '\_%', $store_id, $language_id);
-
-			foreach ($results as $result) {
-				$this->model_design_seo_url->editSeoUrl($result['seo_url_id'], 'path', $path . '_' . substr($result['value'], strlen($path_old . '_') + 1), $keyword . (oc_strlen($seo_urls[$store_id][$language_id]) + 1), $store_id, $language_id);
-			}
-		}
-
-
-
 
 		// Layouts
 		$this->deleteLayout($category_id);

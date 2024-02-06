@@ -39,7 +39,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/payment/opayo', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/payment/opayo.save' . $this->separator . 'save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/payment/opayo.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		$server = HTTP_SERVER;

@@ -4,7 +4,7 @@
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Payment
  */
-namespace Opencart\Admin\Controller\Extension\Opayo\Payment;
+namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 class Opayo extends \Opencart\System\Engine\Controller {
 	/**
 	 * @var array<string, string>
@@ -18,7 +18,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('extension/opayo/payment/opayo');
+		$this->load->language('extension/opencart/payment/opayo');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -30,16 +30,16 @@ class Opayo extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_extensions'),
-			'href' => $this->url->link('marketplace/opencart/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
+			'text' => $this->language->get('text_extension'),
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opayo/payment/opayo', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/payment/opayo', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opayo/payment/opayo' . $this->separator . 'save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/payment/opayo.save' . $this->separator . 'save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		$server = HTTP_SERVER;
@@ -81,11 +81,11 @@ class Opayo extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/opayo/payment/opayo', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/payment/opayo', $data));
 	}
 
 	public function save(): void {
-		$this->load->language('extension/opayo/payment/opayo');
+		$this->load->language('extension/opencart/payment/opayo');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('setting/setting');
@@ -107,9 +107,9 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function install(): void {
-		$this->load->model('extension/opayo/payment/opayo');
+		$this->load->model('extension/opencart/payment/opayo');
 
-		$this->model_extension_opayo_payment_opayo->install();
+		$this->model_extension_opencart_payment_opayo->install();
 	}
 
 	/**
@@ -118,9 +118,9 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function uninstall(): void {
-		$this->load->model('extension/opayo/payment/opayo');
+		$this->load->model('extension/opencart/payment/opayo');
 
-		$this->model_extension_opayo_payment_opayo->uninstall();
+		$this->model_extension_opencart_payment_opayo->uninstall();
 	}
 
 	/**
@@ -130,14 +130,14 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 */
 	public function order(): string {
 		if ($this->config->get('payment_opayo_status')) {
-			$this->load->model('extension/opayo/payment/opayo');
+			$this->load->model('extension/opencart/payment/opayo');
 
-			$opayo_order = $this->model_extension_opayo_payment_opayo->getOrder($this->request->get['order_id']);
+			$opayo_order = $this->model_extension_opencart_payment_opayo->getOrder($this->request->get['order_id']);
 
 			if (!empty($opayo_order)) {
-				$this->load->language('extension/opayo/payment/opayo');
+				$this->load->language('extension/opencart/payment/opayo');
 
-				$opayo_order['total_released'] = $this->model_extension_opayo_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
+				$opayo_order['total_released'] = $this->model_extension_opencart_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
 
 				$opayo_order['total_formatted'] = $this->currency->format($opayo_order['total'], $opayo_order['currency_code'], false, false);
 				$opayo_order['total_released_formatted'] = $this->currency->format($opayo_order['total_released'], $opayo_order['currency_code'], false, false);
@@ -151,7 +151,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 
 				$data['separator'] = $this->separator;
 
-				return $this->load->view('extension/opayo/payment/order', $data);
+				return $this->load->view('extension/opencart/payment/order', $data);
 			}
 		}
 
@@ -164,22 +164,22 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function void(): void {
-		$this->load->language('extension/opayo/payment/opayo');
+		$this->load->language('extension/opencart/payment/opayo');
 
 		$json = [];
 
 		if (!empty($this->request->post['order_id'])) {
-			$this->load->model('extension/opayo/payment/opayo');
+			$this->load->model('extension/opencart/payment/opayo');
 
-			$opayo_order = $this->model_extension_opayo_payment_opayo->getOrder($this->request->post['order_id']);
+			$opayo_order = $this->model_extension_opencart_payment_opayo->getOrder($this->request->post['order_id']);
 
-			$void_response = $this->model_extension_opayo_payment_opayo->void($this->request->post['order_id']);
+			$void_response = $this->model_extension_opencart_payment_opayo->void($this->request->post['order_id']);
 
-			$this->model_extension_opayo_payment_opayo->log('Void result', $void_response);
+			$this->model_extension_opencart_payment_opayo->log('Void result', $void_response);
 
 			if (!empty($void_response) && $void_response['Status'] == 'OK') {
-				$this->model_extension_opayo_payment_opayo->addOrderTransaction($opayo_order['opayo_order_id'], 'void', 0.00);
-				$this->model_extension_opayo_payment_opayo->updateVoidStatus($opayo_order['opayo_order_id'], 1);
+				$this->model_extension_opencart_payment_opayo->addOrderTransaction($opayo_order['opayo_order_id'], 'void', 0.00);
+				$this->model_extension_opencart_payment_opayo->updateVoidStatus($opayo_order['opayo_order_id'], 1);
 
 				$json['msg'] = $this->language->get('success_void_ok');
 
@@ -205,26 +205,26 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function release(): void {
-		$this->load->language('extension/opayo/payment/opayo');
+		$this->load->language('extension/opencart/payment/opayo');
 
 		$json = [];
 
 		if (!empty($this->request->post['order_id']) && !empty($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('extension/opayo/payment/opayo');
+			$this->load->model('extension/opencart/payment/opayo');
 
-			$opayo_order = $this->model_extension_opayo_payment_opayo->getOrder($this->request->post['order_id']);
+			$opayo_order = $this->model_extension_opencart_payment_opayo->getOrder($this->request->post['order_id']);
 
-			$release_response = $this->model_extension_opayo_payment_opayo->release($this->request->post['order_id'], $this->request->post['amount']);
+			$release_response = $this->model_extension_opencart_payment_opayo->release($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_extension_opayo_payment_opayo->log('Release result', $release_response);
+			$this->model_extension_opencart_payment_opayo->log('Release result', $release_response);
 
 			if (!empty($release_response) && $release_response['Status'] == 'OK') {
-				$this->model_extension_opayo_payment_opayo->addOrderTransaction($opayo_order['opayo_order_id'], 'payment', $this->request->post['amount']);
+				$this->model_extension_opencart_payment_opayo->addOrderTransaction($opayo_order['opayo_order_id'], 'payment', $this->request->post['amount']);
 
-				$total_released = $this->model_extension_opayo_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
+				$total_released = $this->model_extension_opencart_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
 
 				if ($total_released >= $opayo_order['total'] || $opayo_order['settle_type'] == 0) {
-					$this->model_extension_opayo_payment_opayo->updateReleaseStatus($opayo_order['opayo_order_id'], 1);
+					$this->model_extension_opencart_payment_opayo->updateReleaseStatus($opayo_order['opayo_order_id'], 1);
 					$release_status = 1;
 					$json['msg'] = $this->language->get('success_release_ok_order');
 				} else {
@@ -261,27 +261,27 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function rebate(): void {
-		$this->load->language('extension/opayo/payment/opayo');
+		$this->load->language('extension/opencart/payment/opayo');
 
 		$json = [];
 
 		if (!empty($this->request->post['order_id'])) {
-			$this->load->model('extension/opayo/payment/opayo');
+			$this->load->model('extension/opencart/payment/opayo');
 
-			$opayo_order = $this->model_extension_opayo_payment_opayo->getOrder($this->request->post['order_id']);
+			$opayo_order = $this->model_extension_opencart_payment_opayo->getOrder($this->request->post['order_id']);
 
-			$rebate_response = $this->model_extension_opayo_payment_opayo->rebate($this->request->post['order_id'], $this->request->post['amount']);
+			$rebate_response = $this->model_extension_opencart_payment_opayo->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_extension_opayo_payment_opayo->log('Rebate result', $rebate_response);
+			$this->model_extension_opencart_payment_opayo->log('Rebate result', $rebate_response);
 
 			if (!empty($rebate_response) && $rebate_response['Status'] == 'OK') {
-				$this->model_extension_opayo_payment_opayo->addOrderTransaction($opayo_order['opayo_order_id'], 'rebate', $this->request->post['amount'] * -1);
+				$this->model_extension_opencart_payment_opayo->addOrderTransaction($opayo_order['opayo_order_id'], 'rebate', $this->request->post['amount'] * -1);
 
-				$total_rebated = $this->model_extension_opayo_payment_opayo->getTotalRebated($opayo_order['opayo_order_id']);
-				$total_released = $this->model_extension_opayo_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
+				$total_rebated = $this->model_extension_opencart_payment_opayo->getTotalRebated($opayo_order['opayo_order_id']);
+				$total_released = $this->model_extension_opencart_payment_opayo->getTotalReleased($opayo_order['opayo_order_id']);
 
 				if ($total_released <= 0 && $opayo_order['release_status'] == 1) {
-					$this->model_extension_opayo_payment_opayo->updateRebateStatus($opayo_order['opayo_order_id'], 1);
+					$this->model_extension_opencart_payment_opayo->updateRebateStatus($opayo_order['opayo_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('success_rebate_ok_order');
 				} else {
@@ -319,7 +319,7 @@ class Opayo extends \Opencart\System\Engine\Controller {
 	 * @return bool
 	 */
 	private function validate(): bool {
-		if (!$this->user->hasPermission('modify', 'extension/opayo/payment/opayo')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/payment/opayo')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

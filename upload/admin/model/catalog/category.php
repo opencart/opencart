@@ -154,7 +154,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['category_store'])) {
 			foreach ($data['category_store'] as $store_id) {
-				$this->addStore($category_id, $store_id);+
+				$this->addStore($category_id, $store_id);
 			}
 		}
 

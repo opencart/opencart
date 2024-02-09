@@ -337,7 +337,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['subscription_plan_description'] as $language_id => $value) {
-			if ((oc_strlen(trim($value['name'])) < 3) || (oc_strlen($value['name']) > 255)) {
+			if (!oc_validate_length($value['name'], 3, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

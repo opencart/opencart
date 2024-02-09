@@ -337,7 +337,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['category_id'])) {
 			$this->load->model('design/seo_url');
 
-			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $this->request->get['category_id']);
+			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $this->model_catalog_category->getPath($this->request->get['category_id']));
 
 			foreach ($results as $store_id => $languages) {
 				foreach ($languages as $language_id => $keyword) {

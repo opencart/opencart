@@ -31,10 +31,6 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "', `keyword` = '" . $this->db->escape((string)$keyword) . "', `sort_order` = '" . (int)$sort_order . "' WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 	}
 
-	public function editSeoUrlKeyword(int $seo_url_id, string $key, string $value, string $keyword, int $store_id, int $language_id, int $sort_order = 0): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_urls[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
-	}
-
 	/**
 	 * Delete Seo Url
 	 *
@@ -53,8 +49,22 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteSeoUrlsByKeyValue(string $key, string $value): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'");
+	public function deleteSeoUrlsByKeyValue(string $key, string $value, int $store_id = 0, int $language_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
+
+		if ($store_id) {
+			$sql .= " AND `store_id` = '" . (int)$store_id . "'";
+		}
+
+		if ($language_id) {
+			$sql .= " AND `language_id` = '" . (int)$language_id . "'";
+		}
+
+		$this->db->query($sql);
+	}
+
+	public function deleteSeoUrlsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	public function deleteSeoUrlsByStoreId(int $store_id): void {
@@ -84,8 +94,18 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id, int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
+	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id = 0, int $language_id = 0): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
+
+		if ($store_id) {
+			$sql .= " AND `store_id` = '" . (int)$store_id . "'";
+		}
+
+		if ($language_id) {
+			$sql .= " AND `language_id` = '" . (int)$language_id . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return $query->row;
 	}

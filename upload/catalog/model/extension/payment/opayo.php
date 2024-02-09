@@ -394,7 +394,7 @@ class ModelExtensionPaymentOpayo extends Model {
 	private function addRecurring($order_id, $description, $data, $reference) {
 		$order_recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $description, $data);
 		$this->model_checkout_recurring->editReference($order_recurring_id, $reference);
-		return order_recurring_id;
+		return $order_recurring_id;
 	}
 	
 	public function editRecurringStatus($order_recurring_id, $status) {

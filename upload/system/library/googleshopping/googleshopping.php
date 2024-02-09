@@ -366,7 +366,7 @@ class Googleshopping extends Library {
 
                 do {
                     ${'custom_label_' . ($i++)} = trim(strtolower(array_pop($campaigns)));
-                } while (!empty($campaigns));
+                } while ($campaigns);
             }
 
             $mpn = !empty($row['mpn']) ? $row['mpn'] : '';
@@ -664,7 +664,7 @@ class Googleshopping extends Library {
                     $product_reports = $this->getProductReports($chunk);
 
                     if (!empty($product_reports)) {
-                        $this->updateProductReports($product_reports, $this->store_id);
+                        $this->updateProductReports($product_reports);
                         $report_count += count($product_reports);
                     }
                 }

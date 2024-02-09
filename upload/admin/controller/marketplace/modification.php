@@ -149,7 +149,7 @@ class ControllerMarketplaceModification extends Controller {
 				$recovery = array();
 
 				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
-				if (isset($modification)) {
+				if ($modification) {
 					$recovery = $modification;
 				}
 

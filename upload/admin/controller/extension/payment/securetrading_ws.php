@@ -411,7 +411,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 		$amount = number_format($this->request->post['amount'], 2);
 
-		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($amount) && $amount > 0) {
+		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && $amount > 0) {
 			$this->load->model('extension/payment/securetrading_ws');
 
 			$securetrading_ws_order = $this->model_extension_payment_securetrading_ws->getOrder($this->request->post['order_id']);

@@ -268,7 +268,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
                 if (!empty($select)) {
                     $this->model_extension_advertise_google->setAdvertisingBySelect($select, $target_ids, $this->store_id);
-                } else if (!empty($filter_data)) {
+                } else {
                     $this->model_extension_advertise_google->setAdvertisingByFilter($filter_data, $target_ids, $this->store_id);
                 }
 

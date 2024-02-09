@@ -43,22 +43,20 @@ class ControllerExtensionPaymentG2APay extends Controller {
 				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+				$total_info = $this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 
-				if (isset($order_data['totals'][$i])) {
-					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {
-						$item = new stdClass();
-						$item->sku = $order_data['totals'][$i]['code'];
-						$item->name = $order_data['totals'][$i]['title'];
-						$item->amount = number_format($order_data['totals'][$i]['value'], 2);
-						$item->qty = 1;
-						$item->id = $order_data['totals'][$i]['code'];
-						$item->price = $order_data['totals'][$i]['value'];
-						$item->url = $this->url->link('common/home', '', true);
-						$items[] = $item;
-					}
+				if ($total_info) {
+					$item = new \stdClass();
 
-					$i++;
+					$item->sku = $total_info['totals']['code'];
+					$item->name = $total_info['totals']['title'];
+					$item->amount = number_format($total_info['totals']['value'], 2);
+					$item->qty = 1;
+					$item->id = $total_info['totals']['code'];
+					$item->price = $total_info['totals']['value'];
+					$item->url = $this->url->link('common/home', '', true);
+
+					$items[] = $item;
 				}
 			}
 		}

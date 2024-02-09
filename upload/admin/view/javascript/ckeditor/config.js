@@ -27,6 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.browserContextMenuOnCtrl = true;
 	config.resize_enabled = true;
 	config.resize_dir = 'vertical';
+	config.versionCheck = false;
 
 	config.toolbar_Custom = [
 		['Source'],

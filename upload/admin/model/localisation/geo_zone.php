@@ -105,7 +105,7 @@ class ModelLocalisationGeoZone extends Model {
 	}
 
 	public function getZoneToGeoZones($geo_zone_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$geo_zone_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$geo_zone_id . "' ORDER BY country_id ASC, zone_id ASC");
 
 		return $query->rows;
 	}
@@ -126,5 +126,27 @@ class ModelLocalisationGeoZone extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "zone_to_geo_zone WHERE zone_id = '" . (int)$zone_id . "'");
 
 		return $query->row['total'];
+	}
+
+	public function getZonesByGeoZones($geo_zone_ids) {
+		if (empty($geo_zone_ids)) {
+			return array();
+		}
+		$sql  = "SELECT DISTINCT zgz.country_id, z.zone_id, c.`name` AS country, z.`name` AS zone ";
+		$sql .= "FROM `".DB_PREFIX."zone_to_geo_zone` AS zgz ";
+		$sql .= "LEFT JOIN `".DB_PREFIX."country` c ON c.country_id=zgz.country_id ";
+		$sql .= "LEFT JOIN `".DB_PREFIX."zone` z ON z.country_id=c.country_id ";
+		$sql .= "WHERE zgz.geo_zone_id IN (".implode($geo_zone_ids).") ";
+		$sql .= "ORDER BY country_id ASC, zone ASC;";
+		$query = $this->db->query( $sql );
+		$results = array();
+		foreach ($query->rows as $row) {
+			$country_id = $row['country_id'];
+			if (!isset($results[$country_id])) {
+				$results[$country_id] = array();
+			}
+			$results[$country_id][$row['zone_id']] = $row['zone'];
+		}
+		return $results;
 	}
 }

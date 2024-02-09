@@ -55,7 +55,7 @@
               {% set zone_to_geo_zone_row = 0 %}
               {% for zone_to_geo_zone in zone_to_geo_zones %}
               <tr id="zone-to-geo-zone-row{{ zone_to_geo_zone_row }}">
-                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-control" data-index="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}" disabled="disabled">                    
+                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-control" data-index="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}">                    
                     {% for country in countries %}
                     {% if country.country_id == zone_to_geo_zone.country_id %}                    
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>                    
@@ -64,7 +64,15 @@
                     {% endif %}
                     {% endfor %}                  
                   </select></td>
-                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="form-control" disabled="disabled">
+                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for zone_id,zone in zones[zone_to_geo_zone.country_id] %}
+                    {% if zone_id == zone_to_geo_zone.zone_id %}
+                    <option value="{{ zone_id }}" selected="selected">{{ zone }}</option>
+                    {% else %}
+                    <option value="{{ zone_id }}">{{ zone }}</option>
+                    {% endif %}
+                    {% endfor %}
                   </select></td>
                 <td class="text-left"><button type="button" onclick="$('#zone-to-geo-zone-row{{ zone_to_geo_zone_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
@@ -149,6 +157,5 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 	}
 });
 
-$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
 //--></script></div>
 {{ footer }}

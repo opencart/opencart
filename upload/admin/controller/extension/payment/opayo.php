@@ -293,6 +293,74 @@ class ControllerExtensionPaymentOpayo extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	public function recurringButtons() {
+		$content = '';
+		
+		if (!empty($this->request->get['order_recurring_id'])) {
+			$this->load->language('extension/payment/opayo');
+		
+			$this->load->model('sale/recurring');
+			
+			$data['order_recurring_id'] = $this->request->get['order_recurring_id'];
+
+			$order_recurring_info = $this->model_sale_recurring->getRecurring($data['order_recurring_id']);
+			
+			if ($order_recurring_info) {
+				$data['recurring_status'] = $order_recurring_info['status'];
+				
+				$data['info_url'] = str_replace('&amp;', '&', $this->url->link('extension/payment/opayo/getRecurringInfo', 'user_token=' . $this->session->data['user_token'] . '&order_recurring_id=' . $data['order_recurring_id'], true));
+				$data['enable_url'] = str_replace('&amp;', '&', $this->url->link('extension/payment/opayo/enableRecurring', 'user_token=' . $this->session->data['user_token'], true));
+				$data['disable_url'] = str_replace('&amp;', '&', $this->url->link('extension/payment/opayo/disableRecurring', 'user_token=' . $this->session->data['user_token'], true));
+				
+				$content = $this->load->view('extension/payment/opayo/recurring', $data);
+			}
+		}
+		
+		return $content;
+	}
+		
+	public function getRecurringInfo() {
+		$this->response->setOutput($this->recurringButtons());
+	}
+	
+	public function enableRecurring() {
+		if (!empty($this->request->post['order_recurring_id'])) {
+			$this->load->language('extension/payment/opayo');
+			
+			$this->load->model('extension/payment/opayo');
+			
+			$order_recurring_id = $this->request->post['order_recurring_id'];
+			
+			$this->model_extension_payment_opayo->editRecurringStatus($order_recurring_id, 1);
+			
+			$data['success'] = $this->language->get('success_enable_recurring');	
+		}
+						
+		$data['error'] = $this->error;
+				
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($data));
+	}
+	
+	public function disableRecurring() {
+		if (!empty($this->request->post['order_recurring_id'])) {
+			$this->load->language('extension/payment/opayo');
+			
+			$this->load->model('extension/payment/opayo');
+			
+			$order_recurring_id = $this->request->post['order_recurring_id'];
+			
+			$this->model_extension_payment_opayo->editRecurringStatus($order_recurring_id, 2);
+			
+			$data['success'] = $this->language->get('success_disable_recurring');	
+		}
+						
+		$data['error'] = $this->error;
+				
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($data));
+	}
 
 	private function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/payment/opayo')) {

@@ -242,6 +242,10 @@ class ModelExtensionPaymentOpayo extends Model {
 
 		return (float)$query->row['total'];
 	}
+	
+	public function editRecurringStatus($order_recurring_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (int)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
+	}
 
 	public function sendCurl($url, $payment_data) {
 		$curl = curl_init($url);
@@ -262,14 +266,14 @@ class ModelExtensionPaymentOpayo extends Model {
 
 		$response_info = explode(chr(10), $response);
 
-		foreach ($response_info as $i => $string) {
-			if (strpos($string, '=') && isset($i)) {
-				$parts = explode('=', $string, 2);
-				$data['RepeatResponseData_' . $i][trim($parts[0])] = trim($parts[1]);
-			} elseif (strpos($string, '=')) {
-				$parts = explode('=', $string, 2);
-				$data[trim($parts[0])] = trim($parts[1]);
+		foreach ($response_info as $string) {
+			if (strpos($string, '=') === false) {
+				continue;
 			}
+			
+			$parts = explode('=', $string, 2);
+			
+			$data[trim($parts[0])] = trim($parts[1]);
 		}
 		
 		return $data;
@@ -286,7 +290,7 @@ class ModelExtensionPaymentOpayo extends Model {
 		if ($setting['general']['debug']) {
 			$log = new Log('opayo.log');
 			
-			$log->write($title . ': ' . print_r($data, 1));
+			$log->write($title . ': ' . print_r($data, true));
 		}
 	}
 }

@@ -334,6 +334,14 @@ class ControllerLocalisationGeoZone extends Controller {
 			$data['zone_to_geo_zones'] = array();
 		}
 
+		$geo_zone_ids = array();
+		foreach ($data['zone_to_geo_zones'] as $zone_to_geo_zone) {
+			if (!in_array($zone_to_geo_zone['geo_zone_id'],$geo_zone_ids)) {
+				$geo_zone_ids[] = $zone_to_geo_zone['geo_zone_id'];
+			}
+		}
+		$data['zones'] = $this->model_localisation_geo_zone->getZonesByGeoZones($geo_zone_ids);
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

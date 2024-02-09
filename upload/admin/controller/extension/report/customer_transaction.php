@@ -1,5 +1,7 @@
 <?php
 class ControllerExtensionReportCustomerTransaction extends Controller {
+	private $error = array();
+
 	public function index() {
 		$this->load->language('extension/report/customer_transaction');
 

@@ -36,7 +36,7 @@ class ControllerMailOrder extends Controller {
 			
 			// If order status is not 0 then send update text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
-				$this->edit($order_info, $order_status_id, $comment, $notify);
+				$this->edit($order_info, $order_status_id, $comment);
 			}		
 		}
 	}

@@ -288,8 +288,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $article_id, int $store_id): array {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "'");
+	public function addStore(int $article_id, int $store_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_store` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
@@ -300,7 +300,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $article_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
 	/**
@@ -331,7 +331,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addLayout(int $article_id, int $store_id, int $layout_id): array {
+	public function addLayout(int $article_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_layout` SET `article_id` = '" . (int)$article_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 

@@ -104,7 +104,7 @@ class ModelExtensionPaymentOpayo extends Model {
 			$void_data['SecurityKey'] = $opayo_order['SecurityKey'];
 			$void_data['TxAuthNo'] = $opayo_order['TxAuthNo'];
 
-			$response_data = $this->sendCurl($url, $void_data);
+			$response_data = $this->sendAdminCurl($url, $void_data);
 
 			return $response_data;
 		} else {
@@ -147,7 +147,7 @@ class ModelExtensionPaymentOpayo extends Model {
 			$release_data['TxAuthNo'] = $opayo_order['TxAuthNo'];
 			$release_data['Amount'] = $amount;
 
-			$response_data = $this->sendCurl($url, $release_data);
+			$response_data = $this->sendAdminCurl($url, $release_data);
 
 			return $response_data;
 		} else {
@@ -192,7 +192,7 @@ class ModelExtensionPaymentOpayo extends Model {
 			$refund_data['RelatedSecurityKey'] = $opayo_order['SecurityKey'];
 			$refund_data['RelatedTxAuthNo'] = $opayo_order['TxAuthNo'];
 
-			$response_data = $this->sendCurl($url, $refund_data);
+			$response_data = $this->sendAdminCurl($url, $refund_data);
 
 			return $response_data;
 		} else {
@@ -247,7 +247,7 @@ class ModelExtensionPaymentOpayo extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (int)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
 	}
 
-	public function sendCurl($url, $payment_data) {
+	public function sendAdminCurl($url, $payment_data) {
 		$curl = curl_init($url);
 
 		curl_setopt($curl, CURLOPT_PORT, 443);

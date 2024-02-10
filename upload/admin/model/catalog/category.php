@@ -598,13 +598,12 @@ if (!$path_new) {
 	/**
 	 * Add Filter
 	 *
-	 * @param int $information_id
-	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $category_id
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
-	public function addFilter(int $category_id, int $filter_id): array {
+	public function addFilter(int $category_id, int $filter_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_filter` SET `category_id` = '" . (int)$category_id . "', `filter_id` = '" . (int)$filter_id . "'");
 	}
 
@@ -693,7 +692,7 @@ if (!$path_new) {
 	 *
 	 * @return void
 	 */
-	public function addLayout(int $category_id, int $store_id, int $layout_id): array {
+	public function addLayout(int $category_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 

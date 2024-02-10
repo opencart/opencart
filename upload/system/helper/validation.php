@@ -45,7 +45,7 @@ function oc_validate_ip(string $ip): bool {
 /**
  * Validate URL
  *
- * @param string $url
+ * @param string $filename
  *
  * @return bool
  */

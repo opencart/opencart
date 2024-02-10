@@ -1673,7 +1673,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addLayout(int $product_id, int $store_id, int $layout_id): array {
+	public function addLayout(int $product_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_layout` SET `product_id` = '" . (int)$product_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 

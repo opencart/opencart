@@ -1685,7 +1685,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteLayout(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` SET `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function deleteLayoutsByLayoutId(int $layout_id): void {

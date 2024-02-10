@@ -1642,7 +1642,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**

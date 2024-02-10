@@ -216,17 +216,17 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_cardinity_order_status_id'));
 
-		$this->model_extension_payment_cardinity->log($this->language->get('text_payment_success'));
-		$this->model_extension_payment_cardinity->log($payment);
+		$this->model_extension_payment_cardinity->cardinityLog($this->language->get('text_payment_success'));
+		$this->model_extension_payment_cardinity->cardinityLog($payment);
 	}
 
 	private function failedOrder($log = null, $alert = null) {
 		$this->load->language('extension/payment/cardinity');
 
-		$this->model_extension_payment_cardinity->log($this->language->get('text_payment_failed'));
+		$this->model_extension_payment_cardinity->cardinityLog($this->language->get('text_payment_failed'));
 
 		if ($log) {
-			$this->model_extension_payment_cardinity->log($log);
+			$this->model_extension_payment_cardinity->cardinityLog($log);
 		}
 
 		if ($alert) {

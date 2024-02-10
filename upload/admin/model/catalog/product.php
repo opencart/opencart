@@ -71,7 +71,7 @@ class Product extends \Opencart\System\Engine\Model {
 					$this->deleteAttribute($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute);
+						$this->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -222,7 +222,7 @@ class Product extends \Opencart\System\Engine\Model {
 					$this->deleteAttribute($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute);
+						$this->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -1494,7 +1494,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<string, string>> Descriptions sorted by language_id
 	 */
-	public function addSpecial(int $product_id, int $language_id, $data): void {
+	public function addSpecial(int $product_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_special` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
 	}
 
@@ -1642,7 +1642,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteStore(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**
@@ -1685,7 +1685,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteLayout(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` SET `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function deleteLayoutsByLayoutId(int $layout_id): void {

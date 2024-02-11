@@ -235,7 +235,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function addDescription(int $article_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -247,7 +247,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function deleteDescription(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");

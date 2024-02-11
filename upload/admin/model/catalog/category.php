@@ -493,7 +493,7 @@ if (!$path_new) {
 	 *
 	 * @param int $category_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function addDescription(int $category_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -505,7 +505,7 @@ if (!$path_new) {
 	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function deleteDescription(int $category_id) : void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -610,7 +610,7 @@ if (!$path_new) {
 	/**
 	 * Delete Filter
 	 *
-	 * @param int $information_id
+	 * @param int $category_id
 	 *
 	 * @return void
 	 */
@@ -640,7 +640,7 @@ if (!$path_new) {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $category_id
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -652,7 +652,7 @@ if (!$path_new) {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $category_id
 	 *
 	 * @return void
 	 */

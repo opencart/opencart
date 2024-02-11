@@ -147,10 +147,11 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int $option_id primary key
-	 * @param int $language_id
+	 * @param int                  $option_id primary key
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function addDescription(int $option_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `option_id` = '" . (int)$option_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -162,7 +163,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function deleteDescription(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");

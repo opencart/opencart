@@ -256,35 +256,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 		$custom_field_value_id = $this->db->getLastId();
 
 		foreach ($data['custom_field_value_description'] as $language_id => $custom_field_value_description) {
-			$this->addValueDescription($custom_field_id, $language_id, $custom_field_value_description);
-
+			$this->addValueDescription($custom_field_id, $custom_field_value_id, $language_id, $custom_field_value_description);
 		}
 
-
-
-
-		$custom_field_value_id = $this->db->getLastId();
-
-		foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value_id . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_id . "', `name` = '" . $this->db->escape($custom_field_value_description['name']) . "'");
-		}
-
-
-
-
-
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value` SET `custom_field_id` = '" . (int)$custom_field_id . "', `sort_order` = '" . (int)$custom_field_value['sort_order'] . "'");
-
-		$custom_field_value_id = $this->db->getLastId();
-
-		foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value_id . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_id . "', `name` = '" . $this->db->escape($custom_field_value_description['name']) . "'");
-		}
-
-
-
-		return $option_value_id;
+		return $custom_field_value_id;
 	}
 
 	public function deleteValue(int $custom_field_id): void {
@@ -328,7 +303,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 		return $custom_field_value_data;
 	}
 
-	public function addValueDescription($custom_field_id, $language_id, $custom_field_value_description) {
+	public function addValueDescription($custom_field_id, $custom_field_value_id, $language_id, $custom_field_value_description) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value_id . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_id . "', `name` = '" . $this->db->escape($custom_field_value_description['name']) . "'");
 	}
 

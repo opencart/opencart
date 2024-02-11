@@ -48,6 +48,8 @@ class PgSQL {
 	 * @return \stdClass
 	 */
 	public function query(string $sql): \stdClass {
+		$sql = preg_replace('/`([A-Za-z0-9\.\-_]+)*[^\'\"\s]?/', '$1', $sql);
+		
 		$resource = pg_query($this->connection, $sql);
 
 		if ($resource === false) {

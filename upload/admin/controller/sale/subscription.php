@@ -524,7 +524,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			if ($subscription_plan_info['trial_status']) {
 				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
-				$trial_cycle = $result['trial_cycle'];
+				$trial_cycle = $subscription_plan_info['trial_cycle'];
 				$trial_frequency = $this->language->get('text_' . $subscription_plan_info['trial_frequency']);
 				$trial_duration = $subscription_plan_info['trial_duration'];
 
@@ -532,7 +532,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
-			$cycle = $result['cycle'];
+			$cycle = $subscription_plan_info['cycle'];
 			$frequency = $this->language->get('text_' . $subscription_plan_info['frequency']);
 			$duration = $subscription_plan_info['duration'];
 

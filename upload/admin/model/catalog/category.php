@@ -447,7 +447,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *    Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $category_id
 	 *
 	 * @return void
 	 */

@@ -161,7 +161,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $option_id
 	 *
 	 * @return void
 	 */

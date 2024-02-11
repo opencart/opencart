@@ -233,7 +233,9 @@ class Article extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int                  $article_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -245,7 +247,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */
@@ -283,7 +285,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -295,7 +297,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */
@@ -325,7 +327,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
@@ -336,9 +338,9 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Layout
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */
@@ -423,7 +425,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Comments by article ID
 	 *
-	 * @param int $article_comment_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */

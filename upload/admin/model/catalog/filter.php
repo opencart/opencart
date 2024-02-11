@@ -42,7 +42,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filter
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
@@ -55,9 +55,9 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Group
+	 * Get Filter
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_id
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -139,7 +139,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $filter_group_id primary key of the filter record to be fetched
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
@@ -150,7 +150,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Group Descriptions
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_id
 	 *
 	 * @return array<int, array<string, string>>
 	 */

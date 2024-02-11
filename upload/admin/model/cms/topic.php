@@ -300,7 +300,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layout
 	 *
-	 * @param int $topic_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */

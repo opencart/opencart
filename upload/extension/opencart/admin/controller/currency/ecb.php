@@ -130,7 +130,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					$this->model_localisation_currency->editValueByCode($default, '1.00000');
+					$this->model_localisation_currency->editValueByCode($default, 1.00000);
 				}
 			}
 		}

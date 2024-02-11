@@ -119,7 +119,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 					}
 
 					foreach ($keys as $key) {
-						if ($result['Key_name'] == 'PRIMARY') {
+						if ($key == 'PRIMARY') {
 							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
 						} else {
 							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $key . "`");

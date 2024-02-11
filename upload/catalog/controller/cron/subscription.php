@@ -90,7 +90,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							$price = $result['trial_price'];
 						}
 
-						$store->cart->add($result['product_id'], $result['quantity'], $result['option'], true, $price);
+						$store->cart->add($result['product_id'], $result['quantity'], $result['option'], $result['subscription_plan_id'], true, $price);
 					} else {
 						$error = $this->language->get('error_product');
 					}

@@ -51,7 +51,7 @@ class PgSQL {
 		$resource = pg_query($this->connection, $sql);
 
 		if ($resource === false) {
-			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
+			throw new \Exception('Error: ' . pg_last_error($this->connection) . '<br/>' . $sql);
 		}
 
 		$data = [];

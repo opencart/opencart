@@ -53,7 +53,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'SameSite' => $this->config->get('config_session_samesite')
 			];
 
-			setcookie('notification', true, $option);
+			setcookie('notification', '1', $option);
 		}
 	}
 }

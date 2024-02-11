@@ -279,7 +279,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((oc_strlen($this->request->post['filename']) < 3) || (oc_strlen($this->request->post['filename']) > 128)) {
+		if (!oc_validate_length($this->request->post['filename'], 3, 128)) {
 			$json['error']['filename'] = $this->language->get('error_filename');
 		}
 
@@ -291,15 +291,15 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['filename'] = $this->language->get('error_exists');
 		}
 
-		if (preg_match('/[^a-zA-Z0-9\/._-]|[\p{Cyrillic}]+/u', $this->request->post['filename'])) {
+		if (!oc_validate_filename($this->request->post['filename'])) {
 			$json['error']['filename'] = $this->language->get('error_filename_character');
 		}
 
-		if ((oc_strlen($this->request->post['mask']) < 3) || (oc_strlen($this->request->post['mask']) > 128)) {
+		if (!oc_validate_length($this->request->post['mask'], 3, 128)) {
 			$json['error']['mask'] = $this->language->get('error_mask');
 		}
 
-		if (preg_match('/[^a-zA-Z0-9\/._-]|[\p{Cyrillic}]+/u', $this->request->post['mask'])) {
+		if (!oc_validate_filename($this->request->post['mask'])) {
 			$json['error']['mask'] = $this->language->get('error_mask_character');
 		}
 

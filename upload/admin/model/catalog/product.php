@@ -1457,11 +1457,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Discount
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
-	public function addDiscount(int $product_id, int $data): void {
+	public function addDiscount(int $product_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_discount` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
 	}
 

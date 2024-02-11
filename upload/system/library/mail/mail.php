@@ -38,7 +38,7 @@ class Mail {
 			$eol = PHP_EOL;
 		}
 
-		$boundary = '----=_NextPart_' . md5(time());
+		$boundary = '----=_NextPart_' . md5((string)time());
 
 		$header  = 'MIME-Version: 1.0' . $eol;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $eol;

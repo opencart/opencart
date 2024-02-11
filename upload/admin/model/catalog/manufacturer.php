@@ -190,7 +190,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $manufacturer_id
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -202,7 +202,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $manufacturer_id
 	 *
 	 * @return void
 	 */
@@ -236,7 +236,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $manufacturer_id
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
@@ -247,9 +247,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Layout
 	 *
-	 * @param int $information_id
+	 * @param int $manufacturer_id
 	 *
 	 * @return void
 	 */

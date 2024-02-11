@@ -161,10 +161,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Store
+	 * Add Route
 	 *
-	 * @param int $information_id
-	 * @param int $store_id
+	 * @param int                  $layout_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -211,10 +211,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Store
+	 * Add Module
 	 *
-	 * @param int $information_id
-	 * @param int $store_id
+	 * @param int                  $layout_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

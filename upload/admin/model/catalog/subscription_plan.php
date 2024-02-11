@@ -140,7 +140,9 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 *
-	 * @param int $category_id primary key of the attribute record to be fetched
+	 * @param int                  $subscription_plan_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -152,7 +154,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $subscription_plan_id
 	 *
 	 * @return void
 	 */

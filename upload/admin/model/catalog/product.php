@@ -1039,7 +1039,9 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -1051,7 +1053,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $product_id
 	 *
 	 * @return void
 	 */
@@ -1089,7 +1091,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Category
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $product_id
+	 * @param int $category_id
 	 *
 	 * @return void
 	 */
@@ -1100,7 +1103,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Category
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $product_id
 	 *
 	 * @return void
 	 */
@@ -1135,7 +1138,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Filter
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $product_id
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
@@ -1147,7 +1151,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Delete Filter
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $product_id
 	 *
 	 * @return void
 	 */
@@ -1667,7 +1671,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $product_id
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
@@ -1678,9 +1682,9 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Layout
 	 *
-	 * @param int $information_id
+	 * @param int $product_id
 	 *
 	 * @return void
 	 */

@@ -362,7 +362,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		foreach ($directories as $directory) {
 			if (!is_dir($storage . $directory)) {
-				mkdir($storage . $directory, '0644');
+				mkdir($storage . $directory, 0644);
 
 				$handle = fopen($storage . $directory . '/index.html', 'w');
 

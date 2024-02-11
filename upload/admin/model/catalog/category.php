@@ -405,6 +405,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Categories
 	 *
+	 * @param array<string, mixed> $data
+	 *
 	 * @return int
 	 */
 	public function getTotalCategories($data = []): int {
@@ -435,7 +437,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *    Add Description
 	 *
 	 *
-	 * @param int $category_id primary key of the attribute record to be fetched
+	 * @param int                  $category_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -492,6 +495,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Delete Filter
 	 *
 	 * @param int $category_id
+	 * @param int $level
 	 *
 	 * @return void
 	 */
@@ -503,6 +507,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Delete Filter
 	 *
 	 * @param int $category_id
+	 * @param int $level
 	 *
 	 * @return void
 	 */
@@ -534,6 +539,9 @@ class Category extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getPathsByPathId(int $path_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$path_id . "' ORDER BY `level` ASC");
 

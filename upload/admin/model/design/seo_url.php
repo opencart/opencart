@@ -226,6 +226,9 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		return $seo_url_data;
 	}
 
+	/**
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getSeoUrlsByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
 

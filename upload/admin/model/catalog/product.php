@@ -1182,7 +1182,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Attribute
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -1255,7 +1256,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Option
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -1354,7 +1356,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
@@ -1420,7 +1423,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Image
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -1495,7 +1499,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Special
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -1532,7 +1537,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Reward
 	 *
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -1780,6 +1786,9 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_related_data;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addSubscription(int $product_id, $data): void {
 		$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$data['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "'");
 

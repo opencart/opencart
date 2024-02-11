@@ -188,6 +188,9 @@ class Option extends \Opencart\System\Engine\Model {
 		return $description_data;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addValue(int $option_id, array $data): int {
 		if ($data['option_value_id']) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value` SET `option_value_id` = '" . (int)$data['option_value_id'] . "', `option_id` = '" . (int)$option_id . "', `image` = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -251,6 +254,9 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_data;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addValueDescription(int $option_value_id, int $language_id, int $option_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}

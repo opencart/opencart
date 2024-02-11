@@ -17,3 +17,5 @@ parameters:
         - '#Class Event constructor invoked with 1 parameter, 4-5 required\.#'
         - '#Constant [A-Z_]+ not found\.#'
         - '#might not be defined\.#'
+        - '#invoked with 1 parameter, 2 required\.#'
+        - '#invoked with 3 parameters, 2 required\.#'

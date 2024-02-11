@@ -233,7 +233,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
-	public function deleteModuleByCode(int $code): void {
+	public function deleteModuleByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` = '" . $this->db->escape($code) . "' OR `code` LIKE '" . $this->db->escape($code . '.%') . "'");
 	}
 

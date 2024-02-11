@@ -18,8 +18,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 
 		$custom_field_id = $this->db->getLastId();
 
-		foreach ($data['custom_field_description'] as $language_id => $value) {
-			$this->addDescription($custom_field_id, $language_id, $value);
+		foreach ($data['custom_field_description'] as $language_id => $custom_field_description) {
+			$this->addDescription($custom_field_id, $language_id, $custom_field_description);
 		}
 
 		if (isset($data['custom_field_customer_group'])) {
@@ -52,8 +52,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 
 		$this->deleteDescription($custom_field_id);
 
-		foreach ($data['custom_field_description'] as $language_id => $value) {
-			$this->addDescription($custom_field_id, $language_id, $value);
+		foreach ($data['custom_field_description'] as $language_id => $custom_field_description) {
+			$this->addDescription($custom_field_id, $language_id, $custom_field_description);
 		}
 
 		$this->deleteCustomerGroup($custom_field_id);

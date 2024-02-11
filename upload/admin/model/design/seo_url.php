@@ -9,8 +9,6 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Seo Url
 	 *
-	 * @param array<string, mixed> $data
-	 *
 	 * @return int
 	 */
 	public function addSeoUrl(string $key, string $value, string $keyword, int $store_id, int $language_id, int $sort_order = 0): int {
@@ -22,8 +20,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Seo Url
 	 *
-	 * @param int                  $seo_url_id
-	 * @param array<string, mixed> $data
+	 * @param int $seo_url_id
 	 *
 	 * @return void
 	 */

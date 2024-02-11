@@ -195,7 +195,7 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	public function deleteReport(int $download_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_report` WHERE `customer_id` = '" . (int)$download_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");
 	}
 
 	/**

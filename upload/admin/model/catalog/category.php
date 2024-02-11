@@ -158,31 +158,35 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Seo urls on categories need to be done differently to they include the full keyword path
 		$seo_urls = [];
 
-		$path_data = '';
+		$value = '';
 
 		$this->load->model('design/seo_url');
 
 		foreach ($paths as $path_id) {
 			// Get all sub paths
-			if (!$path_data) {
-				$path_data = $path_id;
+			if (!$value) {
+				$value = $path_id;
 			} else {
-				$path_data = $path_data . '_' . $path_id;
+				$value = $value . '_' . $path_id;
 			}
 
-			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_data);
+			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $value);
 
-			foreach ($results as $result) {
-				$seo_urls[substr($result['value'], strrpos($result['value'], '_') + 1)][$result['store_id']][$result['language_id']] = substr($result['keyword'], strrpos($result['keyword'], '/') + 1);
+			foreach ($results as $store_id => $language) {
+				foreach ($language as $language_id => $keyword) {
+					$pos = strrpos($keyword, '/');
+
+					if ($pos !== false) {
+						$keyword = substr($keyword, $pos + 1);
+					}
+
+					$seo_urls[$path_id][$store_id][$language_id] = $keyword;
+				}
 			}
 		}
-
-		// Get the SEO url of the old path
-		$seo_url_old = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old);
-
-
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
@@ -190,120 +194,81 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 		}
 
-
-
 		// All sub paths
-		$filter_data = [
-			'filter_key'   => 'path',
-			'filter_value' => $path_old . '\_%'
-		];
+		$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old . '\_%');
 
-		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
+		foreach ($results as $store_id => $language) {
+			foreach ($language as $language_id => $keyword) {
+				$pos = strrpos($keyword, '/');
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old . '\_%');
+				if ($pos !== false) {
+					$keyword = substr($keyword, $pos);
+				}
 
-		foreach ($results as $result) {
-			$seo_urls[substr($result['value'], strrpos($result['value'], '_') + 1)][$result['store_id']][$result['language_id']] = substr($result['keyword'], strrpos($result['keyword'], '/') + 1);
+				$seo_urls[substr($result['value'], strrpos($result['value'], '_') + 1)][$result['store_id']][$result['language_id']] = $keyword;
+			}
 		}
 
-
-
+		// Get the SEO url of the old path
 		// Delete the old SEO url paths
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old . '\_%');
 
-		foreach ($seo_urls as $seo_url) {
-			$this->model_design_seo_url->addSeoUrl('path', $path, $keyword, $store_id, $language_id);
-		}
+		$keyword_data = [];
 
+		$value = '';
 
-		/*
-// Seo urls on categories need to be done differently to they include the full keyword path
-$path_new = $this->getPath($data['parent_id']);
+		foreach ($paths as $path_id) {
+			// Get all sub paths
+			if (!$value) {
+				$value = $path_id;
+			} else {
+				$value = $value . '_' . $path_id;
+			}
 
-if (!$path_new) {
-	$path = $category_id;
-} else {
-	$path = $path_new . '_' . $category_id;
-}
-*/
-		//$parent_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path, $store_id, $language_id);
+			// Get all sub paths
+			foreach ($seo_urls[$path_id] as $store_id => $language) {
 
-		//if ($parent_info) {
-		//	$keyword = $parent_info['keyword'] . '/' . $keyword;
-		//}
+				foreach ($language as $language_id => $keyword) {
 
-
-		/*
-		foreach ($data['category_seo_url'] as $store_id => $language) {
-			foreach ($language as $language_id => $keyword) {
-
-				$path = '';
-
-				$keyword = '';
-
-					if ($seo_url_new[$store_id][$language_id][$path_id]) {
-						$keyword .= '/' . $seo_url_new[$store_id][$language_id][$path_id];
-					}
-
-					if (!$path) {
-						$path = $path_id;
+					if (!isset($keyword_data[$store_id][$language_id])) {
+						$keyword_data[$path_id][$store_id][$language_id] = $keyword;
 					} else {
-						$path = $path_new . '_' . $path_id;
+						$keyword_data[$path_id][$store_id][$language_id] = $keyword_data[$path_id][$store_id][$language_id] . '/' . $keyword;
 					}
 
-					$this->model_design_seo_url->addSeoUrl('path', $path, $keyword, $store_id, $language_id);
-
-					if (!$keyword) {
-						$path = $keyword;
-					} else {
-						$path = $path_new . '_' . $path_id;
-					}
-
-					if (isset($seo_url_new[$path])) {
-						//foreach () {
-						//}
-					}
-
-					//$seo_url_new[$result['value']][$store_id][$language_id]
+					$this->model_design_seo_url->addSeoUrl('path', $value, $keyword_data[$path_id][$store_id][$language_id], $store_id, $language_id);
 				}
 			}
 		}
 
-		$results = $this->getPaths($category_id);
+		print_r($seo_urls);
+		//print_r($paths);
+		print_r($keyword_data);
 
-		$this->model_design_seo_url->addSeoUrl('path', $path, $keyword, $store_id, $language_id);
+		/*
+		foreach ($seo_urls as $path_id => $store) {
+			foreach ($store as $store_id => $language) {
+				foreach ($language as $language_id => $keyword) {
+					// Get all sub paths
+					if (!$value) {
+						$value = $path_id;
+					} else {
+						$value = $value . '_' . $path_id;
+					}
 
-		print_r($seo_url_new);
+					// Get all sub paths
+					if (!$path_data) {
+						$path_data = $path_id;
+					} else {
+						$path_data = $path_data . '_' . $path_id;
+					}
 
-		foreach ($parts as $path_id) {
-			if (!$path) {
-				$path = $path_id;
-			} else {
-				$path = $path_new . '_' . $path_id;
+					$this->model_design_seo_url->addSeoUrl('path', $value, $keyword, $store_id, $language_id);
+				}
 			}
-
-			if (isset($seo_url_new[$path])) {
-			//	foreach () {
-				//	$this->model_design_seo_url->addSeoUrl('path', $path, $keyword, $store_id, $language_id);
-			//	}
-			}
-
-			//$seo_url_new[$result['value']][$store_id][$language_id]
 		}
-		//$url_path[$result['value']][$result['store_id']][$result['language_id']] = substr($result['value'], strrpos($result['value'], '/') + 1);
-		//if (isset($seo_url_new[$result['store_id']][$result['language_id']])) {
-			//$keyword .= $seo_url_new[$result['store_id']][$result['language_id']];
-		//}
-		// Get old Length
-		//if (isset($seo_url_old[$result['store_id']][$result['language_id']])) {
-			//$keyword .= '/' . substr($result['keyword'], strlen($seo_url_old[$result['store_id']][$result['language_id']]) + 1);
-		//}
-		//foreach ($results as $result) {
-			//$this->model_design_seo_url->addSeoUrl('path', $path . '_' . substr($result['value'], strlen($path_old) + 1), $keyword, $store_id, $language_id);
-			//$this->model_design_seo_url->addSeoUrl('path', $path, $keyword, $store_id, $language_id);
-		//}
 		*/
-
 		// Layouts
 		$this->deleteLayout($category_id);
 

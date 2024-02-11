@@ -64,6 +64,6 @@ function oc_validate_url(string $url): bool {
  * @return bool
  */
 function oc_validate_seo_url(string $keyword): bool {
-	return preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\.\-\_]+/u', $keyword);
+	return !preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\.\-\_]+/u', $keyword);
 }
 

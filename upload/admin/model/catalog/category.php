@@ -175,6 +175,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $value);
 
+			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $value);
+
 			foreach ($results as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					$pos = strrpos($keyword, '/');
@@ -188,7 +190,7 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Get the SEO URL of the old path
+		// Delete the old path
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
 
 		// Current SEO URL
@@ -199,21 +201,26 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		// All sub paths
-		$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old . '\_%');
+		$filter_data = [
+			'filter_key'   => 'path',
+			'filter_value' => $path_old . '\_%'
+		];
+
+		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
 
 		// Delete the old SEO URL paths
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old . '\_%');
 
-		foreach ($results as $store_id => $language) {
-			foreach ($language as $language_id => $keyword) {
-				$pos = strrpos($keyword, '/');
+		foreach ($results as $result) {
+			$keyword = $result['keyword'];
 
-				if ($pos !== false) {
-					$keyword = substr($keyword, $pos);
-				}
+			$pos = strrpos($keyword, '/');
 
-				$seo_urls[$result['store_id']][$result['language_id']][substr($result['value'], strrpos($result['value'], '_') + 1)] = $keyword;
+			if ($pos !== false) {
+				$keyword = substr($keyword, $pos + 1);
 			}
+
+			$seo_urls[$result['store_id']][$result['language_id']][substr($result['value'], strrpos($result['value'], '_') + 1)] = $keyword;
 		}
 
 		// Get all sub paths
@@ -241,8 +248,6 @@ class Category extends \Opencart\System\Engine\Model {
 				}
 			}
 		}
-
-		print_r($seo_urls);
 
 		// Layouts
 		$this->deleteLayout($category_id);

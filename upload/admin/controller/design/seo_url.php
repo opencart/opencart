@@ -519,11 +519,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$keywords = explode('/', $this->request->post['keyword']);
 
 		foreach ($keywords as $keyword) {
-			if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 64)) {
+			if (!oc_validate_length($keyword, 1, 64)) {
 				$json['error']['keyword'] = $this->language->get('error_keyword');
 			}
 
-			if (preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\.\-\_]+/u', $keyword)) {
+			if (!oc_validate_seo_url($keyword)) {
 				$json['error']['keyword'] = $this->language->get('error_keyword_character');
 			}
 		}

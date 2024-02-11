@@ -50,7 +50,7 @@ function oc_validate_ip(string $ip): bool {
  * @return bool
  */
 function oc_validate_filename(string $filename): bool {
-	return preg_match('/[^a-zA-Z0-9\/._-]|[\p{Cyrillic}]+/u', $filename);
+	return !preg_match('/[^a-zA-Z\p{Cyrillic}0-9\.\-\_]+/u', $filename);
 }
 
 /**

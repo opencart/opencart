@@ -122,7 +122,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 *
-	 * @param int $download_id primary key of the attribute record to be fetched
+	 * @param int                  $download_id primary key of the attribute record to be fetched
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -195,7 +196,7 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	public function deleteReport(int $download_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_report` WHERE `customer_id` = '" . (int)$download_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");
 	}
 
 	/**

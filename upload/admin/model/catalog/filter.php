@@ -27,6 +27,9 @@ class Filter extends \Opencart\System\Engine\Model {
 		return $filter_id;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function editFilter(int $filter_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
 
@@ -42,7 +45,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filter
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
@@ -55,9 +58,9 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Group
+	 * Get Filter
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_id
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -139,7 +142,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $filter_group_id primary key of the filter record to be fetched
+	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
@@ -150,7 +153,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Group Descriptions
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_id
 	 *
 	 * @return array<int, array<string, string>>
 	 */

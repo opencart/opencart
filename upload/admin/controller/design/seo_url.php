@@ -523,7 +523,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$json['error']['keyword'] = $this->language->get('error_keyword');
 			}
 
-			if (preg_match('/[^a-zA-Z0-9\/_-]|[\p{Cyrillic}]+/u', $keyword)) {
+			if (preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\.\-\_]+/u', $keyword)) {
 				$json['error']['keyword'] = $this->language->get('error_keyword_character');
 			}
 		}

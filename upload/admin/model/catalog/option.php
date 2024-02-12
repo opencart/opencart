@@ -147,10 +147,11 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int $option_id primary key
-	 * @param int $language_id
+	 * @param int                  $option_id primary key
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function addDescription(int $option_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `option_id` = '" . (int)$option_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -160,9 +161,9 @@ class Option extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $option_id
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function deleteDescription(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
@@ -187,6 +188,9 @@ class Option extends \Opencart\System\Engine\Model {
 		return $description_data;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addValue(int $option_id, array $data): int {
 		if ($data['option_value_id']) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value` SET `option_value_id` = '" . (int)$data['option_value_id'] . "', `option_id` = '" . (int)$option_id . "', `image` = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -250,6 +254,9 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_data;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addValueDescription(int $option_value_id, int $language_id, int $option_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}

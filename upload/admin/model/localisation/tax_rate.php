@@ -143,7 +143,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function addCustomerGroup(int $tax_rate_id, $customer_group_id): void {
+	public function addCustomerGroup(int $tax_rate_id, int $customer_group_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rate_to_customer_group` SET `tax_rate_id` = '" . (int)$tax_rate_id . "', `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}
 

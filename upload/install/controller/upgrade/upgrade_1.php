@@ -91,7 +91,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			} else {
 				if (!empty($config['HTTPS_SERVER'])) {
 					$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n\n";
-				} else {
+				} elseif (!empty($config['HTTP_SERVER'])) {
 					$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n\n";
 				}
 			}
@@ -270,13 +270,13 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 			if (!empty($config['HTTPS_SERVER'])) {
 				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n";
-			} else {
+			} elseif (!empty($config['HTTP_SERVER'])) {
 				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n";
 			}
 
 			if (!empty($config['HTTPS_CATALOG'])) {
 				$output .= 'define(\'HTTP_CATALOG\', \'' . $config['HTTPS_CATALOG'] . '\');' . "\n\n";
-			} else {
+			} elseif (!empty($config['HTTP_CATALOG'])) {
 				$output .= 'define(\'HTTP_CATALOG\', \'' . $config['HTTP_CATALOG'] . '\');' . "\n\n";
 			}
 
@@ -362,7 +362,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		foreach ($directories as $directory) {
 			if (!is_dir($storage . $directory)) {
-				mkdir($storage . $directory, '0644');
+				mkdir($storage . $directory, 0644);
 
 				$handle = fopen($storage . $directory . '/index.html', 'w');
 

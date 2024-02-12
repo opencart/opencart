@@ -233,9 +233,11 @@ class Article extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int                  $article_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function addDescription(int $article_id, int $language_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -245,9 +247,9 @@ class Article extends \Opencart\System\Engine\Model {
 	 *	Delete Description
 	 *
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $article_id
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return void
 	 */
 	public function deleteDescription(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
@@ -283,24 +285,24 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 * @param int $store_id
 	 *
 	 * @return void
 	 */
-	public function addStore(int $article_id, int $store_id): array {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "'");
+	public function addStore(int $article_id, int $store_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_store` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
 	 * Delete Store
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */
 	public function deleteStore(int $article_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
 	/**
@@ -325,20 +327,20 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
 	 * @return void
 	 */
-	public function addLayout(int $article_id, int $store_id, int $layout_id): array {
+	public function addLayout(int $article_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_layout` SET `article_id` = '" . (int)$article_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Layout
 	 *
-	 * @param int $information_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */
@@ -423,7 +425,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Comments by article ID
 	 *
-	 * @param int $article_comment_id
+	 * @param int $article_id
 	 *
 	 * @return void
 	 */

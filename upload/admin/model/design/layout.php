@@ -161,10 +161,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Store
+	 * Add Route
 	 *
-	 * @param int $information_id
-	 * @param int $store_id
+	 * @param int                  $layout_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -204,6 +204,9 @@ class Layout extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getRoutesByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
 
@@ -211,10 +214,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Store
+	 * Add Module
 	 *
-	 * @param int $information_id
-	 * @param int $store_id
+	 * @param int                  $layout_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -233,7 +236,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
-	public function deleteModuleByCode(int $code): void {
+	public function deleteModuleByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` = '" . $this->db->escape($code) . "' OR `code` LIKE '" . $this->db->escape($code . '.%') . "'");
 	}
 

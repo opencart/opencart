@@ -171,8 +171,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int $attribute_id primary key of the attribute record
-	 * @param int $language_id primary key of the attribute language
+	 * @param int                  $attribute_id primary key of the attribute record
+	 * @param int                  $language_id primary key of the attribute language
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

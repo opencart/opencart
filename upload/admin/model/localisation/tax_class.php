@@ -133,6 +133,9 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addTaxRule(int $tax_class_id, $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rule` SET `tax_class_id` = '" . (int)$tax_class_id . "', `tax_rate_id` = '" . (int)$data['tax_rate_id'] . "', `based` = '" . $this->db->escape($data['based']) . "', `priority` = '" . (int)$data['priority'] . "'");
 	}

@@ -53,7 +53,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['from_email'] = '';
 		}
 
-		$data['amount'] = $this->currency->format($this->config->get('config_voucher_min'), $this->config->get('config_currency'), false, false);
+		$data['amount'] = $this->currency->format($this->config->get('config_voucher_min'), $this->config->get('config_currency'), 0.0, false);
 
 		$this->load->model('checkout/voucher_theme');
 

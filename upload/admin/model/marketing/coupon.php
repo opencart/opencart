@@ -76,6 +76,14 @@ class Coupon extends \Opencart\System\Engine\Model {
 		$this->deleteHistory($coupon_id);
 	}
 
+	public function deleteCategoryByCategoryId(int $category_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
+	}
+
+	public function deleteProductByProductId(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_product` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
 	/**
 	 * Get Coupon
 	 *

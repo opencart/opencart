@@ -39,9 +39,9 @@ class Cookie extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['agree'])) {
-			$agree = (int)$this->request->get['agree'];
+			$agree = $this->request->get['agree'];
 		} else {
-			$agree = 0;
+			$agree = '0';
 		}
 
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {

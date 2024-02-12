@@ -1,4 +1,6 @@
-<div id="search" class="input-group mb-3">
+<form id="search" method="get" action="index.php" class="input-group mb-3">
 	<input type="text" name="search" value="{{ search }}" placeholder="{{ text_search }}" class="form-control form-control-lg">
-	<button type="button" data-lang="{{ language }}" class="btn btn-light btn-lg"><i class="fa-solid fa-magnifying-glass"></i></button>
-</div>
+  <input type="hidden" name="language" value="{{ language }}">
+  <input type="hidden" name="route" value="product/search">
+	<button type="button" class="btn btn-light btn-lg"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>

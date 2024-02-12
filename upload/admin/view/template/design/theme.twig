@@ -190,9 +190,9 @@ $('#path').on('click', 'a.file', function (e) {
                     $('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-bs-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa-solid fa-minus-circle"></i></a></li>');
 
                     html = '<div class="tab-pane" id="tab-' + tab_id + '">';
-                    html += '  <textarea name="code" id="input-code" rows="10" class="form-control"></textarea>';
-                    html += '  <input type="hidden" name="store_id" value="' + $('#input-store').val() + '" id="input-' + tab_id + '-store"/>';
-                    html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" id="input-' + tab_id + '-path"/>';
+                    html += '  <textarea name="code" id="input-code-' + tab_id + '" rows="10" class="form-control"></textarea>';
+                    html += '  <input type="hidden" name="store_id" value="' + $('#input-store').val() + '" id="input-store-' + tab_id + '"/>';
+                    html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" id="input-path-' + tab_id + '"/>';22
                     html += '  <br/>';
                     html += '  <div class="float-end">';
                     html += '    <button type="button" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save|escape('js') }}</button>';
@@ -205,7 +205,7 @@ $('#path').on('click', 'a.file', function (e) {
                     $('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
 
                     // Initialize codemirrror
-                    var codemirror = CodeMirror.fromTextArea(document.querySelector('#input-'), {
+                    var codemirror = CodeMirror.fromTextArea(document.querySelector('#input-code-'+ tab_id), {
                         mode: 'text/html',
                         lineNumbers: true,
                         lineWrapping: true,

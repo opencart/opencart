@@ -1,7 +1,7 @@
 <?php
 /*
  * This document has been generated with
- * https://mlocati.github.io/php-cs-fixer-configurator/#version:3.41.1|configurator
+ * https://mlocati.github.io/php-cs-fixer-configurator/#version:3.49|configurator
  * you can change this configuration by importing this file.
  */
 $config = new PhpCsFixer\Config();
@@ -44,7 +44,7 @@ return $config
         'empty_loop_condition' => true,
         'ereg_to_preg' => true,
         'error_suppression' => true,
-        'escape_implicit_backslashes' => true,
+        'string_implicit_backslashes' => true,
         'explicit_indirect_variable' => true,
         'explicit_string_variable' => true,
         'fopen_flag_order' => true,

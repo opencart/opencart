@@ -27,6 +27,9 @@ class Filter extends \Opencart\System\Engine\Model {
 		return $filter_id;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function editFilter(int $filter_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
 

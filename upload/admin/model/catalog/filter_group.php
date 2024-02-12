@@ -6,6 +6,9 @@ namespace Opencart\Admin\Model\Catalog;
  * @package Opencart\Admin\Model\Catalog
  */
 class FilterGroup extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addFilterGroup($data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
 
@@ -20,6 +23,10 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 		return $filter_group_id;
 	}
 
+	/**
+	 * @param int                  $filter_group_id
+	 * @param array<string, mixed> $data
+	 */
 	public function editFilterGroup($filter_group_id, $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 

@@ -428,7 +428,7 @@ class ModelExtensionPaymentOpayo extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'opayo', 'payment_opayo_last_cron_run', NOW(), 0)");
 	}
 
-	public function sendCurl($url, $payment_data, $i = null) {
+	public function sendCurl(string $url, array $payment_data, $i = null) {
 		$curl = curl_init($url);
 
 		curl_setopt($curl, CURLOPT_PORT, 443);

@@ -18,3 +18,4 @@ parameters:
         - '#Constant [A-Z_]+ not found\.#'
         - '#might not be defined\.#'
         - '#invoked with \d+ parameters?, \d+ required\.#'
+    reportUnmatchedIgnoredErrors: false

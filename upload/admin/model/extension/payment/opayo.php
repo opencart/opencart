@@ -247,7 +247,7 @@ class ModelExtensionPaymentOpayo extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (int)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
 	}
 
-	public function sendCurl($url, $payment_data, $i = null) {
+	public function sendCurl($url, $payment_data) {
 		$curl = curl_init($url);
 
 		curl_setopt($curl, CURLOPT_PORT, 443);

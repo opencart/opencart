@@ -37,7 +37,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		if (isset($this->request->get['filter_extension_id'])) {
+		if (isset($this->request->get['filter_extension_download_id'])) {
 			$data['filter_extension_download_id'] = (int)$this->request->get['filter_extension_download_id'];
 		} else {
 			$data['filter_extension_download_id'] = '';

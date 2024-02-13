@@ -22,7 +22,6 @@ class Banner extends \Opencart\System\Engine\Model {
 			foreach ($data['banner_image'] as $language_id => $value) {
 				foreach ($value as $banner_image) {
 
-
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($banner_image['title']) . "', `link` = '" . $this->db->escape($banner_image['link']) . "', `image` = '" . $this->db->escape($banner_image['image']) . "', `sort_order` = '" . (int)$banner_image['sort_order'] . "'");
 				}
 			}
@@ -157,12 +156,11 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
-
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $download_id primary key of the attribute record to be fetched
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void

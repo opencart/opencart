@@ -28,6 +28,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $filter_id
 	 * @param array<string, mixed> $data
 	 */
 	public function editFilter(int $filter_id, array $data): void {
@@ -129,7 +130,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $filter_id primary key of the attribute record to be fetched
+	 * @param int                  $filter_id   primary key of the attribute record to be fetched
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *

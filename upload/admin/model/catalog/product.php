@@ -930,7 +930,6 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
-
 	/**
 	 * Get Total Products
 	 *
@@ -1038,7 +1037,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $product_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
@@ -1051,7 +1049,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $product_id
 	 *
@@ -1089,7 +1086,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Add Category
-	 *
 	 *
 	 * @param int $product_id
 	 * @param int $category_id
@@ -1137,7 +1133,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Filter
 	 *
-	 *
 	 * @param int $product_id
 	 * @param int $filter_id
 	 *
@@ -1149,7 +1144,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Filter
-	 *
 	 *
 	 * @param int $product_id
 	 *
@@ -1181,8 +1175,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Attribute
 	 *
-	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id   primary key of the attribute record to be fetched
+	 * @param int                  $attribute_id
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -1194,8 +1189,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Attribute
 	 *
-	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $product_id   primary key of the attribute record to be fetched
+	 * @param int $attribute_id
 	 *
 	 * @return void
 	 */
@@ -1206,7 +1201,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND `attribute_id` = '" . (int)$attribute_id . "'";
 		}
 
-	    $this->db->query($sql);
+		$this->db->query($sql);
 	}
 
 	/**
@@ -1255,7 +1250,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Option
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1281,7 +1275,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Option
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1355,8 +1348,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id        primary key of the attribute record to be fetched
+	 * @param int                  $product_option_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -1369,7 +1362,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1422,7 +1414,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Image
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1434,7 +1425,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Image
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1460,7 +1450,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Discount
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1472,7 +1461,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Discount
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1498,7 +1486,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Special
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1510,7 +1497,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Special
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1536,8 +1522,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Reward
 	 *
-	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id        primary key of the attribute record to be fetched
+	 * @param int                  $customer_group_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -1548,7 +1534,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Reward
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1580,8 +1565,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Download
 	 *
-	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $product_id  primary key of the attribute record to be fetched
+	 * @param int $download_id
 	 *
 	 * @return void
 	 */
@@ -1591,7 +1576,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Download
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1742,8 +1726,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Related
 	 *
-	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $related_id
 	 *
 	 * @return void
 	 */
@@ -1756,7 +1740,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Related
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1787,6 +1770,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $product_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addSubscription(int $product_id, $data): void {

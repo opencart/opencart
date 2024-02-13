@@ -157,7 +157,6 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $weight_class_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
@@ -170,7 +169,6 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $weight_class_id
 	 *

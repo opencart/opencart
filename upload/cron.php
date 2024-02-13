@@ -12,7 +12,7 @@ require_once(DIR_SYSTEM . 'startup.php');
 
 // Autoloader
 $autoloader = new \Opencart\System\Engine\Autoloader();
-$autoloader->register('Opencart\\Catalog', DIR_APPLICATION);
+$autoloader->register('Opencart\Catalog', DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 

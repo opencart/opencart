@@ -81,7 +81,7 @@ class Information extends \Opencart\System\Engine\Model {
 
 		foreach ($data['information_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$this->model_design_seo_url->addSeoUrl('information_id', $information_id, $keyword, $store_id, $language_id, );
+				$this->model_design_seo_url->addSeoUrl('information_id', $information_id, $keyword, $store_id, $language_id);
 			}
 		}
 
@@ -189,7 +189,6 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $information_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
@@ -202,7 +201,6 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $information_id
 	 *

@@ -133,7 +133,6 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $length_class_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
@@ -147,7 +146,6 @@ class LengthClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $length_class_id
 	 *

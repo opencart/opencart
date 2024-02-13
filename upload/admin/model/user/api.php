@@ -61,7 +61,6 @@ class Api extends \Opencart\System\Engine\Model {
 	public function deleteApi(int $api_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api` WHERE `api_id` = '" . (int)$api_id . "'");
 
-
 	}
 
 	/**

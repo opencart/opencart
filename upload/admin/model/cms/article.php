@@ -232,7 +232,6 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $article_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
@@ -245,7 +244,6 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $article_id
 	 *

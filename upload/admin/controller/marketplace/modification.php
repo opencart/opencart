@@ -506,7 +506,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 												$modification = $recovery;
 												// Log
 												$log[] = 'NOT FOUND - ABORTING!';
-												break 5;
+												break 4;
 											}
 											// Skip current operation or break
 											elseif ($error == 'skip') {

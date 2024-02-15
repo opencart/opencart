@@ -247,7 +247,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/cron');
 
-			$this->model_setting_cron->editStatus($cron_id, 1);
+			$this->model_setting_cron->editStatus($cron_id, true);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -279,7 +279,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/cron');
 
-			$this->model_setting_cron->editStatus($cron_id, 0);
+			$this->model_setting_cron->editStatus($cron_id, false);
 
 			$json['success'] = $this->language->get('text_success');
 		}

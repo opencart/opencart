@@ -440,7 +440,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				$this->model_setting_extension->editStatus($extension_install_id, 1);
+				$this->model_setting_extension->editStatus($extension_install_id, true);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
@@ -830,7 +830,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			// Remove extension directory
-			$this->model_setting_extension->editStatus($extension_install_id, 0);
+			$this->model_setting_extension->editStatus($extension_install_id, false);
 
 			// Remove any OCMOD modifications
 			$this->load->model('setting/modification');

@@ -143,7 +143,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_user_user->editAuthorizeStatus($authorize_info['user_authorize_id'], 1);
+			$this->model_user_user->editAuthorizeStatus($authorize_info['user_authorize_id'], true);
 			$this->model_user_user->editAuthorizeTotal($authorize_info['user_authorize_id'], 0);
 
 			if (isset($this->request->post['redirect'])) {

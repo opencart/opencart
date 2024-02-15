@@ -254,10 +254,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$comment_info = $this->model_cms_article->getComment($article_comment_id);
 
 				if ($comment_info) {
-					$this->model_cms_article->editCommentStatus($article_comment_id, 1);
+					$this->model_cms_article->editCommentStatus($article_comment_id, true);
 
 					if ($comment_info['customer_id']) {
-						$this->model_customer_customer->editCommenter($comment_info['customer_id'], 1);
+						$this->model_customer_customer->editCommenter($comment_info['customer_id'], true);
 
 						$filter_data = [
 							'filter_customer_id' => $comment_info['customer_id'],
@@ -267,7 +267,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 						$results = $this->model_cms_article->getComments($filter_data);
 
 						foreach ($results as $result) {
-							$this->model_cms_article->editCommentStatus($result['article_comment_id'], 1);
+							$this->model_cms_article->editCommentStatus($result['article_comment_id'], true);
 						}
 					}
 				}
@@ -312,10 +312,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$comment_info = $this->model_cms_article->getComment($article_comment_id);
 
 				if ($comment_info) {
-					$this->model_cms_article->editCommentStatus($article_comment_id, 0);
+					$this->model_cms_article->editCommentStatus($article_comment_id, false);
 
 					if ($comment_info['customer_id']) {
-						$this->model_customer_customer->editCommenter($comment_info['customer_id'], 0);
+						$this->model_customer_customer->editCommenter($comment_info['customer_id'], false);
 						$this->model_customer_customer->addHistory($comment_info['customer_id'], 'SPAMMER!!!');
 
 						// Delete all customer comments

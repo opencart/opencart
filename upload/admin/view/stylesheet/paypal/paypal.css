@@ -656,6 +656,12 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 }
+.payment-paypal .panel-default #messaging-configurator input {
+	position: absolute;
+}
+.payment-paypal .panel-default #messaging-configurator .css-15yf9ku {
+	height: auto;
+}
 @media (max-width: 767px) {
 	.payment-paypal .panel-default .section-cart .table-cart .table-row .table-col-product-image,
 	.payment-paypal .panel-default .section-cart .table-cart .table-row .table-col-product-model,
@@ -763,9 +769,6 @@
 	.payment-paypal .panel-default .paypal-card-container {
 		width: 100% !important;
 	}
-}
-.payment-paypal .panel-default .paypal-message {
-	position: relative;
 }
 .payment-paypal .panel-default .paypal-spinner {
 	position: relative;

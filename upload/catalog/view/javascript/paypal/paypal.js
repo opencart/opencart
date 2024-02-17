@@ -465,6 +465,10 @@ var PayPalAPI = (function () {
 			var paypal_message = document.createElement('div');
 			
 			paypal_message.setAttribute('data-pp-message', '');
+			
+			if (paypal_data['page_code'] == 'home') {
+				paypal_message.setAttribute('data-pp-placement', 'home');
+			}
 						
 			if (paypal_data['page_code'] == 'product') {
 				paypal_message.setAttribute('data-pp-placement', 'product');
@@ -475,13 +479,15 @@ var PayPalAPI = (function () {
 			}
 			
 			if (paypal_data['page_code'] == 'checkout') {
-				paypal_message.setAttribute('data-pp-placement', 'payment');
+				paypal_message.setAttribute('data-pp-placement', 'checkout');
 			}
 			
 			paypal_message.setAttribute('data-pp-amount', paypal_data['message_amount']);
 			paypal_message.setAttribute('data-pp-style-layout', paypal_data['message_layout']);
 			
 			if (paypal_data['message_layout'] == 'text') {
+				paypal_message.setAttribute('data-pp-style-logo-type', paypal_data['message_logo_type']);
+				paypal_message.setAttribute('data-pp-style-logo-position', paypal_data['message_logo_position']);
 				paypal_message.setAttribute('data-pp-style-text-color', paypal_data['message_text_color']);
 				paypal_message.setAttribute('data-pp-style-text-size', paypal_data['message_text_size']);
 			} else {

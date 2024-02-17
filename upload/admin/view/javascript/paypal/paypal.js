@@ -34,12 +34,7 @@ var PayPalAPI = (function () {
 			$('#paypal_card_container').find('iframe').remove();
 			$('#paypal_card_container').addClass('paypal-spinner');
 		}
-		
-		if (paypal_data['components'].includes('messages')) {
-			$('#paypal_message_' + paypal_data['page_code'] + '_container').html('');
-			$('#paypal_message_' + paypal_data['page_code'] + '_container').addClass('paypal-spinner');
-		}
-		
+				
 		var src_data = {};
 		
 		src_data['components'] = paypal_data['components'].join(',');
@@ -313,54 +308,7 @@ var PayPalAPI = (function () {
 			
 			$('#paypal_card_container').removeClass('paypal-spinner');
 		}
-		
-		if (paypal_data['components'].includes('messages') && $('#paypal_message_' + paypal_data['page_code']).length) {
-			$('#paypal_message_' + paypal_data['page_code']).css('text-align', paypal_data['message_align']);
-			
-			if (paypal_data['message_width']) {
-				$('#paypal_message_' + paypal_data['page_code'] + '_container').css('display', 'inline-block');
-				$('#paypal_message_' + paypal_data['page_code'] + '_container').css('width', paypal_data['message_width']);
-			} else {
-				$('#paypal_message_' + paypal_data['page_code'] + '_container').css('display', 'block');
-				$('#paypal_message_' + paypal_data['page_code'] + '_container').css('width', 'auto');
-			}
-			
-			var paypal_message = document.createElement('div');
-			
-			paypal_message.setAttribute('data-pp-message', '');
-						
-			if (paypal_data['page_code'] == 'home') {
-				paypal_message.setAttribute('data-pp-placement', 'home');
-			}
-			
-			if (paypal_data['page_code'] == 'product') {
-				paypal_message.setAttribute('data-pp-placement', 'product');
-			}
-			
-			if (paypal_data['page_code'] == 'cart') {
-				paypal_message.setAttribute('data-pp-placement', 'cart');
-			}
-			
-			if (paypal_data['page_code'] == 'checkout') {
-				paypal_message.setAttribute('data-pp-placement', 'payment');
-			}
-			
-			paypal_message.setAttribute('data-pp-amount', '33.00');
-			paypal_message.setAttribute('data-pp-style-layout', paypal_data['message_layout']);
-			
-			if (paypal_data['message_layout'] == 'text') {
-				paypal_message.setAttribute('data-pp-style-text-color', paypal_data['message_text_color']);
-				paypal_message.setAttribute('data-pp-style-text-size', paypal_data['message_text_size']);
-			} else {
-				paypal_message.setAttribute('data-pp-style-color', paypal_data['message_flex_color']);
-				paypal_message.setAttribute('data-pp-style-ratio', paypal_data['message_flex_ratio']);
-			}
-			
-			document.querySelector('#paypal_message_' + paypal_data['page_code'] + '_container').appendChild(paypal_message);
-			
-			$('#paypal_message_' + paypal_data['page_code'] + '_container').removeClass('paypal-spinner');
-		}
-			
+									
 		if (paypal_callback && typeof paypal_callback == 'function') {
 			paypal_callback();
 		}
@@ -417,7 +365,7 @@ var PayPalAPI = (function () {
 			console.log(error);
 		});
 	};
-		
+			
 	var init = function(data, callback = '') {
 		paypal_data = data;
 		paypal_callback = callback;

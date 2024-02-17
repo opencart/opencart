@@ -1,6 +1,6 @@
 <?php 
 $_['paypal_setting'] = array(
-	'version' => '2.2.0',
+	'version' => '2.2.1',
 	'partner' => array(
 		'production' => array(
 			'partner_id' => 'TY2Q25KP2PX9L',
@@ -119,6 +119,8 @@ $_['paypal_setting'] = array(
 			'align' => 'right',
 			'size' => 'large',
 			'layout' => 'text',
+			'logo_position' => 'left',
+			'logo_type' => 'primary',
 			'text_color' => 'black',
 			'text_size' => '12',
 			'flex_color' => 'blue',
@@ -133,6 +135,8 @@ $_['paypal_setting'] = array(
 			'align' => 'right',
 			'size' => 'large',
 			'layout' => 'text',
+			'logo_type' => 'primary',
+			'logo_position' => 'left',
 			'text_color' => 'black',
 			'text_size' => '12',
 			'flex_color' => 'blue',
@@ -147,6 +151,8 @@ $_['paypal_setting'] = array(
 			'align' => 'center',
 			'size' => 'responsive',
 			'layout' => 'text',
+			'logo_type' => 'primary',
+			'logo_position' => 'left',
 			'text_color' => 'black',
 			'text_size' => '12',
 			'flex_color' => 'blue',
@@ -160,11 +166,13 @@ $_['paypal_setting'] = array(
 			'insert_type' => 'prepend',
 			'align' => 'center',
 			'size' => 'responsive',
-			'layout' => 'text',
+			'layout' => 'flex',
+			'logo_type' => 'primary',
+			'logo_position' => 'left',
 			'text_color' => 'black',
 			'text_size' => '12',
 			'flex_color' => 'blue',
-			'flex_ratio' => '8x1'
+			'flex_ratio' => '20x1'
 		)
 	),
 	'order_status' => array(
@@ -595,6 +603,10 @@ $_['paypal_setting'] = array(
 			'code' => 'bancontact',
 			'name' => 'text_bancontact'
 		),
+		'bancontact' => array(
+			'code' => 'bancontact',
+			'name' => 'text_bancontact'
+		),
 		'blik' => array(
 			'code' => 'blik',
 			'name' => 'text_blik'
@@ -935,42 +947,6 @@ $_['paypal_setting'] = array(
 		'large' => '350px',
 		'responsive' => ''
 	),
-	'message_layout' => array(
-		'text' => array(
-			'code' => 'text',
-			'name' => 'text_text'
-		),
-		'flex' => array(
-			'code' => 'flex',
-			'name' => 'text_flex'
-		)
-	),
-	'message_text_color' => array(
-		'black' => array(
-			'code' => 'black',
-			'name' => 'text_black'
-		),
-		'white' => array(
-			'code' => 'white',
-			'name' => 'text_white'
-		)
-	),
-	'message_text_size' => array('10', '11', '12', '13', '14', '15', '16'),
-	'message_flex_color' => array(
-		'blue' => array(
-			'code' => 'blue',
-			'name' => 'text_blue'
-		),
-		'black' => array(
-			'code' => 'black',
-			'name' => 'text_black'
-		),
-		'white' => array(
-			'code' => 'white',
-			'name' => 'text_white'
-		)
-	),
-	'message_flex_ratio' => array('1x1', '1x4', '8x1', '20x1'),
 	'contact_sales' => array('100k - 250k', '250k - 2m', '2m - 10m', '10m - 20m', '20m - 50m', '50m +'),
 	'contact_product' => array(
 		array(

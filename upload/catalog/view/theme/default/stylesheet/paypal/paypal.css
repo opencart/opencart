@@ -47,6 +47,7 @@
 }
 .paypal-message {
 	position: relative;
+	margin-bottom: 10px;
 }
 .paypal-spinner {
 	position: relative;

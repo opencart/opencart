@@ -223,6 +223,8 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$data['message_size'] = $setting['message']['home']['size'];
 					$data['message_width'] = $setting['message_width'][$data['message_size']];
 					$data['message_layout'] = $setting['message']['home']['layout'];
+					$data['message_logo_type'] = $setting['message']['home']['logo_type'];
+					$data['message_logo_position'] = $setting['message']['home']['logo_position'];
 					$data['message_text_color'] = $setting['message']['home']['text_color'];
 					$data['message_text_size'] = $setting['message']['home']['text_size'];
 					$data['message_flex_color'] = $setting['message']['home']['flex_color'];
@@ -270,6 +272,8 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$data['message_size'] = $setting['message']['product']['size'];
 					$data['message_width'] = $setting['message_width'][$data['message_size']];
 					$data['message_layout'] = $setting['message']['product']['layout'];
+					$data['message_logo_type'] = $setting['message']['product']['logo_type'];
+					$data['message_logo_position'] = $setting['message']['product']['logo_position'];
 					$data['message_text_color'] = $setting['message']['product']['text_color'];
 					$data['message_text_size'] = $setting['message']['product']['text_size'];
 					$data['message_flex_color'] = $setting['message']['product']['flex_color'];
@@ -319,6 +323,8 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$data['message_size'] = $setting['message']['cart']['size'];
 					$data['message_width'] = $setting['message_width'][$data['message_size']];
 					$data['message_layout'] = $setting['message']['cart']['layout'];
+					$data['message_logo_type'] = $setting['message']['cart']['logo_type'];
+					$data['message_logo_position'] = $setting['message']['cart']['logo_position'];
 					$data['message_text_color'] = $setting['message']['cart']['text_color'];
 					$data['message_text_size'] = $setting['message']['cart']['text_size'];
 					$data['message_flex_color'] = $setting['message']['cart']['flex_color'];
@@ -454,6 +460,8 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$data['message_size'] = $setting['message']['checkout']['size'];
 					$data['message_width'] = $setting['message_width'][$data['message_size']];
 					$data['message_layout'] = $setting['message']['checkout']['layout'];
+					$data['message_logo_type'] = $setting['message']['checkout']['logo_type'];
+					$data['message_logo_position'] = $setting['message']['checkout']['logo_position'];
 					$data['message_text_color'] = $setting['message']['checkout']['text_color'];
 					$data['message_text_size'] = $setting['message']['checkout']['text_size'];
 					$data['message_flex_color'] = $setting['message']['checkout']['flex_color'];

@@ -1140,6 +1140,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$this->document->addScript('view/javascript/paypal/paypal.js');
 		$this->document->addScript('view/javascript/paypal/bootstrap-switch.js');
+		$this->document->addScript('https://www.paypalobjects.com/merchant-library/merchant-configurator.js');
 
 		$this->document->setTitle($this->language->get('heading_title_main'));
 				
@@ -1195,6 +1196,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['merchant_id'] = $this->config->get('payment_paypal_merchant_id');
 		$data['webhook_id'] = $this->config->get('payment_paypal_webhook_id');
 		$data['environment'] = $this->config->get('payment_paypal_environment');
+		$data['partner_client_id'] = $data['setting']['partner'][$data['environment']]['client_id'];
 		$data['partner_attribution_id'] = $data['setting']['partner'][$data['environment']]['partner_attribution_id'];
 		
 		$country = $this->model_extension_payment_paypal->getCountryByCode($data['setting']['general']['country_code']);

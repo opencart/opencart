@@ -40,7 +40,7 @@ class Information extends \Opencart\System\Engine\Model {
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($information_id, $store_id, $layout_id);
+					$this->model_catalog_information->addLayout($information_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -90,7 +90,7 @@ class Information extends \Opencart\System\Engine\Model {
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($information_id, $store_id, $layout_id);
+					$this->model_catalog_information->addLayout($information_id, $store_id, $layout_id);
 				}
 			}
 		}

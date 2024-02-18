@@ -43,7 +43,7 @@ class Article extends \Opencart\System\Engine\Model {
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($article_id, $store_id, $layout_id);
+					$this->model_cms_article->addLayout($article_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -97,7 +97,7 @@ class Article extends \Opencart\System\Engine\Model {
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($article_id, $store_id, $layout_id);
+					$this->model_cms_article->addLayout($article_id, $store_id, $layout_id);
 				}
 			}
 		}

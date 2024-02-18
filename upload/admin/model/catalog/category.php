@@ -74,7 +74,7 @@ class Category extends \Opencart\System\Engine\Model {
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($category_id, $store_id, $layout_id);
+					$this->model_catalog_category->addLayout($category_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -255,7 +255,7 @@ class Category extends \Opencart\System\Engine\Model {
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($category_id, $store_id, $layout_id);
+					$this->model_catalog_category->addLayout($category_id, $store_id, $layout_id);
 				}
 			}
 		}

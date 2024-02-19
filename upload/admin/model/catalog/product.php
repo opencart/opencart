@@ -279,7 +279,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_reward'])) {
 			foreach ($data['product_reward'] as $customer_group_id => $value) {
 				if ((int)$value['points'] > 0) {
-					$this->model_catalog_product->addReward($product_id, $customer_group_id, $store_id);
+					$this->model_catalog_product->addReward($product_id, $customer_group_id, $value);
 				}
 			}
 		}

@@ -215,6 +215,4 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
-
-
 }

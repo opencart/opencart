@@ -134,6 +134,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $tax_class_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addTaxRule(int $tax_class_id, $data): void {

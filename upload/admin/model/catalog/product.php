@@ -24,13 +24,13 @@ class Product extends \Opencart\System\Engine\Model {
 
 		// Description
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->addDescription($product_id, $language_id, $value);
+			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
 		}
 
 		// Categories
 		if (isset($data['product_category'])) {
 			foreach ($data['product_category'] as $category_id) {
-				$this->addCategory($product_id, $category_id);
+				$this->model_catalog_product->addCategory($product_id, $category_id);
 
 			}
 		}
@@ -38,28 +38,28 @@ class Product extends \Opencart\System\Engine\Model {
 		// Filters
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
-				$this->addFilter($product_id, $filter_id);
+				$this->model_catalog_product->addFilter($product_id, $filter_id);
 			}
 		}
 
 		// Stores
 		if (isset($data['product_store'])) {
 			foreach ($data['product_store'] as $store_id) {
-				$this->addStore($product_id, $store_id);
+				$this->model_catalog_product->addStore($product_id, $store_id);
 			}
 		}
 
 		// Downloads
 		if (isset($data['product_download'])) {
 			foreach ($data['product_download'] as $download_id) {
-				$this->addDownload($product_id, $download_id);
+				$this->model_catalog_product->addDownload($product_id, $download_id);
 			}
 		}
 
 		// Related
 		if (isset($data['product_related'])) {
 			foreach ($data['product_related'] as $related_id) {
-				$this->addRelated($product_id, $related_id);
+				$this->model_catalog_product->addRelated($product_id, $related_id);
 			}
 		}
 
@@ -68,10 +68,10 @@ class Product extends \Opencart\System\Engine\Model {
 			foreach ($data['product_attribute'] as $product_attribute) {
 				if ($product_attribute['attribute_id']) {
 					// Removes duplicates
-					$this->deleteAttribute($product_id, $product_attribute['attribute_id']);
+					$this->model_catalog_product->deleteAttribute($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
+						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -80,35 +80,35 @@ class Product extends \Opencart\System\Engine\Model {
 		// Options
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
-				$this->addOption($product_id, $product_option);
+				$this->model_catalog_product->addOption($product_id, $product_option);
 			}
 		}
 
 		// Subscription
 		if (isset($data['product_subscription'])) {
 			foreach ($data['product_subscription'] as $product_subscription) {
-				$this->addSubscription($product_id, $product_subscription);
+				$this->model_catalog_product->addSubscription($product_id, $product_subscription);
 			}
 		}
 
 		// Discounts
 		if (isset($data['product_discount'])) {
 			foreach ($data['product_discount'] as $product_discount) {
-				$this->addDiscount($product_id, $product_discount);
+				$this->model_catalog_product->addDiscount($product_id, $product_discount);
 			}
 		}
 
 		// Specials
 		if (isset($data['product_special'])) {
 			foreach ($data['product_special'] as $product_special) {
-				$this->addSpecial($product_id, $product_special);
+				$this->model_catalog_product->addSpecial($product_id, $product_special);
 			}
 		}
 
 		// Images
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $product_image) {
-				$this->addImage($product_id, $product_image);
+				$this->model_catalog_product->addImage($product_id, $product_image);
 
 			}
 		}
@@ -117,7 +117,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_reward'])) {
 			foreach ($data['product_reward'] as $customer_group_id => $product_reward) {
 				if ((int)$product_reward['points'] > 0) {
-					$this->addReward($customer_group_id, $product_reward);
+					$this->model_catalog_product->addReward($product_id, $customer_group_id, $product_reward);
 				}
 			}
 		}
@@ -136,7 +136,7 @@ class Product extends \Opencart\System\Engine\Model {
 		// Layout
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
-				$this->addLayout($product_id, $store_id, $layout_id);
+				$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
 			}
 		}
 
@@ -161,125 +161,125 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// Description
-		$this->deleteDescription($product_id);
+		$this->model_catalog_product->deleteDescription($product_id);
 
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->addDescription($product_id, $language_id, $value);
+			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
 		}
 
 		// Categories
-		$this->deleteCategory($product_id);
+		$this->model_catalog_product->deleteCategory($product_id);
 
 		if (isset($data['product_category'])) {
 			foreach ($data['product_category'] as $category_id) {
-				$this->addCategory($product_id, $category_id);
+				$this->model_catalog_product->addCategory($product_id, $category_id);
 			}
 		}
 
 		// Filters
-		$this->deleteFilter($product_id);
+		$this->model_catalog_product->deleteFilter($product_id);
 
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
-				$this->addFilter($product_id, $filter_id);
+				$this->model_catalog_product->addFilter($product_id, $filter_id);
 			}
 		}
 
 		// Stores
-		$this->deleteStore($product_id);
+		$this->model_catalog_product->deleteStore($product_id);
 
 		if (isset($data['product_store'])) {
 			foreach ($data['product_store'] as $store_id) {
-				$this->addStore($product_id, $store_id);
+				$this->model_catalog_product->addStore($product_id, $store_id);
 			}
 		}
 
 		// Downloads
-		$this->deleteDownload($product_id);
+		$this->model_catalog_product->deleteDownload($product_id);
 
 		if (isset($data['product_download'])) {
 			foreach ($data['product_download'] as $download_id) {
-				$this->addDownload($product_id, $download_id);
+				$this->model_catalog_product->addDownload($product_id, $download_id);
 			}
 		}
 
 		// Related
-		$this->deleteRelated($product_id);
+		$this->model_catalog_product->deleteRelated($product_id);
 
 		if (isset($data['product_related'])) {
 			foreach ($data['product_related'] as $related_id) {
-				$this->addRelated($product_id, $related_id);
+				$this->model_catalog_product->addRelated($product_id, $related_id);
 			}
 		}
 
 		// Attributes
-		$this->deleteAttribute($product_id);
+		$this->model_catalog_product->deleteAttribute($product_id);
 
 		if (!empty($data['product_attribute'])) {
 			foreach ($data['product_attribute'] as $product_attribute) {
 				if ($product_attribute['attribute_id']) {
 					// Removes duplicates
-					$this->deleteAttribute($product_id, $product_attribute['attribute_id']);
+					$this->model_catalog_product->deleteAttribute($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
+						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
 					}
 				}
 			}
 		}
 
 		// Options
-		$this->deleteOption($product_id);
+		$this->model_catalog_product->deleteOption($product_id);
 
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
-				$this->addOption($product_id, $product_option);
+				$this->model_catalog_product->addOption($product_id, $product_option);
 			}
 		}
 
 		// Subscription
-		$this->deleteSubscription($product_id);
+		$this->model_catalog_product->deleteSubscription($product_id);
 
 		if (isset($data['product_subscription'])) {
 			foreach ($data['product_subscription'] as $product_subscription) {
-				$this->addSubscription($product_id, $product_subscription);
+				$this->model_catalog_product->addSubscription($product_id, $product_subscription);
 			}
 		}
 
 		// Discounts
-		$this->deleteDiscount($product_id);
+		$this->model_catalog_product->deleteDiscount($product_id);
 
 		if (isset($data['product_discount'])) {
 			foreach ($data['product_discount'] as $product_discount) {
-				$this->addDiscount($product_id, $product_discount);
+				$this->model_catalog_product->addDiscount($product_id, $product_discount);
 			}
 		}
 
 		// Specials
-		$this->deleteSpecial($product_id);
+		$this->model_catalog_product->deleteSpecial($product_id);
 
 		if (isset($data['product_special'])) {
 			foreach ($data['product_special'] as $product_special) {
-				$this->addSpecial($product_id, $product_special);
+				$this->model_catalog_product->addSpecial($product_id, $product_special);
 			}
 		}
 
 		// Images
-		$this->deleteImage($product_id);
+		$this->model_catalog_product->deleteImage($product_id);
 
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $product_image) {
-				$this->addImage($product_id, $product_image);
+				$this->model_catalog_product->addImage($product_id, $product_image);
 			}
 		}
 
 		// Rewards
-		$this->deleteReward($product_id);
+		$this->model_catalog_product->deleteReward($product_id);
 
 		if (isset($data['product_reward'])) {
 			foreach ($data['product_reward'] as $customer_group_id => $value) {
 				if ((int)$value['points'] > 0) {
-					$this->addReward($product_id, $customer_group_id, $store_id);
+					$this->model_catalog_product->addReward($product_id, $customer_group_id, $store_id);
 				}
 			}
 		}
@@ -296,12 +296,12 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// Layout
-		$this->deleteLayout($product_id);
+		$this->model_catalog_product->deleteLayout($product_id);
 
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($product_id, $store_id, $layout_id);
+					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -355,21 +355,21 @@ class Product extends \Opencart\System\Engine\Model {
 	public function deleteProduct(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'");
 
-		$this->deleteAttribute($product_id);
-		$this->deleteCategory($product_id);
-		$this->deleteDescription($product_id);
-		$this->deleteDiscount($product_id);
-		$this->deleteDownload($product_id);
-		$this->deleteFilter($product_id);
-		$this->deleteImage($product_id);
-		$this->deleteLayout($product_id);
-		$this->deleteOption($product_id);
-		$this->deleteRelated($product_id);
-		$this->deleteReport($product_id);
-		$this->deleteReward($product_id);
-		$this->deleteSpecial($product_id);
-		$this->deleteStore($product_id);
-		$this->deleteSubscription($product_id);
+		$this->model_catalog_product->deleteAttribute($product_id);
+		$this->model_catalog_product->deleteCategory($product_id);
+		$this->model_catalog_product->deleteDescription($product_id);
+		$this->model_catalog_product->deleteDiscount($product_id);
+		$this->model_catalog_product->deleteDownload($product_id);
+		$this->model_catalog_product->deleteFilter($product_id);
+		$this->model_catalog_product->deleteImage($product_id);
+		$this->model_catalog_product->deleteLayout($product_id);
+		$this->model_catalog_product->deleteOption($product_id);
+		$this->model_catalog_product->deleteRelated($product_id);
+		$this->model_catalog_product->deleteReport($product_id);
+		$this->model_catalog_product->deleteReward($product_id);
+		$this->model_catalog_product->deleteSpecial($product_id);
+		$this->model_catalog_product->deleteStore($product_id);
+		$this->model_catalog_product->deleteSubscription($product_id);
 
 		$this->load->model('catalog/review');
 
@@ -383,7 +383,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$this->model_marketing_coupon->deleteProductByProductId($product_id);
 
-		$this->resetMasterId($product_id);
+		$this->model_catalog_product->resetMasterId($product_id);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '0' WHERE `master_id` = '" . (int)$product_id . "'");
 
@@ -930,7 +930,6 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
-
 	/**
 	 * Get Total Products
 	 *
@@ -1038,7 +1037,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $product_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
@@ -1051,7 +1049,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $product_id
 	 *
@@ -1089,7 +1086,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Add Category
-	 *
 	 *
 	 * @param int $product_id
 	 * @param int $category_id
@@ -1137,7 +1133,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Filter
 	 *
-	 *
 	 * @param int $product_id
 	 * @param int $filter_id
 	 *
@@ -1149,7 +1144,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Filter
-	 *
 	 *
 	 * @param int $product_id
 	 *
@@ -1181,8 +1175,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Attribute
 	 *
-	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id   primary key of the attribute record to be fetched
+	 * @param int                  $attribute_id
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -1194,8 +1189,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Attribute
 	 *
-	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $product_id   primary key of the attribute record to be fetched
+	 * @param int $attribute_id
 	 *
 	 * @return void
 	 */
@@ -1206,7 +1201,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND `attribute_id` = '" . (int)$attribute_id . "'";
 		}
 
-	    $this->db->query($sql);
+		$this->db->query($sql);
 	}
 
 	/**
@@ -1255,7 +1250,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Option
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1270,6 +1264,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$product_option_id = $this->db->getLastId();
 
+
 		if (isset($data['product_option_value'])) {
 			foreach ($data['product_option_value'] as $product_option_value) {
 				$this->addOptionValue($product_id, $product_option_id, $data['option_id'], $product_option_value);
@@ -1282,7 +1277,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Option
 	 *
-	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
 	 * @return void
@@ -1290,7 +1284,7 @@ class Product extends \Opencart\System\Engine\Model {
 	public function deleteOption(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_option` WHERE `product_id` = '" . (int)$product_id . "'");
 
-		$this->deleteOptionValue($product_id);
+		$this->model_catalog_product->deleteOptionValue($product_id);
 	}
 
 	/**
@@ -1355,8 +1349,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id        primary key of the attribute record to be fetched
+	 * @param int                  $product_option_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -1369,7 +1363,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1422,7 +1415,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Image
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1434,7 +1426,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Image
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1460,7 +1451,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Discount
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1472,7 +1462,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Discount
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1498,7 +1487,6 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Special
 	 *
-	 *
 	 * @param int                  $product_id primary key of the attribute record to be fetched
 	 * @param array<string, mixed> $data
 	 *
@@ -1510,7 +1498,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Special
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1536,8 +1523,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Reward
 	 *
-	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
+	 * @param int                  $product_id        primary key of the attribute record to be fetched
+	 * @param int                  $customer_group_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -1548,7 +1535,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Reward
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1580,8 +1566,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Download
 	 *
-	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $product_id  primary key of the attribute record to be fetched
+	 * @param int $download_id
 	 *
 	 * @return void
 	 */
@@ -1591,7 +1577,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Download
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1742,8 +1727,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Related
 	 *
-	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $related_id
 	 *
 	 * @return void
 	 */
@@ -1756,7 +1741,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Related
-	 *
 	 *
 	 * @param int $product_id primary key of the attribute record to be fetched
 	 *
@@ -1787,6 +1771,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $product_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addSubscription(int $product_id, $data): void {

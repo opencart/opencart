@@ -374,6 +374,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Authorize
 	 *
+	 * @param int $user_id
 	 * @param int $user_authorize_id
 	 *
 	 * @return void

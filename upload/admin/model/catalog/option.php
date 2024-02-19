@@ -147,7 +147,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $option_id primary key
+	 * @param int                  $option_id   primary key
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
@@ -159,7 +159,6 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $option_id
 	 *
@@ -189,6 +188,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addValue(int $option_id, array $data): int {
@@ -255,6 +255,9 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $option_value_id
+	 * @param int                  $language_id
+	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addValueDescription(int $option_value_id, int $language_id, int $option_id, array $data): void {

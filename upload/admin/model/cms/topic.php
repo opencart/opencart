@@ -196,8 +196,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $topic_id
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void

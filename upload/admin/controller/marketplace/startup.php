@@ -194,7 +194,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/startup');
 
-			$this->model_setting_startup->editStatus($startup_id, 1);
+			$this->model_setting_startup->editStatus($startup_id, true);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -226,7 +226,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/startup');
 
-			$this->model_setting_startup->editStatus($startup_id, 0);
+			$this->model_setting_startup->editStatus($startup_id, false);
 
 			$json['success'] = $this->language->get('text_success');
 		}

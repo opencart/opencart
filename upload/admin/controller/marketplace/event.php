@@ -194,7 +194,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/event');
 
-			$this->model_setting_event->editStatus($event_id, 1);
+			$this->model_setting_event->editStatus($event_id, true);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -226,7 +226,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/event');
 
-			$this->model_setting_event->editStatus($event_id, 0);
+			$this->model_setting_event->editStatus($event_id, false);
 
 			$json['success'] = $this->language->get('text_success');
 		}

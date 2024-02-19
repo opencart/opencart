@@ -184,8 +184,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 *
 	 * @param int                  $custom_field_id primary key of the attribute record to be fetched
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -196,7 +196,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Description
-	 *
 	 *
 	 * @param int $custom_field_id primary key of the attribute record to be fetched
 	 *
@@ -227,6 +226,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $custom_field_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addCustomerGroup(int $custom_field_id, array $data): void {
@@ -251,6 +251,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $custom_field_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addValue(int $custom_field_id, array $data): int {
@@ -311,6 +312,9 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $custom_field_id
+	 * @param int                  $custom_field_value_id
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $custom_field_value_description
 	 */
 	public function addValueDescription(int $custom_field_id, int $custom_field_value_id, int $language_id, array $custom_field_value_description): void {

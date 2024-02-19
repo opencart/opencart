@@ -75,7 +75,6 @@ class Review extends \Opencart\System\Engine\Model {
 		$this->cache->delete('product');
 	}
 
-
 	/**
 	 * Get Review
 	 *

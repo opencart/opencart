@@ -136,7 +136,9 @@ class Product extends \Opencart\System\Engine\Model {
 		// Layout
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
-				$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
+				}
 			}
 		}
 

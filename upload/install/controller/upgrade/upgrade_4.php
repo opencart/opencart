@@ -349,7 +349,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $extension) {
 				//get all setting from setting table
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $extension['code'] . "'");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
 
 				if ($query->num_rows) {
 					foreach ($query->rows as $result) {

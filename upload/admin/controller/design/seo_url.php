@@ -633,7 +633,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			}
 
-			$email_total = $this->model_design_seo_url->getTotalEmailsByProductsOrdered($this->request->post['product']);
+			$this->load->model('sale/order');
+
+			$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($this->request->post['product']);
 
 			$start = ($page - 1) * $limit;
 			$end = $start > ($email_total - $limit) ? $email_total : ($start + $limit);

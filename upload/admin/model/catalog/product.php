@@ -1353,6 +1353,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id        primary key of the attribute record to be fetched
 	 * @param int                  $product_option_id
+	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int

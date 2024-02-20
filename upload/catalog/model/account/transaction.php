@@ -28,8 +28,6 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteTransaction(int $customer_id, int $order_id = 0): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
-
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($order_id) {

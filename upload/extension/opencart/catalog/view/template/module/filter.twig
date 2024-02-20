@@ -27,6 +27,6 @@ $('#button-filter').on('click', function () {
         filter.push(this.value);
     });
 
-    location = '{{ action }}&filter=' + filter.join(',');
+    location = '{{ action|escape('js') }}&filter=' + filter.join(',');
 });
 //--></script>

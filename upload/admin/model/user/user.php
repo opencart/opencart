@@ -379,7 +379,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAuthorize(int $user_id, int $user_authorize_id): void {
+	public function deleteAuthorize(int $user_id, int $user_authorize_id= 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'";
 
 		if ($user_authorize_id) {

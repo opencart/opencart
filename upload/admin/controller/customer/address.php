@@ -76,9 +76,9 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['address_id'])) {
-			$data['heading_title'] = $this->language->get('text_address_add');
-		} else {
 			$data['heading_title'] = $this->language->get('text_address_edit');
+		} else {
+			$data['heading_title'] = $this->language->get('text_address_add');
 		}
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));

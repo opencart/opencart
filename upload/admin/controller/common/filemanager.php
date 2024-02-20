@@ -396,11 +396,11 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			mkdir($directory . '/' . $folder, 0777);
+			mkdir($directory . $folder, 0777);
 
-			chmod($directory . '/' . $folder, 0777);
+			chmod($directory . $folder, 0777);
 
-			@touch($directory . '/' . $folder . '/' . 'index.html');
+			@touch($directory . $folder . '/' . 'index.html');
 
 			$json['success'] = $this->language->get('text_directory');
 		}

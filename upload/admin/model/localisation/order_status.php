@@ -17,7 +17,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		$order_status_id = 0;
 
 		foreach ($data['order_status'] as $language_id => $value) {
-			if ($order_status_id) {
+			if (!$order_status_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 
 				$order_status_id = $this->db->getLastId();

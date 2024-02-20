@@ -6,6 +6,11 @@ namespace Opencart\Catalog\Model\Account;
  * @package Opencart\Catalog\Model\Account
  */
 class Reward extends \Opencart\System\Engine\Model {
+	public function addReward() {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$this->customer->getId() . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
+		
+	}
+	
 	/**
 	 * delete Reward
 	 *
@@ -13,7 +18,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteReward(int $customer_id): void {
+	public function deleteReward(int $customer_id, int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 

@@ -7,6 +7,40 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Transaction extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Transaction
+	 *
+	 * @param int    $customer_id
+	 * @param string $description
+	 * @param float  $amount
+	 * @param int    $order_id
+	 *
+	 * @return void
+	 */
+	public function addTransaction(int $customer_id, string $description, float $amount = 0, int $order_id = 0): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Delete Transaction
+	 *
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
+	public function deleteTransaction(int $customer_id, int $order_id = 0): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+		$sql = "DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($order_id) {
+			$sql .= " AND `order_id` = '" . (int)$order_id . "'";
+		}
+
+		$this->db->query($sql);
+
+	}
+
+	/**
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -54,6 +88,19 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalTransactions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Transactions By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return int
+	 */
+	public function getTotalTransactionsByOrderId(int $order_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return (int)$query->row['total'];
 	}

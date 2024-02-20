@@ -7,6 +7,18 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Reward extends \Opencart\System\Engine\Model {
 	/**
+	 * delete Reward
+	 *
+	 * @param int    $customer_id
+	 *
+	 * @return void
+	 */
+	public function deleteReward(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+
+	/**
 	 * Get Rewards
 	 *
 	 * @param array<string, mixed> $data

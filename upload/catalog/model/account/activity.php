@@ -23,4 +23,15 @@ class Activity extends \Opencart\System\Engine\Model {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_activity` SET `customer_id` = '" . (int)$customer_id . "', `key` = '" . $this->db->escape($key) . "', `data` = '" . $this->db->escape(json_encode($data)) . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
 	}
+
+	/**
+	 * Delete Activity
+	 *
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
+	public function deleteActivity(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_activity` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
 }

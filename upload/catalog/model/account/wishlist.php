@@ -22,8 +22,18 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteWishlist(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `product_id` = '" . (int)$product_id . "'");
+	public function deleteWishlist(int $customer_id, int $product_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($product_id) {
+			$sql .= " AND `product_id` = '" . (int)$product_id . "'";
+		}
+		
+		$this->db->query($sql);
+	}
+
+	public function deleteWishlistByCustomerId(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**

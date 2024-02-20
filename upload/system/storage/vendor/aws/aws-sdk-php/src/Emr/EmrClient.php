@@ -100,6 +100,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeTagsAsync(array $args = [])
  * @method \Aws\Result runJobFlow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise runJobFlowAsync(array $args = [])
+ * @method \Aws\Result setKeepJobFlowAliveWhenNoSteps(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise setKeepJobFlowAliveWhenNoStepsAsync(array $args = [])
  * @method \Aws\Result setTerminationProtection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setTerminationProtectionAsync(array $args = [])
  * @method \Aws\Result setVisibleToAllUsers(array $args = [])

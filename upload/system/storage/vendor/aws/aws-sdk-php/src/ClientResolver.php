@@ -153,6 +153,7 @@ class ClientResolver
         ],
         'serializer' => [
             'default'   => [__CLASS__, '_default_serializer'],
+            'fn'        => [__CLASS__, '_apply_serializer'],
             'internal'  => true,
             'type'      => 'value',
             'valid'     => ['callable'],
@@ -832,6 +833,11 @@ class ClientResolver
 
     public static function _default_use_dual_stack_endpoint(array &$args) {
         return UseDualStackConfigProvider::defaultProvider($args);
+    }
+
+    public static function _apply_serializer($value, array &$args, HandlerList $list)
+    {
+        $list->prependBuild(Middleware::requestBuilder($value), 'builder');
     }
 
     public static function _apply_debug($value, array &$args, HandlerList $list)

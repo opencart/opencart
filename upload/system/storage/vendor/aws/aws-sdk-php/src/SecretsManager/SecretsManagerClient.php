@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Secrets Manager** service.
+ * @method \Aws\Result batchGetSecretValue(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetSecretValueAsync(array $args = [])
  * @method \Aws\Result cancelRotateSecret(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelRotateSecretAsync(array $args = [])
  * @method \Aws\Result createSecret(array $args = [])

@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteDomainAsync(array $args = [])
  * @method \Aws\Result getCase(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCaseAsync(array $args = [])
+ * @method \Aws\Result getCaseAuditEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCaseAuditEventsAsync(array $args = [])
  * @method \Aws\Result getCaseEventConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCaseEventConfigurationAsync(array $args = [])
  * @method \Aws\Result getDomain(array $args = [])

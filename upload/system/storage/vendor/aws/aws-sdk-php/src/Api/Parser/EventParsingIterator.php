@@ -69,37 +69,81 @@ class EventParsingIterator implements Iterator
             if ($event['headers'][':message-type'] === 'error') {
                 return $this->parseError($event);
             }
+
             if ($event['headers'][':message-type'] !== 'event') {
                 throw new ParserException('Failed to parse unknown message type.');
             }
         }
 
-        if (empty($event['headers'][':event-type'])) {
+        $eventType = $event['headers'][':event-type'] ?? null;
+        if (empty($eventType)) {
             throw new ParserException('Failed to parse without event type.');
         }
-        $eventShape = $this->shape->getMember($event['headers'][':event-type']);
 
-        $parsedEvent = [];
-        foreach ($eventShape['members'] as $shape => $details) {
-            if (!empty($details['eventpayload'])) {
-                $payloadShape = $eventShape->getMember($shape);
-                if ($payloadShape['type'] === 'blob') {
-                    $parsedEvent[$shape] = $event['payload'];
-                } else {
-                    $parsedEvent[$shape] = $this->parser->parseMemberFromStream(
-                        $event['payload'],
-                        $payloadShape,
-                        null
-                    );
-                }
-            } else {
-                $parsedEvent[$shape] = $event['headers'][$shape];
+        $eventShape = $this->shape->getMember($eventType);
+        $eventPayload = $event['payload'];
+
+        return [
+            $eventType => array_merge(
+                $this->parseEventHeaders($event['headers'], $eventShape),
+                $this->parseEventPayload($eventPayload, $eventShape)
+            )
+        ];
+    }
+
+    /**
+     * @param $headers
+     * @param $eventShape
+     *
+     * @return array
+     */
+    private function parseEventHeaders($headers, $eventShape): array
+    {
+        $parsedHeaders = [];
+        foreach ($eventShape->getMembers() as $memberName => $memberProps) {
+            if (isset($memberProps['eventheader'])) {
+                $parsedHeaders[$memberName] = $headers[$memberName];
             }
         }
 
-        return [
-            $event['headers'][':event-type'] => $parsedEvent
-        ];
+        return $parsedHeaders;
+    }
+
+    /**
+     * @param $payload
+     * @param $eventShape
+     *
+     * @return array
+     */
+    private function parseEventPayload($payload, $eventShape): array
+    {
+        $parsedPayload = [];
+        foreach ($eventShape->getMembers() as $memberName => $memberProps) {
+            $memberShape = $eventShape->getMember($memberName);
+            if (isset($memberProps['eventpayload'])) {
+                if ($memberShape->getType() === 'blob') {
+                    $parsedPayload[$memberName] = $payload;
+                } else {
+                    $parsedPayload[$memberName] = $this->parser->parseMemberFromStream(
+                        $payload,
+                        $memberShape,
+                        null
+                    );
+                }
+
+                break;
+            }
+        }
+
+        if (empty($parsedPayload) && !empty($payload->getContents())) {
+            /**
+             * If we did not find a member with an eventpayload trait, then we should deserialize the payload
+             * using the event's shape.
+             */
+            $parsedPayload = $this->parser->parseMemberFromStream($payload, $eventShape, null);
+        }
+
+        return $parsedPayload;
     }
 
     private function parseError(array $event)

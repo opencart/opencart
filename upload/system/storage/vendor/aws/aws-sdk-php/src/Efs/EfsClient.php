@@ -66,5 +66,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateFileSystem(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFileSystemAsync(array $args = [])
+ * @method \Aws\Result updateFileSystemProtection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateFileSystemProtectionAsync(array $args = [])
  */
 class EfsClient extends AwsClient {}

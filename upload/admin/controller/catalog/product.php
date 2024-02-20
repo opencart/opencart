@@ -1074,12 +1074,12 @@ class Product extends \Opencart\System\Engine\Controller {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 
-			if ((oc_strlen(trim($value['meta_title'])) < 1) || (oc_strlen($value['meta_title']) > 255)) {
+			if (!oc_validate_length($value['meta_title'], 1, 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
-		if ((oc_strlen($this->request->post['model']) < 1) || (oc_strlen($this->request->post['model']) > 64)) {
+		if (!oc_validate_length($this->request->post['model'], 1, 64)) {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 

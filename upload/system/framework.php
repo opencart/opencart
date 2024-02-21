@@ -83,6 +83,13 @@ if ($config->get('db_autostart')) {
 	$db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
 	$registry->set('db', $db);
 
+	// Set time zone
+	$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_timezone' AND store_id = '0'");
+
+	if ($query->num_rows) {
+		date_default_timezone_set($query->row['value']);
+	}
+
 	// Sync PHP and DB time zones
 	$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
 }

@@ -853,19 +853,3 @@ div.required .col-form-label:not(span):before, div.required .form-label:before, 
 td {
     position: relative;
 }
-
-.filter-sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: calc(var(--bs-gutter-x) / 1);
-    bottom: calc(var(--bs-gutter-x) / 1);
-    max-height: calc(100vh - (var(--bs-gutter-x) * 2));
-    overflow-y: auto;
-    z-index: 100;
-}
-
-@media screen and (max-width: 992px) {
-    .filter-sticky {
-        position: unset;
-    }
-}

@@ -60,6 +60,9 @@ $carousel-indicator-active-opacity:  .9;
 .input-group-sm > .btn {
   height: #{$input-height-sm};
 }
+.btn-light {
+  --bs-btn-border-color: var(--bs-gray-300);
+}
 .carousel {
   border: 4px solid #{$white};
   border-radius: 4px;
@@ -109,7 +112,4 @@ $carousel-indicator-active-opacity:  .9;
   .active {
     opacity: $carousel-indicator-active-opacity;
   }
-}
-.table > :not(caption) > * > * {
-	background: transparent;
 }

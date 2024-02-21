@@ -87,6 +87,3 @@ $breadcrumb-divider:        "\f105";
 .btn-light, .btn-outline-secondary {
   --#{$prefix}btn-border-color: #{$gray-400};
 }
-.table > :not(caption) > * > * {
-	background: transparent;
-}

@@ -75,7 +75,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['address_id'])) {
+		if (!isset($this->request->get['address_id'])) {
 			$data['heading_title'] = $this->language->get('text_address_add');
 		} else {
 			$data['heading_title'] = $this->language->get('text_address_edit');

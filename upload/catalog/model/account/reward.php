@@ -27,8 +27,19 @@ class Reward extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteReward(int $customer_id, int $order_id): void {
+	public function deleteReward(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * Delete Reward By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteRewardByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	/**

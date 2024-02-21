@@ -75,11 +75,6 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 			}
 
-			// Gift Voucher
-			$this->load->model('checkout/voucher');
-
-			$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
-
 			// Vouchers
 			$this->deleteVoucher($order_id);
 
@@ -142,13 +137,18 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->deleteTotal($order_id);
 		$this->deleteHistory($order_id);
 
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
-
 		// Gift Voucher
 		$this->load->model('checkout/voucher');
 
 		$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
+
+		$this->load->model('account/transaction');
+
+		$this->model_account_transaction->deleteTransactionByOrderId($order_id);
+
+		$this->load->model('account/reward');
+
+		$this->model_account_reward->deleteRewardByOrderId($order_id);
 	}
 
 	/**

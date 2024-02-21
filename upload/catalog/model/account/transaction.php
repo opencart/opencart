@@ -38,6 +38,19 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Transaction By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteTransactionByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	/**
+	 * Get Transactions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>

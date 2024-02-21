@@ -807,6 +807,17 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Reset Authorizes
+	 *
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
+	public function resetAuthorizes(int $customer_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
 	 * Delete Authorize
 	 *
 	 * @param int $customer_id
@@ -836,17 +847,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "') AS `attempts` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
 		return $query->row;
-	}
-
-	/**
-	 * Reset Authorizes
-	 *
-	 * @param int $customer_id
-	 *
-	 * @return void
-	 */
-	public function resetAuthorizes(int $customer_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**

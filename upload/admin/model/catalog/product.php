@@ -1819,6 +1819,15 @@ class Product extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * Add Report
+	 *
+	 * @param int    $product_id
+	 * @param string $ip
+	 * @param int    $store_id
+	 * @param string $country
+	 *
+
 	public function deleteReport(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "'");
 	}

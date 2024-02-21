@@ -172,7 +172,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				$this->load->model('account/wishlist');
 
 				foreach ($this->session->data['wishlist'] as $key => $product_id) {
-					$this->model_account_wishlist->addWishlist($product_id);
+					$this->model_account_wishlist->addWishlist($this->customer->getId(), $product_id);
 
 					unset($this->session->data['wishlist'][$key]);
 				}

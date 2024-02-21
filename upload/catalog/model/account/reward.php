@@ -6,9 +6,18 @@ namespace Opencart\Catalog\Model\Account;
  * @package Opencart\Catalog\Model\Account
  */
 class Reward extends \Opencart\System\Engine\Model {
-	public function addReward() {
+	/**
+	 * Add Reward
+	 *
+	 * @param int    $customer_id
+	 * @param int    $order_id
+	 * @param string $description
+	 * @param int    $points
+	 *
+	 * @return void
+	 */
+	public function addReward(int $customer_id, int $order_id, string $description, int $points): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$this->customer->getId() . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
-		
 	}
 	
 	/**
@@ -21,7 +30,6 @@ class Reward extends \Opencart\System\Engine\Model {
 	public function deleteReward(int $customer_id, int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
-
 
 	/**
 	 * Get Rewards
@@ -80,12 +88,14 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Points
+	 * Get Reward Total
+	 *
+	 * @param int $customer_id
 	 *
 	 * @return int
 	 */
-	public function getTotalPoints(): int {
-		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
+	public function getRewardTotal(int $customer_id): int {
+		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

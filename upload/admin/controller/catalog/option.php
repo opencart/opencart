@@ -296,7 +296,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
-			if ((oc_strlen(trim($value['name'])) < 1) || (oc_strlen($value['name']) > 128)) {
+			if (!oc_validate_length($value['name'], 1, 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
@@ -330,7 +330,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->post['option_value'])) {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
-					if ((oc_strlen(trim($option_value_description['name'])) < 1) || (oc_strlen($option_value_description['name']) > 128)) {
+					if (!oc_validate_length($option_value_description['name'], 1, 128)) {
 						$json['error']['option_value_' . $option_value_id . '_' . $language_id] = $this->language->get('error_option_value');
 					}
 				}

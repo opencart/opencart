@@ -47,8 +47,14 @@ class Address extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAddress(int $address_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+	public function deleteAddress(int $customer_id, int $address_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($address_id) {
+			$sql = " AND `address_id` = '" . (int)$address_id . "'";
+		}
+
+		$this->db->query($sql);
 	}
 
 	/**

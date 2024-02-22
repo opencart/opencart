@@ -143,7 +143,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_user_user->editAuthorizeStatus($authorize_info['user_authorize_id'], 1);
+			$this->model_user_user->editAuthorizeStatus($authorize_info['user_authorize_id'], true);
 			$this->model_user_user->editAuthorizeTotal($authorize_info['user_authorize_id'], 0);
 
 			if (isset($this->request->post['redirect'])) {
@@ -241,7 +241,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$user_info = $this->model_user_user->getUserByEmail($email);
 
 		if ($user_info && $user_info['code'] && $code && $user_info['code'] === $code) {
-			$this->model_user_user->resetAuthorizes($user_info['user_id']);
+			$this->model_user_user->editAuthorizeTotalByUserId($user_info['user_id'], 0);
 
 			$this->model_user_user->editCode($email, '');
 

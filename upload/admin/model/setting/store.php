@@ -28,12 +28,12 @@ class Store extends \Opencart\System\Engine\Model {
 		}
 
 		// SEO URL
-		$this->load->model('design/layout');
+		$this->load->model('design/seo_url');
 
-		$results = $this->model_design_layout->getSeoUrlsByStoreId(0);
+		$results = $this->model_design_seo_url->getSeoUrlsByStoreId(0);
 
 		foreach ($results as $result) {
-			$this->model_design_layout->addSeoUrl($result['key'], $result['value'], $result['keyword'], $store_id, $result['language_id'], $result['sort_order']);
+			$this->model_design_seo_url->addSeoUrl($result['key'], $result['value'], $result['keyword'], $store_id, $result['language_id'], $result['sort_order']);
 		}
 
 		$this->cache->delete('store');

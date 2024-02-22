@@ -37,7 +37,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		if (isset($this->request->get['filter_extension_id'])) {
+		if (isset($this->request->get['filter_extension_download_id'])) {
 			$data['filter_extension_download_id'] = (int)$this->request->get['filter_extension_download_id'];
 		} else {
 			$data['filter_extension_download_id'] = '';
@@ -235,7 +235,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$code = basename($filename, '.ocmod.zip');
 
 			// 2. Validate the filename.
-			if ((oc_strlen($filename) < 1) || (oc_strlen($filename) > 128)) {
+			if (!oc_validate_length($filename, 1, 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 
@@ -440,7 +440,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				$this->model_setting_extension->editStatus($extension_install_id, 1);
+				$this->model_setting_extension->editStatus($extension_install_id, true);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
@@ -830,7 +830,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			// Remove extension directory
-			$this->model_setting_extension->editStatus($extension_install_id, 0);
+			$this->model_setting_extension->editStatus($extension_install_id, false);
 
 			// Remove any OCMOD modifications
 			$this->load->model('setting/modification');

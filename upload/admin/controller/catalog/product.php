@@ -1074,12 +1074,12 @@ class Product extends \Opencart\System\Engine\Controller {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 
-			if ((oc_strlen(trim($value['meta_title'])) < 1) || (oc_strlen($value['meta_title']) > 255)) {
+			if (!oc_validate_length($value['meta_title'], 1, 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
-		if ((oc_strlen($this->request->post['model']) < 1) || (oc_strlen($this->request->post['model']) > 64)) {
+		if (!oc_validate_length($this->request->post['model'], 1, 64)) {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
@@ -1365,7 +1365,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$subscription_data = [];
+			$subscription_plan_data = [];
 
 			$product_subscriptions = $this->model_catalog_product->getSubscriptions($result['product_id']);
 
@@ -1373,7 +1373,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
-					$subscription_data[] = [
+					$subscription_plan_data[] = [
 						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
 						'name'                 => $subscription_plan_info['name']
 					];
@@ -1385,7 +1385,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 				'model'        => $result['model'],
 				'option'       => $option_data,
-				'subscription' => $subscription_data,
+				'subscription' => $subscription_plan_data,
 				'price'        => $result['price']
 			];
 		}

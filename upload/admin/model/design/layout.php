@@ -148,7 +148,7 @@ class Layout extends \Opencart\System\Engine\Model {
 
 		return $query->rows;
 	}
-	
+
 	/**
 	 * Get Total Layouts
 	 *
@@ -205,6 +205,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $store_id
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRoutesByStoreId(int $store_id): array {

@@ -17,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getKeyspaceAsync(array $args = [])
  * @method \Aws\Result getTable(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTableAsync(array $args = [])
+ * @method \Aws\Result getTableAutoScalingSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTableAutoScalingSettingsAsync(array $args = [])
  * @method \Aws\Result listKeyspaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listKeyspacesAsync(array $args = [])
  * @method \Aws\Result listTables(array $args = [])

@@ -473,7 +473,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Delete address from database.
-			$this->model_account_address->deleteAddress($address_id);
+			$this->model_account_address->deleteAddress($this->customer->getId(), $address_id);
 
 			// Delete address from session.
 			if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == $address_id)) {

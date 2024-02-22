@@ -9,6 +9,13 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Seo Url
 	 *
+	 * @param string $key
+	 * @param string $value
+	 * @param string $keyword
+	 * @param int    $store_id
+	 * @param int    $language_id
+	 * @param int    $sort_order
+	 *
 	 * @return int
 	 */
 	public function addSeoUrl(string $key, string $value, string $keyword, int $store_id, int $language_id, int $sort_order = 0): int {
@@ -20,7 +27,13 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Seo Url
 	 *
-	 * @param int $seo_url_id
+	 * @param int    $seo_url_id
+	 * @param string $key
+	 * @param string $value
+	 * @param string $keyword
+	 * @param int    $store_id
+	 * @param int    $language_id
+	 * @param int    $sort_order
 	 *
 	 * @return void
 	 */
@@ -213,7 +226,6 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<int, string>>
 	 */
-
 	public function getSeoUrlsByKeyValue(string $key, string $value): array {
 		$seo_url_data = [];
 
@@ -227,6 +239,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $store_id
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getSeoUrlsByStoreId(int $store_id): array {

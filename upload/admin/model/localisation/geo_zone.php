@@ -145,6 +145,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int                  $geo_zone_id
 	 * @param array<string, mixed> $data
 	 */
 	public function addZone(int $geo_zone_id, $data): void {

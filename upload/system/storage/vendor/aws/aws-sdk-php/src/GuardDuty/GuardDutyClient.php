@@ -81,6 +81,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMemberDetectorsAsync(array $args = [])
  * @method \Aws\Result getMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMembersAsync(array $args = [])
+ * @method \Aws\Result getOrganizationStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getOrganizationStatisticsAsync(array $args = [])
  * @method \Aws\Result getRemainingFreeTrialDays(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRemainingFreeTrialDaysAsync(array $args = [])
  * @method \Aws\Result getThreatIntelSet(array $args = [])

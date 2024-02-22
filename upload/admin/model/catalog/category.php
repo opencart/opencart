@@ -436,8 +436,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 *    Add Description
 	 *
-	 *
 	 * @param int                  $category_id primary key of the attribute record to be fetched
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -448,7 +448,6 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 *    Delete Description
-	 *
 	 *
 	 * @param int $category_id
 	 *
@@ -540,6 +539,8 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $path_id
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getPathsByPathId(int $path_id): array {

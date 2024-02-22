@@ -146,7 +146,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$data['text'] = html_entity_decode($notification_info['text'], ENT_QUOTES, 'UTF-8');
 
-			$this->model_tool_notification->editStatus($notification_id, 1);
+			$this->model_tool_notification->editStatus($notification_id, true);
 
 			$this->response->setOutput($this->load->view('tool/notification_info', $data));
 		}

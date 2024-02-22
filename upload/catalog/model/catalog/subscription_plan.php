@@ -30,7 +30,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND spd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+			$sql .= " AND spd.`name` LIKE '" . $this->db->escape($data['filter_name'] . '%') . "'";
 		}
 
 		$sort_data = [

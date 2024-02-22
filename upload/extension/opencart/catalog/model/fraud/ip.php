@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Fraud;
  */
 class Ip extends \Opencart\System\Engine\Model {
 	/**
+	 * Check IP
+	 *
 	 * @param array<string, mixed> $order_info
 	 *
 	 * @return int
@@ -20,18 +22,18 @@ class Ip extends \Opencart\System\Engine\Model {
 			$results = $this->model_account_customer->getIps($order_info['customer_id']);
 
 			foreach ($results as $result) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fraud_ip` WHERE `ip` = '" . $this->db->escape($result['ip']) . "'");
+				$ips = $this->getIps($result['ip']);
 
-				if ($query->num_rows) {
+				if ($ips) {
 					$status = true;
 
 					break;
 				}
 			}
 		} else {
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fraud_ip` WHERE `ip` = '" . $this->db->escape($order_info['ip']) . "'");
+			$ips = $this->getIps($order_info['ip']);
 
-			if ($query->num_rows) {
+			if ($ips) {
 				$status = true;
 			}
 		}
@@ -41,5 +43,18 @@ class Ip extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
+	}
+
+	/**
+	 * Get IPs
+	 *
+	 * @param string $ip
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getIps(string $ip): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fraud_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
+
+		return $query->rows;
 	}
 }

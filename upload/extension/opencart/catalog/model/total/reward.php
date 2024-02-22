@@ -66,6 +66,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @param array<string, mixed> $order_info
 	 * @param array<string, mixed> $order_total
 	 *

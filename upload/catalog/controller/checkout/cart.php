@@ -189,7 +189,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'reward'       => $product['reward'],
 				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
 				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
-				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
+				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+				'remove'       => $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language') . '&key=' . $product['cart_id'])
 			];
 		}
 
@@ -202,7 +203,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$data['vouchers'][] = [
 				'key'         => $key,
 				'description' => $voucher['description'],
-				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
+				'remove'      => $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language') . '&key=' . $key)
 			];
 		}
 
@@ -387,8 +389,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->post['key'])) {
-			$key = (int)$this->request->post['key'];
+		if (isset($this->request->get['key'])) {
+			$key = (int)$this->request->get['key'];
 		} else {
 			$key = 0;
 		}

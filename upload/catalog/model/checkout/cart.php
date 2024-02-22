@@ -21,10 +21,10 @@ class Cart extends \Opencart\System\Engine\Model {
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
-			if ($product['image']) {
-				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+			if ($product['image'] && is_file(DIR_IMAGE . html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $product['image'];
 			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+				$image = 'placeholder.png';
 			}
 
 			$option_data = [];
@@ -71,7 +71,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'cart_id'      => $product['cart_id'],
 				'product_id'   => $product['product_id'],
 				'master_id'    => $product['master_id'],
-				'image'        => $image,
+				'image'        => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
 				'name'         => $product['name'],
 				'model'        => $product['model'],
 				'option'       => $option_data,

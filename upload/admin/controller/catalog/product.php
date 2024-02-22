@@ -225,9 +225,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), 40, 40);
+				$image = $result['image'];
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 40, 40);
+				$image = 'no_image.png';
 			}
 
 			$special = false;
@@ -244,7 +244,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['products'][] = [
 				'product_id' => $result['product_id'],
-				'image'      => $image,
+				'image'      => $this->model_tool_image->resize($image, 40, 40),
 				'name'       => $result['name'],
 				'model'      => $result['model'],
 				'price'      => $this->currency->format($result['price'], $this->config->get('config_currency')),
@@ -979,8 +979,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
-		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+		if ($data['image'] && is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
+			$data['thumb'] = $this->model_tool_image->resize($data['image'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
@@ -995,7 +995,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['product_images'] = [];
 
 		foreach ($product_images as $product_image) {
-			if (is_file(DIR_IMAGE . html_entity_decode($product_image['image'], ENT_QUOTES, 'UTF-8'))) {
+			if ($product_image['image'] && is_file(DIR_IMAGE . html_entity_decode($product_image['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $product_image['image'];
 				$thumb = $product_image['image'];
 			} else {
@@ -1005,7 +1005,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['product_images'][] = [
 				'image'      => $image,
-				'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'thumb'      => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
 				'sort_order' => $product_image['sort_order']
 			];
 		}

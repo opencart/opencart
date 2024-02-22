@@ -93,10 +93,10 @@ class Special extends \Opencart\System\Engine\Controller {
 				$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
 			}
 
-			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $result['image'];
 			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+				$image = 'placeholder.png';
 			}
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -119,7 +119,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 			$product_data = [
 				'product_id'  => $result['product_id'],
-				'thumb'       => $image,
+				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
 				'name'        => $result['name'],
 				'description' => $description,
 				'price'       => $price,

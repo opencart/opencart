@@ -247,7 +247,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		foreach ($banner_images as $language_id => $banner_image) {
 			foreach ($banner_image as $value) {
-				if (is_file(DIR_IMAGE . html_entity_decode($value['image'], ENT_QUOTES, 'UTF-8'))) {
+				if ($value['image'] && is_file(DIR_IMAGE . html_entity_decode($value['image'], ENT_QUOTES, 'UTF-8'))) {
 					$image = $value['image'];
 					$thumb = $value['image'];
 				} else {
@@ -259,7 +259,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 					'title'      => $value['title'],
 					'link'       => $value['link'],
 					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+					'thumb'      => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
 					'sort_order' => $value['sort_order']
 				];
 			}

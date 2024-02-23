@@ -253,7 +253,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$data['option_values'] = [];
 
 		foreach ($option_values as $option_value) {
-			if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
+			if ($option_value['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $option_value['image'];
 				$thumb = $option_value['image'];
 			} else {
@@ -265,7 +265,7 @@ class Option extends \Opencart\System\Engine\Controller {
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'thumb'                    => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
 				'sort_order'               => $option_value['sort_order']
 			];
 		}
@@ -296,7 +296,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
-			if ((oc_strlen(trim($value['name'])) < 1) || (oc_strlen($value['name']) > 128)) {
+			if (!oc_validate_length($value['name'], 1, 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
@@ -330,7 +330,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->post['option_value'])) {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
-					if ((oc_strlen(trim($option_value_description['name'])) < 1) || (oc_strlen($option_value_description['name']) > 128)) {
+					if (!oc_validate_length($option_value_description['name'], 1, 128)) {
 						$json['error']['option_value_' . $option_value_id . '_' . $language_id] = $this->language->get('error_option_value');
 					}
 				}
@@ -430,16 +430,16 @@ class Option extends \Opencart\System\Engine\Controller {
 					$option_values = $this->model_catalog_option->getValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {
-						if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
-							$image = $this->model_tool_image->resize(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'), 50, 50);
+						if ($option_value['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
+							$image = $option_value['image'];
 						} else {
-							$image = $this->model_tool_image->resize('no_image.png', 50, 50);
+							$image = 'no_image.png';
 						}
 
 						$option_value_data[] = [
 							'option_value_id' => $option_value['option_value_id'],
 							'name'            => strip_tags(html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8')),
-							'image'           => $image
+							'image'           => $this->model_tool_image->resize($image, 50, 50)
 						];
 					}
 

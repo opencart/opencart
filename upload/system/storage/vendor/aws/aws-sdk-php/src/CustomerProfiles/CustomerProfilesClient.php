@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteProfileObjectTypeAsync(array $args = [])
  * @method \Aws\Result deleteWorkflow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteWorkflowAsync(array $args = [])
+ * @method \Aws\Result detectProfileObjectType(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise detectProfileObjectTypeAsync(array $args = [])
  * @method \Aws\Result getAutoMergingPreview(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAutoMergingPreviewAsync(array $args = [])
  * @method \Aws\Result getCalculatedAttributeDefinition(array $args = [])

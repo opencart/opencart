@@ -16,17 +16,22 @@ use Psr\Http\Message\ResponseInterface;
  */
 class InstanceProfileProvider
 {
-    const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
     const TOKEN_PATH = 'api/token';
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
     const CFG_EC2_METADATA_V1_DISABLED = 'ec2_metadata_v1_disabled';
+    const CFG_EC2_METADATA_SERVICE_ENDPOINT = 'ec2_metadata_service_endpoint';
+    const CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE = 'ec2_metadata_service_endpoint_mode';
     const DEFAULT_TIMEOUT = 1.0;
     const DEFAULT_RETRIES = 3;
     const DEFAULT_TOKEN_TTL_SECONDS = 21600;
     const DEFAULT_AWS_EC2_METADATA_V1_DISABLED = false;
+    const ENDPOINT_MODE_IPv4 = 'IPv4';
+    const ENDPOINT_MODE_IPv6 = 'IPv6';
+    const DEFAULT_METADATA_SERVICE_IPv4_ENDPOINT = 'http://169.254.169.254';
+    const DEFAULT_METADATA_SERVICE_IPv6_ENDPOINT = 'http://[fd00:ec2::254]';
 
     /** @var string */
     private $profile;
@@ -49,6 +54,12 @@ class InstanceProfileProvider
     /** @var bool|null */
     private $ec2MetadataV1Disabled;
 
+    /** @var string */
+    private $endpoint;
+
+    /** @var string */
+    private $endpointMode;
+
     /**
      * The constructor accepts the following options:
      *
@@ -56,6 +67,11 @@ class InstanceProfileProvider
      * - profile: Optional EC2 profile name, if known.
      * - retries: Optional number of retries to be attempted.
      * - ec2_metadata_v1_disabled: Optional for disabling the fallback to IMDSv1.
+     * - endpoint: Optional for overriding the default endpoint to be used for fetching credentials.
+     *             The value must contain a valid URI scheme. If the URI scheme is not https, it must
+     *             resolve to a loopback address.
+     * - endpoint_mode: Optional for overriding the default endpoint mode (IPv4|IPv6) to be used for
+     *   resolving the default endpoint.
      *
      * @param array $config Configuration options.
      */
@@ -66,6 +82,12 @@ class InstanceProfileProvider
         $this->retries = (int) getenv(self::ENV_RETRIES) ?: ($config['retries'] ?? self::DEFAULT_RETRIES);
         $this->client = $config['client'] ?? \Aws\default_http_handler();
         $this->ec2MetadataV1Disabled = $config[self::CFG_EC2_METADATA_V1_DISABLED] ?? null;
+        $this->endpoint = $config[self::CFG_EC2_METADATA_SERVICE_ENDPOINT] ?? null;
+        if (!empty($this->endpoint) && !$this->isValidEndpoint($this->endpoint)) {
+            throw new \InvalidArgumentException('The provided URI "' . $this->endpoint . '" is invalid, or contains an unsupported host');
+        }
+
+        $this->endpointMode = $config[self::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE] ?? null;
     }
 
     /**
@@ -227,7 +249,7 @@ class InstanceProfileProvider
         }
 
         $fn = $this->client;
-        $request = new Request($method, self::SERVER_URI . $url);
+        $request = new Request($method, $this->resolveEndpoint() . $url);
         $userAgent = 'aws-sdk-php/' . Sdk::VERSION;
         if (defined('HHVM_VERSION')) {
             $userAgent .= ' HHVM/' . HHVM_VERSION;
@@ -314,7 +336,7 @@ class InstanceProfileProvider
      *
      * @return bool
      */
-    private function shouldFallbackToIMDSv1(): bool 
+    private function shouldFallbackToIMDSv1(): bool
     {
         $isImdsV1Disabled = \Aws\boolean_value($this->ec2MetadataV1Disabled)
             ?? \Aws\boolean_value(
@@ -328,5 +350,111 @@ class InstanceProfileProvider
             ?? self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED;
 
         return !$isImdsV1Disabled;
+    }
+
+    /**
+     * Resolves the metadata service endpoint. If the endpoint is not provided
+     * or configured then, the default endpoint, based on the endpoint mode resolved,
+     * will be used.
+     * Example: if endpoint_mode is resolved to be IPv4 and the endpoint is not provided
+     * then, the endpoint to be used will be http://169.254.169.254.
+     *
+     * @return string
+     */
+    private function resolveEndpoint(): string
+    {
+        $endpoint = $this->endpoint;
+        if (is_null($endpoint)) {
+            $endpoint = ConfigurationResolver::resolve(
+                self::CFG_EC2_METADATA_SERVICE_ENDPOINT,
+                $this->getDefaultEndpoint(),
+                'string',
+                ['use_aws_shared_config_files' => true]
+            );
+        }
+
+        if (!$this->isValidEndpoint($endpoint)) {
+            throw new CredentialsException('The provided URI "' . $endpoint . '" is invalid, or contains an unsupported host');
+        }
+
+        if (substr($endpoint, strlen($endpoint) - 1) !== '/') {
+            $endpoint = $endpoint . '/';
+        }
+
+        return $endpoint . 'latest/';
+    }
+
+    /**
+     * Resolves the default metadata service endpoint.
+     * If endpoint_mode is resolved as IPv4 then:
+     * - endpoint = http://169.254.169.254
+     * If endpoint_mode is resolved as IPv6 then:
+     * - endpoint = http://[fd00:ec2::254]
+     *
+     * @return string
+     */
+    private function getDefaultEndpoint(): string
+    {
+        $endpointMode = $this->resolveEndpointMode();
+        switch ($endpointMode) {
+            case self::ENDPOINT_MODE_IPv4:
+                return self::DEFAULT_METADATA_SERVICE_IPv4_ENDPOINT;
+            case self::ENDPOINT_MODE_IPv6:
+                return self::DEFAULT_METADATA_SERVICE_IPv6_ENDPOINT;
+        }
+
+        throw new CredentialsException("Invalid endpoint mode '$endpointMode' resolved");
+    }
+
+    /**
+     * Resolves the endpoint mode to be considered when resolving the default
+     * metadata service endpoint.
+     *
+     * @return string
+     */
+    private function resolveEndpointMode(): string
+    {
+        $endpointMode = $this->endpointMode;
+        if (is_null($endpointMode)) {
+            $endpointMode = ConfigurationResolver::resolve(
+                self::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE,
+                    self::ENDPOINT_MODE_IPv4,
+                'string',
+                ['use_aws_shared_config_files' => true]
+            );
+        }
+
+        return $endpointMode;
+    }
+
+    /**
+     * This method checks for whether a provide URI is valid.
+     * @param string $uri this parameter is the uri to do the validation against to.
+     *
+     * @return string|null
+     */
+    private function isValidEndpoint(
+        $uri
+    ): bool
+    {
+        // We make sure first the provided uri is a valid URL
+        $isValidURL = filter_var($uri, FILTER_VALIDATE_URL) !== false;
+        if (!$isValidURL) {
+            return false;
+        }
+
+        // We make sure that if is a no secure host then it must be a loop back address.
+        $parsedUri = parse_url($uri);
+        if ($parsedUri['scheme'] !== 'https') {
+            $host = trim($parsedUri['host'], '[]');
+
+            return CredentialsUtils::isLoopBackAddress(gethostbyname($host))
+                || in_array(
+                    $uri,
+                    [self::DEFAULT_METADATA_SERVICE_IPv4_ENDPOINT, self::DEFAULT_METADATA_SERVICE_IPv6_ENDPOINT]
+                );
+        }
+
+        return true;
     }
 }

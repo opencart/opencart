@@ -251,11 +251,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer'] . '%') . "'";
+			$implode[] = "CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) LIKE '" . $this->db->escape($data['filter_customer'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_date_next'])) {
-			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
+			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape($data['filter_date_next']) . "')";
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
@@ -263,11 +263,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape($data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape($data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

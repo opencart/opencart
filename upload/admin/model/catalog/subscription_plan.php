@@ -69,10 +69,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteSubscriptionBySubscriptionPlanId($subscription_plan_id);
-
-		$this->load->model('sale/subscription');
-
-		$this->model_sale_subscription->resetSubscriptionPlan($subscription_plan_id);
 	}
 
 	/**
@@ -177,5 +173,16 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		}
 
 		return $subscription_plan_description_data;
+	}
+
+	/**
+	 * Get Total Subscription Plans
+	 *
+	 * @return int
+	 */
+	public function getTotalSubscriptionPlans(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_plan`");
+
+		return (int)$query->row['total'];
 	}
 }

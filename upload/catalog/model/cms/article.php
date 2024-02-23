@@ -196,7 +196,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addComment(int $article_id, array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape((string)$data['author']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `ip` = '" . $this->db->escape((string)$this->request->server['REMOTE_ADDR']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape($data['author']) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
 
 		$this->cache->delete('comment');
 

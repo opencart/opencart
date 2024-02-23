@@ -498,11 +498,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((oc_strlen($this->request->post['key']) < 1) || (oc_strlen($this->request->post['key']) > 64)) {
+		if (!oc_validate_length($this->request->post['key'], 1, 64)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if ((oc_strlen($this->request->post['value']) < 1) || (oc_strlen($this->request->post['value']) > 255)) {
+		if (!oc_validate_length($this->request->post['value'], 1, 255)) {
 			$json['error']['value'] = $this->language->get('error_value');
 		}
 
@@ -519,11 +519,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$keywords = explode('/', $this->request->post['keyword']);
 
 		foreach ($keywords as $keyword) {
-			if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 64)) {
+			if (!oc_validate_length($keyword, 1, 64)) {
 				$json['error']['keyword'] = $this->language->get('error_keyword');
 			}
 
-			if (preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\.\-\_]+/u', $keyword)) {
+			if (!oc_validate_seo_url($keyword)) {
 				$json['error']['keyword'] = $this->language->get('error_keyword_character');
 			}
 		}

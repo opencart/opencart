@@ -7,6 +7,50 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Transaction extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Transaction
+	 *
+	 * @param int    $customer_id
+	 * @param string $description
+	 * @param float  $amount
+	 * @param int    $order_id
+	 *
+	 * @return void
+	 */
+	public function addTransaction(int $customer_id, string $description, float $amount = 0, int $order_id = 0): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Delete Transaction
+	 *
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
+	public function deleteTransaction(int $customer_id, int $order_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($order_id) {
+			$sql .= " AND `order_id` = '" . (int)$order_id . "'";
+		}
+
+		$this->db->query($sql);
+	}
+
+	/**
+	 * Delete Transaction By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteTransactionByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	/**
+	 * Get Transactions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -59,10 +103,27 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Transactions By Order ID
+	 *
+	 * @param int $order_id
+	 *
 	 * @return int
 	 */
-	public function getTotalAmount(): int {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
+	public function getTotalTransactionsByOrderId(int $order_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Transaction Total
+	 *
+	 * @param int $customer_id
+	 *
+	 * @return float
+	 */
+	public function getTransactionTotal(int $customer_id): float {
+		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

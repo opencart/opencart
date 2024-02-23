@@ -16,15 +16,17 @@ class Weight extends \Opencart\System\Engine\Model {
 
 		$quote_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "geo_zone` ORDER BY `name`");
+		$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_localisation_geo_zone->getGeoZones();
 
 		$weight = $this->cart->getWeight();
 
-		foreach ($query->rows as $result) {
+		foreach ($results as $result) {
 			if ($this->config->get('shipping_weight_' . $result['geo_zone_id'] . '_status')) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$result['geo_zone_id'] . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+				$results = $this->model_localisation_geo_zone->getGeoZone($result['geo_zone_id'], $address['country_id'], $address['zone_id']);
 
-				if ($query->num_rows) {
+				if ($results) {
 					$status = true;
 				} else {
 					$status = false;

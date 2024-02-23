@@ -21,9 +21,11 @@ class BankTransfer extends \Opencart\System\Engine\Model {
 		} elseif (!$this->config->get('payment_bank_transfer_geo_zone_id')) {
 			$status = true;
 		} else {
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_bank_transfer_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+			$this->load->model('localisation/geo_zone');
 
-			if ($query->num_rows) {
+			$results = $this->model_localisation_geo_zone->getGeoZone((int)$this->config->get('payment_bank_transfer_geo_zone_id'), (int)$address['country_id'], (int)$address['zone_id']);
+
+			if ($results) {
 				$status = true;
 			} else {
 				$status = false;

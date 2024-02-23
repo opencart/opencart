@@ -3,8 +3,8 @@ namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\CommandInterface;
-use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
+use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
@@ -56,8 +56,7 @@ class JsonRpcSerializer
      */
     public function __invoke(
         CommandInterface $command,
-        $endpointProvider = null,
-        $clientArgs = null
+        $endpoint = null
     )
     {
         $operationName = $command->getName();
@@ -68,15 +67,8 @@ class JsonRpcSerializer
                 'Content-Type' => $this->contentType
             ];
 
-        if ($endpointProvider instanceof EndpointProviderV2) {
-            $this->setRequestOptions(
-                $endpointProvider,
-                $command,
-                $operation,
-                $commandArgs,
-                $clientArgs,
-                $headers
-            );
+        if ($endpoint instanceof RulesetEndpoint) {
+            $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
 
         return new Request(

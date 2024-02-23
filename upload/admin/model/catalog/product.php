@@ -136,7 +136,9 @@ class Product extends \Opencart\System\Engine\Model {
 		// Layout
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
-				$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
+				if ($layout_id) {
+					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
+				}
 			}
 		}
 
@@ -279,7 +281,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_reward'])) {
 			foreach ($data['product_reward'] as $customer_group_id => $value) {
 				if ((int)$value['points'] > 0) {
-					$this->model_catalog_product->addReward($product_id, $customer_group_id, $store_id);
+					$this->model_catalog_product->addReward($product_id, $customer_group_id, $value);
 				}
 			}
 		}
@@ -383,7 +385,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$this->model_marketing_coupon->deleteProductByProductId($product_id);
 
-		$this->model_catalog_product->resetMasterId($product_id);
+		$this->model_catalog_product->editMasterId($product_id, 0);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '0' WHERE `master_id` = '" . (int)$product_id . "'");
 
@@ -821,7 +823,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `rating` = '" . (int)$rating . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
-	public function resetMasterId(int $product_id): void {
+	public function editMasterId(int $product_id, int $master_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '0', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
@@ -1256,7 +1258,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addOption(int $product_id, $data): int {
-		if (isset($product_option['product_option_value'])) {
+		if (isset($data['product_option_value'])) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$data['option_id'] . "', `required` = '" . (int)$data['required'] . "'");
 		} else {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$data['option_id'] . "', `value` = '" . $this->db->escape($data['value']) . "', `required` = '" . (int)$data['required'] . "'");
@@ -1264,9 +1266,10 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$product_option_id = $this->db->getLastId();
 
-		if (isset($product_option['product_option_value'])) {
-			foreach ($product_option['product_option_value'] as $product_option_value) {
-				$this->model_catalog_product->addOptionValue($product_id, $product_option_id, $product_option_value);
+
+		if (isset($data['product_option_value'])) {
+			foreach ($data['product_option_value'] as $product_option_value) {
+				$this->addOptionValue($product_id, $product_option_id, $data['option_id'], $product_option_value);
 			}
 		}
 
@@ -1350,12 +1353,13 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id        primary key of the attribute record to be fetched
 	 * @param int                  $product_option_id
+	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 */
-	public function addOptionValue(int $product_id, int $product_option_id, $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$data['option_id'] . "', `option_value_id` = '" . (int)$data['option_value_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `subtract` = '" . (int)$data['subtract'] . "', `price` = '" . (float)$data['price'] . "', `price_prefix` = '" . $this->db->escape($data['price_prefix']) . "', `points` = '" . (int)$data['points'] . "', `points_prefix` = '" . $this->db->escape($data['points_prefix']) . "', `weight` = '" . (float)$data['weight'] . "', `weight_prefix` = '" . $this->db->escape($data['weight_prefix']) . "'");
+	public function addOptionValue(int $product_id, int $product_option_id, $option_id, $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$option_id . "', `option_value_id` = '" . (int)$data['option_value_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `subtract` = '" . (int)$data['subtract'] . "', `price` = '" . (float)$data['price'] . "', `price_prefix` = '" . $this->db->escape($data['price_prefix']) . "', `points` = '" . (int)$data['points'] . "', `points_prefix` = '" . $this->db->escape($data['points_prefix']) . "', `weight` = '" . (float)$data['weight'] . "', `weight_prefix` = '" . $this->db->escape($data['weight_prefix']) . "'");
 
 		return $this->db->getLastId();
 	}
@@ -1815,6 +1819,11 @@ class Product extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * Delete Report
+	 *
+	 * @param int $product_id
+	 */
 	public function deleteReport(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "'");
 	}

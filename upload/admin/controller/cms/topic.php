@@ -240,8 +240,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 			foreach ($results as $key => $result) {
 				$data['topic_description'][$key] = $result;
 
-				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-					$data['topic_description'][$key]['thumb'] = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+				if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+					$data['topic_description'][$key]['thumb'] = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 				} else {
 					$data['topic_description'][$key]['thumb'] = $data['placeholder'];
 				}
@@ -316,11 +316,11 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['topic_description'] as $language_id => $value) {
-			if ((oc_strlen(trim($value['name'])) < 1) || (oc_strlen($value['name']) > 255)) {
+			if (!oc_validate_length($value['name'], 1, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 
-			if ((oc_strlen(trim($value['meta_title'])) < 1) || (oc_strlen($value['meta_title']) > 255)) {
+			if (!oc_validate_length($value['meta_title'], 1, 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}

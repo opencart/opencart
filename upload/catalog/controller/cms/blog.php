@@ -141,8 +141,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		if ($topic_info && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['image'] = $this->model_tool_image->resize(html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_topic_width'), $this->config->get('config_image_topic_height'));
+		if (!empty($topic_info['image']) && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
+			$data['image'] = $this->model_tool_image->resize($topic_info['image'], $this->config->get('config_image_topic_width'), $this->config->get('config_image_topic_height'));
 		} else {
 			$data['image'] = '';
 		}
@@ -173,8 +173,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$description = oc_substr($description, 0, $this->config->get('config_article_description_length')) . '..';
 			}
 
-			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
 			} else {
 				$image = '';
 			}
@@ -400,8 +400,8 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('tool/image');
 
-			if (is_file(DIR_IMAGE . html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'))) {
-				$data['image'] = $this->model_tool_image->resize(html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+			if (!empty($article_info['image']) && is_file(DIR_IMAGE . html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'))) {
+				$data['image'] = $this->model_tool_image->resize($article_info['image'], $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
 			} else {
 				$data['image'] = '';
 			}

@@ -33,6 +33,19 @@ class RulesetEndpoint
     }
 
     /**
+     * @param $property
+     * @return mixed
+     */
+    public function getProperty($property)
+    {
+        if (isset($this->properties[$property])) {
+            return $this->properties[$property];
+        }
+
+        return null;
+    }
+
+    /**
      * @return mixed
      */
     public function getProperties()

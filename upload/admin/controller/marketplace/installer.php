@@ -235,7 +235,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$code = basename($filename, '.ocmod.zip');
 
 			// 2. Validate the filename.
-			if ((oc_strlen($filename) < 1) || (oc_strlen($filename) > 128)) {
+			if (!oc_validate_length($filename, 1, 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

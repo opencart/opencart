@@ -21,3 +21,4 @@ $_['column_action']   = 'Action';
 
 // Error
 $_['error_product']   = 'Warning: Product could not be found!';
+$_['error_login']     = 'Warning: You must <a href="%s">login</a> or <a href="%s">create an account</a> to remove items from your <a href="%s">wish list</a>!';

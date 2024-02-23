@@ -14,7 +14,10 @@ class ControllerAccountForgotten extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_customer->editCode($this->request->post['email'], token(40));
+			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+			// for better security use existing validated customer email address instead of the posted one
+			$this->model_account_customer->editCode($customer_info['email'], token(40));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

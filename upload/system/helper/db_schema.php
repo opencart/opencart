@@ -1109,10 +1109,6 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name' => 'top',
-				'type' => 'tinyint(1)'
-			],
-			[
 				'name' => 'column',
 				'type' => 'int(3)'
 			],
@@ -3197,11 +3193,6 @@ function oc_db_schema() {
 				'name'           => 'information_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
-			],
-			[
-				'name'    => 'bottom',
-				'type'    => 'int(1)',
-				'default' => '0'
 			],
 			[
 				'name'    => 'sort_order',

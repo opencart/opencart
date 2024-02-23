@@ -309,12 +309,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($category_info)) {
-			$data['top'] = $category_info['top'];
-		} else {
-			$data['top'] = 0;
-		}
-
-		if (!empty($category_info)) {
 			$data['column'] = $category_info['column'];
 		} else {
 			$data['column'] = 1;

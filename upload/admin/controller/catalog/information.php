@@ -259,12 +259,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($information_info)) {
-			$data['bottom'] = $information_info['bottom'];
-		} else {
-			$data['bottom'] = 0;
-		}
-
-		if (!empty($information_info)) {
 			$data['status'] = $information_info['status'];
 		} else {
 			$data['status'] = true;

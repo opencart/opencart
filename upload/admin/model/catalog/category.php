@@ -313,7 +313,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function repairCategories(int $parent_id = 0): void {
-		$categories = $this->getCategories(['parent_id' => $parent_id]);
+		$categories = $this->getCategories(['filter_parent_id' => $parent_id]);
 
 		// Delete the path below the current one
 		foreach ($categories as $category) {
@@ -330,6 +330,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 				$level++;
 			}
+
+			$this->addPath($category['category_id'], $category['category_id'], $level);
 
 			$this->repairCategories($category['category_id']);
 		}
@@ -486,10 +488,6 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
 	}
 
-	//public function editPath(int $category_id, int $path_id, int $level): void {
-	//	$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
-	//}
-
 	/**
 	 * Delete Filter
 	 *
@@ -498,7 +496,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deletePath(int $category_id, $level = 0): void {
+	public function deletePath(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 

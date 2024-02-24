@@ -51,7 +51,7 @@ class Address extends \Opencart\System\Engine\Model {
 		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($address_id) {
-			$sql = " AND `address_id` = '" . (int)$address_id . "'";
+			$sql .= " AND `address_id` = '" . (int)$address_id . "'";
 		}
 
 		$this->db->query($sql);

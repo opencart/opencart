@@ -19,12 +19,12 @@ class Option extends \Opencart\System\Engine\Model {
 		$option_id = $this->db->getLastId();
 
 		foreach ($data['option_description'] as $language_id => $value) {
-			$this->addDescription($option_id, $language_id, $value);
+			$this->model_catalog_option->addDescription($option_id, $language_id, $value);
 		}
 
 		if (isset($data['option_value'])) {
 			foreach ($data['option_value'] as $option_value) {
-				$this->addValue($option_id, $option_value);
+				$this->model_catalog_option->addValue($option_id, $option_value);
 			}
 		}
 
@@ -42,17 +42,17 @@ class Option extends \Opencart\System\Engine\Model {
 	public function editOption(int $option_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `option_id` = '" . (int)$option_id . "'");
 
-		$this->deleteDescription($option_id);
+		$this->model_catalog_option->deleteDescription($option_id);
 
 		foreach ($data['option_description'] as $language_id => $value) {
-			$this->addDescription($option_id, $language_id, $value);
+			$this->model_catalog_option->addDescription($option_id, $language_id, $value);
 		}
 
-		$this->deleteValue($option_id);
+		$this->model_catalog_option->deleteValue($option_id);
 
 		if (isset($data['option_value'])) {
 			foreach ($data['option_value'] as $option_value) {
-				$this->addValue($option_id, $option_value);
+				$this->model_catalog_option->addValue($option_id, $option_value);
 			}
 		}
 	}
@@ -67,8 +67,8 @@ class Option extends \Opencart\System\Engine\Model {
 	public function deleteOption(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option` WHERE `option_id` = '" . (int)$option_id . "'");
 
-		$this->deleteDescription($option_id);
-		$this->deleteValue($option_id);
+		$this->model_catalog_option->deleteDescription($option_id);
+		$this->model_catalog_option->deleteValue($option_id);
 	}
 
 	/**
@@ -203,7 +203,7 @@ class Option extends \Opencart\System\Engine\Model {
 		if ($data['option_value_id']) {
 			if (isset($data['option_value_description'])) {
 				foreach ($data['option_value_description'] as $language_id => $option_value_description) {
-					$this->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+					$this->model_catalog_option->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
 				}
 			}
 		}
@@ -214,7 +214,7 @@ class Option extends \Opencart\System\Engine\Model {
 	public function deleteValue(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 
-		$this->deleteValueDescriptionByOptionId($option_id);
+		$this->model_catalog_option->deleteValueDescriptionByOptionId($option_id);
 	}
 
 	/**

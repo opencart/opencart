@@ -1269,7 +1269,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['product_option_value'])) {
 			foreach ($data['product_option_value'] as $product_option_value) {
-				$this->addOptionValue($product_id, $product_option_id, $data['option_id'], $product_option_value);
+				$this->model_catalog_product->addOptionValue($product_id, $product_option_id, $data['option_id'], $product_option_value);
 			}
 		}
 

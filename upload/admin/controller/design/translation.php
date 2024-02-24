@@ -228,8 +228,8 @@ class ControllerDesignTranslation extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
-		$pagination->url = $this->url->link('design/translation/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
+		$pagination->limit = $this->config->get('config_limit_admin');
+		$pagination->url = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

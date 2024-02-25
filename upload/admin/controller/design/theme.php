@@ -55,7 +55,7 @@ class ControllerDesignTheme extends Controller {
 
 		$history_total = $this->model_design_theme->getTotalThemes();
 
-		$results = $this->model_design_theme->getThemes(($page - 1) * 10, 10);
+		$results = $this->model_design_theme->getThemes(($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));
 
 		foreach ($results as $result) {
 			$store_info = $this->model_setting_store->getStore($result['store_id']);

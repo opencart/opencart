@@ -13,7 +13,7 @@
 
 namespace Install;
 
-ini_set('display_errors', 1);
+ini_set('display_errors', true);
 
 error_reporting(E_ALL);
 
@@ -266,7 +266,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$db->query("SET CHARACTER SET utf8");
+			$db->query("SET CHARACTER SET utf8mb4");
 
 			$db->query("SET @@session.sql_mode = ''");
 

@@ -24,9 +24,6 @@ $_['entry_route']       = 'Choose Template';
 $_['entry_code']        = 'Code';
 $_['entry_status']      = 'Status';
 
-// Button
-$_['button_load']       = 'Load';
-
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify the theme editor!';
 $_['error_file']        = 'Warning: Template file does not exist!';

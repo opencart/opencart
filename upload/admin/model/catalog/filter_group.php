@@ -15,7 +15,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 		$filter_group_id = $this->db->getLastId();
 
 		foreach ($data['filter_group_description'] as $language_id => $filter_group_description) {
-			$this->addDescription($filter_group_id, $language_id, $filter_group_description);
+			$this->model_catalog_filter_group->addDescription($filter_group_id, $language_id, $filter_group_description);
 		}
 
 		$this->cache->delete('filter_group');
@@ -30,10 +30,10 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	public function editFilterGroup($filter_group_id, $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
-		$this->deleteDescription($filter_group_id);
+		$this->model_catalog_filter_group->deleteDescription($filter_group_id);
 
 		foreach ($data['filter_group_description'] as $language_id => $filter_group_description) {
-			$this->addDescription($filter_group_id, $language_id, $filter_group_description);
+			$this->model_catalog_filter_group->addDescription($filter_group_id, $language_id, $filter_group_description);
 		}
 
 		$this->cache->delete('filter_group');
@@ -42,7 +42,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	public function deleteFilterGroup(int $filter_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
-		$this->deleteDescription($filter_group_id);
+		$this->model_catalog_filter_group->deleteDescription($filter_group_id);
 
 		$this->cache->delete('filter_group');
 	}

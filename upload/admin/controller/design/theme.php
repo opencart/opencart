@@ -99,8 +99,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 			$data['themes'][] = [
 				'theme_id'   => $result['theme_id'],
-				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'route'      => $result['route'],
+				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('design/theme.form', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id']),

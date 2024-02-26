@@ -22,13 +22,13 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int $gdpr_id
-	 * @param int $status
+	 * @param int  $gdpr_id
+	 * @param bool $status
 	 *
 	 * @return void
 	 */
-	public function editStatus(int $gdpr_id, int $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
+	public function editStatus(int $gdpr_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (bool)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 
 	/**

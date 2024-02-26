@@ -298,13 +298,11 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
-			$json['error'] = $this->language->get('error_file');
+			$json['code'] = '';
 		}
 
 		if (!$json) {
 			$json['code'] = file_get_contents($file);
-		} else {
-			$json['code'] = '';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -20,7 +20,7 @@ $_['column_action']     = 'Action';
 
 // Entry
 $_['entry_store']       = 'Store';
-$_['entry_route']       = 'Template';
+$_['entry_route']       = 'Choose Template';
 $_['entry_code']        = 'Code';
 $_['entry_status']      = 'Status';
 

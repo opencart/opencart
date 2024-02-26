@@ -43,6 +43,7 @@
             <legend>{{ text_code }}</legend>
             <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_twig }}</div>
             <div class="input-group mb-2">
+              <div class="input-group-text">{{ entry_route }}</div>
               <select name="route" id="input-route" class="form-select">
                 <option value=""></option>
                 <optgroup label="{{ text_default }}">
@@ -56,7 +57,6 @@
                   {% endfor %}
                 </optgroup>
               </select>
-              <button type="button" id="button-load" class="btn btn-primary"><i class="fa-solid fa-pencil-alt"></i> {{ button_edit }}</button>
             </div>
             <textarea name="code" id="input-code" rows="10" class="form-control">{{ code }}</textarea>
           </fieldset>
@@ -85,17 +85,17 @@ $(document).ready(function(e) {
     codemirror.setSize('100%', '500px');
 });
 
-$('#button-load').on('click', function(e) {
+$('#input-route').on('change', function(e) {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=design/theme.template&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&path=' + $('#input-route').val(),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true);
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false);
         },
         success: function(json) {
             $('.alert-dismissible').remove();

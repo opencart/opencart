@@ -20,13 +20,13 @@ class Article extends \Opencart\System\Engine\Model {
 
 		// Description
 		foreach ($data['article_description'] as $language_id => $value) {
-			$this->addDescription($article_id, $language_id, $value);
+			$this->model_cms_article->addDescription($article_id, $language_id, $value);
 		}
 
 		// Store
 		if (isset($data['article_store'])) {
 			foreach ($data['article_store'] as $store_id) {
-				$this->addStore($article_id, $store_id);
+				$this->model_cms_article->addStore($article_id, $store_id);
 			}
 		}
 
@@ -43,7 +43,7 @@ class Article extends \Opencart\System\Engine\Model {
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($article_id, $store_id, $layout_id);
+					$this->model_cms_article->addLayout($article_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -65,18 +65,18 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `topic_id` = '" . (int)$data['topic_id'] . "', `author` = '" . $this->db->escape($data['author']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `article_id` = '" . (int)$article_id . "'");
 
 		// Description
-		$this->deleteDescription($article_id);
+		$this->model_cms_article->deleteDescription($article_id);
 
 		foreach ($data['article_description'] as $language_id => $value) {
-			$this->addDescription($article_id, $language_id, $value);
+			$this->model_cms_article->addDescription($article_id, $language_id, $value);
 		}
 
 		// Store
-		$this->deleteStore($article_id);
+		$this->model_cms_article->deleteStore($article_id);
 
 		if (isset($data['article_store'])) {
 			foreach ($data['article_store'] as $store_id) {
-				$this->addStore($article_id, $store_id);
+				$this->model_cms_article->addStore($article_id, $store_id);
 			}
 		}
 
@@ -92,12 +92,12 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		// Layouts
-		$this->deleteLayout($article_id);
+		$this->model_cms_article->deleteLayout($article_id);
 
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($article_id, $store_id, $layout_id);
+					$this->model_cms_article->addLayout($article_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -125,10 +125,10 @@ class Article extends \Opencart\System\Engine\Model {
 	public function deleteArticle(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article` WHERE `article_id` = '" . (int)$article_id . "'");
 
-		$this->deleteDescription($article_id);
-		$this->deleteStore($article_id);
-		$this->deleteLayout($article_id);
-		$this->deleteCommentsByArticleId($article_id);
+		$this->model_cms_article->deleteDescription($article_id);
+		$this->model_cms_article->deleteStore($article_id);
+		$this->model_cms_article->deleteLayout($article_id);
+		$this->model_cms_article->deleteCommentsByArticleId($article_id);
 
 		$this->load->model('design/seo_url');
 

@@ -366,7 +366,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($from);
 			$mail->setSender($store_name);
 			$mail->setSubject($subject);
-			$mail->setHtml($this->load->view('mail/order_invoice', $data));
+			$mail->setHtml($this->load->view('mail/order_add', $data));
 			$mail->send();
 		}
 	}

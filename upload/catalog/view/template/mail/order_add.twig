@@ -19,7 +19,7 @@
   {% if download %}
     <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_download }}</p>
     <p style="margin-top: 0px; margin-bottom: 20px;"><a href="{{ download }}">{{ download }}</a></p>
-  {% endif %}
+    {% endif %}
   <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
     <thead>
       <tr>
@@ -34,7 +34,8 @@
           <br/>
           <b>{{ text_payment_method }}</b> {{ payment_method }}
           <br/>
-          {% if shipping_method %} <b>{{ text_shipping_method }}</b> {{ shipping_method }}{% endif %}</td>
+          {% if shipping_method %} <b>{{ text_shipping_method }}</b> {{ shipping_method }}
+          {% endif %}</td>
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><b>{{ text_email }}</b> {{ email }}
           <br/>
           <b>{{ text_telephone }}</b> {{ telephone }}
@@ -60,30 +61,24 @@
       </tbody>
     </table>
   {% endif %}
-  {% if payment_address || shipping_address %}
-    <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
-      <thead>
-        <tr>
-          {% if payment_address %}
-            <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_payment_address }}</td>
-          {% endif %}
-          {% if shipping_address %}
-            <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_shipping_address }}</td>
-          {% endif %}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          {% if payment_address %}
-            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ payment_address }}</td>
-          {% endif %}
-          {% if shipping_address %}
-            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ shipping_address }}</td>
-          {% endif %}
-        </tr>
-      </tbody>
-    </table>
-  {% endif %}
+  <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
+    <thead>
+      <tr>
+        <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_payment_address }}</td>
+        {% if shipping_address %}
+          <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_shipping_address }}</td>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ payment_address }}</td>
+        {% if shipping_address %}
+          <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ shipping_address }}</td>
+        {% endif %}
+      </tr>
+    </tbody>
+  </table>
   <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
     <thead>
       <tr>
@@ -101,15 +96,7 @@
             {% for option in product.option %}
               <br/>
               <small> - {{ option.name }}: {{ option.value }}</small>
-            {% endfor %}
-            {% if product.reward %}
-              <br/>
-              <small>{{ text_points }}: {{ product.reward }}</small>
-            {% endif %}
-            {% if product.subscription %}
-              <br/>
-              <small>{{ text_subscription }}: {{ product.subscription }}</small>
-            {% endif %}</td>
+            {% endfor %}</td>
           <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ product.model }}</td>
           <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">{{ product.quantity }}</td>
           <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">{{ product.price }}</td>

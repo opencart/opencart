@@ -21,7 +21,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		// Store
 		if (isset($data['manufacturer_store'])) {
 			foreach ($data['manufacturer_store'] as $store_id) {
-				$this->addStore($manufacturer_id, $store_id);
+				$this->model_catalog_manufacturer->addStore($manufacturer_id, $store_id);
 			}
 		}
 
@@ -38,7 +38,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($manufacturer_id, $store_id, $layout_id);
+					$this->model_catalog_manufacturer->addLayout($manufacturer_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -64,7 +64,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 		if (isset($data['manufacturer_store'])) {
 			foreach ($data['manufacturer_store'] as $store_id) {
-				$this->addStore($manufacturer_id, $store_id);
+				$this->model_catalog_manufacturer->addStore($manufacturer_id, $store_id);
 			}
 		}
 
@@ -82,12 +82,12 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		}
 
 		// Layouts
-		$this->deleteLayout($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteLayout($manufacturer_id);
 
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($manufacturer_id, $store_id, $layout_id);
+					$this->model_catalog_manufacturer->addLayout($manufacturer_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -105,8 +105,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
-		$this->deleteStore($manufacturer_id);
-		$this->deleteLayout($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteStore($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteLayout($manufacturer_id);
 
 		$this->load->model('design/seo_url');
 

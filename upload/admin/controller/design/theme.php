@@ -171,18 +171,18 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = 0;
 		}
 
+		// We grab the files from the default template directory
 		$files = [];
 
-		// We grab the files from the default template directory
-		$directory = [DIR_CATALOG . 'view/template/'];
+		$path = DIR_CATALOG . 'view/template/';
 
-		// While the path array is still populated keep looping through
+		$directory = [$path];
+
 		while (count($directory) != 0) {
 			$next = array_shift($directory);
 
 			if (is_dir($next)) {
 				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
 					$directory[] = $file;
 				}
 			}
@@ -193,107 +193,52 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		sort($files);
 
+		$data['templates'] = [];
+
 		foreach ($files as $file) {
-
-
-			$data['directory'][] = [
-				'name' => basename($file),
-				'path' => trim($path . '/' . basename($file), '/')
-			];
-		}
-
-
-		$directories = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$json['directory']['directory'][] = [
-				'name' => basename($directory),
-				'path' => 'extension/' . basename($directory)
-			];
-		}
-
-
-
-
-		print_r($data['files']);
-
-
-		if (!$path) {
-			$json['directory'][] = [
-				'name' => $this->language->get('text_extension'),
-				'path' => 'extension',
-			];
-		}
-
-		// Extension templates
-		$json['extension'] = [];
-
-		// List all the extensions
-		if ($path == 'extension') {
-			$directories = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
-
-			foreach ($directories as $directory) {
-				$json['extension']['directory'][] = [
-					'name' => basename($directory),
-					'path' => 'extension/' . basename($directory)
-				];
+			if (is_file($file)) {
+				$data['templates'][] = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
 			}
 		}
 
-		// List extension sub directories directories
-		if (substr($path, 0, 10) == 'extension/') {
-			$route = '';
+		// We grab the files from the extension template directory
+		$data['extensions'] = [];
 
-			$part = explode('/', $path);
+		$files = [];
 
-			$extension = $part[1];
+		$extensions = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
 
-			unset($part[0]);
-			unset($part[1]);
+		foreach ($extensions as $extension) {
+			$extension = basename($extension);
 
-			if (isset($part[2])) {
-				$route = implode('/', $part);
-			}
+			$path = DIR_EXTENSION . $extension . '/catalog/view/template';
 
-			$safe = true;
+			$directory = [$path];
 
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
-				$safe = false;
-			}
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
 
-			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
-
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
-				$safe = false;
-			}
-
-			if ($safe) {
-				$files = glob(rtrim(DIR_EXTENSION . $extension . '/catalog/view/template/' . $route, '/') . '/*');
-
-				sort($files);
-
-				foreach ($files as $file) {
-					if (is_dir($file)) {
-						$json['extension']['directory'][] = [
-							'name' => basename($file),
-							'path' => $path . '/' . basename($file)
-						];
+				if (is_dir($next)) {
+					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						$directory[] = $file;
 					}
+				}
 
-					if (is_file($file)) {
-						$json['extension']['file'][] = [
-							'name' => basename($file),
-							'path' => $path . '/' . basename($file)
-						];
-					}
+				// Add the file to the files to be deleted array
+				$files[] = $next;
+			}
+
+			sort($files);
+
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					$data['extensions'][] = 'extension/' . $extension . substr(substr($file, 0, strrpos($file, '.')), strlen($path));
 				}
 			}
 		}
 
-
-
 		if (!empty($theme_info)) {
-			$data['route'] = $theme_info['route'];
+			$data['route'] = $theme_info['route'] . '.twig';
 		} else {
 			$data['route'] = '';
 		}
@@ -320,140 +265,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Path
-	 *
-	 * @return void
-	 */
-	public function path(): void {
-		$this->load->language('design/theme');
-
-		$json = [];
-
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		if (isset($this->request->get['path'])) {
-			$path = $this->request->get['path'];
-		} else {
-			$path = '';
-		}
-
-		// Default templates
-		$json['directory'] = [];
-		$json['file'] = [];
-
-		$directory = DIR_CATALOG . 'view/template';
-
-		if (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory) {
-			// We grab the files from the default template directory
-			$files = glob(rtrim(DIR_CATALOG . 'view/template/' . $path, '/') . '/*');
-
-			foreach ($files as $file) {
-
-
-				if (is_dir($file)) {
-					$json['directory'][] = [
-						'name' => basename($file),
-						'path' => trim($path . '/' . basename($file), '/')
-					];
-				}
-
-				if (is_file($file)) {
-					$json['file'][] = [
-						'name' => basename($file),
-						'path' => trim($path . '/' . basename($file), '/')
-					];
-				}
-			}
-		}
-
-		if (!$path) {
-			$json['directory'][] = [
-				'name' => $this->language->get('text_extension'),
-				'path' => 'extension',
-			];
-		}
-
-		// Extension templates
-		$json['extension'] = [];
-
-		// List all the extensions
-		if ($path == 'extension') {
-			$directories = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
-
-			foreach ($directories as $directory) {
-				$json['extension']['directory'][] = [
-					'name' => basename($directory),
-					'path' => 'extension/' . basename($directory)
-				];
-			}
-		}
-
-		// List extension sub directories directories
-		if (substr($path, 0, 10) == 'extension/') {
-			$route = '';
-
-			$part = explode('/', $path);
-
-			$extension = $part[1];
-
-			unset($part[0]);
-			unset($part[1]);
-
-			if (isset($part[2])) {
-				$route = implode('/', $part);
-			}
-
-			$safe = true;
-
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
-				$safe = false;
-			}
-
-			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
-
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
-				$safe = false;
-			}
-
-			if ($safe) {
-				$files = glob(rtrim(DIR_EXTENSION . $extension . '/catalog/view/template/' . $route, '/') . '/*');
-
-				sort($files);
-
-				foreach ($files as $file) {
-					if (is_dir($file)) {
-						$json['extension']['directory'][] = [
-							'name' => basename($file),
-							'path' => $path . '/' . basename($file)
-						];
-					}
-
-					if (is_file($file)) {
-						$json['extension']['file'][] = [
-							'name' => basename($file),
-							'path' => $path . '/' . basename($file)
-						];
-					}
-				}
-			}
-		}
-
-		if ($path) {
-			$json['back'] = [
-				'name' => $this->language->get('button_back'),
-				'path' => urlencode(substr($path, 0, strrpos($path, '/'))),
-			];
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Template
 	 *
 	 * @return void
@@ -475,11 +286,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$path = '';
 		}
 
-		// Default template load
+		$json['code'] = '';
+
+			// Default template load
 		$directory = DIR_CATALOG . 'view/template';
 
-		if (is_file($directory . '/' . $path) && (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory)) {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/template/' . $path);
+		if (is_file($directory . '/' . $path . '.twig') && (substr(str_replace('\\', '/', realpath($directory . '/' . $path . '.twig')), 0, strlen($directory)) == $directory)) {
+			$json['code'] = file_get_contents(DIR_CATALOG . 'view/template/' . $path . '.twig');
 		}
 
 		// Extension template load
@@ -501,22 +314,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
 
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
+			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route . '.twig')), 0, strlen($directory)) != $directory) {
 				$safe = false;
 			}
 
-			if ($safe && is_file($directory . '/' . $route)) {
-				$json['code'] = file_get_contents($directory . '/' . $route);
+			if ($safe && is_file($directory . '/' . $route . '.twig')) {
+				$json['code'] = file_get_contents($directory . '/' . $route . '.twig');
 			}
-		}
-
-		// Custom template load
-		$this->load->model('design/theme');
-
-		$theme_info = $this->model_design_theme->getTheme($store_id, $path);
-
-		if ($theme_info) {
-			$json['code'] = html_entity_decode($theme_info['code']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -533,93 +337,30 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		if (isset($this->request->get['path'])) {
-			$path = $this->request->get['path'];
-		} else {
-			$path = '';
-		}
-
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (substr($path, -5) != '.twig') {
+		if (substr($this->request->post['route'], -5) != '.twig') {
 			$json['error'] = $this->language->get('error_twig');
 		}
 
 		if (!$json) {
-			$this->load->model('design/theme');
-
 			$pos = strpos($path, '.');
 
-			$this->model_design_theme->editTheme($store_id, ($pos !== false) ? substr($path, 0, $pos) : $path, $this->request->post['code']);
+			($pos !== false) ? substr($path, 0, $pos) : $path;
+
+
+			$this->load->model('design/theme');
+
+			if (!$this->request->post['theme_id']) {
+				$json['theme_id'] = $this->model_design_theme->addTheme($this->request->post);
+			} else {
+				$this->model_design_theme->editTheme($this->request->post['theme_id'], $this->request->post);
+			}
 
 			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Reset
-	 *
-	 * @return void
-	 */
-	public function reset(): void {
-		$json = [];
-
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		if (isset($this->request->get['path'])) {
-			$path = $this->request->get['path'];
-		} else {
-			$path = '';
-		}
-
-		$directory = DIR_CATALOG . 'view/template';
-
-		if (is_file($directory . '/' . $path) && (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory)) {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/template/' . $path);
-		}
-
-		// Extension template load
-		if (substr($path, 0, 10) == 'extension/') {
-			$part = explode('/', $path);
-
-			$extension = $part[1];
-
-			unset($part[0]);
-			unset($part[1]);
-
-			$route = implode('/', $part);
-
-			$safe = true;
-
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
-				$safe = false;
-			}
-
-			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
-
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
-				$safe = false;
-			}
-
-			if ($safe && is_file($directory . '/' . $route)) {
-				$json['code'] = file_get_contents($directory . '/' . $route);
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

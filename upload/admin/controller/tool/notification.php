@@ -98,7 +98,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			foreach ($ranges as $range => $value) {
 				if ($value) {
 					$date_added = $value;
-					$code = $range . ($value > 1) ? $range . 's' : '';
+					$code = ($value > 1) ? $range . 's' : $range;
 				}
 			}
 

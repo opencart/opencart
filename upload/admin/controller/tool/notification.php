@@ -92,6 +92,9 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'year'   => floor($second / 31556926)
 			];
 
+			$date_added = 0;
+			$code = 'seconds';
+
 			foreach ($ranges as $range => $value) {
 				if ($value) {
 					$date_added = $value;

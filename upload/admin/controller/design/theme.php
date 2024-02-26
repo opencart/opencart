@@ -101,6 +101,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 				'theme_id'   => $result['theme_id'],
 				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'route'      => $result['route'],
+				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('design/theme.form', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id']),
 				'delete'     => $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'])
@@ -238,7 +239,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($theme_info)) {
-			$data['route'] = $theme_info['route'] . '.twig';
+			$data['route'] = $theme_info['route'];
 		} else {
 			$data['route'] = '';
 		}
@@ -274,53 +275,36 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
 		if (isset($this->request->get['path'])) {
 			$path = $this->request->get['path'];
 		} else {
 			$path = '';
 		}
 
-		$json['code'] = '';
-
-			// Default template load
-		$directory = DIR_CATALOG . 'view/template';
-
-		if (is_file($directory . '/' . $path . '.twig') && (substr(str_replace('\\', '/', realpath($directory . '/' . $path . '.twig')), 0, strlen($directory)) == $directory)) {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/template/' . $path . '.twig');
-		}
-
-		// Extension template load
-		if (substr($path, 0, 10) == 'extension/') {
+		// Default template load
+		if (substr($path, 0, 10) != 'extension/') {
+			$directory = DIR_CATALOG . 'view/template';
+			$file = $directory . '/' . $path . '.twig';
+		} else {
+			// Extension template load
 			$part = explode('/', $path);
 
-			$extension = $part[1];
+			$directory = DIR_EXTENSION . $part[1] . '/catalog/view/template';
 
 			unset($part[0]);
 			unset($part[1]);
 
-			$route = implode('/', $part);
+			$file = $directory . '/' . implode('/', $part) . '.twig';
+		}
 
-			$safe = true;
+		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+			$json['error'] = $this->language->get('error_file');
+		}
 
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
-				$safe = false;
-			}
-
-			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
-
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route . '.twig')), 0, strlen($directory)) != $directory) {
-				$safe = false;
-			}
-
-			if ($safe && is_file($directory . '/' . $route . '.twig')) {
-				$json['code'] = file_get_contents($directory . '/' . $route . '.twig');
-			}
+		if (!$json) {
+			$json['code'] = file_get_contents($file);
+		} else {
+			$json['code'] = '';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -337,21 +321,43 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->post['route'])) {
+			$route = $this->request->post['route'];
+		} else {
+			$route = '';
+		}
+
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (substr($this->request->post['route'], -5) != '.twig') {
-			$json['error'] = $this->language->get('error_twig');
+		$directory = DIR_CATALOG . 'view/template';
+		$file = $directory . '/' . $route . '.twig';
+
+		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
+		// Extension template load
+		if (substr($route, 0, 10) == 'extension/') {
+			$part = explode('/', $route);
+
+			$directory = DIR_EXTENSION . $part[1] . '/catalog/view/template';
+
+			unset($part[0]);
+			unset($part[1]);
+
+			$route = implode('/', $part);
+
+			$file = $directory . '/' . $route . '.twig';
+
+			if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory) {
+				$json['error'] = $this->language->get('error_file');
+			}
 		}
 
 		if (!$json) {
-			$pos = strpos($path, '.');
-
-			($pos !== false) ? substr($path, 0, $pos) : $path;
-
-
 			$this->load->model('design/theme');
 
 			if (!$this->request->post['theme_id']) {
@@ -377,10 +383,10 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['theme_id'])) {
-			$theme_id = (int)$this->request->get['theme_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
 		} else {
-			$theme_id = 0;
+			$selected = [];
 		}
 
 		// Check user has permission
@@ -391,7 +397,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('design/theme');
 
-			$this->model_design_theme->deleteTheme($theme_id);
+			foreach ($selected as $theme_id) {
+				$this->model_design_theme->deleteTheme($theme_id);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

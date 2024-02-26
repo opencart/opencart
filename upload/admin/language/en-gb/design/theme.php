@@ -14,6 +14,7 @@ $_['text_twig']         = 'The theme editor uses the template language Twig. You
 // Column
 $_['column_store']      = 'Store';
 $_['column_route']      = 'Route';
+$_['column_status']     = 'Status';
 $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
@@ -21,10 +22,11 @@ $_['column_action']     = 'Action';
 $_['entry_store']       = 'Store';
 $_['entry_route']       = 'Template';
 $_['entry_code']        = 'Code';
+$_['entry_status']      = 'Status';
 
 // Button
 $_['button_load']       = 'Load';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify the theme editor!';
-$_['error_twig']        = 'Warning: You can only save .twig files!';
+$_['error_file']        = 'Warning: Template file does not exist!';

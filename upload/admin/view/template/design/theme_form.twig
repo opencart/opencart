@@ -30,10 +30,19 @@
               </select>
             </div>
           </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="status" value="0"/>
+                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+              </div>
+            </div>
+          </div>
           <fieldset>
             <legend>{{ text_code }}</legend>
             <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_twig }}</div>
-            <div class="input-group">
+            <div class="input-group mb-2">
               <select name="route" id="input-route" class="form-select">
                 <option value=""></option>
                 <optgroup label="{{ text_default }}">
@@ -49,9 +58,7 @@
               </select>
               <button type="button" id="button-load" class="btn btn-primary"><i class="fa-solid fa-pencil-alt"></i> {{ button_edit }}</button>
             </div>
-            <div class="mb-2">
-              <textarea name="code" id="input-code" rows="10" class="form-control">{{ code }}</textarea>
-            </div>
+            <textarea name="code" id="input-code" rows="10" class="form-control">{{ code }}</textarea>
           </fieldset>
           <input type="hidden" name="theme_id" value="{{ theme_id }}" id="input-theme-id"/>
         </form>

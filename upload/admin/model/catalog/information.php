@@ -19,12 +19,12 @@ class Information extends \Opencart\System\Engine\Model {
 		$information_id = $this->db->getLastId();
 
 		foreach ($data['information_description'] as $language_id => $information_description) {
-			$this->addDescription($information_id, $language_id, $information_description);
+			$this->model_catalog_information->addDescription($information_id, $language_id, $information_description);
 		}
 
 		if (isset($data['information_store'])) {
 			foreach ($data['information_store'] as $store_id) {
-				$this->addStore($information_id, $store_id);
+				$this->model_catalog_information->addStore($information_id, $store_id);
 			}
 		}
 
@@ -40,7 +40,7 @@ class Information extends \Opencart\System\Engine\Model {
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($information_id, $store_id, $layout_id);
+					$this->model_catalog_information->addLayout($information_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -61,17 +61,17 @@ class Information extends \Opencart\System\Engine\Model {
 	public function editInformation(int $information_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
-		$this->deleteDescription($information_id);
+		$this->model_catalog_information->deleteDescription($information_id);
 
 		foreach ($data['information_description'] as $language_id => $information_description) {
-			$this->addDescription($information_id, $language_id, $information_description);
+			$this->model_catalog_information->addDescription($information_id, $language_id, $information_description);
 		}
 
-		$this->deleteStore($information_id);
+		$this->model_catalog_information->deleteStore($information_id);
 
 		if (isset($data['information_store'])) {
 			foreach ($data['information_store'] as $store_id) {
-				$this->addStore($information_id, $store_id);
+				$this->model_catalog_information->addStore($information_id, $store_id);
 			}
 		}
 
@@ -85,12 +85,12 @@ class Information extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		$this->deleteLayout($information_id);
+		$this->model_catalog_information->deleteLayout($information_id);
 
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->addLayout($information_id, $store_id, $layout_id);
+					$this->model_catalog_information->addLayout($information_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -108,9 +108,9 @@ class Information extends \Opencart\System\Engine\Model {
 	public function deleteInformation(int $information_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
 
-		$this->deleteDescription($information_id);
-		$this->deleteStore($information_id);
-		$this->deleteLayout($information_id);
+		$this->model_catalog_information->deleteDescription($information_id);
+		$this->model_catalog_information->deleteStore($information_id);
+		$this->model_catalog_information->deleteLayout($information_id);
 
 		$this->load->model('design/seo_url');
 

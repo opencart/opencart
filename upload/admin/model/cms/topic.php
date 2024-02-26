@@ -20,13 +20,13 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		// Description
 		foreach ($data['topic_description'] as $language_id => $value) {
-			$this->addDescription($topic_id, $language_id, $value);
+			$this->model_cms_topic->addDescription($topic_id, $language_id, $value);
 		}
 
 		// Store
 		if (isset($data['topic_store'])) {
 			foreach ($data['topic_store'] as $store_id) {
-				$this->addStore($topic_id, $store_id);
+				$this->model_cms_topic->addStore($topic_id, $store_id);
 			}
 		}
 
@@ -56,18 +56,18 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "topic` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `topic_id` = '" . (int)$topic_id . "'");
 
 		// Description
-		$this->deleteDescription($topic_id);
+		$this->model_cms_topic->deleteDescription($topic_id);
 
 		foreach ($data['topic_description'] as $language_id => $value) {
-			$this->addDescription($topic_id, $language_id, $value);
+			$this->model_cms_topic->addDescription($topic_id, $language_id, $value);
 		}
 
 		// Store
-		$this->deleteStore($topic_id);
+		$this->model_cms_topic->deleteStore($topic_id);
 
 		if (isset($data['topic_store'])) {
 			foreach ($data['topic_store'] as $store_id) {
-				$this->addStore($topic_id, $store_id);
+				$this->model_cms_topic->addStore($topic_id, $store_id);
 			}
 		}
 
@@ -95,8 +95,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	public function deleteTopic(int $topic_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic` WHERE `topic_id` = '" . (int)$topic_id . "'");
 
-		$this->deleteDescription($topic_id);
-		$this->deleteStore($topic_id);
+		$this->model_cms_topic->deleteDescription($topic_id);
+		$this->model_cms_topic->deleteStore($topic_id);
 
 		$this->load->model('design/seo_url');
 

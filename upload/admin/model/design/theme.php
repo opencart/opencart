@@ -6,6 +6,11 @@ namespace Opencart\Admin\Model\Design;
  * @package Opencart\Admin\Model\Design
  */
 class Theme extends \Opencart\System\Engine\Model {
+	public function addTheme(int $store_id, string $route, string $code): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$store_id . "', `route` = '" . $this->db->escape($route) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
+	}
+
+
 	/**
 	 * Edit Theme
 	 *
@@ -16,9 +21,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editTheme(int $store_id, string $route, string $code): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$store_id . "', `route` = '" . $this->db->escape($route) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
+		$this->db->query("UPDATE `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$store_id . "', `route` = '" . $this->db->escape($route) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
 	}
 
 	/**

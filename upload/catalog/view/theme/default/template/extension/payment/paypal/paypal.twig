@@ -16,25 +16,38 @@
 	</div>
 	{% endif %}
 	{% if card_status %}
+	<div id="paypal_card_tokens" class="paypal-card-tokens">
+		<div id="paypal_card_tokens_container" class="paypal-card-tokens-container"></div>
+	</div>
 	<div id="paypal_card" class="paypal-card">
 		<div id="paypal_card_container" class="paypal-card-container paypal-spinner">
-			<form id="paypal_card_form" class="paypal-card-form well">
+			<div id="paypal_card_form" class="paypal-card-form well">
+				<div class="card-info-holder-name clearfix">
+					<div id="card_holder_name" class="card-input-container"></div>
+				</div>
 				<div class="card-info-number clearfix">
-					<label for="card_number" class="card-label">{{ entry_card_number }}</label>
-					<div id="card_number" class="card-input-container"><div id="card_image"></div></div>
+					<div id="card_number" class="card-input-container"></div>
 				</div>
 				<div class="card-info-date-cvv clearfix">
 					<div class="card-info-date">
-						<label for="expiration_date" class="card-label">{{ entry_expiration_date }}</label>
 						<div id="expiration_date" class="card-input-container"></div>
 					</div>
 					<div class="card-info-cvv">
-						<label for="cvv" class="card-label">{{ entry_cvv }}</label>
 						<div id="cvv" class="card-input-container"></div>
 					</div>
 				</div>
-				<button id="paypal_button_submit" class="btn" value="submit">{{ button_pay }}</button>
-			</form>
+				<div class="card-button">
+					{% if logged %}
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="paypal_card_save" id="paypal_card_save" value="1" checked /> {{ entry_card_save }}
+						</label>
+					</div>
+					{% endif %}
+					<button type="button" id="paypal_card_button" class="btn paypal-card-button">{{ button_pay }}</button>
+				</div>
+			</div>
+			<div id="payments-sdk__contingency-lightbox"></div>
 		</div>
 	</div>
 	{% endif %}

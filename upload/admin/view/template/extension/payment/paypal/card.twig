@@ -34,7 +34,8 @@
 						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
 						<li class="nav-tab active"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
-						<li class="nav-tab"><a href="{{ href_message }}" class="tab"><i class="tab-icon tab-icon-message"></i><span class="tab-title">{{ text_tab_message }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_message_configurator }}" class="tab"><i class="tab-icon tab-icon-message-configurator"></i><span class="tab-title">{{ text_tab_message_configurator }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_message_setting }}" class="tab"><i class="tab-icon tab-icon-message-setting"></i><span class="tab-title">{{ text_tab_message_setting }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_contact }}" class="tab"><i class="tab-icon tab-icon-contact"></i><span class="tab-title">{{ text_tab_contact }}</span></a></li>
 					</ul>
@@ -125,11 +126,16 @@
 										</select>
 									</div>
 									<div class="form-group">
-										<label class="control-label" for="input_card_secure_status"><span data-toggle="tooltip" title="{{ help_card_secure_status }}">{{ entry_card_secure_status }}</span></label>
-										<div id="input_secure_status">
-											<input type="hidden" name="payment_paypal_setting[card][secure_status]" value="0" />
-											<input type="checkbox" name="payment_paypal_setting[card][secure_status]" value="1" class="switch" {% if setting['card']['secure_status'] %}checked="checked"{% endif %} />
-										</div>
+										<label class="control-label" for="input_card_secure_method"><span data-toggle="tooltip" title="{{ help_card_secure_method }}">{{ entry_card_secure_method }}</span></label>
+										<select name="payment_paypal_setting[card][secure_method]" id="input_card_secure_method" class="form-control">
+											{% for card_secure_method in setting['card_secure_method'] %}
+											{% if (card_secure_method['code'] == setting['card']['secure_method']) %}
+											<option value="{{ card_secure_method['code'] }}" selected="selected">{{ attribute(_context, card_secure_method['name']) }}</option>
+											{% else %}
+											<option value="{{ card_secure_method['code'] }}">{{ attribute(_context, card_secure_method['name']) }}</option>
+											{% endif %}
+											{% endfor %}
+										</select>
 									</div>
 									<hr class="hr" />
 									<button type="button" href="#all_settings" class="btn btn-default button-all-settings collapsed" data-toggle="collapse" role="button">{{ button_all_settings }}<i class="icon icon-all-settings"></i></button>	

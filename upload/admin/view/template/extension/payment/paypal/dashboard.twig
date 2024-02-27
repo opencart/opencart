@@ -78,10 +78,17 @@
 							</a>
 						</div>
 						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
-							<a href="{{ href_message }}" class="tab">
+							<a href="{{ href_message_configurator }}" class="tab">
 								<i class="tab-icon-status tab-icon-status-{% if message_status %}on{% else %}off{% endif %}"></i>
-								<i class="tab-icon tab-icon-message"></i>
-								<span class="tab-title">{{ text_tab_message }}</span>
+								<i class="tab-icon tab-icon-message-configurator"></i>
+								<span class="tab-title">{{ text_tab_message_configurator }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_message_setting }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if message_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-message-setting"></i>
+								<span class="tab-title">{{ text_tab_message_setting }}</span>
 							</a>
 						</div>
 						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">

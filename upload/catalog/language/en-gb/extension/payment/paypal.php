@@ -18,6 +18,7 @@ $_['text_week']                				= 'week';
 $_['text_semi_month']          				= 'half-month';
 $_['text_month']               				= 'month';
 $_['text_year']                				= 'year';
+$_['text_card_number']          			= '%s ending in %s';
 $_['text_trial']               				= '%s every %s %s for %s payments then ';
 $_['text_recurring']          				= '%s every %s %s';
 $_['text_recurring_item']      				= 'Recurring Item';
@@ -29,6 +30,8 @@ $_['text_length']							= ' for %s payments';
 $_['text_order_message']					= 'PayPal Seller Protection - %s';
 $_['text_wait']								= 'Please wait!';
 $_['text_loading']          				= 'Loading...';
+$_['text_failure_page_title']				= 'Your order is failed!';
+$_['text_failure_page_message']				= 'Sorry, but the transaction failed! Please choose another payment method or <a href="%s" target="_blank">contact us</a>';
 
 // Column
 $_['column_image']             				= 'Image';
@@ -53,6 +56,7 @@ $_['entry_zone']                    		= 'Region / State';
 $_['entry_card_number']						= 'Card Number';
 $_['entry_expiration_date']					= 'Expiration Date';
 $_['entry_cvv']								= 'CVV';
+$_['entry_card_save']						= 'Save your card';
 
 // Button
 $_['button_confirm']  						= 'Confirm';

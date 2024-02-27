@@ -19,7 +19,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		$attribute_group_id = $this->db->getLastId();
 
 		foreach ($data['attribute_group_description'] as $language_id => $attribute_group_description) {
-			$this->addDescription($attribute_group_id, $language_id, $attribute_group_description);
+			$this->model_catalog_attribute_group->addDescription($attribute_group_id, $language_id, $attribute_group_description);
 		}
 
 		return $attribute_group_id;
@@ -53,7 +53,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	public function deleteAttributeGroup(int $attribute_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
-		$this->deleteDescription($attribute_group_id);
+		$this->model_catalog_attribute_group->deleteDescription($attribute_group_id);
 	}
 
 	/**

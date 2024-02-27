@@ -19,7 +19,7 @@ class Filter extends \Opencart\System\Engine\Model {
 		$filter_id = $this->db->getLastId();
 
 		foreach ($data['filter_description'] as $language_id => $filter_description) {
-			$this->addDescription($filter_id, $language_id, $filter_description);
+			$this->model_catalog_filter->addDescription($filter_id, $language_id, $filter_description);
 		}
 
 		$this->cache->delete('filter');
@@ -34,10 +34,10 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function editFilter(int $filter_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
 
-		$this->deleteDescription($filter_id);
+		$this->model_catalog_filter->deleteDescription($filter_id);
 
 		foreach ($data['filter_description'] as $language_id => $filter_description) {
-			$this->addDescription($filter_id, $language_id, $filter_description);
+			$this->model_catalog_filter->addDescription($filter_id, $language_id, $filter_description);
 		}
 
 		$this->cache->delete('filter');
@@ -53,7 +53,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function deleteFilter(int $filter_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
 
-		$this->deleteDescription($filter_id);
+		$this->model_catalog_filter->deleteDescription($filter_id);
 
 		$this->cache->delete('filter');
 	}

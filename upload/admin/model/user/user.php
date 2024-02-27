@@ -287,6 +287,13 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
 	}
 
+	/**
+	 * Delete Login
+	 *
+	 * @param int $user_id
+	 *
+	 * @return void
+	 */
 	public function deleteLogin(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 	}

@@ -240,8 +240,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 			foreach ($results as $key => $result) {
 				$data['topic_description'][$key] = $result;
 
-				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-					$data['topic_description'][$key]['thumb'] = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+				if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+					$data['topic_description'][$key]['thumb'] = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 				} else {
 					$data['topic_description'][$key]['thumb'] = $data['placeholder'];
 				}

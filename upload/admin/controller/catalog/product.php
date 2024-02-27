@@ -977,10 +977,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', (int)$this->config->get('config_image_default_width'), (int)$this->config->get('config_image_default_height'));
 
 		if ($data['image'] && is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize($data['image'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+			$data['thumb'] = $this->model_tool_image->resize($data['image'], (int)$this->config->get('config_image_default_width'), (int)$this->config->get('config_image_default_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
@@ -1005,7 +1005,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['product_images'][] = [
 				'image'      => $image,
-				'thumb'      => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'thumb'      => $this->model_tool_image->resize($thumb, (int)$this->config->get('config_image_default_width'), (int)$this->config->get('config_image_default_height')),
 				'sort_order' => $product_image['sort_order']
 			];
 		}

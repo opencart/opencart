@@ -34,6 +34,17 @@
 		width: 100% !important;
 	}
 }
+.paypal-card-tokens {
+	position: relative;
+}
+.paypal-card-tokens-container {
+	position: relative;
+}
+@media (max-width: 476px) {
+	.paypal-card-tokens-container {
+		width: 100% !important;
+	}
+}
 .paypal-card {
 	position: relative;
 }
@@ -48,6 +59,9 @@
 .paypal-message {
 	position: relative;
 	margin-bottom: 10px;
+}
+.paypal-message [data-pp-message] > * {
+	max-width: none !important;
 }
 .paypal-spinner {
 	position: relative;

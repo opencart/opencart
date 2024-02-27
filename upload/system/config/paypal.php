@@ -1,6 +1,6 @@
 <?php 
 $_['paypal_setting'] = array(
-	'version' => '2.2.1',
+	'version' => '3.0.0',
 	'partner' => array(
 		'production' => array(
 			'partner_id' => 'TY2Q25KP2PX9L',
@@ -23,6 +23,7 @@ $_['paypal_setting'] = array(
 		'currency_value' => '1',
 		'card_currency_code' => 'USD',
 		'card_currency_value' => '1',
+		'callback_token' => '',
 		'webhook_token' => '',
 		'cron_token' => ''
 	),
@@ -48,7 +49,6 @@ $_['paypal_setting'] = array(
 				'mybank' => 0,
 				'p24' => 0,
 				'sepa' => 0,
-				'sofort' => 0,
 				'venmo' => 0
 			)
 		),
@@ -99,7 +99,7 @@ $_['paypal_setting'] = array(
 		'status' => true,
 		'align' => 'right',
 		'size' => 'large',
-		'secure_status' => true,
+		'secure_method' => 'sca_when_required',
 		'secure_scenario' => array(
 			'failed_authentication' => 0,
 			'rejected_authentication' => 0,
@@ -116,8 +116,6 @@ $_['paypal_setting'] = array(
 			'page_code' => 'checkout',
 			'page_name' => 'text_checkout',
 			'status' => true,
-			'align' => 'right',
-			'size' => 'large',
 			'layout' => 'text',
 			'logo_position' => 'left',
 			'logo_type' => 'primary',
@@ -130,10 +128,8 @@ $_['paypal_setting'] = array(
 			'page_code' => 'cart',
 			'page_name' => 'text_cart',
 			'status' => true,
-			'insert_tag' => '#content',
-			'insert_type' => 'append',
-			'align' => 'right',
-			'size' => 'large',
+			'insert_tag' => '#content form',
+			'insert_type' => 'after',
 			'layout' => 'text',
 			'logo_type' => 'primary',
 			'logo_position' => 'left',
@@ -148,8 +144,6 @@ $_['paypal_setting'] = array(
 			'status' => true,
 			'insert_tag' => '#content #product',
 			'insert_type' => 'before',
-			'align' => 'center',
-			'size' => 'responsive',
 			'layout' => 'text',
 			'logo_type' => 'primary',
 			'logo_position' => 'left',
@@ -164,8 +158,6 @@ $_['paypal_setting'] = array(
 			'status' => true,
 			'insert_tag' => '#common-home',
 			'insert_type' => 'prepend',
-			'align' => 'center',
-			'size' => 'responsive',
 			'layout' => 'flex',
 			'logo_type' => 'primary',
 			'logo_position' => 'left',
@@ -603,6 +595,10 @@ $_['paypal_setting'] = array(
 			'code' => 'bancontact',
 			'name' => 'text_bancontact'
 		),
+		'bancontact' => array(
+			'code' => 'bancontact',
+			'name' => 'text_bancontact'
+		),
 		'blik' => array(
 			'code' => 'blik',
 			'name' => 'text_blik'
@@ -634,10 +630,6 @@ $_['paypal_setting'] = array(
 		'sepa' => array(
 			'code' => 'sepa',
 			'name' => 'text_sepa'
-		),
-		'sofort' => array(
-			'code' => 'sofort',
-			'name' => 'text_sofort'
 		),
 		'venmo' => array(
 			'code' => 'venmo',
@@ -837,6 +829,16 @@ $_['paypal_setting'] = array(
 		'large' => '350px',
 		'responsive' => ''
 	),
+	'card_secure_method' => array(
+		'sca_when_required' => array(
+			'code' => 'sca_when_required',
+			'name' => 'text_sca_when_required'
+		),
+		'sca_always' => array(
+			'code' => 'sca_always',
+			'name' => 'text_sca_always'
+		)
+	),
 	'card_secure_scenario' => array(
 		'failed_authentication' => array(
 			'code' => 'failed_authentication',
@@ -904,44 +906,6 @@ $_['paypal_setting'] = array(
 			'code'	=> 'after',
 			'name'	=> 'text_insert_after'
 		)
-	),
-	'message_align' => array(
-		'left' => array(
-			'code' => 'left',
-			'name' => 'text_align_left'
-		),
-		'center' => array(
-			'code' => 'center',
-			'name' => 'text_align_center'
-		),
-		'right' => array(
-			'code' => 'right',
-			'name' => 'text_align_right'
-		)
-	),
-	'message_size' => array(
-		'small' => array(
-			'code' => 'small',
-			'name' => 'text_small'
-		),
-		'medium' => array(
-			'code' => 'medium',
-			'name' => 'text_medium'
-		),
-		'large' => array(
-			'code' => 'large',
-			'name' => 'text_large'
-		),
-		'responsive' => array(
-			'code' => 'responsive',
-			'name' => 'text_responsive'
-		)
-	),
-	'message_width' => array(
-		'small' => '200px',
-		'medium' => '250px',
-		'large' => '350px',
-		'responsive' => ''
 	),
 	'contact_sales' => array('100k - 250k', '250k - 2m', '2m - 10m', '10m - 20m', '20m - 50m', '50m +'),
 	'contact_product' => array(

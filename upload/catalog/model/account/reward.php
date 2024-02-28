@@ -17,7 +17,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addReward(int $customer_id, int $order_id, string $description, int $points): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$this->customer->getId() . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
 	}
 	
 	/**

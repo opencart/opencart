@@ -16,7 +16,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addTransaction(int $customer_id, string $description, float $amount = 0, int $order_id = 0): void {
+	public function addTransaction(int $customer_id, int $order_id, string $description, float $amount): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
 	}
 
@@ -45,7 +45,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteTransactionByOrderId(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "' AND `amount` < 0");
 	}
 
 	/**
@@ -55,8 +55,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
-	public function getTransactions(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
+	public function getTransactions(int $customer_id, array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		$sort_data = [
 			'amount',
@@ -96,8 +96,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * @return int
 	 */
-	public function getTotalTransactions(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
+	public function getTotalTransactions(int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];
 	}

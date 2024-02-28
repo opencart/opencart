@@ -21,6 +21,17 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Voucher By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteVoucherByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	/**
 	 * Disable Voucher
 	 *
 	 * @param int $order_id
@@ -51,7 +62,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 					$implode[] = "'" . (int)$order_status_id . "'";
 				}
 
-				$order_query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$voucher_query->row['order_id'] . "' AND `order_status_id` IN(" . implode(",", $implode) . ")");
+				$order_query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$voucher_query->row['order_id'] . "' AND `order_status_id` IN (" . implode(",", $implode) . ")");
 
 				if (!$order_query->num_rows) {
 					$status = false;
@@ -101,13 +112,28 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Voucher By Order ID
+     * Add History
+	 *
+	 * @param int   $voucher_id
+	 * @param int   $order_id
+	 * @param float $value
+	 *
+	 * @return int
+	 */
+	public function addHistory(int $voucher_id, int $order_id, float $value): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET `voucher_id` = '" . (int)$voucher_id . "', `order_id` = '" . (int)$order_id . "', `amount` = '" . (float)$value . "', `date_added` = NOW()");
+
+		return $this->db->getLastId();
+	}
+
+	/**
+	 * Delete History By Order ID
 	 *
 	 * @param int $order_id
 	 *
 	 * @return void
 	 */
-	public function deleteVoucherByOrderId(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
+	public function deleteHistoryByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

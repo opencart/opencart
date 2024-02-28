@@ -69,10 +69,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 			$voucher_info = $this->model_checkout_voucher->getVoucher($code);
 
 			if ($voucher_info) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET `voucher_id` = '" . (int)$voucher_info['voucher_id'] . "', `order_id` = '" . (int)$order_info['order_id'] . "', `amount` = '" . (float)$order_total['value'] . "', `date_added` = NOW()");
-
-
-
+				$this->model_checkout_voucher->addHistory($voucher_info['voucher_id'], $order_info['order_id'], $order_total['value']);
 			} else {
 				return $this->config->get('config_fraud_status_id');
 			}
@@ -82,11 +79,15 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $order_id
+	 * Unconfirm
+	 *
+	 * @param array $order_id
 	 *
 	 * @return void
 	 */
-	public function unconfirm(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
+	public function unconfirm(array $order_info): void {
+		$this->load->model('checkout/voucher');
+
+		$this->model_checkout_voucher->deleteHistoryByOrderId($order_info['order_id']);
 	}
 }

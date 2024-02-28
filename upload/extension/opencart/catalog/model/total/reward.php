@@ -55,7 +55,7 @@ class Reward extends \Opencart\System\Engine\Model {
 				$totals[] = [
 					'extension'  => 'opencart',
 					'code'       => 'reward',
-					'title'      => sprintf($this->language->get('reward_text_reward'), $this->session->data['reward']),
+					'title'      => sprintf($this->language->get('reward_text_reward'), -$this->session->data['reward']),
 					'value'      => -$discount_total,
 					'sort_order' => (int)$this->config->get('total_reward_sort_order')
 				];
@@ -88,7 +88,7 @@ class Reward extends \Opencart\System\Engine\Model {
 		$this->load->model('account/reward');
 
 		if ($order_info['customer_id'] && $this->model_account_reward->getRewardTotal($order_info['customer_id']) >= $points) {
-			$this->model_account_reward->addReward($order_info['customer_id'], $order_info['order_id'], sprintf($this->language->get('text_order_id'), (int)$order_info['order_id']), (int)-$points);
+			$this->model_account_reward->addReward($order_info['customer_id'], $order_info['order_id'], sprintf($this->language->get('text_order_id'), (int)$order_info['order_id']), (int)$points);
 		} else {
 			return $this->config->get('config_fraud_status_id');
 		}
@@ -101,11 +101,9 @@ class Reward extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function unconfirm(int $order_id, $data): void {
+	public function unconfirm(array $order_info): void {
 		$this->load->model('account/reward');
 
-		$this->model_account_reward->deleteReward($order_info['customer_id'], $order_id);
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` < '0'");
+		$this->model_account_reward->deleteRewardByOrderId($order_info['order_id']);
 	}
 }

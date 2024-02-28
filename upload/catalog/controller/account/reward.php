@@ -56,7 +56,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/reward');
 
-		$results = $this->model_account_reward->getRewards($filter_data);
+		$results = $this->model_account_reward->getRewards($this->customer->getId(), $filter_data);
 
 		foreach ($results as $result) {
 			$data['rewards'][] = [
@@ -68,7 +68,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$reward_total = $this->model_account_reward->getTotalRewards();
+		$reward_total = $this->model_account_reward->getTotalRewards($this->customer->getId());
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $reward_total,

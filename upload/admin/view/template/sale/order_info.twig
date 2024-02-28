@@ -79,7 +79,8 @@
                     {% for option in order_product.option %}
                       <br/>
                       {% if option.type != 'file' %}
-                      <small> - {{ option.name }}: {{ option.value }}</small> {% else %}
+                      <small> - {{ option.name }}: {{ option.value }}</small>
+                      {% else %}
                       <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
                     {% endfor %}
                   {% endif %}

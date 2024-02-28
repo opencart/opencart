@@ -94,6 +94,10 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Transactions
+	 *
+	 * @param int $customer_id
+	 *
 	 * @return int
 	 */
 	public function getTotalTransactions(int $customer_id): int {

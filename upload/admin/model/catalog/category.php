@@ -492,7 +492,6 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Delete Filter
 	 *
 	 * @param int $category_id
-	 * @param int $level
 	 *
 	 * @return void
 	 */

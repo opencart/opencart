@@ -69,7 +69,7 @@ class ControllerToolLog extends Controller {
 
 				$data['error_warning'] = sprintf($this->language->get('error_warning'), basename($file), round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
 			} else {
-				$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+				$data['log'] = htmlspecialchars(file_get_contents($file), ENT_COMPAT, 'UTF-8');
 			}
 		}
 

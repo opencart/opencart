@@ -28,7 +28,7 @@ class Order extends \Opencart\System\Engine\Model {
 		// Vouchers
 		if (isset($data['vouchers'])) {
 			foreach ($data['vouchers'] as $voucher) {
-				$this->model_checkout_order->addVoucher($order_id);
+				$this->model_checkout_order->addVoucher($order_id, $voucher);
 			}
 		}
 
@@ -80,7 +80,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 			if (isset($data['vouchers'])) {
 				foreach ($data['vouchers'] as $voucher) {
-					$this->model_checkout_order->addVoucher($order_id);
+					$this->model_checkout_order->addVoucher($order_id, $voucher);
 				}
 			}
 
@@ -480,6 +480,20 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query($sql);
+	}
+
+	/**
+	 * Get Voucher By Voucher ID
+	 *
+	 * @param int $order_id
+	 * @param int $order_voucher_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getVoucherByVoucherId(int $order_id, int $voucher_id): array {
+		$query = $this->db->query("SELECT `order_voucher_id` FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "' AND `voucher_id` = '" . (int)$voucher_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

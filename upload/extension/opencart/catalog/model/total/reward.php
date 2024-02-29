@@ -97,7 +97,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param int $order_id
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */

@@ -56,14 +56,14 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "topic` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `topic_id` = '" . (int)$topic_id . "'");
 
 		// Description
-		$this->model_cms_topic->deleteDescription($topic_id);
+		$this->model_cms_topic->deleteDescriptions($topic_id);
 
 		foreach ($data['topic_description'] as $language_id => $value) {
 			$this->model_cms_topic->addDescription($topic_id, $language_id, $value);
 		}
 
 		// Store
-		$this->model_cms_topic->deleteStore($topic_id);
+		$this->model_cms_topic->deleteStores($topic_id);
 
 		if (isset($data['topic_store'])) {
 			foreach ($data['topic_store'] as $store_id) {
@@ -95,8 +95,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	public function deleteTopic(int $topic_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic` WHERE `topic_id` = '" . (int)$topic_id . "'");
 
-		$this->model_cms_topic->deleteDescription($topic_id);
-		$this->model_cms_topic->deleteStore($topic_id);
+		$this->model_cms_topic->deleteDescriptions($topic_id);
+		$this->model_cms_topic->deleteStores($topic_id);
 
 		$this->load->model('design/seo_url');
 
@@ -213,7 +213,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $topic_id): void {
+	public function deleteDescriptions(int $topic_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
 
@@ -262,7 +262,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteStore(int $topic_id): void {
+	public function deleteStores(int $topic_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_store` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
 
@@ -305,7 +305,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteLayout(int $article_id): void {
+	public function deleteLayouts(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 

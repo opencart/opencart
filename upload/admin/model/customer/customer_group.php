@@ -36,7 +36,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	public function editCustomerGroup(int $customer_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer_group` SET `approval` = '" . (isset($data['approval']) ? (bool)$data['approval'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
-		$this->deleteDescription($customer_group_id);
+		$this->deleteDescriptions($customer_group_id);
 
 		foreach ($data['customer_group_description'] as $language_id => $value) {
 			$this->addDescription($customer_group_id, $language_id, $value);
@@ -53,21 +53,17 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	public function deleteCustomerGroup(int $customer_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_group` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
-		$this->deleteDescription($customer_group_id);
+		$this->deleteDescriptions($customer_group_id);
 
 		$this->load->model('catalog/product');
 
-		$this->model_catalog_product->deleteDiscountByCustomerGroupId($customer_group_id);
-		$this->model_catalog_product->deleteSpecialByCustomerGroupId($customer_group_id);
-		$this->model_catalog_product->deleteRewardByCustomerGroupId($customer_group_id);
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_special` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+		$this->model_catalog_product->deleteDiscountsByCustomerGroupId($customer_group_id);
+		$this->model_catalog_product->deleteSpecialsByCustomerGroupId($customer_group_id);
+		$this->model_catalog_product->deleteRewardsByCustomerGroupId($customer_group_id);
 
 		$this->load->model('localisation/tax_rate');
 
-		$this->model_localisation_tax_rate->deleteCustomerGroupByCustomerGroupId($customer_group_id);
+		$this->model_localisation_tax_rate->deleteCustomerGroupsByCustomerGroupId($customer_group_id);
 	}
 
 	/**
@@ -147,7 +143,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $customer_group_id): void {
+	public function deleteDescriptions(int $customer_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}
 

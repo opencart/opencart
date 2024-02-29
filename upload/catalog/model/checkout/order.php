@@ -67,7 +67,7 @@ class Order extends \Opencart\System\Engine\Model {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `invoice_prefix` = '" . $this->db->escape((string)$data['invoice_prefix']) . "', `store_id` = '" . (int)$data['store_id'] . "', `store_name` = '" . $this->db->escape((string)$data['store_name']) . "', `store_url` = '" . $this->db->escape((string)$data['store_url']) . "', `customer_id` = '" . (int)$data['customer_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(json_encode($data['custom_field'])) . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_firstname` = '" . $this->db->escape((string)$data['payment_firstname']) . "', `payment_lastname` = '" . $this->db->escape((string)$data['payment_lastname']) . "', `payment_company` = '" . $this->db->escape((string)$data['payment_company']) . "', `payment_address_1` = '" . $this->db->escape((string)$data['payment_address_1']) . "', `payment_address_2` = '" . $this->db->escape((string)$data['payment_address_2']) . "', `payment_city` = '" . $this->db->escape((string)$data['payment_city']) . "', `payment_postcode` = '" . $this->db->escape((string)$data['payment_postcode']) . "', `payment_country` = '" . $this->db->escape((string)$data['payment_country']) . "', `payment_country_id` = '" . (int)$data['payment_country_id'] . "', `payment_zone` = '" . $this->db->escape((string)$data['payment_zone']) . "', `payment_zone_id` = '" . (int)$data['payment_zone_id'] . "', `payment_address_format` = '" . $this->db->escape((string)$data['payment_address_format']) . "', `payment_custom_field` = '" . $this->db->escape(isset($data['payment_custom_field']) ? json_encode($data['payment_custom_field']) : '') . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_firstname` = '" . $this->db->escape((string)$data['shipping_firstname']) . "', `shipping_lastname` = '" . $this->db->escape((string)$data['shipping_lastname']) . "', `shipping_company` = '" . $this->db->escape((string)$data['shipping_company']) . "', `shipping_address_1` = '" . $this->db->escape((string)$data['shipping_address_1']) . "', `shipping_address_2` = '" . $this->db->escape((string)$data['shipping_address_2']) . "', `shipping_city` = '" . $this->db->escape((string)$data['shipping_city']) . "', `shipping_postcode` = '" . $this->db->escape((string)$data['shipping_postcode']) . "', `shipping_country` = '" . $this->db->escape((string)$data['shipping_country']) . "', `shipping_country_id` = '" . (int)$data['shipping_country_id'] . "', `shipping_zone` = '" . $this->db->escape((string)$data['shipping_zone']) . "', `shipping_zone_id` = '" . (int)$data['shipping_zone_id'] . "', `shipping_address_format` = '" . $this->db->escape((string)$data['shipping_address_format']) . "', `shipping_custom_field` = '" . $this->db->escape(isset($data['shipping_custom_field']) ? json_encode($data['shipping_custom_field']) : '') . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `total` = '" . (float)$data['total'] . "', `affiliate_id` = '" . (int)$data['affiliate_id'] . "', `commission` = '" . (float)$data['commission'] . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
 
 			// Products
-			$this->model_checkout_order->deleteProduct($order_id);
+			$this->model_checkout_order->deleteProducts($order_id);
 
 			if (isset($data['products'])) {
 				foreach ($data['products'] as $product) {
@@ -76,7 +76,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// Vouchers
-			$this->model_checkout_order->deleteVoucher($order_id);
+			$this->model_checkout_order->deleteVouchers($order_id);
 
 			if (isset($data['vouchers'])) {
 				foreach ($data['vouchers'] as $voucher) {
@@ -85,7 +85,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// Totals
-			$this->model_checkout_order->deleteTotal($order_id);
+			$this->model_checkout_order->deleteTotals($order_id);
 
 			if (isset($data['totals'])) {
 				foreach ($data['totals'] as $total) {
@@ -144,23 +144,23 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		$this->model_checkout_order->deleteProduct($order_id);
-		$this->model_checkout_order->deleteVoucher($order_id);
-		$this->model_checkout_order->deleteTotal($order_id);
-		$this->model_checkout_order->deleteHistory($order_id);
+		$this->model_checkout_order->deleteProducts($order_id);
+		$this->model_checkout_order->deleteVouchers($order_id);
+		$this->model_checkout_order->deleteTotals($order_id);
+		$this->model_checkout_order->deleteHistories($order_id);
 
 		// Gift Voucher
 		$this->load->model('checkout/voucher');
 
-		$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
+		$this->model_checkout_voucher->deleteVouchersByOrderId($order_id);
 
 		$this->load->model('account/transaction');
 
-		$this->model_account_transaction->deleteTransactionByOrderId($order_id);
+		$this->model_account_transaction->deleteTransactionsByOrderId($order_id);
 
 		$this->load->model('account/reward');
 
-		$this->model_account_reward->deleteRewardByOrderId($order_id);
+		$this->model_account_reward->deleteRewardsByOrderId($order_id);
 	}
 
 	/**
@@ -239,7 +239,7 @@ class Order extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function deleteProduct(int $order_id, int $order_product_id = 0): void {
+	public function deleteProducts(int $order_id, int $order_product_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'";
 
 		if ($order_product_id) {
@@ -248,7 +248,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$this->db->query($sql);
 
-		$this->deleteOption($order_id, $order_product_id);
+		$this->deleteOptions($order_id, $order_product_id);
 		$this->deleteSubscription($order_id, $order_product_id);
 	}
 
@@ -298,7 +298,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteOption(int $order_id, int $order_product_id = 0): void {
+	public function deleteOptions(int $order_id, int $order_product_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'";
 		
 		if ($order_product_id) {
@@ -472,7 +472,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteVoucher(int $order_id, int $order_voucher_id = 0): void {
+	public function deleteVouchers(int $order_id, int $order_voucher_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'";
 
 		if ($order_voucher_id) {
@@ -491,7 +491,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getVoucherByVoucherId(int $order_id, int $voucher_id): array {
-		$query = $this->db->query("SELECT `order_voucher_id` FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "' AND `voucher_id` = '" . (int)$voucher_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "' AND `voucher_id` = '" . (int)$voucher_id . "'");
 
 		return $query->rows;
 	}
@@ -526,7 +526,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int    $order_id
 	 */
-	public function deleteTotal(int $order_id): void {
+	public function deleteTotals(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
@@ -746,5 +746,16 @@ class Order extends \Opencart\System\Engine\Model {
 
 			$this->cache->delete('product');
 		}
+	}
+
+	/**
+	 * Delete Order Histories
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteHistory(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

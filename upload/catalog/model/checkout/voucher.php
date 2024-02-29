@@ -27,7 +27,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteVoucherByOrderId(int $order_id): void {
+	public function deleteVouchersByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
@@ -119,7 +119,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	public function getVoucherByCode(string $code): array {
 		$query = $this->db->query("SELECT *, `vtd`.`name` AS theme FROM `" . DB_PREFIX . "voucher` `v` LEFT JOIN `" . DB_PREFIX . "voucher_theme` `vt` ON (`v`.`voucher_theme_id` = `vt`.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` `vtd` ON (`vt`.`voucher_theme_id` = `vtd`.`voucher_theme_id`) WHERE `v`.`code` = '" . $this->db->escape($code) . "' AND `vtd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `v`.`status` = '1'");
 
-		return $query->rows;
+		return $query->row;
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteHistoryByOrderId(int $order_id): void {
+	public function deleteHistoriesByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

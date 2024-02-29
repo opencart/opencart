@@ -158,7 +158,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteHistoryByOrderId(int $order_id): void {
+	public function deleteHistoriesByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 

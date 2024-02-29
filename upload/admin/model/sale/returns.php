@@ -45,7 +45,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	public function deleteReturn(int $return_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return` WHERE `return_id` = '" . (int)$return_id . "'");
 
-		$this->deleteHistory($return_id);
+		$this->deleteHistories($return_id);
 	}
 
 	/**
@@ -257,7 +257,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_history` SET `return_id` = '" . (int)$return_id . "', `return_status_id` = '" . (int)$return_status_id . "', `notify` = '" . (int)$notify . "', `comment` = '" . $this->db->escape(strip_tags($comment)) . "', `date_added` = NOW()");
 	}
 
-	public function deleteHistory(int $return_id): void {
+	public function deleteHistories(int $return_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_history` WHERE `return_id` = '" . (int)$return_id . "'");
 	}
 

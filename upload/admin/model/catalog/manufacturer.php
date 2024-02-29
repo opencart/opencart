@@ -60,7 +60,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 		// Store
-		$this->deleteStore($manufacturer_id);
+		$this->deleteStores($manufacturer_id);
 
 		if (isset($data['manufacturer_store'])) {
 			foreach ($data['manufacturer_store'] as $store_id) {
@@ -82,7 +82,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		}
 
 		// Layouts
-		$this->model_catalog_manufacturer->deleteLayout($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 
 		if (isset($data['manufacturer_layout'])) {
 			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
@@ -105,8 +105,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
-		$this->model_catalog_manufacturer->deleteStore($manufacturer_id);
-		$this->model_catalog_manufacturer->deleteLayout($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteStores($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 
 		$this->load->model('design/seo_url');
 
@@ -206,7 +206,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteStore(int $manufacturer_id): void {
+	public function deleteStores(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 	}
 
@@ -253,7 +253,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteLayout(int $manufacturer_id): void {
+	public function deleteLayouts(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 	}
 

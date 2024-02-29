@@ -40,6 +40,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteMarketing(int $marketing_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "marketing` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
+
+		$this->deleteReports($marketing_id);
 	}
 
 	/**
@@ -178,6 +180,17 @@ class Marketing extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Delete Reports
+	 *
+	 * @param int $marketing_id
+	 *
+	 * @return void
+	 */
+	public function deleteReports(int $marketing_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 	}
 
 	/**

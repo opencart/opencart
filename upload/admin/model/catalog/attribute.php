@@ -44,7 +44,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		$this->model_catalog_attribute->deleteDescription($attribute_id);
+		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
 			$this->model_catalog_attribute->addDescription($attribute_id, $language_id, $attribute_description);
@@ -63,7 +63,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		$this->model_catalog_attribute->deleteDescription($attribute_id);
+		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
 	}
 
 	/**
@@ -190,7 +190,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $attribute_id): void {
+	public function deleteDescriptions(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 	}
 

@@ -1058,6 +1058,13 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
+	/**
+	 *	Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -1208,6 +1215,10 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query($sql);
 	}
 
+	public function deleteAttributesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_attribute` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Attributes
 	 *
@@ -1281,7 +1292,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Option
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return void
 	 */

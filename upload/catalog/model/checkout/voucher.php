@@ -112,7 +112,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Voucher By Code
 	 *
-	 * @param int $voucher_id
+	 * @param string $code
 	 *
 	 * @return array<string, mixed>
 	 */

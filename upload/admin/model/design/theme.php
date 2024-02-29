@@ -19,7 +19,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Theme
 	 *
-	 * @param int                  $store_id
+	 * @param int                  $theme_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void

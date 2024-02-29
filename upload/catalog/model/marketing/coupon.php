@@ -113,7 +113,10 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getProducts(int $coupon_id) {
+	/**
+	 * @return array<int, int>
+	 */
+	public function getProducts(int $coupon_id): array {
 		$product_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
@@ -125,7 +128,10 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
-	public function getCategories($coupon_id) {
+	/**
+	 * @return array<int, int>
+	 */
+	public function getCategories(int $coupon_id): array {
 		$category_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` `cc` LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cc`.`category_id` = `cp`.`path_id`) WHERE `cc`.`coupon_id` = '" . (int)$coupon_id . "'");
@@ -165,7 +171,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories By Coupon
 	 *
-	 * @param string $coupon
+	 * @param string $coupon_id
 	 *
 	 * @return int
 	 */
@@ -178,8 +184,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories By Customer ID
 	 *
-	 * @param string $coupon
-	 * @param int    $customer_id
+	 * @param int $coupon_id
+	 * @param int $customer_id
 	 *
 	 * @return int
 	 */

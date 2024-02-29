@@ -159,7 +159,6 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Image
 	 *
-	 * @param int                  $download_id primary key of the attribute record to be fetched
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
@@ -171,8 +170,6 @@ class Banner extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Image
-	 *
-	 * @param int $download_id primary key of the attribute record to be fetched
 	 *
 	 * @return void
 	 */

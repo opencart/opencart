@@ -52,7 +52,7 @@ class Credit extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * @param array $order_info
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */

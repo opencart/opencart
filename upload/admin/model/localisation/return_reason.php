@@ -62,6 +62,13 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_reason');
 	}
 
+	/**
+	 * Delete Return Reasons By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteReturnReasonsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
 
@@ -143,6 +150,13 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		return $return_reason_data;
 	}
 
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
 

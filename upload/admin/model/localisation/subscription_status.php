@@ -143,6 +143,13 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 		return $subscription_status_data;
 	}
 
+	/**
+	 * Get Descriptions By Language Id
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
 

@@ -81,7 +81,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	/**
 	 * Unconfirm
 	 *
-	 * @param array $order_id
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */

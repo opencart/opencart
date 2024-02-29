@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="50px" height="39px" viewBox="0 0 50 39" style="enable-background:new 0 0 50 39;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#003087;}
+	.st1{fill:#0070E0;}
+	.st2{fill:#FFFFFF;}
+</style>
+<g id="icon_Pay_Later_messaging" transform="translate(-628 -587)">
+	<path id="Rectangle_233" class="st0" d="M631,587h44c1.7,0,3,1.3,3,3v4l0,0h-50l0,0v-4C628,588.3,629.3,587,631,587z"/>
+	<path id="Rectangle_234" class="st1" d="M628,598h50l0,0v25c0,1.7-1.3,3-3,3h-44c-1.7,0-3-1.3-3-3V598L628,598z"/>
+	<g id="Group_500">
+		<circle id="Ellipse_44" class="st2" cx="632.3" cy="590.5" r="1.3"/>
+		<circle id="Ellipse_45" class="st2" cx="636.5" cy="590.5" r="1.3"/>
+		<circle id="Ellipse_46" class="st2" cx="640.7" cy="590.5" r="1.3"/>
+	</g>
+	<path id="Rectangle_235" class="st2" d="M636,602h34c0.6,0,1,0.4,1,1v2c0,0.6-0.4,1-1,1h-34c-0.6,0-1-0.4-1-1v-2
+		C635,602.4,635.4,602,636,602z"/>
+	<g id="Group_501">
+		<path id="Rectangle_236" class="st0" d="M650,609h7c0.6,0,1,0.4,1,1l0,0c0,0.6-0.4,1-1,1h-7c-0.6,0-1-0.4-1-1l0,0
+			C649,609.4,649.4,609,650,609z"/>
+		<path id="Rectangle_237" class="st2" d="M661,609h7c0.6,0,1,0.4,1,1l0,0c0,0.6-0.4,1-1,1h-7c-0.6,0-1-0.4-1-1l0,0
+			C660,609.4,660.4,609,661,609z"/>
+		<path id="Rectangle_238" class="st2" d="M650,612h12c0.6,0,1,0.4,1,1l0,0c0,0.6-0.4,1-1,1h-12c-0.6,0-1-0.4-1-1l0,0
+			C649,612.4,649.4,612,650,612z"/>
+		<path id="Rectangle_239" class="st2" d="M666,612h4c0.6,0,1,0.4,1,1l0,0c0,0.6-0.4,1-1,1h-4c-0.6,0-1-0.4-1-1l0,0
+			C665,612.4,665.4,612,666,612z"/>
+	</g>
+	<path id="Rectangle_240" class="st0" d="M650,617h20c0.6,0,1,0.4,1,1v2c0,0.6-0.4,1-1,1h-20c-0.6,0-1-0.4-1-1v-2
+		C649,617.4,649.4,617,650,617z"/>
+</g>
+<g>
+	<path class="st2" d="M14.7,35.5H8.1c-0.6,0-1-0.4-1-1V21.8c0-0.6,0.4-1,1-1h6.6c0.6,0,1,0.4,1,1v12.7
+		C15.7,35.1,15.3,35.5,14.7,35.5z"/>
+	<path class="st0" d="M13.9,33.7H8.9c-0.6,0-1-0.4-1-1v-9.9c0-0.6,0.4-1,1-1h4.9c0.6,0,1,0.4,1,1v9.9C14.9,33.2,14.4,33.7,13.9,33.7
+		z"/>
+	<path class="st0" d="M12.4,34.9h-2c-0.2,0-0.3-0.1-0.3-0.3l0,0c0-0.2,0.1-0.3,0.3-0.3h2c0.2,0,0.3,0.1,0.3,0.3l0,0
+		C12.7,34.8,12.6,34.9,12.4,34.9z"/>
+</g>
+</svg>

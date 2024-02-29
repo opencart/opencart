@@ -217,6 +217,10 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Descriptions
 	 *

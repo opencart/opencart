@@ -155,6 +155,10 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Descriptions
 	 *

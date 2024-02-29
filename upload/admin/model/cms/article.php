@@ -253,6 +253,10 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Descriptions
 	 *

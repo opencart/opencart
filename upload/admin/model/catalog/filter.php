@@ -151,6 +151,10 @@ class Filter extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_id` = '" . (int)$filter_id . "'");
 	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Group Descriptions
 	 *

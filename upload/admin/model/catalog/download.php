@@ -142,6 +142,10 @@ class Download extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
 	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Descriptions
 	 *

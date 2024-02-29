@@ -203,7 +203,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteDescriptions(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -323,6 +326,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 
 	public function deleteValueDescriptions(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+	}
+
+	public function deleteValueDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**

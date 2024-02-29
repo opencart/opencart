@@ -210,6 +210,10 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+
+	}
+
 	/**
 	 * Get Descriptions
 	 *

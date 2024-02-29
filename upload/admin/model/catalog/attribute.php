@@ -195,6 +195,35 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Delete Description By Language ID
+	 *
+	 *	Delete attribute description record in the database.
+	 *
+	 * @param int $language_id primary key of the attribute language
+	 *
+	 * @return void
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 *	Get Description
+	 *
+	 *	Get the record of the attribute description record in the database.
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $language_id  primary key of the attribute language
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getDescription(int $attribute_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "' AND language_id = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 *	Get Descriptions
 	 *
 	 *	Get the record of the attribute record in the database.

@@ -62,6 +62,12 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_status');
 	}
 
+	public function deleteReturnStatusesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('return_status');
+	}
+
 	/**
 	 * Get Return Status
 	 *
@@ -135,6 +141,12 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		}
 
 		return $return_status_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

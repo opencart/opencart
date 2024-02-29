@@ -488,6 +488,12 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_description_data;
 	}
 
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
 	public function addPath(int $category_id, int $path_id, int $level): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
 	}

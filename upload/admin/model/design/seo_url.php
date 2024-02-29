@@ -219,7 +219,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Seo Urls
+	 * Get Seo Urls By Key Value
 	 *
 	 * @param string $key
 	 * @param string $value
@@ -239,12 +239,27 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Urls By Store Id
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getSeoUrlsByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Seo Urls By Language Id
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getSeoUrlsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

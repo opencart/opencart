@@ -133,6 +133,27 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Add Image
+	 *
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
+	 *
+	 * @return void
+	 */
+	public function addImage(int $banner_id, int $language_id, $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `link` = '" . $this->db->escape($data['link']) . "', `image` = '" . $this->db->escape($data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+	}
+
+	/**
+	 *	Delete Image
+	 *
+	 * @return void
+	 */
+	public function deleteImages(int $banner_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "'");
+	}
+
+	/**
 	 * Get Images
 	 *
 	 * @param int $banner_id
@@ -156,24 +177,9 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
-	/**
-	 *	Add Image
-	 *
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
-	 *
-	 * @return void
-	 */
-	public function addImage(int $banner_id, int $language_id, $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `link` = '" . $this->db->escape($data['link']) . "', `image` = '" . $this->db->escape($data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
-	}
+	public function getImagesByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `language_id` = '" . (int)$language_id . "'");
 
-	/**
-	 *	Delete Image
-	 *
-	 * @return void
-	 */
-	public function deleteImages(int $banner_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "'");
+		return $query->rows;
 	}
 }

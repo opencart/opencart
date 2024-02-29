@@ -44,6 +44,10 @@ class Translation extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 
+	public function deleteTranslationsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
 	/**
 	 * Get Translation
 	 *

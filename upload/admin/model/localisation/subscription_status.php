@@ -62,6 +62,12 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('subscription_status');
 	}
 
+	public function deleteStockStatusesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('subscription_status');
+	}
+
 	/**
 	 * Get Subscription Status
 	 *
@@ -135,6 +141,12 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 		}
 
 		return $subscription_status_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

@@ -63,6 +63,19 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Order Statuses By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteOrderStatusesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('order_status');
+	}
+
+	/**
 	 * Get Order Status
 	 *
 	 * @param int $order_status_id

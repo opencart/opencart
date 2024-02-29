@@ -62,6 +62,12 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('stock_status');
 	}
 
+	public function deleteStockStatusesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('stock_status');
+	}
+
 	/**
 	 * Get Stock Status
 	 *
@@ -135,6 +141,12 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		}
 
 		return $stock_status_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

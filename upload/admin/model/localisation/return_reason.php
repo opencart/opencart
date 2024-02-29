@@ -62,6 +62,12 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_reason');
 	}
 
+	public function deleteReturnReasonsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('return_reason');
+	}
+
 	/**
 	 * Get Return Reason
 	 *
@@ -135,6 +141,12 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		}
 
 		return $return_reason_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

@@ -23,130 +23,124 @@ class Language extends \Opencart\System\Engine\Model {
 		// Attribute
 		$this->load->model('catalog/attribute');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $attribute) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute['attribute_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($attribute['name']) . "'");
+		foreach ($results as $attribute) {
+			$this->model_catalog_attribute->addDescription($attribute['attribute_id'], $language_id, $attribute);
 		}
 
 		// Attribute Group
 		$this->load->model('catalog/attribute_group');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_group_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $attribute_group) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group_description` SET `attribute_group_id` = '" . (int)$attribute_group['attribute_group_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($attribute_group['name']) . "'");
+		foreach ($results as $attribute_group) {
+			$this->model_catalog_attribute->addDescription($attribute['attribute_id'], $language_id, $attribute_group);
 		}
-
-		$this->cache->delete('attribute');
 
 		// Banner
 		$this->load->model('design/banner');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_design_banner->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $banner_image) {
+		foreach ($results as $banner_image) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_image['banner_id'] . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($banner_image['title']) . "', `link` = '" . $this->db->escape($banner_image['link']) . "', `image` = '" . $this->db->escape($banner_image['image']) . "', `sort_order` = '" . (int)$banner_image['sort_order'] . "'");
 		}
 
-		$this->cache->delete('banner');
-
+		// Category
 		$this->load->model('catalog/category');
 
-		// Category
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_category->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $category) {
+		foreach ($results as $category) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category['category_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($category['name']) . "', `description` = '" . $this->db->escape($category['description']) . "', `meta_title` = '" . $this->db->escape($category['meta_title']) . "', `meta_description` = '" . $this->db->escape($category['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($category['meta_keyword']) . "'");
 		}
 
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
-		// Customer Group
+		$results = $this->model_customer_customer_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		foreach ($query->rows as $customer_group) {
+		foreach ($results as $customer_group) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($customer_group['name']) . "', `description` = '" . $this->db->escape($customer_group['description']) . "'");
 		}
 
+		// Custom Field
 		$this->load->model('customer/custom_field');
 
-		// Custom Field
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_customer_custom_field->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $custom_field) {
+		foreach ($results as $custom_field) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_description` SET `custom_field_id` = '" . (int)$custom_field['custom_field_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($custom_field['name']) . "'");
 		}
 
-		$this->load->model('customer/custom_field');
-
 		// Custom Field Value
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $custom_field_value) {
+		foreach ($results as $custom_field_value) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value['custom_field_value_id'] . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_value['custom_field_id'] . "', `name` = '" . $this->db->escape($custom_field_value['name']) . "'");
 		}
 
 		// Download
 		$this->load->model('catalog/download');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_download->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $download) {
+		foreach ($results as $download) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "download_description` SET `download_id` = '" . (int)$download['download_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($download['name']) . "'");
 		}
 
 		// Filter
 		$this->load->model('catalog/filter');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_filter->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $filter) {
+		foreach ($results as $filter) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_description` SET `filter_id` = '" . (int)$filter['filter_id'] . "', `language_id` = '" . (int)$language_id . "', `filter_group_id` = '" . (int)$filter['filter_group_id'] . "', `name` = '" . $this->db->escape($filter['name']) . "'");
 		}
 
 		// Filter Group
 		$this->load->model('catalog/filter_group');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_filter_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $filter_group) {
+		foreach ($results as $filter_group) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group_description` SET `filter_group_id` = '" . (int)$filter_group['filter_group_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($filter_group['name']) . "'");
 		}
 
 		// Information
 		$this->load->model('catalog/information');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_information->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $information) {
+		foreach ($results as $information) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information['information_id'] . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($information['title']) . "', `description` = '" . $this->db->escape($information['description']) . "', `meta_title` = '" . $this->db->escape($information['meta_title']) . "', `meta_description` = '" . $this->db->escape($information['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($information['meta_keyword']) . "'");
 		}
-
-		$this->cache->delete('information');
 
 		// Length
 		$this->load->model('localisation/length_class');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_localisation_length_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($query->rows as $length) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class_description` SET `length_class_id` = '" . (int)$length['length_class_id'] . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($length['title']) . "', `unit` = '" . $this->db->escape($length['unit']) . "'");
 		}
 
-		$this->cache->delete('length_class');
-
 		// Option
 		$this->load->model('catalog/option');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$results = $this->model_catalog_option->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($query->rows as $option) {
+		foreach ($results as $option) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `option_id` = '" . (int)$option['option_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($option['name']) . "'");
 		}
 
 		// Option Value
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		$results = $this->model_catalog_option->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($query->rows as $option_value) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value['option_value_id'] . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_value['option_id'] . "', `name` = '" . $this->db->escape($option_value['name']) . "'");
@@ -155,27 +149,29 @@ class Language extends \Opencart\System\Engine\Model {
 		// Order Status
 		$this->load->model('localisation/order_status');
 
+		$results = $this->model_
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $order_status) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `order_status_id` = '" . (int)$order_status['order_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($order_status['name']) . "'");
 		}
 
-		$this->cache->delete('order_status');
 
 		// Product
 		$this->load->model('catalog/product');
 
+		$results = $this->model_
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $product) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product['product_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($product['name']) . "', `description` = '" . $this->db->escape($product['description']) . "', `tag` = '" . $this->db->escape($product['tag']) . "', `meta_title` = '" . $this->db->escape($product['meta_title']) . "', `meta_description` = '" . $this->db->escape($product['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($product['meta_keyword']) . "'");
 		}
 
-		$this->cache->delete('product');
 
 		// Product Attribute
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		$results = $this->model_
 
 		foreach ($query->rows as $product_attribute) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_attribute` SET `product_id` = '" . (int)$product_attribute['product_id'] . "', `attribute_id` = '" . (int)$product_attribute['attribute_id'] . "', `language_id` = '" . (int)$language_id . "', `text` = '" . $this->db->escape($product_attribute['text']) . "'");
@@ -183,6 +179,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 		// Return Action
 		$this->load->model('localisation/return_action');
+
+		$results = $this->model_
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -193,6 +191,8 @@ class Language extends \Opencart\System\Engine\Model {
 		// Return Reason
 		$this->load->model('localisation/return_reason');
 
+		$results = $this->model_
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $return_reason) {
@@ -201,6 +201,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 		// Return Status
 		$this->load->model('localisation/return_status');
+
+		$results = $this->model_
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -211,16 +213,20 @@ class Language extends \Opencart\System\Engine\Model {
 		// Stock Status
 		$this->load->model('localisation/stock_status');
 
+		$results = $this->model_localisation_stock_status->getDescriptionsByLanguageId($language_id);
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $stock_status) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status['stock_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($stock_status['name']) . "'");
 		}
 
-		$this->cache->delete('stock_status');
+
 
 		// Voucher Theme
 		$this->load->model('localisation/voucher_theme');
+
+		$results = $this->model_localisation_voucher_theme->getDescriptionsByLanguageId($language_id);
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -228,10 +234,12 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_theme_description` SET `voucher_theme_id` = '" . (int)$voucher_theme['voucher_theme_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($voucher_theme['name']) . "'");
 		}
 
-		$this->cache->delete('voucher_theme');
+
 
 		// Weight Class
 		$this->load->model('localisation/weight_class');
+
+		$results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($language_id);
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -239,10 +247,12 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "weight_class_description` SET `weight_class_id` = '" . (int)$weight_class['weight_class_id'] . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($weight_class['title']) . "', `unit` = '" . $this->db->escape($weight_class['unit']) . "'");
 		}
 
-		$this->cache->delete('weight_class');
+
 
 		// Subscription
 		$this->load->model('localisation/subscription_status');
+
+		$results = $this->model_localisation_subscription_status->getDescriptionsByLanguageId($language_id);
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -252,6 +262,9 @@ class Language extends \Opencart\System\Engine\Model {
 
 		// SEO URL
 		$this->load->model('design/seo_url');
+
+		$results = $this->model_
+
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -298,36 +311,26 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_attribute_group->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('attribute');
-
 		// Banner
 		$this->load->model('design/banner');
 
 		$this->model_design_banner->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('banner');
 
 		// Category
 		$this->load->model('catalog/category');
 
 		$this->model_catalog_category->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('category');
-
 		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$this->model_catalog_customer_group->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('customer_group');
 
 		// Custom Field
 		$this->load->model('customer/custom_field');
 
 		$this->model_customer_custom_field->deleteDescriptionsByLanguageId($language_id);
 		$this->model_customer_custom_field->deleteValueDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('custom_field');
 
 		// Download
 		$this->load->model('catalog/download');
@@ -339,28 +342,20 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_filter->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('filter');
-
 		// Filter Group
 		$this->load->model('catalog/filter_group');
 
 		$this->model_catalog_filter_group->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('filter_group');
 
 		// Information
 		$this->load->model('catalog/information');
 
 		$this->model_catalog_information->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('information');
-
 		// Length
 		$this->load->model('localisation/length_class');
 
 		$this->model_localisation_length_class->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('length_class');
 
 		// Option
 		$this->load->model('catalog/option');
@@ -368,14 +363,10 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->model_catalog_option->deleteDescriptionsByLanguageId($language_id);
 		$this->model_catalog_option->deleteValueDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('option');
-
 		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$this->model_localisation_order_status->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('order_status');
 
 		// Product
 		$this->load->model('catalog/product');
@@ -383,54 +374,40 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteDescriptionsByLanguageId($language_id);
 		$this->model_catalog_product->deleteAttributesByLanguageId($language_id);
 
-		$this->cache->delete('product');
-
 		// Return Action
 		$this->load->model('localisation/return_action');
 
 		$this->model_localisation_return_action->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('return_action');
 
 		// Return Reason
 		$this->load->model('localisation/return_reason');
 
 		$this->model_localisation_return_reason->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('return_reason');
-
 		// Return Status
 		$this->load->model('localisation/return_status');
 
 		$this->model_localisation_return_status->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('return_status');
 
 		// Stock Status
 		$this->load->model('localisation/stock_status');
 
 		$this->model_localisation_stock_status->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('stock_status');
-
 		// Voucher Theme
 		$this->load->model('localisation/voucher_theme');
 
 		$this->model_localisation_voucher_theme->deleteDescriptionsByLanguageId($language_id);
-
-		$this->cache->delete('voucher_theme');
 
 		// Weight Class
 		$this->load->model('localisation/weight_class');
 
 		$this->model_localisation_weight_class->deleteDescriptionsByLanguageId($language_id);
 
-		$this->cache->delete('weight_class');
-
 		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
-		$this->cache->delete('subscription_status');
+		$this->model_localisation_subscription_status->deleteDescriptionsByLanguageId($language_id);
 
 		// SEO URL
 		$this->load->model('design/seo_url');

@@ -177,4 +177,10 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 		return $attribute_group_data;
 	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
 }

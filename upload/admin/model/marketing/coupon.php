@@ -220,7 +220,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Categories By Category Id
+	 * Delete Categories By Category ID
 	 *
 	 * @param int $category_id
 	 *
@@ -229,7 +229,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 	public function deleteCategoriesByCategoryId(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_category` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
-
 
 	/**
 	 * Get Categories

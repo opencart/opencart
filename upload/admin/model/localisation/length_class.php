@@ -63,6 +63,19 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Length Classes By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteLengthClassesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('length_class');
+	}
+
+	/**
 	 * Get Length Classes
 	 *
 	 * @param array<string, mixed> $data
@@ -155,6 +168,13 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 	}
 
+	/**
+	 *	Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -179,6 +199,12 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		}
 
 		return $length_class_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description");
+
+		return $query->row;
 	}
 
 	/**

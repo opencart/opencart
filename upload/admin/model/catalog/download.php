@@ -165,6 +165,12 @@ class Download extends \Opencart\System\Engine\Model {
 		return $download_description_data;
 	}
 
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Total Downloads
 	 *

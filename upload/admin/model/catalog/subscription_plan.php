@@ -179,6 +179,12 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		return $subscription_plan_description_data;
 	}
 
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Total Subscription Plans
 	 *

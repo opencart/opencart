@@ -169,7 +169,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description By Language Id
+	 *	Delete Description By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -195,6 +195,12 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 
 		return $description_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**
@@ -308,5 +314,11 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 
 		return $option_value_data;
+	}
+
+	public function getValueDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 }

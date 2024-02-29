@@ -63,6 +63,19 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Return Actions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteReturnActionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		$this->cache->delete('return_action');
+	}
+
+	/**
 	 * Get Return Action
 	 *
 	 * @param int $return_action_id
@@ -135,6 +148,12 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		}
 
 		return $return_action_data;
+	}
+
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

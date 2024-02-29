@@ -284,6 +284,12 @@ class Article extends \Opencart\System\Engine\Model {
 		return $article_description_data;
 	}
 
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Add Store
 	 *

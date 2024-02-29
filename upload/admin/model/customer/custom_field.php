@@ -228,6 +228,12 @@ class CustomField extends \Opencart\System\Engine\Model {
 		return $custom_field_data;
 	}
 
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * @param int                  $custom_field_id
 	 * @param array<string, mixed> $data
@@ -361,5 +367,11 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		return $custom_field_value_data;
+	}
+
+	public function getValueDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 }

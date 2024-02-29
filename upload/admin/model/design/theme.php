@@ -6,6 +6,9 @@ namespace Opencart\Admin\Model\Design;
  * @package Opencart\Admin\Model\Design
  */
 class Theme extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array<string, mixed> $data
+	 */
 	public function addTheme(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `code` = '" . $this->db->escape($data['code']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
 
@@ -16,9 +19,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Theme
 	 *
-	 * @param int    $store_id
-	 * @param string $route
-	 * @param string $code
+	 * @param int                  $theme_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */

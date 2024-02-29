@@ -21,6 +21,17 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Voucher By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteVouchersByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	/**
 	 * Disable Voucher
 	 *
 	 * @param int $order_id
@@ -41,35 +52,33 @@ class Voucher extends \Opencart\System\Engine\Model {
 	public function getVoucher(string $code): array {
 		$status = true;
 
-		$voucher_query = $this->db->query("SELECT *, `vtd`.`name` AS theme FROM `" . DB_PREFIX . "voucher` `v` LEFT JOIN `" . DB_PREFIX . "voucher_theme` `vt` ON (`v`.`voucher_theme_id` = `vt`.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` `vtd` ON (`vt`.`voucher_theme_id` = `vtd`.`voucher_theme_id`) WHERE `v`.`code` = '" . $this->db->escape($code) . "' AND `vtd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `v`.`status` = '1'");
+		$this->load->model('checkout/voucher');
 
-		if ($voucher_query->num_rows) {
-			if ($voucher_query->row['order_id']) {
-				$implode = [];
+		$voucher_info = $this->model_checkout_voucher->getVoucherByCode($code);
 
-				foreach ($this->config->get('config_complete_status') as $order_status_id) {
-					$implode[] = "'" . (int)$order_status_id . "'";
-				}
+		if ($voucher_info) {
+			if ($voucher_info['order_id']) {
+				$this->load->model('checkout/order');
 
-				$order_query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$voucher_query->row['order_id'] . "' AND `order_status_id` IN(" . implode(",", $implode) . ")");
+				$order_info = $this->model_checkout_order->getOrder($voucher_info['order_id']);
 
-				if (!$order_query->num_rows) {
+				if (!$order_info || !in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status'))) {
 					$status = false;
 				}
 
-				$order_voucher_query = $this->db->query("SELECT `order_voucher_id` FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$voucher_query->row['order_id'] . "' AND `voucher_id` = '" . (int)$voucher_query->row['voucher_id'] . "'");
+				$order_info = $this->model_checkout_order->getVoucherByVoucherId($voucher_info['order_id'], $voucher_info['voucher_id']);
 
-				if (!$order_voucher_query->num_rows) {
+				if (!$order_info) {
 					$status = false;
 				}
 			}
 
-			$voucher_history_query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "voucher_history` `vh` WHERE `vh`.`voucher_id` = '" . (int)$voucher_query->row['voucher_id'] . "' GROUP BY `vh`.`voucher_id`");
+			$remaining = $this->model_checkout_voucher->getVoucherTotal($voucher_info['voucher_id']);
 
-			if ($voucher_history_query->num_rows) {
-				$amount = $voucher_query->row['amount'] + $voucher_history_query->row['total'];
+			if ($remaining) {
+				$amount = $voucher_info['amount'] + $remaining;
 			} else {
-				$amount = $voucher_query->row['amount'];
+				$amount = $voucher_info['amount'];
 			}
 
 			if ($amount <= 0) {
@@ -81,19 +90,19 @@ class Voucher extends \Opencart\System\Engine\Model {
 
 		if ($status) {
 			return [
-				'voucher_id'       => $voucher_query->row['voucher_id'],
-				'code'             => $voucher_query->row['code'],
-				'from_name'        => $voucher_query->row['from_name'],
-				'from_email'       => $voucher_query->row['from_email'],
-				'to_name'          => $voucher_query->row['to_name'],
-				'to_email'         => $voucher_query->row['to_email'],
-				'voucher_theme_id' => $voucher_query->row['voucher_theme_id'],
-				'theme'            => $voucher_query->row['theme'],
-				'message'          => $voucher_query->row['message'],
-				'image'            => $voucher_query->row['image'],
+				'voucher_id'       => $voucher_info['voucher_id'],
+				'code'             => $voucher_info['code'],
+				'from_name'        => $voucher_info['from_name'],
+				'from_email'       => $voucher_info['from_email'],
+				'to_name'          => $voucher_info['to_name'],
+				'to_email'         => $voucher_info['to_email'],
+				'voucher_theme_id' => $voucher_info['voucher_theme_id'],
+				'theme'            => $voucher_info['theme'],
+				'message'          => $voucher_info['message'],
+				'image'            => $voucher_info['image'],
 				'amount'           => $amount,
-				'status'           => $voucher_query->row['status'],
-				'date_added'       => $voucher_query->row['date_added']
+				'status'           => $voucher_info['status'],
+				'date_added'       => $voucher_info['date_added']
 			];
 		} else {
 			return [];
@@ -101,13 +110,58 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Voucher By Order ID
+	 * Get Voucher By Code
+	 *
+	 * @param string $code
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getVoucherByCode(string $code): array {
+		$query = $this->db->query("SELECT *, `vtd`.`name` AS theme FROM `" . DB_PREFIX . "voucher` `v` LEFT JOIN `" . DB_PREFIX . "voucher_theme` `vt` ON (`v`.`voucher_theme_id` = `vt`.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` `vtd` ON (`vt`.`voucher_theme_id` = `vtd`.`voucher_theme_id`) WHERE `v`.`code` = '" . $this->db->escape($code) . "' AND `vtd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `v`.`status` = '1'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Voucher Total
+	 *
+	 * @param int $voucher_id
+	 *
+	 * @return float
+	 */
+	public function getVoucherTotal(int $voucher_id): float {
+		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "voucher_history` `vh` WHERE `vh`.`voucher_id` = '" . (int)$voucher_id . "' GROUP BY `vh`.`voucher_id`");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+     * Add History
+	 *
+	 * @param int   $voucher_id
+	 * @param int   $order_id
+	 * @param float $value
+	 *
+	 * @return int
+	 */
+	public function addHistory(int $voucher_id, int $order_id, float $value): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET `voucher_id` = '" . (int)$voucher_id . "', `order_id` = '" . (int)$order_id . "', `amount` = '" . (float)$value . "', `date_added` = NOW()");
+
+		return $this->db->getLastId();
+	}
+
+	/**
+	 * Delete History By Order ID
 	 *
 	 * @param int $order_id
 	 *
 	 * @return void
 	 */
-	public function deleteVoucherByOrderId(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
+	public function deleteHistoriesByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

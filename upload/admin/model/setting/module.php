@@ -46,6 +46,21 @@ class Module extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Modules By Code
+	 *
+	 * @param string $code
+	 *
+	 * @return void
+	 */
+	public function deleteModulesByCode(string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		$this->load->model('design/layout');
+
+		$this->model_design_layout->deleteModulesByCode($code);
+	}
+
+	/**
 	 * Get Module
 	 *
 	 * @param int $module_id
@@ -84,20 +99,5 @@ class Module extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Delete Modules By Code
-	 *
-	 * @param string $code
-	 *
-	 * @return void
-	 */
-	public function deleteModulesByCode(string $code): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'");
-
-		$this->load->model('design/layout');
-
-		$this->model_design_layout->deleteModuleByCode($code);
 	}
 }

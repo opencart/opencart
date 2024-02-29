@@ -230,6 +230,20 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Categories By Category ID
+	 *
+	 * @param int $product_id
+	 * @param int $category_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getCategoriesByCategoryId(int $product_id, int $category_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "' AND `category_id` = '" . (int)$category_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Attributes
 	 *
 	 * @param int $product_id

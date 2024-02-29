@@ -58,7 +58,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/transaction');
 
-		$results = $this->model_account_transaction->getTransactions($filter_data);
+		$results = $this->model_account_transaction->getTransactions($this->customer->getId(), $filter_data);
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
@@ -68,7 +68,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$transaction_total = $this->model_account_transaction->getTotalTransactions();
+		$transaction_total = $this->model_account_transaction->getTotalTransactions($this->customer->getId());
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $transaction_total,

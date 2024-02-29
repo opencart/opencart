@@ -145,7 +145,7 @@ class Api extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
 	}
 
-	public function deleteIp(int $api_id): void {
+	public function deleteIps(int $api_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
 	}
 
@@ -220,7 +220,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteSessionBySessionId(string $session_id): void {
+	public function deleteSessionsBySessionId(string $session_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE `session_id` = '" . $this->db->escape($session_id) . "'");
 	}
 }

@@ -474,6 +474,13 @@ class ControllerUserUser extends Controller {
 			if ($this->request->post['password'] != $this->request->post['confirm']) {
 				$this->error['confirm'] = $this->language->get('error_confirm');
 			}
+
+		}
+
+		$total_users = $this->model_user_user->getTotalUsers();
+
+		if ($total_users <= 1 && isset($this->request->post['status']) && $this->request->post['status'] == 0) {
+			$this->error['warning'] = $this->language->get('error_single_user');
 		}
 
 		return !$this->error;

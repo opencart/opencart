@@ -300,7 +300,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteOptions(int $order_id, int $order_product_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'";
-		
+
 		if ($order_product_id) {
 			$sql .= " AND `order_product_id` = '" . (int)$order_product_id . "'";
 		}
@@ -486,7 +486,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Get Voucher By Voucher ID
 	 *
 	 * @param int $order_id
-	 * @param int $order_voucher_id
+	 * @param int $voucher_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

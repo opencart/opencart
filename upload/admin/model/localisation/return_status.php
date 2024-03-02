@@ -163,6 +163,9 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		return $return_status_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
 

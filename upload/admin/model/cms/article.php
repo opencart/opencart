@@ -284,6 +284,9 @@ class Article extends \Opencart\System\Engine\Model {
 		return $article_description_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
 

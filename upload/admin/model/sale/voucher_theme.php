@@ -165,6 +165,9 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		return $voucher_theme_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `language_id` = '" . (int)$language_id . "'");
 

@@ -60,35 +60,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer
-	 *
-	 * @param int $customer_id
-	 *
-	 * @return void
-	 */
-	public function deleteCustomers(int $customer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
-
-		$this->deleteActivities($customer_id);
-
-		$this->deleteAddresses($customer_id);
-		$this->deleteAuthorizes($customer_id);
-		$this->deleteHistories($customer_id);
-		$this->deleteRewards($customer_id);
-		$this->deleteTransactions($customer_id);
-		$this->deleteWishlists($customer_id);
-		$this->deleteIps($customer_id);
-
-		$this->load->model('marketing/affiliate');
-
-		$this->model_marketing_affiliate->deleteAffiliate($customer_id);
-
-		$this->load->model('customer/customer_approval');
-
-		$this->model_customer_customer_approval->deleteApprovalsByCustomerId($customer_id);
-	}
-
-	/**
 	 * Get Customer
 	 *
 	 * @param int $customer_id

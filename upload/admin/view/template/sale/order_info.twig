@@ -71,6 +71,7 @@
             </tr>
           </thead>
           <tbody id="order-products">
+
             {% for order_product in order_products %}
               <tr>
                 <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
@@ -99,8 +100,7 @@
                 <td class="text-end">{{ order_product.quantity }}</td>
                 <td class="text-end">{{ order_product.price }}</td>
                 <td class="text-end">{{ order_product.total }}</td>
-                <td class="text-end">
-                  <form>
+                <td class="text-end"><form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
                   </form></td>
@@ -122,6 +122,7 @@
                   </form></td>
               </tr>
             {% endfor %}
+
             {% if not order_products and not order_vouchers %}
               <tr>
                 <td colspan="6" class="text-center">{{ text_no_results }}</td>
@@ -170,7 +171,8 @@
                     {% for currency in currencies %}
                       <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                     {% endfor %}
-                  </select> <label for="input-currency">{{ entry_currency }}</label>
+                  </select>
+                  <label for="input-currency">{{ entry_currency }}</label>
                 </div>
               </form>
             </div>

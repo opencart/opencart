@@ -176,6 +176,27 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function save() {
+		$this->load->language('api/sale/order');
+
+		$json = [];
+
+		if (!isset($this->request->post['order_id'])) {
+			$json['error'] = $this->language->get('error_order');
+		}
+
+		if (!$json) {
+			$this->load->model('checkout/order');
+
+			$this->model_checkout_order->editOrder($this->request->post['order_id'], $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	/**
 	 * Comment
 	 *

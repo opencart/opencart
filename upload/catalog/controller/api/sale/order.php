@@ -176,7 +176,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('api/sale/order');
 
 		$json = [];

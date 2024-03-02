@@ -35,7 +35,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute_group) {
-			$this->model_catalog_attribute_group->addDescription($attribute['attribute_id'], $language_id, $attribute_group);
+			$this->model_catalog_attribute_group->addDescription($attribute_group['attribute_group_id'], $language_id, $attribute_group);
 		}
 
 		// Banner
@@ -44,7 +44,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_design_banner->getImagesByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $banner_image) {
-			$this->model_design_banner->addImage($attribute['attribute_id'], $language_id, $banner_image);
+			$this->model_design_banner->addImage($banner_image['banner_id'], $language_id, $banner_image);
 		}
 
 		// Category
@@ -164,7 +164,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_product->getAttributesByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $product_attribute) {
-			$this->model_catalog_product->addAttribute($product_attribute['product_id'], $language_id, $product_attribute);
+			$this->model_catalog_product->addAttribute($product_attribute['product_id'], $product_attribute['attribute_id'], $language_id, $product_attribute);
 		}
 
 		// Return Action
@@ -204,12 +204,12 @@ class Language extends \Opencart\System\Engine\Model {
 		}
 
 		// Voucher Theme
-		$this->load->model('localisation/voucher_theme');
+		$this->load->model('sale/voucher_theme');
 
-		$results = $this->model_localisation_voucher_theme->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+		$results = $this->model_sale_voucher_theme->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $voucher_theme) {
-			$this->model_localisation_voucher_theme->addDescription($voucher_theme['voucher_theme_id'], $language_id, $voucher_theme);
+			$this->model_sale_voucher_theme->addDescription($voucher_theme['voucher_theme_id'], $language_id, $voucher_theme);
 		}
 
 		// Weight Class
@@ -281,7 +281,7 @@ class Language extends \Opencart\System\Engine\Model {
 		// Banner
 		$this->load->model('design/banner');
 
-		$this->model_design_banner->deleteDescriptionsByLanguageId($language_id);
+		$this->model_design_banner->deleteImagesByLanguageId($language_id);
 
 		// Category
 		$this->load->model('catalog/category');
@@ -291,7 +291,7 @@ class Language extends \Opencart\System\Engine\Model {
 		// Customer Group
 		$this->load->model('customer/customer_group');
 
-		$this->model_catalog_customer_group->deleteDescriptionsByLanguageId($language_id);
+		$this->model_customer_customer_group->deleteDescriptionsByLanguageId($language_id);
 
 		// Custom Field
 		$this->load->model('customer/custom_field');
@@ -333,7 +333,7 @@ class Language extends \Opencart\System\Engine\Model {
 		// Order Status
 		$this->load->model('localisation/order_status');
 
-		$this->model_localisation_order_status->deleteDescriptionsByLanguageId($language_id);
+		$this->model_localisation_order_status->deleteOrderStatusesByLanguageId($language_id);
 
 		// Product
 		$this->load->model('catalog/product');
@@ -344,27 +344,27 @@ class Language extends \Opencart\System\Engine\Model {
 		// Return Action
 		$this->load->model('localisation/return_action');
 
-		$this->model_localisation_return_action->deleteDescriptionsByLanguageId($language_id);
+		$this->model_localisation_return_action->deleteReturnActionsByLanguageId($language_id);
 
 		// Return Reason
 		$this->load->model('localisation/return_reason');
 
-		$this->model_localisation_return_reason->deleteDescriptionsByLanguageId($language_id);
+		$this->model_localisation_return_reason->deleteReturnReasonsByLanguageId($language_id);
 
 		// Return Status
 		$this->load->model('localisation/return_status');
 
-		$this->model_localisation_return_status->deleteDescriptionsByLanguageId($language_id);
+		$this->model_localisation_return_status->deleteReturnStatusesByLanguageId($language_id);
 
 		// Stock Status
 		$this->load->model('localisation/stock_status');
 
-		$this->model_localisation_stock_status->deleteDescriptionsByLanguageId($language_id);
+		$this->model_localisation_stock_status->deleteStockStatusesByLanguageId($language_id);
 
 		// Voucher Theme
-		$this->load->model('localisation/voucher_theme');
+		$this->load->model('sale/voucher_theme');
 
-		$this->model_localisation_voucher_theme->deleteDescriptionsByLanguageId($language_id);
+		$this->model_sale_voucher_theme->deleteDescriptionsByLanguageId($language_id);
 
 		// Weight Class
 		$this->load->model('localisation/weight_class');
@@ -374,7 +374,7 @@ class Language extends \Opencart\System\Engine\Model {
 		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
-		$this->model_localisation_subscription_status->deleteDescriptionsByLanguageId($language_id);
+		$this->model_localisation_subscription_status->deleteStockStatusesByLanguageId($language_id);
 
 		// SEO URL
 		$this->load->model('design/seo_url');

@@ -1096,7 +1096,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "product_description` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}
@@ -1253,6 +1253,19 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return $product_attribute_data;
+	}
+
+	/**
+	 * Get Attributes By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getAttributesByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

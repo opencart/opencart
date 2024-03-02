@@ -42,8 +42,6 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function editAttribute(int $attribute_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
 		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
@@ -230,7 +228,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return array<int, array<string, string>> Descriptions
 	 */
 	public function getDescriptions(int $attribute_id): array {
 		$attribute_data = [];
@@ -244,8 +242,17 @@ class Attribute extends \Opencart\System\Engine\Model {
 		return $attribute_data;
 	}
 
+	/**
+	 *	Get Descriptions By Language ID
+	 *
+	 *	Get the record of the attribute record in the database.
+	 *
+	 * @param int $language_id primary key of the attribute language
+	 *
+	 * @return array<int, array<string, string>> Descriptions by language_id
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

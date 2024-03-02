@@ -154,6 +154,15 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 *	Delete Images By Language ID
+	 *
+	 * @return void
+	 */
+	public function deleteImagesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
 	 * Get Images
 	 *
 	 * @param int $banner_id
@@ -177,8 +186,15 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
+	/**
+	 * Get Images By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getImagesByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

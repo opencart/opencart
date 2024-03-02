@@ -50,13 +50,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	public function editCustomField(int $custom_field_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
-		$this->deleteDescription($custom_field_id);
+		$this->deleteDescriptions($custom_field_id);
 
 		foreach ($data['custom_field_description'] as $language_id => $custom_field_description) {
 			$this->addDescription($custom_field_id, $language_id, $custom_field_description);
 		}
 
-		$this->deleteCustomerGroup($custom_field_id);
+		$this->deleteCustomerGroups($custom_field_id);
 
 		if (isset($data['custom_field_customer_group'])) {
 			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
@@ -66,7 +66,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		$this->deleteValue($custom_field_id);
+		$this->deleteValues($custom_field_id);
 
 		if (isset($data['custom_field_value'])) {
 			foreach ($data['custom_field_value'] as $custom_field_value) {
@@ -85,9 +85,9 @@ class CustomField extends \Opencart\System\Engine\Model {
 	public function deleteCustomField(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
-		$this->deleteDescription($custom_field_id);
-		$this->deleteCustomerGroup($custom_field_id);
-		$this->deleteValue($custom_field_id);
+		$this->deleteDescriptions($custom_field_id);
+		$this->deleteCustomerGroups($custom_field_id);
+		$this->deleteValues($custom_field_id);
 	}
 
 	/**
@@ -201,9 +201,12 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $custom_field_id): void {
+	public function deleteDescriptions(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+	}
 
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -226,6 +229,15 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @return array<int, array<string, string>>
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
+	/**
 	 * @param int                  $custom_field_id
 	 * @param array<string, mixed> $data
 	 */
@@ -233,7 +245,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_customer_group` SET `custom_field_id` = '" . (int)$custom_field_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `required` = '" . (int)(isset($data['required']) ? 1 : 0) . "'");
 	}
 
-	public function deleteCustomerGroup(int $custom_field_id): void {
+	public function deleteCustomerGroups(int $custom_field_id): void {
 		$this->db->query("delete FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 	}
 
@@ -264,16 +276,16 @@ class CustomField extends \Opencart\System\Engine\Model {
 		$custom_field_value_id = $this->db->getLastId();
 
 		foreach ($data['custom_field_value_description'] as $language_id => $custom_field_value_description) {
-			$this->addValueDescription($custom_field_id, $custom_field_value_id, $language_id, $custom_field_value_description);
+			$this->addValueDescription($custom_field_value_id, $custom_field_id, $language_id, $custom_field_value_description);
 		}
 
 		return $custom_field_value_id;
 	}
 
-	public function deleteValue(int $custom_field_id): void {
+	public function deleteValues(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
-		$this->deleteValueDescription($custom_field_id);
+		$this->deleteValueDescriptions($custom_field_id);
 	}
 
 	/**
@@ -317,12 +329,16 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $custom_field_value_description
 	 */
-	public function addValueDescription(int $custom_field_id, int $custom_field_value_id, int $language_id, array $custom_field_value_description): void {
+	public function addValueDescription(int $custom_field_value_id, int $custom_field_id, int $language_id, array $custom_field_value_description): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value_id . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_id . "', `name` = '" . $this->db->escape($custom_field_value_description['name']) . "'");
 	}
 
-	public function deleteValueDescription(int $custom_field_id): void {
+	public function deleteValueDescriptions(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+	}
+
+	public function deleteValueDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -354,5 +370,15 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		return $custom_field_value_data;
+	}
+
+
+	/**
+	 * @return array<int, array<string, string>>
+	 */
+	public function getValueDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 }

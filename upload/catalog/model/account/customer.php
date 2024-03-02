@@ -108,11 +108,11 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->load->model('account/activity');
 
-		$this->model_account_activity->deleteActivity($customer_id);
+		$this->model_account_activity->deleteActivities($customer_id);
 
 		$this->load->model('account/address');
 
-		$this->model_account_address->deleteAddress($customer_id);
+		$this->model_account_address->deleteAddresses($customer_id);
 
 		$this->load->model('account/affiliate');
 
@@ -120,23 +120,23 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->load->model('account/approval');
 
-		$this->model_account_approval->deleteApproval($customer_id);
+		$this->model_account_approval->deleteApprovals($customer_id);
 
 		$this->load->model('account/reward');
 
-		$this->model_account_reward->deleteReward($customer_id);
+		$this->model_account_reward->deleteRewards($customer_id);
 
 		$this->load->model('account/transaction');
 
-		$this->model_account_transaction->deleteTransaction($customer_id);
+		$this->model_account_transaction->deleteTransactions($customer_id);
 
 		$this->load->model('account/wishlist');
 
-		$this->model_account_wishlist->deleteWishlist($customer_id);
+		$this->model_account_wishlist->deleteWishlists($customer_id);
 
-		$this->deleteHistory($customer_id);
-		$this->deleteIp($customer_id);
-		$this->deleteAuthorize($customer_id);
+		$this->deleteHistories($customer_id);
+		$this->deleteIps($customer_id);
+		$this->deleteAuthorizes($customer_id);
 	}
 
 	/**

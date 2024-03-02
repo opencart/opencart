@@ -40,7 +40,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	public function editTaxClass(int $tax_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "' WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
-		$this->deleteTaxRule($tax_class_id);
+		$this->deleteTaxRules($tax_class_id);
 
 		if (isset($data['tax_rule'])) {
 			foreach ($data['tax_rule'] as $tax_rule) {
@@ -61,7 +61,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	public function deleteTaxClass(int $tax_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
-		$this->deleteTaxRule($tax_class_id);
+		$this->deleteTaxRules($tax_class_id);
 
 		$this->cache->delete('tax_class');
 	}
@@ -141,7 +141,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rule` SET `tax_class_id` = '" . (int)$tax_class_id . "', `tax_rate_id` = '" . (int)$data['tax_rate_id'] . "', `based` = '" . $this->db->escape($data['based']) . "', `priority` = '" . (int)$data['priority'] . "'");
 	}
 
-	public function deleteTaxRule(int $tax_class_id): void {
+	public function deleteTaxRules(int $tax_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 	}
 

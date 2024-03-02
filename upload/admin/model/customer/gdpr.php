@@ -29,7 +29,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 
-	public function deleteGdprByStoreId(int $store_id): void {
+	public function deleteGdprsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 

@@ -6948,6 +6948,10 @@ function oc_db_schema() {
 				'type' => 'mediumtext'
 			],
 			[
+				'name' => 'status',
+				'type' => 'tinyint(1)'
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime'
 			]

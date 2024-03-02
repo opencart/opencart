@@ -607,14 +607,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 
-		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($data['customer_group_id']);
-
-		if ($customer_group_info) {
-			$data['customer_group'] = $customer_group_info['name'];
-		} else {
-			$data['customer_group'] = '';
-		}
-
 		if (!empty($order_info)) {
 			$data['firstname'] = $order_info['firstname'];
 		} else {
@@ -1339,9 +1331,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
+		$this->load->model('sale/subscription');
 		$this->load->model('setting/setting');
 		$this->load->model('tool/upload');
-		$this->load->model('sale/subscription');
 
 		$data['orders'] = [];
 

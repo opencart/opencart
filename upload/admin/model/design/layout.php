@@ -44,7 +44,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	public function editLayout(int $layout_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "' WHERE `layout_id` = '" . (int)$layout_id . "'");
 
-		$this->deleteRoute($layout_id);
+		$this->deleteRoutes($layout_id);
 
 		if (isset($data['layout_route'])) {
 			foreach ($data['layout_route'] as $layout_route) {
@@ -52,7 +52,7 @@ class Layout extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		$this->deleteModule($layout_id);
+		$this->deleteModules($layout_id);
 
 		if (isset($data['layout_module'])) {
 			foreach ($data['layout_module'] as $layout_module) {
@@ -71,8 +71,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	public function deleteLayout(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
-		$this->deleteRoute($layout_id);
-		$this->deleteModule($layout_id);
+		$this->deleteRoutes($layout_id);
+		$this->deleteModules($layout_id);
 
 		$this->load->model('catalog/category');
 
@@ -179,7 +179,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteRoute(int $layout_id): void {
+	public function deleteRoutes(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
@@ -234,11 +234,11 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteModule(int $layout_id): void {
+	public function deleteModules(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
-	public function deleteModuleByCode(string $code): void {
+	public function deleteModulesByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` = '" . $this->db->escape($code) . "' OR `code` LIKE '" . $this->db->escape($code . '.%') . "'");
 	}
 

@@ -38,7 +38,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	public function editVoucherTheme(int $voucher_theme_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = '" . $this->db->escape((string)$data['image']) . "' WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
-		$this->deleteDescription($voucher_theme_id);
+		$this->deleteDescriptions($voucher_theme_id);
 
 		foreach ($data['voucher_theme_description'] as $language_id => $value) {
 			$this->addDescription($voucher_theme_id, $language_id, $value);
@@ -57,7 +57,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	public function deleteVoucherTheme(int $voucher_theme_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
-		$this->deleteDescription($voucher_theme_id);
+		$this->deleteDescriptions($voucher_theme_id);
 
 		$this->cache->delete('voucher_theme');
 	}
@@ -138,8 +138,12 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $voucher_theme_id): void {
+	public function deleteDescriptions(int $voucher_theme_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
+	}
+
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -159,6 +163,15 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		}
 
 		return $voucher_theme_data;
+	}
+
+	/**
+	 * @return array<int, array<string, string>>
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

@@ -23,7 +23,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$attribute_id = $this->db->getLastId();
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
-			$this->addDescription($attribute_id, $language_id, $attribute_description);
+			$this->model_catalog_attribute->addDescription($attribute_id, $language_id, $attribute_description);
 		}
 
 		return $attribute_id;
@@ -42,12 +42,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function editAttribute(int $attribute_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
-		$this->deleteDescription($attribute_id);
+		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
-			$this->addDescription($attribute_id, $language_id, $attribute_description);
+			$this->model_catalog_attribute->addDescription($attribute_id, $language_id, $attribute_description);
 		}
 	}
 
@@ -63,7 +61,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		$this->deleteDescription($attribute_id);
+		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
 	}
 
 	/**
@@ -190,8 +188,37 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $attribute_id): void {
+	public function deleteDescriptions(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+	}
+
+	/**
+	 *	Delete Description By Language ID
+	 *
+	 *	Delete attribute description record in the database.
+	 *
+	 * @param int $language_id primary key of the attribute language
+	 *
+	 * @return void
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 *	Get Description
+	 *
+	 *	Get the record of the attribute description record in the database.
+	 *
+	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $language_id  primary key of the attribute language
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getDescription(int $attribute_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "' AND language_id = '" . (int)$language_id . "'");
+
+		return $query->row;
 	}
 
 	/**
@@ -201,7 +228,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_id primary key of the attribute record to be fetched
 	 *
-	 * @return array<int, array<string, string>> Descriptions sorted by language_id
+	 * @return array<int, array<string, string>> Descriptions
 	 */
 	public function getDescriptions(int $attribute_id): array {
 		$attribute_data = [];
@@ -213,5 +240,20 @@ class Attribute extends \Opencart\System\Engine\Model {
 		}
 
 		return $attribute_data;
+	}
+
+	/**
+	 *	Get Descriptions By Language ID
+	 *
+	 *	Get the record of the attribute record in the database.
+	 *
+	 * @param int $language_id primary key of the attribute language
+	 *
+	 * @return array<int, array<string, string>> Descriptions by language_id
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 }

@@ -132,14 +132,14 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_option->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $option) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `option_id` = '" . (int)$option['option_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($option['name']) . "'");
+			$this->model_catalog_option->addDescription($option['option_id'], $language_id, $option);
 		}
 
 		// Option Value
 		$results = $this->model_catalog_option->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $option_value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value['option_value_id'] . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_value['option_id'] . "', `name` = '" . $this->db->escape($option_value['name']) . "'");
+			$this->model_catalog_option->addValueDescription($option_value['option_value_id'], $option_value['option_id'], $language_id, $option_value);
 		}
 
 		// Order Status
@@ -148,7 +148,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_order_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $order_status) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `order_status_id` = '" . (int)$order_status['order_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($order_status['name']) . "'");
+			$this->model_localisation_order_status->addDescription($order_status['order_status_id'], $language_id, $order_status);
 		}
 
 		// Product
@@ -190,10 +190,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$results = $this->model_localisation_return_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
 		foreach ($results as $return_status) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `return_status_id` = '" . (int)$return_status['return_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($return_status['name']) . "'");
+			$this->model_localisation_return_status->addDescription($return_status['return_status_id'], $language_id, $return_status);
 		}
 
 		// Stock Status
@@ -201,10 +199,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$results = $this->model_localisation_stock_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
 		foreach ($results as $stock_status) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status['stock_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($stock_status['name']) . "'");
+			$this->model_localisation_stock_status->addDescription($stock_status['stock_status_id'], $language_id, $stock_status);
 		}
 
 		// Voucher Theme
@@ -225,17 +221,13 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_localisation_weight_class->addDescription($weight_class['weight_class_id'], $language_id, $weight_class);
 		}
 
-
-
 		// Subscription
 		$this->load->model('localisation/subscription_status');
 
 		$results = $this->model_localisation_subscription_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
 		foreach ($results as $subscription) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription['subscription_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription['name']) . "'");
+			$this->model_localisation_subscription_status->addDescription($subscription['subscription_status_id'], $language_id, $subscription);
 		}
 
 		// SEO URL

@@ -256,6 +256,12 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/order_status');
 
+
+			foreach ($this->request->post['order_status'] as $language_id => $value) {
+
+			}
+
+
 			if (!$this->request->post['order_status_id']) {
 				$json['order_status_id'] = $this->model_localisation_order_status->addOrderStatus($this->request->post);
 			} else {

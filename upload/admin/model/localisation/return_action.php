@@ -132,6 +132,19 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Description
+	 *
+	 * @param int                  $return_action_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
+	 *
+	 * @return void
+	 */
+	public function addDescription(int $return_action_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `return_action_i` = '" . (int)$return_action_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * @param int $return_action_id

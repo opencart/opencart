@@ -174,7 +174,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "customer_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

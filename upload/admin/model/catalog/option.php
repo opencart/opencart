@@ -219,7 +219,7 @@ class Option extends \Opencart\System\Engine\Model {
 		if ($data['option_value_id']) {
 			if (isset($data['option_value_description'])) {
 				foreach ($data['option_value_description'] as $language_id => $option_value_description) {
-					$this->model_catalog_option->addValueDescription($option_value_id, $language_id, $option_id, $option_value_description);
+					$this->model_catalog_option->addValueDescription($option_value_id, $option_id, $language_id, $option_value_description);
 				}
 			}
 		}
@@ -276,7 +276,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
 	 */
-	public function addValueDescription(int $option_value_id, int $language_id, int $option_id, array $data): void {
+	public function addValueDescription(int $option_value_id, int $option_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
@@ -317,7 +317,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	public function getValueDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

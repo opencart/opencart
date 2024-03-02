@@ -125,6 +125,19 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Description
+	 *
+	 * @param int                  $subscription_status_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
+	 *
+	 * @return void
+	 */
+	public function addDescription(int $subscription_status_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * @param int $subscription_status_id

@@ -156,6 +156,13 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 	}
 
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $subscription_plan_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -180,7 +187,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

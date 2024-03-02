@@ -187,6 +187,17 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Information(s)
+	 *
+	 * @return int
+	 */
+	public function getTotalInformations(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 *	Add Description
 	 *
 	 * @param int                  $information_id
@@ -211,7 +222,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
-
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -239,21 +250,17 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_description_data;
 	}
 
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Information(s)
-	 *
-	 * @return int
-	 */
-	public function getTotalInformations(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information`");
-
-		return (int)$query->row['total'];
 	}
 
 	/**

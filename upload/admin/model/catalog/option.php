@@ -337,6 +337,9 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getValueDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
 

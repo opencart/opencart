@@ -273,7 +273,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 		$custom_field_value_id = $this->db->getLastId();
 
 		foreach ($data['custom_field_value_description'] as $language_id => $custom_field_value_description) {
-			$this->addValueDescription($custom_field_id, $custom_field_value_id, $language_id, $custom_field_value_description);
+			$this->addValueDescription($custom_field_value_id, $custom_field_id, $language_id, $custom_field_value_description);
 		}
 
 		return $custom_field_value_id;
@@ -326,7 +326,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $custom_field_value_description
 	 */
-	public function addValueDescription(int $custom_field_id, int $custom_field_value_id, int $language_id, array $custom_field_value_description): void {
+	public function addValueDescription(int $custom_field_value_id, int $custom_field_id, int $language_id, array $custom_field_value_description): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value_id . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_id . "', `name` = '" . $this->db->escape($custom_field_value_description['name']) . "'");
 	}
 

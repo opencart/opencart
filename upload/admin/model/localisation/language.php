@@ -78,7 +78,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $custom_field_value) {
-			$this->model_customer_custom_field->addValueDescription($custom_field_value['custom_field_value_id'], $language_id, $custom_field_value);
+			$this->model_customer_custom_field->addValueDescription($custom_field_value['custom_field_value_id'], $custom_field_value['custom_field_id'], $language_id, $custom_field_value);
 		}
 
 		// Download

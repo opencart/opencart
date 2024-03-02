@@ -279,6 +279,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (empty($this->request->post['filter_group_id'])) {
+			$json['error']['filter_group'] = $this->language->get('error_filter_group');
+		}
+
 		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}

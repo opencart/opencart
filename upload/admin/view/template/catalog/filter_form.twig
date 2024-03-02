@@ -38,6 +38,7 @@
                   <option value="{{ filter_group.filter_group_id }}"{% if filter_group.filter_group_id == filter_group_id %} selected{% endif %}>{{ filter_group.name }}</option>
                 {% endfor %}
               </select>
+              <div id="error-filter-group" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">

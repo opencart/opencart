@@ -165,6 +165,9 @@ class Download extends \Opencart\System\Engine\Model {
 		return $download_description_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$language_id . "'");
 

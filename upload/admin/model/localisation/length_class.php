@@ -201,6 +201,9 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		return $length_class_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `language_id` = '" . (int)$language_id . "'");
 

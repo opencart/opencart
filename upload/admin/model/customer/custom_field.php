@@ -228,6 +228,9 @@ class CustomField extends \Opencart\System\Engine\Model {
 		return $custom_field_data;
 	}
 
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
@@ -369,6 +372,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 		return $custom_field_value_data;
 	}
 
+
+	/**
+	 * @return array<int, array<string, string>>
+	 */
 	public function getValueDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
 

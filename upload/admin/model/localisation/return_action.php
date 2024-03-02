@@ -16,13 +16,13 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	public function addReturnAction(array $data): ?int {
 		$return_action_id = 0;
 
-		foreach ($data['return_action'] as $language_id => $value) {
-			if ($return_action_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['return_action'] as $language_id => $return_action) {
+			if (!$return_action_id) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($return_action['name']) . "'");
 
 				$return_action_id = $this->db->getLastId();
 			} else {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `return_action_id` = '" . (int)$return_action_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->model_localisation_return_action->addDescription($return_action_id, $language_id, $return_action);
 			}
 		}
 
@@ -42,8 +42,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	public function editReturnAction(int $return_action_id, array $data): void {
 		$this->deleteReturnAction($return_action_id);
 
-		foreach ($data['return_action'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `return_action_id` = '" . (int)$return_action_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['return_action'] as $language_id => $return_action) {
+			$this->model_localisation_return_action->addDescription($return_action_id, $language_id, $return_action);
 		}
 
 		$this->cache->delete('return_action');

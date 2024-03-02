@@ -16,13 +16,13 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	public function addReturnReason(array $data): ?int {
 		$return_reason_id = 0;
 
-		foreach ($data['return_reason'] as $language_id => $value) {
+		foreach ($data['return_reason'] as $language_id => $return_reason) {
 			if (!$return_reason_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_reason` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_reason` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($return_reason['name']) . "'");
 
 				$return_reason_id = $this->db->getLastId();
 			} else {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_reason` SET `return_reason_id` = '" . (int)$return_reason_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->model_localisation_return_reason->addDescription($return_reason_id, $language_id, $return_reason);
 			}
 		}
 
@@ -40,10 +40,10 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editReturnReason(int $return_reason_id, array $data): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_reason` WHERE `return_reason_id` = '" . (int)$return_reason_id . "'");
+		$this->deleteReturnReason($return_reason_id);
 
-		foreach ($data['return_reason'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "return_reason` SET `return_reason_id` = '" . (int)$return_reason_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['return_reason'] as $language_id => $return_reason) {
+			$this->model_localisation_return_reason->addDescription($return_reason_id, $language_id, $return_reason);
 		}
 
 		$this->cache->delete('return_reason');

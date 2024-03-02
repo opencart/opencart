@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class OrderStatus
+ * Class Order Status
  *
  * @package Opencart\Admin\Model\Localisation
  */
@@ -16,13 +16,13 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	public function addOrderStatus(array $data): ?int {
 		$order_status_id = 0;
 
-		foreach ($data['order_status'] as $language_id => $value) {
+		foreach ($data['order_status'] as $language_id => $order_status) {
 			if (!$order_status_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($order_status['name']) . "'");
 
 				$order_status_id = $this->db->getLastId();
 			} else {
-				$this->addDescription($order_status_id, $language_id, $value);
+				$this->model_localisation_order_status->addDescription($order_status_id, $language_id, $order_status);
 			}
 		}
 
@@ -43,7 +43,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		$this->deleteOrderStatus($order_status_id);
 
 		foreach ($data['order_status'] as $language_id => $value) {
-			$this->addDescription($order_status_id, $language_id, $value);
+			$this->model_localisation_order_status->addDescription($order_status_id, $language_id, $value);
 		}
 
 		$this->cache->delete('order_status');

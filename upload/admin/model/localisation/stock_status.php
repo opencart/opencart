@@ -16,13 +16,13 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	public function addStockStatus(array $data): ?int {
 		$stock_status_id = 0;
 
-		foreach ($data['stock_status'] as $language_id => $value) {
+		foreach ($data['stock_status'] as $language_id => $stock_status) {
 			if (!$stock_status_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($stock_status['name']) . "'");
 
 				$stock_status_id = $this->db->getLastId();
 			} else {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->model_localisation_stock_status->addDescription($stock_status_id, $language_id, $stock_status);
 			}
 		}
 
@@ -40,10 +40,10 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editStockStatus(int $stock_status_id, array $data): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
+		$this->deleteStockStatus($stock_status_id);
 
-		foreach ($data['stock_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['stock_status'] as $language_id => $stock_status) {
+			$this->model_localisation_stock_status->addDescription($stock_status_id, $language_id, $stock_status);
 		}
 
 		$this->cache->delete('stock_status');
@@ -62,6 +62,13 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('stock_status');
 	}
 
+	/**
+	 * Delete Stock Statuses By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteStockStatusesByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$language_id . "'");
 

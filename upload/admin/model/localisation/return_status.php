@@ -16,13 +16,13 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	public function addReturnStatus(array $data): ?int {
 		$return_status_id = 0;
 
-		foreach ($data['return_status'] as $language_id => $value) {
+		foreach ($data['return_status'] as $language_id => $return_status) {
 			if (!$return_status_id) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($return_status['name']) . "'");
 
 				$return_status_id = $this->db->getLastId();
 			} else {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `return_status_id` = '" . (int)$return_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+				$this->model_localisation_return_status->addDescription($return_status_id, $language_id, $return_status);
 			}
 		}
 
@@ -40,10 +40,10 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editReturnStatus(int $return_status_id, array $data): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
+		$this->deleteReturnStatus($return_status_id);
 
-		foreach ($data['return_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `return_status_id` = '" . (int)$return_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['return_status'] as $language_id => $return_status) {
+			$this->model_localisation_return_status->addDescription($return_status_id, $language_id, $return_status);
 		}
 
 		$this->cache->delete('return_status');
@@ -62,6 +62,13 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_status');
 	}
 
+	/**
+	 * Delete Return Statuses By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteReturnStatusesByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
 

@@ -289,7 +289,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Histories
+	 * Delete Coupon Histories
 	 *
 	 * @param int $coupon_id
 	 *

@@ -44,6 +44,8 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Address
+	 *
 	 * @param int $customer_id
 	 * @param int $address_id
 	 *

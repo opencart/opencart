@@ -114,6 +114,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Products
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return array<int, int>
@@ -131,6 +133,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Categories
+	 *
 	 * @param int $coupon_id
 	 *
 	 * @return array<int, int>
@@ -162,7 +166,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete History By Order ID
+	 * Delete Histories By Order ID
 	 *
 	 * @param int $order_id
 	 *

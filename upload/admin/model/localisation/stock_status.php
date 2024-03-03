@@ -164,6 +164,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
 	 * @param int $language_id
 	 *
 	 * @return array<int, array<string, string>>

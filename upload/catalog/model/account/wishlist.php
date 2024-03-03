@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Wishlist extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Wishlist
+	 *
 	 * @param int $customer_id
 	 * @param int $product_id
 	 *
@@ -19,6 +21,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Wishlist
+	 *
 	 * @param int $customer_id
 	 * @param int $product_id
 	 *
@@ -35,6 +39,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Wishlist
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -46,6 +52,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Wishlist
+	 *
 	 * @param int $customer_id
 	 *
 	 * @return int

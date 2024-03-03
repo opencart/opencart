@@ -21,7 +21,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * delete Reward
+	 * Delete Reward
 	 *
 	 * @param int $customer_id
 	 * @param int $order_id

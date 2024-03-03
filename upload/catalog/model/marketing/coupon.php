@@ -177,7 +177,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Histories By Coupon
+	 * Get Total Histories
 	 *
 	 * @param string $coupon_id
 	 *

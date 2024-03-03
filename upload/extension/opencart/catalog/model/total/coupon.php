@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Coupon extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Total
+	 *
 	 * @param array<int, array<string, mixed>> $totals
 	 * @param array<int, float>                $taxes
 	 * @param float                            $total
@@ -107,6 +109,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @param array<string, mixed> $order_info
 	 * @param array<string, mixed> $order_total
 	 *
@@ -158,6 +162,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Unconfirm
+	 *
 	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void

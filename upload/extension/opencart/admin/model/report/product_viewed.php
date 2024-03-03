@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class ProductViewed extends \Opencart\System\Engine\Model {
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -18,6 +20,8 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -25,6 +29,8 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Report
+	 *
 	 * @param int $product_id
 	 * @param int $viewed
 	 *
@@ -35,6 +41,8 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Viewed
+	 *
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -55,6 +63,8 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Viewed
+	 *
 	 * @return int
 	 */
 	public function getTotalViewed(): int {
@@ -64,6 +74,8 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total
+	 *
 	 * @return int
 	 */
 	public function getTotal(): int {
@@ -73,6 +85,8 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Clear
+	 *
 	 * @return void
 	 */
 	public function clear(): void {

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Subscriptions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -70,6 +72,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Subscriptions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int

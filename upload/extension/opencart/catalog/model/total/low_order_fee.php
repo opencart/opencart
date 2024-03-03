@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class LowOrderFee extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Total
+	 *
 	 * @param array<int, array<string, mixed>> $totals
 	 * @param array<int, float>                $taxes
 	 * @param float                            $total

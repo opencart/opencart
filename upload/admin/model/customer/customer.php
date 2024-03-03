@@ -480,7 +480,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Histories
+	 * Delete Customer Histories
 	 *
 	 * @param int $customer_id
 	 *

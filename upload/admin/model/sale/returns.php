@@ -266,7 +266,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Histories
+	 * Delete Return Histories
 	 *
 	 * @param int $return_id
 	 *

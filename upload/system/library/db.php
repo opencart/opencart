@@ -10,7 +10,7 @@
  */
 namespace Opencart\System\Library;
 /**
- * Class DB Adapter
+ * Class DB Adaptor
  *
  * @package Opencart\System\Library
  */

@@ -221,6 +221,13 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -271,12 +278,12 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addStore(int $information_id, $store_id): void {
+	public function addStore(int $information_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_store` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Stores
 	 *
 	 * @param int $information_id
 	 *
@@ -286,6 +293,13 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
+	/**
+	 * Delete Stores By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
 	public function deleteStoresByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
@@ -323,7 +337,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Layouts
 	 *
 	 * @param int $information_id
 	 *
@@ -333,10 +347,24 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Layout ID
+	 *
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
@@ -361,7 +389,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Information(s) By Layout ID
+	 * Get Total Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *

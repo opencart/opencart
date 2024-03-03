@@ -143,14 +143,36 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * Add Customer Group
+	 *
+	 * @param int $tax_rate_id
+	 * @param int $customer_group_id
+	 *
+	 * @return void
+	 */
 	public function addCustomerGroup(int $tax_rate_id, int $customer_group_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rate_to_customer_group` SET `tax_rate_id` = '" . (int)$tax_rate_id . "', `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}
 
+	/**
+	 * Delete Customer Groups
+	 *
+	 * @param int $tax_rate_id
+	 *
+	 * @return void
+	 */
 	public function deleteCustomerGroups(int $tax_rate_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rate_to_customer_group` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 	}
 
+	/**
+	 * Delete Customer Groups By Cusomer Group ID
+	 *
+	 * @param int $customer_group_id
+	 *
+	 * @return void
+	 */
 	public function deleteCustomerGroupsByCustomerGroupId(int $customer_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rate_to_customer_group` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}

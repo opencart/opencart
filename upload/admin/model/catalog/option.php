@@ -178,6 +178,7 @@ class Option extends \Opencart\System\Engine\Model {
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
+
 	/**
 	 * Get Descriptions
 	 *
@@ -198,6 +199,8 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -207,6 +210,8 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Value
+	 *
 	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
 	 */
@@ -230,6 +235,13 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_id;
 	}
 
+	/**
+	 * Delete Values
+	 *
+	 * @param int $option_id
+	 *
+	 * @return void
+	 */
 	public function deleteValues(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 
@@ -274,10 +286,14 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Value Description
+	 * 
 	 * @param int                  $option_value_id
-	 * @param int                  $language_id
 	 * @param int                  $option_id
+	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
+	 * 
+	 * @return void
 	 */
 	public function addValueDescription(int $option_value_id, int $option_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -338,6 +354,10 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Value Descriptions By Language ID
+	 * 
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getValueDescriptionsByLanguageId(int $language_id): array {

@@ -53,7 +53,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Seo Url by Key Value pair
+	 * Delete Seo Urls by Key Value pair
 	 *
 	 * @param string $key
 	 * @param string $value
@@ -76,10 +76,24 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$this->db->query($sql);
 	}
 
+	/**
+	 * Delete Seo Urls By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteSeoUrlsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
+	/**
+	 * Delete Seo Urls By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
 	public function deleteSeoUrlsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
 	}

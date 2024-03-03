@@ -132,9 +132,9 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
-	 * @param int $download_id primary key of the attribute record to be fetched
+	 * @param int $download_id primary key of the download record to be fetched
 	 *
 	 * @return void
 	 */
@@ -142,6 +142,13 @@ class Download extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
 	}
 
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -166,6 +173,10 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -208,6 +219,13 @@ class Download extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * Delete Reports
+	 *
+	 * @param int $download_id
+	 *
+	 * @return void
+	 */
 	public function deleteReports(int $download_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");
 	}

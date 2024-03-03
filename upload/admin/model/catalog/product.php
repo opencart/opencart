@@ -821,6 +821,14 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `rating` = '" . (int)$rating . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
+	/**
+	 * Edit Master ID
+	 *
+	 * @param int $product_id
+	 * @param int $master_id
+	 *
+	 * @return void
+	 */
 	public function editMasterId(int $product_id, int $master_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$master_id . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
@@ -1096,6 +1104,8 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -1117,7 +1127,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Category
+	 *	Delete Categories
 	 *
 	 * @param int $product_id
 	 *
@@ -1127,6 +1137,13 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
+	/**
+	 * Delete Categories By Category ID
+	 *
+	 * @param int $category_id
+	 *
+	 * @return void
+	 */
 	public function deleteCategoriesByCategoryId(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
 	}
@@ -1207,9 +1224,9 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Attribute
+	 *	Delete Attributes
 	 *
-	 * @param int $product_id   primary key of the attribute record to be fetched
+	 * @param int $product_id   primary key of the product record to be fetched
 	 * @param int $attribute_id
 	 *
 	 * @return void
@@ -1224,6 +1241,13 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query($sql);
 	}
 
+	/**
+	 * Delete Attributes By Language ID
+	 * 
+	 * @param int $language_id
+	 * 
+	 * @return void
+	 */
 	public function deleteAttributesByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_attribute` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -1300,7 +1324,6 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		$product_option_id = $this->db->getLastId();
-
 
 		if (isset($data['product_option_value'])) {
 			foreach ($data['product_option_value'] as $product_option_value) {
@@ -1712,7 +1735,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts
 	 *
 	 * @param int $product_id
 	 *
@@ -1722,10 +1745,24 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Layout ID
+	 *
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
@@ -1765,7 +1802,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Related
 	 *
-	 * @param int $product_id primary key of the attribute record to be fetched
+	 * @param int $product_id primary key of the product record to be fetched
 	 * @param int $related_id
 	 *
 	 * @return void
@@ -1812,7 +1849,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int                  $product_id
 	 * @param array<string, mixed> $data
 	 */
-	public function addSubscription(int $product_id, $data): void {
+	public function addSubscription(int $product_id, array $data): void {
 		$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$data['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "'");
 
 		if (!$query->num_rows) {
@@ -1820,6 +1857,13 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * Delete Subscriptions
+	 *
+	 * @param int $product_id
+	 *
+	 * @return void
+	 */
 	public function deleteSubscriptions(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
@@ -1837,12 +1881,19 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * Delete Subscriptions By Subscription Plan ID
+	 *
+	 * @param int $subscription_plan_id
+	 *
+	 * @return void
+	 */
 	public function deleteSubscriptionsBySubscriptionPlanId(int $subscription_plan_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 	}
 
 	/**
-	 * Get Total Products By Subscription Plan ID
+	 * Get Total Subscriptions By Subscription Plan ID
 	 *
 	 * @param int $subscription_plan_id
 	 *
@@ -1855,9 +1906,11 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Report
+	 * Delete Reports
 	 *
 	 * @param int $product_id
+	 *
+	 * @return void
 	 */
 	public function deleteReports(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "'");

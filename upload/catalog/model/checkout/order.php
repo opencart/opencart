@@ -217,7 +217,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param int $order_id
+	 * @param int                  $order_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -239,6 +239,14 @@ class Order extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
+	/**
+	 * Delete Products
+	 *
+	 * @param int $order_id
+	 * @param int $order_product_id
+	 *
+	 * @return void
+	 */
 	public function deleteProducts(int $order_id, int $order_product_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'";
 
@@ -282,6 +290,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
+	 * @param int                  $order_id
+	 * @param int                  $order_product_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -291,7 +301,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Option
+	 * Delete Options
 	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
@@ -465,7 +475,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Voucher
+	 * Delete Vouchers
 	 *
 	 * @param int $order_id
 	 * @param int $order_voucher_id
@@ -522,9 +532,9 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Total
+	 * Delete Totals
 	 *
-	 * @param int    $order_id
+	 * @param int $order_id
 	 */
 	public function deleteTotals(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -749,7 +759,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Order Histories
+	 * Delete Order History
 	 *
 	 * @param int $order_id
 	 *

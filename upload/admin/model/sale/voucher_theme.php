@@ -144,9 +144,9 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Descriptions By Language ID
-	 * 
+	 *
 	 * @param int $language_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -174,9 +174,9 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
-	 * 
+	 *
 	 * @param int $language_id
-	 * 
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {

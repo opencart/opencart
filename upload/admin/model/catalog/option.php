@@ -287,12 +287,12 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Value Description
-	 * 
+	 *
 	 * @param int                  $option_value_id
 	 * @param int                  $option_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
-	 * 
+	 *
 	 * @return void
 	 */
 	public function addValueDescription(int $option_value_id, int $option_id, int $language_id, array $data): void {
@@ -355,7 +355,7 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Value Descriptions By Language ID
-	 * 
+	 *
 	 * @param int $language_id
 	 *
 	 * @return array<int, array<string, string>>

@@ -202,6 +202,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {

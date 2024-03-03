@@ -212,9 +212,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Stores By Store ID
-	 * 
+	 *
 	 * @param int $store_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteStoresByStoreId(int $store_id): void {
@@ -266,9 +266,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layouts By Layout ID
-	 * 
+	 *
 	 * @param int $layout_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
@@ -277,9 +277,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layouts By Store ID
-	 * 
+	 *
 	 * @param int $store_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {

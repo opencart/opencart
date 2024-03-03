@@ -15,7 +15,6 @@ class Theme extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-
 	/**
 	 * Edit Theme
 	 *
@@ -53,7 +52,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Theme
 	 *
-	 * @param int    $theme_id
+	 * @param int $theme_id
 	 *
 	 * @return array<string, mixed>
 	 */

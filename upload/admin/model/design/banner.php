@@ -60,7 +60,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteBanner(int $banner_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner` WHERE `banner_id` = '" . (int)$banner_id . "'");
-		
+
 		$this->deleteImages($banner_id);
 	}
 
@@ -135,6 +135,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Image
 	 *
+	 * @param int                  $banner_id
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
@@ -147,6 +148,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Image
 	 *
+	 * @param int $banner_id
+	 *
 	 * @return void
 	 */
 	public function deleteImages(int $banner_id): void {
@@ -155,6 +158,8 @@ class Banner extends \Opencart\System\Engine\Model {
 
 	/**
 	 *	Delete Images By Language ID
+	 *
+	 * @param int $language_id
 	 *
 	 * @return void
 	 */

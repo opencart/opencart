@@ -143,7 +143,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	/*
+	/**
 	 * Delete History
 	 *
 	 * @param int $voucher_id
@@ -161,7 +161,6 @@ class Voucher extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-
 	public function deleteHistoriesByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}

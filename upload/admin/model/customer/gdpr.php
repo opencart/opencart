@@ -31,9 +31,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Gdprs By Store ID
-	 * 
+	 *
 	 * @param int $store_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteGdprsByStoreId(int $store_id): void {

@@ -71,9 +71,9 @@ class Review extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Reviews By Product ID
-	 * 
+	 *
 	 * @param int $product_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteReviewsByProductId(int $product_id): void {

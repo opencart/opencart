@@ -164,9 +164,9 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Products
-	 * 
+	 *
 	 * @param int $coupon_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteProducts(int $coupon_id): void {
@@ -288,7 +288,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	/*
+	/**
 	 * Delete Histories
 	 *
 	 * @param int $coupon_id

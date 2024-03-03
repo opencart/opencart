@@ -114,6 +114,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $coupon_id
+	 *
 	 * @return array<int, int>
 	 */
 	public function getProducts(int $coupon_id): array {
@@ -129,6 +131,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * @param int $coupon_id
+	 *
 	 * @return array<int, int>
 	 */
 	public function getCategories(int $coupon_id): array {

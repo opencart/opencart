@@ -147,9 +147,9 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Ips
-	 * 
+	 *
 	 * @param int $api_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteIps(int $api_id): void {

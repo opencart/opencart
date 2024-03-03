@@ -382,6 +382,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * Reset Authorizes
 	 *
 	 * @param int $user_id
+	 * @param int $total
 	 *
 	 * @return void
 	 */

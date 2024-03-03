@@ -140,7 +140,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-     * Add History
+	 * Add History
 	 *
 	 * @param int   $voucher_id
 	 * @param int   $order_id

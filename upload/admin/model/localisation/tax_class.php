@@ -135,10 +135,10 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Tax Rule
-	 * 
+	 *
 	 * @param int                  $tax_class_id
 	 * @param array<string, mixed> $data
-	 * 
+	 *
 	 * @return void
 	 */
 	public function addTaxRule(int $tax_class_id, $data): void {
@@ -147,9 +147,9 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Tax Rules
-	 * 
+	 *
 	 * @param int $tax_class_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteTaxRules(int $tax_class_id): void {

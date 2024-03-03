@@ -411,7 +411,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function getTotalCategories($data = []): int {
+	public function getTotalCategories(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category`";
 
 		$implode = [];

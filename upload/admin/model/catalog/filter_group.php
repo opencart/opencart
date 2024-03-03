@@ -7,9 +7,11 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Filter Group
+	 *
 	 * @param array<string, mixed> $data
 	 */
-	public function addFilterGroup($data): int {
+	public function addFilterGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$filter_group_id = $this->db->getLastId();
@@ -168,6 +170,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
 	 * @param int $language_id
 	 *
 	 * @return array<int, array<string, string>>

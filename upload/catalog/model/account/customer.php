@@ -88,6 +88,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Newsletter
 	 *
+	 * @param int  $customer_id
 	 * @param bool $newsletter
 	 *
 	 * @return void
@@ -223,7 +224,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete History
+	 * Delete Customer History
 	 *
 	 * @param int $customer_id
 	 *

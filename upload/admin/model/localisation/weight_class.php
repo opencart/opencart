@@ -212,7 +212,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Description By Unit
+	 * Get Descriptions By Unit
 	 *
 	 * @param string $unit
 	 *

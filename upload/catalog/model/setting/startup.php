@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Setting;
  */
 class Startup extends \Opencart\System\Engine\Model {
 	/**
-	 * Get Startups
+	 * Get Start-ups
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

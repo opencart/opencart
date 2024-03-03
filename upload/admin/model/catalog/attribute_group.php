@@ -138,7 +138,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 * @param int $attribute_group_id primary key of the attribute record to be fetched
 	 *
@@ -149,7 +149,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description By Language ID
+	 *	Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id
 	 *

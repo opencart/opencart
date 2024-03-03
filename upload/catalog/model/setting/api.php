@@ -47,7 +47,7 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Sessions
+	 * Delete API Sessions
 	 *
 	 * @param int $api_id
 	 *
@@ -72,7 +72,7 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Clean Sessions
+	 * Clean API Sessions
 	 *
 	 * @return void
 	 */

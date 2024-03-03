@@ -243,7 +243,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 * @param int $article_id
 	 *

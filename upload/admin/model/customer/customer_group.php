@@ -124,7 +124,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $customer_group_id
 	 * @param int                  $language_id
@@ -137,7 +137,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
 	 * @param int $customer_group_id
 	 *

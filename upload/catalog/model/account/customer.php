@@ -235,7 +235,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete IP
+	 * Delete Ip
 	 *
 	 * @param int $customer_id
 	 *
@@ -302,7 +302,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Login Attempts
+	 * Delete Customer Login Attempts
 	 *
 	 * @param string $email
 	 *
@@ -362,7 +362,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Authorize
+	 * Delete Customer Authorize
 	 *
 	 * @param int $customer_id
 	 * @param int $customer_authorize_id
@@ -394,7 +394,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset Authorizes
+	 * Reset Customer Authorizes
 	 *
 	 * @param int $customer_id
 	 *

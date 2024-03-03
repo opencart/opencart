@@ -145,7 +145,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $option_id   primary key
 	 * @param int                  $language_id
@@ -158,7 +158,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $option_id
 	 *
@@ -169,7 +169,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description By Language ID
+	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -199,6 +199,8 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
 	 * @param int $language_id
 	 *
 	 * @return array<int, array<string, string>>

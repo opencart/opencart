@@ -194,7 +194,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $topic_id
 	 * @param int                  $language_id
@@ -207,7 +207,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Description
 	 *
 	 * @param int $topic_id primary key of the attribute record to be fetched
 	 *
@@ -255,6 +255,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
 	 * @param int $language_id
 	 *
 	 * @return array<int, array<string, string>>
@@ -278,7 +280,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Stores
 	 *
 	 * @param int $topic_id
 	 *
@@ -321,7 +323,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts
 	 *
 	 * @param int $article_id
 	 *
@@ -332,7 +334,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *

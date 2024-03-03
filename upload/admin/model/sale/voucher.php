@@ -155,7 +155,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Voucher By Order ID
+	 * Delete Voucher Histories By Order ID
 	 *
 	 * @param int $order_id
 	 *

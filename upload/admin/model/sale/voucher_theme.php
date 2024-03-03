@@ -119,7 +119,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $voucher_theme_id
 	 * @param int                  $language_id
@@ -132,7 +132,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
 	 * @param int $voucher_theme_id
 	 *

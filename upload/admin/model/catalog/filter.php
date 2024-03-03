@@ -28,6 +28,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Filter
+	 * 
 	 * @param int                  $filter_id
 	 * @param array<string, mixed> $data
 	 */
@@ -72,7 +74,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Groups
+	 * Get Filters
 	 *
 	 * @param array<string, mixed> $data
 	 *
@@ -117,7 +119,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Groups
+	 * Get Total Filters
 	 *
 	 * @return int
 	 */
@@ -141,7 +143,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 * @param int $filter_id
 	 *
@@ -163,7 +165,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Group Descriptions
+	 * Get Descriptions
 	 *
 	 * @param int $filter_id
 	 *

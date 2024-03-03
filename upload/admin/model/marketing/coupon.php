@@ -257,6 +257,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Coupons
+	 *
 	 * @return int
 	 */
 	public function getTotalCoupons(): int {

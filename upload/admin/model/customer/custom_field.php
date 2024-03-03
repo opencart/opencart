@@ -182,9 +182,9 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
-	 * @param int                  $custom_field_id primary key of the attribute record to be fetched
+	 * @param int                  $custom_field_id primary key of the custom field record to be fetched
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
@@ -195,9 +195,9 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Description
 	 *
-	 * @param int $custom_field_id primary key of the attribute record to be fetched
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return void
 	 */

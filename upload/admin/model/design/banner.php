@@ -146,7 +146,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Image
+	 *	Delete Images
 	 *
 	 * @param int $banner_id
 	 *

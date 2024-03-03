@@ -436,7 +436,7 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *    Add Description
+	 * Add Description
 	 *
 	 * @param int                  $category_id primary key of the attribute record to be fetched
 	 * @param int                  $language_id
@@ -449,7 +449,7 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *    Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $category_id
 	 *
@@ -460,7 +460,7 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *    Delete Description By Language ID
+	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -742,7 +742,7 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Categories By Layout ID
+	 * Get Total Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *

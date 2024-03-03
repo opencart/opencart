@@ -167,7 +167,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer Groups By Cusomer Group ID
+	 * Delete Customer Groups By Customer Group ID
 	 *
 	 * @param int $customer_group_id
 	 *

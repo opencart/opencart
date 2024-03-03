@@ -29,7 +29,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Modification By Extension Install ID
+	 * Delete Modifications By Extension Install ID
 	 *
 	 * @param int $extension_install_id
 	 *

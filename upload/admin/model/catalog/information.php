@@ -198,7 +198,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $information_id
 	 * @param int                  $language_id
@@ -211,7 +211,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Description
 	 *
 	 * @param int $information_id
 	 *

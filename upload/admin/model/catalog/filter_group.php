@@ -74,7 +74,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Groups
+	 * Get Filter Groups
 	 *
 	 * @param array<string, mixed> $data
 	 *
@@ -183,7 +183,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Groups
+	 * Get Total Filter Groups
 	 *
 	 * @return int
 	 */

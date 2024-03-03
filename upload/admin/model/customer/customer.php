@@ -60,7 +60,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer
+	 * Delete Customers
 	 *
 	 * @param int $customer_id
 	 *

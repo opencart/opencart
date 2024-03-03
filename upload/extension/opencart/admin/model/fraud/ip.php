@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Fraud;
  */
 class Ip extends \Opencart\System\Engine\Model {
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -18,6 +20,8 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -25,6 +29,8 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Ip
+	 *
 	 * @param string $ip
 	 *
 	 * @return void
@@ -34,6 +40,8 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Remove Ip
+	 *
 	 * @param string $ip
 	 *
 	 * @return void
@@ -43,6 +51,8 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Ips
+	 *
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -63,6 +73,8 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Ips
+	 *
 	 * @return int
 	 */
 	public function getTotalIps(): int {
@@ -72,6 +84,8 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Ips By Ip
+	 *
 	 * @param string $ip
 	 *
 	 * @return int

@@ -1221,7 +1221,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addAttribute(int $product_id, int $attribute_id, int $language_id, $data): void {
+	public function addAttribute(int $product_id, int $attribute_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_attribute` SET `product_id` = '" . (int)$product_id . "', `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `text` = '" . $this->db->escape($data['text']) . "'");
 	}
 
@@ -1318,7 +1318,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function addOption(int $product_id, $data): int {
+	public function addOption(int $product_id, array $data): int {
 		if (isset($data['product_option_value'])) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$data['option_id'] . "', `required` = '" . (int)$data['required'] . "'");
 		} else {
@@ -1418,7 +1418,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return int
 	 */
-	public function addOptionValue(int $product_id, int $product_option_id, $option_id, $data): int {
+	public function addOptionValue(int $product_id, int $product_option_id, int $option_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_value` SET `product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$option_id . "', `option_value_id` = '" . (int)$data['option_value_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `subtract` = '" . (int)$data['subtract'] . "', `price` = '" . (float)$data['price'] . "', `price_prefix` = '" . $this->db->escape($data['price_prefix']) . "', `points` = '" . (int)$data['points'] . "', `points_prefix` = '" . $this->db->escape($data['points_prefix']) . "', `weight` = '" . (float)$data['weight'] . "', `weight_prefix` = '" . $this->db->escape($data['weight_prefix']) . "'");
 
 		return $this->db->getLastId();
@@ -1555,7 +1555,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addSpecial(int $product_id, $data): void {
+	public function addSpecial(int $product_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_special` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
 	}
 
@@ -1592,7 +1592,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addReward(int $product_id, int $customer_group_id, $data): void {
+	public function addReward(int $product_id, int $customer_group_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_reward` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$customer_group_id . "', `points` = '" . (int)$data['points'] . "'");
 	}
 

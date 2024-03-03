@@ -148,7 +148,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * @param int                  $geo_zone_id
 	 * @param array<string, mixed> $data
 	 */
-	public function addZone(int $geo_zone_id, $data): void {
+	public function addZone(int $geo_zone_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone_to_geo_zone` SET `geo_zone_id` = '" . (int)$geo_zone_id . "', `country_id` = '" . (int)$data['country_id'] . "', `zone_id` = '" . (int)$data['zone_id'] . "'");
 	}
 

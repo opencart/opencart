@@ -29,7 +29,7 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Filter
-	 * 
+	 *
 	 * @param int                  $filter_id
 	 * @param array<string, mixed> $data
 	 */

@@ -8,7 +8,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 class Free extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Quote
-	 * 
+	 *
 	 * @param array<string, mixed> $address
 	 *
 	 * @return array<string, mixed>

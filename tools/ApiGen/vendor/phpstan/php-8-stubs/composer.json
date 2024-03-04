@@ -1,8 +1,0 @@
-{
-	"name": "phpstan/php-8-stubs",
-	"description": "PHP stubs extracted from php-src",
-	"license": ["MIT", "PHP-3.01"],
-	"autoload": {
-		"classmap": ["Php8StubsMap.php"]
-	}
-}

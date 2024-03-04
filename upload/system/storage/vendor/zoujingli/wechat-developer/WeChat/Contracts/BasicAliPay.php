@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat\Contracts;
@@ -61,20 +63,26 @@ abstract class BasicAliPay
      */
     public function __construct($options)
     {
-        $this->params = new DataArray([]);
-        $this->config = new DataArray($options);
         if (empty($options['appid'])) {
-            throw new InvalidArgumentException("Missing Config -- [appid]");
+            throw new InvalidArgumentException('Missing Config -- [appid]');
+        }
+        if (empty($options['public_key']) && !empty($options['alipay_cert_path']) && is_file($options['alipay_cert_path'])) {
+            $options['public_key'] = file_get_contents($options['alipay_cert_path']);
+        }
+        if (empty($options['private_key']) && !empty($options['private_key_path']) && is_file($options['private_key_path'])) {
+            $options['private_key'] = file_get_contents($options['private_key_path']);
         }
         if (empty($options['public_key'])) {
-            throw new InvalidArgumentException("Missing Config -- [public_key]");
+            throw new InvalidArgumentException('Missing Config -- [public_key]');
         }
         if (empty($options['private_key'])) {
-            throw new InvalidArgumentException("Missing Config -- [private_key]");
+            throw new InvalidArgumentException('Missing Config -- [private_key]');
         }
         if (!empty($options['debug'])) {
-            $this->gateway = 'https://openapi.alipaydev.com/gateway.do?charset=utf-8';
+            $this->gateway = 'https://openapi-sandbox.dl.alipaydev.com/gateway.do?charset=utf-8';
         }
+        $this->params = new DataArray([]);
+        $this->config = new DataArray($options);
         $this->options = new DataArray([
             'app_id'    => $this->config->get('appid'),
             'charset'   => empty($options['charset']) ? 'utf-8' : $options['charset'],
@@ -92,6 +100,16 @@ abstract class BasicAliPay
         if (isset($options['app_auth_token']) && $options['app_auth_token'] !== '') {
             $this->options->set('app_auth_token', $options['app_auth_token']);
         }
+
+        // 证书模式读取证书
+        $appCertPath = $this->config->get('app_cert_path');
+        $aliRootPath = $this->config->get('alipay_root_path');
+        if (!$this->config->get('app_cert') && !empty($appCertPath) && is_file($appCertPath)) {
+            $this->config->set('app_cert', file_get_contents($appCertPath));
+        }
+        if (!$this->config->get('root_cert') && !empty($aliRootPath) && is_file($aliRootPath)) {
+            $this->config->set('root_cert', file_get_contents($aliRootPath));
+        }
     }
 
     /**
@@ -108,28 +126,28 @@ abstract class BasicAliPay
 
     /**
      * 查询支付宝订单状态
-     * @param string $out_trade_no
+     * @param string $outTradeNo
      * @return array|boolean
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function query($out_trade_no = '')
+    public function query($outTradeNo = '')
     {
         $this->options->set('method', 'alipay.trade.query');
-        return $this->getResult(['out_trade_no' => $out_trade_no]);
+        return $this->getResult(['out_trade_no' => $outTradeNo]);
     }
 
     /**
      * 支付宝订单退款操作
      * @param array|string $options 退款参数或退款商户订单号
-     * @param null $refund_amount 退款金额
+     * @param null $refundAmount 退款金额
      * @return array|boolean
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function refund($options, $refund_amount = null)
+    public function refund($options, $refundAmount = null)
     {
-        if (!is_array($options)) $options = ['out_trade_no' => $options, 'refund_amount' => $refund_amount];
+        if (!is_array($options)) $options = ['out_trade_no' => $options, 'refund_amount' => $refundAmount];
         $this->options->set('method', 'alipay.trade.refund');
         return $this->getResult($options);
     }
@@ -138,7 +156,7 @@ abstract class BasicAliPay
      * 关闭支付宝进行中的订单
      * @param array|string $options
      * @return array|boolean
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function close($options)
@@ -150,20 +168,21 @@ abstract class BasicAliPay
 
     /**
      * 获取通知数据
+     *
      * @param boolean $needSignType 是否需要sign_type字段
-     * @return boolean|array
-     * @throws InvalidResponseException
+     * @param array $parameters
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
      */
-    public function notify($needSignType = false)
+    public function notify($needSignType = false, array $parameters = [])
     {
-        $data = $_POST;
+        $data = empty($parameters) ? $_POST : $parameters;
+
         if (empty($data) || empty($data['sign'])) {
             throw new InvalidResponseException('Illegal push request.', 0, $data);
         }
         $string = $this->getSignContent($data, $needSignType);
-        $content = wordwrap($this->config->get('public_key'), 64, "\n", true);
-        $res = "-----BEGIN PUBLIC KEY-----\n{$content}\n-----END PUBLIC KEY-----";
-        if (openssl_verify($string, base64_decode($data['sign']), $res, OPENSSL_ALGO_SHA256) !== 1) {
+        if (openssl_verify($string, base64_decode($data['sign']), $this->getAliPublicKey(), OPENSSL_ALGO_SHA256) !== 1) {
             throw new InvalidResponseException('Data signature verification failed.', 0, $data);
         }
         return $data;
@@ -173,20 +192,19 @@ abstract class BasicAliPay
      * 验证接口返回的数据签名
      * @param array $data 通知数据
      * @param null|string $sign 数据签名
-     * @return array|boolean
-     * @throws InvalidResponseException
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
      */
     protected function verify($data, $sign)
     {
-        $content = wordwrap($this->config->get('public_key'), 64, "\n", true);
-        $res = "-----BEGIN PUBLIC KEY-----\n{$content}\n-----END PUBLIC KEY-----";
+        unset($data['sign']);
         if ($this->options->get('sign_type') === 'RSA2') {
-            if (openssl_verify(json_encode($data, 256), base64_decode($sign), $res, OPENSSL_ALGO_SHA256) !== 1) {
-                throw new InvalidResponseException('Data signature verification failed.');
+            if (openssl_verify(json_encode($data, 256), base64_decode($sign), $this->getAliPublicKey(), OPENSSL_ALGO_SHA256) !== 1) {
+                throw new InvalidResponseException('Data signature verification failed by RSA2.');
             }
         } else {
-            if (openssl_verify(json_encode($data, 256), base64_decode($sign), $res, OPENSSL_ALGO_SHA1) !== 1) {
-                throw new InvalidResponseException('Data signature verification failed.');
+            if (openssl_verify(json_encode($data, 256), base64_decode($sign), $this->getAliPublicKey(), OPENSSL_ALGO_SHA1) !== 1) {
+                throw new InvalidResponseException('Data signature verification failed by RSA.');
             }
         }
         return $data;
@@ -198,21 +216,29 @@ abstract class BasicAliPay
      */
     protected function getSign()
     {
-        $content = wordwrap($this->config->get('private_key'), 64, "\n", true);
-        $string = "-----BEGIN RSA PRIVATE KEY-----\n{$content}\n-----END RSA PRIVATE KEY-----";
         if ($this->options->get('sign_type') === 'RSA2') {
-            openssl_sign($this->getSignContent($this->options->get(), true), $sign, $string, OPENSSL_ALGO_SHA256);
+            openssl_sign($this->getSignContent($this->options->get(), true), $sign, $this->getAppPrivateKey(), OPENSSL_ALGO_SHA256);
         } else {
-            openssl_sign($this->getSignContent($this->options->get(), true), $sign, $string, OPENSSL_ALGO_SHA1);
+            openssl_sign($this->getSignContent($this->options->get(), true), $sign, $this->getAppPrivateKey(), OPENSSL_ALGO_SHA1);
         }
         return base64_encode($sign);
+    }
+
+    /**
+     * 去除证书前后内容及空白
+     * @param string $sign
+     * @return string
+     */
+    protected function trimCert($sign)
+    {
+        return preg_replace(['/\s+/', '/-{5}.*?-{5}/'], '', $sign);
     }
 
     /**
      * 数据签名处理
      * @param array $data 需要进行签名数据
      * @param boolean $needSignType 是否需要sign_type字段
-     * @return bool|string
+     * @return string
      */
     private function getSignContent(array $data, $needSignType = false)
     {
@@ -221,7 +247,7 @@ abstract class BasicAliPay
         if (empty($needSignType)) unset($data['sign_type']);
         foreach ($data as $key => $value) {
             if ($value === '' || is_null($value)) continue;
-            array_push($attrs, "{$key}={$value}");
+            $attrs[] = "{$key}={$value}";
         }
         return join('&', $attrs);
     }
@@ -232,6 +258,9 @@ abstract class BasicAliPay
      */
     protected function applyData($options)
     {
+        if ($this->config->get('app_cert') && $this->config->get('root_cert')) {
+            $this->setAppCertSnAndRootCertSn();
+        }
         $this->options->set('biz_content', json_encode($this->params->merge($options), 256));
         $this->options->set('sign', $this->getSign());
     }
@@ -240,7 +269,7 @@ abstract class BasicAliPay
      * 请求接口并验证访问数据
      * @param array $options
      * @return array|boolean
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     protected function getResult($options)
@@ -257,7 +286,7 @@ abstract class BasicAliPay
             );
         }
         return $data[$method];
-        // 去除返回结果签名检查
+        // 返回结果签名检查
         // return $this->verify($data[$method], $data['sign']);
     }
 
@@ -277,10 +306,123 @@ abstract class BasicAliPay
     }
 
     /**
+     * 获取应用私钥内容
+     * @return string
+     */
+    private function getAppPrivateKey()
+    {
+        $content = wordwrap($this->trimCert($this->config->get('private_key')), 64, "\n", true);
+        return "-----BEGIN RSA PRIVATE KEY-----\n{$content}\n-----END RSA PRIVATE KEY-----";
+    }
+
+    /**
+     * 获取支付公钥内容
+     * @return string
+     */
+    public function getAliPublicKey()
+    {
+        $cert = $this->config->get('public_key');
+        if (strpos(trim($cert), '-----BEGIN CERTIFICATE-----') !== false) {
+            $pkey = openssl_pkey_get_public($cert);
+            $keyData = openssl_pkey_get_details($pkey);
+            return trim($keyData['key']);
+        } else {
+            $content = wordwrap($this->trimCert($cert), 64, "\n", true);
+            return "-----BEGIN PUBLIC KEY-----\n{$content}\n-----END PUBLIC KEY-----";
+        }
+    }
+
+    /**
+     * 新版 从证书中提取序列号
+     * @param string $sign
+     * @return string
+     */
+    private function getAppCertSN($sign)
+    {
+        $ssl = openssl_x509_parse($sign, true);
+        return md5($this->_arr2str(array_reverse($ssl['issuer'])) . $ssl['serialNumber']);
+    }
+
+    /**
+     * 新版 提取根证书序列号
+     * @param string $sign
+     * @return string|null
+     */
+    private function getRootCertSN($sign)
+    {
+        $sn = null;
+        $array = explode('-----END CERTIFICATE-----', $sign);
+        for ($i = 0; $i < count($array) - 1; $i++) {
+            $ssl[$i] = openssl_x509_parse($array[$i] . '-----END CERTIFICATE-----', true);
+            if (strpos($ssl[$i]['serialNumber'], '0x') === 0) {
+                $ssl[$i]['serialNumber'] = $this->_hex2dec($ssl[$i]['serialNumberHex']);
+            }
+            if ($ssl[$i]['signatureTypeLN'] == 'sha1WithRSAEncryption' || $ssl[$i]['signatureTypeLN'] == 'sha256WithRSAEncryption') {
+                if ($sn == null) {
+                    $sn = md5($this->_arr2str(array_reverse($ssl[$i]['issuer'])) . $ssl[$i]['serialNumber']);
+                } else {
+                    $sn = $sn . '_' . md5($this->_arr2str(array_reverse($ssl[$i]['issuer'])) . $ssl[$i]['serialNumber']);
+                }
+            }
+        }
+        return $sn;
+    }
+
+    /**
+     * 新版 设置网关应用公钥证书SN、支付宝根证书SN
+     */
+    protected function setAppCertSnAndRootCertSn()
+    {
+        if (!($appCert = $this->config->get('app_cert'))) {
+            throw new InvalidArgumentException('Missing Config -- [app_cert|app_cert_path]');
+        }
+        if (!($rootCert = $this->config->get('root_cert'))) {
+            throw new InvalidArgumentException('Missing Config -- [root_cert|alipay_root_path]');
+        }
+        $this->options->set('app_cert_sn', $this->getAppCertSN($appCert));
+        $this->options->set('alipay_root_cert_sn', $this->getRootCertSN($rootCert));
+        if (!$this->options->get('app_cert_sn')) {
+            throw new InvalidArgumentException('Missing options -- [app_cert_sn]');
+        }
+        if (!$this->options->get('alipay_root_cert_sn')) {
+            throw new InvalidArgumentException('Missing options -- [alipay_root_cert_sn]');
+        }
+    }
+
+    /**
+     * 新版 数组转字符串
+     * @param array $array
+     * @return string
+     */
+    private function _arr2str($array)
+    {
+        $string = [];
+        if ($array && is_array($array)) {
+            foreach ($array as $key => $value) {
+                $string[] = $key . '=' . $value;
+            }
+        }
+        return join(',', $string);
+    }
+
+    /**
+     * 新版 0x转高精度数字
+     * @param string $hex
+     * @return int|string
+     */
+    private function _hex2dec($hex)
+    {
+        list($dec, $len) = [0, strlen($hex)];
+        for ($i = 1; $i <= $len; $i++) {
+            $dec = bcadd($dec, bcmul(strval(hexdec($hex[$i - 1])), bcpow('16', strval($len - $i))));
+        }
+        return $dec;
+    }
+
+    /**
      * 应用数据操作
      * @param array $options
      * @return mixed
      */
     abstract public function apply($options);
-
 }

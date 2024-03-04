@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WePay;
@@ -30,7 +32,7 @@ class Bill extends BasicWePay
      * @param array $options 静音参数
      * @param null|string $outType 输出类型
      * @return bool|string
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function download(array $options, $outType = null)
@@ -39,7 +41,7 @@ class Bill extends BasicWePay
         $params = $this->params->merge($options);
         $params['sign'] = $this->getPaySign($params, 'MD5');
         $result = Tools::post('https://api.mch.weixin.qq.com/pay/downloadbill', Tools::arr2xml($params));
-        if (($jsonData = Tools::xml2arr($result))) {
+        if (is_array($jsonData = Tools::xml3arr($result))) {
             if ($jsonData['return_code'] !== 'SUCCESS') {
                 throw new InvalidResponseException($jsonData['return_msg'], '0');
             }
@@ -52,7 +54,7 @@ class Bill extends BasicWePay
      * 拉取订单评价数据
      * @param array $options
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function comment(array $options)

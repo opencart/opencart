@@ -3,19 +3,20 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat;
 
 use WeChat\Contracts\BasicWePay;
-use WeChat\Exceptions\InvalidResponseException;
 use WePay\Bill;
 use WePay\Order;
 use WePay\Refund;
@@ -34,8 +35,8 @@ class Pay extends BasicWePay
      * 统一下单
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function createOrder(array $options)
     {
@@ -46,8 +47,8 @@ class Pay extends BasicWePay
      * 刷卡支付
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function createMicropay($options)
     {
@@ -88,8 +89,8 @@ class Pay extends BasicWePay
      * 查询订单
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function queryOrder(array $options)
     {
@@ -100,8 +101,8 @@ class Pay extends BasicWePay
      * 关闭订单
      * @param string $out_trade_no 商户订单号
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function closeOrder($out_trade_no)
     {
@@ -112,8 +113,8 @@ class Pay extends BasicWePay
      * 申请退款
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function createRefund(array $options)
     {
@@ -124,8 +125,8 @@ class Pay extends BasicWePay
      * 查询退款
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function queryRefund(array $options)
     {
@@ -136,8 +137,8 @@ class Pay extends BasicWePay
      * 交易保障
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function report(array $options)
     {
@@ -148,8 +149,8 @@ class Pay extends BasicWePay
      * 授权码查询openid
      * @param string $authCode 扫码支付授权码，设备读取用户微信中的条码或者二维码信息
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function queryAuthCode($authCode)
     {
@@ -161,8 +162,8 @@ class Pay extends BasicWePay
      * @param array $options 静音参数
      * @param null|string $outType 输出类型
      * @return bool|string
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function billDownload(array $options, $outType = null)
     {
@@ -173,8 +174,8 @@ class Pay extends BasicWePay
      * 拉取订单评价数据
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function billCommtent(array $options)
     {
@@ -185,8 +186,8 @@ class Pay extends BasicWePay
      * 企业付款到零钱
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function createTransfers(array $options)
     {
@@ -197,8 +198,8 @@ class Pay extends BasicWePay
      * 查询企业付款到零钱
      * @param string $partner_trade_no 商户调用企业付款API时使用的商户订单号
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function queryTransfers($partner_trade_no)
     {
@@ -209,9 +210,9 @@ class Pay extends BasicWePay
      * 企业付款到银行卡
      * @param array $options
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws Exceptions\InvalidDecryptException
-     * @throws Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidDecryptException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function createTransfersBank(array $options)
     {
@@ -222,8 +223,8 @@ class Pay extends BasicWePay
      * 商户企业付款到银行卡操作进行结果查询
      * @param string $partner_trade_no 商户订单号，需保持唯一
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function queryTransFresBank($partner_trade_no)
     {

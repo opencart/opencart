@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat;
@@ -29,8 +31,8 @@ class Qrcode extends BasicWeChat
      * @param string|integer $scene 场景
      * @param int $expire_seconds 有效时间
      * @return array
-     * @throws Exceptions\InvalidResponseException
-     * @throws Exceptions\LocalCacheException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function create($scene, $expire_seconds = 0)
     {
@@ -46,8 +48,7 @@ class Qrcode extends BasicWeChat
             $data['action_name'] = is_integer($scene) ? 'QR_LIMIT_SCENE' : 'QR_LIMIT_STR_SCENE';
         }
         $url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=ACCESS_TOKEN";
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, $data);
+        return $this->callPostApi($url, $data);
     }
 
     /**
@@ -57,21 +58,19 @@ class Qrcode extends BasicWeChat
      */
     public function url($ticket)
     {
-        return "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={$ticket}";
+        return "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" . urlencode($ticket);
     }
 
     /**
      * 长链接转短链接接口
      * @param string $longUrl 需要转换的长链接
      * @return array
-     * @throws Exceptions\InvalidResponseException
-     * @throws Exceptions\LocalCacheException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function shortUrl($longUrl)
     {
         $url = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=ACCESS_TOKEN";
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, ['action' => 'long2short', 'long_url' => $longUrl]);
+        return $this->callPostApi($url, ['action' => 'long2short', 'long_url' => $longUrl]);
     }
-
 }

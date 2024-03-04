@@ -213,6 +213,62 @@
                   {% endif %}</td>
               </tr>
               {% endif %}
+              <tr>
+                <td>{{ text_dom }}</td>
+                <td>{% if dom %}
+                  {{ text_on }}
+                  {% else %}
+                  {{ text_off }}
+                  {% endif %}</td>
+                <td>{{ text_on }}</td>
+                <td class="text-center">{% if dom %}
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  {% else %}
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_hash }}</td>
+                <td>{% if hash %}
+                  {{ text_on }}
+                  {% else %}
+                  {{ text_off }}
+                  {% endif %}</td>
+                <td>{{ text_on }}</td>
+                <td class="text-center">{% if hash %}
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  {% else %}
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_xmlwriter }}</td>
+                <td>{% if xmlwriter %}
+                  {{ text_on }}
+                  {% else %}
+                  {{ text_off }}
+                  {% endif %}</td>
+                <td>{{ text_on }}</td>
+                <td class="text-center">{% if xmlwriter %}
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  {% else %}
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_json }}</td>
+                <td>{% if json %}
+                  {{ text_on }}
+                  {% else %}
+                  {{ text_off }}
+                  {% endif %}</td>
+                <td>{{ text_on }}</td>
+                <td class="text-center">{% if json %}
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  {% else %}
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  {% endif %}</td>
+              </tr>
             </tbody>
           </table>
         </fieldset>

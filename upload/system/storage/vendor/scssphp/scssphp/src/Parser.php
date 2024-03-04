@@ -273,6 +273,11 @@ class Parser
         $this->saveEncoding();
         $this->extractLineNumbers($buffer);
 
+        if ($this->utf8 && !preg_match('//u', $buffer)) {
+            $message = $this->sourceName ? 'Invalid UTF-8 file: ' . $this->sourceName : 'Invalid UTF-8 file';
+            throw new ParserException($message);
+        }
+
         $this->pushBlock(null); // root block
         $this->whitespace();
         $this->pushBlock(null);
@@ -322,6 +327,13 @@ class Parser
         $this->extractLineNumbers($this->buffer);
 
         $list = $this->valueList($out);
+
+        if ($this->count !== \strlen($this->buffer)) {
+            $error = $this->parseError('Expected end of value');
+            $message = 'Passing trailing content after the expression when parsing a value is deprecated since Scssphp 1.12.0 and will be an error in 2.0. ' . $error->getMessage();
+
+            @trigger_error($message, E_USER_DEPRECATED);
+        }
 
         $this->restoreEncoding();
 
@@ -383,9 +395,12 @@ class Parser
         $this->inParens        = false;
         $this->eatWhiteDefault = true;
         $this->buffer          = (string) $buffer;
+        $this->discardComments = true;
 
         $this->saveEncoding();
         $this->extractLineNumbers($this->buffer);
+
+        $this->whitespace();
 
         $isMediaQuery = $this->mediaQueryList($out);
 
@@ -1678,9 +1693,9 @@ class Parser
      */
     protected function appendComment($comment)
     {
-        assert($this->env !== null);
-
         if (! $this->discardComments) {
+            assert($this->env !== null);
+
             $this->env->comments[] = $comment;
         }
     }

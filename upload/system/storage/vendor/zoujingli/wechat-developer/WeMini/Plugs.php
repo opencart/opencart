@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -33,7 +35,6 @@ class Plugs extends BasicWeChat
     public function apply($plugin_appid)
     {
         $url = 'https://api.weixin.qq.com/wxa/plugin?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['action' => 'apply', 'plugin_appid' => $plugin_appid], true);
     }
 
@@ -46,7 +47,6 @@ class Plugs extends BasicWeChat
     public function getList()
     {
         $url = 'https://api.weixin.qq.com/wxa/plugin?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['action' => 'list'], true);
     }
 
@@ -60,7 +60,6 @@ class Plugs extends BasicWeChat
     public function unbind($plugin_appid)
     {
         $url = 'https://api.weixin.qq.com/wxa/plugin?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['action' => 'unbind', 'plugin_appid' => $plugin_appid], true);
     }
 
@@ -75,7 +74,6 @@ class Plugs extends BasicWeChat
     public function devplugin($data)
     {
         $url = 'https://api.weixin.qq.com/wxa/devplugin?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -90,7 +88,6 @@ class Plugs extends BasicWeChat
     public function devApplyList($page = 1, $num = 10)
     {
         $url = 'https://api.weixin.qq.com/wxa/plugin?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         $data = ['action' => 'dev_apply_list', 'page' => $page, 'num' => $num];
         return $this->callPostApi($url, $data, true);
     }
@@ -105,8 +102,6 @@ class Plugs extends BasicWeChat
     public function devAgree($action = 'dev_agree')
     {
         $url = 'https://api.weixin.qq.com/wxa/plugin?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['action' => $action], true);
     }
-
 }

@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat\Contracts;
@@ -17,6 +19,7 @@ namespace WeChat\Contracts;
 use WeChat\Exceptions\InvalidArgumentException;
 use WeChat\Exceptions\InvalidDecryptException;
 use WeChat\Exceptions\InvalidResponseException;
+use WeChat\Prpcrypt\Prpcrypt;
 
 /**
  * 微信通知处理基本类
@@ -69,10 +72,11 @@ class BasicPushEvent
 
     /**
      * BasicPushEvent constructor.
-     * @param array $options
-     * @throws InvalidResponseException
+     * @param array $options 配置参数
+     * @param boolean $showEchoStr 回显内容
+     * @throws \WeChat\Exceptions\InvalidResponseException
      */
-    public function __construct(array $options)
+    public function __construct(array $options, $showEchoStr = true)
     {
         if (empty($options['appid'])) {
             throw new InvalidArgumentException("Missing Config -- [appid]");
@@ -89,16 +93,13 @@ class BasicPushEvent
         $this->appid = $this->config->get('appid');
         // 推送消息处理
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $this->postxml = file_get_contents("php://input");
+            $this->postxml = Tools::getRawInput();
             $this->encryptType = $this->input->get('encrypt_type');
             if ($this->isEncrypt()) {
                 if (empty($options['encodingaeskey'])) {
                     throw new InvalidArgumentException("Missing Config -- [encodingaeskey]");
                 }
-                if (!class_exists('Prpcrypt', false)) {
-                    require __DIR__ . '/Prpcrypt.php';
-                }
-                $prpcrypt = new \Prpcrypt($this->config->get('encodingaeskey'));
+                $prpcrypt = new Prpcrypt($this->config->get('encodingaeskey'));
                 $result = Tools::xml2arr($this->postxml);
                 $array = $prpcrypt->decrypt($result['Encrypt']);
                 if (intval($array[0]) > 0) {
@@ -108,10 +109,25 @@ class BasicPushEvent
             }
             $this->receive = new DataArray(Tools::xml2arr($this->postxml));
         } elseif ($_SERVER['REQUEST_METHOD'] == "GET" && $this->checkSignature()) {
-            @ob_clean();
-            exit($this->input->get('echostr'));
+            $this->receive = new DataArray([]);
+            if ($showEchoStr && ob_clean()) {
+                echo($this->input->get('echostr'));
+            }
         } else {
             throw new InvalidResponseException('Invalid interface request.', '0');
+        }
+    }
+
+    /**
+     * 获取回显字串
+     * @return string
+     */
+    public function getEchoStr()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "GET" && $this->checkSignature()) {
+            return $this->input->get('echostr');
+        } else {
+            return '';
         }
     }
 
@@ -129,17 +145,14 @@ class BasicPushEvent
      * @param array $data 消息内容
      * @param boolean $return 是否返回XML内容
      * @param boolean $isEncrypt 是否加密内容
-     * @return string
-     * @throws InvalidDecryptException
+     * @return string|void
+     * @throws \WeChat\Exceptions\InvalidDecryptException
      */
     public function reply(array $data = [], $return = false, $isEncrypt = false)
     {
         $xml = Tools::arr2xml(empty($data) ? $this->message : $data);
         if ($this->isEncrypt() || $isEncrypt) {
-            if (!class_exists('Prpcrypt', false)) {
-                require __DIR__ . '/Prpcrypt.php';
-            }
-            $prpcrypt = new \Prpcrypt($this->config->get('encodingaeskey'));
+            $prpcrypt = new Prpcrypt($this->config->get('encodingaeskey'));
             // 如果是第三方平台，加密得使用 component_appid
             $component_appid = $this->config->get('component_appid');
             $appid = empty($component_appid) ? $this->appid : $component_appid;
@@ -160,16 +173,15 @@ class BasicPushEvent
 
     /**
      * 验证来自微信服务器
-     * @param string $str
      * @return bool
      */
-    private function checkSignature($str = '')
+    private function checkSignature()
     {
         $nonce = $this->input->get('nonce');
         $timestamp = $this->input->get('timestamp');
         $msg_signature = $this->input->get('msg_signature');
         $signature = empty($msg_signature) ? $this->input->get('signature') : $msg_signature;
-        $tmpArr = [$this->config->get('token'), $timestamp, $nonce, $str];
+        $tmpArr = [$this->config->get('token'), $timestamp, $nonce, ''];
         sort($tmpArr, SORT_STRING);
         return sha1(implode($tmpArr)) === $signature;
     }

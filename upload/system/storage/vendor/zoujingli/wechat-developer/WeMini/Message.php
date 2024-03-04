@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -33,7 +35,6 @@ class Message extends BasicWeChat
     public function createActivityId($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/activityid/create?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -47,7 +48,6 @@ class Message extends BasicWeChat
     public function setUpdatableMsg($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/updatablemsg/send?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -61,7 +61,6 @@ class Message extends BasicWeChat
     public function uniformSend($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 }

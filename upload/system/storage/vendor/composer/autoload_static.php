@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit505ae6f2a3616473de90938541c4614d
+class ComposerStaticInit56198b4abead21620fa739b22c3bfd4e
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -24,6 +24,7 @@ class ComposerStaticInit505ae6f2a3616473de90938541c4614d
         array (
             'Wechat\\' => 7,
             'WePay\\' => 6,
+            'WePayV3\\' => 8,
             'WeMini\\' => 7,
             'WeChat\\' => 7,
         ),
@@ -77,6 +78,10 @@ class ComposerStaticInit505ae6f2a3616473de90938541c4614d
         'WePay\\' => 
         array (
             0 => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay',
+        ),
+        'WePayV3\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePayV3',
         ),
         'WeMini\\' => 
         array (
@@ -195,10 +200,10 @@ class ComposerStaticInit505ae6f2a3616473de90938541c4614d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit505ae6f2a3616473de90938541c4614d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit505ae6f2a3616473de90938541c4614d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit505ae6f2a3616473de90938541c4614d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit505ae6f2a3616473de90938541c4614d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit56198b4abead21620fa739b22c3bfd4e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit56198b4abead21620fa739b22c3bfd4e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit56198b4abead21620fa739b22c3bfd4e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit56198b4abead21620fa739b22c3bfd4e::$classMap;
 
         }, null, ClassLoader::class);
     }

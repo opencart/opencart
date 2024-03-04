@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -33,7 +35,6 @@ class Newtmpl extends BasicWeChat
     public function addCategory($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/wxopen/addcategory?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -46,7 +47,6 @@ class Newtmpl extends BasicWeChat
     public function getCategory()
     {
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/getcategory?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callGetApi($url);
     }
 
@@ -59,7 +59,6 @@ class Newtmpl extends BasicWeChat
     public function deleteCategory()
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/wxopen/deletecategory?access_token=TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, [], true);
     }
 
@@ -73,8 +72,8 @@ class Newtmpl extends BasicWeChat
     public function getPubTemplateTitleList($ids)
     {
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatetitles?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, ['ids'=>$ids,'start' => '0', 'limit' => '30'], true);
+        $url .= '&' . http_build_query(['ids' => $ids, 'start' => '0', 'limit' => '30']);
+        return $this->callGetApi($url);
     }
 
     /**
@@ -87,8 +86,8 @@ class Newtmpl extends BasicWeChat
     public function getPubTemplateKeyWordsById($tid)
     {
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatekeywords?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, ['tid' => $tid], true);
+        $url .= '&' . http_build_query(['tid' => $tid]);
+        return $this->callGetApi($url);
     }
 
     /**
@@ -103,7 +102,6 @@ class Newtmpl extends BasicWeChat
     public function addTemplate($tid, array $kidList, $sceneDesc = '')
     {
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/addtemplate?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['tid' => $tid, 'kidList' => $kidList, 'sceneDesc' => $sceneDesc], false);
     }
 
@@ -116,8 +114,7 @@ class Newtmpl extends BasicWeChat
     public function getTemplateList()
     {
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/gettemplate?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, [], true);
+        return $this->callGetApi($url);
     }
 
     /**
@@ -130,7 +127,6 @@ class Newtmpl extends BasicWeChat
     public function delTemplate($priTmplId)
     {
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/deltemplate?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['priTmplId' => $priTmplId], true);
     }
 
@@ -144,8 +140,6 @@ class Newtmpl extends BasicWeChat
     public function send(array $data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
-
 }

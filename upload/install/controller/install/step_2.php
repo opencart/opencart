@@ -42,6 +42,10 @@ class ControllerInstallStep2 extends Controller {
 		$data['text_zlib'] = $this->language->get('text_zlib');
 		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
+		$data['text_dom'] = $this->language->get('text_dom');
+		$data['text_hash'] = $this->language->get('text_hash');
+		$data['text_xmlwriter'] = $this->language->get('text_xmlwriter');
+		$data['text_json'] = $this->language->get('text_json');
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
@@ -145,6 +149,10 @@ class ControllerInstallStep2 extends Controller {
 		$data['zip'] = extension_loaded('zip');
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
+		$data['dom'] = extension_loaded('dom');
+		$data['hash'] = extension_loaded('hash');
+		$data['xmlwriter'] = extension_loaded('xmlwriter');
+		$data['json'] = extension_loaded('json');
 
 		$data['catalog_config'] = DIR_OPENCART . 'config.php';
 		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
@@ -211,6 +219,22 @@ class ControllerInstallStep2 extends Controller {
 
 		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
 			$this->error['warning'] = $this->language->get('error_mbstring');
+		}
+
+		if (!extension_loaded('dom')) {
+			$this->error['warning'] = $this->language->get('error_dom');
+		}
+
+		if (!extension_loaded('hash')) {
+			$this->error['warning'] = $this->language->get('error_hash');
+		}
+
+		if (!extension_loaded('xmlwriter')) {
+			$this->error['warning'] = $this->language->get('error_xmlwriter');
+		}
+
+		if (!extension_loaded('json')) {
+			$this->error['warning'] = $this->language->get('error_json');
 		}
 
 		if (!file_exists(DIR_OPENCART . 'config.php')) {

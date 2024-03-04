@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -33,7 +35,6 @@ class Logistics extends BasicWeChat
     public function addOrder($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/order/add?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -47,7 +48,6 @@ class Logistics extends BasicWeChat
     public function cancelOrder($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/order/cancel?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -60,7 +60,6 @@ class Logistics extends BasicWeChat
     public function getAllDelivery()
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/delivery/getall?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callGetApi($url);
     }
 
@@ -74,7 +73,6 @@ class Logistics extends BasicWeChat
     public function getOrder($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/order/get?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -88,7 +86,6 @@ class Logistics extends BasicWeChat
     public function getPath($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/path/get?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -101,7 +98,6 @@ class Logistics extends BasicWeChat
     public function getPrinter()
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/printer/getall?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callGetApi($url);
     }
 
@@ -115,7 +111,6 @@ class Logistics extends BasicWeChat
     public function getQuota($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/path/get?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -129,7 +124,6 @@ class Logistics extends BasicWeChat
     public function testUpdateOrder($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/test_update_order?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -143,7 +137,6 @@ class Logistics extends BasicWeChat
     public function updatePrinter($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/business/printer/update?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -157,7 +150,6 @@ class Logistics extends BasicWeChat
     public function getContact($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/delivery/contact/get?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -171,7 +163,6 @@ class Logistics extends BasicWeChat
     public function previewTemplate($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/delivery/template/preview?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -185,7 +176,6 @@ class Logistics extends BasicWeChat
     public function updateBusiness($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/delivery/service/business/update?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
 
@@ -199,8 +189,6 @@ class Logistics extends BasicWeChat
     public function updatePath($data)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/express/delivery/path/update?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, $data, true);
     }
-
 }

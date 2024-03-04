@@ -251,7 +251,7 @@ final class CoreExtension extends AbstractExtension
             new TwigTest('divisible by', null, ['node_class' => DivisiblebyTest::class, 'one_mandatory_argument' => true]),
             new TwigTest('constant', null, ['node_class' => ConstantTest::class]),
             new TwigTest('empty', 'twig_test_empty'),
-            new TwigTest('iterable', 'twig_test_iterable'),
+            new TwigTest('iterable', 'is_iterable'),
         ];
     }
 
@@ -343,9 +343,9 @@ function twig_cycle($values, $position)
  * @param \Traversable|array|int|float|string $values The values to pick a random item from
  * @param int|null                            $max    Maximum value used when $values is an int
  *
- * @throws RuntimeError when $values is an empty array (does not apply to an empty string which is returned as is)
- *
  * @return mixed A random value from the given sequence
+ *
+ * @throws RuntimeError when $values is an empty array (does not apply to an empty string which is returned as is)
  */
 function twig_random(Environment $env, $values = null, $max = null)
 {
@@ -364,7 +364,6 @@ function twig_random(Environment $env, $values = null, $max = null)
             }
         } else {
             $min = $values;
-            $max = $max;
         }
 
         return mt_rand((int) $min, (int) $max);
@@ -392,7 +391,7 @@ function twig_random(Environment $env, $values = null, $max = null)
         }
     }
 
-    if (!twig_test_iterable($values)) {
+    if (!is_iterable($values)) {
         return $values;
     }
 
@@ -529,7 +528,7 @@ function twig_date_converter(Environment $env, $date = null, $timezone = null)
  */
 function twig_replace_filter($str, $from)
 {
-    if (!twig_test_iterable($from)) {
+    if (!is_iterable($from)) {
         throw new RuntimeError(sprintf('The "replace" filter expects an array or "Traversable" as replace values, got "%s".', \is_object($from) ? \get_class($from) : \gettype($from)));
     }
 
@@ -626,7 +625,7 @@ function twig_array_merge(...$arrays)
     $result = [];
 
     foreach ($arrays as $argNumber => $array) {
-        if (!twig_test_iterable($array)) {
+        if (!is_iterable($array)) {
             throw new RuntimeError(sprintf('The merge filter only works with arrays or "Traversable", got "%s" for argument %d.', \gettype($array), $argNumber + 1));
         }
 
@@ -656,7 +655,7 @@ function twig_slice(Environment $env, $item, $start, $length = null, $preserveKe
 
         if ($start >= 0 && $length >= 0 && $item instanceof \Iterator) {
             try {
-                return iterator_to_array(new \LimitIterator($item, $start, null === $length ? -1 : $length), $preserveKeys);
+                return iterator_to_array(new \LimitIterator($item, $start, $length ?? -1), $preserveKeys);
             } catch (\OutOfBoundsException $e) {
                 return [];
             }
@@ -669,7 +668,7 @@ function twig_slice(Environment $env, $item, $start, $length = null, $preserveKe
         return \array_slice($item, $start, $length, $preserveKeys);
     }
 
-    return (string) mb_substr((string) $item, $start, $length, $env->getCharset());
+    return mb_substr((string) $item, $start, $length, $env->getCharset());
 }
 
 /**
@@ -722,7 +721,7 @@ function twig_last(Environment $env, $item)
  */
 function twig_join_filter($value, $glue = '', $and = null)
 {
-    if (!twig_test_iterable($value)) {
+    if (!is_iterable($value)) {
         $value = (array) $value;
     }
 
@@ -768,7 +767,7 @@ function twig_split_filter(Environment $env, $value, $delimiter, $limit = null)
 {
     $value = $value ?? '';
 
-    if (\strlen($delimiter) > 0) {
+    if ('' !== $delimiter) {
         return null === $limit ? explode($delimiter, $value) : explode($delimiter, $value, $limit);
     }
 
@@ -926,7 +925,7 @@ function twig_in_filter($value, $compare)
 
     if (\is_string($compare)) {
         if (\is_string($value) || \is_int($value) || \is_float($value)) {
-            return '' === $value || false !== strpos($compare, (string) $value);
+            return '' === $value || str_contains($compare, (string) $value);
         }
 
         return false;
@@ -1022,9 +1021,6 @@ function twig_compare($a, $b)
 }
 
 /**
- * @param string $pattern
- * @param string|null $subject
- *
  * @return int
  *
  * @throws RuntimeError When an invalid pattern is used
@@ -1123,7 +1119,7 @@ function twig_length_filter(Environment $env, $thing)
         return 0;
     }
 
-    if (is_scalar($thing)) {
+    if (\is_scalar($thing)) {
         return mb_strlen($thing, $env->getCharset());
     }
 
@@ -1233,7 +1229,7 @@ function twig_call_macro(Template $template, string $method, array $args, int $l
  */
 function twig_ensure_traversable($seq)
 {
-    if ($seq instanceof \Traversable || \is_array($seq)) {
+    if (is_iterable($seq)) {
         return $seq;
     }
 
@@ -1296,21 +1292,23 @@ function twig_test_empty($value)
  * @param mixed $value A variable
  *
  * @return bool true if the value is traversable
+ *
+ * @deprecated since Twig 3.8, to be removed in 4.0 (use the native "is_iterable" function instead)
  */
 function twig_test_iterable($value)
 {
-    return $value instanceof \Traversable || \is_array($value);
+    return is_iterable($value);
 }
 
 /**
  * Renders a template.
  *
- * @param array        $context
- * @param string|array $template      The template to render or an array of templates to try consecutively
- * @param array        $variables     The variables to pass to the template
- * @param bool         $withContext
- * @param bool         $ignoreMissing Whether to ignore missing templates or not
- * @param bool         $sandboxed     Whether to sandbox the template or not
+ * @param array                        $context
+ * @param string|array|TemplateWrapper $template      The template to render or an array of templates to try consecutively
+ * @param array                        $variables     The variables to pass to the template
+ * @param bool                         $withContext
+ * @param bool                         $ignoreMissing Whether to ignore missing templates or not
+ * @param bool                         $sandboxed     Whether to sandbox the template or not
  *
  * @return string The rendered template
  */
@@ -1431,7 +1429,7 @@ function twig_constant_is_defined($constant, $object = null)
  */
 function twig_array_batch($items, $size, $fill = null, $preserveKeys = true)
 {
-    if (!twig_test_iterable($items)) {
+    if (!is_iterable($items)) {
         throw new RuntimeError(sprintf('The "batch" filter expects an array or "Traversable", got "%s".', \is_object($items) ? \get_class($items) : \gettype($items)));
     }
 
@@ -1573,13 +1571,13 @@ function twig_get_attribute(Environment $env, Source $source, $object, $item, ar
             $classCache[$method] = $method;
             $classCache[$lcName = $lcMethods[$i]] = $method;
 
-            if ('g' === $lcName[0] && 0 === strpos($lcName, 'get')) {
+            if ('g' === $lcName[0] && str_starts_with($lcName, 'get')) {
                 $name = substr($method, 3);
                 $lcName = substr($lcName, 3);
-            } elseif ('i' === $lcName[0] && 0 === strpos($lcName, 'is')) {
+            } elseif ('i' === $lcName[0] && str_starts_with($lcName, 'is')) {
                 $name = substr($method, 2);
                 $lcName = substr($lcName, 2);
-            } elseif ('h' === $lcName[0] && 0 === strpos($lcName, 'has')) {
+            } elseif ('h' === $lcName[0] && str_starts_with($lcName, 'has')) {
                 $name = substr($method, 3);
                 $lcName = substr($lcName, 3);
                 if (\in_array('is'.$lcName, $lcMethods)) {
@@ -1675,7 +1673,7 @@ function twig_array_column($array, $name, $index = null): array
 
 function twig_array_filter(Environment $env, $array, $arrow)
 {
-    if (!twig_test_iterable($array)) {
+    if (!is_iterable($array)) {
         throw new RuntimeError(sprintf('The "filter" filter expects an array or "Traversable", got "%s".', \is_object($array) ? \get_class($array) : \gettype($array)));
     }
 

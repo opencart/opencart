@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getAnomalyMonitorsAsync(array $args = [])
  * @method \Aws\Result getAnomalySubscriptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAnomalySubscriptionsAsync(array $args = [])
+ * @method \Aws\Result getApproximateUsageRecords(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getApproximateUsageRecordsAsync(array $args = [])
  * @method \Aws\Result getCostAndUsage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCostAndUsageAsync(array $args = [])
  * @method \Aws\Result getCostAndUsageWithResources(array $args = [])

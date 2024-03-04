@@ -204,6 +204,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getReservedNodeExchangeOfferingsAsync(array $args = [])
  * @method \Aws\Result getResourcePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
+ * @method \Aws\Result listRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRecommendationsAsync(array $args = [])
  * @method \Aws\Result modifyAquaConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyAquaConfigurationAsync(array $args = [])
  * @method \Aws\Result modifyAuthenticationProfile(array $args = [])

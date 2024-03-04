@@ -104,6 +104,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise setKeepJobFlowAliveWhenNoStepsAsync(array $args = [])
  * @method \Aws\Result setTerminationProtection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setTerminationProtectionAsync(array $args = [])
+ * @method \Aws\Result setUnhealthyNodeReplacement(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise setUnhealthyNodeReplacementAsync(array $args = [])
  * @method \Aws\Result setVisibleToAllUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setVisibleToAllUsersAsync(array $args = [])
  * @method \Aws\Result startNotebookExecution(array $args = [])

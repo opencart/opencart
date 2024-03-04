@@ -548,7 +548,7 @@ class AwsClient implements AwsClientInterface
         if (!empty($paramDefinitions = $api->getClientContextParams())) {
             foreach($paramDefinitions as $paramName => $paramValue) {
                 if (isset($args[$paramName])) {
-                   $result[$paramName] = $args[$paramName];
+                   $resolvedParams[$paramName] = $args[$paramName];
                }
             }
         }
@@ -564,7 +564,12 @@ class AwsClient implements AwsClientInterface
         $config = $this->getConfig();
         $service = $args['service'];
 
-        $builtIns['SDK::Endpoint'] = isset($args['endpoint']) ? $args['endpoint'] : null;
+        $builtIns['SDK::Endpoint'] = null;
+        if (!empty($args['endpoint'])) {
+            $builtIns['SDK::Endpoint'] = $args['endpoint'];
+        } elseif (isset($config['configured_endpoint_url'])) {
+            $builtIns['SDK::Endpoint'] = (string) $this->getEndpoint();
+        }
         $builtIns['AWS::Region'] = $this->getRegion();
         $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
         $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();

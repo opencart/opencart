@@ -30,6 +30,11 @@ class AesGcmDecryptingStream implements AesStreamInterface
     private $tagLength;
 
     /**
+     * @var StreamInterface
+     */
+    private $stream;
+
+    /**
      * @param StreamInterface $cipherText
      * @param string $key
      * @param string $initializationVector
@@ -54,6 +59,9 @@ class AesGcmDecryptingStream implements AesStreamInterface
         $this->aad = $aad;
         $this->tagLength = $tagLength;
         $this->keySize = $keySize;
+        // unsetting the property forces the first access to go through
+        // __get().
+        unset($this->stream);
     }
 
     public function getOpenSslName()

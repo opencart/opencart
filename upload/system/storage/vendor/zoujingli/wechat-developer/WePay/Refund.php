@@ -3,19 +3,22 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WePay;
 
 use WeChat\Contracts\BasicWePay;
 use WeChat\Contracts\Tools;
+use WeChat\Exceptions\InvalidDecryptException;
 use WeChat\Exceptions\InvalidResponseException;
 
 /**
@@ -30,7 +33,7 @@ class Refund extends BasicWePay
      * 创建退款订单
      * @param array $options
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function create(array $options)
@@ -43,7 +46,7 @@ class Refund extends BasicWePay
      * 查询退款
      * @param array $options
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function query(array $options)
@@ -54,25 +57,25 @@ class Refund extends BasicWePay
 
     /**
      * 获取退款通知
+     * @param string $xml
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidDecryptException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      */
-    public function getNotify()
+    public function getNotify($xml = '')
     {
-        $data = Tools::xml2arr(file_get_contents("php://input"));
+        $data = Tools::xml2arr(empty($xml) ? Tools::getRawInput() : $xml);
         if (!isset($data['return_code']) || $data['return_code'] !== 'SUCCESS') {
             throw new InvalidResponseException('获取退款通知XML失败！');
         }
-        if (!class_exists('Prpcrypt', false)) {
-            include dirname(__DIR__) . '/WeChat/Contracts/Prpcrypt.php';
+        try {
+            $key = md5($this->config->get('mch_key'));
+            $decrypt = base64_decode($data['req_info']);
+            $response = openssl_decrypt($decrypt, 'aes-256-ecb', $key, OPENSSL_RAW_DATA);
+            $data['result'] = Tools::xml2arr($response);
+            return $data;
+        } catch (\Exception $exception) {
+            throw new InvalidDecryptException($exception->getMessage(), $exception->getCode());
         }
-        $pc = new \Prpcrypt(md5($this->config->get('mch_key')));
-        $array = $pc->decrypt(base64_decode($data['req_info']));
-        if (intval($array[0]) > 0) {
-            throw new InvalidResponseException($array[1], $array[0]);
-        }
-        $data['decode'] = $array[1];
-        return $data;
     }
-
 }

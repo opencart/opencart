@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -18,6 +20,7 @@ use WeChat\Contracts\BasicWeChat;
 use WeChat\Contracts\Tools;
 use WeChat\Exceptions\InvalidDecryptException;
 use WeChat\Exceptions\InvalidResponseException;
+use WXBizDataCrypt;
 
 
 /**
@@ -33,12 +36,12 @@ class Crypt extends BasicWeChat
      * @param string $iv
      * @param string $sessionKey
      * @param string $encryptedData
-     * @return bool
+     * @return bool|array
      */
     public function decode($iv, $sessionKey, $encryptedData)
     {
         require_once __DIR__ . DIRECTORY_SEPARATOR . 'crypt' . DIRECTORY_SEPARATOR . 'wxBizDataCrypt.php';
-        $pc = new \WXBizDataCrypt($this->config->get('appid'), $sessionKey);
+        $pc = new WXBizDataCrypt($this->config->get('appid'), $sessionKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $data);
         if ($errCode == 0) {
             return json_decode($data, true);
@@ -66,8 +69,8 @@ class Crypt extends BasicWeChat
      * @param string $iv 加密算法的初始向量
      * @param string $encryptedData 加密数据( encryptedData )
      * @return array
-     * @throws InvalidDecryptException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidDecryptException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function userInfo($code, $iv, $encryptedData)
@@ -81,6 +84,20 @@ class Crypt extends BasicWeChat
             throw new InvalidDecryptException('用户信息解析失败', 403);
         }
         return array_merge($result, $userinfo);
+    }
+
+    /**
+     * 通过授权码换取手机号
+     * @param string $code
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     */
+    public function getPhoneNumber($code)
+    {
+        $url = 'https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, ['code' => $code], true);
     }
 
     /**

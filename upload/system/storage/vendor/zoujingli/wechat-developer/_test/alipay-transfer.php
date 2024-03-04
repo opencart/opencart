@@ -3,20 +3,22 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 // 1. 手动加载入口文件
 include "../include.php";
 
 // 2. 准备公众号配置参数
-$config = include "./alipay.php";
+$config = include "./alipay2.php";
 
 try {
     // 实例支付对象
@@ -28,10 +30,10 @@ try {
     $result = $pay->apply([
         'out_biz_no'      => time(), // 订单号
         'payee_type'      => 'ALIPAY_LOGONID', // 收款方账户类型(ALIPAY_LOGONID | ALIPAY_USERID)
-        'payee_account'   => 'demo@sandbox.com', // 收款方账户
+        'payee_account'   => 'yvvfcr3065@sandbox.com', // 收款方账户
         'amount'          => '10', // 转账金额
         'payer_show_name' => '未寒', // 付款方姓名
-        'payee_real_name' => '张三', // 收款方真实姓名
+        'payee_real_name' => 'yvvfcr3065', // 收款方真实姓名
         'remark'          => '张三', // 转账备注
     ]);
 

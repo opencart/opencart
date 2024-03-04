@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -25,32 +27,30 @@ class Total extends BasicWeChat
 {
     /**
      * 数据分析接口
-     * @param string $begin_date 开始日期
-     * @param string $end_date 结束日期，限定查询1天数据，end_date允许设置的最大值为昨日
+     * @param string $beginDate 开始日期
+     * @param string $endDate 结束日期，限定查询1天数据，end_date允许设置的最大值为昨日
      * @return array
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function getWeanalysisAppidDailySummarytrend($begin_date, $end_date)
+    public function getWeanalysisAppidDailySummarytrend($beginDate, $endDate)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappiddailysummarytrend?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
+        return $this->callPostApi($url, ['begin_date' => $beginDate, 'end_date' => $endDate], true);
     }
 
     /**
      * 访问分析
-     * @param string $begin_date 开始日期
-     * @param string $end_date 结束日期，限定查询1天数据，end_date允许设置的最大值为昨日
+     * @param string $beginDate 开始日期
+     * @param string $endDate 结束日期，限定查询1天数据，end_date允许设置的最大值为昨日
      * @return array
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function getWeanalysisAppidDailyVisittrend($begin_date, $end_date)
+    public function getWeanalysisAppidDailyVisittrend($beginDate, $endDate)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappiddailyvisittrend?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
+        return $this->callPostApi($url, ['begin_date' => $beginDate, 'end_date' => $endDate], true);
     }
 
     /**
@@ -64,7 +64,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidWeeklyVisittrend($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappidweeklyvisittrend?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -79,7 +78,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidMonthlyVisittrend($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappidmonthlyvisittrend?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -94,7 +92,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidVisitdistribution($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappidvisitdistribution?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -109,7 +106,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidDailyRetaininfo($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappiddailyretaininfo?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -124,7 +120,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidWeeklyRetaininfo($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappidweeklyretaininfo?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -139,7 +134,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidMonthlyRetaininfo($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappidmonthlyretaininfo?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -154,7 +148,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidVisitPage($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappidvisitpage?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
 
@@ -169,8 +162,6 @@ class Total extends BasicWeChat
     public function getWeanalysisAppidUserportrait($begin_date, $end_date)
     {
         $url = 'https://api.weixin.qq.com/datacube/getweanalysisappiduserportrait?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['begin_date' => $begin_date, 'end_date' => $end_date], true);
     }
-
 }

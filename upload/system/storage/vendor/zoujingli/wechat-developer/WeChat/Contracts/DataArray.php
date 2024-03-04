@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat\Contracts;
@@ -51,7 +53,7 @@ class DataArray implements ArrayAccess
     /**
      * 获取配置项参数
      * @param string|null $offset
-     * @return array|string|null
+     * @return array|string|null|mixed
      */
     public function get($offset = null)
     {
@@ -76,7 +78,9 @@ class DataArray implements ArrayAccess
      * 设置配置项值
      * @param string $offset
      * @param string|array|null|integer $value
+     * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
@@ -91,6 +95,7 @@ class DataArray implements ArrayAccess
      * @param string $offset
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->config[$offset]);
@@ -99,7 +104,9 @@ class DataArray implements ArrayAccess
     /**
      * 清理配置项
      * @param string|null $offset
+     * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset = null)
     {
         if (is_null($offset)) {
@@ -112,13 +119,12 @@ class DataArray implements ArrayAccess
     /**
      * 获取配置项参数
      * @param string|null $offset
-     * @return array|string|null
+     * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset = null)
     {
-        if (is_null($offset)) {
-            return $this->config;
-        }
+        if (is_null($offset)) return $this->config;
         return isset($this->config[$offset]) ? $this->config[$offset] : null;
     }
 }

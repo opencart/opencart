@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 // 1. 手动加载入口文件
@@ -26,12 +28,17 @@ try {
 
     // 请参考（请求参数）：https://docs.open.alipay.com/api_1/alipay.trade.app.pay
     $result = $pay->apply([
-        'out_trade_no' => time(), // 商户订单号
+        'out_trade_no' => strval(time()), // 商户订单号
         'total_amount' => '1', // 支付金额
-        'subject'      => 'test subject', // 支付订单描述
+        'subject'      => '支付宝订单标题', // 支付订单描述
     ]);
-    echo '<pre>';
-    var_export($result);
+    echo $result . PHP_EOL .'<br></br>'. PHP_EOL;
+
+    // 请求关闭订单
+    $result = $pay->close([
+        'out_trade_no' => strval(time())
+    ]);
+    echo PHP_EOL . PHP_EOL . $result;
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

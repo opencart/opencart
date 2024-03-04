@@ -43,7 +43,7 @@
         "thoughtbot/bourbon": "^7.0",
         "twbs/bootstrap": "~5.0",
         "twbs/bootstrap4": "4.6.1",
-        "zurb/foundation": "~6.5"
+        "zurb/foundation": "~6.7.0"
     },
     "repositories": [
         {

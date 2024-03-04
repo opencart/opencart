@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -36,7 +38,6 @@ class Poi extends BasicWeChat
     public function addBearByPoi($related_name, $related_credential, $related_address, $related_proof_material)
     {
         $url = 'https://api.weixin.qq.com/wxa/addnearbypoi?access_token=ACCESS_TOKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         $data = [
             'related_name'    => $related_name, 'related_credential' => $related_credential,
             'related_address' => $related_address, 'related_proof_material' => $related_proof_material,
@@ -55,7 +56,6 @@ class Poi extends BasicWeChat
     public function getNearByPoiList($page = 1, $page_rows = 1000)
     {
         $url = "https://api.weixin.qq.com/wxa/getnearbypoilist?page={$page}&page_rows={$page_rows}&access_token=ACCESS_TOKEN";
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callGetApi($url);
     }
 
@@ -69,7 +69,6 @@ class Poi extends BasicWeChat
     public function delNearByPoiList($poi_id)
     {
         $url = "https://api.weixin.qq.com/wxa/delnearbypoi?access_token=ACCESS_TOKEN";
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['poi_id' => $poi_id], true);
     }
 
@@ -84,8 +83,6 @@ class Poi extends BasicWeChat
     public function setNearByPoiShowStatus($poi_id, $status)
     {
         $url = "https://api.weixin.qq.com/wxa/setnearbypoishowstatus?access_token=ACCESS_TOKEN";
-        $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->callPostApi($url, ['poi_id' => $poi_id, 'status' => $status], true);
     }
-
 }

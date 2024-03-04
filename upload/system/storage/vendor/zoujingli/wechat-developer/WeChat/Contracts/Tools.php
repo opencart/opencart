@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat\Contracts;
@@ -63,13 +65,25 @@ class Tools
         return $str;
     }
 
+    /**
+     * 获取输入对象
+     * @return false|mixed|string
+     */
+    public static function getRawInput()
+    {
+        if (empty($GLOBALS['HTTP_RAW_POST_DATA'])) {
+            return file_get_contents('php://input');
+        } else {
+            return $GLOBALS['HTTP_RAW_POST_DATA'];
+        }
+    }
 
     /**
      * 根据文件后缀获取文件类型
      * @param string|array $ext 文件后缀
      * @param array $mine 文件后缀MINE信息
      * @return string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function getExtMine($ext, $mine = [])
     {
@@ -83,7 +97,7 @@ class Tools
     /**
      * 获取所有文件扩展的类型
      * @return array
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     private static function getMines()
     {
@@ -99,21 +113,22 @@ class Tools
 
     /**
      * 创建CURL文件对象
-     * @param $filename
+     * @param mixed $filename
      * @param string $mimetype
      * @param string $postname
      * @return \CURLFile|string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function createCurlFile($filename, $mimetype = null, $postname = null)
     {
         if (is_string($filename) && file_exists($filename)) {
             if (is_null($postname)) $postname = basename($filename);
             if (is_null($mimetype)) $mimetype = self::getExtMine(pathinfo($filename, 4));
-            if (function_exists('curl_file_create')) {
-                return curl_file_create($filename, $mimetype, $postname);
+            if (class_exists('CURLFile')) {
+                return new \CURLFile($filename, $mimetype, $postname);
+            } else {
+                return "@{$filename};filename={$postname};type={$mimetype}";
             }
-            return "@{$filename};filename={$postname};type={$mimetype}";
         }
         return $filename;
     }
@@ -158,20 +173,35 @@ class Tools
      */
     public static function xml2arr($xml)
     {
-        $entity = libxml_disable_entity_loader(true);
-        $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        libxml_disable_entity_loader($entity);
+        if (PHP_VERSION_ID < 80000) {
+            $backup = libxml_disable_entity_loader(true);
+            $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+            libxml_disable_entity_loader($backup);
+        } else {
+            $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        }
         return json_decode(json_encode($data), true);
+    }
+
+    /**
+     * 解析XML文本内容
+     * @param string $xml
+     * @return array|false
+     */
+    public static function xml3arr($xml)
+    {
+        $state = xml_parse($parser = xml_parser_create(), $xml, true);
+        return xml_parser_free($parser) && $state ? self::xml2arr($xml) : false;
     }
 
     /**
      * 数组转xml内容
      * @param array $data
-     * @return null|string|string
+     * @return null|string
      */
     public static function arr2json($data)
     {
-        $json = json_encode(self::buildEnEmojiData($data), JSON_UNESCAPED_UNICODE);
+        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
         return $json === '[]' ? '{}' : $json;
     }
 
@@ -241,7 +271,7 @@ class Tools
      * 解析JSON内容到数组
      * @param string $json
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      */
     public static function json2arr($json)
     {
@@ -261,7 +291,7 @@ class Tools
      * @param array $query GET数
      * @param array $options
      * @return boolean|string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function get($url, $query = [], $options = [])
     {
@@ -275,7 +305,7 @@ class Tools
      * @param array $data POST数据
      * @param array $options
      * @return boolean|string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function post($url, $data = [], $options = [])
     {
@@ -289,7 +319,7 @@ class Tools
      * @param string $url 请求方法
      * @param array $options 请求参数[headers,data,ssl_cer,ssl_key]
      * @return boolean|string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function doRequest($method, $url, $options = [])
     {
@@ -342,13 +372,18 @@ class Tools
     private static function _buildHttpData($data, $build = true)
     {
         if (!is_array($data)) return $data;
-        foreach ($data as $key => $value) if (is_object($value) && $value instanceof \CURLFile) {
+        foreach ($data as $key => $value) if ($value instanceof \CURLFile) {
             $build = false;
         } elseif (is_object($value) && isset($value->datatype) && $value->datatype === 'MY_CURL_FILE') {
             $build = false;
             $mycurl = new MyCurlFile((array)$value);
             $data[$key] = $mycurl->get();
-            array_push(self::$cache_curl, $mycurl->tempname);
+            self::$cache_curl[] = $mycurl->tempname;
+        } elseif (is_array($value) && isset($value['datatype']) && $value['datatype'] === 'MY_CURL_FILE') {
+            $build = false;
+            $mycurl = new MyCurlFile($value);
+            $data[$key] = $mycurl->get();
+            self::$cache_curl[] = $mycurl->tempname;
         } elseif (is_string($value) && class_exists('CURLFile', false) && stripos($value, '@') === 0) {
             if (($filename = realpath(trim($value, '@'))) && file_exists($filename)) {
                 $build = false;
@@ -363,7 +398,7 @@ class Tools
      * @param string $name 文件名称
      * @param string $content 文件内容
      * @return string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function pushFile($name, $content)
     {
@@ -383,7 +418,7 @@ class Tools
      * @param string $value 缓存内容
      * @param int $expired 缓存时间(0表示永久缓存)
      * @return string
-     * @throws LocalCacheException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public static function setCache($name, $value = '', $expired = 3600)
     {
@@ -409,7 +444,7 @@ class Tools
             return call_user_func_array(self::$cache_callable['get'], func_get_args());
         }
         $file = self::_getCacheName($name);
-        if (file_exists($file) && ($content = file_get_contents($file))) {
+        if (file_exists($file) && is_file($file) && ($content = file_get_contents($file))) {
             $data = unserialize($content);
             if (isset($data['expired']) && (intval($data['expired']) === 0 || intval($data['expired']) >= time())) {
                 return $data['value'];
@@ -430,7 +465,7 @@ class Tools
             return call_user_func_array(self::$cache_callable['del'], func_get_args());
         }
         $file = self::_getCacheName($name);
-        return file_exists($file) ? unlink($file) : true;
+        return !file_exists($file) || @unlink($file);
     }
 
     /**

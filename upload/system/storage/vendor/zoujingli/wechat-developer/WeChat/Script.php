@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat;
@@ -44,8 +46,8 @@ class Script extends BasicWeChat
      * @param string $type TICKET类型(wx_card|jsapi)
      * @param string $appid 强制指定有效APPID
      * @return string
-     * @throws Exceptions\InvalidResponseException
-     * @throws Exceptions\LocalCacheException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function getTicket($type = 'jsapi', $appid = null)
     {
@@ -60,7 +62,7 @@ class Script extends BasicWeChat
                 throw new InvalidResponseException('Invalid Resoponse Ticket.', '0');
             }
             $ticket = $result['ticket'];
-            Tools::setCache($cache_name, $ticket, 5000);
+            Tools::setCache($cache_name, $ticket, 7000);
         }
         return $ticket;
     }
@@ -70,15 +72,23 @@ class Script extends BasicWeChat
      * @param string $url 网页的URL
      * @param string $appid 用于多个appid时使用(可空)
      * @param string $ticket 强制指定ticket
+     * @param array $jsApiList 需初始化的 jsApiList
      * @return array
-     * @throws Exceptions\LocalCacheException
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function getJsSign($url, $appid = null, $ticket = null)
+    public function getJsSign($url, $appid = null, $ticket = null, $jsApiList = null)
     {
         list($url,) = explode('#', $url);
         is_null($ticket) && $ticket = $this->getTicket('jsapi');
         is_null($appid) && $appid = $this->config->get('appid');
+        is_null($jsApiList) && $jsApiList = [
+            'updateAppMessageShareData', 'updateTimelineShareData', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone',
+            'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice',
+            'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation',
+            'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem',
+            'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard',
+        ];
         $data = ["url" => $url, "timestamp" => '' . time(), "jsapi_ticket" => $ticket, "noncestr" => Tools::createNoncestr(16)];
         return [
             'debug'     => false,
@@ -86,13 +96,7 @@ class Script extends BasicWeChat
             "nonceStr"  => $data['noncestr'],
             "timestamp" => $data['timestamp'],
             "signature" => $this->getSignature($data, 'sha1'),
-            'jsApiList' => [
-                'updateAppMessageShareData', 'updateTimelineShareData', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone',
-                'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice',
-                'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation',
-                'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem',
-                'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard',
-            ],
+            'jsApiList' => $jsApiList,
         ];
     }
 
@@ -107,7 +111,7 @@ class Script extends BasicWeChat
     {
         ksort($data);
         if (!function_exists($method)) return false;
-        foreach ($data as $k => $v) array_push($params, "{$k}={$v}");
+        foreach ($data as $k => $v) $params[] = "{$k}={$v}";
         return $method(join('&', $params));
     }
 }

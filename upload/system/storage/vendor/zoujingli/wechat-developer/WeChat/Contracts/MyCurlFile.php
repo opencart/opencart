@@ -1,5 +1,19 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | WeChatDeveloper
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// +----------------------------------------------------------------------
+// | 官方网站: https://thinkadmin.top
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
+// +----------------------------------------------------------------------
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
+// +----------------------------------------------------------------------
+
 namespace WeChat\Contracts;
 
 /**
@@ -39,7 +53,7 @@ class MyCurlFile extends \stdClass
     }
 
     /**
-     * 获取文件信息
+     * 获取文件上传信息
      * @return \CURLFile|string
      * @throws \WeChat\Exceptions\LocalCacheException
      */
@@ -48,12 +62,14 @@ class MyCurlFile extends \stdClass
         $this->filename = Tools::pushFile($this->tempname, base64_decode($this->content));
         if (class_exists('CURLFile')) {
             return new \CURLFile($this->filename, $this->mimetype, $this->postname);
+        } else {
+            return "@{$this->tempname};filename={$this->postname};type={$this->mimetype}";
         }
-        return "@{$this->tempname};filename={$this->postname};type={$this->mimetype}";
     }
 
     /**
-     * 类销毁处理
+     * 通用销毁函数清理缓存文件
+     * 提前删除过期因此放到了网络请求之后
      */
     public function __destruct()
     {

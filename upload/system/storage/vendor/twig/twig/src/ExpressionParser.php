@@ -183,11 +183,14 @@ class ExpressionParser
             if (!$this->parser->getStream()->nextIf(/* Token::PUNCTUATION_TYPE */ 9, ':')) {
                 $expr2 = $this->parseExpression();
                 if ($this->parser->getStream()->nextIf(/* Token::PUNCTUATION_TYPE */ 9, ':')) {
+                    // Ternary operator (expr ? expr2 : expr3)
                     $expr3 = $this->parseExpression();
                 } else {
+                    // Ternary without else (expr ? expr2)
                     $expr3 = new ConstantExpression('', $this->parser->getCurrentToken()->getLine());
                 }
             } else {
+                // Ternary without then (expr ?: expr3)
                 $expr2 = $expr;
                 $expr3 = $this->parseExpression();
             }
@@ -334,7 +337,14 @@ class ExpressionParser
             }
             $first = false;
 
-            $node->addElement($this->parseExpression());
+            if ($stream->test(/* Token::SPREAD_TYPE */ 13)) {
+                $stream->next();
+                $expr = $this->parseExpression();
+                $expr->setAttribute('spread', true);
+                $node->addElement($expr);
+            } else {
+                $node->addElement($this->parseExpression());
+            }
         }
         $stream->expect(/* Token::PUNCTUATION_TYPE */ 9, ']', 'An opened array is not properly closed');
 
@@ -358,6 +368,14 @@ class ExpressionParser
                 }
             }
             $first = false;
+
+            if ($stream->test(/* Token::SPREAD_TYPE */ 13)) {
+                $stream->next();
+                $value = $this->parseExpression();
+                $value->setAttribute('spread', true);
+                $node->addElement($value);
+                continue;
+            }
 
             // a hash key can be:
             //
@@ -491,10 +509,6 @@ class ExpressionParser
             }
 
             if ($node instanceof NameExpression && null !== $this->parser->getImportedSymbol('template', $node->getAttribute('name'))) {
-                if (!$arg instanceof ConstantExpression) {
-                    throw new SyntaxError(sprintf('Dynamic macro names are not supported (called on "%s").', $node->getAttribute('name')), $token->getLine(), $stream->getSourceContext());
-                }
-
                 $name = $arg->getAttribute('value');
 
                 $node = new MethodCallExpression($node, 'macro_'.$name, $arguments, $lineno);

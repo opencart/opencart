@@ -8,6 +8,7 @@ $baseDir = dirname(dirname(dirname(dirname($vendorDir))));
 return array(
     'Wechat\\' => array($vendorDir . '/zoujingli/wechat-php-sdk/Wechat'),
     'WePay\\' => array($vendorDir . '/zoujingli/wechat-developer/WePay'),
+    'WePayV3\\' => array($vendorDir . '/zoujingli/wechat-developer/WePayV3'),
     'WeMini\\' => array($vendorDir . '/zoujingli/wechat-developer/WeMini'),
     'WeChat\\' => array($vendorDir . '/zoujingli/wechat-developer/WeChat'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),

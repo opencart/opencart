@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeMini;
@@ -32,9 +34,8 @@ class Ocr extends BasicWeChat
      */
     public function bankcard($data)
     {
-        $url = 'https://api.weixin.qq.com/cv/ocr/bankcard?access_token=ACCESS_TOCKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, $data, true);
+        $url = 'https://api.weixin.qq.com/cv/ocr/bankcard?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, false);
     }
 
     /**
@@ -46,9 +47,8 @@ class Ocr extends BasicWeChat
      */
     public function businessLicense($data)
     {
-        $url = 'https://api.weixin.qq.com/cv/ocr/bizlicense?access_token=ACCESS_TOCKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, $data, true);
+        $url = 'https://api.weixin.qq.com/cv/ocr/bizlicense?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, false);
     }
 
     /**
@@ -60,9 +60,8 @@ class Ocr extends BasicWeChat
      */
     public function driverLicense($data)
     {
-        $url = 'https://api.weixin.qq.com/cv/ocr/drivinglicense?access_token=ACCESS_TOCKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, $data, true);
+        $url = 'https://api.weixin.qq.com/cv/ocr/drivinglicense?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, false);
     }
 
     /**
@@ -74,9 +73,8 @@ class Ocr extends BasicWeChat
      */
     public function idcard($data)
     {
-        $url = 'https://api.weixin.qq.com/cv/ocr/idcard?access_token=ACCESS_TOCKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, $data, true);
+        $url = 'https://api.weixin.qq.com/cv/ocr/idcard?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, false);
     }
 
     /**
@@ -88,9 +86,8 @@ class Ocr extends BasicWeChat
      */
     public function printedText($data)
     {
-        $url = 'https://api.weixin.qq.com/cv/ocr/comm?access_token=ACCESS_TOCKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, $data, true);
+        $url = 'https://api.weixin.qq.com/cv/ocr/comm?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, false);
     }
 
     /**
@@ -102,9 +99,7 @@ class Ocr extends BasicWeChat
      */
     public function vehicleLicense($data)
     {
-        $url = 'https://api.weixin.qq.com/cv/ocr/driving?access_token=ACCESS_TOCKEN';
-        $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->callPostApi($url, $data, true);
+        $url = 'https://api.weixin.qq.com/cv/ocr/driving?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, false);
     }
-
 }

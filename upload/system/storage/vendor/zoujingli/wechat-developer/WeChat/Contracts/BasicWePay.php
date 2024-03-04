@@ -3,13 +3,15 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
+// | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
+// | 免责声明 ( https://thinkadmin.top/disclaimer )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/WeChatDeveloper
+// | gitee 代码仓库：https://gitee.com/zoujingli/WeChatDeveloper
+// | github 代码仓库：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
 namespace WeChat\Contracts;
@@ -90,12 +92,13 @@ class BasicWePay
 
     /**
      * 获取微信支付通知
+     * @param string $xml
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      */
-    public function getNotify()
+    public function getNotify($xml = '')
     {
-        $data = Tools::xml2arr(file_get_contents('php://input'));
+        $data = Tools::xml2arr(empty($xml) ? Tools::getRawInput() : $xml);
         if (isset($data['sign']) && $this->getPaySign($data) === $data['sign']) {
             return $data;
         }
@@ -122,7 +125,10 @@ class BasicWePay
     {
         ksort($data);
         if (isset($data['sign'])) unset($data['sign']);
-        foreach ($data as $k => $v) $buff .= "{$k}={$v}&";
+        foreach ($data as $k => $v) {
+            if ('' === $v || null === $v) continue;
+            $buff .= "{$k}={$v}&";
+        }
         $buff .= ("key=" . $this->config->get('mch_key'));
         if (strtoupper($signType) === 'MD5') {
             return strtoupper(md5($buff));
@@ -134,7 +140,7 @@ class BasicWePay
      * 转换短链接
      * @param string $longUrl 需要转换的URL，签名用原串，传输需URLencode
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
     public function shortUrl($longUrl)
@@ -143,34 +149,32 @@ class BasicWePay
         return $this->callPostApi($url, ['long_url' => $longUrl]);
     }
 
-
     /**
      * 数组直接转xml数据输出
      * @param array $data
      * @param bool $isReturn
-     * @return string
+     * @return string|void
      */
     public function toXml(array $data, $isReturn = false)
     {
         $xml = Tools::arr2xml($data);
-        if ($isReturn) {
-            return $xml;
-        }
+        if ($isReturn) return $xml;
         echo $xml;
     }
 
     /**
-     * 以Post请求接口
+     * 以 Post 请求接口
      * @param string $url 请求
      * @param array $data 接口参数
      * @param bool $isCert 是否需要使用双向证书
      * @param string $signType 数据签名类型 MD5|SHA256
      * @param bool $needSignType 是否需要传签名类型参数
+     * @param bool $needNonceStr
      * @return array
-     * @throws InvalidResponseException
+     * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    protected function callPostApi($url, array $data, $isCert = false, $signType = 'HMAC-SHA256', $needSignType = true)
+    protected function callPostApi($url, array $data, $isCert = false, $signType = 'HMAC-SHA256', $needSignType = true, $needNonceStr = true)
     {
         $option = [];
         if ($isCert) {
@@ -192,7 +196,8 @@ class BasicWePay
             }
         }
         $params = $this->params->merge($data);
-        $needSignType && ($params['sign_type'] = strtoupper($signType));
+        if (!$needNonceStr) unset($params['nonce_str']);
+        if ($needSignType) $params['sign_type'] = strtoupper($signType);
         $params['sign'] = $this->getPaySign($params, $signType);
         $result = Tools::xml2arr(Tools::post($url, Tools::arr2xml($params), $option));
         if ($result['return_code'] !== 'SUCCESS') {

@@ -29,6 +29,7 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address
 	 *
+	 * @param int                  $customer_id
 	 * @param int                  $address_id
 	 * @param array<string, mixed> $data
 	 *
@@ -43,6 +44,9 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Address
+	 *
+	 * @param int $customer_id
 	 * @param int $address_id
 	 *
 	 * @return void

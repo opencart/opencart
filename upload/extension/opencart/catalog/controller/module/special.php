@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
  */
 class Special extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param array<string, mixed> $setting
 	 *
 	 * @return string

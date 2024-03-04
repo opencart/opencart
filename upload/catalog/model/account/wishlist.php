@@ -7,6 +7,9 @@ namespace Opencart\Catalog\Model\Account;
  */
 class Wishlist extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Wishlist
+	 *
+	 * @param int $customer_id
 	 * @param int $product_id
 	 *
 	 * @return void
@@ -18,6 +21,9 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Wishlist
+	 *
+	 * @param int $customer_id
 	 * @param int $product_id
 	 *
 	 * @return void
@@ -28,11 +34,15 @@ class Wishlist extends \Opencart\System\Engine\Model {
 		if ($product_id) {
 			$sql .= " AND `product_id` = '" . (int)$product_id . "'";
 		}
-		
+
 		$this->db->query($sql);
 	}
 
 	/**
+	 * Get Wishlist
+	 *
+	 * @param int $customer_id
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getWishlist(int $customer_id): array {
@@ -42,6 +52,10 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Wishlist
+	 *
+	 * @param int $customer_id
+	 *
 	 * @return int
 	 */
 	public function getTotalWishlist(int $customer_id): int {

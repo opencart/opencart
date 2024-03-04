@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Currency;
  */
 class Fixer extends \Opencart\System\Engine\Controller {
 	/**
+	 * Currency
+	 *
 	 * @param string $default
 	 *
 	 * @return void

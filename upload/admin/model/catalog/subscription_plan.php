@@ -133,7 +133,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $subscription_plan_id
 	 * @param int                  $language_id
@@ -146,7 +146,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $subscription_plan_id
 	 *
@@ -166,7 +166,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Description
+	 * Get Descriptions
 	 *
 	 * @param int $subscription_plan_id
 	 *
@@ -185,6 +185,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {

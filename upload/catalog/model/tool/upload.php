@@ -23,6 +23,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Upload By Code
+	 *
 	 * @param string $code
 	 *
 	 * @return array<string, mixed>

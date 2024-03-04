@@ -44,7 +44,7 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Reviews Product ID
+	 * Get Total Reviews By Product ID
 	 *
 	 * @param int $product_id
 	 *

@@ -183,7 +183,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Reports
+	 * Delete Marketing Reports
 	 *
 	 * @param int $marketing_id
 	 *

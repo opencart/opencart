@@ -37,9 +37,7 @@
                     {% else %}
                       <li><a href="#" class="dropdown-item disabled"><i class="fa-solid fa-unlock"></i> {{ text_unlock }}</a></li>
                     {% endif %}
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">{{ text_login }}</h6></li>
                     {% for store in customer.store %}
                       <li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fa-solid fa-lock"></i> {{ store.name }}</a></li>

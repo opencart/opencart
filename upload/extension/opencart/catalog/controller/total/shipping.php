@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
  */
 class Shipping extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -42,6 +44,8 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Quote
+	 *
 	 * @return void
 	 */
 	public function quote(): void {
@@ -140,6 +144,8 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

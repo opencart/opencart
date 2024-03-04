@@ -259,7 +259,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Path By Extension Install ID
+	 * Get Paths By Extension Install ID
 	 *
 	 * @param int $extension_install_id
 	 *

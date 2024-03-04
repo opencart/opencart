@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Activity extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Activities
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getActivities(): array {

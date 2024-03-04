@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
  */
 class Coupon extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -29,6 +31,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

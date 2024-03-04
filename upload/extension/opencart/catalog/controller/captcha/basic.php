@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
  */
 class Basic extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -20,6 +22,8 @@ class Basic extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Validate
+	 *
 	 * @return string
 	 */
 	public function validate(): string {
@@ -33,6 +37,8 @@ class Basic extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Captcha
+	 *
 	 * @return void
 	 */
 	public function captcha(): void {

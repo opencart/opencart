@@ -114,6 +114,10 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Products
+	 *
+	 * @param int $coupon_id
+	 *
 	 * @return array<int, int>
 	 */
 	public function getProducts(int $coupon_id): array {
@@ -129,6 +133,10 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Categories
+	 *
+	 * @param int $coupon_id
+	 *
 	 * @return array<int, int>
 	 */
 	public function getCategories(int $coupon_id): array {
@@ -158,7 +166,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete History By Order ID
+	 * Delete Coupon Histories By Order ID
 	 *
 	 * @param int $order_id
 	 *
@@ -169,7 +177,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Histories By Coupon
+	 * Get Total Histories
 	 *
 	 * @param string $coupon_id
 	 *

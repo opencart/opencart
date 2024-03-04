@@ -175,12 +175,12 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $attribute_id, int $language_id, $data): void {
+	public function addDescription(int $attribute_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_description` SET `attribute_id` = '" . (int)$attribute_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 *  Delete attribute description record in the database.
 	 *
@@ -193,7 +193,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description By Language ID
+	 *	Delete Descriptions By Language ID
 	 *
 	 *	Delete attribute description record in the database.
 	 *

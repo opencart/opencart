@@ -145,6 +145,13 @@ class Api extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
 	}
 
+	/**
+	 * Delete Ips
+	 *
+	 * @param int $api_id
+	 *
+	 * @return void
+	 */
 	public function deleteIps(int $api_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
 	}

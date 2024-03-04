@@ -53,9 +53,7 @@
           {% if price %}
             <ul class="list-unstyled">
               {% if not special %}
-                <li>
-                  <h2><span class="price-new">{{ price }}</span></h2>
-                </li>
+                <li><h2><span class="price-new">{{ price }}</span></h2></li>
               {% else %}
                 <li><span class="price-old">{{ price }}</span></li>
                 <li><h2><span class="price-new">{{ special }}</span></h2></li>

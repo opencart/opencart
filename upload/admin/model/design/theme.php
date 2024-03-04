@@ -7,14 +7,17 @@ namespace Opencart\Admin\Model\Design;
  */
 class Theme extends \Opencart\System\Engine\Model {
 	/**
+	 * Add Theme
+	 *
 	 * @param array<string, mixed> $data
+	 *
+	 * @return int
 	 */
 	public function addTheme(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `code` = '" . $this->db->escape($data['code']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
-
 
 	/**
 	 * Edit Theme
@@ -53,7 +56,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Theme
 	 *
-	 * @param int    $theme_id
+	 * @param int $theme_id
 	 *
 	 * @return array<string, mixed>
 	 */

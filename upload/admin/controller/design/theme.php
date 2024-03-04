@@ -60,7 +60,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * getList
+	 * Get List
 	 *
 	 * @return string
 	 */
@@ -122,6 +122,11 @@ class Theme extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/theme_list', $data);
 	}
 
+	/**
+	 * Get Form
+	 *
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('design/theme');
 

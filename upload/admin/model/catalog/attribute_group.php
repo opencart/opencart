@@ -133,12 +133,12 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $attribute_group_id, int $language_id, $data): void {
+	public function addDescription(int $attribute_group_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group_description` SET `attribute_group_id` = '" . (int)$attribute_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 * @param int $attribute_group_id primary key of the attribute record to be fetched
 	 *
@@ -149,7 +149,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description By Language ID
+	 *	Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -179,6 +179,10 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {

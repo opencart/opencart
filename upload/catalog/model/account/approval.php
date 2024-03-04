@@ -19,7 +19,7 @@ class Approval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer Approval
+	 * Delete Customer Approvals
 	 *
 	 * @param int $customer_id
 	 *

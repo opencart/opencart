@@ -11,7 +11,6 @@
 namespace Opencart\System\Engine;
 /**
  * Class Registry
- *
  */
 class Registry {
 	/**

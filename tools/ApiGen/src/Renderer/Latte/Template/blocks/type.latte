@@ -1,0 +1,146 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define type, PHPStan\PhpDocParser\Ast\Type\TypeNode $type, ?ApiGen\Info\ClassLikeInfo $scope, bool $brackets = false, bool $short = true}
+	{pre}
+		{if $type instanceof PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode}
+			{var ApiGen\Analyzer\IdentifierKind $kind = $type->getAttribute('kind')}
+			{if $kind === ApiGen\Analyzer\IdentifierKind::ClassLike}
+				{var ApiGen\Info\ClassLikeReferenceInfo $ref = $type->getAttribute('classLikeReference')}
+				{include classLikeLink, $index->classLike[$ref->fullLower], $short}
+			{elseif $kind === ApiGen\Analyzer\IdentifierKind::Alias}
+				{var ApiGen\Info\AliasReferenceInfo $ref = $type->getAttribute('aliasReference')}
+				{var ApiGen\Info\ClassLikeInfo $classLike = $index->classLike[$ref->classLike->fullLower]}
+				{var ApiGen\Info\AliasInfo $alias = $classLike->aliases[$ref->aliasLower] ?? null}
+				{if $alias !== null}
+					{include aliasLink, classLike: $classLike, alias: $alias}
+				{else}
+					<span title="Alias">{$type}</span>
+				{/if}
+			{elseif $kind === ApiGen\Analyzer\IdentifierKind::Keyword && $type->name === 'parent' && $scope && isClass($scope) && $scope->extends}
+				{include classLikeLink, $index->classLike[$scope->extends->fullLower], text: 'parent'}
+			{elseif $kind === ApiGen\Analyzer\IdentifierKind::Keyword && $type->name === 'self' && $scope}
+				{include classLikeLink, $scope, text: 'self'}
+			{else}
+				{$type}
+			{/if}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode}
+			{include this, type: $type->type, scope: $scope, brackets: true, short: $short}[]
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ArrayShapeNode}
+			{$type->kind}{
+			{foreach $type->items as $item}
+				{if $item->keyName}
+					{$item->keyName}
+					{if $item->optional}?{/if}{=": "}
+				{/if}
+				{include this, type: $item->valueType, scope: $scope, brackets: true, short: $short}
+				{sep}, {/sep}
+			{/foreach}
+			{if !$type->sealed}{if $type->items}, {/if}...{/if}
+			}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ObjectShapeNode}
+			object{
+			{foreach $type->items as $item}
+				{$item->keyName}
+				{if $item->optional}?{/if}{=": "}
+				{include this, type: $item->valueType, scope: $scope, brackets: true, short: $short}
+				{sep}, {/sep}
+			{/foreach}
+			}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\NullableTypeNode}
+			?{include this, type: $type->type, scope: $scope, brackets: true, short: $short}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\UnionTypeNode}
+			{if $brackets}({/if}
+			{foreach $type->types as $innerType}
+				{include this, type: $innerType, scope: $scope, brackets: true, short: $short}
+				{sep}|{/sep}
+			{/foreach}
+			{if $brackets}){/if}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode}
+			{if $brackets}({/if}
+			{foreach $type->types as $innerType}
+				{include this, type: $innerType, scope: $scope, brackets: true, short: $short}
+				{sep}&amp;{/sep}
+			{/foreach}
+			{if $brackets}){/if}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\GenericTypeNode}
+			{include this, type: $type->type, scope: $scope, short: $short}
+			&lt;
+			{foreach $type->genericTypes as $idx => $genericType}
+				{var $variance = $type->variances[$idx] ?? null}
+				{if $variance === PHPStan\PhpDocParser\Ast\Type\GenericTypeNode::VARIANCE_BIVARIANT}
+					*
+				{elseif $variance === PHPStan\PhpDocParser\Ast\Type\GenericTypeNode::VARIANCE_COVARIANT}
+					<span title="covariant">out</span>{=' '}
+					{include this, type: $genericType, scope: $scope, short: $short}
+				{elseif $variance === PHPStan\PhpDocParser\Ast\Type\GenericTypeNode::VARIANCE_CONTRAVARIANT}
+					<span title="contravariant">in</span>{=' '}
+					{include this, type: $genericType, scope: $scope, short: $short}
+				{else}
+					{include this, type: $genericType, scope: $scope, short: $short}
+				{/if}
+				{sep}, {/sep}
+			{/foreach}
+			&gt;
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\CallableTypeNode}
+			{if $brackets}({/if}
+			{include this, type: $type->identifier, scope: $scope, short: $short}
+			(
+			{foreach $type->parameters as $parameter}
+				{include this, type: $parameter->type, scope: $scope, short: $short}
+				{if $parameter->isReference}&{/if}{if $parameter->isVariadic}...{/if}
+				{if $parameter->parameterName && $parameter->type} {/if}
+				{$parameter->parameterName}
+				{sep}, {/sep}
+			{/foreach}
+			):&nbsp;
+			{include this, type: $type->returnType, scope: $scope, brackets: true, short: $short}
+			{if $brackets}){/if}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ThisTypeNode}
+			{$type}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ConstTypeNode}
+			{var ApiGen\Info\ExprInfo $expr = $type->constExpr->getAttribute('info')}
+			{include expr, expr: $expr, scope: $scope}
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\OffsetAccessTypeNode}
+			{include this, type: $type->type, scope: $scope, short: $short}
+			[{include this, type: $type->offset, scope: $scope, short: $short}]
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ConditionalTypeNode}
+			(
+			{include this, type: $type->subjectType, scope: $scope, short: $short}
+			{if $type->negated} is not {else} is {/if}
+			{include this, type: $type->targetType, scope: $scope, short: $short}
+			&nbsp;?&nbsp;
+			{include this, type: $type->if, scope: $scope, short: $short}
+			&nbsp;:&nbsp;
+			{include this, type: $type->else, scope: $scope, short: $short}
+			)
+
+		{elseif $type instanceof PHPStan\PhpDocParser\Ast\Type\ConditionalTypeForParameterNode}
+			(
+			{$type->parameterName}
+			{if $type->negated} is not {else} is {/if}
+			{include this, type: $type->targetType, scope: $scope, short: $short}
+			&nbsp;?&nbsp;
+			{include this, type: $type->if, scope: $scope, short: $short}
+			&nbsp;:&nbsp;
+			{include this, type: $type->else, scope: $scope, short: $short}
+			)
+
+		{else}
+			UNRESOLVED
+		{/if}
+	{/pre}
+{/define}

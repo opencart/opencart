@@ -1,0 +1,12 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define member, ApiGen\Info\MemberInfo $member}
+	<tr class="expandable collapsed" data-order="{$member->name}" id="{memberAnchor($member)}">
+		{include cells}
+		<td class="table-anchor">
+			<a href="#{memberAnchor($member)}">#</a>
+		</td>
+	</tr>
+{/define}

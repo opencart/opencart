@@ -1,0 +1,23 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define menu}
+	<div class="menu">
+		{ifset $index->namespace['']}
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+				{include menuGroup, namespace: $index->namespace['']}
+			</div>
+		{/ifset}
+
+		{if $layout->activeNamespace}
+			{include menuElements, elements: $layout->activeNamespace->class, heading: 'Classes', onlyPrimary: $layout->activeNamespace->primary}
+			{include menuElements, elements: $layout->activeNamespace->interface, heading: 'Interfaces', onlyPrimary: $layout->activeNamespace->primary}
+			{include menuElements, elements: $layout->activeNamespace->trait, heading: 'Traits', onlyPrimary: $layout->activeNamespace->primary}
+			{include menuElements, elements: $layout->activeNamespace->enum, heading: 'Enums', onlyPrimary: $layout->activeNamespace->primary}
+			{include menuElements, elements: $layout->activeNamespace->exception, heading: 'Exceptions', onlyPrimary: $layout->activeNamespace->primary}
+			{include menuElements, elements: $layout->activeNamespace->function, heading: 'Functions', onlyPrimary: $layout->activeNamespace->primary}
+		{/if}
+	</div>
+{/define}

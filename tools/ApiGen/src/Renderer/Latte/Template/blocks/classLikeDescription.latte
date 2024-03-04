@@ -1,0 +1,11 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define classLikeDescription, ApiGen\Info\ClassLikeInfo $classLike}
+	{if $classLike->description}
+		<div class="classLikeDescription">
+			{include description, $classLike->description, $classLike}
+		</div>
+	{/if}
+{/define}

@@ -1,0 +1,17 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define aliasSummary, ApiGen\Info\ClassLikeInfo $classLike}
+	{if $classLike->aliases}
+		<table class="table" id="aliases">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Type aliases</th>
+			</tr>
+
+			{foreach $classLike->aliases as $alias}
+				{include alias, classLike: $classLike, alias: $alias}
+			{/foreach}
+		</table>
+	{/if}
+{/define}

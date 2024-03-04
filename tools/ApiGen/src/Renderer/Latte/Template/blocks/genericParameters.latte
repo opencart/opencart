@@ -1,0 +1,33 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define genericParameters, ApiGen\Info\GenericParameterInfo[] $genericParameters}
+	{pre}
+		{if $genericParameters}
+			&lt;
+			{foreach $genericParameters as $genericParameter}
+				{include genericParameter, $genericParameter}
+				{sep}, {/sep}
+			{/foreach}
+			&gt;
+		{/if}
+	{/pre}
+{/define}
+
+{define genericParameter, ApiGen\Info\GenericParameterInfo $genericParameter}
+	{pre}
+		{include genericParameterVariance, $genericParameter->variance}
+		<span title="{$genericParameter->description}">{$genericParameter->name}</span>
+		{if $genericParameter->bound} is {include type, $genericParameter->bound}{/if}
+		{if $genericParameter->default} = {include type, $genericParameter->default}{/if}
+	{/pre}
+{/define}
+
+{define genericParameterVariance, ApiGen\Info\GenericParameterVariance $variance}
+	{pre}
+		{if $variance === ApiGen\Info\GenericParameterVariance::Covariant}<span title="covariant">out</span>{=' '}
+		{elseif $variance === ApiGen\Info\GenericParameterVariance::Contravariant}<span title="contravariant">in</span>{=' '}
+		{/if}
+	{/pre}
+{/define}

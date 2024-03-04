@@ -1,0 +1,64 @@
+{
+	"name": "apigen/apigen",
+	"description": "PHP source code API generator.",
+	"license": "MIT",
+	"authors": [
+		{"name": "ApiGen Contributors", "homepage": "https://github.com/apigen/apigen/graphs/contributors"},
+		{"name": "Jaroslav Hanslík", "homepage": "https://github.com/kukulich"},
+		{"name": "Ondřej Nešpor", "homepage": "https://github.com/andrewsville"},
+		{"name": "David Grudl", "homepage": "https://davidgrudl.com"}
+	],
+	"bin": ["bin/apigen"],
+	"require": {
+		"php": "^8.1",
+		"ext-ctype": "*",
+		"ext-json": "*",
+		"ext-mbstring": "*",
+		"ext-tokenizer": "*",
+		"composer-runtime-api": "^2.0",
+		"jetbrains/phpstorm-stubs": "^2022.3",
+		"latte/latte": "^3.0",
+		"league/commonmark": "^2.3",
+		"nette/di": "^3.1",
+		"nette/finder": "^3.0",
+		"nette/schema": "^1.2",
+		"nette/utils": "^4.0",
+		"nikic/php-parser": "^4.15",
+		"phpstan/php-8-stubs": "^0.3.55",
+		"phpstan/phpdoc-parser": "^1.16",
+		"symfony/console": "^6.0"
+	},
+	"require-dev": {
+		"nette/neon": "^3.4",
+		"nette/tester": "^2.4",
+		"phpstan/phpstan": "^1.9",
+		"tracy/tracy": "^2.9"
+	},
+	"replace": {
+		"symfony/polyfill-ctype": "*",
+		"symfony/polyfill-mbstring": "*",
+		"symfony/polyfill-php80": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"ApiGen\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"ApiGenTests\\": "tests"
+		}
+	},
+	"config": {
+		"platform-check": true,
+		"sort-packages": true
+	},
+	"scripts": {
+		"check": [
+			"@check:phpstan",
+			"@check:tests"
+		],
+		"check:tests": "tester -C tests",
+		"check:phpstan": "phpstan analyse -vvv"
+	}
+}

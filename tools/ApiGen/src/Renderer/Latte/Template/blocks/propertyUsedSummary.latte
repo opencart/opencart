@@ -1,0 +1,25 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define propertyUsedSummary, ApiGen\Info\ClassLikeInfo $classLike, array $overriden}
+	{if isClass($classLike)}
+		{if $classLike->extends}
+			{include propertyUsed, $index->classLike[$classLike->extends->fullLower], $overriden + $classLike->properties}
+		{/if}
+
+		{foreach $classLike->uses as $use}
+			{include propertyUsed, $index->classLike[$use->fullLower], $overriden + $classLike->properties}
+		{/foreach}
+
+	{elseif isInterface($classLike)}
+		{foreach $classLike->extends as $parent}
+			{include propertyUsed, $index->classLike[$parent->fullLower], $overriden + $classLike->properties}
+		{/foreach}
+
+	{elseif isTrait($classLike) || isEnum($classLike)}
+		{foreach $classLike->uses as $use}
+			{include propertyUsed, $index->classLike[$use->fullLower], $overriden + $classLike->properties}
+		{/foreach}
+	{/if}
+{/define}

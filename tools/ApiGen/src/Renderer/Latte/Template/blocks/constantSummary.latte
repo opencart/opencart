@@ -1,0 +1,17 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define constantSummary, ApiGen\Info\ClassLikeInfo $classLike}
+	{if $classLike->constants}
+		<table class="table" id="constants">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Constants</th>
+			</tr>
+
+			{foreach $classLike->constants as $constant}
+				{include constant, classLike: $classLike, constant: $constant}
+			{/foreach}
+		</table>
+	{/if}
+{/define}

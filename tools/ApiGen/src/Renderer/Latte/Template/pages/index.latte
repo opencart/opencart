@@ -1,0 +1,14 @@
+{templateType ApiGen\Renderer\Latte\Template\TreeTemplate}
+{import '../blocks/@index.latte'}
+
+{embed layout}
+	{block content}
+		<h1>{$config->title} API documentation</h1>
+
+		{embed elementSummary}
+			{block elementSummaryContent}
+				{include elementSummaryGroup, heading: 'Namespaces', elements: $index->namespace, showDescription: false, onlyPrimary: true}
+			{/block}
+		{/embed}
+	{/block}
+{/embed}

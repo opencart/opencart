@@ -1,0 +1,32 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define property, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\PropertyInfo $property}
+	{embed member, $property}
+		{block cells}
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					{include memberVisibility, $property}
+					{if $property->static}static{/if}
+					{if $property->readOnly}readonly{elseif $property->writeOnly}writeonly{/if}
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">{if $property->type}{include type, $property->type, scope: $classLike}{/if}</code>
+			</td>
+
+			<td class="table-cell">
+				<code n:pre>
+					<var>{embed memberSourceLink, $classLike, $property}{block content}${$property->name}{/block}{/embed}</var>
+					{if $property->default} = {include expr, expr: $property->default, scope: $classLike}{/if}
+				</code>
+
+				{embed memberDescription, classLike: $classLike, member: $property}}
+					{block details}{* TODO: other tags (uses, internal...) *}{/block}
+				{/embed}
+			</td>
+		{/block}
+	{/embed}
+{/define}

@@ -1,0 +1,27 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define constant, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\ConstantInfo $constant}
+	{embed member, $constant}
+		{block cells}
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					{if $constant->final}final{/if}
+					{include memberVisibility, $constant}
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code n:pre>
+					{embed memberSourceLink, classLike: $classLike, member: $constant}{block content}{$constant->name}{/block}{/embed}
+					 = {include expr, expr: $constant->value, scope: $classLike}
+				</code>
+
+				{embed memberDescription, classLike: $classLike, member: $constant}
+					{block details}{* TODO: other tags (uses, internal...) *}{/block}
+				{/embed}
+			</td>
+		{/block}
+	{/embed}
+{/define}

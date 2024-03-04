@@ -1,0 +1,16 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define memberDescription, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\MemberInfo $member}
+	{var $description = $member->getEffectiveDescription($index, $classLike)}
+
+	<div n:if="$description" class="expandable-collapsedView">
+		{shortDescription($index, $classLike, $description)}
+	</div>
+
+	<div class="expandable-expandedView">
+		{include description, $description, $classLike}
+		{block details}{/block}
+	</div>
+{/define}

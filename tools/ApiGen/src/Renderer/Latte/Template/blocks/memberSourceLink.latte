@@ -1,0 +1,11 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define memberSourceLink, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\MemberInfo $member}
+	{pre}
+		<a n:tag-if="$classLike->file && sourcePageExists($index->files[$classLike->file])" href="{memberSourceUrl($classLike, $member)}" title="Go to source code">
+			<span n:tag-if="$member->isDeprecated()" class="deprecated">{include content}</span>
+		</a>
+	{/pre}
+{/define}

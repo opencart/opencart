@@ -1,0 +1,12 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define namespaceLinks, ApiGen\Index\NamespaceIndex $namespace}
+	{pre}
+		{if $namespace->name->namespaceLower !== ''}
+			{include this, $index->namespace[$namespace->name->namespaceLower]}\
+		{/if}
+		<a n:tag-if="namespacePageExists($namespace)" href="{namespaceUrl($namespace)}">{$namespace->name->short}</a>
+	{/pre}
+{/define}

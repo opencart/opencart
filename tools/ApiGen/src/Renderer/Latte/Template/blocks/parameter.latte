@@ -1,0 +1,11 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define parameter, ApiGen\Info\ParameterInfo $parameter, ?ApiGen\Info\ClassLikeInfo $classLike = null}
+	<span n:pre>
+		{if $parameter->type}{include type, type: $parameter->type, scope: $classLike} {/if}
+		{if $parameter->byRef}&amp;{/if}{if $parameter->variadic}...{/if}<var>${$parameter->name}</var>
+		{if $parameter->default} = {include expr, expr: $parameter->default, scope: $classLike}{/if}
+	</span>
+{/define}

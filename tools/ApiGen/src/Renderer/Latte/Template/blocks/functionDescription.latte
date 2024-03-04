@@ -1,0 +1,11 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define functionDescription, ApiGen\Info\FunctionInfo $function}
+	{if $function->description}
+		<div class="classLikeDescription">
+			{include description, $function->description, null}
+		</div>
+	{/if}
+{/define}

@@ -1,0 +1,24 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define menuElements, ApiGen\Info\ElementInfo[] $elements, string $heading, bool $onlyPrimary = true}
+	{try}
+		<div class="menu-section">
+			<h3>{$heading}</h3>
+			<ul>
+				{foreach $elements as $element}
+					{skipIf $onlyPrimary && !$element->primary}
+					{skipIf !elementPageExists($element)}
+					<li n:class="$element === $layout->activeElement ? active">
+						<a n:class="$element->isDeprecated() ? deprecated" href="{elementUrl($element)}">
+							{elementName($element)}
+						</a>
+					</li>
+				{else}
+					{rollback}
+				{/foreach}
+			</ul>
+		</div>
+	{/try}
+{/define}

@@ -1,0 +1,11 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define aliasLink, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\AliasInfo $alias, ?string $text = null}
+	{pre}
+		<a n:tag-if="classLikePageExists($classLike)" href="{aliasUrl($classLike, $alias)}">
+			<span title="{$alias->type}">{if $text}{$text}{else}{$alias->name}{/if}</span>
+		</a>
+	{/pre}
+{/define}

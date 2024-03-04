@@ -1,0 +1,23 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define alias, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\AliasInfo $alias}
+	<tr data-order="{$alias->name}" id="{aliasAnchor($alias)}">
+		<td class="table-cell table-shrink">
+			<code class="nowrap">
+				<a n:tag-if="$classLike->file && sourcePageExists($index->files[$classLike->file])" href="{aliasSourceUrl($classLike, $alias)}" title="Go to source code">
+					{$alias->name}
+				</a>
+			</code>
+		</td>
+
+		<td class="table-cell">
+			<code class="nowrap">{include type, type: $alias->type, scope: $classLike}</code>
+		</td>
+
+		<td class="table-anchor">
+			<a href="#{aliasAnchor($alias)}">#</a>
+		</td>
+	</tr>
+{/define}

@@ -1,0 +1,50 @@
+{templateType ApiGen\Renderer\Latte\Template\ClassLikeTemplate}
+{import '../blocks/@index.latte'}
+
+{embed layout}
+	{block title}
+		{if $classLike->isDeprecated()}Deprecated {/if}
+		{include classLikeKind, $classLike}
+		{$classLike->name->full}
+	{/block}
+
+	{block content}
+		<h1 n:class="$classLike->isDeprecated() ? deprecated">
+			{include classLikeKind, $classLike} {include classLikeLinks, $classLike}
+		</h1>
+
+		{if $classLike->genericParameters}
+			<h2><code>{include genericParameters, $classLike->genericParameters}</code></h2>
+		{/if}
+
+		{include classLikeSignatureTable, $classLike}
+		{include classLikeDescription, $classLike}
+
+		{if !empty($index->dag[$classLike->name->fullLower]) || (isClass($classLike) && $classLike->extends) || (isInterface($classLike) && $classLike->extends)}
+			<div class="classLikeSection">
+				{include classTree, $classLike, $index->dag}
+			</div>
+		{/if}
+
+		<div class="classLikeSection">
+			{if $classLike->file && sourcePageExists($index->files[$classLike->file])}<b>Located at</b> <a href="{classLikeSourceUrl($classLike)}" title="Go to source code">{relativePath($classLike->file)}</a><br>{/if}
+		</div>
+
+		{include aliasSummary, $classLike}
+
+		{if isEnum($classLike)}
+			{include enumCaseSummary, $classLike}
+		{/if}
+
+		{include methodSummary, $classLike}
+		{include methodInheritedSummary, $classLike, []}
+		{include methodUsedSummary, $classLike, []}
+
+		{include constantSummary, $classLike}
+		{include constantInheritedSummary, $classLike, []}
+
+		{include propertySummary, $classLike}
+		{include propertyInheritedSummary, $classLike, []}
+		{include propertyUsedSummary, $classLike, []}
+	{/block}
+{/embed}

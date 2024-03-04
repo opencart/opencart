@@ -1,0 +1,17 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define methodSummary, ApiGen\Info\ClassLikeInfo $classLike}
+	{if $classLike->methods}
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+			{foreach $classLike->methods as $method}
+				{include method, classLike: $classLike, method: $method}
+			{/foreach}
+		</table>
+	{/if}
+{/define}

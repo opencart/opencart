@@ -1,0 +1,28 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define propertyUsed, ApiGen\Info\ClassLikeInfo $from, array $overriden}
+	{try}
+		<table class="table" n:if="isTrait($from)">
+			<tr>
+				<th class="table-heading">Properties used from {include classLikeLink, $from}</th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+					<code n:pre>
+						{foreach $from->properties as $propertyName => $property}
+							{skipIf isset($overriden[$propertyName])}
+							<var>{embed memberLink, $from, $property}{block content}${$property->name}{/block}{/embed}</var>
+							{sep}, {/sep}
+						{else}
+							{rollback}
+						{/foreach}
+					</code>
+				</td>
+			</tr>
+		</table>
+	{/try}
+
+	{include propertyUsedSummary, $from, $overriden}
+{/define}

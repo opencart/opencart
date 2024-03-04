@@ -1,0 +1,86 @@
+#!/usr/bin/env php
+<?php declare(strict_types = 1);
+
+use ApiGen\Bootstrap;
+use Composer\InstalledVersions;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+
+if (is_file(__DIR__ . '/../vendor/autoload.php')) {
+	require __DIR__ . '/../vendor/autoload.php';
+
+} elseif (is_file(__DIR__ . '/../../../autoload.php')) {
+	require __DIR__ . '/../../../autoload.php';
+
+} else {
+	fwrite(STDERR, "ERROR: unable to find autoloader\n");
+	exit(1);
+}
+
+Bootstrap::configureErrorHandling();
+
+$app = new SingleCommandApplication('ApiGen');
+$app->setVersion(InstalledVersions::getPrettyVersion('apigen/apigen'));
+
+$app->addArgument('path', InputArgument::IS_ARRAY, 'path directory to analyze');
+$app->addOption('config', 'c', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'path to config file');
+$app->addOption('include', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'includes files mask, e.g. *.php');
+$app->addOption('exclude', 'e', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'excluded files mask, e.g. tests/**');
+$app->addOption('working-dir', null, InputOption::VALUE_REQUIRED, 'project directory (containing composer.json), defaults to current working directory');
+$app->addOption('temp', null, InputOption::VALUE_REQUIRED, 'temp directory, defaults to sys_get_temp_dir() . \'/apigen\'');
+$app->addOption('workers', 'w', InputOption::VALUE_REQUIRED, 'worker count');
+$app->addOption('memory-limit', null, InputOption::VALUE_REQUIRED, 'memory limit');
+$app->addOption('title', 't', InputOption::VALUE_REQUIRED, 'title');
+$app->addOption('base-url', null, InputOption::VALUE_REQUIRED, 'base URL');
+$app->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'output directory');
+$app->addOption('theme', null, InputOption::VALUE_REQUIRED, 'theme directory');
+
+$app->setCode(function (InputInterface $input, ConsoleOutputInterface $output): int {
+	$paths = $input->getArgument('path');
+	$options = $input->getOptions();
+
+	$optionsMapping = [
+		'include' => 'include',
+		'exclude' => 'exclude',
+		'working-dir' => 'workingDir',
+		'temp' => 'tempDir',
+		'workers' => 'workerCount',
+		'memory-limit' => 'memoryLimit',
+		'title' => 'title',
+		'base-url' => 'baseUrl',
+		'output' => 'outputDir',
+		'theme' => 'themeDir',
+	];
+
+	$numericOptions = [
+		'workers' => true,
+	];
+
+	$parameters = [];
+	foreach ($optionsMapping as $optionKey => $parameterKey) {
+		$optionValue = $options[$optionKey];
+		if (is_string($optionValue)) {
+			$parameters[$parameterKey] = isset($numericOptions[$optionKey]) ? (int) $optionValue : $optionValue;
+
+		} elseif (is_array($optionValue) && count($optionValue) > 0) {
+			$parameters[$parameterKey] = $optionValue;
+		}
+	}
+
+	if (count($paths) > 0) {
+		$parameters['paths'] = $paths;
+	}
+
+	$style = new SymfonyStyle($input, $output);
+	$apiGen = Bootstrap::createApiGen($style, $parameters, $options['config']);
+
+	return $apiGen->generate() ? Command::SUCCESS : Command::FAILURE;
+});
+
+$app->run();

@@ -1,0 +1,16 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define classLikeLink, ApiGen\Info\ClassLikeInfo $classLike, bool $short = false, ?string $text = null}
+	{pre}
+		{var bool $active = $classLike === $layout->activeElement}
+		<a n:tag-if="!$active && classLikePageExists($classLike)" href="{classLikeUrl($classLike)}">
+			<b n:tag-if="$active">
+			<span n:class="$classLike->isDeprecated() ? deprecated, $active ? active" n:attr="title: ($short || $text) ? $classLike->name->full">
+				{if $text}{$text}{elseif $short}{$classLike->name->short}{else}{$classLike->name->full}{/if}
+			</span>
+			</b>
+		</a>
+	{/pre}
+{/define}

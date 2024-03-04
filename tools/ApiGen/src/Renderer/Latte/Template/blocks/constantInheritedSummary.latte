@@ -1,0 +1,20 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define constantInheritedSummary, ApiGen\Info\ClassLikeInfo $classLike, array $overriden}
+	{if isClass($classLike)}
+		{if $classLike->extends}
+			{include constantInherited, $index->classLike[$classLike->extends->fullLower], $overriden + $classLike->constants}
+		{/if}
+
+		{foreach $classLike->implements as $interface}
+			{include constantInherited, $index->classLike[$interface->fullLower], $overriden + $classLike->constants}
+		{/foreach}
+
+	{elseif isInterface($classLike)}
+		{foreach $classLike->extends as $parent}
+			{include constantInherited, $index->classLike[$parent->fullLower], $overriden + $classLike->constants}
+		{/foreach}
+	{/if}
+{/define}

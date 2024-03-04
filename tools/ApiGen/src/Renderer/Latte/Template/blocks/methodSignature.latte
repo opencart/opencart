@@ -1,0 +1,18 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define methodSignature, ApiGen\Info\ClassLikeInfo $classLike, ApiGen\Info\MethodInfo $method}
+	{pre}
+		{embed autoBreakingLine, items: $method->parameters, maxWidth: 120}
+			{block before}
+				{embed memberSourceLink, classLike: $classLike, member: $method}{block content}{$method->name}{/block}{/embed}
+				{include genericParameters, $method->genericParameters}
+				(
+			{/block}
+			{block after}){if $method->returnType}: {include type, type: $method->returnType, scope: $classLike}{/if}{/block}
+			{block item}{include parameter, classLike: $classLike, parameter: $item}{/block}
+			{block sep},{/block}
+		{/embed}
+	{/pre}
+{/define}

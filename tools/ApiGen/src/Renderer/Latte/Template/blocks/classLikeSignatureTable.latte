@@ -1,0 +1,41 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define classLikeSignatureTable, ApiGen\Info\ClassLikeInfo $classLike}
+	<table class="classLikeSignatureTable">
+		{if isClass($classLike)}
+			{if $classLike->abstract}<tr><th><code>abstract</code></th></tr>{/if}
+			{if $classLike->final}<tr><th><code>final</code></th></tr>{/if}
+			{if $classLike->readOnly}<tr><th><code>readonly</code></th></tr>{/if}
+			{include classLikeSignatureTableRow, 'extends', $classLike->extends ? [$classLike->extends] : []}
+			{include classLikeSignatureTableRow, 'implements', $classLike->implements}
+			{include classLikeSignatureTableRow, 'uses', $classLike->uses}
+
+		{elseif isInterface($classLike)}
+			{include classLikeSignatureTableRow, 'extends', $classLike->extends}
+
+		{elseif isTrait($classLike)}
+			{include classLikeSignatureTableRow, 'uses', $classLike->uses}
+
+		{elseif isEnum($classLike)}
+			{include classLikeSignatureTableRow, 'implements', $classLike->implements}
+			{include classLikeSignatureTableRow, 'uses', $classLike->uses}
+		{/if}
+	</table>
+{/define}
+
+{define classLikeSignatureTableRow, string $label, ApiGen\Info\ClassLikeReferenceInfo[] $refs}
+	{if $refs}
+		<tr>
+			<th><code>{$label}</code></th>
+			<td>
+				<code n:pre>
+					{foreach $refs as $ref}
+						{include classLikeReference, $ref}{sep}, {/sep}
+					{/foreach}
+				</code>
+			</td>
+		</tr>
+	{/if}
+{/define}

@@ -1,0 +1,15 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define methodInheritedSummary, ApiGen\Info\ClassLikeInfo $classLike, array $overriden}
+	{if isClass($classLike)}
+		{if $classLike->extends}
+			{include methodInherited, $index->classLike[$classLike->extends->fullLower], $overriden + $classLike->methods}
+		{/if}
+	{elseif isInterface($classLike)}
+		{foreach $classLike->extends as $parent}
+			{include methodInherited, $index->classLike[$parent->fullLower], $overriden + $classLike->methods}
+		{/foreach}
+	{/if}
+{/define}

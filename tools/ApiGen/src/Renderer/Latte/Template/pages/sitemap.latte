@@ -1,0 +1,34 @@
+{templateType ApiGen\Renderer\Latte\Template\SitemapTemplate}
+{contentType 'application/xml'}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url><loc>{indexUrl()}</loc></url>
+
+	{if treePageExists()}
+		<url><loc>{treeUrl()}</loc></url>
+	{/if}
+
+	{foreach $index->namespace as $namespace}
+		{if namespacePageExists($namespace) && $namespace->primary}
+			<url><loc>{namespaceUrl($namespace)}</loc></url>
+		{/if}
+	{/foreach}
+
+	{foreach $index->classLike as $classLike}
+		{if classLikePageExists($classLike) && $classLike->primary}
+			<url><loc>{classLikeUrl($classLike)}</loc></url>
+		{/if}
+	{/foreach}
+
+	{foreach $index->function as $function}
+		{if functionPageExists($function) && $function->primary}
+			<url><loc>{functionUrl($function)}</loc></url>
+		{/if}
+	{/foreach}
+
+	{foreach $index->files as $file}
+		{if sourcePageExists($file) && $file->primary}
+			<url><loc>{sourceUrl($file->path, null, null)}</loc></url>
+		{/if}
+	{/foreach}
+</urlset>

@@ -71,7 +71,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->deleteActivities($customer_id);
 
-		$this->deleteAddress($customer_id);
+		$this->deleteAddresses($customer_id);
 		$this->deleteAuthorizes($customer_id);
 		$this->deleteHistories($customer_id);
 		$this->deleteRewards($customer_id);
@@ -334,7 +334,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteAddress(int $customer_id, int $address_id = 0): void {
+	public function deleteAddresses(int $customer_id, int $address_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($address_id) {
@@ -342,17 +342,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query($sql);
-	}
-
-	/**
-	 * Delete Addresses By Customer ID
-	 *
-	 * @param int $customer_id
-	 *
-	 * @return void
-	 */
-	public function deleteAddressesByCustomerId(int $customer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**

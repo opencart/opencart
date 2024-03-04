@@ -194,7 +194,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $topic_id
 	 * @param int                  $language_id
@@ -202,12 +202,12 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $topic_id, int $language_id, $data): void {
+	public function addDescription(int $topic_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_description` SET `topic_id` = '" . (int)$topic_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Description
 	 *
 	 * @param int $topic_id primary key of the attribute record to be fetched
 	 *
@@ -217,6 +217,13 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
 
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
@@ -248,6 +255,10 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -269,7 +280,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Stores
 	 *
 	 * @param int $topic_id
 	 *
@@ -312,7 +323,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts
 	 *
 	 * @param int $article_id
 	 *
@@ -323,7 +334,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *

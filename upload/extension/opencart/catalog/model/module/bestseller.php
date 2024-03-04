@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Module;
  */
 class Bestseller extends \Opencart\Catalog\Model\Catalog\Product {
 	/**
+	 * Get Best Sellers
+	 *
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>

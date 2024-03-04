@@ -19,11 +19,12 @@ class Reward extends \Opencart\System\Engine\Model {
 	public function addReward(int $customer_id, int $order_id, string $description, int $points): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
 	}
-	
+
 	/**
-	 * delete Reward
+	 * Delete Reward
 	 *
-	 * @param int    $customer_id
+	 * @param int $customer_id
+	 * @param int $order_id
 	 *
 	 * @return void
 	 */
@@ -51,6 +52,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rewards
 	 *
+	 * @param int                  $customer_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -95,6 +97,8 @@ class Reward extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Rewards
+	 *
+	 * @param int $customer_id
 	 *
 	 * @return int
 	 */

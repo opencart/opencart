@@ -200,7 +200,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Stores
 	 *
 	 * @param int $manufacturer_id
 	 *
@@ -210,6 +210,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 	}
 
+	/**
+	 * Delete Stores By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
 	public function deleteStoresByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
@@ -247,7 +254,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts
 	 *
 	 * @param int $manufacturer_id
 	 *
@@ -257,10 +264,24 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Layout ID
+	 *
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
@@ -285,7 +306,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Manufacturers By Layout ID
+	 * Get Total Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *

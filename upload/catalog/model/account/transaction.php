@@ -10,9 +10,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * Add Transaction
 	 *
 	 * @param int    $customer_id
+	 * @param int    $order_id
 	 * @param string $description
 	 * @param float  $amount
-	 * @param int    $order_id
 	 *
 	 * @return void
 	 */
@@ -24,6 +24,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * Delete Transaction
 	 *
 	 * @param int $customer_id
+	 * @param int $order_id
 	 *
 	 * @return void
 	 */
@@ -51,6 +52,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transactions
 	 *
+	 * @param int                  $customer_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>

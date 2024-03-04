@@ -21,7 +21,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Voucher By Order ID
+	 * Delete Vouchers By Order ID
 	 *
 	 * @param int $order_id
 	 *
@@ -140,7 +140,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-     * Add History
+	 * Add History
 	 *
 	 * @param int   $voucher_id
 	 * @param int   $order_id
@@ -155,7 +155,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete History By Order ID
+	 * Delete Voucher Histories By Order ID
 	 *
 	 * @param int $order_id
 	 *

@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Marketing extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Marketing
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -64,6 +66,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Marketing
+	 *
 	 * @param array<mixed> $data
 	 *
 	 * @return int

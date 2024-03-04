@@ -20,6 +20,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Articles
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -121,6 +123,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Articles
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -173,6 +177,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Layout ID
+	 *
 	 * @param int $article_id
 	 *
 	 * @return int
@@ -188,7 +194,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * addComment
+	 * Add Comment
 	 *
 	 * @param int                  $article_id
 	 * @param array<string, mixed> $data
@@ -215,7 +221,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getComment
+	 * Get Comment
 	 *
 	 * @param int $article_comment_id
 	 *
@@ -228,7 +234,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * getComments
+	 * Get Comments
 	 *
 	 * @param int                  $article_id
 	 * @param array<string, mixed> $data
@@ -293,6 +299,8 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Comments
+	 *
 	 * @param int                  $article_id
 	 * @param array<string, mixed> $data
 	 *
@@ -322,16 +330,20 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int  $article_id
 	 * @param int  $article_comment_id
 	 * @param bool $rating
+	 *
+	 * @return void
 	 */
 	public function addRating(int $article_id, int $article_comment_id, bool $rating): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_rating` SET `article_comment_id` = '" . (int)$article_comment_id . "', `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `rating` = '" . (bool)$rating . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
 	}
 
 	/**
-	 * Delete Rating
+	 * Delete Ratings
 	 *
 	 * @param int $article_id
 	 * @param int $article_comment_id
+	 *
+	 * @return void
 	 */
 	public function deleteRatings(int $article_id, int $article_comment_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_rating` WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");

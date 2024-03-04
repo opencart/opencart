@@ -6,6 +6,13 @@ namespace Opencart\Admin\Model\Customer;
  * @package Opencart\Admin\Model\Customer
  */
 class CustomerApproval extends \Opencart\System\Engine\Model {
+	/**
+	 * Delete Approvals By Customer ID
+	 *
+	 * @param int $customer_id
+	 *
+	 * @return void
+	 */
 	public function deleteApprovalsByCustomerId(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}

@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
  */
 class Latest extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param array<string, mixed> $setting
 	 *
 	 * @return string

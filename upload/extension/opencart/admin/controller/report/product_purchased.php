@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
- * Class ProductPurchased
+ * Class Product Purchased
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

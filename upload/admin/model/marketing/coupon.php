@@ -162,12 +162,19 @@ class Coupon extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_product` SET `coupon_id` = '" . (int)$coupon_id . "', `product_id` = '" . (int)$product_id . "'");
 	}
 
+	/**
+	 * Delete Products
+	 *
+	 * @param int $coupon_id
+	 *
+	 * @return void
+	 */
 	public function deleteProducts(int $coupon_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_product` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
 	}
 
 	/**
-	 * Delete Products
+	 * Delete Products By Product ID
 	 *
 	 * @param int $product_id
 	 *
@@ -250,6 +257,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Coupons
+	 *
 	 * @return int
 	 */
 	public function getTotalCoupons(): int {
@@ -281,8 +290,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	/*
-	 * Delete Histories
+	/**
+	 * Delete Coupon Histories
 	 *
 	 * @param int $coupon_id
 	 *

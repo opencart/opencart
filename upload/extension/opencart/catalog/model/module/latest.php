@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Module;
  */
 class Latest extends \Opencart\Catalog\Model\Catalog\Product {
 	/**
+	 * Get Latest
+	 *
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>

@@ -144,7 +144,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $length_class_id
 	 * @param int                  $language_id
@@ -158,7 +158,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Description
 	 *
 	 * @param int $length_class_id
 	 *
@@ -169,7 +169,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions By Language ID
+	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -202,6 +202,10 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
 	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {

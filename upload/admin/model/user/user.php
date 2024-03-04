@@ -288,7 +288,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Login
+	 * Delete User Logins
 	 *
 	 * @param int $user_id
 	 *
@@ -379,9 +379,10 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset Authorizes
+	 * Reset User Authorizes
 	 *
 	 * @param int $user_id
+	 * @param int $total
 	 *
 	 * @return void
 	 */
@@ -390,7 +391,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Authorize
+	 * Delete User Authorizes
 	 *
 	 * @param int $user_id
 	 * @param int $user_authorize_id

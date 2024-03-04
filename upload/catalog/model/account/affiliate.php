@@ -97,7 +97,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Report
+	 * Delete Customer Affiliate Reports
 	 *
 	 * @param int $customer_id
 	 *

@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
  */
 class BankTransfer extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -20,6 +22,8 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @return void
 	 */
 	public function confirm(): void {

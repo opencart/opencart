@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
  */
 class Reward extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -45,6 +47,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

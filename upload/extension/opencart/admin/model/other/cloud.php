@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Other;
  */
 class Cloud extends \Opencart\System\Engine\Model {
 	/**
+	 * Install
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -18,6 +20,8 @@ class Cloud extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Uninstall
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -25,6 +29,8 @@ class Cloud extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Total
+	 *
 	 * @param int $product_id
 	 * @param int $total
 	 *
@@ -35,6 +41,8 @@ class Cloud extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @param int $product_id
 	 *
 	 * @return void
@@ -44,6 +52,8 @@ class Cloud extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Reports
+	 *
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -64,6 +74,8 @@ class Cloud extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Reports
+	 *
 	 * @return int
 	 */
 	public function getTotalReports(): int {

@@ -51,10 +51,10 @@ jobs:
           restore-keys: ${{ matrix.php }}-
 
       - name: PHPStan
-        run: ./tools/phpstan.phar analyze --no-progress
+        run: php tools/phpstan.phar analyze --no-progress
 
       - name: Code style
         if: matrix.php == '8.3'
         run: |
-          ./tools/php-cs-fixer.phar fix --dry-run --diff --ansi || true
-          ./tools/php-cs-fixer.phar fix --dry-run --format=checkstyle | cs2pr
+          php tools/php-cs-fixer.phar fix --dry-run --diff --ansi || true
+          php tools/php-cs-fixer.phar fix --dry-run --format=checkstyle | cs2pr

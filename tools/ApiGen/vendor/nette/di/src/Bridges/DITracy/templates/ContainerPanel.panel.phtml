@@ -1,0 +1,81 @@
+<?php
+declare(strict_types=1);
+
+namespace Nette\Bridges\DITracy;
+
+use Nette;
+use Tracy\Dumper;
+use Tracy\Helpers;
+
+?>
+<style class="tracy-debug">
+	#tracy-debug .nette-ContainerPanel table {
+		width: 100%;
+		white-space: nowrap;
+	}
+
+	#tracy-debug .nette-ContainerPanel .created {
+		font-weight: bold;
+	}
+
+	#tracy-debug .nette-ContainerPanel .yes {
+		color: green;
+		font-weight: bold;
+	}
+
+	#tracy-debug .nette-ContainerPanel table pre {
+		display: inline;
+		background: transparent;
+		padding: 0;
+		word-break: normal;
+	}
+</style>
+
+<h1>Nette DI Container</h1>
+
+<div class="tracy-inner nette-ContainerPanel">
+<div class="tracy-inner-container">
+	<p>Source: <?= Helpers::editorLink($file) ?></p>
+
+	<table class="tracy-sortable">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>Autowired</th>
+			<th>Service</th>
+			<th>Tags</th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($types as $name => $type): ?>
+		<?php $name = (string) $name ?>
+		<?php $autowired = in_array($name, array_merge($wiring[$type][0] ?? [], $wiring[$type][1] ?? []), true) ?>
+		<tr>
+			<td class="<?= isset($instances[$name]) ? 'created' : '' ?>"><?= is_numeric($name) ? "<small>$name</small>" : Helpers::escapeHtml($name) ?></td>
+			<td class="<?= $autowired ? 'yes' : '' ?>"><?= $autowired ? 'yes' : (isset($wiring[$type]) ? 'no' : '?') ?></td>
+			<td>
+				<?php if (isset($instances[$name]) && !$instances[$name] instanceof Nette\DI\Container): ?>
+					<?= Dumper::toHtml($instances[$name], [Dumper::COLLAPSE => true, Dumper::LIVE => true, Dumper::DEPTH => 5]); ?>
+				<?php elseif (isset($instances[$name])): ?>
+					<code><?= get_class($instances[$name]) ?></code>
+				<?php elseif (is_string($type)): ?>
+					<code><?= Helpers::escapeHtml($type) ?></code>
+				<?php endif ?>
+			</td>
+			<td><?php if (isset($tags[$name])) {
+				echo count($tags[$name]) === 1
+					? Helpers::escapeHtml(key($tags[$name])) . ' = ' . Dumper::toHtml(current($tags[$name]), [Dumper::COLLAPSE => true])
+					: Dumper::toHtml($tags[$name], [Dumper::COLLAPSE => true]);
+			} ?></td>
+		</tr>
+		<?php endforeach ?>
+		</tbody>
+	</table>
+
+	<h2>Parameters</h2>
+
+	<div class="nette-ContainerPanel-parameters">
+		<?= $container->parameters ? Dumper::toHtml($container->parameters) : "<i>disabled via 'di › export › parameters'</i>" ?>
+	</div>
+</div>
+</div>

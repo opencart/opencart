@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex,noarchive">
+	<meta name="generator" content="Nette Tester">
+
+	<title><?= $title ? htmlspecialchars("$title - ") : ''; ?>Code coverage</title>
+
+	<style type="text/css">
+	html {
+		font: 14px/1.5 Verdana,"Geneva CE",lucida,sans-serif;
+		border-top: 7.7em solid #f4ebdb;
+	}
+
+	body {
+		max-width: 990px;
+		margin: -7.7em auto 0;
+		background: #fcfaf5;
+		color: #333;
+	}
+
+	footer {
+		margin-left: .5em;
+	}
+
+	h1 {
+		font-family: "Trebuchet MS","Geneva CE",lucida,sans-serif;
+		font-size: 1.9em;
+		margin: .5em;
+		color: #7a7772;
+		text-shadow: 1px 1px 0 white;
+	}
+
+	h1 small {
+		font-size: 60%;
+	}
+
+	div.code {
+		background: white;
+		border: 1px dotted silver;
+		padding: .4em 0;
+		display: none;
+		color: #333;
+		overflow: auto;
+	}
+
+	code,
+	div.code {
+		font: 13px/1.3 monospace;
+	}
+
+	div.code > div {
+		float: left;
+		min-width: 100%;
+		position: relative;
+	}
+
+	aside {
+		min-width: 100%;
+		position: absolute;
+	}
+
+	aside div {
+		white-space: pre;
+		padding-left: .7em;
+	}
+
+	aside a {
+		color: #c0c0c0;
+		display: block;
+	}
+
+	aside a:hover {
+		color: inherit;
+		font-weight: bold;
+		text-decoration: none;
+	}
+
+	code {
+		display: block;
+		white-space: nowrap;
+		position: relative;
+	}
+
+	i {
+		font-style: normal;
+	}
+
+	a {
+		color: #006aeb;
+		text-decoration: none;
+	}
+
+	a:active,
+	a:hover {
+		text-decoration: underline;
+	}
+
+	td {
+		vertical-align: middle;
+	}
+
+	small {
+		color: gray;
+	}
+
+	.number {
+		text-align: right;
+		width: 50px;
+	}
+
+	.bar {
+		border: 1px solid #acacac;
+		background: #e50400;
+		width: 35px;
+		height: 1em;
+	}
+
+	.bar-empty {
+		border: 1px solid transparent;
+		background: transparent;
+		width: 35px;
+		height: 1em;
+	}
+
+	.bar div {
+		background: #1a7e1e;
+		height: 1em;
+	}
+
+	.light td {
+		opacity: .5;
+	}
+
+	.light td * {
+		color: gray;
+	}
+
+	.not-loaded td * {
+		color: red;
+	}
+
+	.t { background-color: #e0ffe0; }
+	.u { background-color: #ffe0e0; }
+
+	code .hc { color: #929292; }
+	code .hd { color: #333; }
+	code .hh { color: #06B; }
+	code .hk { color: #e71818; }
+	code .hs { color: #008000; }
+
+	.tabs {
+		margin-bottom: 1.5em;
+	}
+
+	.tabs a {
+		padding: .5em 1.5em;
+		display: inline-block;
+		font-size: 17px;
+	}
+
+	.tabs a.active,
+	.tabs a:focus,
+	.tabs a:hover {
+		background-color: #fcfaf5;
+		text-decoration: none;
+	}
+
+	.directory {
+		display: none;
+		margin-left: 1.5rem;
+	}
+
+	.directory.opened {
+		display: block;
+	}
+
+	.toggle-dir {
+		color: brown;
+	}
+
+	.toggle-dir:before {
+		content: '▼ ';
+	}
+
+	.toggle-dir.opened:before {
+		content: '▲ ';
+	}
+
+	.sort .up, .sort .no-sort, .sort .down {
+		display: inline-block;
+		padding-left: 5px;
+		color: #c9302c
+	}
+
+	.sort .no-sort {
+		color: #ccc
+	}
+
+	.sort .up, .sort .down, .sort .no-sort,
+	.sort.desc:hover .up, .sort.desc:hover .down,
+	.sort.asc .no-sort, .sort.down .no-sort, .sort.asc:hover .up, .sort:hover .no-sort {
+		display: none
+	}
+
+	.sort:hover .up, .sort.asc .up,
+	.sort.desc:hover .no-sort,
+	.sort.asc:hover .down, .sort.desc .down {
+		display: inline-block
+	}
+	</style>
+</head>
+
+<body>
+
+<?php
+
+function assignArrayByPath(array &$arr, stdClass $info, string $value): void
+{
+	$keys = explode(DIRECTORY_SEPARATOR, $info->name);
+
+	$currentFile = '';
+	foreach ($keys as $key) {
+		$currentFile = $currentFile . ($currentFile !== '' ? DIRECTORY_SEPARATOR : '') . $key;
+		$arr = &$arr['files'][$key];
+
+		if (!isset($arr['name'])) {
+			$arr['name'] = $currentFile;
+		}
+		$arr['count'] = isset($arr['count']) ? $arr['count'] + 1 : 1;
+		$arr['coverage'] = isset($arr['coverage']) ? $arr['coverage'] + $info->coverage : $info->coverage;
+	}
+	$arr = $value;
+}
+
+$jsonData = [];
+$directories = [];
+$allLinesCount = 0;
+foreach ($files as $id => $info) {
+	$code = file_get_contents($info->file);
+	$lineCount = substr_count($code, "\n") + 1;
+	$digits = ceil(log10($lineCount)) + 1;
+
+	$allLinesCount += $lineCount;
+
+	$currentId = "F{$id}";
+	assignArrayByPath($directories, $info, $currentId);
+
+	$data = (array) $info;
+	$data['digits'] = $digits;
+	$data['lineCount'] = $lineCount;
+	$data['content'] = strtr(highlight_string($code, true), [
+		'<code>' => "<code style='margin-left: {$digits}em'>",
+		'<span style="color: ' => '<i class="',
+		'</span>' => '</i>',
+		'<br />' => '<br>',
+	]);
+	$jsonData[$currentId] = $data;
+} ?>
+
+<h1>
+	<?= $title ? htmlspecialchars("$title - ") : ''; ?>Code coverage <?= round($coveredPercent) ?>&nbsp;%
+	<small>sources have <?= number_format($allLinesCount) ?> lines of code in <?= number_format(count($files)) ?> files</small>
+</h1>
+
+<nav class="tabs">
+	<a href="#list" class="tab-item active">List</a>
+	<a href="#tree" class="tab-item">Tree</a>
+</nav>
+
+<div class="tabs-content">
+	<div id="list" class="tab-content">
+		<table>
+			<tbody>
+			<tr>
+				<td class="number">
+					<a href="#" class="sort desc" data-sort="coverage"><span class="up">↓</span><span class="down">↑</span><span class="no-sort">&nbsp;</span>%</a>
+				</td>
+				<td>
+					<div class="bar-empty"></div>
+				</td>
+				<td>
+					<a href="#" class="sort" data-sort="path">path<span class="up">↓</span><span class="down">↑</span><span class="no-sort">&nbsp;</span></a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<div id="files-content"></div>
+	</div>
+	<div id="tree" class="tab-content" style="display: none"></div>
+</div>
+
+<footer>
+	<p>Generated by <a href="https://tester.nette.org">Nette Tester</a> at <?= @date('Y/m/d H:i:s') // @ timezone may not be set ?></p>
+</footer>
+
+<script>
+	(function() {
+		let _files = <?= json_encode($jsonData) ?>;
+		let _directories = <?= json_encode($directories) ?>;
+		let isFilesInitialized = false;
+		let isDirectoriesInitialized = false;
+
+		let sort = 'coverage';
+		let desc = true;
+		let classes = {
+			'1': 't', // tested
+			'-1': 'u', // untested
+			'-2': 'dead', // dead code
+		};
+
+		function getSortedKeys() {
+			switch (sort) {
+				case 'coverage':
+					let sortedFiles = [];
+					for (let i in _files) {
+						sortedFiles.push([i, _files[i].coverage]);
+					}
+
+					sortedFiles.sort(function(a, b) {
+						return desc ? (b[1] - a[1]) : (a[1] - b[1]);
+					});
+
+					let filesByCoverage = [];
+					for (let i = 0; i < sortedFiles.length; i++) {
+						filesByCoverage.push(sortedFiles[i][0]);
+					}
+					return filesByCoverage;
+
+				case 'path':
+					return sortAlphabetically(_files, desc);
+
+				default:
+					return Object.keys(_files).sort((a, b) => desc ? (b-a) : (a-b));
+			}
+		}
+
+		function sortAlphabetically(obj, isDesc) {
+			let sorted = [];
+			for (let i in obj) {
+				sorted.push([i, obj[i].name]);
+			}
+
+			sorted.sort(function(a, b) {
+				let compared = a[1].localeCompare(b[1]);
+				return compared === -1 ? (isDesc ? 1 : -1) : (compared === 1 ? (isDesc ? -1 : 1) : 0);
+			});
+
+			let out = [];
+			for (let i = 0; i < sorted.length; i++) {
+				out.push(sorted[i][0]);
+			}
+			return out;
+		}
+
+		function initDirectories() {
+			if (isDirectoriesInitialized) {
+				return;
+			}
+			let el = document.getElementById('tree');
+			el.innerHTML = createDirectory(_directories.files);
+			isDirectoriesInitialized = true;
+		}
+
+		function createDirectory(directory) {
+			let out = '';
+			Object.keys(directory).sort(function(a, b) {
+				let aIsFile = a.endsWith('.php');
+				let bIsFile = b.endsWith('.php');
+				if ((aIsFile || bIsFile) && !(aIsFile && bIsFile)) {
+					return aIsFile ? 1 : -1;
+				}
+				let compared = a.localeCompare(b);
+				return compared === -1 ? -1 : (compared === 1 ? 1 : 0);
+			}).forEach(function(i) {
+				let dir = directory[i];
+				let id, coverage;
+				let isFile = typeof dir === 'string';
+				if (isFile) {
+					id = dir;
+					dir = _files[dir];
+					coverage = dir.coverage;
+				} else {
+					id = null;
+					coverage = dir.count === 0 ? 0 : Math.round(dir.coverage / dir.count);
+				}
+
+				let html = createFileInfo(isFile ? ('D' + id) : dir.name, {
+					coverage: coverage,
+					name: isFile ? i : (i + ' <small>(' + dir.count + ')</small>'),
+					class: isFile ? dir.class : 'dir',
+				}, isFile ? 'toggle' : 'toggle-dir');
+
+				if (isFile) {
+					html += '<div class="code" id="D' + id + '"></div>';
+				} else {
+					html += '<div class="directory" id="' + dir.name + '">' + createDirectory(dir.files) + '</div>';
+				}
+
+				out += '<div>' + html + '</div>';
+			});
+			return out;
+		}
+
+		function initFiles(force) {
+			if (!force && isFilesInitialized) {
+				return;
+			}
+			let filesEl = document.getElementById('files-content');
+			filesEl.innerHTML = '';
+
+			getSortedKeys().forEach(function(i) {
+				let file = _files[i];
+				let html = createFileInfo(i, file);
+
+				html += '<div class="code" id="' + i + '"></div>';
+
+				let wrapper = document.createElement('div');
+				wrapper.innerHTML = html;
+				filesEl.appendChild(wrapper);
+			});
+			isFilesInitialized = true;
+		}
+
+		function createFileInfo(id, file, toggleClass) {
+			toggleClass = toggleClass || 'toggle';
+			return '<table>' +
+				'<tbody><tr' + (file.class ? (' class="' + file.class + '"') : '') + '>' +
+				'<td class="number"><small>' + file.coverage + ' %</small></td>' +
+				'<td><div class="bar"><div style="width: ' + file.coverage + '%"></div></div></td>' +
+				'<td><a href="#' + id + '" class="' + toggleClass + '">' + file.name + '</a></td>' +
+				'</tr>' +
+				'</tbody></table>';
+		}
+
+		function initFileContent(el) {
+			if (el.hasAttribute('data-initialized')) {
+				return;
+			}
+
+			let id = el.getAttribute('id');
+			id = id.startsWith('D') ? id.split('D')[1] : id;
+			let file = _files[id];
+			if (!file) {
+				return;
+			}
+
+			let aside = '';
+			let prevClass = null;
+			let closeTag = '', buffer = '';
+			for (let i = 1; i < file.lineCount; i++) {
+				let currentClass = file.lines[i] && classes[file.lines[i]] ? classes[file.lines[i]] : '';
+				if (currentClass !== prevClass) {
+					aside += (buffer + closeTag);
+					buffer = '';
+					closeTag = '</div>';
+					aside += '<div' + (currentClass ? (' class="' + currentClass + '"') : '') + '>';
+				}
+
+				let currentId = id + 'L' + i;
+				buffer += '<a href="#' + currentId + '" id="' + currentId + '">' + '&nbsp;'.repeat(file.digits - String(i).length) + i + "</a>";
+				prevClass = currentClass;
+			}
+			aside += buffer + closeTag;
+
+			el.innerHTML = '<div><aside>' + aside + '</aside>' + (file ? file.content : 'ERROR: Not available') + '</div>';
+
+			el.setAttribute('data-initialized', 'true');
+		}
+
+		function addClickListener(className, callback) {
+			document.body.addEventListener('click', function (e) {
+				let isParent = e.target.parentNode && e.target.parentNode.classList.contains(className);
+				if (isParent || e.target.classList.contains(className)) {
+					callback.apply(isParent ? e.target.parentNode : e.target, [e]);
+				}
+			});
+		}
+
+		addClickListener('sort', function(e) {
+			e.preventDefault();
+			sort = this.getAttribute('data-sort');
+
+			let sortItems = document.getElementsByClassName('sort');
+			for (let i = 0; i < sortItems.length; i++) {
+				if (sortItems[i] === this) {
+					continue;
+				}
+				sortItems[i].classList.remove('asc');
+				sortItems[i].classList.remove('desc');
+			}
+
+			desc = false;
+			if (this.classList.contains('asc')) {
+				desc = true;
+				this.classList.remove('asc');
+				this.classList.add('desc');
+			} else {
+				this.classList.remove('desc');
+				this.classList.add('asc');
+			}
+
+			initFiles(true);
+		});
+
+		addClickListener('toggle', function(e) {
+			e.preventDefault();
+			let el = document.getElementById(this.href.split('#')[1]);
+			if (el.style.display === 'block') {
+				el.style.display = 'none';
+			} else {
+				initFileContent(el);
+				el.style.display = 'block';
+			}
+		});
+
+		addClickListener('toggle-dir', function(e) {
+			e.preventDefault();
+			let el = document.getElementById(this.href.split('#')[1]);
+			if (el.classList.contains('opened')) {
+				this.classList.remove('opened');
+				el.classList.remove('opened');
+			} else {
+				this.classList.add('opened');
+				el.classList.add('opened');
+			}
+		});
+
+		addClickListener('tab-item', function(e) {
+			e.preventDefault();
+			let tabs = document.getElementsByClassName('tab-content');
+			for (let i = 0; i < tabs.length; i++) {
+				tabs[i].style.display = 'none';
+			}
+			let tabItems = document.getElementsByClassName('tab-item');
+			for (let i = 0; i < tabItems.length; i++) {
+				tabItems[i].classList.remove('active');
+			}
+			this.classList.add('active');
+
+			let id = this.href.split('#')[1];
+			if (id === 'files') {
+				initFiles();
+			} else {
+				initDirectories();
+			}
+
+			let el = document.getElementById(id);
+			if (el.style.display === 'block') {
+				el.style.display = 'none';
+			} else {
+				el.style.display = 'block';
+			}
+		});
+
+		document.addEventListener("DOMContentLoaded", function(event) {
+			initFiles(true);
+
+			let el = document.getElementById(window.location.hash.replace(/^#|L\d+$/g, ''));
+			if (el) {
+				initFileContent(el);
+				el.style.display = 'block';
+			}
+		});
+	})();
+</script>
+</body>
+</html>

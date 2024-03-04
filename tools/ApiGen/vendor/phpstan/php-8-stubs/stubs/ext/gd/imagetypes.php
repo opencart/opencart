@@ -1,0 +1,5 @@
+<?php 
+
+function imagetypes() : int
+{
+}

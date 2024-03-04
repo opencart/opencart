@@ -1,0 +1,50 @@
+name: PhpStorm Stubs Tests
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  general:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+    name: Run tests against php ${{matrix.php}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build Docker Container
+        run: docker-compose -f docker-compose.yml build >/dev/null
+        env:
+          PHP_VERSION: ${{matrix.php}}
+
+      - name: Composer Install
+        run: docker-compose -f docker-compose.yml run -e PHP_VERSION=${{matrix.php}} test_runner composer update
+        env:
+          PHP_VERSION: ${{matrix.php}}
+
+      - name: Dump Reflection To File
+        run: docker-compose -f docker-compose.yml run -e PHP_VERSION=${{matrix.php}} php_under_test /usr/local/bin/php tests/Tools/dump-reflection-to-file.php ReflectionData.json
+        env:
+          PHP_VERSION: ${{matrix.php}}
+
+      - name: Run Tests
+        run: docker-compose -f docker-compose.yml run -e PHP_VERSION=${{matrix.php}} test_runner vendor/bin/phpunit --testsuite PHP_${{matrix.php}}
+        env:
+          PHP_VERSION: ${{matrix.php}}
+  additional:
+    runs-on: ubuntu-latest
+    name: Run cs-fixer and stubs structure tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Composer Install
+        run: docker-compose -f docker-compose.yml run test_runner composer install
+
+      - name: Test Stubs Map, Structure and Reflection
+        run: docker-compose -f docker-compose.yml run test_runner vendor/bin/phpunit --testsuite Structure
+
+      - name: run cs fixer
+        run: docker-compose -f docker-compose.yml run test_runner composer cs

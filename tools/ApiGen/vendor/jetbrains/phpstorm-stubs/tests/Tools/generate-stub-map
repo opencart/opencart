@@ -1,0 +1,289 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+namespace JetBrains\PHPStormStub;
+
+use DirectoryIterator;
+use Exception;
+use PhpParser\Node;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\NameResolver;
+use PhpParser\NodeVisitorAbstract;
+use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter\Standard;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+use SplFileInfo;
+use function array_map;
+use function count;
+use function file_get_contents;
+use function file_put_contents;
+use function in_array;
+use function ksort;
+use function preg_match;
+use function sprintf;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strtolower;
+use function substr;
+use function var_export;
+use const PHP_EOL;
+
+(function (): void {
+    require __DIR__ . '/../../vendor/autoload.php';
+
+    $mapFile = $GLOBALS['argv'][1] ?? __DIR__ . '/../../PhpStormStubsMap.php';
+
+    class InvalidConstantNode extends RuntimeException
+    {
+        public static function create(Node $node): self
+        {
+            return new self(sprintf(
+                'Invalid constant node (first 50 characters: %s)',
+                substr((new Standard())->prettyPrint([$node]), 0, 50)
+            ));
+        }
+    }
+
+    class InvalidFileLocation extends RuntimeException
+    {
+    }
+
+    /**
+     * @throws InvalidFileLocation
+     */
+    function assertReadableFile(string $filename): void
+    {
+        if (empty($filename)) {
+            throw new InvalidFileLocation('Filename was empty');
+        }
+        if (!file_exists($filename)) {
+            throw new InvalidFileLocation(sprintf('File "%s" does not exist', $filename));
+        }
+        if (!is_readable($filename)) {
+            throw new InvalidFileLocation(sprintf('File "%s" is not readable', $filename));
+        }
+        if (!is_file($filename)) {
+            throw new InvalidFileLocation(sprintf('"%s" is not a file', $filename));
+        }
+    }
+
+    /**
+     * @throws InvalidConstantNode
+     */
+    function assertValidDefineFunctionCall(Node\Expr\FuncCall $node): void
+    {
+        if (!($node->name instanceof Node\Name)) {
+            throw InvalidConstantNode::create($node);
+        }
+        if ($node->name->toLowerString() !== 'define') {
+            throw InvalidConstantNode::create($node);
+        }
+        if (!in_array(count($node->args), [2, 3], true)) {
+            throw InvalidConstantNode::create($node);
+        }
+        if (!($node->args[0]->value instanceof Node\Scalar\String_)) {
+            throw InvalidConstantNode::create($node);
+        }
+        $valueNode = $node->args[1]->value;
+        if ($valueNode instanceof Node\Expr\Variable) {
+            throw InvalidConstantNode::create($node);
+        }
+    }
+
+    $phpStormStubsDirectory = __DIR__ . '/../../';
+
+    $fileVisitor = new class() extends NodeVisitorAbstract {
+        /** @var string[] */
+        private $classNames = [];
+
+        /** @var string[] */
+        private $functionNames = [];
+
+        /** @var string[] */
+        private $constantNames = [];
+
+        /**
+         * {@inheritdoc}
+         */
+        public function enterNode(Node $node): ?int
+        {
+            if ($node instanceof Node\Stmt\ClassLike) {
+                if ($node->getDocComment() !== null && strpos($node->getDocComment()->getText(), '@internal') !== false) {
+                    return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+                }
+
+                $this->classNames[] = $node->namespacedName->toString();
+
+                return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+            }
+
+            if ($node instanceof Node\Stmt\Function_) {
+                $this->functionNames[] = $node->namespacedName->toString();
+
+                return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+            }
+
+            if ($node instanceof Node\Const_) {
+                $this->constantNames[] = $node->namespacedName->toString();
+
+                return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+            }
+
+            if ($node instanceof Node\Expr\FuncCall) {
+                try {
+                    assertValidDefineFunctionCall($node);
+                } catch (InvalidConstantNode $e) {
+                    return null;
+                }
+
+                /** @var Node\Scalar\String_ $nameNode */
+                $nameNode = $node->args[0]->value;
+
+                if (count($node->args) === 3
+                    && $node->args[2]->value instanceof Node\Expr\ConstFetch
+                    && $node->args[2]->value->name->toLowerString() === 'true'
+                ) {
+                    $this->constantNames[] = strtolower($nameNode->value);
+                }
+
+                $this->constantNames[] = $nameNode->value;
+
+                return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+            }
+
+            return null;
+        }
+
+        /**
+         * @return string[]
+         */
+        public function getClassNames(): array
+        {
+            return $this->classNames;
+        }
+
+        /**
+         * @return string[]
+         */
+        public function getFunctionNames(): array
+        {
+            return $this->functionNames;
+        }
+
+        /**
+         * @return string[]
+         */
+        public function getConstantNames(): array
+        {
+            return $this->constantNames;
+        }
+
+        public function clear(): void
+        {
+            $this->classNames = [];
+            $this->functionNames = [];
+            $this->constantNames = [];
+        }
+    };
+
+    $phpParser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+
+    $nodeTraverser = new NodeTraverser();
+    $nodeTraverser->addVisitor(new NameResolver());
+    $nodeTraverser->addVisitor($fileVisitor);
+
+    $map = ['classes' => [], 'functions' => [], 'constants' => []];
+
+    foreach (new DirectoryIterator($phpStormStubsDirectory) as $directoryInfo) {
+        /** @var DirectoryIterator $directoryInfo */
+        if ($directoryInfo->isDot()) {
+            continue;
+        }
+
+        if (!$directoryInfo->isDir()) {
+            continue;
+        }
+
+        if (in_array($directoryInfo->getBasename(), ['tests', 'meta', 'vendor', 'couchbase_v2'], true)) {
+            continue;
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directoryInfo->getPathName(), RecursiveDirectoryIterator::SKIP_DOTS)
+        );
+
+        /** @var SplFileInfo $fileInfo */
+        foreach ($iterator as $fileInfo) {
+            if (!preg_match('/\.php$/', $fileInfo->getBasename())) {
+                continue;
+            }
+
+            assertReadableFile($fileInfo->getPathname());
+
+            echo sprintf('Parsing "%s"', $fileInfo->getPathname()) . PHP_EOL;
+
+            $ast = $phpParser->parse(file_get_contents($fileInfo->getPathname()));
+
+            $nodeTraverser->traverse($ast);
+
+            foreach ($fileVisitor->getClassNames() as $className) {
+                $map['classes'][$className] = $fileInfo->getPathname();
+            }
+
+            foreach ($fileVisitor->getFunctionNames() as $functionName) {
+                $map['functions'][$functionName] = $fileInfo->getPathname();
+            }
+
+            foreach ($fileVisitor->getConstantNames() as $constantName) {
+                $map['constants'][$constantName] = $fileInfo->getPathname();
+            }
+
+            $fileVisitor->clear();
+        }
+    }
+
+    $mapWithRelativeFilePaths = array_map(static function (array $files) use ($phpStormStubsDirectory): array {
+        ksort($files);
+
+        return array_map(static function (string $filePath) use ($phpStormStubsDirectory): string {
+            return str_replace('\\', '/', substr($filePath, strlen($phpStormStubsDirectory)));
+        }, $files);
+    }, $map);
+
+    $exportedClasses = var_export($mapWithRelativeFilePaths['classes'], true);
+    $exportedFunctions = var_export($mapWithRelativeFilePaths['functions'], true);
+    $exportedConstants = var_export($mapWithRelativeFilePaths['constants'], true);
+
+    $output = <<<"PHP"
+<?php
+
+declare(strict_types=1);
+
+namespace JetBrains\PHPStormStub;
+
+/**
+ * This is a generated file, do not modify it directly!
+ */
+final class PhpStormStubsMap
+{
+const CLASSES = {$exportedClasses};
+
+const FUNCTIONS = {$exportedFunctions};
+
+const CONSTANTS = {$exportedConstants};
+}
+PHP;
+
+    $bytesWritten = @file_put_contents($mapFile, $output, LOCK_EX);
+
+    if ($bytesWritten === false) {
+        throw new Exception(sprintf('File "%s" is not writeable.', $mapFile));
+    }
+
+    exit('Done' . PHP_EOL);
+})();

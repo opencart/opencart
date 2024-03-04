@@ -1,0 +1,98 @@
+<?php
+declare(strict_types=1);
+
+namespace Latte\Bridges\Tracy;
+
+use Latte\Runtime\Template;
+use Tracy\Dumper;
+use Tracy\Helpers;
+
+$colors = [
+	'include' => '#00000052',
+	'extends' => '#cd1c1c7d',
+	'import' => '#17c35b8f',
+	'includeblock' => '#17c35b8f',
+	'embed' => '#4f1ccd7d',
+	'sandbox' => 'black',
+];
+
+?>
+
+<style class="tracy-debug">
+	#tracy-debug .LattePanel td {
+		white-space: nowrap;
+	}
+
+	#tracy-debug .LattePanel-php {
+		background: #8993be;
+		color: white;
+		border-radius: 79px;
+		padding: 1px 4px 3px 4px;
+		font-size: 75%;
+		font-style: italic;
+		font-weight: bold;
+		vertical-align: text-top;
+		opacity: .5;
+		margin-left: 2ex;
+	}
+
+	#tracy-debug .LattePanel-type {
+		border-radius: 2px;
+		padding: 2px 4px;
+		font-size: 80%;
+		color: white;
+		font-weight: bold;
+	}
+
+	#tracy-debug .LattePanel-include {
+		background: #00000052;
+	}
+
+	#tracy-debug .LattePanel-extends {
+		background: #cd1c1c7d;
+	}
+
+	#tracy-debug .LattePanel-import,
+	#tracy-debug .LattePanel-includeblock {
+		background: #17c35b8f;
+	}
+
+	#tracy-debug .LattePanel-embed {
+		background: #4f1ccd7d;
+	}
+
+	#tracy-debug .LattePanel-sandbox {
+		background: black;
+	}
+</style>
+
+<h1>Rendered Templates</h1>
+
+<div class="tracy-inner LattePanel">
+	<table>
+		<?php foreach ($list as $item): ?>
+			<tr>
+				<td>
+					<?php if ($item->template->getReferenceType()): ?>
+						<span style="margin-left: <?= $item->depth * 4 ?>ex"></span>└ 
+						<span class="LattePanel-type" style="background: <?= $colors[$item->template->getReferenceType()] ?>"><?= Helpers::escapeHtml($item->template->getReferenceType()) ?></span>
+					<?php endif ?>
+
+					<?= Helpers::editorLink($item->template->getName()) ?>
+
+					<a href="<?= Helpers::escapeHtml(Helpers::editorUri($item->phpFile)) ?>" class="LattePanel-php">php</a>
+				</td>
+
+				<td><?= $item->count > 1 ? $item->count . '×' : '' ?></td>
+			</tr>
+		<?php endforeach ?>
+	</table>
+
+	<?php if ($dumpParameters): ?>
+	<h2>Parameters</h2>
+
+	<div class="tracy-inner">
+		<?= Dumper::toHtml(reset($list)->template->getParameters(), [Dumper::LIVE => true]); ?>
+	</div>
+	<?php endif ?>
+</div>

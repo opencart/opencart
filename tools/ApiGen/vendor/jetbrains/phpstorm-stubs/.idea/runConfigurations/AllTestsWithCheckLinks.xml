@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AllTestsWithCheckLinks" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <CommandLine workingDirectory="$PROJECT_DIR$">
+      <envs>
+        <env name="CHECK_LINKS" value="true" />
+      </envs>
+    </CommandLine>
+    <TestRunner class="StubTests\BaseStubsTest" directory="$PROJECT_DIR$/tests" scope="Pattern">
+      <test_patterns>
+        <composite_test_pattern class_fqn="StubTests\StubsTypeHintsTest" file_path="$PROJECT_DIR$/tests/StubsTypeHintsTest.php" />
+        <composite_test_pattern class_fqn="StubTests\StubsParameterNamesTest" file_path="$PROJECT_DIR$/tests/StubsParameterNamesTest.php" />
+        <composite_test_pattern class_fqn="StubTests\StubsMetaInternalTagTest" file_path="$PROJECT_DIR$/tests/StubsMetaInternalTagTest.php" />
+        <composite_test_pattern class_fqn="StubTests\StubsMetaExpectedArgumentsTest" file_path="$PROJECT_DIR$/tests/StubsMetaExpectedArgumentsTest.php" />
+        <composite_test_pattern class_fqn="StubTests\StubsPhpDocTest" file_path="$PROJECT_DIR$/tests/StubsPhpDocTest.php" />
+        <composite_test_pattern class_fqn="StubTests\StubsTest" file_path="$PROJECT_DIR$/tests/StubsTest.php" />
+      </test_patterns>
+    </TestRunner>
+    <method v="2" />
+  </configuration>
+</component>

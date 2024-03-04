@@ -1,0 +1,24 @@
+# Datasource local storage ignored files
+.idea/dataSources
+dataSources.local.xml
+
+# Editor-based HTTP Client requests
+http-client.private.env.json
+.idea/httpRequests
+rest-client.private.env.json
+
+# Default ignored files
+.idea/workspace.xml
+.idea/shelf
+
+# PHPUnit
+phpunit.xml
+
+# Composer
+vendor
+composer.lock
+
+.php_cs.cache
+.phpunit.result.cache
+
+ReflectionData.json

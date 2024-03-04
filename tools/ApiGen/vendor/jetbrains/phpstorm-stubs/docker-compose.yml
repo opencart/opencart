@@ -1,0 +1,14 @@
+version: '3'
+services:
+  php_under_test:
+    build: tests/DockerImages/${PHP_VERSION}
+    volumes:
+      - .:/opt/project/phpstorm-stubs
+  test_runner:
+    build: tests/DockerImages/testRunner
+    volumes:
+      - .:/opt/project/phpstorm-stubs
+  pecl_extensions:
+    build: tests/DockerImages/peclExtensions
+    volumes:
+      - .:/opt/project/phpstorm-stubs

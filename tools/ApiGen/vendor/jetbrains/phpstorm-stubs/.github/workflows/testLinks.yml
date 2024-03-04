@@ -1,0 +1,28 @@
+name: PhpStorm Stubs Check Links
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Composer Install
+        run: docker-compose -f docker-compose.yml run test_runner composer install
+        env:
+          PHP_VERSION: '8.0'
+
+      - name: Build Docker Container
+        run: docker-compose -f docker-compose.yml build >/dev/null
+        env:
+          PHP_VERSION: '8.0'
+
+      - name: Run Tests
+        run: docker-compose -f docker-compose.yml run -e CHECK_LINKS=true test_runner vendor/bin/phpunit --testsuite PhpDoc
+        env:
+          PHP_VERSION: '8.0'

@@ -1,0 +1,26 @@
+{
+	"name": "nette/finder",
+	"description": "🔍 Nette Finder: find files and directories with an intuitive API.",
+	"keywords": ["nette", "filesystem", "iterator", "glob"],
+	"homepage": "https://nette.org",
+	"license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
+	"authors": [
+		{
+			"name": "David Grudl",
+			"homepage": "https://davidgrudl.com"
+		},
+		{
+			"name": "Nette Community",
+			"homepage": "https://nette.org/contributors"
+		}
+	],
+	"require": {
+		"nette/utils": "^4.0"
+	},
+	"minimum-stability": "dev",
+	"extra": {
+		"branch-alias": {
+			"dev-master": "3.0-dev"
+		}
+	}
+}

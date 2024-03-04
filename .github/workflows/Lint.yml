@@ -50,6 +50,9 @@ jobs:
           key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ matrix.php }}-
 
+      - name: Check dependencies
+        run: composer install
+
       - name: PHPStan
         run: php tools/phpstan.phar analyze --no-progress
 

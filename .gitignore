@@ -44,3 +44,5 @@
 /.DS_Store
 /.cache
 /.php-cs-fixer.cache
+/tools/phpstan
+/tools/php-cs-fixer

@@ -2,4 +2,4 @@
 
 $directory = chdir(__DIR__ . '/..');
 
-passthru('php tools/ApiGen/bin/apigen --working-dir "upload/system/storage"');
+passthru('php tools/apigen.phar --working-dir "upload/system/storage"');

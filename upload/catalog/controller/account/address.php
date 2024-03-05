@@ -391,7 +391,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			// Edit Address
 			if (isset($this->request->get['address_id'])) {
-				$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
+				$this->model_account_address->editAddress($this->customer->getId(), $this->request->get['address_id'], $this->request->post);
 
 				// If address is in session update it.
 				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == $this->request->get['address_id'])) {

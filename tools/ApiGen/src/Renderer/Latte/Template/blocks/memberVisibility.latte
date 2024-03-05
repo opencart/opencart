@@ -1,7 +1,0 @@
-{varType ApiGen\Index\Index $index}
-{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
-{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
-
-{define memberVisibility, ApiGen\Info\MemberInfo $member}
-	{if $member->protected}protected{elseif $member->private}private{else}public{/if}
-{/define}

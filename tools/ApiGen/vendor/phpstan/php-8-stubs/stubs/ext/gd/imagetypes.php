@@ -1,5 +1,0 @@
-<?php 
-
-function imagetypes() : int
-{
-}

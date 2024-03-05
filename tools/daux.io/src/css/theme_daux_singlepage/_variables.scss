@@ -1,0 +1,46 @@
+:root {
+    --font-family-text: -apple-system, ".SFNSText-Regular", "San Francisco",
+        "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial,
+        sans-serif;
+    --font-family-monospace: Monaco, Menlo, Consolas, "Lucida Console",
+        "Courier New", monospace;
+    --font-family-heading: var(--font-family-text);
+
+    --color-info: #00b8d4;
+    --color-warning: #ff9100;
+    --color-danger: #f50057;
+
+    --admonition-border-radius: 4px;
+    --admonition-border-color: #9e9e9e;
+    --admonition-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+    --admonition-bg-color: color-mod(
+        var(--admonition-border-color) lightness(98%)
+    );
+    --admonition-title-bg-color: #efefef;
+
+    --admonition-info-border-color: var(--color-info);
+    --admonition-info-background: color-mod(var(--color-info) lightness(95%));
+    --admonition-info-title-background: color-mod(
+        var(--color-info) lightness(85%)
+    );
+
+    --admonition-warning-border-color: var(--color-warning);
+    --admonition-warning-background: color-mod(
+        var(--color-warning) lightness(95%)
+    );
+    --admonition-warning-title-background: color-mod(
+        var(--color-warning) lightness(85%)
+    );
+
+    --admonition-danger-border-color: var(--color-danger);
+    --admonition-danger-background: color-mod(
+        var(--color-danger) lightness(95%)
+    );
+    --admonition-danger-title-background: color-mod(
+        var(--color-danger) lightness(85%)
+    );
+
+    --details-bg-color: #efefef;
+    --details-border-radius: 0.5rem;
+    --details-padding: 0.6rem;
+}

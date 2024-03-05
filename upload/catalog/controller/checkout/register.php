@@ -506,7 +506,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				// Edit
 				if ($this->customer->isLogged() && $payment_address_data['address_id']) {
-					$this->model_account_address->editAddress($payment_address_data['address_id'], $payment_address_data);
+					$this->model_account_address->editAddress($this->customer->getId(), $payment_address_data['address_id'], $payment_address_data);
 				}
 
 				// Requires Approval
@@ -587,7 +587,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 					// Edit
 					if ($this->customer->isLogged() && $shipping_address_data['address_id']) {
-						$this->model_account_address->editAddress($shipping_address_data['address_id'], $shipping_address_data);
+						$this->model_account_address->editAddress($this->customer->getId(), $shipping_address_data['address_id'], $shipping_address_data);
 					}
 
 					// Requires Approval

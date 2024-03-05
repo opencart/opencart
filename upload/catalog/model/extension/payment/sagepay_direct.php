@@ -188,14 +188,15 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 
 	private function setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $recurring_name, $i = null) {
 		if ($this->config->get('payment_sagepay_direct_test') == 'live') {
-			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
-			$payment_data['VPSProtocol'] = '3.00';
+//			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
+			$url = 'https://live.opayo.eu.elavon.com/gateway/service/repeat.vsp';
+//			$payment_data['VPSProtocol'] = '3.00';
+			$payment_data['VPSProtocol'] = '4.00';
 		} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
-			$url = 'https://test.sagepay.com/gateway/service/repeat.vsp';
-			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
-			$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRepeatTx';
-			$payment_data['VPSProtocol'] = '2.23';
+//			$url = 'https://test.sagepay.com/gateway/service/repeat.vsp';
+			$url = 'https://sandbox.opayo.eu.elavon.com/gateway/service/repeat.vsp';
+//			$payment_data['VPSProtocol'] = '3.00';
+			$payment_data['VPSProtocol'] = '4.00';
 		}
 
 		$payment_data['TxType'] = 'REPEAT';

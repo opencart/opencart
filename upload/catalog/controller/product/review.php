@@ -97,11 +97,11 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
-		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 25)) {
+		if (!oc_validate_length($this->request->post['author'], 3, 25)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if ((oc_strlen($this->request->post['text']) < 25) || (oc_strlen($this->request->post['text']) > 1000)) {
+		if (!oc_validate_length($this->request->post['text'], 25, 1000)) {
 			$json['error']['text'] = $this->language->get('error_text');
 		}
 

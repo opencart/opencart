@@ -119,7 +119,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((oc_strlen($this->request->post['name']) < 3) || (oc_strlen($this->request->post['name']) > 32)) {
+		if (!oc_validate_length($this->request->post['name'], 3, 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
@@ -127,7 +127,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ((oc_strlen($this->request->post['enquiry']) < 10) || (oc_strlen($this->request->post['enquiry']) > 3000)) {
+		if (!oc_validate_length($this->request->post['enquiry'], 10, 3000)) {
 			$json['error']['enquiry'] = $this->language->get('error_enquiry');
 		}
 

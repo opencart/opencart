@@ -38,11 +38,6 @@
             <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
               <select name="payment_sagepay_direct_test" id="input-test" class="form-control">
-                {% if payment_sagepay_direct_test == 'sim' %}
-                <option value="sim" selected="selected">{{ text_sim }}</option>
-                {% else %}
-                <option value="sim">{{ text_sim }}</option>
-                {% endif %}
                 {% if payment_sagepay_direct_test == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}

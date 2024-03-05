@@ -12,7 +12,7 @@ $directory = realpath(__DIR__ . '/../') . '/';
 
 $url = $protocol . $_SERVER['HTTP_HOST'] . substr($directory, strlen($_SERVER['DOCUMENT_ROOT']));
 
-$command  = 'php ' . $directory . 'tools/ApiGen/bin/apigen';
+$command  = 'php ' . $directory . 'tools/apigen.phar';
 $command .= ' --title "OpenCart API"';
 $command .= ' --include *.php';
 $command .= ' --exclude ' . $directory . 'upload/system/storage/vendor/*';

@@ -1,0 +1,50 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: Setup PHP
+      uses: shivammathur/setup-php@2.30.0
+      with:
+        php-version: 8.1
+        extensions: mbstring, dom, intl, iconv
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Generate documentation
+      run: bin/daux generate --value html.plausible_domain=daux.io
+    - name: Deploy same repository 🚀
+      uses: JamesIves/github-pages-deploy-action@v4.5.0
+      with:
+        folder: "static"
+        branch: gh-pages
+    - name: Deploy daux.io 🚀
+      uses: JamesIves/github-pages-deploy-action@v4.5.0
+      with:
+        folder: "static"
+        token: ${{ secrets.GH_TOKEN_DAUX }}
+        branch: master
+        repository-name: dauxio/dauxio.github.io
+
+  confluence:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: Setup PHP
+      uses: shivammathur/setup-php@2.30.0
+      with:
+        php-version: 8.1
+        extensions: mbstring, dom, intl
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Deploy 🚀
+      run: bin/daux generate -f confluence --value confluence.user=${{ secrets.CONFLUENCE_USERNAME }} --value confluence.pass=${{ secrets.CONFLUENCE_PASSWORD }}

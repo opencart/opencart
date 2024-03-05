@@ -659,7 +659,19 @@
 			<url><loc>http://localhost\opencart-master/docs/api/Opencart.System.Library.Template.Twig.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/Opencart.System.Library.Url.html</loc></url>
 
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_filter_keyword.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_bbcode_decode.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strlen.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strpos.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strrpos.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.substr.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strtoupper.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strtolower.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_length.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_email.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_ip.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_filename.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_url.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_seo_url.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-oc_strlen.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-oc_strpos.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-oc_strrpos.html</loc></url>
@@ -669,19 +681,7 @@
 			<url><loc>http://localhost\opencart-master/docs/api/function-oc_token.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-str_starts_with.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-str_ends_with.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_bbcode_decode.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_length.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_email.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_ip.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_filename.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_url.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-oc_validate_seo_url.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strlen.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strpos.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strrpos.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.substr.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strtoupper.html</loc></url>
-			<url><loc>http://localhost\opencart-master/docs/api/function-Opencart.System.Helper.Utf8.strtolower.html</loc></url>
+			<url><loc>http://localhost\opencart-master/docs/api/function-oc_filter_keyword.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-oc_db_create.html</loc></url>
 			<url><loc>http://localhost\opencart-master/docs/api/function-oc_db_schema.html</loc></url>
 

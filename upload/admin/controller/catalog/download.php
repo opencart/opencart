@@ -465,7 +465,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 
 			// Validate the filename length
-			if ((oc_strlen($filename) < 3) || (oc_strlen($filename) > 128)) {
+			if (!oc_validate_length($filename, 3, 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

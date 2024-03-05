@@ -249,7 +249,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
-			if ($country_info && $country_info['postcode_required'] && (oc_strlen($this->request->post['postcode']) < 2 || oc_strlen($this->request->post['postcode']) > 10)) {
+			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['postcode'], 2, 10)) {
 				$json['error']['address_postcode'] = $this->language->get('error_postcode');
 			}
 

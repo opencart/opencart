@@ -690,7 +690,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->config->get('config_telephone_required') && (oc_strlen($this->request->post['telephone']) < 3) || (oc_strlen($this->request->post['telephone']) > 32)) {
+		if ($this->config->get('config_telephone_required') && oc_validate_length($this->request->post['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -714,7 +714,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->post['customer_id']))) {
-			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 6) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), 6, 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

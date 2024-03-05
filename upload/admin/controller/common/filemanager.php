@@ -292,7 +292,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					$filename = preg_replace('/[\/\\\?%*:|"<>]/', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
-					if ((oc_strlen($filename) < 4) || (oc_strlen($filename) > 255)) {
+					if (!oc_validate_length($filename, 4, 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
@@ -385,7 +385,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$folder = preg_replace('/[\/\\\?%*&:|"<>]/', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
-			if ((oc_strlen($folder) < 3) || (oc_strlen($folder) > 128)) {
+			if (oc_validate_length($folder, 3, 128)) {
 				$json['error'] = $this->language->get('error_folder');
 			}
 

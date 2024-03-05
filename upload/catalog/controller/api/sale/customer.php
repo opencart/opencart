@@ -97,6 +97,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
+			$this->model_order
+
+
 			$json['success'] = $this->language->get('text_success');
 
 			unset($this->session->data['reward']);

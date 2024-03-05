@@ -96,7 +96,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((oc_strlen($this->request->post['username']) < 3) || (oc_strlen($this->request->post['username']) > 20)) {
+		if (!oc_validate_length($this->request->post['username'], 3, 20)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
@@ -127,7 +127,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password']) {
-			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 6) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), 6, 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

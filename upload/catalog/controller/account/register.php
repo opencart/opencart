@@ -144,7 +144,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
 			$json['redirect'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true);
 		}
-		
+
 		// Captcha first to prevent probing for registered emails
 		$this->load->model('setting/extension');
 

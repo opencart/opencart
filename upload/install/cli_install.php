@@ -243,7 +243,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if ((oc_strlen($option['username']) < 3) || (oc_strlen($option['username']) > 20)) {
+		if (!oc_validate_length($option['username'], 3, 20)) {
 			$error .= 'ERROR: Username must be between 3 and 20 characters!' . "\n";
 		}
 
@@ -253,9 +253,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 
 		// If not cloud then we validate the password
 		if ($option['db_password']) {
-			$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
-
-			if ((oc_strlen($password) < 5) || (oc_strlen($password) > 20)) {
+			if (!oc_validate_length(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), 5, 20)) {
 				$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
 			}
 		}

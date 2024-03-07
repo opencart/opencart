@@ -2479,6 +2479,10 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
+				'name' => 'store_id',
+				'type' => 'int(11)'
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
 			],
@@ -2489,6 +2493,7 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'customer_id',
+			'store_id',
 			'product_id'
 		],
 		'foreign' => [
@@ -2496,6 +2501,10 @@ function oc_db_schema() {
 				'key'   => 'customer_id',
 				'table' => 'customer',
 				'field' => 'customer_id'
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)'
 			],
 			[
 				'key'   => 'product_id',

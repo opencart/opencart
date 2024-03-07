@@ -538,6 +538,28 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Wishlist By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
+	public function deleteWishlistByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `store_id` = '" . (int)$store_id . "'");
+	}
+
+	/**
+	 * Delete Wishlist By Product ID
+	 *
+	 * @param int $product_id
+	 *
+	 * @return void
+	 */
+	public function deleteWishlistByProductId(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	/**
 	 * Add Transaction
 	 *
 	 * @param int    $customer_id

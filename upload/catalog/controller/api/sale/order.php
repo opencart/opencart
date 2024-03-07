@@ -6,7 +6,18 @@ namespace Opencart\Catalog\Controller\Api\Sale;
  * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Order extends \Opencart\System\Engine\Controller {
-	// Loads order info
+	function add() {
+
+	}
+
+	function edit() {
+
+
+
+	}
+
+
+
 	/**
 	 * Load
 	 *

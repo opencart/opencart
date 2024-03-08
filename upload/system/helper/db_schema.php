@@ -2503,8 +2503,9 @@ function oc_db_schema() {
 				'field' => 'customer_id'
 			],
 			[
-				'name' => 'store_id',
-				'type' => 'int(11)'
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
 			],
 			[
 				'key'   => 'product_id',

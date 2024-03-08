@@ -9,6 +9,10 @@
  * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
+use Closure;
+use Exception;
+use Opencart\System\Library\DB\Connection;
+
 /**
  * Class DB Adaptor
  *
@@ -39,7 +43,7 @@ class DB {
 		if (class_exists($class)) {
 			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $ssl_key, $ssl_cert, $ssl_ca);
 		} else {
-			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
+			throw new Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
 	}
 
@@ -97,4 +101,18 @@ class DB {
 	public function isConnected(): bool {
 		return $this->adaptor->isConnected();
 	}
+
+    /**
+     * @param Closure $callback
+     * @return mixed
+     * @throws Exception
+     */
+    public function transaction(Closure $callback)
+    {
+        if ($this->adaptor instanceof Connection) {
+            return $this->adaptor->transaction($callback);
+        }
+
+        throw new Exception('DB driver [' . get_class($this->adaptor) . '] has not transaction implementation');
+    }
 }

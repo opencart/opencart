@@ -1,15 +1,24 @@
 <?php
 namespace Opencart\System\Library\DB;
+
+use Closure;
+use Throwable;
+
 /**
  * Class MySQLi
  *
  * @package Opencart\System\Library\DB
  */
-class MySQLi {
+class MySQLi implements Connection {
 	/**
 	 * @var ?\mysqli
 	 */
 	private ?\mysqli $connection;
+
+    /**
+     * @var int
+     */
+    private int $transactions = 0;
 
 	/**
 	 * Constructor
@@ -67,6 +76,8 @@ class MySQLi {
 
 		try {
 			$this->connection = mysqli_init() ?: null;
+
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 			if ($temp_ssl_key_file || $temp_ssl_cert_file || $temp_ssl_ca_file) {
 				$this->connection->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
@@ -160,6 +171,72 @@ class MySQLi {
 	public function isConnected(): bool {
 		return $this->connection !== null;
 	}
+
+    /**
+     * @param Closure $callback
+     * @return mixed
+     * @throws Throwable
+     */
+    public function transaction(\Closure $callback)
+    {
+        $this->beginTransaction();
+
+        try {
+            $result = $callback($this);
+            $this->commit();
+
+            return $result;
+        } catch (Throwable $exception) {
+            $this->rollBack();
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function beginTransaction(): void
+    {
+        ++$this->transactions;
+
+        if ($this->transactions == 1) {
+            $this->connection->begin_transaction();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function commit(): void
+    {
+        if ($this->transactions == 1) {
+            $this->connection->commit();
+        }
+
+        --$this->transactions;
+    }
+
+    /**
+     * @return void
+     */
+    public function rollBack(): void
+    {
+        if ($this->transactions == 1) {
+            $this->transactions = 0;
+            $this->connection->rollback();
+        } else {
+            --$this->transactions;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function transactionLevel(): int
+    {
+        return $this->transactions;
+    }
 
 	/**
 	 * Destructor

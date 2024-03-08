@@ -6,11 +6,11 @@ namespace Opencart\Catalog\Controller\Api\Sale;
  * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Order extends \Opencart\System\Engine\Controller {
-	function add() {
+	function add(): void {
 
 	}
 
-	function edit() {
+	function edit(): void {
 
 
 

@@ -187,7 +187,7 @@ class MySQLi implements Connection {
 
             return $result;
         } catch (Throwable $exception) {
-            $this->rollBack();
+            $this->rollback();
 
             throw $exception;
         }

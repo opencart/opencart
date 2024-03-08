@@ -152,7 +152,7 @@ class PdoPgsql implements Connection {
 
             return $result;
         } catch (Throwable $exception) {
-            $this->rollBack();
+            $this->rollback();
 
             throw $exception;
         }

@@ -185,7 +185,7 @@ class PdoPgsql implements Connection {
     /**
      * @return void
      */
-    public function rollBack(): void
+    public function rollback(): void
     {
         if ($this->transactions == 1) {
             $this->transactions = 0;

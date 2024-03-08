@@ -9,6 +9,7 @@
  * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
+
 use Closure;
 use Exception;
 use Opencart\System\Library\DB\Connection;

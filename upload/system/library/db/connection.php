@@ -12,4 +12,18 @@ interface Connection
      * @return mixed
      */
     public function transaction(Closure $callback);
+
+    /**
+     * Commit the active db transaction
+     *
+     * @return void
+     */
+    public function commit(): void;
+
+    /**
+     * Rollback the active db transaction
+     *
+     * @return void
+     */
+    public function rollback(): void;
 }

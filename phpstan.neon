@@ -10,6 +10,7 @@ parameters:
     excludePaths:
         - ./system/storage/vendor/
         - ./upload/system/storage/vendor/
+        - ./upload/system/storage/cache/
     tmpDir: .cache
     ignoreErrors:
         - '#^Access to an undefined property Opencart\\System\\Engine\\Proxy<Opencart\\Catalog\\Model\\Checkout\\Cart>::\$getTotals\.$#'

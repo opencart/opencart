@@ -14,6 +14,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->session->data['order_id']) {
+			$order_id = $this->session->data['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
 		$keys = [
 			'customer_id',
 			'customer_group_id',
@@ -63,7 +69,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((oc_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!oc_validate_email($this->request->post['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
@@ -97,7 +103,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			if ($order_id)
+			if ($this->session->data['order_id']) {
 				$this->load->model('checkout/order');
 
 				$this->model_checkout_order->editOrder($order_id, $this->session->data['customer']);

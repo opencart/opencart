@@ -20,6 +20,10 @@ function oc_validate_length(string $string, int $minimum, int $maximum): bool {
  * @return bool
  */
 function oc_validate_email(string $email): bool {
+	if (oc_strlen($email) > 96) {
+	  return false;
+	}
+
 	if (oc_strrpos($email, '@') === false) {
 		return false;
 	}

@@ -197,9 +197,72 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->session->data['order_id']) {
+			$order_id = $this->session->data['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		$keys = [
+			'customer_id',
+			'customer_group_id',
+			'firstname',
+			'lastname',
+			'email',
+			'telephone',
+			'custom_field',
+
+			'payment_firstname',
+			'payment_lastname',
+			'payment_company',
+			'payment_address_1',
+			'payment_address_2',
+			'payment_postcode',
+			'payment_city',
+			'payment_zone_id',
+			'payment_country_id',
+
+			'payment_custom_field',
+
+			'shipping_firstname',
+			'shipping_lastname',
+			'shipping_company',
+			'shipping_address_1',
+			'shipping_address_2',
+			'shipping_postcode',
+			'shipping_city',
+			'shipping_zone_id',
+			'shipping_country_id'
+		];
+
+
+
 		if (!isset($this->request->post['order_id'])) {
 			$json['error'] = $this->language->get('error_order');
 		}
+
+		// Customer Details
+		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+			$json['error']['firstname'] = $this->language->get('error_firstname');
+		}
+
+		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+			$json['error']['lastname'] = $this->language->get('error_lastname');
+		}
+
+		if (!oc_validate_email($this->request->post['email'])) {
+			$json['error']['email'] = $this->language->get('error_email');
+		}
+
+		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+			$json['error']['telephone'] = $this->language->get('error_telephone');
+		}
+
+
+
+
+
+
 
 		if (!$json) {
 			$this->load->model('checkout/order');

@@ -21,18 +21,18 @@ function oc_validate_length(string $string, int $minimum, int $maximum): bool {
  */
 function oc_validate_email(string $email): bool {
 	if (oc_strlen($email) > 96) {
-	  return false;
+		return false;
 	}
 
 	if (oc_strrpos($email, '@') === false) {
 		return false;
 	}
 
-	$local = oc_substr($email, 0, oc_strrpos($email, '@'));
+	//$local = oc_substr($email, 0, oc_strrpos($email, '@'));
 
-	$domain = oc_substr($email, (oc_strrpos($email, '@') + 1));
+	//$domain = oc_substr($email, (oc_strrpos($email, '@') + 1));
 
-	$email = $local . '@' . idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+	//$email = $local . '@' . idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
 
 	return filter_var($email, FILTER_VALIDATE_EMAIL);
 }

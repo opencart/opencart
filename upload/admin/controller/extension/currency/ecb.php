@@ -97,23 +97,10 @@ class ControllerExtensionCurrencyEcb extends Controller {
 
 
 	public function install() {
-		// add event handlers
-		$this->load->model('setting/event');
-		$code = 'currency_ecb';
-		$app = 'admin/';
-
-		$trigger = 'model/localisation/currency/refresh/before';
-		$route = 'extension/currency/ecb/eventModelLocalisationCurrencyRefreshBefore';
-		$this->model_setting_event->addEvent( $code, $app.$trigger, $route );
 	}
 
 
 	public function uninstall() {
-		// remove event handlers
-		$this->load->model('setting/event');
-		$code = 'currency_ecb';
-		$this->model_setting_event->deleteEventByCode( $code );
-
 	}
 
 

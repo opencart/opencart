@@ -123,7 +123,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
 		}
 
-		if (!isset($this->request->post['agree'])) {
+		if (empty($this->request->post['agree'])) {
 			$json['error']['warning'] = $this->language->get('error_agree');
 		}
 

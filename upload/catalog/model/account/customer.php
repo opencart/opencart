@@ -88,6 +88,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Newsletter
 	 *
+	 * @param int  $customer_id
 	 * @param bool $newsletter
 	 *
 	 * @return void
@@ -108,11 +109,11 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->load->model('account/activity');
 
-		$this->model_account_activity->deleteActivity($customer_id);
+		$this->model_account_activity->deleteActivities($customer_id);
 
 		$this->load->model('account/address');
 
-		$this->model_account_address->deleteAddress($customer_id);
+		$this->model_account_address->deleteAddresses($customer_id);
 
 		$this->load->model('account/affiliate');
 
@@ -120,23 +121,23 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->load->model('account/approval');
 
-		$this->model_account_approval->deleteApproval($customer_id);
+		$this->model_account_approval->deleteApprovals($customer_id);
 
 		$this->load->model('account/reward');
 
-		$this->model_account_reward->deleteReward($customer_id);
+		$this->model_account_reward->deleteRewards($customer_id);
 
 		$this->load->model('account/transaction');
 
-		$this->model_account_transaction->deleteTransaction($customer_id);
+		$this->model_account_transaction->deleteTransactions($customer_id);
 
 		$this->load->model('account/wishlist');
 
-		$this->model_account_wishlist->deleteWishlist($customer_id);
+		$this->model_account_wishlist->deleteWishlists($customer_id);
 
-		$this->deleteHistory($customer_id);
-		$this->deleteIp($customer_id);
-		$this->deleteAuthorize($customer_id);
+		$this->deleteHistories($customer_id);
+		$this->deleteIps($customer_id);
+		$this->deleteAuthorizes($customer_id);
 	}
 
 	/**
@@ -223,7 +224,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete History
+	 * Delete Customer History
 	 *
 	 * @param int $customer_id
 	 *
@@ -234,7 +235,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete IP
+	 * Delete Ip
 	 *
 	 * @param int $customer_id
 	 *
@@ -301,7 +302,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Login Attempts
+	 * Delete Customer Login Attempts
 	 *
 	 * @param string $email
 	 *
@@ -361,7 +362,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Authorize
+	 * Delete Customer Authorize
 	 *
 	 * @param int $customer_id
 	 * @param int $customer_authorize_id
@@ -393,7 +394,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset Authorizes
+	 * Reset Customer Authorizes
 	 *
 	 * @param int $customer_id
 	 *

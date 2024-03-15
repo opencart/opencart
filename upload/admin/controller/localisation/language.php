@@ -284,11 +284,11 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((oc_strlen($this->request->post['code']) < 2) || (oc_strlen($this->request->post['code']) > 5)) {
+		if (!oc_validate_length($this->request->post['code'], 2, 5)) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		if ((oc_strlen($this->request->post['locale']) < 2) || (oc_strlen($this->request->post['locale']) > 255)) {
+		if (!oc_validate_length($this->request->post['locale'], 2, 255)) {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 

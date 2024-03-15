@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
- * Class CustomerSearch
+ * Class Customer Search
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

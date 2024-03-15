@@ -65,14 +65,14 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `topic_id` = '" . (int)$data['topic_id'] . "', `author` = '" . $this->db->escape($data['author']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `article_id` = '" . (int)$article_id . "'");
 
 		// Description
-		$this->model_cms_article->deleteDescription($article_id);
+		$this->model_cms_article->deleteDescriptions($article_id);
 
 		foreach ($data['article_description'] as $language_id => $value) {
 			$this->model_cms_article->addDescription($article_id, $language_id, $value);
 		}
 
 		// Store
-		$this->model_cms_article->deleteStore($article_id);
+		$this->model_cms_article->deleteStores($article_id);
 
 		if (isset($data['article_store'])) {
 			foreach ($data['article_store'] as $store_id) {
@@ -92,7 +92,7 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		// Layouts
-		$this->model_cms_article->deleteLayout($article_id);
+		$this->model_cms_article->deleteLayouts($article_id);
 
 		if (isset($data['article_layout'])) {
 			foreach ($data['article_layout'] as $store_id => $layout_id) {
@@ -125,9 +125,9 @@ class Article extends \Opencart\System\Engine\Model {
 	public function deleteArticle(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article` WHERE `article_id` = '" . (int)$article_id . "'");
 
-		$this->model_cms_article->deleteDescription($article_id);
-		$this->model_cms_article->deleteStore($article_id);
-		$this->model_cms_article->deleteLayout($article_id);
+		$this->model_cms_article->deleteDescriptions($article_id);
+		$this->model_cms_article->deleteStores($article_id);
+		$this->model_cms_article->deleteLayouts($article_id);
 		$this->model_cms_article->deleteCommentsByArticleId($article_id);
 
 		$this->load->model('design/seo_url');
@@ -238,19 +238,30 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $article_id, int $language_id, $data): void {
+	public function addDescription(int $article_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 * @param int $article_id
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $article_id): void {
+	public function deleteDescriptions(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
+	}
+
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -281,6 +292,19 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, string>>
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
+	/**
 	 * Add Store
 	 *
 	 * @param int $article_id
@@ -293,13 +317,13 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Store
+	 * Delete Stores
 	 *
 	 * @param int $article_id
 	 *
 	 * @return void
 	 */
-	public function deleteStore(int $article_id): void {
+	public function deleteStores(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_store` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
@@ -336,16 +360,23 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layout
+	 * Delete Layouts
 	 *
 	 * @param int $article_id
 	 *
 	 * @return void
 	 */
-	public function deleteLayout(int $article_id): void {
+	public function deleteLayouts(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
 	}
 
+	/**
+	 * Delete Layouts By Layout ID
+	 *
+	 * @param int $layout_id
+	 *
+	 * @return void
+	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}

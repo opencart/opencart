@@ -643,11 +643,11 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((oc_strlen($this->request->post['config_owner']) < 3) || (oc_strlen($this->request->post['config_owner']) > 64)) {
+		if (!oc_validate_length($this->request->post['config_owner'], 3, 64)) {
 			$json['error']['owner'] = $this->language->get('error_owner');
 		}
 
-		if ((oc_strlen($this->request->post['config_address']) < 3) || (oc_strlen($this->request->post['config_address']) > 256)) {
+		if (!oc_validate_length($this->request->post['config_address'], 3, 256)) {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 

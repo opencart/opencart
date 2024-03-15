@@ -19,13 +19,13 @@ class Approval extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer Approval
+	 * Delete Customer Approvals
 	 *
 	 * @param int $customer_id
 	 *
 	 * @return void
 	 */
-	public function deleteApproval(int $customer_id): void {
+	public function deleteApprovals(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 }

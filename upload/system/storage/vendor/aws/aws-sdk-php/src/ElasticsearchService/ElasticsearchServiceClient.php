@@ -14,6 +14,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associatePackageAsync(array $args = [])
  * @method \Aws\Result authorizeVpcEndpointAccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise authorizeVpcEndpointAccessAsync(array $args = [])
+ * @method \Aws\Result cancelDomainConfigChange(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelDomainConfigChangeAsync(array $args = [])
  * @method \Aws\Result cancelElasticsearchServiceSoftwareUpdate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelElasticsearchServiceSoftwareUpdateAsync(array $args = [])
  * @method \Aws\Result createElasticsearchDomain(array $args = [])

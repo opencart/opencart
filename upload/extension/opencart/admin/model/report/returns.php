@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Returns
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -68,6 +70,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Returns
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int

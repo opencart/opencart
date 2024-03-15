@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class CustomerTransaction extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Transactions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -46,6 +48,8 @@ class CustomerTransaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Transactions
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int

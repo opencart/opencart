@@ -30,6 +30,11 @@ class AesGcmEncryptingStream implements AesStreamInterface, AesStreamInterfaceV2
     private $tagLength;
 
     /**
+     * @var StreamInterface
+     */
+    private $stream;
+
+    /**
      * Same as non-static 'getAesName' method, allowing calls in a static
      * context.
      *
@@ -63,6 +68,9 @@ class AesGcmEncryptingStream implements AesStreamInterface, AesStreamInterfaceV2
         $this->aad = $aad;
         $this->tagLength = $tagLength;
         $this->keySize = $keySize;
+        // unsetting the property forces the first access to go through
+        // __get().
+        unset($this->stream);
     }
 
     public function getOpenSslName()

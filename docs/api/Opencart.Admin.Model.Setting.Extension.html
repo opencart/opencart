@@ -1,0 +1,867 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class Opencart\Admin\Model\Setting\Extension | OpenCart API API</title>
+	<link rel="stylesheet" href="http://localhost\opencart-master/docs/api/assets/main.css">
+	<script src="http://localhost\opencart-master/docs/api/assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.html">Opencart</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.html">Admin</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Controller.html">Controller</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.html">Model</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Catalog.html">Catalog</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Cms.html">Cms</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Customer.html">Customer</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Design.html">Design</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Extension.html">Extension</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Localisation.html">Localisation</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Marketing.html">Marketing</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Report.html">Report</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Sale.html">Sale</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Setting.html">Setting</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Tool.html">Tool</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.User.html">User</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Catalog.html">Catalog</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.System.html">System</a>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-none.html">none</a>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Cron.html">
+							Cron
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Event.html">
+							Event
+						</a>
+					</li>
+					<li class="active">
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Extension.html">
+							Extension
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Modification.html">
+							Modification
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Module.html">
+							Module
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Setting.html">
+							Setting
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Startup.html">
+							Startup
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Store.html">
+							Store
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="http://localhost\opencart-master/docs/api/index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Setting.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Extension.html">Class</a></li>				<li>
+					<a href="http://localhost\opencart-master/docs/api/tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="http://localhost\opencart-master/docs/api/assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="http://localhost\opencart-master/docs/api/namespace-Opencart.html">Opencart</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.html">Admin</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.html">Model</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Setting.html">Setting</a>\<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Setting.Extension.html">Extension</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+		<tr>
+			<th><code>extends</code></th>
+			<td>
+<code><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span title="Opencart\System\Engine\Model">Model</span></a></code>			</td>
+		</tr>
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Class Extension</p>
+</div>
+		</div>
+
+			<div class="classLikeSection">
+	<ul class="classTree">
+	<li>
+<a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a>
+
+
+	<ul class="classTree">
+	<li>
+<b><span class="active">Opencart\Admin\Model\Setting\Extension</span></b>
+
+
+	</li>
+	</ul>
+	</li>
+	</ul>
+			</div>
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#8" title="Go to source code">admin\model\setting\extension.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="getExtensions" id="_getExtensions">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#9-18" title="Go to source code">getExtensions</a>(): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Extensions</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Extensions</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getExtensions">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getExtensionsByType" id="_getExtensionsByType">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#20-31" title="Go to source code">getExtensionsByType</a>(<span>string <var>$type</var></span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Extensions By Type</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Extensions By Type</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getExtensionsByType">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getExtensionByCode" id="_getExtensionByCode">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#33-45" title="Go to source code">getExtensionByCode</a>(<span>string <var>$type</var></span>, <span>string <var>$code</var></span>): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Extension By Code</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Extension By Code</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getExtensionByCode">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTotalExtensionsByExtension" id="_getTotalExtensionsByExtension">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#47-58" title="Go to source code">getTotalExtensionsByExtension</a>(<span>string <var>$extension</var></span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Total Extensions By Extension</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Total Extensions By Extension</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTotalExtensionsByExtension">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="install" id="_install">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#60-77" title="Go to source code">install</a>(<span>string <var>$type</var></span>, <span>string <var>$extension</var></span>, <span>string <var>$code</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Install</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Install</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_install">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="uninstall" id="_uninstall">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#79-93" title="Go to source code">uninstall</a>(<span>string <var>$type</var></span>, <span>string <var>$code</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Uninstall</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Uninstall</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_uninstall">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="addInstall" id="_addInstall">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#95-106" title="Go to source code">addInstall</a>(<span>array&lt;string, mixed&gt; <var>$data</var></span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Install</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Install</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addInstall">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteInstall" id="_deleteInstall">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#108-117" title="Go to source code">deleteInstall</a>(<span>int <var>$extension_install_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Install</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Install</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteInstall">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="editStatus" id="_editStatus">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#119-129" title="Go to source code">editStatus</a>(<span>int <var>$extension_install_id</var></span>, <span>bool <var>$status</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Edit Status</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Edit Status</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_editStatus">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getInstall" id="_getInstall">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#131-142" title="Go to source code">getInstall</a>(<span>int <var>$extension_install_id</var></span>): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Install</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Install</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getInstall">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getInstallByExtensionDownloadId" id="_getInstallByExtensionDownloadId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#144-155" title="Go to source code">getInstallByExtensionDownloadId</a>(<span>int <var>$extension_download_id</var></span>): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Install By Extension Download ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Install By Extension Download ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getInstallByExtensionDownloadId">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getInstallByCode" id="_getInstallByCode">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#157-168" title="Go to source code">getInstallByCode</a>(<span>string <var>$code</var></span>): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Install By Code</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Install By Code</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getInstallByCode">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getInstalls" id="_getInstalls">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#170-217" title="Go to source code">getInstalls</a>(<span>array&lt;string, mixed&gt; <var>$data</var> = []</span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Installs</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Installs</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getInstalls">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTotalInstalls" id="_getTotalInstalls">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#219-236" title="Go to source code">getTotalInstalls</a>(<span>array&lt;string, mixed&gt; <var>$data</var> = []</span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Total Installs</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Total Installs</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTotalInstalls">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="addPath" id="_addPath">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#238-248" title="Go to source code">addPath</a>(<span>int <var>$extension_install_id</var></span>, <span>string <var>$path</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Path</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Path</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addPath">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deletePath" id="_deletePath">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#250-259" title="Go to source code">deletePath</a>(<span>int <var>$extension_path_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Path</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Path</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deletePath">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getPathsByExtensionInstallId" id="_getPathsByExtensionInstallId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#261-272" title="Go to source code">getPathsByExtensionInstallId</a>(<span>int <var>$extension_install_id</var></span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Paths By Extension Install ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Paths By Extension Install ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getPathsByExtensionInstallId">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getPaths" id="_getPaths">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#274-285" title="Go to source code">getPaths</a>(<span>string <var>$path</var></span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Paths</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Paths</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getPaths">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTotalPaths" id="_getTotalPaths">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.setting.extension.html#287-298" title="Go to source code">getTotalPaths</a>(<span>string <var>$path</var></span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Total Paths</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Total Paths</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTotalPaths">#</a>
+		</td>
+	</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<th class="table-heading">Methods inherited from <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a></th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+<code><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___construct">__construct()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___get">__get()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___set">__set()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___isset">__isset()</a></code>				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<table class="table">
+			<tr>
+				<th class="table-heading">Properties inherited from <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a></th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+<code><var><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#$registry">$registry</a></var></code>				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+		</div>
+
+		<div class="layout-footer">
+			OpenCart API API documentation generated by <a href="https://www.apigen.org">ApiGen dev-master</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

@@ -151,7 +151,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if ((oc_strlen($option['username']) < 3) || (oc_strlen($option['username']) > 20)) {
+		if (!oc_validate_length($option['username'], 3, 20)) {
 			$error .= 'ERROR: Username must be between 3 and 20 characters!' . "\n";
 		}
 

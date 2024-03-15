@@ -88,7 +88,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$this->load->model('customer/gdpr');
 
-		$this->model_customer_gdpr->deleteGdprByStoreId($store_id);
+		$this->model_customer_gdpr->deleteGdprsByStoreId($store_id);
 
 		$this->load->model('design/theme');
 
@@ -104,7 +104,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$this->load->model('setting/setting');
 
-		$this->model_setting_setting->deleteSettingByStoreId($store_id);
+		$this->model_setting_setting->deleteSettingsByStoreId($store_id);
 
 		$this->cache->delete('store');
 	}

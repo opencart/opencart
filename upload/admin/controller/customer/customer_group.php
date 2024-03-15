@@ -264,7 +264,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
-			if ((oc_strlen($value['name']) < 3) || (oc_strlen($value['name']) > 32)) {
+			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

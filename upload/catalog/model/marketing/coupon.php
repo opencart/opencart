@@ -16,52 +16,42 @@ class Coupon extends \Opencart\System\Engine\Model {
 	public function getCoupon(string $code): array {
 		$status = true;
 
-		$coupon_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE `code` = '" . $this->db->escape($code) . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) AND `status` = '1'");
+		$coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 
-		if ($coupon_query->num_rows) {
-			if ($coupon_query->row['total'] > $this->cart->getSubTotal()) {
+		if ($coupon_info && ($coupon_info['date_start'] == '0000-00-00' || strtotime($coupon_info['date_start']) < strtotime(date('Y-m-d H:i:s'))) && ($coupon_info['date_end'] == '0000-00-00' || strtotime($coupon_info['date_end']) > strtotime(date('Y-m-d H:i:s')))) {
+			if ($coupon_info['total'] > $this->cart->getSubTotal()) {
 				$status = false;
 			}
 
-			$coupon_total = $this->getTotalHistoriesByCoupon($code);
+			$coupon_total = $this->model_marketing_coupon->getTotalHistories($coupon_info['coupon_id']);
 
-			if ($coupon_query->row['uses_total'] > 0 && ($coupon_total >= $coupon_query->row['uses_total'])) {
+			if ($coupon_info['uses_total'] > 0 && ($coupon_total >= $coupon_info['uses_total'])) {
 				$status = false;
 			}
 
-			if ($coupon_query->row['logged'] && !$this->customer->getId()) {
+			if ($coupon_info['logged'] && !$this->customer->getId()) {
 				$status = false;
 			}
 
 			if ($this->customer->getId()) {
-				$customer_total = $this->getTotalHistoriesByCustomerId($code, $this->customer->getId());
+				$customer_total = $this->model_marketing_coupon->getTotalHistoriesByCustomerId($coupon_info['coupon_id'], $this->customer->getId());
 
-				if ($coupon_query->row['uses_customer'] > 0 && ($customer_total >= $coupon_query->row['uses_customer'])) {
+				if ($coupon_info['uses_customer'] > 0 && ($customer_total >= $coupon_info['uses_customer'])) {
 					$status = false;
 				}
 			}
 
 			// Products
-			$coupon_product_data = [];
-
-			$coupon_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE `coupon_id` = '" . (int)$coupon_query->row['coupon_id'] . "'");
-
-			foreach ($coupon_product_query->rows as $product) {
-				$coupon_product_data[] = $product['product_id'];
-			}
+			$coupon_product_data = $this->getProducts($coupon_info['coupon_id']);
 
 			// Categories
-			$coupon_category_data = [];
-
-			$coupon_category_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` `cc` LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cc`.`category_id` = `cp`.`path_id`) WHERE `cc`.`coupon_id` = '" . (int)$coupon_query->row['coupon_id'] . "'");
-
-			foreach ($coupon_category_query->rows as $category) {
-				$coupon_category_data[] = $category['category_id'];
-			}
+			$coupon_category_data = $this->getCategories($coupon_info['coupon_id']);
 
 			$product_data = [];
 
 			if ($coupon_product_data || $coupon_category_data) {
+				$this->load->model('catalog/product');
+
 				foreach ($this->cart->getProducts() as $product) {
 					if (in_array($product['product_id'], $coupon_product_data)) {
 						$product_data[] = $product['product_id'];
@@ -70,9 +60,9 @@ class Coupon extends \Opencart\System\Engine\Model {
 					}
 
 					foreach ($coupon_category_data as $category_id) {
-						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `category_id` = '" . (int)$category_id . "'");
+						$product_total = $this->model_catalog_product->getTotalCategoriesByCategoryId($product['product_id'], $category_id);
 
-						if ($coupon_category_query->row['total']) {
+						if ($product_total) {
 							$product_data[] = $product['product_id'];
 
 							continue;
@@ -90,20 +80,20 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 		if ($status) {
 			return [
-				'coupon_id'     => $coupon_query->row['coupon_id'],
-				'code'          => $coupon_query->row['code'],
-				'name'          => $coupon_query->row['name'],
-				'type'          => $coupon_query->row['type'],
-				'discount'      => $coupon_query->row['discount'],
-				'shipping'      => $coupon_query->row['shipping'],
-				'total'         => $coupon_query->row['total'],
+				'coupon_id'     => $coupon_info['coupon_id'],
+				'code'          => $coupon_info['code'],
+				'name'          => $coupon_info['name'],
+				'type'          => $coupon_info['type'],
+				'discount'      => $coupon_info['discount'],
+				'shipping'      => $coupon_info['shipping'],
+				'total'         => $coupon_info['total'],
 				'product'       => $product_data,
-				'date_start'    => $coupon_query->row['date_start'],
-				'date_end'      => $coupon_query->row['date_end'],
-				'uses_total'    => $coupon_query->row['uses_total'],
-				'uses_customer' => $coupon_query->row['uses_customer'],
-				'status'        => $coupon_query->row['status'],
-				'date_added'    => $coupon_query->row['date_added']
+				'date_start'    => $coupon_info['date_start'],
+				'date_end'      => $coupon_info['date_end'],
+				'uses_total'    => $coupon_info['uses_total'],
+				'uses_customer' => $coupon_info['uses_customer'],
+				'status'        => $coupon_info['status'],
+				'date_added'    => $coupon_info['date_added']
 			];
 		} else {
 			return [];
@@ -111,14 +101,90 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Histories By Coupon
+	 * Get Coupon By Code
 	 *
-	 * @param string $coupon
+	 * @param string $code
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getCouponByCode(string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE `code` = '" . $this->db->escape($code) . "' AND `status` = '1'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Products
+	 *
+	 * @param int $coupon_id
+	 *
+	 * @return array<int, int>
+	 */
+	public function getProducts(int $coupon_id): array {
+		$product_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
+
+		foreach ($query->rows as $product) {
+			$product_data[] = $product['product_id'];
+		}
+
+		return $product_data;
+	}
+
+	/**
+	 * Get Categories
+	 *
+	 * @param int $coupon_id
+	 *
+	 * @return array<int, int>
+	 */
+	public function getCategories(int $coupon_id): array {
+		$category_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` `cc` LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cc`.`category_id` = `cp`.`path_id`) WHERE `cc`.`coupon_id` = '" . (int)$coupon_id . "'");
+
+		foreach ($query->rows as $category) {
+			$category_data[] = $category['category_id'];
+		}
+
+		return $category_data;
+	}
+
+	/**
+	 * Add History
+	 *
+	 * @param int   $coupon_id
+	 * @param int   $order_id
+	 * @param int   $customer_id
+	 * @param float $amount
+	 *
+	 * @return void
+	 */
+	public function addHistory(int $coupon_id, int $order_id, int $customer_id, float $amount = 0.00): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_history` SET `coupon_id` = '" . (int)$coupon_id . "', `order_id` = '" . (int)$order_id . "', `customer_id` = '" . (int)$customer_id . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Delete Coupon Histories By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteHistoriesByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	/**
+	 * Get Total Histories
+	 *
+	 * @param string $coupon_id
 	 *
 	 * @return int
 	 */
-	public function getTotalHistoriesByCoupon(string $coupon): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` `ch` LEFT JOIN `" . DB_PREFIX . "coupon` `c` ON (`ch`.`coupon_id` = `c`.`coupon_id`) WHERE `c`.`code` = '" . $this->db->escape($coupon) . "'");
+	public function getTotalHistories(string $coupon_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` `ch` LEFT JOIN `" . DB_PREFIX . "coupon` `c` ON (`ch`.`coupon_id` = `c`.`coupon_id`) WHERE `c`.`coupon_id` = '" . $this->db->escape($coupon_id) . "'");
 
 		return (int)$query->row['total'];
 	}
@@ -126,13 +192,13 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories By Customer ID
 	 *
-	 * @param string $coupon
-	 * @param int    $customer_id
+	 * @param int $coupon_id
+	 * @param int $customer_id
 	 *
 	 * @return int
 	 */
-	public function getTotalHistoriesByCustomerId(string $coupon, int $customer_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` `ch` LEFT JOIN `" . DB_PREFIX . "coupon` `c` ON (`ch`.`coupon_id` = `c`.`coupon_id`) WHERE `c`.`code` = '" . $this->db->escape($coupon) . "' AND `ch`.`customer_id` = '" . (int)$customer_id . "'");
+	public function getTotalHistoriesByCustomerId(int $coupon_id, int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` `ch` LEFT JOIN `" . DB_PREFIX . "coupon` `c` ON (`ch`.`coupon_id` = `c`.`coupon_id`) WHERE `c`.`coupon_id` = '" . (int)$coupon_id . "' AND `ch`.`customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];
 	}

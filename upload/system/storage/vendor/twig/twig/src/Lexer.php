@@ -345,13 +345,13 @@ class Lexer
             $this->moveCursor($match[0]);
         }
         // punctuation
-        elseif (false !== strpos(self::PUNCTUATION, $this->code[$this->cursor])) {
+        elseif (str_contains(self::PUNCTUATION, $this->code[$this->cursor])) {
             // opening bracket
-            if (false !== strpos('([{', $this->code[$this->cursor])) {
+            if (str_contains('([{', $this->code[$this->cursor])) {
                 $this->brackets[] = [$this->code[$this->cursor], $this->lineno];
             }
             // closing bracket
-            elseif (false !== strpos(')]}', $this->code[$this->cursor])) {
+            elseif (str_contains(')]}', $this->code[$this->cursor])) {
                 if (empty($this->brackets)) {
                     throw new SyntaxError(sprintf('Unexpected "%s".', $this->code[$this->cursor]), $this->lineno, $this->source);
                 }
@@ -422,7 +422,7 @@ class Lexer
             $this->pushToken(/* Token::INTERPOLATION_START_TYPE */ 10);
             $this->moveCursor($match[0]);
             $this->pushState(self::STATE_INTERPOLATION);
-        } elseif (preg_match(self::REGEX_DQ_STRING_PART, $this->code, $match, 0, $this->cursor) && \strlen($match[0]) > 0) {
+        } elseif (preg_match(self::REGEX_DQ_STRING_PART, $this->code, $match, 0, $this->cursor) && '' !== $match[0]) {
             $this->pushToken(/* Token::STRING_TYPE */ 7, stripcslashes($match[0]));
             $this->moveCursor($match[0]);
         } elseif (preg_match(self::REGEX_DQ_STRING_DELIM, $this->code, $match, 0, $this->cursor)) {

@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon DocumentDB Elastic Clusters** service.
+ * @method \Aws\Result copyClusterSnapshot(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise copyClusterSnapshotAsync(array $args = [])
  * @method \Aws\Result createCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createClusterAsync(array $args = [])
  * @method \Aws\Result createClusterSnapshot(array $args = [])
@@ -25,6 +27,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result restoreClusterFromSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreClusterFromSnapshotAsync(array $args = [])
+ * @method \Aws\Result startCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startClusterAsync(array $args = [])
+ * @method \Aws\Result stopCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopClusterAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

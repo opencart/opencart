@@ -59,7 +59,7 @@ class PresignUrlMiddleware
     public function __invoke(CommandInterface $cmd, RequestInterface $request = null)
     {
         if (in_array($cmd->getName(), $this->commandPool)
-            && (!isset($cmd->{'__skip' . $cmd->getName()}))
+            && (!isset($cmd['__skip' . $cmd->getName()]))
         ) {
             $cmd['DestinationRegion'] = $this->client->getRegion();
             if (!empty($cmd['SourceRegion']) && !empty($cmd[$this->presignParam])) {
@@ -84,7 +84,7 @@ class PresignUrlMiddleware
         $cmdName = $cmd->getName();
         $newCmd = $client->getCommand($cmdName, $cmd->toArray());
         // Avoid infinite recursion by flagging the new command.
-        $newCmd->{'__skip' . $cmdName} = true;
+        $newCmd['__skip' . $cmdName] = true;
 
         // Serialize a request for the operation.
         $request = \Aws\serialize($newCmd);

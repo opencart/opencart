@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createRuleGroupAsync(array $args = [])
  * @method \Aws\Result createWebACL(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWebACLAsync(array $args = [])
+ * @method \Aws\Result deleteAPIKey(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAPIKeyAsync(array $args = [])
  * @method \Aws\Result deleteFirewallManagerRuleGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFirewallManagerRuleGroupsAsync(array $args = [])
  * @method \Aws\Result deleteIPSet(array $args = [])

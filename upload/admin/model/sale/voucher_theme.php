@@ -38,7 +38,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	public function editVoucherTheme(int $voucher_theme_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = '" . $this->db->escape((string)$data['image']) . "' WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
-		$this->deleteDescription($voucher_theme_id);
+		$this->deleteDescriptions($voucher_theme_id);
 
 		foreach ($data['voucher_theme_description'] as $language_id => $value) {
 			$this->addDescription($voucher_theme_id, $language_id, $value);
@@ -57,7 +57,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	public function deleteVoucherTheme(int $voucher_theme_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
-		$this->deleteDescription($voucher_theme_id);
+		$this->deleteDescriptions($voucher_theme_id);
 
 		$this->cache->delete('voucher_theme');
 	}
@@ -119,7 +119,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $voucher_theme_id
 	 * @param int                  $language_id
@@ -127,19 +127,30 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $voucher_theme_id, int $language_id, $data): void {
+	public function addDescription(int $voucher_theme_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_theme_description` SET `voucher_theme_id` = '" . (int)$voucher_theme_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $voucher_theme_id
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $voucher_theme_id): void {
+	public function deleteDescriptions(int $voucher_theme_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
+	}
+
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -159,6 +170,19 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		}
 
 		return $voucher_theme_data;
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, string>>
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

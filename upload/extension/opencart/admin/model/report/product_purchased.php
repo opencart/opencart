@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class ProductPurchased extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Purchased
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -48,6 +50,8 @@ class ProductPurchased extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Purchased
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int

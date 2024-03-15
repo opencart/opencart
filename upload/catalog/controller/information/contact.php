@@ -119,15 +119,15 @@ class Contact extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((oc_strlen($this->request->post['name']) < 3) || (oc_strlen($this->request->post['name']) > 32)) {
+		if (!oc_validate_length($this->request->post['name'], 3, 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!oc_validate_email($this->request->post['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ((oc_strlen($this->request->post['enquiry']) < 10) || (oc_strlen($this->request->post['enquiry']) > 3000)) {
+		if (!oc_validate_length($this->request->post['enquiry'], 10, 3000)) {
 			$json['error']['enquiry'] = $this->language->get('error_enquiry');
 		}
 

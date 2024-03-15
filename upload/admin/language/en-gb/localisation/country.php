@@ -26,6 +26,8 @@ $_['entry_status']            = 'Status';
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify countries!';
 $_['error_name']              = 'Country Name must be between 1 and 128 characters!';
+$_['error_iso_code_2']        = 'ISO Code 2 must be 2 characters!';
+$_['error_iso_code_3']        = 'ISO Code 3 must be between 3 characters!';
 $_['error_default']           = 'Warning: This country cannot be deleted as it is currently assigned as the default store country!';
 $_['error_store']             = 'Warning: This country cannot be deleted as it is currently assigned to %s stores!';
 $_['error_address']           = 'Warning: This country cannot be deleted as it is currently assigned to %s address book entries!';

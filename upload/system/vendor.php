@@ -64,5 +64,11 @@ if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/bootstrap.php')) {
 	require_once(DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/bootstrap.php');
 }
 
+// symfony/polyfill-php80
+$autoloader->register('Symfony\Polyfill\Php80', DIR_STORAGE . 'vendor/symfony/polyfill-php80//', true);
+if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-php80/bootstrap.php')) {
+	require_once(DIR_STORAGE . 'vendor/symfony/polyfill-php80/bootstrap.php');
+}
+
 // twig/twig
 $autoloader->register('Twig', DIR_STORAGE . 'vendor/twig/twig/src/', true);

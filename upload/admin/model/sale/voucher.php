@@ -41,7 +41,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 	public function deleteVoucher(int $voucher_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 
-		$this->deleteHistory($voucher_id);
+		$this->deleteHistories($voucher_id);
 	}
 
 	/**
@@ -143,8 +143,26 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function deleteHistory(int $voucher_id): void {
+	/**
+	 * Delete Voucher Histories
+	 *
+	 * @param int $voucher_id
+	 *
+	 * @return void
+	 */
+	public function deleteHistories(int $voucher_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
+	}
+
+	/**
+	 * Delete Voucher Histories By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteHistoriesByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	/**

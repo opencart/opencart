@@ -320,7 +320,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((oc_strlen($this->request->post['code']) < 3) || (oc_strlen($this->request->post['code']) > 10)) {
+		if (!oc_validate_length($this->request->post['code'], 3, 10)) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 

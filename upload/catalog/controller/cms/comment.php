@@ -311,11 +311,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_article');
 		}
 
-		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 25)) {
+		if (!oc_validate_length($this->request->post['author'], 3, 25)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if ((oc_strlen($this->request->post['comment']) < 2) || (oc_strlen($this->request->post['comment']) > 1000)) {
+		if (!oc_validate_length($this->request->post['comment'], 2, 1000)) {
 			$json['error']['comment'] = $this->language->get('error_comment');
 		}
 

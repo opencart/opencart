@@ -31,7 +31,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteActivity(int $customer_id): void {
+	public function deleteActivities(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_activity` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 }

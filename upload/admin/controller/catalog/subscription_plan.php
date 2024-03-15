@@ -227,7 +227,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['subscription_plan_id'])) {
-			$data['subscription_plan_description'] = $this->model_catalog_subscription_plan->getDescription($this->request->get['subscription_plan_id']);
+			$data['subscription_plan_description'] = $this->model_catalog_subscription_plan->getDescriptions($this->request->get['subscription_plan_id']);
 		} else {
 			$data['subscription_plan_description'] = [];
 		}

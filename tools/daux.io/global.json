@@ -1,0 +1,131 @@
+{
+    "docs_directory": "docs",
+    "themes_directory": "themes",
+
+    "title": "My Project",
+    "tagline": "My Stylish Documentation",
+    "author": "I, Me & Myself",
+    "image": "",
+    "languages": {},
+
+    "cache": true,
+
+    "format": "html",
+    "processor": "",
+
+    "ignore": {
+        "files": [],
+        "folders": []
+    },
+
+    "language": "en",
+
+    "strings": {
+        "en": {
+            "CodeBlocks_show": "Show Code Blocks",
+            "DarkMode": "Dark Mode",
+            "Search_placeholder": "Search...",
+            "Search_one_result": "1 result",
+            "Search_results": "!count results",
+            "Search_no_results": "Nothing found",
+            "Search_common_words_ignored": "Common words are largely ignored",
+            "Search_too_short": "Search too short",
+            "Search_one_character_or_more": "Should be one character or more",
+            "Search_should_be_x_or_more": "Should be !min characters or more",
+            "Link_previous": "Previous",
+            "Link_next": "Next",
+            "Edit_on": "Edit on :name:",
+            "View_on_github": "View On GitHub",
+            "View_documentation": "View Documentation",
+            "Table_of_contents": "Table of Contents",
+            "Toggle_navigation": "Toggle navigation"
+        },
+        "fr": {
+            "CodeBlocks_show": "Afficher le code",
+            "DarkMode": "Mode Sombre",
+            "Search_placeholder": "Rechercher...",
+            "Search_one_result": "1 résultat",
+            "Search_results": "!count résultats",
+            "Search_no_results": "Aucun résultat trouvé",
+            "Search_common_words_ignored": "Les mots communs sont ignorés",
+            "Search_too_short": "Critère de recherche trop court",
+            "Search_one_character_or_more": "Doit être un caractère ou plus",
+            "Search_should_be_x_or_more": "Doit être !min caractère ou plus",
+            "Link_previous": "Précédent",
+            "Link_next": "Suivant",
+            "Edit_on": "Editer sur :name:",
+            "View_on_github": "Voir sur GitHub",
+            "View_documentation": "Voir la Documentation",
+            "Table_of_contents": "Table des matières"
+        },
+        "de": {
+            "CodeBlocks_show": "Code-Blöcke anzeigen",
+            "Search_placeholder": "Suchen...",
+            "Search_one_result": "1 Ergebnis",
+            "Search_results": "!count Ergebnisse",
+            "Search_no_results": "Nichts gefunden",
+            "Search_common_words_ignored": "Allgemeine Wörter werden weitgehend ignoriert",
+            "Search_too_short": "Suche zu kurz",
+            "Search_one_character_or_more": "Sollte ein Zeichen oder mehr sein",
+            "Search_should_be_x_or_more": "Sollte !min Zeichen oder mehr sein",
+            "Link_previous": "Zurück",
+            "Link_next": "Weiter",
+            "Edit_on": "Bearbeiten bei :name:",
+            "View_on_github": "Bei GitHub anzeigen",
+            "View_documentation": "Dokumentation anzeigen",
+            "Table_of_contents": "Inhaltsverzeichnis"
+        },
+        "it": {
+            "CodeBlocks_show": "Mostra blocchi di codice",
+            "Search_one_result": "1 risultato",
+            "Search_results": "!count risultati",
+            "Search_no_results": "Nessun risultato trovato",
+            "Search_common_words_ignored": "Le parole comuni vengono per lo più ignorate",
+            "Search_too_short": "Ricerca troppo breve",
+            "Search_one_character_or_more": "Dovrebbe essere composto da uno o più caratteri",
+            "Search_should_be_x_or_more": "Dovrebbe essere composto da almeno !min caratteri",
+            "Search_placeholder": "Cerca...",
+            "Link_previous": "Pagina precedente",
+            "Link_next": "Pagina successiva",
+            "Edit_on": "Modifica su :name:",
+            "View_on_github": "Guarda su GitHub",
+            "View_documentation": "Leggi la documentazione",
+            "Table_of_contents": "Contenuti"
+        }
+    },
+
+    "timezone": "America/Los_Angeles",
+
+    "live": {
+        "clean_urls": true
+    },
+
+    "html": {
+        "theme": "daux-blue",
+        "breadcrumbs": true,
+		"breadcrumb_separator": "Chevrons",
+        "toggle_code": true,
+        "date_modified": false,
+        "auto_landing": true,
+        "search": true,
+        "auto_toc": false,
+        "inherit_index": false,
+        "jump_buttons": true,
+
+        "repo": "",
+        "twitter": [],
+        "links": {
+        },
+        "buttons": {
+        },
+
+        "google_analytics": false,
+        "piwik_analytics": false,
+        "piwik_analytics_id": "0"
+    },
+
+    "confluence": {
+        "prefix": "",
+        "delete": false
+    }
+}

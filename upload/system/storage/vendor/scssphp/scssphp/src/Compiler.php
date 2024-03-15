@@ -458,10 +458,33 @@ class Compiler
     }
 
     /**
-     * Compile scss
+     * Compiles the provided scss file into CSS.
+     *
+     * @param string $path
+     *
+     * @return CompilationResult
+     *
+     * @throws SassException when the source fails to compile
+     */
+    public function compileFile($path)
+    {
+        $source = file_get_contents($path);
+
+        if ($source === false) {
+            throw new \RuntimeException('Could not read the file content');
+        }
+
+        return $this->compileString($source, $path);
+    }
+
+    /**
+     * Compiles the provided scss source code into CSS.
+     *
+     * If provided, the path is considered to be the path from which the source code comes
+     * from, which will be used to resolve relative imports.
      *
      * @param string      $source
-     * @param string|null $path
+     * @param string|null $path   The path for the source, used to resolve relative imports
      *
      * @return CompilationResult
      *
@@ -548,7 +571,7 @@ class Compiler
 
             $sourceMap = null;
 
-            if (! empty($out) && $this->sourceMap && $this->sourceMap !== self::SOURCE_MAP_NONE) {
+            if (! empty($out) && $this->sourceMap !== self::SOURCE_MAP_NONE && $this->sourceMap) {
                 assert($sourceMapGenerator !== null);
                 $sourceMap = $sourceMapGenerator->generateJson($prefix);
                 $sourceMapUrl = null;
@@ -5818,13 +5841,13 @@ EOL;
 
                     if (! \is_null($file)) {
                         if (\is_array($dir)) {
-                            $callableDescription = (\is_object($dir[0]) ? \get_class($dir[0]) : $dir[0]).'::'.$dir[1];
+                            $callableDescription = (\is_object($dir[0]) ? \get_class($dir[0]) : $dir[0]) . '::' . $dir[1];
                         } elseif ($dir instanceof \Closure) {
                             $r = new \ReflectionFunction($dir);
                             if (false !== strpos($r->name, '{closure}')) {
                                 $callableDescription = sprintf('closure{%s:%s}', $r->getFileName(), $r->getStartLine());
                             } elseif ($class = $r->getClosureScopeClass()) {
-                                $callableDescription = $class->name.'::'.$r->name;
+                                $callableDescription = $class->name . '::' . $r->name;
                             } else {
                                 $callableDescription = $r->name;
                             }
@@ -5937,15 +5960,15 @@ EOL;
     private function tryImportPathWithExtensions($path)
     {
         $result = array_merge(
-            $this->tryImportPath($path.'.sass'),
-            $this->tryImportPath($path.'.scss')
+            $this->tryImportPath($path . '.sass'),
+            $this->tryImportPath($path . '.scss')
         );
 
         if ($result) {
             return $result;
         }
 
-        return $this->tryImportPath($path.'.css');
+        return $this->tryImportPath($path . '.css');
     }
 
     /**
@@ -5955,7 +5978,7 @@ EOL;
      */
     private function tryImportPath($path)
     {
-        $partial = dirname($path).'/_'.basename($path);
+        $partial = dirname($path) . '/_' . basename($path);
 
         $candidates = [];
 
@@ -5981,7 +6004,7 @@ EOL;
             return null;
         }
 
-        return $this->checkImportPathConflicts($this->tryImportPathWithExtensions($path.'/index'));
+        return $this->checkImportPathConflicts($this->tryImportPathWithExtensions($path . '/index'));
     }
 
     /**
@@ -5996,7 +6019,7 @@ EOL;
         }
 
         $normalizedPath = $path;
-        $normalizedRootDirectory = $this->rootDirectory.'/';
+        $normalizedRootDirectory = $this->rootDirectory . '/';
 
         if (\DIRECTORY_SEPARATOR === '\\') {
             $normalizedRootDirectory = str_replace('\\', '/', $normalizedRootDirectory);
@@ -6383,8 +6406,6 @@ EOL;
      */
     protected function sortNativeFunctionArgs($functionName, $prototypes, $args)
     {
-        static $parser = null;
-
         if (! isset($prototypes)) {
             $keyArgs = [];
             $posArgs = [];
@@ -6538,7 +6559,7 @@ EOL;
      *
      * @return array
      *
-     * @phpstan-param non-empty-list<array{arguments: list<array{0: string, 1: string, 2: array|Number|null}>, rest_argument: string|null}> $prototypes
+     * @phpstan-param non-empty-array<array{arguments: list<array{0: string, 1: string, 2: array|Number|null}>, rest_argument: string|null}> $prototypes
      * @phpstan-return array{arguments: list<array{0: string, 1: string, 2: array|Number|null}>, rest_argument: string|null}
      */
     private function selectFunctionPrototype(array $prototypes, $positional, array $names)
@@ -7691,9 +7712,9 @@ EOL;
         $b = min(1.0 - $w, $b);
 
         $rgb = $this->toRGB($hue, 100, 50);
-        for($i = 1; $i < 4; $i++) {
-          $rgb[$i] *= (1.0 - $w - $b);
-          $rgb[$i] = round($rgb[$i] + 255 * $w + 0.0001);
+        for ($i = 1; $i < 4; $i++) {
+            $rgb[$i] *= (1.0 - $w - $b);
+            $rgb[$i] = round($rgb[$i] + 255 * $w + 0.0001);
         }
 
         return $rgb;
@@ -7720,7 +7741,6 @@ EOL;
         if ((int) $d === 0) {
             $h = 0;
         } else {
-
             if ($red == $max) {
                 $h = 60 * ($green - $blue) / $d;
             } elseif ($green == $max) {
@@ -7730,7 +7750,7 @@ EOL;
             }
         }
 
-        return [Type::T_HWB, fmod($h, 360), $min / 255 * 100, 100 - $max / 255 *100];
+        return [Type::T_HWB, fmod($h, 360), $min / 255 * 100, 100 - $max / 255 * 100];
     }
 
 
@@ -7939,7 +7959,13 @@ EOL;
         $scale = $operation === 'scale';
         $change = $operation === 'change';
 
-        /** @phpstan-var callable(string, float|int, bool=, bool=): (float|int|null) $getParam */
+        /**
+         * @param string $name
+         * @param float|int $max
+         * @param bool $checkPercent
+         * @param bool $assertPercent
+         * @return float|int|null
+         */
         $getParam = function ($name, $max, $checkPercent = false, $assertPercent = false) use (&$kwargs, $scale, $change) {
             if (!isset($kwargs[$name])) {
                 return null;
@@ -8081,7 +8107,7 @@ EOL;
     protected static $libChangeColor = ['color', 'kwargs...'];
     protected function libChangeColor($args)
     {
-        return $this->alterColor($args,'change', function ($base, $alter, $max) {
+        return $this->alterColor($args, 'change', function ($base, $alter, $max) {
             if ($alter === null) {
                 return $base;
             }

@@ -1,0 +1,56 @@
+{
+    "name": "daux/daux.io",
+    "type": "project",
+    "license": "MIT",
+    "description": "Documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly",
+    "keywords": ["documentation", "docs", "markdown", "md"],
+    "homepage": "https://dauxio.github.io/",
+    "authors": [
+        {
+            "name": "Stéphane Goetz",
+            "homepage": "http://onigoetz.ch/"
+        },
+        {
+            "name": "Justin Walsh",
+            "homepage": "http://todaymade.com/"
+        }
+    ],
+    "bin": ["bin/daux"],
+    "require": {
+        "ext-json": "*",
+        "php": ">=8.1",
+        "guzzlehttp/guzzle": "~6.0 || ~7.0",
+        "league/commonmark": "^2.4.0",
+        "league/plates": "~3.1",
+        "scrivo/highlight.php": "^9.15",
+        "symfony/console": "^5.0|^6.0|^7.0",
+        "symfony/http-foundation": "^5.0|^6.0|^7.0",
+        "symfony/mime": "^5.0|^6.0|^7.0",
+        "symfony/polyfill-intl-icu": "^1.10",
+        "symfony/process": "^5.0|^6.0|^7.0",
+        "symfony/yaml": "^5.0|^6.0|^7.0"
+    },
+    "suggest":{
+        "ext-intl": "Allows to translate the modified at date"
+    },
+    "autoload": {
+        "psr-4": {
+            "Todaymade\\Daux\\": "libs/"
+        }
+    },
+    "replace": {
+        "justinwalsh/daux.io": "*"
+    },
+    "require-dev": {
+        "mikey179/vfsstream": "^1.6",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "scripts": {
+        "test": "APP_ENV=test php vendor/bin/phpunit",
+        "test:coverage": "APP_ENV=test XDEBUG_MODE=coverage php vendor/bin/phpunit --coverage-clover=coverage.xml --log-junit=test-report.xml",
+        "test:coverage-html": "APP_ENV=test XDEBUG_MODE=coverage php vendor/bin/phpunit --coverage-html=build/coverage",
+        "lint": "php build/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run -v",
+        "lint:fix": "php build/php-cs-fixer fix --config=.php-cs-fixer.php"
+    }
+}

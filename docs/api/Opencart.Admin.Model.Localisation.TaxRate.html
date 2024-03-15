@@ -1,0 +1,656 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class Opencart\Admin\Model\Localisation\TaxRate | OpenCart API API</title>
+	<link rel="stylesheet" href="http://localhost\opencart-master/docs/api/assets/main.css">
+	<script src="http://localhost\opencart-master/docs/api/assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.html">Opencart</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.html">Admin</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Controller.html">Controller</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.html">Model</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Catalog.html">Catalog</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Cms.html">Cms</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Customer.html">Customer</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Design.html">Design</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Extension.html">Extension</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Localisation.html">Localisation</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Marketing.html">Marketing</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Report.html">Report</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Sale.html">Sale</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Setting.html">Setting</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Tool.html">Tool</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.User.html">User</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Catalog.html">Catalog</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.System.html">System</a>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-none.html">none</a>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.AddressFormat.html">
+							AddressFormat
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.Country.html">
+							Country
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.Currency.html">
+							Currency
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.GeoZone.html">
+							GeoZone
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.Language.html">
+							Language
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.LengthClass.html">
+							LengthClass
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.Location.html">
+							Location
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.OrderStatus.html">
+							OrderStatus
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.ReturnAction.html">
+							ReturnAction
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.ReturnReason.html">
+							ReturnReason
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.ReturnStatus.html">
+							ReturnStatus
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.StockStatus.html">
+							StockStatus
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.SubscriptionStatus.html">
+							SubscriptionStatus
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.TaxClass.html">
+							TaxClass
+						</a>
+					</li>
+					<li class="active">
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.TaxRate.html">
+							TaxRate
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.WeightClass.html">
+							WeightClass
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.Zone.html">
+							Zone
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="http://localhost\opencart-master/docs/api/index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Localisation.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.TaxRate.html">Class</a></li>				<li>
+					<a href="http://localhost\opencart-master/docs/api/tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="http://localhost\opencart-master/docs/api/assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="http://localhost\opencart-master/docs/api/namespace-Opencart.html">Opencart</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.html">Admin</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.html">Model</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Localisation.html">Localisation</a>\<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Localisation.TaxRate.html">TaxRate</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+		<tr>
+			<th><code>extends</code></th>
+			<td>
+<code><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span title="Opencart\System\Engine\Model">Model</span></a></code>			</td>
+		</tr>
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Class TaxRate</p>
+</div>
+		</div>
+
+			<div class="classLikeSection">
+	<ul class="classTree">
+	<li>
+<a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a>
+
+
+	<ul class="classTree">
+	<li>
+<b><span class="active">Opencart\Admin\Model\Localisation\TaxRate</span></b>
+
+
+	</li>
+	</ul>
+	</li>
+	</ul>
+			</div>
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#8" title="Go to source code">admin\model\localisation\tax_rate.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="addTaxRate" id="_addTaxRate">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#9-28" title="Go to source code">addTaxRate</a>(<span>array&lt;string, mixed&gt; <var>$data</var></span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Tax Rate</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Tax Rate</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addTaxRate">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="editTaxRate" id="_editTaxRate">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#30-48" title="Go to source code">editTaxRate</a>(<span>int <var>$tax_rate_id</var></span>, <span>array&lt;string, mixed&gt; <var>$data</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Edit Tax Rate</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Edit Tax Rate</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_editTaxRate">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteTaxRate" id="_deleteTaxRate">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#50-61" title="Go to source code">deleteTaxRate</a>(<span>int <var>$tax_rate_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Tax Rate</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Tax Rate</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteTaxRate">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTaxRate" id="_getTaxRate">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#63-74" title="Go to source code">getTaxRate</a>(<span>int <var>$tax_rate_id</var></span>): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Tax Rate</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Tax Rate</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTaxRate">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTaxRates" id="_getTaxRates">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#76-120" title="Go to source code">getTaxRates</a>(<span>array&lt;string, mixed&gt; <var>$data</var> = []</span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Tax Rates</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Tax Rates</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTaxRates">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTotalTaxRates" id="_getTotalTaxRates">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#122-131" title="Go to source code">getTotalTaxRates</a>(): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Total Tax Rates</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Total Tax Rates</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTotalTaxRates">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTotalTaxRatesByGeoZoneId" id="_getTotalTaxRatesByGeoZoneId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#133-144" title="Go to source code">getTotalTaxRatesByGeoZoneId</a>(<span>int <var>$geo_zone_id</var></span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Total Tax Rates By Geo Zone ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Total Tax Rates By Geo Zone ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTotalTaxRatesByGeoZoneId">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="addCustomerGroup" id="_addCustomerGroup">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#146-156" title="Go to source code">addCustomerGroup</a>(<span>int <var>$tax_rate_id</var></span>, <span>int <var>$customer_group_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Customer Group</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Customer Group</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addCustomerGroup">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteCustomerGroups" id="_deleteCustomerGroups">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#158-167" title="Go to source code">deleteCustomerGroups</a>(<span>int <var>$tax_rate_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Customer Groups</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Customer Groups</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteCustomerGroups">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteCustomerGroupsByCustomerGroupId" id="_deleteCustomerGroupsByCustomerGroupId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#169-178" title="Go to source code">deleteCustomerGroupsByCustomerGroupId</a>(<span>int <var>$customer_group_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Customer Groups By Customer Group ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Customer Groups By Customer Group ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteCustomerGroupsByCustomerGroupId">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getCustomerGroups" id="_getCustomerGroups">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.localisation.tax_rate.html#180-197" title="Go to source code">getCustomerGroups</a>(<span>int <var>$tax_rate_id</var></span>): array&lt;int, int&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Customer Groups</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Customer Groups</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getCustomerGroups">#</a>
+		</td>
+	</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<th class="table-heading">Methods inherited from <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a></th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+<code><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___construct">__construct()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___get">__get()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___set">__set()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___isset">__isset()</a></code>				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<table class="table">
+			<tr>
+				<th class="table-heading">Properties inherited from <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a></th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+<code><var><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#$registry">$registry</a></var></code>				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+		</div>
+
+		<div class="layout-footer">
+			OpenCart API API documentation generated by <a href="https://www.apigen.org">ApiGen dev-master</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

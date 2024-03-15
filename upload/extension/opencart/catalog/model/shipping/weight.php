@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
  */
 class Weight extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Quote
+	 *
 	 * @param array<string, mixed> $address
 	 *
 	 * @return array<string, mixed>

@@ -28,13 +28,15 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Filter
+	 *
 	 * @param int                  $filter_id
 	 * @param array<string, mixed> $data
 	 */
 	public function editFilter(int $filter_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
 
-		$this->model_catalog_filter->deleteDescription($filter_id);
+		$this->model_catalog_filter->deleteDescriptions($filter_id);
 
 		foreach ($data['filter_description'] as $language_id => $filter_description) {
 			$this->model_catalog_filter->addDescription($filter_id, $language_id, $filter_description);
@@ -53,7 +55,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function deleteFilter(int $filter_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
 
-		$this->model_catalog_filter->deleteDescription($filter_id);
+		$this->model_catalog_filter->deleteDescriptions($filter_id);
 
 		$this->cache->delete('filter');
 	}
@@ -72,7 +74,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Groups
+	 * Get Filters
 	 *
 	 * @param array<string, mixed> $data
 	 *
@@ -117,7 +119,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Groups
+	 * Get Total Filters
 	 *
 	 * @return int
 	 */
@@ -136,23 +138,34 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addDescription(int $filter_id, int $language_id, $data): void {
+	public function addDescription(int $filter_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_description` SET `filter_id` = '" . (int)$filter_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Descriptions
 	 *
 	 * @param int $filter_id
 	 *
 	 * @return void
 	 */
-	public function deleteDescription(int $filter_id): void {
+	public function deleteDescriptions(int $filter_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `filter_id` = '" . (int)$filter_id . "'");
 	}
 
 	/**
-	 * Get Group Descriptions
+	 * Delete Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 * Get Descriptions
 	 *
 	 * @param int $filter_id
 	 *
@@ -168,5 +181,18 @@ class Filter extends \Opencart\System\Engine\Model {
 		}
 
 		return $filter_data;
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, string>>
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 }

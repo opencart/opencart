@@ -579,6 +579,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateArtifactAsync(array $args = [])
  * @method \Aws\Result updateCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterAsync(array $args = [])
+ * @method \Aws\Result updateClusterSoftware(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateClusterSoftwareAsync(array $args = [])
  * @method \Aws\Result updateCodeRepository(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCodeRepositoryAsync(array $args = [])
  * @method \Aws\Result updateContext(array $args = [])

@@ -17,18 +17,25 @@ class Reward extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addReward(int $customer_id, int $order_id, string $description, int $points): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$this->customer->getId() . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `points` = '" . (int)$points . "', `date_added` = NOW()");
 	}
-	
+
 	/**
-	 * delete Reward
+	 * Delete Reward
 	 *
-	 * @param int    $customer_id
+	 * @param int $customer_id
+	 * @param int $order_id
 	 *
 	 * @return void
 	 */
-	public function deleteReward(int $customer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	public function deleteReward(int $customer_id, int $order_id = 0): void {
+		$sql = "DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'";
+
+		if ($order_id) {
+			$sql .= " AND `order_id` = '" . (int)$order_id . "'";
+		}
+
+		$this->db->query($sql);
 	}
 
 	/**
@@ -39,18 +46,19 @@ class Reward extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function deleteRewardByOrderId(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` < 0");
 	}
 
 	/**
 	 * Get Rewards
 	 *
+	 * @param int                  $customer_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
-	public function getRewards(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
+	public function getRewards(int $customer_id, array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		$sort_data = [
 			'points',
@@ -90,10 +98,12 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Rewards
 	 *
+	 * @param int $customer_id
+	 *
 	 * @return int
 	 */
-	public function getTotalRewards(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
+	public function getTotalRewards(int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];
 	}

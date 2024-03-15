@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
  */
 class Credit extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Total
+	 *
 	 * @param array<int, array<string, mixed>> $totals
 	 * @param array<int, float>                $taxes
 	 * @param float                            $total
@@ -36,6 +38,8 @@ class Credit extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Confirm
+	 *
 	 * @param array<string, mixed> $order_info
 	 * @param array<string, mixed> $order_total
 	 *
@@ -47,19 +51,20 @@ class Credit extends \Opencart\System\Engine\Model {
 		if ($order_info['customer_id']) {
 			$this->load->model('account/transaction');
 
-			$this->model_account_transaction->addTransaction($order_info['customer_id'], sprintf($this->language->get('text_order_id'), (int)$order_info['order_id']), $order_total['value'], $order_info['order_id']);
+			$this->model_account_transaction->addTransaction($order_info['customer_id'], $order_info['order_id'], sprintf($this->language->get('text_order_id'), (int)$order_info['order_id']), (float)$order_total['value']);
 		}
 	}
 
 	/**
-	 * @param int $order_id
+	 * Unconfirm
+	 *
+	 * @param array<string, mixed> $order_info
 	 *
 	 * @return void
 	 */
-	public function unconfirm(int $order_id): void {
+	public function unconfirm(array $order_info): void {
 		$this->load->model('account/transaction');
 
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->model_account_transaction->deleteTransactionByOrderId($order_info['order_id']);
 	}
 }

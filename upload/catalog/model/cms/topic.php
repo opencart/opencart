@@ -30,6 +30,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Topics
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTopics(): array {

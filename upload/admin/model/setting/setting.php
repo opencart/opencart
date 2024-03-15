@@ -74,11 +74,25 @@ class Setting extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function deleteSettingByCode(string $code): void {
+	/**
+	 * Delete Settings By Code
+	 *
+	 * @param string $code
+	 *
+	 * @return void
+	 */
+	public function deleteSettingsByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function deleteSettingByStoreId(int $store_id): void {
+	/**
+	 * Delete Settings By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
+	public function deleteSettingsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "'");
 	}
 

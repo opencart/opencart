@@ -14,15 +14,15 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * @return ?int
 	 */
 	public function addSubscriptionStatus(array $data): ?int {
-		$subscription_status_id = null;
+		$subscription_status_id = 0;
 
-		foreach ($data['subscription_status'] as $language_id => $value) {
-			if (isset($subscription_status_id)) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
-			} else {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['subscription_status'] as $language_id => $subscription_status) {
+			if (!$subscription_status_id) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_status['name']) . "'");
 
 				$subscription_status_id = $this->db->getLastId();
+			} else {
+				$this->model_localisation_subscription_status->addDescription($subscription_status_id, $language_id, $subscription_status);
 			}
 		}
 
@@ -40,10 +40,10 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function editSubscriptionStatus(int $subscription_status_id, array $data): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_status` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "'");
+		$this->deleteSubscriptionStatus($subscription_status_id);
 
-		foreach ($data['subscription_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
+		foreach ($data['subscription_status'] as $language_id => $subscription_status) {
+			$this->model_localisation_subscription_status->addDescription($subscription_status_id, $language_id, $subscription_status);
 		}
 
 		$this->cache->delete('subscription_status');
@@ -58,6 +58,19 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteSubscriptionStatus(int $subscription_status_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_status` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "'");
+
+		$this->cache->delete('subscription_status');
+	}
+
+	/**
+	 * Delete Subscription Statuses By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
+	public function deleteStockStatusesByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		$this->cache->delete('subscription_status');
 	}
@@ -119,6 +132,19 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Description
+	 *
+	 * @param int                  $subscription_status_id
+	 * @param int                  $language_id
+	 * @param array<string, mixed> $data
+	 *
+	 * @return void
+	 */
+	public function addDescription(int $subscription_status_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * @param int $subscription_status_id
@@ -135,6 +161,19 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 		}
 
 		return $subscription_status_data;
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * @param int $language_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

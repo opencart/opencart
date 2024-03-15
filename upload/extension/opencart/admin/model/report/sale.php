@@ -7,6 +7,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
  */
 class Sale extends \Opencart\System\Engine\Model {
 	/**
+	 * Get Total Sales
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return float
@@ -24,6 +26,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Country
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTotalOrdersByCountry(): array {
@@ -33,6 +37,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Day
+	 *
 	 * @return array<int, array<string, int>>
 	 */
 	public function getTotalOrdersByDay(): array {
@@ -64,6 +70,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Week
+	 *
 	 * @return array<int, array<string, int>>
 	 */
 	public function getTotalOrdersByWeek(): array {
@@ -99,6 +107,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Month
+	 *
 	 * @return array<int, array<string, int>>
 	 */
 	public function getTotalOrdersByMonth(): array {
@@ -132,6 +142,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders By Year
+	 *
 	 * @return array<int, array<string, int>>
 	 */
 	public function getTotalOrdersByYear(): array {
@@ -163,6 +175,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Orders
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -226,6 +240,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Orders
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -273,6 +289,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Taxes
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -334,6 +352,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Taxes
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -383,6 +403,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Shipping
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -444,6 +466,8 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Shipping
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int

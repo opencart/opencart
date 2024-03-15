@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
  */
 class Topic extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {

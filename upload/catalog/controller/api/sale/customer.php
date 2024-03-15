@@ -14,6 +14,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->session->data['order_id']) {
+			$order_id = $this->session->data['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
 		$keys = [
 			'customer_id',
 			'customer_group_id',
@@ -55,19 +61,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_customer_group');
 		}
 
-		if ((oc_strlen($this->request->post['firstname']) < 1) || (oc_strlen($this->request->post['firstname']) > 32)) {
+		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((oc_strlen($this->request->post['lastname']) < 1) || (oc_strlen($this->request->post['lastname']) > 32)) {
+		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((oc_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!oc_validate_email($this->request->post['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->config->get('config_telephone_required') && (oc_strlen($this->request->post['telephone']) < 3) || (oc_strlen($this->request->post['telephone']) > 32)) {
+		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -96,6 +102,13 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'telephone'         => $this->request->post['telephone'],
 				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
+
+			if ($order_id) {
+
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->editOrder($order_id, $this->session->data['customer']);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 

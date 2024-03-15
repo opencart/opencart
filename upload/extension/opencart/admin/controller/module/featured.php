@@ -134,7 +134,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((oc_strlen($this->request->post['name']) < 3) || (oc_strlen($this->request->post['name']) > 64)) {
+		if (!oc_validate_length($this->request->post['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 

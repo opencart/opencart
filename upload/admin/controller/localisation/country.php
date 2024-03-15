@@ -379,6 +379,14 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		if (oc_strlen($this->request->post['iso_code_2']) != 2) {
+			$json['error']['iso_code_2'] = $this->language->get('error_iso_code_2');
+		}
+
+		if (oc_strlen($this->request->post['iso_code_3']) != 3) {
+			$json['error']['iso_code_3'] = $this->language->get('error_iso_code_3');
+		}
+
 		if (!$json) {
 			$this->load->model('localisation/country');
 

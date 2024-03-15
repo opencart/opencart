@@ -145,6 +145,19 @@ class Register extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true);
 		}
 
+		// Captcha first to prevent probing for registered emails
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
+
+		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '.validate');
+
+			if ($captcha) {
+				$json['error']['captcha'] = $captcha;
+			}
+		}
+
 		if (!$json) {
 			// Customer Group
 			if ($this->request->post['customer_group_id']) {
@@ -161,15 +174,15 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_customer_group');
 			}
 
-			if ((oc_strlen($this->request->post['firstname']) < 1) || (oc_strlen($this->request->post['firstname']) > 32)) {
+			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
-			if ((oc_strlen($this->request->post['lastname']) < 1) || (oc_strlen($this->request->post['lastname']) > 32)) {
+			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if ((oc_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+			if (!oc_validate_email($this->request->post['email'])) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
@@ -179,7 +192,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
-			if ($this->config->get('config_telephone_required') && (oc_strlen($this->request->post['telephone']) < 3) || (oc_strlen($this->request->post['telephone']) > 32)) {
+			if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
@@ -198,21 +211,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 6) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), 6, 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
-			}
-
-			// Captcha
-			$this->load->model('setting/extension');
-
-			$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
-
-			if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-				$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '.validate');
-
-				if ($captcha) {
-					$json['error']['captcha'] = $captcha;
-				}
 			}
 
 			// Agree to terms

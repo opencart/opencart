@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Event;
  * @package Opencart\Catalog\Controller\Event
  */
 class Activity extends \Opencart\System\Engine\Controller {
-	// catalog/model/account/customer/addCustomer/after
 	/**
 	 * Add Customer
+	 *
+	 * catalog/model/account/customer/addCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -29,10 +30,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/customer/editCustomer/after
-
 	/**
 	 * Edit Customer
+	 *
+	 * catalog/model/account/customer/editCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -53,10 +54,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/customer/editPassword/after
-
 	/**
 	 * Edit Password
+	 *
+	 * catalog/model/account/customer/editPassword/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -90,10 +91,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/customer/deleteLoginAttempts/after
-
 	/**
 	 * Login
+	 *
+	 * catalog/model/account/customer/deleteLoginAttempts/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -118,10 +119,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/customer/editCode/after
-
 	/**
 	 * Forgotten
+	 *
+	 * catalog/model/account/customer/editCode/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -148,10 +149,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/customer/addTransaction/after
-
 	/**
 	 * Add Transaction
+	 *
+	 * catalog/model/account/customer/addTransaction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -179,10 +180,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/affiliate/addAffiliate/after
-
 	/**
 	 * Add Affiliate
+	 *
+	 * catalog/model/account/affiliate/addAffiliate/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -203,10 +204,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/affiliate/editAffiliate/after
-
 	/**
 	 * Edit Affiliate
+	 *
+	 * catalog/model/account/affiliate/editAffiliate/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -227,10 +228,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/address/addAddress/after
-
 	/**
 	 * Add Address
+	 *
+	 * catalog/model/account/address/addAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -251,10 +252,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/address/editAddress/after
-
 	/**
 	 * Edit Address
+	 *
+	 * Called by catalog/model/account/address/editAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -275,10 +276,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/address/deleteAddress/after
-
 	/**
 	 * Delete Address
+	 *
+	 * Called by catalog/model/account/address/deleteAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -299,10 +300,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/returns/addReturn/after
-
 	/**
 	 * Add Return
+	 *
+	 * catalog/model/account/returns/addReturn/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -333,10 +334,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/checkout/order/addHistory/before
-
 	/**
 	 * Add History
+	 *
+	 * catalog/model/checkout/order/addHistory/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

@@ -258,7 +258,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['length_class_description'] as $language_id => $value) {
-			if ((oc_strlen($value['title']) < 3) || (oc_strlen($value['title']) > 32)) {
+			if (!oc_validate_length($value['title'], 3, 32)) {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 

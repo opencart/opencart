@@ -40,7 +40,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	public function editGeoZone(int $geo_zone_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "' WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
-		$this->deleteZone($geo_zone_id);
+		$this->deleteZones($geo_zone_id);
 
 		if (isset($data['zone_to_geo_zone'])) {
 			foreach ($data['zone_to_geo_zone'] as $zone_to_geo_zone) {
@@ -61,7 +61,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	public function deleteGeoZone(int $geo_zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
-		$this->deleteZone($geo_zone_id);
+		$this->deleteZones($geo_zone_id);
 
 		$this->cache->delete('geo_zone');
 	}
@@ -145,19 +145,30 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Zone
+	 *
 	 * @param int                  $geo_zone_id
 	 * @param array<string, mixed> $data
+	 *
+	 * @return void
 	 */
-	public function addZone(int $geo_zone_id, $data): void {
+	public function addZone(int $geo_zone_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone_to_geo_zone` SET `geo_zone_id` = '" . (int)$geo_zone_id . "', `country_id` = '" . (int)$data['country_id'] . "', `zone_id` = '" . (int)$data['zone_id'] . "'");
 	}
 
-	public function deleteZone(int $geo_zone_id): void {
+	/**
+	 * Delete Zones
+	 *
+	 * @param int $geo_zone_id
+	 *
+	 * @return void
+	 */
+	public function deleteZones(int $geo_zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 	}
 
 	/**
-	 * Get Zone To Geo Zones
+	 * Get Zones
 	 *
 	 * @param int $geo_zone_id
 	 *
@@ -170,7 +181,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Zone To Geo Zone By Geo Zone ID
+	 * Get Total Zones
 	 *
 	 * @param int $geo_zone_id
 	 *
@@ -183,7 +194,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Zone To Geo Zone By Country ID
+	 * Get Total Zones By Country ID
 	 *
 	 * @param int $country_id
 	 *
@@ -196,7 +207,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Zone To Geo Zone By Zone ID
+	 * Get Total Zones By Zone ID
 	 *
 	 * @param int $zone_id
 	 *

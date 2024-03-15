@@ -290,7 +290,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((oc_strlen($this->request->post['key']) < 3) || (oc_strlen($this->request->post['key']) > 64)) {
+		if (!oc_validate_length($this->request->post['key'], 3, 64)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 

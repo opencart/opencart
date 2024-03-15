@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
- * CLass SaleCoupon
+ * CLass Sale Coupon
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

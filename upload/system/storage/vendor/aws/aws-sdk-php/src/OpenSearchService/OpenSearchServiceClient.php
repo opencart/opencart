@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associatePackageAsync(array $args = [])
  * @method \Aws\Result authorizeVpcEndpointAccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise authorizeVpcEndpointAccessAsync(array $args = [])
+ * @method \Aws\Result cancelDomainConfigChange(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelDomainConfigChangeAsync(array $args = [])
  * @method \Aws\Result cancelServiceSoftwareUpdate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelServiceSoftwareUpdateAsync(array $args = [])
  * @method \Aws\Result createDomain(array $args = [])

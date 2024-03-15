@@ -1,0 +1,20 @@
+parameters:
+  paths: [
+    'upload/admin',
+    'upload/catalog',
+    'upload/extension',
+    'upload/system/engine',
+    'upload/system/library',
+    'upload/system/helper',
+  ]
+  include: ['*.php']
+  exclude: ['upload/system/storage/vendor']
+  excludeProtected: false
+  excludePrivate: true
+  excludeTagged: ['internal']
+  outputDir: 'docs/api'
+  themeDir: null
+  title: 'OpenCart API'
+  baseUrl: ''
+  workerCount: 8
+  memoryLimit: '512M'

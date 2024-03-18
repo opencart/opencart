@@ -37,9 +37,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				break;
 			}
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 

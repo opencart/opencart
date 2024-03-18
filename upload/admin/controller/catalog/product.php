@@ -1104,7 +1104,7 @@ class Product extends \Opencart\System\Engine\Controller {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 					}
 
-					if (!oc_validate_seo_url($keyword)) {
+					if (!oc_validate_path($keyword)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_character');
 					}
 

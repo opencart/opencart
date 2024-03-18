@@ -278,7 +278,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->load->model('catalog/product');
 
-		$this->model_catalog_product->deletesCategoriesByCategoryId($category_id);
+		$this->model_catalog_product->deleteCategoriesByCategoryId($category_id);
 
 		$this->load->model('marketing/coupon');
 

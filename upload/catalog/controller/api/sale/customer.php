@@ -102,4 +102,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		return $json;
 	}
+
+	public function save(): void {
+
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

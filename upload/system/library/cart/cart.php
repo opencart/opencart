@@ -579,6 +579,23 @@ class Cart {
 	}
 
 	/**
+	 * Has Minimum
+	 *
+	 * Check if any products have a minimum order quantity amount and do not meet the requirement
+	 *
+	 * @return bool
+	 */
+	public function hasMinimum() {
+		foreach ($this->getProducts() as $product) {
+			if (!$product['minimum']) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * hasShipping
 	 *
 	 * @return bool

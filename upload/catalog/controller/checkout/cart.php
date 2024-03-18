@@ -27,9 +27,16 @@ class Cart extends \Opencart\System\Engine\Controller {
 		];
 
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 				$data['error_warning'] = $this->language->get('error_stock');
-			} elseif (isset($this->session->data['error'])) {
+			}
+
+			if (!$this->cart->hasMinimum()) {
+				$data['error_minimum'] = $this->language->get('error_minimum');
+			}
+
+			if (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
 
 				unset($this->session->data['error']);
@@ -141,6 +148,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$products = $this->model_checkout_cart->getProducts();
 
 		foreach ($products as $product) {
+			print_r($product);
+
 			if (!$product['minimum']) {
 				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 			}

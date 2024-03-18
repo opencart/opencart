@@ -27,7 +27,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		];
 
 		foreach ($routes as $route) {
-			$output = $this->load->controller($route);
+			$this->load->controller($route);
+
+			$output = $this->response->getOutput();
 
 			if ($output) {
 				$json = $output;
@@ -39,6 +41,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+
 
 
 

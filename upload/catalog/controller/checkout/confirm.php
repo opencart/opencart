@@ -29,19 +29,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
 			$status = false;
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->model_checkout_cart->getProducts();
-
-		foreach ($products as $product) {
-			if (!$product['minimum']) {
-				$status = false;
-
-				break;
-			}
 		}
 
 		// Shipping
@@ -244,6 +233,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			// Products
 			$order_data['products'] = [];
+
+			$products = $this->model_checkout_cart->getProducts();
 
 			foreach ($products as $product) {
 				$option_data = [];

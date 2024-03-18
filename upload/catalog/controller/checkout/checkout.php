@@ -11,19 +11,8 @@ class Checkout extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
 			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true));
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			if (!$product['minimum']) {
-				$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true));
-
-				break;
-			}
 		}
 
 		$this->load->language('checkout/checkout');

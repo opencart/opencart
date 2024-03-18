@@ -542,14 +542,17 @@
       </div>
       <div class="modal-body">
         <form id="form-customer">
+
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
+
           <div class="mb-3">
             <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label>
             <select name="customer_group_id" id="input-customer-group" class="form-select">
@@ -558,16 +561,19 @@
               {% endfor %}
             </select>
           </div>
+
           <div class="mb-3 required">
             <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
             <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
             <div id="error-firstname" class="invalid-feedback"></div>
           </div>
+
           <div class="mb-3 required">
             <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
             <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
             <div id="error-lastname" class="invalid-feedback"></div>
           </div>
+
           <div class="mb-3 required">
             <label for="input-email" class="form-label">{{ entry_email }}</label>
             <div class="input-group">
@@ -575,10 +581,12 @@
             </div>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
+
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
             <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
+
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'account' %}
 

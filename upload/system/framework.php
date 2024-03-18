@@ -13,12 +13,12 @@ $registry->set('autoloader', $autoloader);
 
 // Config
 $config = new \Opencart\System\Engine\Config();
-$registry->set('config', $config);
-$config->addPath(DIR_CONFIG);
 
+$config->addPath(DIR_CONFIG);
 // Load the default config
 $config->load('default');
 $config->load(strtolower(APPLICATION));
+$registry->set('config', $config);
 
 // Set the default application
 $config->set('application', APPLICATION);
@@ -162,8 +162,8 @@ $registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_e
 
 // Template
 $template = new \Opencart\System\Library\Template($config->get('template_engine'));
-$registry->set('template', $template);
 $template->addPath(DIR_TEMPLATE);
+$registry->set('template', $template);
 
 // Language
 $language = new \Opencart\System\Library\Language($config->get('language_code'));

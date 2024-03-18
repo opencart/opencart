@@ -22,7 +22,7 @@ function oc_strpos(string $string, string $needle, int $offset = 0) {
  *
  * @return false|int
  */
-function oc_strrpos(string $string, string $needle, int $offset = 0) {
+function oc_strrpos(string $string, string $needle, int $offset = 0): int {
 	return mb_strrpos($string, $needle, $offset);
 }
 

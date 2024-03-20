@@ -71,7 +71,7 @@ class Cart {
 	}
 
 	/**
-	 * getProducts
+	 * Get Products
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -440,7 +440,7 @@ class Cart {
 	}
 
 	/**
-	 * getSubscriptions
+	 * Get Subscriptions
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -457,7 +457,7 @@ class Cart {
 	}
 
 	/**
-	 * getWeight
+	 * Get Weight
 	 *
 	 * @return float
 	 */
@@ -474,7 +474,7 @@ class Cart {
 	}
 
 	/**
-	 * getSubTotal
+	 * Get Sub Total
 	 *
 	 * @return float
 	 */
@@ -489,7 +489,7 @@ class Cart {
 	}
 
 	/**
-	 * getTaxes
+	 * Get Taxes
 	 *
 	 * @return array<int, float>
 	 */
@@ -514,7 +514,7 @@ class Cart {
 	}
 
 	/**
-	 * getTotal
+	 * Get Total
 	 *
 	 * @return float
 	 */
@@ -529,7 +529,7 @@ class Cart {
 	}
 
 	/**
-	 * countProducts
+	 * Count Products
 	 *
 	 * @return int
 	 */
@@ -546,7 +546,7 @@ class Cart {
 	}
 
 	/**
-	 * hadProducts
+	 * Has Products
 	 *
 	 * @return bool
 	 */
@@ -555,7 +555,7 @@ class Cart {
 	}
 
 	/**
-	 * hasSubscription
+	 * Has Subscription
 	 *
 	 * @return bool
 	 */
@@ -564,7 +564,7 @@ class Cart {
 	}
 
 	/**
-	 * hasStock
+	 * Has Stock
 	 *
 	 * @return bool
 	 */
@@ -596,7 +596,7 @@ class Cart {
 	}
 
 	/**
-	 * hasShipping
+	 * Has Shipping
 	 *
 	 * @return bool
 	 */
@@ -611,7 +611,7 @@ class Cart {
 	}
 
 	/**
-	 * hasDownload
+	 * Has Download
 	 *
 	 * @return bool
 	 */

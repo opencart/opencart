@@ -315,9 +315,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalProductsByProductId(int $product_id): int {
-		$sql = "SELECT SUM(`op`.`quantity`) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `op`.`product_id` = '" . (int)$product_id . "' AND `order_status_id` > '0'";
-
-		$query = $this->db->query($sql);
+		$query = $this->db->query("SELECT SUM(`op`.`quantity`) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `op`.`product_id` = '" . (int)$product_id . "' AND `order_status_id` > '0'");
 
 		return (int)$query->row['total'];
 	}

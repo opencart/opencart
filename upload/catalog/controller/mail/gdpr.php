@@ -8,6 +8,8 @@ namespace Opencart\Catalog\Controller\Mail;
 class Gdpr extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/gdpr/addGdpr
 	/**
+	 * Index
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output

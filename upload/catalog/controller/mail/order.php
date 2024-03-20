@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Controller\Mail;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**
-	 * Mail class for orders
+	 * Index
 	 *
 	 * Trigger catalog/model/checkout/order/addHistory/before
 	 *
@@ -58,6 +58,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Add
+	 *
 	 * @param array<string, mixed> $order_info
 	 * @param int                  $order_status_id
 	 * @param string               $comment
@@ -372,6 +374,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * History
+	 *
 	 * catalog/model/checkout/order/addHistory/before
 	 *
 	 * @param array<string, mixed> $order_info
@@ -475,6 +479,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Alert
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 *

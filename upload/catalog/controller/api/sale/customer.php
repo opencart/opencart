@@ -103,6 +103,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 		return $json;
 	}
 
+	/**
+	 * Save
+	 * 
+	 * @return void
+	 */
 	public function save(): void {
 
 

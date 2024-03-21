@@ -21,16 +21,16 @@ var PayPalAPI = (function () {
 		}
 		
 		if (paypal_data['components'].includes('googlepay')) {
-			$('#googlepay_button_container').html('');
-			$('#googlepay_button_container').addClass('paypal-spinner');
+			$('#googlepay_button_' + paypal_data['page_code'] + '_container').html('');
+			$('#googlepay_button_' + paypal_data['page_code'] + '_container').addClass('paypal-spinner');
 		}
 		
 		if (paypal_data['components'].includes('applepay')) {
-			$('#applepay_button_container').html('');
-			$('#applepay_button_container').addClass('paypal-spinner');
+			$('#applepay_button_' + paypal_data['page_code'] + '_container').html('');
+			$('#applepay_button_' + paypal_data['page_code'] + '_container').addClass('paypal-spinner');
 		}
 		
-		if (paypal_data['components'].includes('hosted-fields')) {
+		if (paypal_data['components'].includes('card-fields')) {
 			$('#paypal_card_container').find('iframe').remove();
 			$('#paypal_card_container').addClass('paypal-spinner');
 		}
@@ -103,12 +103,12 @@ var PayPalAPI = (function () {
 					env: paypal_data['environment'],
 					locale: paypal_data['locale'],
 					style: {
-						layout: ((paypal_data['page_code'] != 'checkout') ? 'horizontal' : 'vertical'),
+						layout: 'vertical',
 						size: paypal_data['button_size'],
 						color: paypal_data['button_color'],
 						shape: paypal_data['button_shape'],
 						label: paypal_data['button_label'],
-						tagline: ((paypal_data['page_code'] != 'checkout') ? paypal_data['button_tagline'] : 'false')
+						tagline: 'false'
 					}
 				};
 				
@@ -123,26 +123,26 @@ var PayPalAPI = (function () {
 			
 			$('#paypal_button_' + paypal_data['page_code'] + '_container').removeClass('paypal-spinner');
 		}
-		
-		if (paypal_data['components'].includes('googlepay') && $('#googlepay_button').length && !$('#googlepay_button_container').html()) {
+				
+		if (paypal_data['components'].includes('googlepay') && $('#googlepay_button_' + paypal_data['page_code']).length && !$('#googlepay_button_' + paypal_data['page_code'] + '_container').html()) {
 			if (google && PayPalSDK.Googlepay) {
 				initGooglePaySDK().catch(console.log);
 			}
 			
-			$('#googlepay_button_container').removeClass('paypal-spinner');
+			$('#googlepay_button_' + paypal_data['page_code'] + '_container').removeClass('paypal-spinner');
 		}
 		
-		if (paypal_data['components'].includes('applepay') && $('#applepay_button').length && !$('#applepay_button_container').html()) {
-			$('#applepay_button').css('text-align', paypal_data['applepay_button_align']);
+		if (paypal_data['components'].includes('applepay') && $('#applepay_button_' + paypal_data['page_code']).length && !$('#applepay_button_' + paypal_data['page_code'] + '_container').html()) {
+			$('#applepay_button_' + paypal_data['page_code']).css('text-align', paypal_data['applepay_button_align']);
 			
 			var applepay_button_style = [];
 			
 			if (paypal_data['applepay_button_width']) {
-				$('#applepay_button_container').css('display', 'inline-block');
-				$('#applepay_button_container').css('width', paypal_data['applepay_button_width']);
+				$('#applepay_button_' + paypal_data['page_code'] + '_container').css('display', 'inline-block');
+				$('#applepay_button_' + paypal_data['page_code'] + '_container').css('width', paypal_data['applepay_button_width']);
 			} else {
-				$('#applepay_button_container').css('display', 'block');
-				$('#applepay_button_container').css('width', 'auto');
+				$('#applepay_button_' + paypal_data['page_code'] + '_container').css('display', 'block');
+				$('#applepay_button_' + paypal_data['page_code'] + '_container').css('width', 'auto');
 			}
 						
 			var applepay_button = document.createElement('apple-pay-button');
@@ -172,12 +172,12 @@ var PayPalAPI = (function () {
 																		
 			applepay_button.setAttribute('style', applepay_button_style.join('; '));
 															
-			document.querySelector('#applepay_button_container').appendChild(applepay_button);			
+			document.querySelector('#applepay_button_' + paypal_data['page_code'] + '_container').appendChild(applepay_button);			
 									
-			$('#applepay_button_container').removeClass('paypal-spinner');
+			$('#applepay_button_' + paypal_data['page_code'] + '_container').removeClass('paypal-spinner');
 		}
 		
-		if (paypal_data['components'].includes('hosted-fields') && $('#paypal_card').length) {
+		if (paypal_data['components'].includes('card-fields') && $('#paypal_card').length) {
 			$('#paypal_card').css('text-align', paypal_data['card_align']);
 						
 			if (paypal_data['card_width']) {
@@ -189,123 +189,69 @@ var PayPalAPI = (function () {
 			}
 			
 			try {
-				// Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
-				if (PayPalSDK.HostedFields.isEligible() === true) {			
-					var paypal_card_form = document.querySelector('#paypal_card_form');
-					var paypal_button_submit = document.querySelector('#paypal_button_submit');
-			
-					PayPalSDK.HostedFields.render({
-						styles: {
-							'input': {
-								'color': '#282c37',
-								'transition': 'color 0.1s',
-								'line-height': '3'
-							},
-							'input.invalid': {
-								'color': '#E53A40'
-							},
-							':-ms-input-placeholder': {
-								'color': 'rgba(0,0,0,0.6)'
-							},
-							':-moz-placeholder': {
-								'color': 'rgba(0,0,0,0.6)'
-							}
-						},
-						fields: {
-							number: {
-								selector: '#card_number',
-								placeholder: '#### #### #### ####'
-							},
-							cvv: {
-								selector: '#cvv',
-								placeholder: '###'
-							},
-							expirationDate: {
-								selector: '#expiration_date',
-								placeholder: 'MM / YYYY'
-							}
-						},
-						createOrder: function(data, actions) {
-							paypal_order_id = false;
-					
-							return paypal_order_id;
+				var paypal_card = PayPalSDK.CardFields({
+					style: {
+						'input': {
+							'font-size': '1rem',
+							'color': '#282c37',
+							'transition': 'color 0.1s',
+							'padding': '0.75rem 0.75rem',
 						}
-					}).then(function(hostedFieldsInstance) {
-						hostedFieldsInstance.on('blur', function (event) {
-							console.log('CCF Event "blur", state=' + hostedFieldsInstance.getState() + ', event=' + event);
-						});
-				
-						hostedFieldsInstance.on('focus', function (event) {
-							console.log('CCF Event "focus", state=' + hostedFieldsInstance.getState() + ', event=' + event);
-						});
+					},
+					createOrder: function() {
+						paypal_order_id = false;
+											
+						return paypal_order_id;
+					},
+					inputEvents: {
+						onChange: function(data) {
+							console.log('CCF Event "change", state=' + paypal_card.getState() + ', event=' + data);
+							
+							$('#paypal_card_form').removeClass().addClass('well');
+							$('#paypal_card_form').removeAttr();
+														
+							if (data.cards.length === 1) {
+								$('#paypal_card_form').addClass(data.cards[0].type);
+								$('#paypal_card_form').attr('card_type', data.cards[0].type);
+								$('#paypal_card_form').attr('card_nice_type', data.cards[0].niceType);
+							}
 
-						hostedFieldsInstance.on('validityChange', function (event) {
-							console.log('CCF Event "validityChange", state=' + hostedFieldsInstance.getState() + ',event=' + event);
-					
-							// Check if all fields are valid, then show submit button
-							var formValid = Object.keys(event.fields).every(function (key) {
-								return event.fields[key].isValid;
-							});
-
-							if (formValid) {
-								$('#paypal_button_submit').addClass('show-button');
+							if (data.isFormValid) {
+								$('#paypal_card_button').addClass('show-button');
 							} else {
-								$('#paypal_button_submit').removeClass('show-button');
+								$('#paypal_card_button').removeClass('show-button');
 							}
-						});
-
-						hostedFieldsInstance.on('notEmpty', function (event) {
-							console.log('CCF Event "notEmpty", state=' + hostedFieldsInstance.getState() + ', event=' + event);
-						});
-       
-						hostedFieldsInstance.on('empty', function (event) {
-							console.log('CCF Event "empty", state=' + hostedFieldsInstance.getState() + ',event=' + event);
-            
-							$(paypal_card_form).removeClass().addClass('well');
-							$('#card_image').removeClass();
-						});
-
-						hostedFieldsInstance.on('cardTypeChange', function (event) {
-							console.log('CCF Event "cardTypeChange", state=' + hostedFieldsInstance.getState() + ',event=' + event);
-					
-							$(paypal_card_form).removeClass().addClass('well');
-							$('#card_image').removeClass();
-					
-							// Change card bg depending on card type
-							if (event.cards.length === 1) {
-								$(paypal_card_form).addClass(event.cards[0].type);
-								$('#card_image').addClass(event.cards[0].type);
-						
-								// Change the CVV length for AmericanExpress cards
-								if (event.cards[0].code.size === 4) {
-									hostedFieldsInstance.setAttribute({
-										field: 'cvv',
-										attribute: 'placeholder',
-										value: '####'
-									});
-								} else {
-									hostedFieldsInstance.setAttribute({
-										field: 'cvv',
-										attribute: 'placeholder',
-										value: '###'
-									});
-								}
-							} else {												
-								hostedFieldsInstance.setAttribute({
-									field: 'cvv',
-									attribute: 'placeholder',
-									value: '###'
-								});
+						},
+						onFocus: function(data) {
+							console.log('CCF Event "focus", state=' + paypal_card.getState() + ', event=' + data);
+						},
+						onBlur: function(data) {
+							console.log('CCF Event "blur", state=' + paypal_card.getState() + ', event=' + data);
+						},
+						onInputSubmitRequest: function(data) {
+							console.log('CCF Event "input submit request", state=' + paypal_card.getState() + ', event=' + data);
+								
+							if (data.isFormValid) {
+								$('#paypal_card_button').addClass('show-button');
+							} else {
+								$('#paypal_card_button').removeClass('show-button');
 							}
-						});
-					});
+						}
+					}
+				});
+				
+				if (paypal_card.isEligible()) {
+					paypal_card.NameField().render('#card_holder_name');
+					paypal_card.NumberField().render('#card_number');
+					paypal_card.ExpiryField().render('#expiration_date');
+					paypal_card.CVVField().render('#cvv');
 				} else {
 					console.log('Not eligible for CCF');
 				}
 			} catch (error) {
 				console.error('PayPal Card failed during startup', error);
 			}
-			
+							
 			$('#paypal_card_container').removeClass('paypal-spinner');
 		}
 									
@@ -323,7 +269,7 @@ var PayPalAPI = (function () {
 		   		
 		paymentsClient.isReadyToPay({allowedPaymentMethods, apiVersion, apiVersionMinor}).then(function(response) {
 			if (response.result) {							
-				$('#googlepay_button').css('text-align', paypal_data['googlepay_button_align']);
+				$('#googlepay_button_' + paypal_data['page_code']).css('text-align', paypal_data['googlepay_button_align']);
 				
 				var googlepay_button_style = [];
 				
@@ -341,14 +287,14 @@ var PayPalAPI = (function () {
 						
 				googlepay_button_style.push('aspect-ratio: 7.5');
 									
-				$('#googlepay_button_container').attr('style', googlepay_button_style.join('; '));
+				$('#googlepay_button_' + paypal_data['page_code'] + '_container').attr('style', googlepay_button_style.join('; '));
 				
 				if (paypal_data['googlepay_button_shape'] == 'pill') {
-					$('#googlepay_button_container').removeClass('shape-rect');
-					$('#googlepay_button_container').addClass('shape-pill');
+					$('#googlepay_button_' + paypal_data['page_code'] + '_container').removeClass('shape-rect');
+					$('#googlepay_button_' + paypal_data['page_code'] + '_container').addClass('shape-pill');
 				} else {
-					$('#googlepay_button_container').removeClass('shape-pill');
-					$('#googlepay_button_container').addClass('shape-rect');
+					$('#googlepay_button_' + paypal_data['page_code'] + '_container').removeClass('shape-pill');
+					$('#googlepay_button_' + paypal_data['page_code'] + '_container').addClass('shape-rect');
 				}
 								
 				const googlepay_button = paymentsClient.createButton({
@@ -359,7 +305,7 @@ var PayPalAPI = (function () {
 					onClick: function() {}
 				});
 				
-				document.querySelector('#googlepay_button_container').appendChild(googlepay_button);
+				document.querySelector('#googlepay_button_' + paypal_data['page_code'] + '_container').appendChild(googlepay_button);
 			}
 		}).catch(function(error) {
 			console.log(error);

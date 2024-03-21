@@ -57,6 +57,13 @@
 											<input type="checkbox" name="payment_paypal_status" value="1" class="switch" {% if status %}checked="checked"{% endif %} />
 										</div>
 									</div>
+									<div class="form-group">
+										<label class="control-label" for="input_vault_status"><span data-toggle="tooltip" title="{{ help_vault_status }}">{{ entry_vault_status }}</span></label>
+										<div id="input_vault_status">
+											<input type="hidden" name="payment_paypal_setting[general][vault_status]" value="0" />
+											<input type="checkbox" name="payment_paypal_setting[general][vault_status]" value="1" class="switch" {% if setting['general']['vault_status'] %}checked="checked"{% endif %} />
+										</div>
+									</div>
 								</div>
 								<div class="col col-md-6">
 									<div class="form-group">
@@ -71,18 +78,6 @@
 							<div class="row">
 								<div class="col col-md-6">
 									<div class="form-group">
-										<label class="control-label" for="input_general_sale_analytics_range">{{ entry_sale_analytics_range }}</label>
-										<select name="payment_paypal_setting[general][sale_analytics_range]" id="input_general_sale_analytics_range" class="form-control">
-											{% for sale_analytics_range in setting['sale_analytics_range'] %}
-											{% if sale_analytics_range['code'] == setting['general']['sale_analytics_range'] %}
-											<option value="{{ sale_analytics_range['code'] }}" selected="selected">{{ attribute(_context, sale_analytics_range['name']) }}</option>
-											{% else %}
-											<option value="{{ sale_analytics_range['code'] }}">{{ attribute(_context, sale_analytics_range['name']) }}</option>
-											{% endif %}
-											{% endfor %}
-										</select>
-									</div>
-									<div class="form-group">
 										<label class="control-label" for="input_general_checkout_mode"><span data-toggle="tooltip" title="{{ help_checkout_mode }}">{{ entry_checkout_mode }}</span></label>
 										<select name="payment_paypal_setting[general][checkout_mode]" id="input_general_checkout_mode" class="form-control">
 											{% for checkout_mode in setting['checkout_mode'] %}
@@ -93,6 +88,10 @@
 											{% endif %}
 											{% endfor %}
 										</select>
+									</div>
+									<div class="form-group">
+										<label class="control-label" for="input_general_checkout_route"><span data-toggle="tooltip" title="{{ help_checkout_route }}">{{ entry_checkout_route }}</span></label>
+										<input type="text" name="payment_paypal_setting[general][checkout_route]" value="{{ setting['general']['checkout_route'] }}" placeholder="{{ entry_currency_value }}" id="input_general_checkout_route" class="form-control" />
 									</div>
 									<div class="form-group">
 										<label class="control-label" for="input_general_transaction_method">{{ entry_transaction_method }}</label>
@@ -129,6 +128,18 @@
 									</div>
 								</div>
 								<div class="col col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="input_general_sale_analytics_range">{{ entry_sale_analytics_range }}</label>
+										<select name="payment_paypal_setting[general][sale_analytics_range]" id="input_general_sale_analytics_range" class="form-control">
+											{% for sale_analytics_range in setting['sale_analytics_range'] %}
+											{% if sale_analytics_range['code'] == setting['general']['sale_analytics_range'] %}
+											<option value="{{ sale_analytics_range['code'] }}" selected="selected">{{ attribute(_context, sale_analytics_range['name']) }}</option>
+											{% else %}
+											<option value="{{ sale_analytics_range['code'] }}">{{ attribute(_context, sale_analytics_range['name']) }}</option>
+											{% endif %}
+											{% endfor %}
+										</select>
+									</div>
 									<div class="form-group">
 										<label class="control-label" for="input_general_country_code"><span data-toggle="tooltip" title="{{ help_country_code }}">{{ entry_country_code }}</span></label>
 										<select name="payment_paypal_setting[general][country_code]" id="input_general_country_code" class="form-control">
@@ -179,6 +190,8 @@
 										<label class="control-label" for="input_general_card_currency_value"><span data-toggle="tooltip" title="{{ help_card_currency_value }}">{{ entry_card_currency_value }}</span></label>
 										<input type="text" name="payment_paypal_setting[general][card_currency_value]" value="{{ setting['general']['card_currency_value'] }}" placeholder="{{ entry_card_currency_value }}" id="input_general_card_currency_value" class="form-control" />										
 									</div>
+								</div>
+								<div class="col col-md-12">
 									<div class="form-group">
 										<label class="control-label" for="input_cron_url"><span data-toggle="tooltip" title="{{ help_cron_url }}">{{ entry_cron_url }}</span></label>
 										<input type="hidden" name="payment_paypal_setting[general][cron_token]" value="{{ setting['general']['cron_token'] }}" />

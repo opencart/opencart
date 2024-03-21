@@ -509,7 +509,7 @@ class PayPal {
 			$ch = curl_init();
 			curl_setopt_array($ch, $curl_options);
 			$response = curl_exec($ch);
-						
+				
 			if (curl_errno($ch)) {
 				$curl_code = curl_errno($ch);
 				

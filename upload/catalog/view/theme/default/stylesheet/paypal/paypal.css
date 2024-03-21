@@ -1,5 +1,7 @@
 .paypal-button {
 	position: relative;
+	width: 100%;
+	margin: 1em 0;
 }
 @media (max-width: 476px) {
 	.paypal-button-container {
@@ -8,6 +10,8 @@
 }
 .googlepay-button {
 	position: relative;
+	width: 100%;
+	margin: 1em 0;
 }
 @media (max-width: 476px) {
 	.googlepay-button-container {
@@ -25,6 +29,8 @@
 }
 .applepay-button {
 	position: relative;
+	width: 100%;
+	margin: 1em 0;
 }
 @media (max-width: 476px) {
 	.applepay-button-container {

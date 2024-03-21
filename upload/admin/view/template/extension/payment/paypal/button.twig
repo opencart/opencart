@@ -253,23 +253,8 @@
 															{% endfor %}
 														</select>
 													</div>
-													{% if (button['page_code'] != 'checkout') %}
-													<div class="form-group">
-														<label class="control-label" for="input_button_{{ button['page_code'] }}_tagline">{{ entry_button_tagline }}</label>
-														<select name="payment_paypal_setting[button][{{ button['page_code'] }}][tagline]" id="input_button_{{ button['page_code'] }}_tagline" class="form-control control-paypal-button">
-															{% for button_tagline in setting['button_tagline'] %}
-															{% if (button_tagline['code'] == button['tagline']) %}
-															<option value="{{ button_tagline['code'] }}" selected="selected">{{ attribute(_context, button_tagline['name']) }}</option>
-															{% else %}
-															<option value="{{ button_tagline['code'] }}">{{ attribute(_context, button_tagline['name']) }}</option>
-															{% endif %}
-															{% endfor %}
-														</select>
-													</div>
-													{% endif %}
 												</div>
 											</div>
-											{% if (button['page_code'] == 'checkout') %}
 											<hr class="hr" />
 											<button type="button" href="#all_settings_{{ button['page_code'] }}" class="btn btn-default button-all-settings collapsed" data-toggle="collapse" role="button">{{ button_all_settings }}<i class="icon icon-all-settings"></i></button>	
 											<div id="all_settings_{{ button['page_code'] }}" class="all-settings collapse">
@@ -290,7 +275,6 @@
 													{% endfor %}
 												</div>
 											</div>
-											{% endif %}
 										</div>
 									</div>
 								</div>

@@ -67,21 +67,23 @@
 									<div id="paypal_card" class="paypal-card">
 										<div id="paypal_card_container" class="paypal-card-container paypal-spinner">
 											<div id="paypal_card_form" class="paypal-card-form well">
+												<div class="card-info-holder-name clearfix">
+													<div id="card_holder_name" class="card-input-container"></div>
+												</div>
 												<div class="card-info-number clearfix">
-													<label for="card_number" class="card-label">{{ entry_card_number }}</label>
-													<div id="card_number" class="card-input-container"><div id="card_image"></div></div>
+													<div id="card_number" class="card-input-container"></div>
 												</div>
 												<div class="card-info-date-cvv clearfix">
 													<div class="card-info-date">
-														<label for="expiration_date" class="card-label">{{ entry_expiration_date }}</label>
 														<div id="expiration_date" class="card-input-container"></div>
 													</div>
 													<div class="card-info-cvv">
-														<label for="cvv" class="card-label">{{ entry_cvv }}</label>
 														<div id="cvv" class="card-input-container"></div>
 													</div>
 												</div>
-												<button id="paypal_button_submit" class="btn" value="submit">{{ button_pay }}</button>
+												<div class="card-button">
+													<button type="button" id="paypal_card_button" class="btn paypal-card-button">{{ button_pay }}</button>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -233,7 +235,7 @@ function updatePayPalCard() {
 	paypal_data['decimal_place'] = '{{ decimal_place }}';
 	paypal_data['client_token'] = '{{ client_token }}';
 	paypal_data['transaction_method'] = '{{ setting['general']['transaction_method'] }}';
-	paypal_data['components'] = ['hosted-fields'];
+	paypal_data['components'] = ['card-fields'];
 	paypal_data['card_align'] = $('.payment-paypal #input_card_align').val();
 	paypal_data['card_size'] = $('.payment-paypal #input_card_size').val();
 		

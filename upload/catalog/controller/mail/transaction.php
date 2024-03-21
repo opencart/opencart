@@ -8,6 +8,8 @@ namespace Opencart\Catalog\Controller\Mail;
 class Transaction extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addTransaction/after
 	/**
+	 * Index
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output

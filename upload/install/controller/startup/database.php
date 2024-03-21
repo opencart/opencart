@@ -7,6 +7,8 @@ namespace Opencart\Install\Controller\Startup;
  */
 class Database extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @throws \Exception
 	 *
 	 * @return void

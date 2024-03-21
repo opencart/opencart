@@ -70,7 +70,7 @@ class Document {
 	}
 
 	/**
-	 * getDescription
+	 * Get Description
 	 *
 	 * @return string
 	 */
@@ -79,7 +79,7 @@ class Document {
 	}
 
 	/**
-	 * setKeywords
+	 * Set Keywords
 	 *
 	 * @param string $keywords
 	 */
@@ -88,7 +88,7 @@ class Document {
 	}
 
 	/**
-	 * getKeywords
+	 * Get Keywords
 	 *
 	 * @return string
 	 */
@@ -97,7 +97,7 @@ class Document {
 	}
 
 	/**
-	 * addLink
+	 * Add Link
 	 *
 	 * @param string $href
 	 * @param string $rel
@@ -112,7 +112,7 @@ class Document {
 	}
 
 	/**
-	 * getLinks
+	 * Get Links
 	 *
 	 * @return array<string, array<string, string>>
 	 */
@@ -121,7 +121,7 @@ class Document {
 	}
 
 	/**
-	 * addStyle
+	 * Add Style
 	 *
 	 * @param string $href
 	 * @param string $rel
@@ -138,7 +138,7 @@ class Document {
 	}
 
 	/**
-	 * getStyles
+	 * Get Styles
 	 *
 	 * @return array<string, array<string, string>>
 	 */
@@ -147,7 +147,7 @@ class Document {
 	}
 
 	/**
-	 * addScript
+	 * Add Script
 	 *
 	 * @param string $href
 	 * @param string $position
@@ -159,7 +159,7 @@ class Document {
 	}
 
 	/**
-	 * getScripts
+	 * Get Scripts
 	 *
 	 * @param string $position
 	 *

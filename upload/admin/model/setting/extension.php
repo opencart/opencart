@@ -89,7 +89,7 @@ class Extension extends \Opencart\System\Engine\Model {
 
 		$this->load->model('setting/setting');
 
-		$this->model_setting_setting->deleteSettingByCode($type . '_' . $code);
+		$this->model_setting_setting->deleteSettingsByCode($type . '_' . $code);
 	}
 
 	/**

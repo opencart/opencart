@@ -265,7 +265,7 @@ class Customer {
 	}
 
 	/**
-	 * getBalance
+	 * Get Balance
 	 *
 	 * @return float
 	 */
@@ -276,7 +276,7 @@ class Customer {
 	}
 
 	/**
-	 * getRewardPoints
+	 * Get Reward Points
 	 *
 	 * @return float
 	 */

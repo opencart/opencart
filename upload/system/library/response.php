@@ -38,7 +38,7 @@ class Response {
 	}
 
 	/**
-	 * getHeaders
+	 * Get Headers
 	 *
 	 * @return array<int, string>
 	 */
@@ -60,7 +60,7 @@ class Response {
 	}
 
 	/**
-	 * setCompression
+	 * Set Compression
 	 *
 	 * @param int $level
 	 *
@@ -71,7 +71,7 @@ class Response {
 	}
 
 	/**
-	 * setOutput
+	 * Set Output
 	 *
 	 * @param string $output
 	 *
@@ -82,7 +82,7 @@ class Response {
 	}
 
 	/**
-	 * getOutput
+	 * Get Output
 	 *
 	 * @return string
 	 */

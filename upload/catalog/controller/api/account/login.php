@@ -65,6 +65,12 @@ class Login extends \Opencart\System\Engine\Controller {
 	 *
 	 * curl_close($curl);
 	 */
+
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/account/login');
 

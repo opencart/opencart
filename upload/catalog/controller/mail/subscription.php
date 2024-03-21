@@ -11,7 +11,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
 	 *
-	 *  addHistory
+	 *  Index
 	 *
 	 * @return void
 	 */

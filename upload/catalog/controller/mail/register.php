@@ -8,6 +8,8 @@ namespace Opencart\Catalog\Controller\Mail;
 class Register extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after
 	/**
+	 * Index
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output

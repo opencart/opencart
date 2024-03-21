@@ -44,6 +44,10 @@ var PayPalAPI = (function () {
 		
 		paypal_data = params;
 		
+		if (paypal_data['page_code'] == 'product') {
+			paypal_data['product'] = $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea').serialize();
+		}
+				
 		$.ajax({
 			method: 'post',
 			url: 'index.php?route=extension/payment/paypal/getData',
@@ -77,9 +81,29 @@ var PayPalAPI = (function () {
 		if (paypal_data['components'].includes('buttons')) {
 			if (!$('#paypal_button').length) {
 				if ($(paypal_data['button_insert_tag']).length) {
-					html = '<div id="paypal_button" class="paypal-button buttons clearfix"><div id="paypal_button_container" class="paypal-button-container paypal-spinner"></div></div>';
+					html = '<div id="paypal_button" class="paypal-button clearfix"><div id="paypal_button_container" class="paypal-button-container paypal-spinner"></div></div>';
 			
 					eval("$('" + paypal_data['button_insert_tag'] + "')." + paypal_data['button_insert_type'] + "(html)");
+				}
+			}
+		}
+		
+		if (paypal_data['components'].includes('googlepay')) {
+			if (!$('#googlepay_button').length) {
+				if ($(paypal_data['googlepay_button_insert_tag']).length) {
+					html = '<div id="googlepay_button" class="googlepay-button clearfix"><div id="googlepay_button_container" class="googlepay-button-container paypal-spinner"></div></div>';
+			
+					eval("$('" + paypal_data['googlepay_button_insert_tag'] + "')." + paypal_data['googlepay_button_insert_type'] + "(html)");
+				}
+			}
+		}
+		
+		if (paypal_data['components'].includes('applepay')) {
+			if (!$('#applepay_button').length) {
+				if ($(paypal_data['applepay_button_insert_tag']).length) {
+					html = '<div id="applepay_button" class="applepay-button clearfix"><div id="applepay_button_container" class="applepay-button-container paypal-spinner"></div></div>';
+			
+					eval("$('" + paypal_data['applepay_button_insert_tag'] + "')." + paypal_data['applepay_button_insert_type'] + "(html)");
 				}
 			}
 		}
@@ -166,17 +190,20 @@ var PayPalAPI = (function () {
 					env: paypal_data['environment'],
 					locale: paypal_data['locale'],
 					style: {
-						layout: ((paypal_data['page_code'] != 'checkout') ? 'horizontal' : 'vertical'),
+						layout: 'vertical',
 						size: paypal_data['button_size'],
 						color: paypal_data['button_color'],
 						shape: paypal_data['button_shape'],
 						label: paypal_data['button_label'],
-						tagline: ((paypal_data['page_code'] != 'checkout') ? paypal_data['button_tagline'] : 'false')
+						tagline: 'false'
 					},
 					createOrder: function() {
 						paypal_order_id = false;
+						product_data = false;
 						
-						product_data = $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea').serialize();
+						if (paypal_data['page_code'] == 'product') {
+							product_data = $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea').serialize();
+						}
 				
 						$.ajax({
 							method: 'post',
@@ -475,7 +502,7 @@ var PayPalAPI = (function () {
 			$('#paypal_card_container').removeClass('paypal-spinner');
 		}
 		
-		if (paypal_data['components'].includes('messages') && $('#paypal_message').length && !$('#paypal_message_container').html()) {			
+		if (paypal_data['components'].includes('messages') && $('#paypal_message').length && !$('#paypal_message_container').html()) {						
 			var paypal_message = document.createElement('div');
 			
 			paypal_message.setAttribute('data-pp-message', '');
@@ -512,6 +539,18 @@ var PayPalAPI = (function () {
 			document.querySelector('#paypal_message_container').appendChild(paypal_message);
 						
 			$('#paypal_message_container').removeClass('paypal-spinner');
+			
+			if (paypal_data['page_code'] == 'product') {
+				$('[name^="option"], [name="quantity"]').on('change', function(event) {
+					setTimeout(function() {
+						updatePayPalData();
+		
+						if (paypal_message) {
+							paypal_message.setAttribute('data-pp-amount', paypal_data['message_amount']);
+						}
+					}, 10);
+				});
+			}
 		}
 			
 		if (paypal_callback && typeof paypal_callback == 'function') {
@@ -528,11 +567,16 @@ var PayPalAPI = (function () {
 					return new Promise(async function(resolve, reject) {
 						try {
 							paypal_order_id = false;
+							product_data = false;
+						
+							if (paypal_data['page_code'] == 'product') {
+								product_data = $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea').serialize();
+							}
 							
 							$.ajax({
 								method: 'post',
 								url: 'index.php?route=extension/payment/paypal/createOrder',
-								data: {'page_code': paypal_data['page_code'], 'payment_type': 'googlepay_button'},
+								data: {'page_code': paypal_data['page_code'], 'payment_type': 'googlepay_button', 'product': product_data},
 								dataType: 'json',
 								async: false,
 								success: function(json) {				
@@ -644,7 +688,7 @@ var PayPalAPI = (function () {
 					$('#googlepay_button_container').removeClass('shape-pill');
 					$('#googlepay_button_container').addClass('shape-rect');
 				}
-								
+							
 				const googlepay_button = paymentsClient.createButton({
 					buttonColor: paypal_data['googlepay_button_color'],
 					buttonType: paypal_data['googlepay_button_type'],
@@ -804,11 +848,16 @@ var PayPalAPI = (function () {
 					console.log(JSON.stringify(event, null, 4));
 										
 					paypal_order_id = false;
+					product_data = false;
+						
+					if (paypal_data['page_code'] == 'product') {
+						product_data = $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea').serialize();
+					}
 						
 					$.ajax({
 						method: 'post',
 						url: 'index.php?route=extension/payment/paypal/createOrder',
-						data: {'page_code': paypal_data['page_code'], 'payment_type': 'applepay_button'},
+						data: {'page_code': paypal_data['page_code'], 'payment_type': 'applepay_button', 'product': product_data},
 						dataType: 'json',
 						async: false,
 						success: function(json) {				

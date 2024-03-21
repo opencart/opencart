@@ -28,11 +28,22 @@
 				<div class="section-connect">
 					<div class="icon icon-logo"></div>
 					<div class="welcome">{{ text_welcome }}</div>
-					<a href="{{ configure_url[environment]['ppcp'] }}" target="_blank" class="btn btn-primary button-connect-ppcp" data-paypal-button="PPLtBlue" data-paypal-onboard-complete="onBoardedCallback">{{ button_connect }}</a>
-					<div class="checkout-express">{{ text_checkout_express }}</div>
-					<div class="support">{{ text_support }}</div>
 					<div class="row">
-						<div class="col col-sm-offset-4 col-sm-4 text-left">
+						<div class="col col-sm-6 text-left">
+							<div class="form-group">
+								<label class="control-label" for="input_authorization_type">{{ entry_authorization_type }}</label>
+								<select name="payment_paypal_authorization_type" id="input_authorization_type" class="form-control">
+									{% if (authorization_type == 'automatic') %}
+									<option value="automatic" selected="selected">{{ text_automatic }}</option>
+									<option value="manual">{{ text_manual }}</option>
+									{% else %}
+									<option value="automatic">{{ text_automatic }}</option>
+									<option value="manual" selected="selected">{{ text_manual }}</option>
+									{% endif %}
+								</select>
+							</div>
+						</div>
+						<div class="col col-sm-6 text-left">
 							<div class="form-group">
 								<label class="control-label" for="input_environment">{{ entry_environment }}</label>
 								<select name="payment_paypal_environment" id="input_environment" class="form-control">
@@ -47,6 +58,35 @@
 							</div>
 						</div>
 					</div>
+					<div class="automatic-authorization {% if (authorization_type == 'manual') %}hidden{% endif %}">
+						<a href="{{ configure_url[environment]['ppcp'] }}" target="_blank" class="btn btn-primary button-connect-ppcp" data-paypal-button="PPLtBlue" data-paypal-onboard-complete="onBoardedCallback">{{ button_connect }}</a>
+						<div class="checkout-express">{{ text_checkout_express }}</div>
+					</div>
+					<div class="manual-authorization {% if (authorization_type == 'automatic') %}hidden{% endif %}">
+						<div class="form-group text-left">
+							<label class="control-label" for="input_merchant_id">{{ entry_merchant_id }}</label>
+							<input type="text" name="payment_paypal_merchant_id" value="" id="input_merchant_id" class="form-control" />
+						</div>
+						<div class="form-group text-left">
+							<label class="control-label" for="input_client_id">{{ entry_client_id }}</label>
+							<input type="text" name="payment_paypal_client_id" value="" id="input_client_id" class="form-control" />
+						</div>
+						<div class="form-group text-left">
+							<label class="control-label" for="input_client_secret">{{ entry_client_secret }}</label>
+							<div class="input-group">
+								<input type="password" name="payment_paypal_client_secret" value="" id="input_client_secret" class="form-control" />
+								<span class="input-group-btn">
+									<button type="button" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-default view-password" field_id="input_client_secret"><i class="fa fa-eye"></i></button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="button-group">
+								<button type="button" class="btn btn-primary button-connect" data-loading-text="{{ text_loading }}">{{ button_connect }}</button>
+							</div>
+						</div>
+					</div>
+					<div class="support">{{ text_support }}</div>
 				</div>
 			</div>
 		</div>
@@ -54,6 +94,18 @@
 </div>
 <script src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
 <script type="text/javascript">
+
+$('#input_authorization_type').on('change', function() {
+	var authorization_type = $(this).val();
+	
+	if (authorization_type == 'automatic') {
+		$('.automatic-authorization').removeClass('hidden');
+		$('.manual-authorization').addClass('hidden');
+	} else {
+		$('.automatic-authorization').addClass('hidden');
+		$('.manual-authorization').removeClass('hidden');
+	}	
+});
 
 $('#input_environment').on('change', function() {
 	var environment = $(this).val();
@@ -65,6 +117,48 @@ $('#input_environment').on('change', function() {
 		$('.button-connect-ppcp').attr('href', '{{ configure_url['sandbox']['ppcp'] }}');
 		$('.button-connect-express_checkout').attr('href', '{{ configure_url['sandbox']['express_checkout'] }}');
 	}	
+});
+
+$('.payment-paypal').on('click', '.view-password', function(event) {
+	event.preventDefault();
+	
+	if ($('#' + $(this).attr('field_id')).attr('type') == 'password') {
+		$('#' + $(this).attr('field_id')).attr('type', 'text');
+	} else {
+		$('#' + $(this).attr('field_id')).attr('type', 'password');
+	}
+});
+
+$('.payment-paypal').on('click', '.button-connect', function() {	
+	var environment = $('#input_environment').val();
+	var client_id = $('#input_client_id').val();
+	var client_secret = $('#input_client_secret').val();
+	var merchant_id = $('#input_merchant_id').val();
+	
+	$('.payment-paypal .button-connect').prop('disabled', true).button('loading');	
+	
+	$.ajax({
+		type: 'post',
+		url: '{{ connect_url }}',
+		data: 'environment=' + environment + '&merchant_id=' + merchant_id + '&client_id=' + client_id + '&client_secret=' + client_secret,
+		dataType: 'json',
+		success: function(json) {
+			$('.payment-paypal .button-connect').prop('disabled', false).button('reset');	
+			
+			$('.payment-paypal .alert').remove();
+						
+			if (json['error'] && json['error']['warning']) {
+				$('.payment-paypal > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+			} else {
+				location.reload();
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 $('.payment-paypal').on('click', '.button-agree', function() {	

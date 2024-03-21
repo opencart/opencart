@@ -671,26 +671,29 @@
     margin: 0 !important;
     justify-content: flex-start !important;
 }
-.payment-paypal .panel-default #configurator-eligibleContainer{
+.payment-paypal .panel-default #configurator-eligibleContainer {
     width: 100%  !important;
-    max-width: 110rem  !important;
+	max-width: 110rem !important;
     padding: 0 !important;
 }
-.payment-paypal .panel-default #messaging-configurator .headerOverride {
+.payment-paypal .panel-default #messaging-configurator #configurator-eligibleContainer .headerOverride {
 	font-size: 15px;
 	font-weight: 700;
 	color: #000000;
 }
-.payment-paypal .panel-default #messaging-configurator .buttonOverride {
+.payment-paypal .panel-default #messaging-configurator #configurator-eligibleContainer .buttonOverride {
 	display: none;
 }
-.payment-paypal .panel-default #messaging-configurator input {
+.payment-paypal .panel-default #messaging-configurator #configurator-eligibleContainer input {
 	position: absolute;
 }
-.payment-paypal .panel-default #messaging-configurator [accordionname] button:not([id^="dropdownMenuButton"]) {
+.payment-paypal .panel-default #messaging-configurator #configurator-controlPanelContainer {
+	margin-right: 50px;
+}
+.payment-paypal .panel-default #messaging-configurator #configurator-controlPanelContainer [accordionname] button:not([id^="dropdownMenuButton"]) {
 	padding: 8px 16px 16px 16px;
 }
-.payment-paypal .card #messaging-configurator #configurator-previewSectionContainer > div + div {
+.payment-paypal .panel-default #messaging-configurator #configurator-previewSectionContainer > div + div {
 	height: auto;
 }
 @media (max-width: 767px) {
@@ -850,7 +853,7 @@
 .payment-paypal .panel-auth .section-connect .welcome {
 	font-size: 18px;
 	color: #1D1D1D;
-	margin-bottom: 37px;
+	margin-bottom: 20px;
 }
 .payment-paypal .panel-auth .section-connect .checkout-express {
 	font-size: 13px;
@@ -861,7 +864,7 @@
 	display: inline-block;
 	vertical-align: top;
 	font-family: 'Open Sans', sans-serif;
-	margin-bottom: 37px;
+	margin: 20px 0px 37px 0px;
 }
 .payment-paypal .panel-auth .section-connect .button-connect-ppcp::before {
 	display: none;
@@ -878,6 +881,10 @@
 }
 .payment-paypal .panel-auth .section-connect .button-connect-express-checkout::before {
 	display: none;
+}
+.payment-paypal .panel-auth .section-connect .button-connect {
+	display: inline-block;
+	margin: 10px 0px 37px 0px;
 }
 .payment-paypal .panel-auth .section-connect .control-label {
 	font-size: 13px;

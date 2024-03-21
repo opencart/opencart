@@ -54,7 +54,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$data['success'] = '';
 			}
 
-
 			if ($this->config->get('config_cart_weight')) {
 				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 			} else {
@@ -123,11 +122,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-
-
-
-
-
 
 		$data['product_edit'] = $this->url->link('checkout/cart.edit', 'language=' . $this->config->get('config_language'));
 		$data['product_remove'] = $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language'));

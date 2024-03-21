@@ -9,9 +9,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): void {
-
-	}
+	public function index(): void {}
 
 	/**
 	 * Add
@@ -158,8 +156,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
-	public function getCart() {
+	public function getCart(): void {
 		$this->load->language('api/sale/cart');
 
 		$json = [];

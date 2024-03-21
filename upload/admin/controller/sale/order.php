@@ -1239,10 +1239,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_info', $data));
 	}
 
-	// Method to call the store front API and return a response.
-
 	/**
 	 * Call
+	 *
+	 * Method to call the storefront API and return a response.
 	 *
 	 * @return void
 	 */

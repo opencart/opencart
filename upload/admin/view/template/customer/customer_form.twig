@@ -386,6 +386,8 @@ $('#form-customer').on('submit', function(e) {
             $('#button-save').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -394,6 +396,8 @@ $('#form-customer').on('submit', function(e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-customer-id').val(json['customer_id']);
 
                 $('#address').load('index.php?route=customer/address&user_token={{ user_token }}&customer_id=' + json['customer_id']);
             }
@@ -478,6 +482,8 @@ $('#payment-method').on('click', 'button', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -512,6 +518,8 @@ $('#payment-method').on('change', 'input[name=\'status\']', function(e) {
             $(element).prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -552,6 +560,8 @@ $('#button-history').on('click', function(e) {
             $('#button-history').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -594,6 +604,8 @@ $('#button-transaction').on('click', function(e) {
             $('#button-transaction').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -637,6 +649,8 @@ $('#button-reward').on('click', function(e) {
             $('#button-reward').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -686,6 +700,8 @@ $('#authorize').on('click', '.btn', function(e) {
                 $(element).button('reset');
             },
             success: function(json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {

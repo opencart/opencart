@@ -562,6 +562,7 @@ var PayPalAPI = (function () {
 		const {allowedPaymentMethods, merchantInfo, apiVersion, apiVersionMinor, countryCode} = await PayPalSDK.Googlepay().config();
 		
 		const paymentsClient = new google.payments.api.PaymentsClient({
+			environment: paypal_data['googlepay_environment'],
 			paymentDataCallbacks: {
 				onPaymentAuthorized: function(paymentData) {
 					return new Promise(async function(resolve, reject) {

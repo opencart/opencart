@@ -159,7 +159,7 @@ class Smtp {
 			while ($line = fgets($handle, 515)) {
 				$reply .= $line;
 
-				//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
+				// Some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
 				if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
 					$reply = '';
 

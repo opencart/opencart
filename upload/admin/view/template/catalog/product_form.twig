@@ -806,7 +806,7 @@
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
                           <div class="col-sm-10 col-md-4">
                             <div class="input-group">
-                              <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control datetime"/>
+                              <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
                               <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                             </div>
                           </div>
@@ -1031,7 +1031,7 @@
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10 col-md-4">
                           <div class="input-group">
-                            <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control date"/>
+                            <input type="date" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
@@ -1049,7 +1049,7 @@
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10 col-md-4">
                           <div id="input-option-{{ option.product_option_id }}" class="input-group">
-                            <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" class="form-control time"/>
+                            <input type="time" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" class="form-control"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
@@ -1067,7 +1067,7 @@
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10 col-md-4">
                           <div class="input-group">
-                            <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control datetime"/>
+                            <input type="datetime-local" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
@@ -1728,7 +1728,7 @@ $('#input-option').autocomplete({
         if (item['type'] == 'datetime') {
             html += '	<div class="row mb-3">';
             html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control datetime"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div></div>';
+            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group"><input type="datetime-local" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div></div>';
             html += '	</div>';
         }
 

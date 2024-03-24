@@ -151,10 +151,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$products = $this->model_checkout_cart->getProducts();
 
 		foreach ($products as $product) {
-			if (!$product['minimum']) {
-				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-			}
-
 			if ($product['option']) {
 				foreach ($product['option'] as $key => $option) {
 					$product['option'][$key]['value'] = (oc_strlen($option['value']) > 20 ? oc_substr($option['value'], 0, 20) . '..' : $option['value']);
@@ -195,7 +191,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'subscription' => $description,
 				'quantity'     => $product['quantity'],
 				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'minimum'      => $product['minimum'],
+				'minimum'      => !$product['minimum'] ?? sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']),
 				'reward'       => $product['reward'],
 				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
 				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',

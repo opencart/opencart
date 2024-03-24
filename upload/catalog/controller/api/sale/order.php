@@ -40,11 +40,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 
-
-
-
-
-
 	/**
 	 * Load
 	 *

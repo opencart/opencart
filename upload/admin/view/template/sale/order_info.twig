@@ -661,7 +661,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
+                    <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -672,7 +672,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
+                    <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -683,7 +683,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
+                    <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -933,7 +933,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
+                    <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -943,7 +943,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
+                    <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -953,7 +953,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
+                    <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -1121,7 +1121,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
+                    <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -1132,7 +1132,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
+                    <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -1143,7 +1143,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
+                    <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -1563,15 +1563,7 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'date') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <div class="input-group"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control date"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>';
-                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
-                    html += '</div>';
-                }
-
-                if (option['type'] == 'datetime') {
-                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <div class="input-group"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control datetime"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>';
+                    html += '  <div class="input-group"><input type="date" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }
@@ -1579,7 +1571,15 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'time') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <div class="input-group"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control time"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>';
+                    html += '  <div class="input-group"><input type="time" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'datetime') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <div class="input-group"><input type="datetime-local" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }

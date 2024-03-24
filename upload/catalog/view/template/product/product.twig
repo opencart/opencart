@@ -171,10 +171,7 @@
                     {% if option.type == 'date' %}
                       <div class="mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                        <div class="input-group">
-                          <input type="date" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
-                          <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                        </div>
+                        <input type="date" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                         <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                       </div>
                     {% endif %}
@@ -182,10 +179,7 @@
                     {% if option.type == 'time' %}
                       <div class="mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                        <div class="input-group">
-                          <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
-                          <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                        </div>
+                        <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                         <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                       </div>
                     {% endif %}
@@ -193,10 +187,7 @@
                     {% if option.type == 'datetime' %}
                       <div class="mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                        <div class="input-group">
-                          <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
-                          <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                        </div>
+                        <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                         <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                       </div>
                     {% endif %}

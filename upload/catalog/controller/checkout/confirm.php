@@ -234,6 +234,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			// Products
 			$order_data['products'] = [];
 
+			// Use cart products to get data for order
 			$products = $this->cart->getProducts();
 
 			foreach ($products as $product) {
@@ -320,22 +321,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		// Use model cart products to get data for template
+		$products = $this->model_checkout_cart->getProducts();
+
 		foreach ($products as $product) {
 			if ($product['option']) {
 				foreach ($product['option'] as $key => $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['value'];
-					} else {
-						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-
-						if ($upload_info) {
-							$value = $upload_info['name'];
-						} else {
-							$value = '';
-						}
-					}
-
-					$product['option'][$key]['value'] = (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value);
+					$product['option'][$key]['value'] = (oc_strlen($option['value']) > 20 ? oc_substr($option['value'], 0, 20) . '..' : $option['value']);
 				}
 			}
 

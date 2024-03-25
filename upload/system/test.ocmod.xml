@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Modification Test</name>
+    <description>Modification testing script. Do not use on a production site. This file is only for testing and should only be modified by developers.</description>
+    <code>default</code>
+    <version>1.0</version>
+    <author>OpenCart Ltd</author>
+    <link>http://www.opencart.com</link>
+    <!-- Controller Test -->
+    <file path="admin/controller/catalog/attribute.php">
+        <operation>
+            <search>
+                <![CDATA[Opencart\Admin\Controller\Catalog;]]>
+            </search>
+            <add position="replace">
+                <![CDATA[Opencart\Admin\Controller\Extension\Ocmod\Catalog;]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[$this->load->language('catalog/attribute');]]>
+            </search>
+            <add position="before">
+                <![CDATA[        // BEFORE WORKS]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[$this->load->language('catalog/attribute');]]>
+            </search>
+            <add position="after">
+                <![CDATA[        // AFTER WORKS]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[$this->load->language('catalog/attribute');]]>
+            </search>
+            <add position="replace">
+                <![CDATA[$this->load->language('catalog/attribute'); // REPLACE WORKS]]>
+            </add>
+        </operation>
+    </file>
+    <!-- Model Test -->
+    <file path="admin/model/catalog/attribute.php">
+        <operation>
+            <search>
+                <![CDATA[Opencart\Admin\Model\Catalog;]]>
+            </search>
+            <add position="replace">
+                <![CDATA[Opencart\Admin\Model\Extension\Ocmod\Catalog;]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[public function addAttribute(array $data): int {]]>
+            </search>
+            <add position="before">
+                <![CDATA[        // BEFORE WORKS]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[public function addAttribute(array $data): int {]]>
+            </search>
+            <add position="after">
+                <![CDATA[        // AFTER WORKS]]>
+            </add>
+        </operation>
+    </file>
+    <!-- View Test -->
+    <file path="admin/view/template/catalog/attribute.twig">
+        <operation>
+            <search regex="false">
+                <![CDATA[<div class="float-end">]]>
+            </search>
+            <add position="before">
+                <![CDATA[        // BEFORE WORKS]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[<div class="float-end">]]>
+            </search>
+            <add position="after">
+                <![CDATA[        // AFTER WORKS]]>
+            </add>
+        </operation>
+    </file>
+
+    <!-- Library Test -->
+    <file path="system/library/template/template.php">
+        <operation>
+            <search regex="false">
+                <![CDATA[require]]>
+            </search>
+            <add position="replace">
+                <![CDATA[$1$2(modification($3)]]>
+            </add>
+        </operation>
+    </file>
+</modification>

@@ -851,7 +851,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => '0'
+				'default' => 0
 			]
 		],
 		'primary' => [
@@ -971,7 +971,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => '0'
+				'default' => 0
 			]
 		],
 		'primary' => [
@@ -1004,12 +1004,19 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => 0
+			],
+			[
 				'name' => 'api_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => 0
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => 0
 			],
 			[
 				'name' => 'session_id',
@@ -1021,7 +1028,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'subscription_plan_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => 0
 			],
 			[
 				'name' => 'option',
@@ -1048,6 +1056,11 @@ function oc_db_schema() {
 			'cart_id'
 		],
 		'foreign' => [
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			],
 			[
 				'key'   => 'api_id',
 				'table' => 'api',

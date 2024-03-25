@@ -21,7 +21,7 @@
                 <![CDATA[$this->load->language('catalog/attribute');]]>
             </search>
             <add position="before">
-                <![CDATA[        // BEFORE WORKS]]>
+                <![CDATA[echo 'BEFORE WORKS</br>';]]>
             </add>
         </operation>
         <operation>
@@ -29,7 +29,15 @@
                 <![CDATA[$this->load->language('catalog/attribute');]]>
             </search>
             <add position="after">
-                <![CDATA[        // AFTER WORKS]]>
+                <![CDATA[echo 'AFTER WORKS</br>';]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[controller_catalog_attribute]]>
+            </search>
+            <add position="replace">
+                <![CDATA[controller_extension_ocmod_catalog_attribute]]>
             </add>
         </operation>
         <operation>
@@ -37,7 +45,9 @@
                 <![CDATA[$this->load->language('catalog/attribute');]]>
             </search>
             <add position="replace">
-                <![CDATA[$this->load->language('catalog/attribute'); // REPLACE WORKS]]>
+                <![CDATA[$this->load->language('catalog/attribute');
+                echo 'REPLACE WORKS</br>';
+                ]]>
             </add>
         </operation>
     </file>
@@ -56,7 +66,7 @@
                 <![CDATA[public function addAttribute(array $data): int {]]>
             </search>
             <add position="before">
-                <![CDATA[        // BEFORE WORKS]]>
+                <![CDATA[echo 'MODEL BEFORE WORKS</br>';]]>
             </add>
         </operation>
         <operation>
@@ -64,7 +74,7 @@
                 <![CDATA[public function addAttribute(array $data): int {]]>
             </search>
             <add position="after">
-                <![CDATA[        // AFTER WORKS]]>
+                <![CDATA[echo 'AFTER WORKS</br>';]]>
             </add>
         </operation>
     </file>
@@ -92,11 +102,32 @@
     <file path="system/library/template/template.php">
         <operation>
             <search regex="false">
-                <![CDATA[require]]>
+                <![CDATA[include]]>
             </search>
-            <add position="replace">
-                <![CDATA[$1$2(modification($3)]]>
+            <add position="after">
+                <![CDATA[        // AFTER WORKS]]>
             </add>
         </operation>
     </file>
+
+    <!-- Extension Test -->
+    <file path="extension/opencart/admin/controller/report/customer_order.php">
+        <operation>
+            <search>
+                <![CDATA[Opencart\Admin\Controller\Extension\Opencart\Report;]]>
+            </search>
+            <add position="replace">
+                <![CDATA[Opencart\Admin\Controller\Extension\Ocmod\Report;]]>
+            </add>
+        </operation>
+        <operation>
+            <search regex="false">
+                <![CDATA[$this->load->language('extension/opencart/report/customer_order');]]>
+            </search>
+            <add position="after">
+                <![CDATA[echo 'WORKS!';]]>
+            </add>
+        </operation>
+    </file>
+
 </modification>

@@ -7130,6 +7130,18 @@ function oc_db_schema() {
 		],
 		'index' => [
 			[
+				'name' => 'store',
+				'key'  => [
+					'store_id'
+				]
+			],
+			[
+				'name' => 'language',
+				'key'  => [
+					'language_id'
+				]
+			],
+			[
 				'name' => 'keyword',
 				'key'  => [
 					'keyword'

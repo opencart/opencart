@@ -344,7 +344,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 										// Log
 										$log[] = PHP_EOL . 'FILE: ' . $key;
-
 									} else {
 										// Log
 										$log[] = PHP_EOL . 'FILE: (sub modification) ' . $key;

@@ -154,7 +154,6 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 */
 	public function addDescription(int $length_class_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class_description` SET `length_class_id` = '" . (int)$length_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `unit` = '" . $this->db->escape($data['unit']) . "'");
-
 	}
 
 	/**

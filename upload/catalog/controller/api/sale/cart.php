@@ -159,7 +159,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 
-	public function getCart() {
+	public function getCart(): void {
 		$this->load->language('api/sale/cart');
 
 		$json = [];

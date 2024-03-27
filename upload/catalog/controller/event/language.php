@@ -9,6 +9,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	// view/*/before
 	// Dump all the language vars into the template.
 	/**
+	 * Index
+	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *

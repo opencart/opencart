@@ -1239,10 +1239,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_info', $data));
 	}
 
-	// Method to call the store front API and return a response.
-
 	/**
 	 * Call
+	 *
+	 * Method to call the storefront API and return a response.
 	 *
 	 * @return void
 	 */
@@ -1579,12 +1579,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
-		// Hard coding CSS so they can be replaced via the events system.
+		// Hard coding CSS so they can be replaced via the event's system.
 		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
 		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
-		// Hard coding scripts so they can be replaced via the events system.
+		// Hard coding scripts so they can be replaced via the event's system.
 		$data['jquery'] = 'view/javascript/jquery/jquery-3.7.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 

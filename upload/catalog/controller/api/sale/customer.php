@@ -14,12 +14,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if ($this->session->data['order_id']) {
-			$order_id = $this->session->data['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
 		$keys = [
 			'customer_id',
 			'customer_group_id',
@@ -27,7 +21,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'lastname',
 			'email',
 			'telephone',
-			'account_custom_field'
+			'custom_field'
 		];
 
 		foreach ($keys as $key) {
@@ -35,6 +29,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$this->request->post[$key] = '';
 			}
 		}
+
+		// Load order if there is one
+		$this->load->controller('api/sale/order.load');
 
 		$this->load->model('account/customer');
 
@@ -103,19 +100,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			if ($order_id) {
-
-				$this->load->model('checkout/order');
-
-				$this->model_checkout_order->editOrder($order_id, $this->session->data['customer']);
-			}
-
 			$json['success'] = $this->language->get('text_success');
 
-			unset($this->session->data['reward']);
-		}
+			$this->load->controller('api/sale/order.confirm');
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+		}
 	}
 }

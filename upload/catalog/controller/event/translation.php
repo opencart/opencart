@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Event;
  */
 class Translation extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param string $route
 	 * @param string $prefix
 	 *

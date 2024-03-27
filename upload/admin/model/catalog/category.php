@@ -278,7 +278,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->load->model('catalog/product');
 
-		$this->model_catalog_product->deletesCategoriesByCategoryId($category_id);
+		$this->model_catalog_product->deleteCategoriesByCategoryId($category_id);
 
 		$this->load->model('marketing/coupon');
 
@@ -318,7 +318,7 @@ class Category extends \Opencart\System\Engine\Model {
 		// Delete the path below the current one
 		foreach ($categories as $category) {
 			// Delete the path below the current one
-			$this->model_catalog_category->deletePath($category['category_id']);
+			$this->model_catalog_category->deletePaths($category['category_id']);
 
 			// Fix for records with no paths
 			$level = 0;

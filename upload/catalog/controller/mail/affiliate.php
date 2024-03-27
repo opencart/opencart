@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Mail;
  */
 class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output

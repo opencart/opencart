@@ -523,7 +523,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$json['error']['keyword'] = $this->language->get('error_keyword');
 			}
 
-			if (!oc_validate_seo_url($keyword)) {
+			if (!oc_validate_path($keyword)) {
 				$json['error']['keyword'] = $this->language->get('error_keyword_character');
 			}
 		}

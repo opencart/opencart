@@ -27,6 +27,15 @@ services:
       - MYSQL_ROOT_PASSWORD=opencart
       - MYSQL_DATABASE=opencart
 
+  adminer:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+
   redis:
     image: redis:latest
 

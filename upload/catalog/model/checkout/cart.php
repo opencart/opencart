@@ -36,7 +36,7 @@ class Cart extends \Opencart\System\Engine\Model {
 					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 					if ($upload_info) {
-						$value = $upload_info['name'];
+						$value = $upload_info['code'];
 					} else {
 						$value = '';
 					}
@@ -53,20 +53,6 @@ class Cart extends \Opencart\System\Engine\Model {
 				];
 			}
 
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$minimum = false;
-			} else {
-				$minimum = true;
-			}
-
 			$product_data[] = [
 				'cart_id'      => $product['cart_id'],
 				'product_id'   => $product['product_id'],
@@ -79,7 +65,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'download'     => $product['download'],
 				'quantity'     => $product['quantity'],
 				'stock'        => $product['stock'],
-				'minimum'      => $minimum,
+				'minimum'      => $product['minimum'],
 				'shipping'     => $product['shipping'],
 				'subtract'     => $product['subtract'],
 				'reward'       => $product['reward'],
@@ -145,7 +131,7 @@ class Cart extends \Opencart\System\Engine\Model {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
 
-				// __call magic method cannot pass-by-reference so we get PHP to call it as an anonymous function.
+				// __call magic method cannot pass-by-reference so PHP calls it as an anonymous function.
 				($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 			}
 		}

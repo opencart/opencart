@@ -422,8 +422,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		foreach ($selected as $subscription_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsBySubscriptionPlanId($subscription_id);
+		foreach ($selected as $subscription_plan_id) {
+			$product_total = $this->model_catalog_product->getTotalSubscriptionsBySubscriptionPlanId($subscription_plan_id);
 
 			if ($product_total) {
 				$json['error'] = sprintf($this->language->get('error_product'), $product_total);

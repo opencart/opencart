@@ -28,11 +28,13 @@ function oc_validate_email(string $email): bool {
 		return false;
 	}
 
-	//$local = oc_substr($email, 0, oc_strrpos($email, '@'));
+	if (function_exists('idn_to_ascii')) {
+		$local = oc_substr($email, 0, oc_strrpos($email, '@'));
 
-	//$domain = oc_substr($email, (oc_strrpos($email, '@') + 1));
+		$domain = oc_substr($email, (oc_strrpos($email, '@') + 1));
 
-	//$email = $local . '@' . idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+		$email = $local . '@' . idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+	}
 
 	return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
@@ -77,6 +79,6 @@ function oc_validate_url(string $url): bool {
  *
  * @return bool
  */
-function oc_validate_seo_url(string $keyword): bool {
-	return !preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\.\-\_]+/u', $keyword);
+function oc_validate_path(string $keyword): bool {
+	return !preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\-\_]+/u', $keyword);
 }

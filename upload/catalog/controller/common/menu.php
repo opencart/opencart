@@ -39,11 +39,19 @@ class Menu extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			$total = count($children_data);
+
+			if ($total > 5) {
+				$column = count($children_data) / 5;
+			} else {
+				$column = 1;
+			}
+
 			// Level 1
 			$data['categories'][] = [
 				'name'     => $category['name'],
 				'children' => $children_data,
-				'column'   => $category['column'] ? $category['column'] : 1,
+				'column'   => $column,
 				'href'     => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'])
 			];
 		}

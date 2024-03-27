@@ -6,7 +6,7 @@
         {% if orders %}
           <a href="{{ orders }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-warning"><i class="fa-solid fa-receipt"></i></a>
         {% endif %}
-        <button type="submit" form="form-customer" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <button type="submit" id="button-save" form="form-customer" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
         <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -33,7 +33,7 @@
         </ul>
         <div class="tab-content">
           <div id="tab-general" class="tab-pane active">
-            <form id="form-customer" action="{{ save }}" method="post" data-oc-toggle="ajax">
+            <form id="form-customer" action="{{ save }}" method="post">
               <fieldset>
                 <legend>{{ text_customer }}</legend>
                 <div class="row mb-3">
@@ -176,10 +176,7 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
-                            <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                          </div>
+                          <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
@@ -190,7 +187,7 @@
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
+                            <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                             <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -202,10 +199,7 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
-                            <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                          </div>
+                          <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
@@ -237,8 +231,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="newsletter" value="0"/>
-                      <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"{% if newsletter %} checked{% endif %}/>
+                      <input type="hidden" name="newsletter" value="0"/> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"{% if newsletter %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
@@ -246,8 +239,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="status" value="0"/>
-                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                      <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
@@ -255,8 +247,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="safe" value="0"/>
-                      <input type="checkbox" name="safe" value="1" id="input-safe" class="form-check-input"{% if safe %} checked{% endif %}/>
+                      <input type="hidden" name="safe" value="0"/> <input type="checkbox" name="safe" value="1" id="input-safe" class="form-check-input"{% if safe %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_safe }}</div>
                   </div>
@@ -265,8 +256,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_commenter }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="commenter" value="0"/>
-                      <input type="checkbox" name="commenter" value="1" id="input-commenter" class="form-check-input"{% if commenter %} checked{% endif %}/>
+                      <input type="hidden" name="commenter" value="0"/> <input type="checkbox" name="commenter" value="1" id="input-commenter" class="form-check-input"{% if commenter %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_commenter }}</div>
                   </div>
@@ -372,6 +362,57 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#form-customer').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('action'),
+        type: 'post',
+        data: $(element).serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-save').button('loading');
+        },
+        complete: function() {
+            $('#button-save').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $(element).find('.is-invalid').removeClass('is-invalid');
+            $(element).find('.invalid-feedback').removeClass('d-block');
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (json['customer_id']) {
+                    $('#input-customer-id').val(json['customer_id']);
+
+                    $('#address').load('index.php?route=customer/address&user_token={{ user_token }}&customer_id=' + json['customer_id']);
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 $('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
@@ -398,7 +439,7 @@ $('#input-customer-group').on('change', function() {
 
 $('#input-customer-group').trigger('change');
 
-$('#address').on('click', '.btn-primary', function (e) {
+$('#address').on('click', '.btn-primary', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -408,13 +449,13 @@ $('#address').on('click', '.btn-primary', function (e) {
     $.ajax({
         url: $(element).val(),
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (html) {
+        success: function(html) {
             $('body').append(html);
 
             var modal = new bootstrap.Modal(document.querySelector('#modal-address'));
@@ -422,10 +463,6 @@ $('#address').on('click', '.btn-primary', function (e) {
             modal.show();
         }
     });
-});
-
-$('#input-customer-id').on('change', function (e) {
-    $('#address').load('index.php?route=customer/address&user_token={{ user_token }}&customer_id=' + this.value);
 });
 
 $('#payment-method').on('click', '.pagination a', function(e) {
@@ -450,6 +487,8 @@ $('#payment-method').on('click', 'button', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -484,6 +523,8 @@ $('#payment-method').on('change', 'input[name=\'status\']', function(e) {
             $(element).prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -524,6 +565,8 @@ $('#button-history').on('click', function(e) {
             $('#button-history').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -566,6 +609,8 @@ $('#button-transaction').on('click', function(e) {
             $('#button-transaction').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -609,6 +654,8 @@ $('#button-reward').on('click', function(e) {
             $('#button-reward').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -658,6 +705,8 @@ $('#authorize').on('click', '.btn', function(e) {
                 $(element).button('reset');
             },
             success: function(json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {
@@ -671,7 +720,7 @@ $('#authorize').on('click', '.btn', function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#authorize').load('index.php?route=customer/customer.authorize&user_token={{ user_token }}&customer_id={{ customer_id }}');
+                    $('#authorize').load('index.php?route=customer/customer.authorize&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

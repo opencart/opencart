@@ -75,7 +75,7 @@ class Image {
 	}
 
 	/**
-	 * getFile
+	 * Get File
 	 *
 	 * @return string
 	 */
@@ -84,7 +84,7 @@ class Image {
 	}
 
 	/**
-	 * getImage
+	 * Get Image
 	 *
 	 * @return mixed
 	 */
@@ -93,7 +93,7 @@ class Image {
 	}
 
 	/**
-	 * getWidth
+	 * Get Width
 	 *
 	 * @return int
 	 */
@@ -102,7 +102,7 @@ class Image {
 	}
 
 	/**
-	 * getHeight
+	 * Get Height
 	 *
 	 * @return int
 	 */
@@ -111,7 +111,7 @@ class Image {
 	}
 
 	/**
-	 * getBits
+	 * Get Bits
 	 *
 	 * @return string
 	 */
@@ -120,7 +120,7 @@ class Image {
 	}
 
 	/**
-	 * getMime
+	 * Get Mime
 	 *
 	 * @return string
 	 */

@@ -2,6 +2,7 @@
 <footer>
   <div class="container">
     <div class="row">
+      {% if informations or blog %}
       <div class="col-sm-3">
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
@@ -13,6 +14,7 @@
           {% endfor %}
         </ul>
       </div>
+      {% endif %}
       <div class="col-sm-3">
         <h5>{{ text_service }}</h5>
         <ul class="list-unstyled">

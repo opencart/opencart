@@ -15,27 +15,50 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function controller(string &$route, array &$args): void {
-		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/catalog/controller/' . $route . '.php')) {
+		if (substr($route, 0, 16) == 'extension/ocmod/') {
+			return;
+		}
+
+		if (substr($route, 0, 10) !== 'extension/') {
+			$class = 'Opencart\Catalog\Controller\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		} else {
+			$part = explode('/', $route);
+
+			unset($part[0]);
+
+			$class = 'Opencart\Catalog\Controller\Extension\Ocmod\Extension\\' . str_replace(['_', '/'], ['', '\\'], ucwords(implode('/', $part), '_/'));
+		}
+
+		if (class_exists($class)) {
 			$route = 'extension/ocmod/' . $route;
 		}
 	}
 
 	/**
 	 * Model
-	 *
+	 *so
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 *
 	 * @return void
 	 */
 	public function model(string &$route, array &$args): void {
-		// For all models we need to separate the method which will always the last /
-		$pos = strrpos($route, '/');
+		if (substr($route, 0, 16) == 'extension/ocmod/') {
+			return;
+		}
 
-		$class = substr($route, 0, $pos);
+		if (substr($route, 0, 10) !== 'extension/') {
+			$class = 'Opencart\Catalog\Model\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		} else {
+			$part = explode('/', $route);
 
-		if (substr($route, 0, 16) !== 'extension/ocmod/' && is_file(DIR_EXTENSION . 'ocmod/catalog/model/' . $class . '.php')) {
-			$route = 'extension/ocmod/' . $class . '/' . substr($route, $pos + 1);
+			unset($part[0]);
+
+			$class = 'Opencart\Catalog\Model\Extension\Ocmod\Extension\\' . str_replace(['_', '/'], ['', '\\'], ucwords(implode('/', $part), '_/'));
+		}
+
+		if (class_exists($class)) {
+			$route = 'extension/ocmod/' . $route;
 		}
 	}
 

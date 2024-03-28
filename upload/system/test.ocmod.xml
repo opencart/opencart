@@ -110,14 +110,14 @@
         </operation>
     </file>
 
-    <!-- Extension Test -->
+    <!-- Extension Admin Test -->
     <file path="extension/opencart/admin/controller/report/customer_order.php">
         <operation>
             <search>
                 <![CDATA[Opencart\Admin\Controller\Extension\Opencart\Report;]]>
             </search>
             <add position="replace">
-                <![CDATA[Opencart\Admin\Controller\Extension\Ocmod\Report;]]>
+                <![CDATA[Opencart\Admin\Controller\Extension\Ocmod\Extension\Opencart\Report;]]>
             </add>
         </operation>
         <operation>

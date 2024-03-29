@@ -70,17 +70,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		if (substr($route, 0, 10) !== 'extension/') {
 			$file = DIR_EXTENSION . 'ocmod/catalog/view/template/' . $route . '.twig';
 		} else {
-			substr($route, 10, );
-
-
-			$part = explode('/', $route);
-
-			$extension = $part[1];
-
-			unset($part[0]);
-			unset($part[1]);
-
-			$file = DIR_EXTENSION . 'ocmod/extension/' . $extension . '/catalog/view/template/' . implode('/', $part) . '.twig';
+			$file = DIR_EXTENSION . 'ocmod/extension/' . substr($route, 10, strpos($route, '/', 10) - 10) . '/catalog/view/template/' . substr($route, strpos($route, '/', 10) + 1) . '.twig';
 		}
 
 		if (is_file($file)) {

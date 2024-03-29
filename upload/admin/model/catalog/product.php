@@ -1526,13 +1526,25 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Discounts
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record to be deleted
 	 *
 	 * @return void
 	 */
 	public function deleteDiscounts(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
+
+	/**
+	 * Delete Discounts By Customer ID
+	 *
+	 * @param int $customer_group_id primary key of the customer group record to be deleted
+	 *
+	 * @return void
+	 */
+	public function deleteDiscountsByCustomerGroupId(int $customer_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+	}
+
 
 	/**
 	 * Get Discounts
@@ -1571,6 +1583,17 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Specials By Customer Group ID
+	 *
+	 * @param int $customer_group_id primary key of the customer group record to be fetched
+	 *
+	 * @return void
+	 */
+	public function deleteSpecialsByCustomerGroupId(int $customer_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_special` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+	}
+
+	/**
 	 * Get Specials
 	 *
 	 * @param int $product_id
@@ -1605,6 +1628,17 @@ class Product extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteRewards(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	/**
+	 * Delete Rewards By Customer Group ID
+	 *
+	 * @param int $customer_group_id primary key of the customer group record to be deleted
+	 *
+	 * @return void
+	 */
+	public function deleteRewardsByCustomerGroupId(int $customer_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}
 
 	/**

@@ -158,7 +158,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
+	/**
+	 * Get Cart
+	 * 
+	 * @return void
+	 */
 	public function getCart(): void {
 		$this->load->language('api/sale/cart');
 

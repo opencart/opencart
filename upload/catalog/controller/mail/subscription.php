@@ -61,7 +61,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription['date_next']
 		$subscription['status']
 
-
 		if ($subscription['trial_duration'] && $subscription['trial_remaining']) {
 			$date_next = date('Y-m-d', strtotime('+' . $subscription['trial_cycle'] . ' ' . $subscription['trial_frequency']));
 		} elseif ($subscription['duration'] && $subscription['remaining']) {
@@ -115,7 +114,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 								foreach ($products as $product) {
 									if ($product['product_id'] == $order_product['product_id']) {
 
-
 										if ($product['subscription']['trial_status']) {
 											$trial_price = $this->currency->format($this->tax->calculate($value['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'));
 											$trial_cycle = $value['trial_cycle'];
@@ -137,7 +135,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 										}
 									}
 								}
-
 
 								// Orders
 								$this->load->model('checkout/order');

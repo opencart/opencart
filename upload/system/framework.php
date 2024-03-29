@@ -185,9 +185,7 @@ if (isset($request->get['route'])) {
 }
 
 $action = '';
-
-// Allow the pre actions to change the route if needed.
-$args[] = ['route' => &$route];
+$args = [];
 
 // Action error object to execute if any other actions cannot be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
@@ -213,6 +211,10 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 		break;
 	}
+}
+
+if ($action) {
+	$route = $action->getId();
 }
 
 // Keep the original trigger

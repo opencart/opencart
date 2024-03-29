@@ -37,6 +37,7 @@ $(document).ready(function() {
 					['float', ['floatLeft', 'floatRight', 'floatNone']],
 					['remove', ['removeMedia']]
 				],
+				link: [['link', ['linkDialogShow', 'unlink']]],
 				table: [
 					['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
 					['delete', ['deleteRow', 'deleteCol', 'deleteTable']]

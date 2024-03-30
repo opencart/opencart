@@ -159,7 +159,7 @@ class Smtp {
 			while ($line = fgets($handle, 515)) {
 				$reply .= $line;
 
-				//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
+				// Some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
 				if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
 					$reply = '';
 
@@ -238,7 +238,7 @@ class Smtp {
 			$lines = explode("\n", $message);
 
 			foreach ($lines as $line) {
-				// see https://php.watch/versions/8.2/str_split-empty-string-empty-array
+				// See: https://php.watch/versions/8.2/str_split-empty-string-empty-array
 				$results = ($line === '') ? [''] : str_split($line, 998);
 
 				foreach ($results as $result) {
@@ -263,6 +263,8 @@ class Smtp {
 	}
 
 	/**
+	 * Handle Reply
+	 * 
 	 * @param resource     $handle
 	 * @param false|int    $status_code
 	 * @param false|string $error_text

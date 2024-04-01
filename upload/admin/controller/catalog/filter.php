@@ -346,13 +346,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/filter');
-
 			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'] . '%',
 				'start'       => 0,
 				'limit'       => 5
 			];
+
+			$this->load->model('catalog/filter');
 
 			$filters = $this->model_catalog_filter->getFilters($filter_data);
 

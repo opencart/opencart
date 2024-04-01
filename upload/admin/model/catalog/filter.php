@@ -57,6 +57,14 @@ class Filter extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_filter->deleteDescriptions($filter_id);
 
+		$this->load->model('catalog/category');
+
+		$this->model_catalog_category->deleteFiltersByFilterId($filter_id);
+
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->deleteFiltersByFilterId($filter_id);
+
 		$this->cache->delete('filter');
 	}
 
@@ -128,13 +136,26 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalFilters(): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter` `f` LEFT JOIN `" . DB_PREFIX . "filter_description` `fd` ON (`f`.`filter_id` = `fd`.`filter_id`) WHERE `fd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`fgd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+			$sql .= " AND LCASE(`fd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
 		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Filters By Filter Group ID
+	 *
+	 * @param int $filter_group_id
+	 *
+	 * @return int
+	 */
+	public function getTotalFiltersByFilterGroupId(int $filter_group_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
 		return (int)$query->row['total'];
 	}

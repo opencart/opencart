@@ -1193,6 +1193,17 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Filters By Filter ID
+	 *
+	 * @param int $filter_id
+	 *
+	 * @return void
+	 */
+	public function deleteFiltersByFilterId(int $filter_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
+	}
+
+	/**
 	 * Get Filters
 	 *
 	 * @param int $product_id

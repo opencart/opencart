@@ -307,6 +307,16 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$this->load->model('catalog/filter');
+
+		foreach ($selected as $filter_group_id) {
+			$filter_total = $this->model_catalog_filter->getTotalFiltersByFilterGroupId($filter_group_id);
+
+			if ($filter_total) {
+				$json['error'] = sprintf($this->language->get('error_filter'), $filter_total);
+			}
+		}
+
 		if (!$json) {
 			$this->load->model('catalog/filter_group');
 
@@ -330,13 +340,13 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/filter_group');
-
 			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
+				'filter_name' => $this->request->get['filter_name'] . '%',
 				'start'       => 0,
 				'limit'       => 5
 			];
+
+			$this->load->model('catalog/filter_group');
 
 			$filters = $this->model_catalog_filter->getFilters($filter_data);
 

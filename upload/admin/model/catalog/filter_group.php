@@ -83,6 +83,10 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	public function getFilterGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` `fg` LEFT JOIN `" . DB_PREFIX . "filter_group_description` `fgd` ON (`fg`.`filter_group_id` = `fgd`.`filter_group_id`) WHERE `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`fgd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		}
+
 		$sort_data = [
 			'fgd.name',
 			'fg.sort_order'
@@ -115,6 +119,17 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	/**
+	 * Get Total Filter Groups
+	 *
+	 * @return int
+	 */
+	public function getTotalFilterGroups(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter_group`");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -180,16 +195,5 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Filter Groups
-	 *
-	 * @return int
-	 */
-	public function getTotalFilterGroups(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter_group`");
-
-		return (int)$query->row['total'];
 	}
 }

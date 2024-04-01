@@ -349,7 +349,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/filter');
 
 			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
+				'filter_name' => $this->request->get['filter_name'] . '%',
 				'start'       => 0,
 				'limit'       => 5
 			];

@@ -177,13 +177,6 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 // Document
 $registry->set('document', new \Opencart\System\Library\Document());
 
-// Route
-if (isset($request->get['route'])) {
-	$route = (string)$request->get['route'];
-} else {
-	$route = (string)$config->get('action_default');
-}
-
 $action = '';
 $args = [];
 
@@ -211,6 +204,13 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 		break;
 	}
+}
+
+// Route
+if (isset($request->get['route'])) {
+	$route = (string)$request->get['route'];
+} else {
+	$route = (string)$config->get('action_default');
 }
 
 if ($action) {

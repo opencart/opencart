@@ -30,9 +30,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 				$data['error_warning'] = $this->language->get('error_stock');
 			} elseif (!$this->cart->hasMinimum()) {
-
 				$data['error_warning'] = $this->language->get('error_minimum');
-
 			} elseif (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
 

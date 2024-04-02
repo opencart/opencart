@@ -30,9 +30,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Load order if there is one
-		$this->load->controller('api/sale/order.load');
-
 		$this->load->model('account/customer');
 
 		if ($this->request->post['customer_id']) {
@@ -102,7 +99,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
-			$this->load->controller('api/sale/order.confirm');
+			if (isset($this->session->data['order_id'])) {
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], $this->session->data['customer']);
+			}
 
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));

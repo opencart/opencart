@@ -70,6 +70,12 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$json['success'] = $this->language->get('text_success');
+
+			if (isset($this->session->data['order_id'])) {
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], ['shipping_method' => $this->session->data['shipping_method']]);
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -126,6 +126,18 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
+
+			if (isset($this->session->data['order_id'])) {
+				$address_data = [];
+
+				foreach ($this->session->data['payment_address'] as $key => $value) {
+					$address_data['payment_' . $key] = $value;
+				}
+
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], $address_data);
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

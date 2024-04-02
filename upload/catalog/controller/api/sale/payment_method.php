@@ -76,6 +76,12 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]];
 
 			$json['success'] = $this->language->get('text_success');
+
+			if (isset($this->session->data['order_id'])) {
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], ['payment_method' => $this->session->data['payment_method']]);
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

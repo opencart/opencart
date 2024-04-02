@@ -1338,7 +1338,6 @@ $('#form-customer').on('submit', function(e) {
         type: 'post',
         data: $('#form-customer').serialize(),
         dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
             $('#button-customer').button('loading');
         },
@@ -1371,8 +1370,6 @@ $('#form-customer').on('submit', function(e) {
 
                 $('#payment-method-value').html('');
                 $('#shipping-method-value').html('');
-
-                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2206,8 +2203,6 @@ $('#form-payment-address').on('submit', function(e) {
                 address += $('#input-payment-country option:selected').text();
 
                 $('#payment-address-value').html(address);
-
-                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2380,9 +2375,6 @@ $('#form-shipping-address').on('submit', function(e) {
                 address += $('#input-shipping-country option:selected').text();
 
                 $('#shipping-address-value').html(address);
-
-                // Refresh products, vouchers and totals
-                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2529,8 +2521,6 @@ $('#form-shipping-method').on('submit', function(e) {
                 $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
 
                 $('#payment-method-value').html('');
-
-                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2628,8 +2618,6 @@ $('#form-payment-method').on('submit', function(e) {
 
                 $('#payment-method-value').html($('input[name=\'payment_method\']:checked').parent().find('label').text());
                 $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
-
-                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

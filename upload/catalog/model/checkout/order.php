@@ -208,6 +208,10 @@ class Order extends \Opencart\System\Engine\Model {
 				$order_data[$column . '_method'] = json_decode($order_query->row[$column . '_method'], true);
 			}
 
+			$order_data['products'] = $this->getProducts($order_id);
+			$order_data['vouchers'] = $this->getProducts($order_id);
+			$order_data['totals'] = $this->getTotals($order_id);
+
 			return $order_data;
 		}
 

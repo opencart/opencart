@@ -22,13 +22,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#event').on('click', 'thead a, .pagination a', function (e) {
+$('#event').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#event').load(this.href);
 });
 
-$('#event').on('click', '.btn-success, .btn-danger', function (e) {
+$('#event').on('click', '.btn-success, .btn-danger', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -38,13 +38,13 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
         type: 'post',
         data: $('#event input[name=\'selected[]\']:checked'),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -57,7 +57,7 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
                 $('#event').load($('#form-event').attr('data-oc-load'));
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

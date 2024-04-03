@@ -189,18 +189,18 @@ $('#input-email').autocomplete({
     }
 });
 
-$('#button-rating').on('click', function () {
+$('#button-rating').on('click', function() {
     var element = this;
 
     $(element).button('loading');
 
     var next = 'index.php?route=cms/comment.rating&user_token={{ user_token }}';
 
-    var rate = function () {
+    var rate = function() {
         return $.ajax({
             url: next,
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 console.log(json);
 
                 $('.alert-dismissible').remove();
@@ -230,7 +230,7 @@ $('#button-rating').on('click', function () {
                     chain.attach(rate);
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 $(element).button('reset');

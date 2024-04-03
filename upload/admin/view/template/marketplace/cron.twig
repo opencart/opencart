@@ -35,13 +35,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#cron').on('click', 'thead a, .pagination a', function (e) {
+$('#cron').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#cron').load(this.href);
 });
 
-$('#button-copy').on('click', function () {
+$('#button-copy').on('click', function() {
     var copyText = document.getElementById('input-cron');
 
     // Select the text field
@@ -52,19 +52,19 @@ $('#button-copy').on('click', function () {
     navigator.clipboard.writeText(copyText.value);
 });
 
-$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function () {
+$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
     var element = this;
 
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -77,7 +77,7 @@ $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function () {
                 $('#cron').load($('#form-cron').attr('data-oc-load'));
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

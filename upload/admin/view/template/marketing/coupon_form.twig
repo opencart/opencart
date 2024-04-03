@@ -183,12 +183,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-product').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['product_id']
@@ -197,7 +197,7 @@ $('#input-product').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-product').val('');
 
         $('#coupon-product-' + item['value']).remove();
@@ -211,18 +211,18 @@ $('#input-product').autocomplete({
     }
 });
 
-$('#coupon-product').on('click', '.btn', function () {
+$('#coupon-product').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
 
 // Category
 $('#input-category').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['category_id']
@@ -231,7 +231,7 @@ $('#input-category').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-category').val('');
 
         $('#coupon-category-' + item['value']).remove();
@@ -245,11 +245,11 @@ $('#input-category').autocomplete({
     }
 });
 
-$('#coupon-category').on('click', '.btn', function () {
+$('#coupon-category').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
 
-$('#history').on('click', '.pagination a', function (e) {
+$('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#history').load(this.href);

@@ -84,24 +84,24 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#report').on('click', '.pagination a', function (e) {
+$('#report').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#report').load(this.href);
 });
 
-$('#button-sync').on('click', function () {
+$('#button-sync').on('click', function() {
     var element = this;
 
     $(element).button('loading');
 
     var next = 'index.php?route=extension/opencart/module/bestseller.sync&user_token={{ user_token }}';
 
-    var rating = function () {
+    var rating = function() {
         return $.ajax({
             url: next,
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 console.log(json);
 
                 $('.alert-dismissible').remove();
@@ -132,7 +132,7 @@ $('#button-sync').on('click', function () {
                     chain.attach(rating);
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 $(element).button('reset');

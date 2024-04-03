@@ -8,24 +8,24 @@
   <div id="product-viewed" class="card-body">{{ list }}</div>
 </div>
 <script type="text/javascript"><!--
-$('#product-viewed').on('click', '.pagination a', function (e) {
+$('#product-viewed').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#product-viewed').load(this.href);
 });
 
-$('#button-generate').on('click', function () {
+$('#button-generate').on('click', function() {
     var element = this;
 
     $(element).button('loading');
 
     var next = 'index.php?route=extension/opencart/report/product_viewed.generate&user_token={{ user_token }}';
 
-    var viewed = function () {
+    var viewed = function() {
         return $.ajax({
             url: next,
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 console.log(json);
 
                 $('.alert-dismissible').remove();
@@ -54,7 +54,7 @@ $('#button-generate').on('click', function () {
                     chain.attach(viewed);
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 $(element).button('reset');

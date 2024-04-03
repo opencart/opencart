@@ -197,12 +197,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         category: item['customer_group'],
                         label: item['name'],
@@ -216,7 +216,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-customer').val(item['label']);
         $('#input-customer-id').val(item['value']);
         $('#input-firstname').val(item['firstname']);
@@ -227,12 +227,12 @@ $('#input-customer').autocomplete({
 });
 
 $('#input-product').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['product_id'],
@@ -242,20 +242,20 @@ $('#input-product').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-product').val(item['label']);
         $('#input-product-id').val(item['value']);
         $('#input-model').val(item['model']);
     }
 });
 
-$('#history').on('click', '.pagination a', function (e) {
+$('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#history').load(this.href);
 });
 
-$('#button-history').on('click', function (e) {
+$('#button-history').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -263,13 +263,13 @@ $('#button-history').on('click', function (e) {
         type: 'post',
         dataType: 'json',
         data: 'return_status_id=' + $('#input-return-status').val() + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-history').val()),
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-history').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-history').button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {

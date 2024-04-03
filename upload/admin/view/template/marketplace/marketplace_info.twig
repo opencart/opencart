@@ -144,31 +144,31 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-api').on('click', function (e) {
+$('#button-api').on('click', function(e) {
     $('#modal-api').remove();
 
     $.ajax({
         url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-api').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-api').button('reset');
         },
-        success: function (html) {
+        success: function(html) {
             $('body').append(html);
 
             $('#modal-api').modal('show');
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#button-buy').on('click', function (e) {
+$('#button-buy').on('click', function(e) {
     e.preventDefault();
 
     $('#modal-purchase').remove();
@@ -201,7 +201,7 @@ $('#button-buy').on('click', function (e) {
     $('#modal-purchase').modal('show');
 });
 
-$('body').on('click', '#modal-purchase #button-purchase', function (e) {
+$('body').on('click', '#modal-purchase #button-purchase', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -211,13 +211,13 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
         type: 'post',
         data: $('#input-pin'),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -232,7 +232,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
                 $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -241,7 +241,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
 // Download
 $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
-$('#tab-download').on('click', '.btn-primary', function (e) {
+$('#tab-download').on('click', '.btn-primary', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -249,13 +249,13 @@ $('#tab-download').on('click', '.btn-primary', function (e) {
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -266,13 +266,13 @@ $('#tab-download').on('click', '.btn-primary', function (e) {
                 $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#tab-download').on('click', '.dropdown-item', function (e) {
+$('#tab-download').on('click', '.dropdown-item', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -280,13 +280,13 @@ $('#tab-download').on('click', '.dropdown-item', function (e) {
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -299,14 +299,14 @@ $('#tab-download').on('click', '.dropdown-item', function (e) {
                 $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Comment
-$('#comment').on('click', '.pagination a', function (e) {
+$('#comment').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#comment').load(this.href);
@@ -315,19 +315,19 @@ $('#comment').on('click', '.pagination a', function (e) {
 $('#comment').load('index.php?route=marketplace/marketplace.comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 // Add comment
-$('#button-comment').on('click', function () {
+$('#button-comment').on('click', function() {
     $.ajax({
         url: 'index.php?route=marketplace/marketplace.addComment&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-history-comment').val()),
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-comment').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-comment').button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -342,14 +342,14 @@ $('#button-comment').on('click', function () {
                 $('#input-history-comment').val('');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Next replies
-$('#comment').on('click', '.btn-block', function (e) {
+$('#comment').on('click', '.btn-block', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -357,32 +357,32 @@ $('#comment').on('click', '.btn-block', function (e) {
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (html) {
+        success: function(html) {
             $(element).parent().parent().parent().append(html);
 
             $(element).parent().remove();
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Reply
-$('#comment').on('click', '.btn-link', function (e) {
+$('#comment').on('click', '.btn-link', function(e) {
     e.preventDefault();
 
     $(this).parent().parent().find('.reply-input-box').toggle();
 });
 
 // Add reply
-$('#comment').on('click', '.btn-primary', function (e) {
+$('#comment').on('click', '.btn-primary', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -392,13 +392,13 @@ $('#comment').on('click', '.btn-primary', function (e) {
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -413,14 +413,14 @@ $('#comment').on('click', '.btn-primary', function (e) {
                 $(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val('');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Refresh
-$('#comment').on('click', '.reply-refresh', function (e) {
+$('#comment').on('click', '.reply-refresh', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -428,22 +428,22 @@ $('#comment').on('click', '.reply-refresh', function (e) {
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (html) {
+        success: function(html) {
             $(element).parent().replaceWith(html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
     $('.thumbnails').magnificPopup({
         type: 'image',
         delegate: 'a',

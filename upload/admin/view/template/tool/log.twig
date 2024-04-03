@@ -50,20 +50,20 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('.tab-content .btn-danger').on('click', function () {
+$('.tab-content .btn-danger').on('click', function() {
     var element = this;
 
     if (confirm('{{ text_confirm }}')) {
         $.ajax({
             url: $(element).attr('value'),
             dataType: 'json',
-            beforeSend: function () {
+            beforeSend: function() {
                 $(element).button('loading');
             },
-            complete: function () {
+            complete: function() {
                 $(element).button('reset');
             },
-            success: function (json) {
+            success: function(json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -76,7 +76,7 @@ $('.tab-content .btn-danger').on('click', function () {
                     $('#' + $(element).attr('data-oc-target')).val('');
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

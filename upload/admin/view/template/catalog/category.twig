@@ -23,13 +23,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#category').on('click', 'thead a, .pagination a', function (e) {
+$('#category').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#category').load(this.href);
 });
 
-$('#button-repair').on('click', function (e) {
+$('#button-repair').on('click', function(e) {
     e.preventDefault();
     
     var element = this;
@@ -37,13 +37,13 @@ $('#button-repair').on('click', function (e) {
     $.ajax({
         url: 'index.php?route=catalog/category.repair&user_token={{ user_token }}',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -54,7 +54,7 @@ $('#button-repair').on('click', function (e) {
                 $('#category').load('index.php?route=catalog/category.list&user_token={{ user_token }}');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

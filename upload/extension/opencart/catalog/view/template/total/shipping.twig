@@ -37,7 +37,7 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#form-quote').on('submit', function (e) {
+  $('#form-quote').on('submit', function(e) {
       e.preventDefault();
 
       $.ajax({
@@ -45,13 +45,13 @@
           type: 'post',
           data: $('#form-quote').serialize(),
           dataType: 'json',
-          beforeSend: function () {
+          beforeSend: function() {
               $('#button-quote').button('loading');
           },
-          complete: function () {
+          complete: function() {
               $('#button-quote').button('reset');
           },
-          success: function (json) {
+          success: function(json) {
               $('.alert-dismissible').remove();
               $('#form-shipping').find('.is-invalid').removeClass('is-invalid');
               $('#form-shipping').find('.invalid-feedback').removeClass('d-block');
@@ -119,13 +119,13 @@
                   $('#modal-shipping').modal('show');
               }
           },
-          error: function (xhr, ajaxOptions, thrownError) {
+          error: function(xhr, ajaxOptions, thrownError) {
               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
 
-  $(document).on('submit', '#form-shipping', function (e) {
+  $(document).on('submit', '#form-shipping', function(e) {
       e.preventDefault();
 
       $.ajax({
@@ -134,13 +134,13 @@
           data: $('#form-shipping').serialize(),
           dataType: 'json',
           contentType: 'application/x-www-form-urlencoded',
-          beforeSend: function () {
+          beforeSend: function() {
               $('#button-shipping-method').button('loading');
           },
-          complete: function () {
+          complete: function() {
               $('#button-shipping-method').button('reset');
           },
-          success: function (json) {
+          success: function(json) {
               $('.alert-dismissible').remove();
 
               if (json['error']) {
@@ -155,27 +155,27 @@
                   $('#modal-shipping').modal('hide');
               }
           },
-          error: function (xhr, ajaxOptions, thrownError) {
+          error: function(xhr, ajaxOptions, thrownError) {
               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
 
-  $('#input-country').on('change', function () {
+  $('#input-country').on('change', function() {
       var element = this;
 
       $.ajax({
           url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
           dataType: 'json',
-          beforeSend: function () {
+          beforeSend: function() {
               $(element).prop('disabled', true);
               $('#input-zone').prop('disabled', true);
           },
-          complete: function () {
+          complete: function() {
               $(element).prop('disabled', false);
               $('#input-zone').prop('disabled', false);
           },
-          success: function (json) {
+          success: function(json) {
               if (json['postcode_required'] == '1') {
                   $('#input-postcode').parent().parent().addClass('required');
               } else {
@@ -200,7 +200,7 @@
 
               $('#input-zone').html(html);
           },
-          error: function (xhr, ajaxOptions, thrownError) {
+          error: function(xhr, ajaxOptions, thrownError) {
               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });

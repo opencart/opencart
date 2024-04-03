@@ -8,26 +8,22 @@
               <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
             {% else %}
               <a href="{{ sort_name }}">{{ column_name }}</a>
-            {% endif %}
-          </td>
+            {% endif %}</td>
           <td class="text-start">{% if sort == 'author' %}
               <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a>
             {% else %}
               <a href="{{ sort_author }}">{{ column_author }}</a>
-            {% endif %}
-          </td>
+            {% endif %}</td>
           <td class="text-start">{% if sort == 'version' %}
               <a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>
             {% else %}
               <a href="{{ sort_version }}">{{ column_version }}</a>
-            {% endif %}
-          </td>
+            {% endif %}</td>
           <td class="text-start">{% if sort == 'date_added' %}
               <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
             {% else %}
               <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-            {% endif %}
-          </td>
+            {% endif %}</td>
           <td class="text-end">{{ column_action }}</td>
         </tr>
       </thead>
@@ -46,8 +42,7 @@
                   <button type="button" value="{{ modification.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
                 {% else %}
                   <button type="button" value="{{ modification.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
-                {% endif %}
-              </td>
+                {% endif %}</td>
             </tr>
           {% endfor %}
         {% else %}
@@ -109,6 +104,6 @@ var codemirror = CodeMirror.fromTextArea(document.querySelector('.codemirror'), 
     autofocus: false,
     theme: 'monokai'
 });
-  
+
 codemirror.setSize('100%', '600px');
 //--></script>

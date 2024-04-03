@@ -24,15 +24,15 @@
 <script type="text/javascript"><!--
 $('#event').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
-  
+
     $('#event').load(this.href);
 });
-  
+
 $('#event').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
-  
+
     var element = this;
-  
+
     $.ajax({
         url: $(element).val(),
         type: 'post',
@@ -50,10 +50,10 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
-  
+
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-  
+
                 $('#event').load($('#form-event').attr('data-oc-load'));
             }
         },

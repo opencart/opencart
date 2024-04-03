@@ -23,15 +23,15 @@
 <script type="text/javascript"><!--
 $('#startup').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
-  
+
     $('#startup').load(this.href);
 });
-  
+
 $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
-  
+
     var element = this;
-  
+
     $.ajax({
         url: $(element).val(),
         dataType: 'json',

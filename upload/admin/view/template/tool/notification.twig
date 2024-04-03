@@ -23,18 +23,18 @@
 <script type="text/javascript"><!--
 $('#notification').on('click', '.pagination a', function (e) {
     e.preventDefault();
-  
+
     $('#notification').load(this.href);
 });
-  
+
 // View
 $('#notification').on('click', 'table a', function (e) {
     e.preventDefault();
-  
+
     var element = this;
-  
+
     $('#modal-notification').remove();
-  
+
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'html',
@@ -53,12 +53,12 @@ $('#notification').on('click', 'table a', function (e) {
         }
     });
 });
-  
+
 $('#notification').on('click', '.btn', function (e) {
     var element = this;
-  
+
     $('#modal-notification').remove();
-  
+
     $.ajax({
         url: $(element).attr('value'),
         dataType: 'html',
@@ -70,9 +70,9 @@ $('#notification').on('click', '.btn', function (e) {
         },
         success: function (html) {
             $('body').append(html);
-  
+
             $('#modal-notification').modal('show');
-  
+
             $(element).parent().parent().removeClass('table-primary');
             $(element).parent().parent().find('.fa-bell').removeClass('fas').addClass('far');
             $(element).parent().parent().find('a').removeClass('font-weight-bold');
@@ -83,13 +83,13 @@ $('#notification').on('click', '.btn', function (e) {
         }
     });
 });
-  
+
 // Delete
 $('#button-delete').on('click', function (e) {
     e.preventDefault();
-  
+
     var element = this;
-  
+
     if (confirm('{{ text_confirm }}')) {
         $.ajax({
             url: 'index.php?route=tool/notification.delete&user_token={{ user_token }}',

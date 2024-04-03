@@ -136,7 +136,7 @@
 <script type="text/javascript"><!--
 $('#button-api').on('click', function (e) {
     $('#modal-api').remove();
-  
+
     $.ajax({
         url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
         dataType: 'html',
@@ -148,7 +148,7 @@ $('#button-api').on('click', function (e) {
         },
         success: function (html) {
             $('body').append(html);
-  
+
             $('#modal-api').modal('show');
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -160,24 +160,24 @@ $('#button-api').on('click', function (e) {
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function (e) {
     var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
-  
+
     var input = $('#extension-filter :input');
-  
+
     for (i = 0; i < input.length; i++) {
         if ($(input[i]).val() !== '') {
             url += '&' + $(input[i]).attr('name') + '=' + $(input[i]).val()
         }
     }
-  
+
     download();
-  
+
     location = url;
 });
-  
+
 $('#input-search').keydown(function (e) {
     if (e.keyCode == 13) {
         e.preventDefault();
-  
+
         $('#button-filter').trigger('click');
     }
 });

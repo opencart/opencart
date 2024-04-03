@@ -40,7 +40,7 @@ $('#notification').on('click', 'table a', function (e) {
         dataType: 'html',
         success: function (html) {
             $('body').append(html);
-  
+
             $('#modal-notification').modal('show');
   
             $(element).parent().parent().removeClass('table-primary');
@@ -104,14 +104,14 @@ $('#button-delete').on('click', function (e) {
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
-  
+
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button</div>');
                 }
-  
+
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button</div>');
-  
+
                     $('#notification').load('index.php?route=tool/notification.list&user_token={{ user_token }}');
                 }
             },

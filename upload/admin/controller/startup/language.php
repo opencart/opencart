@@ -60,7 +60,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	 */
 	public function after(string &$route, string &$prefix, string &$code, array &$output): void {
 		if (!$code) {
-			$code = $this->config->get('config_language_admin');
+			if (isset($this->request->cookie['language'])) {
+				$code = $this->request->cookie['language'];
+			} else {
+				$code = $this->config->get('config_language_admin');
+			}
 		}
 
 		// Use $this->language->load so it's not triggering infinite loops

@@ -9,8 +9,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function save(): void {
 		$this->load->language('api/sale/order');
 
-
-
 		$json = [];
 
 		$keys = [
@@ -97,7 +95,87 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		if (!$json) {
+			$this->load->model('catalog/product');
 
+			foreach ($this->request->post['products'] as $product_id => $option) {
+
+
+
+				$product_info = $this->model_catalog_product->getProduct($product_id);
+
+				if ($product_info) {
+
+					if (isset($this->request->post['product_id'])) {
+						$product_id = (int)$this->request->post['product_id'];
+					} else {
+						$product_id = 0;
+					}
+
+					if (isset($this->request->post['quantity'])) {
+						$quantity = (int)$this->request->post['quantity'];
+					} else {
+						$quantity = 1;
+					}
+
+					if (isset($this->request->post['option'])) {
+						$option = array_filter($this->request->post['option']);
+					} else {
+						$option = [];
+					}
+
+					if (isset($this->request->post['subscription_plan_id'])) {
+						$subscription_plan_id = (int)$this->request->post['subscription_plan_id'];
+					} else {
+						$subscription_plan_id = 0;
+					}
+
+					// If variant get master product
+					if ($product_info['master_id']) {
+						$product_id = $product_info['master_id'];
+					}
+
+					// Merge variant code with options
+					foreach ($product_info['variant'] as $key => $value) {
+						$option[$key] = $value;
+					}
+
+					// Validate options
+					$product_options = $this->model_catalog_product->getOptions($product_id);
+
+					foreach ($product_options as $product_option) {
+						if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+							$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+						}
+					}
+
+					// Validate Subscription plan
+					$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
+
+					if ($subscriptions) {
+						$subscription_plan_ids = [];
+
+						foreach ($subscriptions as $subscription) {
+							$subscription_plan_ids[] = $subscription['subscription_plan_id'];
+						}
+
+						if (!in_array($subscription_plan_id, $subscription_plan_ids)) {
+							$json['error']['subscription'] = $this->language->get('error_subscription');
+						}
+					}
+				} else {
+					$json['error']['warning'] = $this->language->get('error_product');
+				}
+			}
+		}
+
+
+
+
+
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

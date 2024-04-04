@@ -727,9 +727,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			$selected[] = (int)$this->request->get['order_id'];
 		}
 
-		foreach ($selected as $order_id) {
-			$this->load->model('checkout/order');
+		$this->load->model('checkout/order');
 
+		foreach ($selected as $order_id) {
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
 			if ($order_info) {

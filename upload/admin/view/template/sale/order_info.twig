@@ -2092,7 +2092,7 @@ $('#input-payment-address').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer.address&user_token={{ user_token }}&address_id=' + this.value,
+        url: 'index.php?route=customer/address.address&user_token={{ user_token }}&address_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
@@ -2263,7 +2263,7 @@ $('#input-shipping-address').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer.address&user_token={{ user_token }}&address_id=' + this.value,
+        url: 'index.php?route=customer/address.address&user_token={{ user_token }}&address_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
@@ -2347,23 +2347,23 @@ $('#form-shipping-address').on('submit', function(e) {
             if (json['success']) {
                 $('#form-shipping-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
+                var address = $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + '<br/>';
 
                 var company = $('#input-shipping-company').val();
 
                 if (company) {
-                    address += $('#input-shipping-company').val() + "<br/>";
+                    address += $('#input-shipping-company').val() + '<br/>';
                 }
 
-                address += $('#input-shipping-address-1').val() + "<br/>";
+                address += $('#input-shipping-address-1').val() + '<br/>';
 
                 var address_2 = $('#input-shipping-address-2').val();
 
                 if (address_2) {
-                    address += $('#input-shipping-address-2').val() + "<br/>";
+                    address += $('#input-shipping-address-2').val() + '<br/>';
                 }
 
-                address += $('#input-shipping-city').val() + "<br/>";
+                address += $('#input-shipping-city').val() + '<br/>';
 
                 var postcode = $('#input-shipping-postcode').val();
 

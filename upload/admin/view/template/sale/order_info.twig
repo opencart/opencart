@@ -2677,6 +2677,8 @@ $('#button-refresh').on('click', function() {
             $('#button-confirm').prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             html = '';
 
             if (json['products'].length) {

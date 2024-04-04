@@ -214,17 +214,17 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
 });
 
 $('#input-parent').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 json.unshift({
                     'name': '{{ text_none }}',
                     'category_id': '0'
                 });
 
-                response($.map(json, function (item) {
+                response($.map(json, function(item) {
                     return {
                         value: item['category_id'],
                         label: item['name']
@@ -233,19 +233,19 @@ $('#input-parent').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-parent').val(item['label']);
         $('#input-parent-id').val(item['value']);
     }
 });
 
 $('#input-filter').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['filter_id']
@@ -254,7 +254,7 @@ $('#input-filter').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-filter').val('');
 
         $('#category-filter-' + item['value']).remove();
@@ -268,7 +268,7 @@ $('#input-filter').autocomplete({
     }
 });
 
-$('#category-filter').on('click', '.btn', function () {
+$('#category-filter').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
 //--></script>

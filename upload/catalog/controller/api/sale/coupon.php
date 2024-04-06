@@ -31,16 +31,21 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($coupon) {
-				$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 
-				$this->session->data['coupon'] = $coupon;
-			} else {
-				$json['success'] = $this->language->get('text_remove');
-
-				unset($this->session->data['coupon']);
-			}
+			$this->session->data['coupon'] = $coupon;
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function remove(): void {
+		$this->load->language('api/sale/coupon');
+
+		$json['success'] = $this->language->get('text_remove');
+
+		unset($this->session->data['coupon']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

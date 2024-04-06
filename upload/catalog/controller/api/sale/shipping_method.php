@@ -67,10 +67,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
 			$json['success'] = $this->language->get('text_success');
 
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+
+			// If order already created then update
 			if (isset($this->session->data['order_id'])) {
 				$this->load->model('checkout/order');
 

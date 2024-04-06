@@ -32,15 +32,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($voucher) {
-				$this->session->data['voucher'] = $this->request->post['voucher'];
+			$json['success'] = $this->language->get('text_success');
 
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				unset($this->session->data['voucher']);
-
-				$json['success'] = $this->language->get('text_remove');
-			}
+			$this->session->data['voucher'] = $this->request->post['voucher'];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

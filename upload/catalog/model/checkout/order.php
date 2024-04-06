@@ -19,21 +19,21 @@ class Order extends \Opencart\System\Engine\Model {
 		$order_id = $this->db->getLastId();
 
 		// Products
-		if (isset($data['products'])) {
+		if (!empty($data['products'])) {
 			foreach ($data['products'] as $product) {
 				$this->model_checkout_order->addProduct($order_id, $product);
 			}
 		}
 
 		// Vouchers
-		if (isset($data['vouchers'])) {
+		if (!empty($data['vouchers'])) {
 			foreach ($data['vouchers'] as $voucher) {
 				$this->model_checkout_order->addVoucher($order_id, $voucher);
 			}
 		}
 
 		// Totals
-		if (isset($data['totals'])) {
+		if (!empty($data['totals'])) {
 			foreach ($data['totals'] as $total) {
 				$this->model_checkout_order->addTotal($order_id, $total);
 			}
@@ -69,7 +69,7 @@ class Order extends \Opencart\System\Engine\Model {
 			// Products
 			$this->model_checkout_order->deleteProducts($order_id);
 
-			if (isset($data['products'])) {
+			if (!empty($data['products'])) {
 				foreach ($data['products'] as $product) {
 					$this->model_checkout_order->addProduct($order_id, $product);
 				}
@@ -78,7 +78,7 @@ class Order extends \Opencart\System\Engine\Model {
 			// Vouchers
 			$this->model_checkout_order->deleteVouchers($order_id);
 
-			if (isset($data['vouchers'])) {
+			if (!empty($data['vouchers'])) {
 				foreach ($data['vouchers'] as $voucher) {
 					$this->model_checkout_order->addVoucher($order_id, $voucher);
 				}
@@ -87,7 +87,7 @@ class Order extends \Opencart\System\Engine\Model {
 			// Totals
 			$this->model_checkout_order->deleteTotals($order_id);
 
-			if (isset($data['totals'])) {
+			if (!empty($data['totals'])) {
 				foreach ($data['totals'] as $total) {
 					$this->model_checkout_order->addTotal($order_id, $total);
 				}
@@ -231,7 +231,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$order_product_id = $this->db->getLastId();
 
-		if (isset($data['option'])) {
+		if (!empty($data['option'])) {
 			foreach ($data['option'] as $option) {
 				$this->model_checkout_order->addOption($order_id, $order_product_id, $option);
 			}

@@ -127,6 +127,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			// If order already created then update
 			if (isset($this->session->data['order_id'])) {
 				$address_data = [];
 

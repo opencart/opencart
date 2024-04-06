@@ -209,7 +209,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			$order_data['products'] = $this->getProducts($order_id);
-			$order_data['vouchers'] = $this->getProducts($order_id);
+			$order_data['vouchers'] = $this->getVouchers($order_id);
 			$order_data['totals'] = $this->getTotals($order_id);
 
 			return $order_data;
@@ -231,12 +231,14 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$order_product_id = $this->db->getLastId();
 
-		foreach ($data['option'] as $option) {
-			$this->model_checkout_order->addOption($order_id, $order_product_id, $option);
+		if (isset($data['option'])) {
+			foreach ($data['option'] as $option) {
+				$this->model_checkout_order->addOption($order_id, $order_product_id, $option);
+			}
 		}
 
 		// If subscription add details
-		if ($data['subscription']) {
+		if (isset($data['subscription'])) {
 			$this->model_checkout_order->addSubscription($order_id, $order_product_id, $data['subscription']);
 		}
 

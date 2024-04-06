@@ -178,7 +178,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
 
-			print_r($this->cart->getProducts());
+			//print_r($this->cart->getProducts());
 
 
 			$json['success'] = $this->language->get('text_success');

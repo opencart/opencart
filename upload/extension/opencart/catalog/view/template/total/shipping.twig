@@ -195,7 +195,7 @@
                       html += '>' + json['zone'][i]['name'] + '</option>';
                   }
               } else {
-                  html += '<option value="0" selected>{{ text_none }}</option>';
+                  html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
               }
 
               $('#input-zone').html(html);

@@ -33,7 +33,7 @@
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li><h6 class="dropdown-header">{{ text_option }}</h6></li>
                     {% if customer.unlock %}
-                      <li><a href="{{ customer.unlock }}" class="dropdown-item"><i class="fa-solid fa-unlock"></i> {{ text_unlock }}</a></li>
+                      <li><a href="{{ customer.unlock }}" data-oc-toggle="unlock" class="dropdown-item"><i class="fa-solid fa-unlock"></i> {{ text_unlock }}</a></li>
                     {% else %}
                       <li><a href="#" class="dropdown-item disabled"><i class="fa-solid fa-unlock"></i> {{ text_unlock }}</a></li>
                     {% endif %}

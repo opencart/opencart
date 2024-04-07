@@ -74,12 +74,12 @@
                   html += '  <div class="modal-dialog">';
                   html += '    <div class="modal-content">';
                   html += '      <div class="modal-header">';
-                  html += '        <h4 class="modal-title">{{ text_shipping_method }}</h4>';
+                  html += '        <h4 class="modal-title">{{ text_shipping_method|escape('js') }}</h4>';
                   html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                   html += '      </div>';
                   html += '      <div class="modal-body">';
                   html += '        <form id="form-shipping">';
-                  html += '          <p>{{ text_estimate }}</p>';
+                  html += '          <p>{{ text_estimate|escape('js') }}</p>';
 
                   for (i in json['shipping_methods']) {
                       html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';

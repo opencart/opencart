@@ -106,7 +106,7 @@
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping|escape('js') }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';

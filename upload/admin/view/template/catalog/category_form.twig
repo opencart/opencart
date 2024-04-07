@@ -220,8 +220,8 @@ $('#input-parent').autocomplete({
             dataType: 'json',
             success: function(json) {
                 json.unshift({
-                    'name': '{{ text_none }}',
-                    'category_id': '0'
+                    'category_id': '0',
+                    'name': '{{ text_none }}'
                 });
 
                 response($.map(json, function(item) {

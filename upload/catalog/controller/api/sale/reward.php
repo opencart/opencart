@@ -41,20 +41,31 @@ class Reward extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($reward) {
-				$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 
-				$this->session->data['reward'] = $reward;
-			} else {
-				$json['success'] = $this->language->get('text_remove');
-
-				unset($this->session->data['reward']);
-			}
+			$this->session->data['reward'] = $reward;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	 * Remove
+	 *
+	 * @return void
+	 */
+	function remove() {
+		$this->load->language('api/sale/reward');
+
+		$json['success'] = $this->language->get('text_remove');
+
+		unset($this->session->data['reward']);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 
 	/**
 	 * Maximum

@@ -133,15 +133,15 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			// If order already created then update
 			if (isset($this->session->data['order_id'])) {
-				$address_data = [];
+				$order_data = [];
 
 				foreach ($this->session->data['shipping_address'] as $key => $value) {
-					$address_data['shipping_' . $key] = $value;
+					$order_data['shipping_' . $key] = $value;
 				}
 
 				$this->load->model('checkout/order');
 
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], $address_data);
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 			}
 		}
 

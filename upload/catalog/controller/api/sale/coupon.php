@@ -40,6 +40,11 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * Remove
+	 *
+	 * @return void
+	 */
 	public function remove(): void {
 		$this->load->language('api/sale/coupon');
 

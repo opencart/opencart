@@ -31,16 +31,41 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($affiliate_id) {
-				$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 
-				$this->session->data['affiliate_id'] = $affiliate_id;
-			} else {
-				$json['success'] = $this->language->get('text_remove');
+			$this->session->data['affiliate_id'] = $affiliate_id;
 
-				unset($this->session->data['affiliate_id']);
+			// If order already created then update
+			if (isset($this->session->data['order_id'])) {
+				$subtotal = $this->cart->getSubTotal();
+
+				$order_data = [
+					'affiliate_id' => $affiliate_info['customer_id'],
+					'commission'   => ($subtotal / 100) * $affiliate_info['commission'],
+					'tracking'     => $affiliate_info['tracking']
+				];
+
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 			}
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Remove
+	 *
+	 * @return void
+	 */
+	public function remove(): void {
+		$this->load->language('api/sale/affiliate');
+
+		$json['success'] = $this->language->get('text_remove');
+
+		unset($this->session->data['affiliate_id']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

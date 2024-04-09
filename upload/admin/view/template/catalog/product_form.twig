@@ -344,8 +344,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div id="input-subtract" class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="subtract" value="0"/>
-                        <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
+                        <input type="hidden" name="subtract" value="0"/> <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -400,8 +399,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div id="input-shipping" class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="shipping" value="0"/>
-                        <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
+                        <input type="hidden" name="shipping" value="0"/> <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -502,8 +500,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="status" value="0"/>
-                        <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                        <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -710,7 +707,8 @@
                       <tr id="attribute-row-{{ attribute_row }}">
                         <td class="text-start">
                           <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
-                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul></td>
+                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
+                        </td>
                         <td class="text-start">{% for language in languages %}
                             <div class="input-group mb-12">
                               <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
@@ -735,132 +733,130 @@
               <div id="tab-option" class="tab-pane">
 
                 <div id="option">
+
                   {% set option_row = 0 %}
                   {% set option_value_row = 0 %}
                   {% for product_option in product_options %}
 
                     <fieldset id="option-row-{{ option_row }}">
-                      <legend class="float-none">{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-end" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fa-solid fa-minus-circle"></i></button></legend>
+                      <legend>{{ product_option.name }}</legend>
                       <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
 
-                      <div class="row mb-3">
-                        <label for="input-required-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_required }}</label>
-                        <div class="col-sm-10">
-                          <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
-                            <option value="1"{% if product_option.required %} selected{% endif %}>{{ text_enabled }}</option>
-                            <option value="0"{% if not product_option.required %} selected{% endif %}>{{ text_disabled }}</option>
-                          </select>
+                      <div class="row align-items-center">
+                        <div class="col-11">
+
+                          <div class="mb-3">
+                            <label for="input-required-{{ option_row }}" class="form-label">{{ entry_required }}</label>
+                            <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
+                              <option value="1"{% if product_option.required %} selected{% endif %}>{{ text_enabled }}</option>
+                              <option value="0"{% if not product_option.required %} selected{% endif %}>{{ text_disabled }}</option>
+                            </select>
+                          </div>
+
+                          {% if product_option.type == 'text' %}
+                            <div class="mb-3">
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
+                              <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                            </div>
+                          {% endif %}
+
+                          {% if product_option.type == 'textarea' %}
+                            <div class="mb-3">
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
+                              <textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
+                            </div>
+                          {% endif %}
+
+                          {% if product_option.type == 'file' %}
+                            <div class="mb-3 d-none">
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
+                              <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                            </div>
+                          {% endif %}
+
+                          {% if product_option.type == 'date' %}
+                            <div class="mb-3">
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
+                              <input type="date" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                            </div>
+                          {% endif %}
+
+                          {% if product_option.type == 'time' %}
+                            <div class="mb-3">
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
+                              <div class="input-group">
+                                <input type="time" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+                              </div>
+                            </div>
+                          {% endif %}
+
+                          {% if product_option.type == 'datetime' %}
+                            <div class="mb-3">
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
+                              <input type="datetime-local" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                            </div>
+                          {% endif %}
+
+                          {% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <td class="text-start">{{ entry_option_value }}</td>
+                                    <td class="text-end">{{ entry_quantity }}</td>
+                                    <td class="text-start">{{ entry_subtract }}</td>
+                                    <td class="text-end">{{ entry_price }}</td>
+                                    <td class="text-end">{{ entry_points }}</td>
+                                    <td class="text-end">{{ entry_weight }}</td>
+                                    <td></td>
+                                  </tr>
+                                </thead>
+                                <tbody id="option-value-{{ option_row }}">
+                                  {% for product_option_value in product_option.product_option_value %}
+                                    <tr id="option-value-row-{{ option_value_row }}">
+                                      <td class="text-start">{{ product_option_value.name }}
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
+                                      <td class="text-end">{{ product_option_value.quantity }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}"/></td>
+                                      <td class="text-start">{% if product_option_value.subtract %}
+                                          {{ text_yes }}
+                                        {% else %}
+                                          {{ text_no }}
+                                        {% endif %}
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="{{ product_option_value.subtract }}"/></td>
+                                      <td class="text-end">{{ product_option_value.price_prefix }}{{ product_option_value.price }}
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
+                                      <td class="text-end">{{ product_option_value.points_prefix }}{{ product_option_value.points }}
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
+                                      <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
+                                      <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                                    </tr>
+                                    {% set option_value_row = option_value_row + 1 %}
+                                  {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="6"></td>
+                                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" data-option-row="{{ option_row }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                              <select id="product-option-values-{{ option_row }}" class="d-none">
+                                {% if option_values[product_option.option_id] %}
+                                  {% for option_value in option_values[product_option.option_id] %}
+                                    <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
+                                  {% endfor %}
+                                {% endif %}
+                              </select>
+                            </div>
+                          {% endif %}
+                        </div>
+
+                        <div class="col">
+                          <button type="button" class="btn btn-danger" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fa-solid fa-minus-circle"></i></button>
                         </div>
                       </div>
-
-                      {% if product_option.type == 'text' %}
-                        <div class="row mb-3">
-                          <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
-                          <div class="col-sm-10">
-                            <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
-                          </div>
-                        </div>
-                      {% endif %}
-
-                      {% if product_option.type == 'textarea' %}
-                        <div class="row mb-3">
-                          <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
-                          <div class="col-sm-10">
-                            <textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
-                          </div>
-                        </div>
-                      {% endif %}
-
-                      {% if product_option.type == 'file' %}
-                        <div class="row mb-3 d-none">
-                          <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
-                          <div class="col-sm-10"><input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/></div>
-                        </div>
-                      {% endif %}
-
-                      {% if product_option.type == 'date' %}
-                        <div class="row mb-3">
-                          <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
-                          <div class="col-sm-10 col-md-4">
-                            <input type="date" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
-                          </div>
-                        </div>
-                      {% endif %}
-
-                      {% if product_option.type == 'time' %}
-                        <div class="row mb-3">
-                          <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
-                          <div class="col-sm-10 col-md-4">
-                            <div class="input-group">
-                              <input type="time" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
-                              <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-                            </div>
-                          </div>
-                        </div>
-                      {% endif %}
-
-                      {% if product_option.type == 'datetime' %}
-                        <div class="row mb-3">
-                          <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
-                          <div class="col-sm-10 col-md-4">
-                            <input type="datetime-local" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
-                          </div>
-                        </div>
-                      {% endif %}
-
-                      {% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-hover">
-                            <thead>
-                              <tr>
-                                <td class="text-start">{{ entry_option_value }}</td>
-                                <td class="text-end">{{ entry_quantity }}</td>
-                                <td class="text-start">{{ entry_subtract }}</td>
-                                <td class="text-end">{{ entry_price }}</td>
-                                <td class="text-end">{{ entry_points }}</td>
-                                <td class="text-end">{{ entry_weight }}</td>
-                                <td></td>
-                              </tr>
-                            </thead>
-                            <tbody id="option-value-{{ option_row }}">
-                              {% for product_option_value in product_option.product_option_value %}
-                                <tr id="option-value-row-{{ option_value_row }}">
-                                  <td class="text-start">{{ product_option_value.name }}
-                                    <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
-                                  <td class="text-end">{{ product_option_value.quantity }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}"/></td>
-                                  <td class="text-start">{% if product_option_value.subtract %}
-                                      {{ text_yes }}
-                                    {% else %}
-                                      {{ text_no }}
-                                    {% endif %}
-                                    <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="{{ product_option_value.subtract }}"/></td>
-                                  <td class="text-end">{{ product_option_value.price_prefix }}{{ product_option_value.price }}
-                                    <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
-                                  <td class="text-end">{{ product_option_value.points_prefix }}{{ product_option_value.points }}
-                                    <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
-                                  <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
-                                    <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
-                                  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
-                                </tr>
-                                {% set option_value_row = option_value_row + 1 %}
-                              {% endfor %}
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td colspan="6"></td>
-                                <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" data-option-row="{{ option_row }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                          <select id="product-option-values-{{ option_row }}" class="d-none">
-                            {% if option_values[product_option.option_id] %}
-                              {% for option_value in option_values[product_option.option_id] %}
-                                <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
-                              {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                      {% endif %}
                     </fieldset>
                     {% set option_row = option_row + 1 %}
                   {% endfor %}
@@ -882,6 +878,8 @@
                 {% for option in options %}
                   <fieldset>
                     <legend class="float-none">{{ option.name }}</legend>
+
+
                     {% if option.type == 'select' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -906,6 +904,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'radio' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -915,11 +915,11 @@
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
                                   <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
-                                  {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                    {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
-                                  {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
-                                  {% endif %}</label>
+                                    {% if option_value.price %}
+                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    {% endif %}</label>
                                 </div>
                               {% endfor %}
                             </div>
@@ -933,6 +933,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'checkbox' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -942,10 +944,10 @@
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
                                   <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
-                                  {{ option_value.name }}
-                                  {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
-                                  {% endif %}</label>
+                                    {{ option_value.name }}
+                                    {% if option_value.price %}
+                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    {% endif %}</label>
                                 </div>
                               {% endfor %}
                             </div>
@@ -959,6 +961,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'text' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -975,6 +979,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'textarea' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -991,6 +997,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'file' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1010,6 +1018,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'date' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1026,6 +1036,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'time' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1043,6 +1055,8 @@
                         </div>
                       </div>
                     {% endif %}
+
+
                     {% if option.type == 'datetime' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1061,7 +1075,14 @@
                     {% endif %}
                   </fieldset>
                 {% endfor %}
+
+
               </div>
+
+
+
+
+
             {% endif %}
 
             <div id="tab-subscription" class="tab-pane">
@@ -1086,14 +1107,14 @@
                     {% for product_subscription in product_subscriptions %}
                       <tr id="subscription-row-{{ subscription_row }}">
                         <td class="text-start"><select name="product_subscription[{{ subscription_row }}][subscription_plan_id]" class="form-select">
-                          {% for subscription_plan in subscription_plans %}
-                            <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == product_subscription.subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
-                          {% endfor %}
+                            {% for subscription_plan in subscription_plans %}
+                              <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == product_subscription.subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                            {% endfor %}
                           </select></td>
                         <td class="text-start"><select name="product_subscription[{{ subscription_row }}][customer_group_id]" class="form-select">
-                          {% for customer_group in customer_groups %}
-                            <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
-                          {% endfor %}
+                            {% for customer_group in customer_groups %}
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
+                            {% endfor %}
                           </select></td>
                         <td class="text-start"><input type="text" name="product_subscription[{{ subscription_row }}][trial_price]" value="{{ product_subscription.trial_price }}" placeholder="{{ entry_trial_price }}" class="form-control"/></td>
                         <td class="text-start"><input type="text" name="product_subscription[{{ subscription_row }}][price]" value="{{ product_subscription.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
@@ -1135,9 +1156,9 @@
                     {% for product_discount in product_discounts %}
                       <tr id="discount-row-{{ discount_row }}">
                         <td class="text-start"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-select">
-                          {% for customer_group in customer_groups %}
-                            <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_discount.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
-                          {% endfor %}
+                            {% for customer_group in customer_groups %}
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_discount.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
+                            {% endfor %}
                           </select></td>
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
@@ -1181,9 +1202,9 @@
                     {% for product_special in product_specials %}
                       <tr id="special-row-{{ special_row }}">
                         <td class="text-start"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-select">
-                          {% for customer_group in customer_groups %}
-                            <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_special.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
-                          {% endfor %}
+                            {% for customer_group in customer_groups %}
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_special.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
+                            {% endfor %}
                           </select></td>
                         <td class="text-end"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
                         <td class="text-end"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
@@ -1208,8 +1229,7 @@
               <fieldset>
                 <legend>{{ text_image }}</legend>
                 <div id="image" class="border rounded d-block" style="max-width: 300px;">
-                  <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                  <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                  <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                   <div class="d-grid">
                     <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                     <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -1250,7 +1270,8 @@
                                 <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                                 <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                               </div>
-                            </div></td>
+                            </div>
+                          </td>
                           <td class="text-start"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                           <td class="text-end"><button type="button" onclick="$('#product-image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>
@@ -1296,9 +1317,9 @@
                       <tr>
                         <td class="text-start">{{ entry_customer_group }}</td>
                         <td class="text-end">{{ entry_reward }}&nbsp;&nbsp;{% if master_id %}
-                            <div class="form-check form-switch float-end">
-                              <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/> <label for="input-variant-product-reward" class="form-check-label"></label>
-                            </div>
+                          <div class="form-check form-switch float-end">
+                            <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/> <label for="input-variant-product-reward" class="form-check-label"></label>
+                          </div>
                           {% endif %}</td>
                       </tr>
                     </thead>
@@ -1612,276 +1633,276 @@ $('#button-attribute').on('click', function() {
 });
 
 {% if not master_id %}
-  var option_row = {{ option_row }};
+var option_row = {{ option_row }};
 
-  $('#input-option').autocomplete({
-      'source': function(request, response) {
-          $.ajax({
-              url: 'index.php?route=catalog/option.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-              dataType: 'json',
-              success: function(json) {
-                  response($.map(json, function(item) {
-                      return {
-                          category: item['category'],
-                          label: item['name'],
-                          value: item['option_id'],
-                          type: item['type'],
-                          option_value: item['option_value']
-                      }
-                  }));
-              }
-          });
-      },
-      'select': function(item) {
-          html = '<fieldset id="option-row-' + option_row + '">';
-          html += '  <legend class="float-none">' + item['label'] + ' <button type="button" class="btn btn-danger float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fa-solid fa-minus-circle"></i></button></legend>';
-          html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
-          html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
-          html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
-          html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
+$('#input-option').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/option.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        category: item['category'],
+                        label: item['name'],
+                        value: item['option_id'],
+                        type: item['type'],
+                        option_value: item['option_value']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        html = '<fieldset id="option-row-' + option_row + '">';
+        html += '  <legend class="float-none">' + item['label'] + ' <button type="button" class="btn btn-danger float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fa-solid fa-minus-circle"></i></button></legend>';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
 
-          html += '  <div class="row mb-3">';
-          html += '    <label for="input-required-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_required|escape('js') }}</label>';
-          html += '	   <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required-' + option_row + '" class="form-select">';
-          html += '	     <option value="1">{{ text_yes|escape('js') }}</option>';
-          html += '	     <option value="0">{{ text_no|escape('js') }}</option>';
-          html += '	   </select></div>';
-          html += '  </div>';
+        html += '  <div class="row mb-3">';
+        html += '    <label for="input-required-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_required|escape('js') }}</label>';
+        html += '	   <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required-' + option_row + '" class="form-select">';
+        html += '	     <option value="1">{{ text_yes|escape('js') }}</option>';
+        html += '	     <option value="0">{{ text_no|escape('js') }}</option>';
+        html += '	   </select></div>';
+        html += '  </div>';
 
-          if (item['type'] == 'text') {
-              html += '	<div class="row mb-3">';
-              html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-              html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
-              html += '	</div>';
-          }
+        if (item['type'] == 'text') {
+            html += '	<div class="row mb-3">';
+            html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
+            html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
+            html += '	</div>';
+        }
 
-          if (item['type'] == 'textarea') {
-              html += '	<div class="row mb-3">';
-              html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-              html += '	  <div class="col-sm-10"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"></textarea></div>';
-              html += '	</div>';
-          }
+        if (item['type'] == 'textarea') {
+            html += '	<div class="row mb-3">';
+            html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
+            html += '	  <div class="col-sm-10"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"></textarea></div>';
+            html += '	</div>';
+        }
 
-          if (item['type'] == 'file') {
-              html += '	<div class="row mb-3 d-none">';
-              html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-              html += '	  <div class="col-sm-10 d-none"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
-              html += '	</div>';
-          }
+        if (item['type'] == 'file') {
+            html += '	<div class="row mb-3 d-none">';
+            html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
+            html += '	  <div class="col-sm-10 d-none"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
+            html += '	</div>';
+        }
 
-          if (item['type'] == 'date') {
-              html += '	<div class="row mb-3">';
-              html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-              html += '	  <div class="col-sm-10 col-md-4"><input type="date" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
-              html += '	</div>';
-          }
+        if (item['type'] == 'date') {
+            html += '	<div class="row mb-3">';
+            html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
+            html += '	  <div class="col-sm-10 col-md-4"><input type="date" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
+            html += '	</div>';
+        }
 
-          if (item['type'] == 'time') {
-              html += '	<div class="row mb-3">';
-              html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-              html += '	  <div class="col-sm-10 col-md-4"><input type="time" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
-              html += '	</div>';
-          }
+        if (item['type'] == 'time') {
+            html += '	<div class="row mb-3">';
+            html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
+            html += '	  <div class="col-sm-10 col-md-4"><input type="time" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
+            html += '	</div>';
+        }
 
-          if (item['type'] == 'datetime') {
-              html += '	<div class="row mb-3">';
-              html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
-              html += '	  <div class="col-sm-10 col-md-4"><input type="datetime-local" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
-              html += '	</div>';
-          }
+        if (item['type'] == 'datetime') {
+            html += '	<div class="row mb-3">';
+            html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value|escape('js') }}</label>';
+            html += '	  <div class="col-sm-10 col-md-4"><input type="datetime-local" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-' + option_row + '" class="form-control"/></div>';
+            html += '	</div>';
+        }
 
-          if (item['type'] == 'select' || item['type'] == 'radio' || item['type'] == 'checkbox' || item['type'] == 'image') {
-              html += '<div class="table-responsive">';
-              html += '  <table id="option-value-' + option_row + '" class="table table-bordered table-hover">';
-              html += '  	 <thead>';
-              html += '      <tr>';
-              html += '        <td class="text-start">{{ entry_option_value|escape('js') }}</td>';
-              html += '        <td class="text-end">{{ entry_quantity|escape('js') }}</td>';
-              html += '        <td class="text-start">{{ entry_subtract|escape('js') }}</td>';
-              html += '        <td class="text-end">{{ entry_price|escape('js') }}</td>';
-              html += '        <td class="text-end">{{ entry_points|escape('js') }}</td>';
-              html += '        <td class="text-end">{{ entry_weight|escape('js') }}</td>';
-              html += '        <td></td>';
-              html += '      </tr>';
-              html += '    </thead>';
-              html += '    <tbody></tbody>';
-              html += '    <tfoot>';
-              html += '      <tr>';
-              html += '        <td colspan="6"></td>';
-              html += '        <td class="text-end"><button type="button" data-option-row="' + option_row + '" data-bs-toggle="tooltip" title="{{ button_option_value_add|escape('js') }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>';
-              html += '      </tr>';
-              html += '    </tfoot>';
-              html += '  </table>';
-              html += '</div>';
+        if (item['type'] == 'select' || item['type'] == 'radio' || item['type'] == 'checkbox' || item['type'] == 'image') {
+            html += '<div class="table-responsive">';
+            html += '  <table id="option-value-' + option_row + '" class="table table-bordered table-hover">';
+            html += '  	 <thead>';
+            html += '      <tr>';
+            html += '        <td class="text-start">{{ entry_option_value|escape('js') }}</td>';
+            html += '        <td class="text-end">{{ entry_quantity|escape('js') }}</td>';
+            html += '        <td class="text-start">{{ entry_subtract|escape('js') }}</td>';
+            html += '        <td class="text-end">{{ entry_price|escape('js') }}</td>';
+            html += '        <td class="text-end">{{ entry_points|escape('js') }}</td>';
+            html += '        <td class="text-end">{{ entry_weight|escape('js') }}</td>';
+            html += '        <td></td>';
+            html += '      </tr>';
+            html += '    </thead>';
+            html += '    <tbody></tbody>';
+            html += '    <tfoot>';
+            html += '      <tr>';
+            html += '        <td colspan="6"></td>';
+            html += '        <td class="text-end"><button type="button" data-option-row="' + option_row + '" data-bs-toggle="tooltip" title="{{ button_option_value_add|escape('js') }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>';
+            html += '      </tr>';
+            html += '    </tfoot>';
+            html += '  </table>';
+            html += '</div>';
 
-              html += '  <select id="product-option-values-' + option_row + '" class="d-none">';
+            html += '  <select id="product-option-values-' + option_row + '" class="d-none">';
 
-              for (i = 0; i < item['option_value'].length; i++) {
-                  html += '<option value="' + item['option_value'][i]['option_value_id'] + '">' + item['option_value'][i]['name'] + '</option>';
-              }
+            for (i = 0; i < item['option_value'].length; i++) {
+                html += '<option value="' + item['option_value'][i]['option_value_id'] + '">' + item['option_value'][i]['name'] + '</option>';
+            }
 
-              html += '  </select>';
-              html += '</fieldset>';
-          }
+            html += '  </select>';
+            html += '</fieldset>';
+        }
 
-          $('#option').append(html);
+        $('#option').append(html);
 
-          option_row++;
-      }
-  });
+        option_row++;
+    }
+});
 
-  var option_value_row = {{ option_value_row }};
+var option_value_row = {{ option_value_row }};
 
-  $('#option').on('click', '.btn-primary', function() {
-      var element = this;
+$('#option').on('click', '.btn-primary', function() {
+    var element = this;
 
-      if ($(element).attr('data-option-value-row')) {
-          element.option_value_row = $(element).attr('data-option-value-row');
-      } else {
-          element.option_value_row = option_value_row;
-      }
+    if ($(element).attr('data-option-value-row')) {
+        element.option_value_row = $(element).attr('data-option-value-row');
+    } else {
+        element.option_value_row = option_value_row;
+    }
 
-      $('.modal').remove();
+    $('.modal').remove();
 
-      html = '<div id="modal-option" class="modal fade">';
-      html += '  <div class="modal-dialog">';
-      html += '    <div class="modal-content">';
-      html += '      <div class="modal-header">';
-      html += '        <h5 class="modal-title"><i class="fa-solid fa-pencil"></i> {{ text_option_value|escape('js') }}</h5> <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-      html += '      </div>';
-      html += '      <div class="modal-body">';
-      html += '        <div class="mb-3">';
-      html += '      	   <label for="input-modal-option-value" class="form-label">{{ entry_option_value|escape('js') }}</label>';
-      html += '      	   <select name="option_value_id" id="input-modal-option-value" class="form-select">';
+    html = '<div id="modal-option" class="modal fade">';
+    html += '  <div class="modal-dialog">';
+    html += '    <div class="modal-content">';
+    html += '      <div class="modal-header">';
+    html += '        <h5 class="modal-title"><i class="fa-solid fa-pencil"></i> {{ text_option_value|escape('js') }}</h5> <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+    html += '      </div>';
+    html += '      <div class="modal-body">';
+    html += '        <div class="mb-3">';
+    html += '      	   <label for="input-modal-option-value" class="form-label">{{ entry_option_value|escape('js') }}</label>';
+    html += '      	   <select name="option_value_id" id="input-modal-option-value" class="form-select">';
 
-      option_value = $('#product-option-values-' + $(element).attr('data-option-row') + ' option');
+    option_value = $('#product-option-values-' + $(element).attr('data-option-row') + ' option');
 
-      for (i = 0; i < option_value.length; i++) {
-          if ($(element).attr('data-option-value-row') && $(option_value[i]).val() == $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]\']').val()) {
-              html += '<option value="' + $(option_value[i]).val() + '" selected>' + $(option_value[i]).text() + '</option>';
-          } else {
-              html += '<option value="' + $(option_value[i]).val() + '">' + $(option_value[i]).text() + '</option>';
-          }
-      }
+    for (i = 0; i < option_value.length; i++) {
+        if ($(element).attr('data-option-value-row') && $(option_value[i]).val() == $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]\']').val()) {
+            html += '<option value="' + $(option_value[i]).val() + '" selected>' + $(option_value[i]).text() + '</option>';
+        } else {
+            html += '<option value="' + $(option_value[i]).val() + '">' + $(option_value[i]).text() + '</option>';
+        }
+    }
 
-      html += '      	   </select>';
-      html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
-      html += '        </div>';
-      html += '        <div class="mb-3">';
-      html += '      	   <label for="input-modal-quantity" class="form-label">{{ entry_quantity|escape('js') }}</label>';
-      html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="{{ entry_quantity|escape('js') }}" id="input-modal-quantity" class="form-control"/>';
-      html += '        </div>';
-      html += '        <div class="mb-3">';
-      html += '      	   <label for="input-modal-subtract" class="form-label">{{ entry_subtract|escape('js') }}</label>';
-      html += '      	   <select name="subtract" id="input-modal-subtract" class="form-select">';
+    html += '      	   </select>';
+    html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
+    html += '        </div>';
+    html += '        <div class="mb-3">';
+    html += '      	   <label for="input-modal-quantity" class="form-label">{{ entry_quantity|escape('js') }}</label>';
+    html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="{{ entry_quantity|escape('js') }}" id="input-modal-quantity" class="form-control"/>';
+    html += '        </div>';
+    html += '        <div class="mb-3">';
+    html += '      	   <label for="input-modal-subtract" class="form-label">{{ entry_subtract|escape('js') }}</label>';
+    html += '      	   <select name="subtract" id="input-modal-subtract" class="form-select">';
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
-          html += '        <option value="1" selected>{{ text_yes|escape('js') }}</option>';
-          html += '      	 <option value="0">{{ text_no|escape('js') }}</option>';
-      } else {
-          html += '      	 <option value="1">{{ text_yes|escape('js') }}</option>';
-          html += '      	 <option value="0" selected>{{ text_no|escape('js') }}</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
+        html += '        <option value="1" selected>{{ text_yes|escape('js') }}</option>';
+        html += '      	 <option value="0">{{ text_no|escape('js') }}</option>';
+    } else {
+        html += '      	 <option value="1">{{ text_yes|escape('js') }}</option>';
+        html += '      	 <option value="0" selected>{{ text_no|escape('js') }}</option>';
+    }
 
-      html += '      	   </select>';
-      html += '        </div>';
-      html += '        <div class="mb-3">';
-      html += '      	   <label for="input-modal-price" class="form-label">{{ entry_price|escape('js') }}</label>';
-      html += '          <div class="input-group">';
-      html += '            <select name="price_prefix" class="form-select">';
+    html += '      	   </select>';
+    html += '        </div>';
+    html += '        <div class="mb-3">';
+    html += '      	   <label for="input-modal-price" class="form-label">{{ entry_price|escape('js') }}</label>';
+    html += '          <div class="input-group">';
+    html += '            <select name="price_prefix" class="form-select">';
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
-          html += '      	   <option value="+" selected>+</option>';
-      } else {
-          html += '      	   <option value="+">+</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
+        html += '      	   <option value="+" selected>+</option>';
+    } else {
+        html += '      	   <option value="+">+</option>';
+    }
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
-          html += '      	       <option value="-" selected>-</option>';
-      } else {
-          html += '      	       <option value="-">-</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
+        html += '      	       <option value="-" selected>-</option>';
+    } else {
+        html += '      	       <option value="-">-</option>';
+    }
 
-      html += '      	     </select>';
-      html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="{{ entry_price|escape('js') }}" id="input-modal-price" class="form-control"/>';
-      html += '          </div>';
-      html += '        </div>';
-      html += '        <div class="mb-3">';
-      html += '      	   <label for="input-modal-points" class="form-label">{{ entry_points|escape('js') }}</label>';
-      html += '          <div class="input-group">';
-      html += '      	     <select name="points_prefix" class="form-select">';
+    html += '      	     </select>';
+    html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="{{ entry_price|escape('js') }}" id="input-modal-price" class="form-control"/>';
+    html += '          </div>';
+    html += '        </div>';
+    html += '        <div class="mb-3">';
+    html += '      	   <label for="input-modal-points" class="form-label">{{ entry_points|escape('js') }}</label>';
+    html += '          <div class="input-group">';
+    html += '      	     <select name="points_prefix" class="form-select">';
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
-          html += '      	       <option value="+" selected>+</option>';
-      } else {
-          html += '      	       <option value="+">+</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
+        html += '      	       <option value="+" selected>+</option>';
+    } else {
+        html += '      	       <option value="+">+</option>';
+    }
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
-          html += '      	       <option value="-" selected>-</option>';
-      } else {
-          html += '      	       <option value="-">-</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
+        html += '      	       <option value="-" selected>-</option>';
+    } else {
+        html += '      	       <option value="-">-</option>';
+    }
 
-      html += '      	     </select>';
-      html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="{{ entry_points|escape('js') }}" id="input-modal-points" class="form-control"/>';
-      html += '          </div>';
-      html += '        </div>';
-      html += '        <div class="mb-3">';
-      html += '      	   <label for="input-modal-weight" class="form-label">{{ entry_weight|escape('js') }}</label>';
-      html += '          <div class="input-group">';
-      html += '      	     <select name="weight_prefix" class="form-select">';
+    html += '      	     </select>';
+    html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="{{ entry_points|escape('js') }}" id="input-modal-points" class="form-control"/>';
+    html += '          </div>';
+    html += '        </div>';
+    html += '        <div class="mb-3">';
+    html += '      	   <label for="input-modal-weight" class="form-label">{{ entry_weight|escape('js') }}</label>';
+    html += '          <div class="input-group">';
+    html += '      	     <select name="weight_prefix" class="form-select">';
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
-          html += '      	       <option value="+" selected>+</option>';
-      } else {
-          html += '      	       <option value="+">+</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
+        html += '      	       <option value="+" selected>+</option>';
+    } else {
+        html += '      	       <option value="+">+</option>';
+    }
 
-      if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
-          html += '      	       <option value="-" selected>-</option>';
-      } else {
-          html += '      	       <option value="-">-</option>';
-      }
+    if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
+        html += '      	       <option value="-" selected>-</option>';
+    } else {
+        html += '      	       <option value="-">-</option>';
+    }
 
-      html += '      	     </select>';
-      html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="{{ entry_weight|escape('js') }}" id="input-modal-weight" class="form-control"/>';
-      html += '          </div>';
-      html += '        </div>';
-      html += '      </div>';
-      html += '      <div class="modal-footer">';
-      html += '	     <button type="button" id="button-save" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '" class="btn btn-primary">{{ button_save|escape('js') }}</button> <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_cancel|escape('js') }}</button>';
-      html += '      </div>';
-      html += '    </div>';
-      html += '  </div>';
-      html += '</div>';
+    html += '      	     </select>';
+    html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="{{ entry_weight|escape('js') }}" id="input-modal-weight" class="form-control"/>';
+    html += '          </div>';
+    html += '        </div>';
+    html += '      </div>';
+    html += '      <div class="modal-footer">';
+    html += '	     <button type="button" id="button-save" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '" class="btn btn-primary">{{ button_save|escape('js') }}</button> <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_cancel|escape('js') }}</button>';
+    html += '      </div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
 
-      $('body').append(html);
+    $('body').append(html);
 
-      $('#modal-option').modal('show');
+    $('#modal-option').modal('show');
 
-      $('#modal-option #button-save').on('click', function() {
-          html = '<tr id="option-value-row-' + element.option_value_row + '">';
-          html += '  <td class="text-start">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]" value="' + $('#modal-option input[name=\'product_option_value_id\']').val() + '"/></td>';
-          html += '  <td class="text-end">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
-          html += '  <td class="text-start">' + ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1' ? '{{ text_yes|escape('js') }}' : '{{ text_no|escape('js') }}') + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]" value="' + $('#modal-option select[name=\'subtract\'] option:selected').val() + '"/></td>';
-          html += '  <td class="text-end">' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + $('#modal-option input[name=\'price\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]" value="' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]" value="' + $('#modal-option input[name=\'price\']').val() + '"/></td>';
-          html += '  <td class="text-end"> ' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + $('#modal-option input[name=\'points\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]" value="' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]" value="' + $('#modal-option input[name=\'points\']').val() + '"/></td>';
-          html += '  <td class="text-end">' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + $('#modal-option input[name=\'weight\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]" value="' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]" value="' + $('#modal-option input[name=\'weight\']').val() + '"/></td>';
-          html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit|escape('js') }}" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '"class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$(\'#option-value-row-' + element.option_value_row + '\').remove();" data-bs-toggle="tooltip" rel="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
-          html += '</tr>';
+    $('#modal-option #button-save').on('click', function() {
+        html = '<tr id="option-value-row-' + element.option_value_row + '">';
+        html += '  <td class="text-start">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]" value="' + $('#modal-option input[name=\'product_option_value_id\']').val() + '"/></td>';
+        html += '  <td class="text-end">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
+        html += '  <td class="text-start">' + ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1' ? '{{ text_yes|escape('js') }}' : '{{ text_no|escape('js') }}') + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]" value="' + $('#modal-option select[name=\'subtract\'] option:selected').val() + '"/></td>';
+        html += '  <td class="text-end">' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + $('#modal-option input[name=\'price\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]" value="' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]" value="' + $('#modal-option input[name=\'price\']').val() + '"/></td>';
+        html += '  <td class="text-end"> ' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + $('#modal-option input[name=\'points\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]" value="' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]" value="' + $('#modal-option input[name=\'points\']').val() + '"/></td>';
+        html += '  <td class="text-end">' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + $('#modal-option input[name=\'weight\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]" value="' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]" value="' + $('#modal-option input[name=\'weight\']').val() + '"/></td>';
+        html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit|escape('js') }}" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '"class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$(\'#option-value-row-' + element.option_value_row + '\').remove();" data-bs-toggle="tooltip" rel="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '</tr>';
 
-          if ($(element).attr('data-option-value-row')) {
-              $('#option-value-row-' + element.option_value_row).replaceWith(html);
-          } else {
-              $('#option-value-' + $(element).attr('data-option-row')).append(html);
+        if ($(element).attr('data-option-value-row')) {
+            $('#option-value-row-' + element.option_value_row).replaceWith(html);
+        } else {
+            $('#option-value-' + $(element).attr('data-option-row')).append(html);
 
-              option_value_row++;
-          }
+            option_value_row++;
+        }
 
-          $('#modal-option').modal('hide');
-      });
-  });
+        $('#modal-option').modal('hide');
+    });
+});
 {% endif %}
 
 var discount_row = {{ discount_row }};

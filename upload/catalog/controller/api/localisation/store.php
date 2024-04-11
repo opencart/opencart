@@ -22,9 +22,9 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$language_info = $this->model_localisation_store->getStoreByCode($store);
+		$store_info = $this->model_setting_store->getStoreByCode($store);
 
-		if (!$language_info) {
+		if (!$store_info) {
 			$json['error'] = $this->language->get('error_store');
 		}
 

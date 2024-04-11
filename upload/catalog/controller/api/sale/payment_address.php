@@ -129,15 +129,15 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			// If order already created then update
 			if (isset($this->session->data['order_id'])) {
-				$address_data = [];
+				$order_data = [];
 
 				foreach ($this->session->data['payment_address'] as $key => $value) {
-					$address_data['payment_' . $key] = $value;
+					$order_data['payment_' . $key] = $value;
 				}
 
 				$this->load->model('checkout/order');
 
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], $address_data);
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 			}
 		}
 

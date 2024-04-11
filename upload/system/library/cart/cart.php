@@ -320,6 +320,8 @@ class Cart {
 
 					if ($cart['override']) {
 						$price = $cart['price'];
+					} else {
+						$price = $price + $option_price;
 					}
 
 					$this->data[$cart['cart_id']] = [
@@ -337,8 +339,8 @@ class Cart {
 						'minimum'         => $minimum,
 						'subtract'        => $product_query->row['subtract'],
 						'stock'           => $stock,
-						'price'           => ($price + $option_price),
-						'total'           => ($price + $option_price) * $cart['quantity'],
+						'price'           => $price,
+						'total'           => $price * $cart['quantity'],
 						'reward'          => $reward * $cart['quantity'],
 						'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
 						'tax_class_id'    => $product_query->row['tax_class_id'],

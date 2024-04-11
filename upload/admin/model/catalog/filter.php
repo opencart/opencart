@@ -133,9 +133,11 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters
 	 *
+	 * @param array<string, mixed> $data
+	 *
 	 * @return int
 	 */
-	public function getTotalFilters(): int {
+	public function getTotalFilters(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter` `f` LEFT JOIN `" . DB_PREFIX . "filter_description` `fd` ON (`f`.`filter_id` = `fd`.`filter_id`) WHERE `fd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {

@@ -74,12 +74,12 @@
                   html += '  <div class="modal-dialog">';
                   html += '    <div class="modal-content">';
                   html += '      <div class="modal-header">';
-                  html += '        <h4 class="modal-title">{{ text_shipping_method }}</h4>';
+                  html += '        <h4 class="modal-title">{{ text_shipping_method|escape('js') }}</h4>';
                   html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                   html += '      </div>';
                   html += '      <div class="modal-body">';
                   html += '        <form id="form-shipping">';
-                  html += '          <p>{{ text_estimate }}</p>';
+                  html += '          <p>{{ text_estimate|escape('js') }}</p>';
 
                   for (i in json['shipping_methods']) {
                       html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
@@ -106,7 +106,7 @@
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping|escape('js') }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';
@@ -182,7 +182,7 @@
                   $('#input-postcode').parent().parent().removeClass('required');
               }
 
-              html = '<option value="">{{ text_select }}</option>';
+              html = '<option value="">{{ text_select|escape('js') }}</option>';
 
               if (json['zone'] && json['zone'] != '') {
                   for (i = 0; i < json['zone'].length; i++) {
@@ -195,7 +195,7 @@
                       html += '>' + json['zone'][i]['name'] + '</option>';
                   }
               } else {
-                  html += '<option value="0" selected>{{ text_none }}</option>';
+                  html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
               }
 
               $('#input-zone').html(html);

@@ -42,7 +42,7 @@ class Debug extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function after(string $route, array &$args, &$output): void {
+	public function after(string &$route, array &$args, &$output): void {
 		// add the route you want to test
 		/*
 		if ($route == 'common/home') {

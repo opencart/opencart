@@ -30,6 +30,27 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Get subtotal
+		if (isset($this->session->data['order_id'])) {
+			$subtotal = 0;
+
+			$this->load->model('checkout/order');
+
+			$results = $this->model_checkout_order->getTotals($this->session->data['order_id']);
+
+			foreach ($results as $result) {
+				if ($result['code'] == 'subtotal') {
+					$subtotal = $results['value'];
+
+					break;
+				}
+			}
+
+			if (!$subtotal) {
+				$json['error'] = $this->language->get('error_order');
+			}
+		}
+
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
 
@@ -37,8 +58,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			// If order already created then update
 			if (isset($this->session->data['order_id'])) {
-				$subtotal = $this->cart->getSubTotal();
-
 				$order_data = [
 					'affiliate_id' => $affiliate_info['customer_id'],
 					'commission'   => ($subtotal / 100) * $affiliate_info['commission'],

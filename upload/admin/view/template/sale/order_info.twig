@@ -2,7 +2,11 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fa-solid fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not shipping_code %} disabled{% endif %}"><i class="fa-solid fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <div class="float-end">
+        <a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fa-solid fa-print"></i></a>
+        <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not shipping_code %} disabled{% endif %}"><i class="fa-solid fa-truck"></i></a>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -103,7 +107,8 @@
                 <td class="text-end"><form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
-                  </form></td>
+                  </form>
+                </td>
               </tr>
             {% endfor %}
           </tbody>
@@ -119,7 +124,8 @@
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
-                  </form></td>
+                  </form>
+                </td>
               </tr>
             {% endfor %}
 
@@ -147,7 +153,8 @@
                     {% for store in stores %}
                       <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                     {% endfor %}
-                  </select> <label for="input-store">{{ entry_store }}</label>
+                  </select>
+                  <label for="input-store">{{ entry_store }}</label>
                 </div>
               </form>
             </div>
@@ -159,7 +166,8 @@
                     {% for language in languages %}
                       <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                     {% endfor %}
-                  </select> <label for="input-language">{{ entry_language }}</label>
+                  </select>
+                  <label for="input-language">{{ entry_language }}</label>
                 </div>
               </form>
             </div>

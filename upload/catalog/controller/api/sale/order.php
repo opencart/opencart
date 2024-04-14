@@ -462,6 +462,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Payment Details
 			if ($this->config->get('config_checkout_payment_address')) {
 				$order_data['payment_address_id'] = $this->session->data['payment_address']['address_id'];
+				$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 				$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
 				$order_data['payment_company'] = $this->session->data['payment_address']['company'];
 				$order_data['payment_address_1'] = $this->session->data['payment_address']['address_1'];

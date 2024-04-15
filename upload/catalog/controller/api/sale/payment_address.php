@@ -106,7 +106,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['payment_address'] = [
-				'address_id'     => $this->request->post['payment_address_id'],
+				'address_id'     => $this->request->post['address_id'],
 				'firstname'      => $this->request->post['firstname'],
 				'lastname'       => $this->request->post['lastname'],
 				'company'        => $this->request->post['company'],

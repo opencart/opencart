@@ -32,7 +32,6 @@
               {% endif %}
             </div>
           </div>
-
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -48,7 +47,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -58,7 +56,6 @@
             </div>
           </div>
         </div>
-
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -583,7 +580,8 @@
           </div>
 
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
-            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
+            <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
 
@@ -684,13 +682,14 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
 <div id="modal-cart" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -722,7 +721,7 @@
               <div id="option"></div>
               <div id="subscription"></div>
               <div class="text-end">
-                <button type="submit" id="button-product-add" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+                <button type="submit" id="button-product-add" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
               </div>
             </form>
           </div>
@@ -762,7 +761,7 @@
                 </div>
               </fieldset>
               <div class="text-end">
-                <button type="submit" id="button-voucher-add" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+                <button type="submit" id="button-voucher-add" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
               </div>
             </form>
           </div>
@@ -771,6 +770,7 @@
     </div>
   </div>
 </div>
+
 <div id="modal-affiliate" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -787,13 +787,14 @@
             <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-affiliate" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="submit" id="button-affiliate" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
 <div id="modal-payment-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -805,7 +806,7 @@
         <form id="form-payment-address">
           <div class="mb-3">
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
-            <select name="payment_address_id" id="input-payment-address" class="form-select">
+            <select name="address_id" id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -949,13 +950,14 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
 <div id="modal-payment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -975,6 +977,7 @@
     </div>
   </div>
 </div>
+
 <div id="modal-shipping-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1134,7 +1137,7 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -1173,7 +1176,7 @@
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-comment" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+            <button type="submit" id="button-comment" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>

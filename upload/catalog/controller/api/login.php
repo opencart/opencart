@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Account;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Login
  *

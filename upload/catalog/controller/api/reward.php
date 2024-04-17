@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Reward
  *
- * @package Opencart\Catalog\Controller\Api\Sale
+ * @package Opencart\Catalog\Controller\Api
  */
 class Reward extends \Opencart\System\Engine\Controller {
 	/**

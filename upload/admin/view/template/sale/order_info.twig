@@ -177,7 +177,8 @@
             <div class="col">
               <form id="form-coupon" class="mb-3">
                 <div class="input-group form-floating">
-                  <input type="text" name="coupon" value="{{ total_coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/> <label for="input-coupon">{{ entry_coupon }}</label>
+                  <input type="text" name="coupon" value="{{ total_coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
+                  <label for="input-coupon">{{ entry_coupon }}</label>
                   <button type="submit" id="button-coupon" data-bs-toogle="tooltip" title="{{ button_apply }}" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
                 </div>
               </form>
@@ -422,7 +423,7 @@
         </table>
         <div class="text-end">
           <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fa-solid fa-rotate"></i></button>
-          <button type="button" id="button-confirm" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_confirm }}</button>
+          <button type="button" id="button-confirm" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_confirm }}</button>
         </div>
       </div>
     </div>
@@ -606,7 +607,8 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -620,7 +622,8 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -630,14 +633,16 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -682,7 +687,7 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -721,7 +726,7 @@
               <div id="option"></div>
               <div id="subscription"></div>
               <div class="text-end">
-                <button type="submit" id="button-product-add" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+                <button type="submit" id="button-product-add" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
               </div>
             </form>
           </div>
@@ -730,38 +735,45 @@
               <fieldset class="mb-0">
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
-                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label>
+                  <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
                   <div id="error-to-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label>
+                  <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
                   <div id="error-to-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label>
+                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                   <div id="error-from-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label>
+                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                   <div id="error-from-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-theme" class="form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
+                  <label for="input-theme" class="form-label">{{ entry_theme }}</label>
+                  <select name="voucher_theme_id" id="input-theme" class="form-select">
                     {% for voucher_theme in voucher_themes %}
                       <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
+                  <label for="input-message" class="form-label">{{ entry_message }}</label>
+                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
+                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                   <div id="error-amount" class="invalid-feedback"></div>
                 </div>
               </fieldset>
               <div class="text-end">
-                <button type="submit" id="button-voucher-add" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+                <button type="submit" id="button-voucher-add" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
               </div>
             </form>
           </div>
@@ -787,7 +799,7 @@
             <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-affiliate" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-affiliate" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -857,7 +869,8 @@
             <div id="error-payment-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"></select>
+            <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+            <select name="zone_id" id="input-payment-zone" class="form-select"></select>
             <div id="error-payment-zone" class="invalid-feedback"></div>
           </div>
           {% for custom_field in custom_fields %}
@@ -879,7 +892,8 @@
                   <div id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -892,7 +906,8 @@
                   <div id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -901,13 +916,15 @@
               {% endif %}
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -950,7 +967,7 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -997,29 +1014,36 @@
             </select>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+            <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+            <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
             <div id="error-shipping-address-1" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+            <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
+            <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
             <div id="error-shipping-city" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+            <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
+            <input type="text" name="postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
             <div id="error-shipping-postcode" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
@@ -1042,7 +1066,8 @@
 
               {% if custom_field.type == 'select' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <option value="{{ custom_field_value.custom_field_value_id }}"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
@@ -1058,7 +1083,8 @@
                   <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -1072,7 +1098,8 @@
                   <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -1082,14 +1109,16 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -1137,7 +1166,7 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -1156,7 +1185,7 @@
           <p>{{ text_shipping }}</p>
           <div id="shipping-methods"></div>
           <div class="text-end">
-            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -1176,7 +1205,7 @@
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-comment" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-comment" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -1339,7 +1368,7 @@ $('#form-customer').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/customer',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=customer',
         type: 'post',
         data: $('#form-customer').serialize(),
         dataType: 'json',
@@ -1605,7 +1634,7 @@ $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/cart.add',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.add',
         type: 'post',
         data: $('#form-product-add').serialize(),
         dataType: 'json',
@@ -1657,7 +1686,7 @@ $('#order-products').on('submit', 'form', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/cart.remove',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.remove',
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
@@ -1698,7 +1727,7 @@ $('#form-voucher-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/voucher.add',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=voucher.add',
         type: 'post',
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
@@ -1756,7 +1785,7 @@ $('#order-vouchers').on('submit', 'form', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/voucher.remove',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=voucher.remove',
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
@@ -1794,7 +1823,7 @@ $('#input-store').on('change', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=localisation/store',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=store',
         type: 'post',
         data: $('#form-store').serialize(),
         dataType: 'json',
@@ -1827,7 +1856,7 @@ $('#input-language').on('change', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=localisation/language',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=language',
         type: 'post',
         data: $('#form-language').serialize(),
         dataType: 'json',
@@ -1860,7 +1889,7 @@ $('#input-currency').on('change', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=localisation/currency',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=currency',
         type: 'post',
         data: $('#form-currency').serialize(),
         dataType: 'json',
@@ -1894,7 +1923,7 @@ $('#form-coupon').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/coupon',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=coupon',
         type: 'post',
         data: $('#form-coupon').serialize(),
         dataType: 'json',
@@ -1929,7 +1958,7 @@ $('#form-voucher').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/voucher',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=voucher',
         type: 'post',
         data: $('#form-voucher').serialize(),
         dataType: 'json',
@@ -1964,7 +1993,7 @@ $('#form-reward').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/reward',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=reward',
         type: 'post',
         data: $('#form-reward').serialize(),
         dataType: 'json',
@@ -2072,7 +2101,7 @@ $('#form-affiliate').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/affiliate',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=affiliate',
         type: 'post',
         data: $('#form-affiliate').serialize(),
         dataType: 'json',
@@ -2208,7 +2237,7 @@ $('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_address',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_address',
         type: 'post',
         data: $('#form-payment-address').serialize(),
         dataType: 'json',
@@ -2379,7 +2408,7 @@ $('#form-shipping-address').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/shipping_address',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_address',
         type: 'post',
         data: $('#form-shipping-address').serialize(),
         dataType: 'json',
@@ -2498,7 +2527,7 @@ $('#button-shipping-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/shipping_method',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_method',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -2557,7 +2586,7 @@ $('#form-shipping-method').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/shipping_method.save',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_method.save',
         type: 'post',
         data: $('#form-shipping-method').serialize(),
         dataType: 'json',
@@ -2597,7 +2626,7 @@ $('#button-payment-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_method',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -2656,7 +2685,7 @@ $('#form-payment-method').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method.save',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_method.save',
         type: 'post',
         data: $('#form-payment-method').serialize(),
         dataType: 'json',
@@ -2695,7 +2724,7 @@ $('#form-comment').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.comment',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.comment',
         type: 'post',
         data: $('#form-comment').serialize(),
         dataType: 'json',
@@ -2729,7 +2758,7 @@ $('#form-comment').on('submit', function(e) {
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function() {
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/cart',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart',
         dataType: 'json',
         beforeSend: function() {
             $('#button-refresh').button('loading');
@@ -2854,7 +2883,7 @@ $('#button-confirm').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.confirm',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.confirm',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -2917,7 +2946,7 @@ $('#form-history').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.addHistory&order_id=' + $('#input-order-id').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.addHistory&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),

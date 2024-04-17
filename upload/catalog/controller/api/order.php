@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Order
  *
- * @package Opencart\Catalog\Controller\Api\Sale
+ * @package Opencart\Catalog\Controller\Api
  */
 class Order extends \Opencart\System\Engine\Controller {
 	public function save(): void {
@@ -99,8 +99,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/product');
 
 			foreach ($this->request->post['products'] as $product_id => $option) {
-
-
 
 				$product_info = $this->model_catalog_product->getProduct($product_id);
 

@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Shipping Method
  *
- * @package Opencart\Catalog\Controller\Api\Sale
+ * @package Opencart\Catalog\Controller\Api
  */
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	/**
@@ -70,13 +70,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
-			// If order already created then update
-			if (isset($this->session->data['order_id'])) {
-				$this->load->model('checkout/order');
-
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], ['shipping_method' => $this->session->data['shipping_method']]);
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

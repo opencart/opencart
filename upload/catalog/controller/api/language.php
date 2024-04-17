@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Localisation;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Language
  *

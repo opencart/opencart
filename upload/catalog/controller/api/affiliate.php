@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Affiliate
  *

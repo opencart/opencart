@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Payment Address
  *
- * @package Opencart\Catalog\Controller\Api\Sale
+ * @package Opencart\Catalog\Controller\Api
  */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	/**

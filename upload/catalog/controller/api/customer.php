@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Customer
  *
- * @package Opencart\Catalog\Controller\Api\Sale
+ * @package Opencart\Catalog\Controller\Api
  */
 class Customer extends \Opencart\System\Engine\Controller {
 	/**
@@ -98,13 +98,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
-
-			// If order already created then update
-			if (isset($this->session->data['order_id'])) {
-				$this->load->model('checkout/order');
-
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], $this->session->data['customer']);
-			}
 
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));

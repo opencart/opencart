@@ -815,7 +815,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->post = $this->request->post;
 
 			// 5. Load the order data
-			$store->request->get['route'] = 'api/sale/order.load';
+			$store->request->get['route'] = 'api/order.load';
 			$store->request->get['language'] = $language;
 
 			unset($store->request->get['user_token']);
@@ -1251,22 +1251,10 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
+		if (isset($this->request->get['call'])) {
+			$call = $this->request->get['call'];
 		} else {
-			$store_id = 0;
-		}
-
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('config_language');
-		}
-
-		if (isset($this->request->get['action'])) {
-			$action = $this->request->get['action'];
-		} else {
-			$action = '';
+			$call = '';
 		}
 
 		if (isset($this->session->data['api_session'])) {
@@ -1289,10 +1277,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->get = $this->request->get;
 			$store->request->post = $this->request->post;
 
-			$store->request->get['route'] = 'api/' . $action;
+			$store->request->get['route'] = 'api/' . $call;
 
 			// 3. Remove the unneeded keys
-			unset($store->request->get['action']);
+			unset($store->request->get['call']);
 			unset($store->request->get['user_token']);
 
 			// Call the required API controller

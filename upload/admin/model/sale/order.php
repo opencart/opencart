@@ -14,72 +14,74 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 */
 	public function getOrder(int $order_id): array {
-		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
+		$query = "
+        SELECT
+            *,
+            (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status`
+        FROM `" . DB_PREFIX . "order` `o`
+        WHERE `o`.`order_id` = '" . (int)$order_id . "'
+    ";
 
-		if ($order_query->num_rows) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$order_query->row['payment_country_id'] . "'");
+		$order_query = $this->db->query($query);
 
+		if (!$order_query->num_rows) {
+			return [];
+		}
+
+		$order_row = $order_query->row;
+
+		$payment_iso_code_2 = '';
+		$payment_iso_code_3 = '';
+		$payment_zone_code = '';
+
+		$shipping_iso_code_2 = '';
+		$shipping_iso_code_3 = '';
+		$shipping_zone_code = '';
+
+		$reward = 0;
+
+		if ($order_row['payment_country_id']) {
+			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$order_row['payment_country_id'] . "'");
 			if ($country_query->num_rows) {
 				$payment_iso_code_2 = $country_query->row['iso_code_2'];
 				$payment_iso_code_3 = $country_query->row['iso_code_3'];
-			} else {
-				$payment_iso_code_2 = '';
-				$payment_iso_code_3 = '';
 			}
+		}
 
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$order_query->row['payment_zone_id'] . "'");
-
+		if ($order_row['payment_zone_id']) {
+			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$order_row['payment_zone_id'] . "'");
 			if ($zone_query->num_rows) {
 				$payment_zone_code = $zone_query->row['code'];
-			} else {
-				$payment_zone_code = '';
 			}
+		}
 
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$order_query->row['shipping_country_id'] . "'");
-
+		if ($order_row['shipping_country_id']) {
+			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$order_row['shipping_country_id'] . "'");
 			if ($country_query->num_rows) {
 				$shipping_iso_code_2 = $country_query->row['iso_code_2'];
 				$shipping_iso_code_3 = $country_query->row['iso_code_3'];
-			} else {
-				$shipping_iso_code_2 = '';
-				$shipping_iso_code_3 = '';
 			}
+		}
 
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$order_query->row['shipping_zone_id'] . "'");
-
+		if ($order_row['shipping_zone_id']) {
+			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$order_row['shipping_zone_id'] . "'");
 			if ($zone_query->num_rows) {
 				$shipping_zone_code = $zone_query->row['code'];
-			} else {
-				$shipping_zone_code = '';
 			}
+		}
 
-			$reward = 0;
+		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		foreach ($order_product_query->rows as $product) {
+			$reward += $product['reward'];
+		}
 
-			$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->load->model('customer/customer');
+		$affiliate_info = $this->model_customer_customer->getCustomer($order_row['affiliate_id']);
+		$affiliate = $affiliate_info ? $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname'] : '';
 
-			foreach ($order_product_query->rows as $product) {
-				$reward += $product['reward'];
-			}
-
-			$this->load->model('customer/customer');
-
-			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
-
-			if ($affiliate_info) {
-				$affiliate = $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname'];
-			} else {
-				$affiliate = '';
-			}
-
-			$this->load->model('localisation/language');
-
-			$language_info = $this->model_localisation_language->getLanguage($order_query->row['language_id']);
-
-			if ($language_info) {
-				$language_code = $language_info['code'];
-			} else {
-				$language_code = $this->config->get('config_language');
-			}
+		$this->load->model('localisation/language');
+		$language_info = $this->model_localisation_language->getLanguage($order_row['language_id']);
+		$language_code = $language_info ? $language_info['code'] : $this->config->get('config_language');
 
 			return [
 				'order_id'                => $order_query->row['order_id'],

@@ -22,7 +22,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_currency->getCurrencyByCode($language);
+		$language_info = $this->model_localisation_language->getLanguageByCode($language);
 
 		if (!$language_info) {
 			$json['error'] = $this->language->get('error_language');

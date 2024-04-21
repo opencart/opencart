@@ -55,19 +55,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['affiliate_id'] = $affiliate_id;
-
-			// If order already created then update
-			if (isset($this->session->data['order_id'])) {
-				$order_data = [
-					'affiliate_id' => $affiliate_info['customer_id'],
-					'commission'   => ($subtotal / 100) * $affiliate_info['commission'],
-					'tracking'     => $affiliate_info['tracking']
-				];
-
-				$this->load->model('checkout/order');
-
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

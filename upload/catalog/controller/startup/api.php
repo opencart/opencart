@@ -20,18 +20,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			return new \Opencart\System\Engine\Action('error/permission');
 		}
 
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('config_language');
-		}
-
 		return null;
 	}
 }

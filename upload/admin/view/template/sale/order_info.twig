@@ -32,6 +32,7 @@
               {% endif %}
             </div>
           </div>
+
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -47,6 +48,7 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
+
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -55,6 +57,46 @@
               </div>
             </div>
           </div>
+
+          <div class="col">
+            <form id="form-store" class="mb-3">
+              <div class="form-floating">
+                <select name="store_id" id="input-store" class="form-select">
+                  {% for store in stores %}
+                    <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
+                  {% endfor %}
+                </select>
+                <label for="input-store">{{ entry_store }}</label>
+              </div>
+            </form>
+          </div>
+
+          <div class="col">
+            <form id="form-language" class="mb-3">
+              <div class="form-floating">
+                <select name="language" id="input-language" class="form-select">
+                  {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
+                  {% endfor %}
+                </select>
+                <label for="input-language">{{ entry_language }}</label>
+              </div>
+            </form>
+          </div>
+
+          <div class="col">
+            <form id="form-currency" class="mb-3">
+              <div class="form-floating">
+                <select name="currency" id="input-currency" class="form-select">
+                  {% for currency in currencies %}
+                    <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
+                  {% endfor %}
+                </select>
+                <label for="input-currency">{{ entry_currency }}</label>
+              </div>
+            </form>
+          </div>
+
         </div>
         <table class="table table-bordered">
           <thead>
@@ -136,43 +178,6 @@
 
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-
-            <div class="col">
-              <form id="form-store" class="mb-3">
-                <div class="form-floating">
-                  <select name="store_id" id="input-store" class="form-select">
-                    {% for store in stores %}
-                      <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
-                    {% endfor %}
-                  </select> <label for="input-store">{{ entry_store }}</label>
-                </div>
-              </form>
-            </div>
-
-            <div class="col">
-              <form id="form-language" class="mb-3">
-                <div class="form-floating">
-                  <select name="language" id="input-language" class="form-select">
-                    {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
-                    {% endfor %}
-                  </select> <label for="input-language">{{ entry_language }}</label>
-                </div>
-              </form>
-            </div>
-
-            <div class="col">
-              <form id="form-currency" class="mb-3">
-                <div class="form-floating">
-                  <select name="currency" id="input-currency" class="form-select">
-                    {% for currency in currencies %}
-                      <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
-                    {% endfor %}
-                  </select>
-                  <label for="input-currency">{{ entry_currency }}</label>
-                </div>
-              </form>
-            </div>
 
             <div class="col">
               <form id="form-coupon" class="mb-3">
@@ -270,32 +275,26 @@
                       {{ payment_firstname }} {{ payment_lastname }}
                       <br/>
                     {% endif %}
-
                     {% if payment_company %}
                       {{ payment_company }}
                       <br/>
                     {% endif %}
-
                     {% if payment_address_1 %}
                       {{ payment_address_1 }}
                       <br/>
                     {% endif %}
-
                     {% if payment_address_2 %}
                       {{ payment_address_2 }}
                       <br/>
                     {% endif %}
-
                     {% if payment_city %}
                       {{ payment_city }}
                       <br/>
                     {% endif %}
-
                     {% if payment_postcode %}
                       {{ payment_postcode }}
                       <br/>
                     {% endif %}
-
                     {% if payment_zone %}
                       {{ payment_zone }}
                       <br/>

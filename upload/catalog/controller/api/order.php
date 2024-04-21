@@ -11,88 +11,105 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'customer_id',
-			'customer_group_id',
-			'firstname',
-			'lastname',
-			'email',
-			'telephone',
-			'custom_field'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
-
-		$this->load->model('account/customer');
-
-		if ($this->request->post['customer_id']) {
-			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
-
-			if (!$customer_info) {
-				$json['error']['warning'] = $this->language->get('error_customer');
-			}
-		}
-
-		// Customer Group
-		if ($this->request->post['customer_group_id']) {
-			$customer_group_id = (int)$this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = (int)$this->config->get('config_customer_group_id');
-		}
-
-		$this->load->model('account/customer_group');
-
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
-
-		if (!$customer_group_info) {
-			$json['error']['warning'] = $this->language->get('error_customer_group');
-		}
-
-		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
-			$json['error']['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
-			$json['error']['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if (!oc_validate_email($this->request->post['email'])) {
-			$json['error']['email'] = $this->language->get('error_email');
-		}
-
-		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
-		}
-
-		// Custom field validation
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-				}
-			}
-		}
 
 		if (!$json) {
-			$this->session->data['customer'] = [
-				'customer_id'       => $this->request->post['customer_id'],
-				'customer_group_id' => $this->request->post['customer_group_id'],
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+			$this->session->data['order_id'] = 0;
+
+
+
+		}
+
+
+
+
+
+
+
+
+		if (!$json) {
+			$keys = [
+				'customer_id',
+				'customer_group_id',
+				'firstname',
+				'lastname',
+				'email',
+				'telephone',
+				'custom_field'
 			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
+			$this->load->model('account/customer');
+
+			if ($this->request->post['customer_id']) {
+				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
+
+				if (!$customer_info) {
+					$json['error']['warning'] = $this->language->get('error_customer');
+				}
+			}
+
+			// Customer Group
+			if ($this->request->post['customer_group_id']) {
+				$customer_group_id = (int)$this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = (int)$this->config->get('config_customer_group_id');
+			}
+
+			$this->load->model('account/customer_group');
+
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+			if (!$customer_group_info) {
+				$json['error']['warning'] = $this->language->get('error_customer_group');
+			}
+
+			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
+
+			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+
+			if (!oc_validate_email($this->request->post['email'])) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
+
+			if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
+			}
+
+			// Custom field validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'account') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+
+			if (!$json) {
+				$this->session->data['customer'] = [
+					'customer_id'       => $this->request->post['customer_id'],
+					'customer_group_id' => $this->request->post['customer_group_id'],
+					'firstname'         => $this->request->post['firstname'],
+					'lastname'          => $this->request->post['lastname'],
+					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['telephone'],
+					'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
+			}
 		}
 
 		if (!$json) {
@@ -167,6 +184,243 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Payment Address
+		if (!$json) {
+			// Add keys for missing post vars
+			$keys = [
+				'firstname',
+				'lastname',
+				'company',
+				'address_1',
+				'address_2',
+				'postcode',
+				'city',
+				'zone_id',
+				'country_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
+			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
+
+			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+
+			if (!oc_validate_length($this->request->post['address_1'], 3, 128)) {
+				$json['error']['address_1'] = $this->language->get('error_address_1');
+			}
+
+			if (!oc_validate_length($this->request->post['city'], 2, 128)) {
+				$json['error']['city'] = $this->language->get('error_city');
+			}
+
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
+
+			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['postcode'], 2, 10)) {
+				$json['error']['postcode'] = $this->language->get('error_postcode');
+			}
+
+			if (!$country_info || $this->request->post['country_id'] == '') {
+				$json['error']['country'] = $this->language->get('error_country');
+			}
+
+			if ($this->request->post['zone_id'] == '') {
+				$json['error']['zone'] = $this->language->get('error_zone');
+			}
+
+			// Custom field validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'address') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+
+			if (!$json) {
+				if ($country_info) {
+					$country = $country_info['name'];
+					$iso_code_2 = $country_info['iso_code_2'];
+					$iso_code_3 = $country_info['iso_code_3'];
+					$address_format = $country_info['address_format'];
+				} else {
+					$country = '';
+					$iso_code_2 = '';
+					$iso_code_3 = '';
+					$address_format = '';
+				}
+
+				$this->load->model('localisation/zone');
+
+				$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+
+				if ($zone_info) {
+					$zone = $zone_info['name'];
+					$zone_code = $zone_info['code'];
+				} else {
+					$zone = '';
+					$zone_code = '';
+				}
+
+				$this->session->data['payment_address'] = [
+					'address_id'     => $this->request->post['address_id'],
+					'firstname'      => $this->request->post['firstname'],
+					'lastname'       => $this->request->post['lastname'],
+					'company'        => $this->request->post['company'],
+					'address_1'      => $this->request->post['address_1'],
+					'address_2'      => $this->request->post['address_2'],
+					'postcode'       => $this->request->post['postcode'],
+					'city'           => $this->request->post['city'],
+					'zone_id'        => $this->request->post['zone_id'],
+					'zone'           => $zone,
+					'zone_code'      => $zone_code,
+					'country_id'     => (int)$this->request->post['country_id'],
+					'country'        => $country,
+					'iso_code_2'     => $iso_code_2,
+					'iso_code_3'     => $iso_code_3,
+					'address_format' => $address_format,
+					'custom_field'   => $this->request->post['custom_field'] ?? []
+				];
+
+				$json['success'] = $this->language->get('text_success');
+			}
+		}
+
+
+
+		// Shipping address
+		if ($this->cart->hasShipping()) {
+			// Add keys for missing post vars
+			$keys = [
+				'firstname',
+				'lastname',
+				'company',
+				'address_1',
+				'address_2',
+				'postcode',
+				'city',
+				'zone_id',
+				'country_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
+			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
+
+			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+
+			if (!oc_validate_length($this->request->post['address_1'], 3, 128)) {
+				$json['error']['address_1'] = $this->language->get('error_address_1');
+			}
+
+			if (!oc_validate_length($this->request->post['city'], 2, 128)) {
+				$json['error']['city'] = $this->language->get('error_city');
+			}
+
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
+
+			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['postcode'], 2, 10)) {
+				$json['error']['postcode'] = $this->language->get('error_postcode');
+			}
+
+			if (!$country_info || $this->request->post['country_id'] == '') {
+				$json['error']['country'] = $this->language->get('error_country');
+			}
+
+			if ($this->request->post['zone_id'] == '') {
+				$json['error']['zone'] = $this->language->get('error_zone');
+			}
+
+			// Custom field validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'address') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+		} else {
+			$json['error']['warning'] = $this->language->get('error_shipping');
+		}
+
+		if (!$json) {
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format = $country_info['address_format'];
+			} else {
+				$country = '';
+				$iso_code_2 = '';
+				$iso_code_3 = '';
+				$address_format = '';
+			}
+
+			$this->load->model('localisation/zone');
+
+			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
+			} else {
+				$zone = '';
+				$zone_code = '';
+			}
+
+			$this->session->data['shipping_address'] = [
+				'address_id'     => $this->request->post['address_id'],
+				'firstname'      => $this->request->post['firstname'],
+				'lastname'       => $this->request->post['lastname'],
+				'company'        => $this->request->post['company'],
+				'address_1'      => $this->request->post['address_1'],
+				'address_2'      => $this->request->post['address_2'],
+				'postcode'       => $this->request->post['postcode'],
+				'city'           => $this->request->post['city'],
+				'zone_id'        => $this->request->post['zone_id'],
+				'zone'           => $zone,
+				'zone_code'      => $zone_code,
+				'country_id'     => (int)$this->request->post['country_id'],
+				'country'        => $country,
+				'iso_code_2'     => $iso_code_2,
+				'iso_code_3'     => $iso_code_3,
+				'address_format' => $address_format,
+				'custom_field'   => $this->request->post['custom_field'] ?? []
+			];
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 
 
@@ -363,13 +617,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->session->data['comment'] = $this->request->post['comment'];
 
 			$json['success'] = $this->language->get('text_success');
-
-			// If order already created then update
-			if (isset($this->session->data['order_id'])) {
-				$this->load->model('checkout/order');
-
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], ['comment' => $this->session->data['comment']]);
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

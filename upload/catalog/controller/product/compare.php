@@ -109,7 +109,15 @@ class Compare extends \Opencart\System\Engine\Controller {
 				} elseif ($this->config->get('config_stock_display')) {
 					$availability = $product_info['quantity'];
 				} else {
-					$availability = $this->language->get('text_instock');
+					$this->load->model('localisation/stock_status');
+
+					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($this->config->get('config_stock_status_id'));
+
+					if ($stock_status_info) {
+						$data['stock'] = $stock_status_info['name'];
+					} else {
+						$data['stock'] = '';
+					}
 				}
 
 				$attribute_data = [];

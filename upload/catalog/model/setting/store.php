@@ -84,7 +84,7 @@ class Store extends \Opencart\System\Engine\Model {
 		$config->set('application', 'Catalog');
 
 		// Store
-		$config->set('config_store_id', $store_id);
+		$config->set('config_store_id', int $store_id);
 
 		// Logging
 		$registry->set('log', $this->log);

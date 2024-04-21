@@ -45,7 +45,7 @@ $('#button-send').on('click', function(e) {
     $.ajax({
         url: 'index.php?route=common/authorize.send&user_token={{ user_token }}',
         dataType: 'json',
-        beforeSend: function() {
+        ajaxSend: function() {
             $('#button-send').button('loading');
         },
         complete: function() {

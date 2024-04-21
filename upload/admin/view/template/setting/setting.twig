@@ -898,6 +898,17 @@
                           <div class="form-text">{{ help_stock_checkout }}</div>
                         </div>
                       </div>
+                      <div class="row mb-3">
+                        <label for="input-stock-status" class="col-sm-2 col-form-label">{{ entry_stock_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_stock_status_id" id="input-stock-status" class="form-select">
+                            {% for stock_status in stock_statuses %}
+                              <option value="{{ stock_status.stock_status_id }}"{% if stock_status.stock_status_id == config_stock_status_id %} selected{% endif %}>{{ stock_status.name }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="form-text">{{ help_stock_status }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

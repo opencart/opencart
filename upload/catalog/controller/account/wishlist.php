@@ -111,7 +111,15 @@ class WishList extends \Opencart\System\Engine\Controller {
 				} elseif ($this->config->get('config_stock_display')) {
 					$stock = $product_info['quantity'];
 				} else {
-					$stock = $this->language->get('text_instock');
+					$this->load->model('localisation/stock_status');
+
+					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($this->config->get('config_stock_status_id'));
+
+					if ($stock_status_info) {
+						$data['stock'] = $stock_status_info['name'];
+					} else {
+						$data['stock'] = '';
+					}
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {

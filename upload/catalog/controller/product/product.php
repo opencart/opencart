@@ -279,7 +279,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			} elseif ($this->config->get('config_stock_display')) {
 				$data['stock'] = $product_info['quantity'];
 			} else {
-				$data['stock'] = $this->language->get('text_instock');
+					$this->load->model('localisation/stock_status');
+
+					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($this->config->get('config_stock_status_id'));
+
+					if ($stock_status_info) {
+						$data['stock'] = $stock_status_info['name'];
+					} else {
+						$data['stock'] = '';
+					}
 			}
 
 			$data['rating'] = (int)$product_info['rating'];

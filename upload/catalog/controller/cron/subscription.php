@@ -358,11 +358,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					// Load payment method used by the subscription
 					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 
-					$callable = [$this->{'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code']}, 'charge'];
+					$key = 'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code'];
 
-					if (is_callable($callable)) {
+					if (isset($this->{$key}->charge)) {
 						// Process payment
-						$response_info = $this->{'model_extension_' . $order_data['payment_method']['extension'] . '_payment_' . $order_data['payment_method']['code']}->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $order_data['payment_method']['code']);
+						$response_info = $this->{$key}->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $order_data['payment_method']['code']);
 
 						if (isset($response_info['order_status_id'])) {
 							$order_status_id = $response_info['order_status_id'];

@@ -447,6 +447,16 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_stock_checkout'] = '';
 		}
 
+		$this->load->model('localisation/stock_status');
+
+		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
+
+		if (isset($store_info['config_stock_status_id'])) {
+			$data['config_stock_status_id'] = $store_info['config_stock_status_id'];
+		} else {
+			$data['config_stock_status_id'] = '7';
+		}
+
 		// Images
 		if (isset($store_info['config_logo'])) {
 			$data['config_logo'] = $store_info['config_logo'];

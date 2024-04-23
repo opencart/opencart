@@ -392,6 +392,10 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
+		if (isset($this->request->get['theme_id'])) {
+			$selected[] = (int)$this->request->get['theme_id'];
+		}
+
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');

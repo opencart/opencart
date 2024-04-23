@@ -21,3 +21,4 @@ $_['entry_sort_order']  = 'Sort Order';
 $_['error_warning']     = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']  = 'Warning: You do not have permission to modify filters!';
 $_['error_name']        = 'Filter Group Name must be between 1 and 64 characters!';
+$_['error_filter']      = 'Warning: This filter group cannot be deleted as it is currently assigned to %s filters!';

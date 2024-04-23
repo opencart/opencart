@@ -94,8 +94,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-				if (is_callable([$this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'getStored'])) {
-					$payment_method_info = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getStored();
+				$key = 'model_extension_' . $result['extension'] . '_payment_' . $result['code'];
+
+				if (isset($this->{$key}->getStored)) {
+					$payment_method_info = $this->{$key}->getStored();
 
 					if ($payment_method_info) {
 						$data['payment_methods'][] = [
@@ -148,8 +150,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('extension/' . $payment_method_info['extension'] . '/payment/' . $payment_method_info['code']);
 
-			if (is_callable([$this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}, 'delete'])) {
-				$this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete();
+			$key = 'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code'];
+
+			if (isset($this->{$key}->delete)) {
+				$this->{$key}->delete();
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\catalog\controller\api;
 /**
  * Class Customer
  *
- * @package Opencart\Catalog\Controller\Api\Sale
+ * @package Opencart\Catalog\Controller\Api
  */
 class Customer extends \Opencart\System\Engine\Controller {
 	/**
@@ -29,9 +29,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$this->request->post[$key] = '';
 			}
 		}
-
-		// Load order if there is one
-		$this->load->controller('api/sale/order.load');
 
 		$this->load->model('account/customer');
 
@@ -101,8 +98,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
-
-			$this->load->controller('api/sale/order.confirm');
 
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));

@@ -35,31 +35,31 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-type').on('change', function () {
+$('#input-type').on('change', function() {
     $.ajax({
         url: $(this).val(),
         dataType: 'html',
-        beforeSend: function () {
+        beforeSend: function() {
             $('.fa-filter').addClass('fa-circle-notch fa-spin');
             $('.fa-filter').removeClass('fa-filter');
             $('#input-type').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $('.fa-circle-notch').addClass('fa-filter');
             $('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
             $('#input-type').prop('disabled', false);
         },
-        success: function (html) {
+        success: function(html) {
             $('#extension').html(html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Download promotion extension
-$('#extension').on('click', '#recommended .btn-primary', function (e) {
+$('#extension').on('click', '#recommended .btn-primary', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -67,13 +67,13 @@ $('#extension').on('click', '#recommended .btn-primary', function (e) {
     $.ajax({
         url: $(element).attr('value'),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -90,7 +90,7 @@ $('#extension').on('click', '#recommended .btn-primary', function (e) {
                 $(element).parent().find('.dropdown-item:first').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
             $(element).button('reset');
@@ -99,7 +99,7 @@ $('#extension').on('click', '#recommended .btn-primary', function (e) {
 });
 
 // Download dropdown
-$('#extension').on('click', '.dropdown-item', function (e) {
+$('#extension').on('click', '.dropdown-item', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -107,7 +107,7 @@ $('#extension').on('click', '.dropdown-item', function (e) {
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -120,14 +120,14 @@ $('#extension').on('click', '.dropdown-item', function (e) {
                 $('#extension').load($('#input-type').val());
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Install
-$('#extension').on('click', '.btn-success', function (e) {
+$('#extension').on('click', '.btn-success', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -135,13 +135,13 @@ $('#extension').on('click', '.btn-success', function (e) {
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -154,14 +154,14 @@ $('#extension').on('click', '.btn-success', function (e) {
                 $('#input-type').trigger('change');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Uninstall / Delete
-$('#extension').on('click', '.btn-danger, .btn-outline-danger', function (e) {
+$('#extension').on('click', '.btn-danger, .btn-outline-danger', function(e) {
     e.preventDefault();
 
     if (confirm('{{ text_confirm }}')) {
@@ -170,13 +170,13 @@ $('#extension').on('click', '.btn-danger, .btn-outline-danger', function (e) {
         $.ajax({
             url: $(element).attr('href'),
             dataType: 'json',
-            beforeSend: function () {
+            beforeSend: function() {
                 $(element).button('loading');
             },
-            complete: function () {
+            complete: function() {
                 $(element).button('reset');
             },
-            success: function (json) {
+            success: function(json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -189,7 +189,7 @@ $('#extension').on('click', '.btn-danger, .btn-outline-danger', function (e) {
                     $('#input-type').trigger('change');
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

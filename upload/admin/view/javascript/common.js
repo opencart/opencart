@@ -426,7 +426,9 @@ var chain = new Chain();
             // Focus out
             $(element).on('focusout', function (e) {
                 if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
-                    $dropdown.removeClass('show');
+                    this.timer = setTimeout(function (object) {
+                        object.removeClass('show');
+                    }, 50, $dropdown);
                 }
             });
 

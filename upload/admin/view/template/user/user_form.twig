@@ -129,13 +129,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#authorize').on('click', '.pagination a', function (e) {
+$('#authorize').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#authorize').load(this.href);
 });
 
-$('#authorize').on('click', '.btn', function (e) {
+$('#authorize').on('click', '.btn', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -144,13 +144,13 @@ $('#authorize').on('click', '.btn', function (e) {
         $.ajax({
             url: $(element).attr('href'),
             dataType: 'json',
-            beforeSend: function () {
+            beforeSend: function() {
                 $(element).button('loading');
             },
-            complete: function () {
+            complete: function() {
                 $(element).button('reset');
             },
-            success: function (json) {
+            success: function(json) {
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {
@@ -167,14 +167,14 @@ $('#authorize').on('click', '.btn', function (e) {
                     $('#authorize').load('index.php?route=user/user.authorize&user_token={{ user_token }}&user_id={{ user_id }}');
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     }
 });
 
-$('#login').on('click', '.pagination a', function (e) {
+$('#login').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#login').load(this.href);

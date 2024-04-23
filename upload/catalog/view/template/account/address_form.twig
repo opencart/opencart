@@ -216,21 +216,21 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('#input-country').on('change', function () {
+$('#input-country').on('change', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
             $('#input-zone').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
             $('#input-zone').prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             if (json['postcode_required'] == '1') {
                 $('#input-postcode').parent().parent().addClass('required');
             } else {
@@ -255,7 +255,7 @@ $('#input-country').on('change', function () {
 
             $('#input-zone').html(html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

@@ -1,33 +1,33 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end">
-				<button type="submit" form="form-startup" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
-			</div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-			<div id="startup" class="card-body">{{ list }}</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-startup" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+      <div id="startup" class="card-body">{{ list }}</div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
-$('#startup').on('click', 'thead a, .pagination a', function (e) {
+$('#startup').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#startup').load(this.href);
 });
 
-$('#startup').on('click', '.btn-success, .btn-danger', function (e) {
+$('#startup').on('click', '.btn-success, .btn-danger', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -35,13 +35,13 @@ $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -54,7 +54,7 @@ $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
                 $('#startup').load($('#form-startup').attr('data-oc-load'));
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

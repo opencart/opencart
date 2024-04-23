@@ -37,7 +37,7 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#form-quote').on('submit', function (e) {
+  $('#form-quote').on('submit', function(e) {
       e.preventDefault();
 
       $.ajax({
@@ -45,13 +45,13 @@
           type: 'post',
           data: $('#form-quote').serialize(),
           dataType: 'json',
-          beforeSend: function () {
+          beforeSend: function() {
               $('#button-quote').button('loading');
           },
-          complete: function () {
+          complete: function() {
               $('#button-quote').button('reset');
           },
-          success: function (json) {
+          success: function(json) {
               $('.alert-dismissible').remove();
               $('#form-shipping').find('.is-invalid').removeClass('is-invalid');
               $('#form-shipping').find('.invalid-feedback').removeClass('d-block');
@@ -74,12 +74,12 @@
                   html += '  <div class="modal-dialog">';
                   html += '    <div class="modal-content">';
                   html += '      <div class="modal-header">';
-                  html += '        <h4 class="modal-title">{{ text_shipping_method }}</h4>';
+                  html += '        <h4 class="modal-title">{{ text_shipping_method|escape('js') }}</h4>';
                   html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                   html += '      </div>';
                   html += '      <div class="modal-body">';
                   html += '        <form id="form-shipping">';
-                  html += '          <p>{{ text_estimate }}</p>';
+                  html += '          <p>{{ text_estimate|escape('js') }}</p>';
 
                   for (i in json['shipping_methods']) {
                       html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
@@ -106,7 +106,7 @@
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping|escape('js') }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';
@@ -119,13 +119,13 @@
                   $('#modal-shipping').modal('show');
               }
           },
-          error: function (xhr, ajaxOptions, thrownError) {
+          error: function(xhr, ajaxOptions, thrownError) {
               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
 
-  $(document).on('submit', '#form-shipping', function (e) {
+  $(document).on('submit', '#form-shipping', function(e) {
       e.preventDefault();
 
       $.ajax({
@@ -134,13 +134,13 @@
           data: $('#form-shipping').serialize(),
           dataType: 'json',
           contentType: 'application/x-www-form-urlencoded',
-          beforeSend: function () {
+          beforeSend: function() {
               $('#button-shipping-method').button('loading');
           },
-          complete: function () {
+          complete: function() {
               $('#button-shipping-method').button('reset');
           },
-          success: function (json) {
+          success: function(json) {
               $('.alert-dismissible').remove();
 
               if (json['error']) {
@@ -155,34 +155,34 @@
                   $('#modal-shipping').modal('hide');
               }
           },
-          error: function (xhr, ajaxOptions, thrownError) {
+          error: function(xhr, ajaxOptions, thrownError) {
               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
 
-  $('#input-country').on('change', function () {
+  $('#input-country').on('change', function() {
       var element = this;
 
       $.ajax({
           url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
           dataType: 'json',
-          beforeSend: function () {
+          beforeSend: function() {
               $(element).prop('disabled', true);
               $('#input-zone').prop('disabled', true);
           },
-          complete: function () {
+          complete: function() {
               $(element).prop('disabled', false);
               $('#input-zone').prop('disabled', false);
           },
-          success: function (json) {
+          success: function(json) {
               if (json['postcode_required'] == '1') {
                   $('#input-postcode').parent().parent().addClass('required');
               } else {
                   $('#input-postcode').parent().parent().removeClass('required');
               }
 
-              html = '<option value="">{{ text_select }}</option>';
+              html = '<option value="">{{ text_select|escape('js') }}</option>';
 
               if (json['zone'] && json['zone'] != '') {
                   for (i = 0; i < json['zone'].length; i++) {
@@ -195,12 +195,12 @@
                       html += '>' + json['zone'][i]['name'] + '</option>';
                   }
               } else {
-                  html += '<option value="0" selected>{{ text_none }}</option>';
+                  html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
               }
 
               $('#input-zone').html(html);
           },
-          error: function (xhr, ajaxOptions, thrownError) {
+          error: function(xhr, ajaxOptions, thrownError) {
               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });

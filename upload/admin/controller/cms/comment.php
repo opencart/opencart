@@ -232,10 +232,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$selected = [];
-
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
 		if (isset($this->request->get['article_comment_id'])) {
@@ -290,10 +290,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$selected = [];
-
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
 		if (isset($this->request->get['article_comment_id'])) {
@@ -345,10 +345,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$selected = [];
-
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
 		if (isset($this->request->get['article_comment_id'])) {

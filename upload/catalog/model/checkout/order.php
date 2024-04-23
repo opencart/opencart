@@ -597,10 +597,10 @@ class Order extends \Opencart\System\Engine\Model {
 					if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
 						$this->load->model('extension/' . $extension['extension'] . '/fraud/' . $extension['code']);
 
-						$model_extension_fraud = ($this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']}) ?? null;
+						$key = 'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code'];
 
-						if ($model_extension_fraud && isset($model_extension_fraud->check)) {
-							$fraud_status_id = $model_extension_fraud->check($order_info);
+						if (isset($this->{$key}->check)) {
+							$fraud_status_id = $this->{$key}->check($order_info);
 
 							if ($fraud_status_id) {
 								$order_status_id = $fraud_status_id;
@@ -622,11 +622,11 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
-					$model_extension_total = $this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']} ?? null;
+					$key = 'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code'];
 
-					if ($model_extension_total && isset($model_extension_total->confirm)) {
+					if (isset($this->{$key}->confirm)) {
 						// Confirm coupon, vouchers and reward points
-						$fraud_status_id = $model_extension_total->confirm($order_info, $order_total);
+						$fraud_status_id = $this->{$key}->confirm($order_info, $order_total);
 
 						// If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned.
 						if ($fraud_status_id) {
@@ -724,10 +724,10 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
-					$model_extension_total = $this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']} ?? null;
+					$key = 'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code'];
 
-					if ($model_extension_total && isset($model_extension_total->unconfirm)) {
-						$model_extension_total->unconfirm($order_info);
+					if (isset($this->{$key}->unconfirm)) {
+						$this->{$key}->unconfirm($order_info);
 					}
 				}
 			}

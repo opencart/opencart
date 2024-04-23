@@ -125,7 +125,7 @@ class Article extends \Opencart\System\Engine\Controller {
 				'article_id' => $result['article_id'],
 				'name'       => $result['name'],
 				'author'     => $result['author'],
-				'rating'     => $result['rating'],
+				'rating'     => (int)$result['rating'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id'] . $url)

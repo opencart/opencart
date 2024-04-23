@@ -1263,6 +1263,18 @@ class Order extends \Opencart\System\Engine\Controller {
 			$session_id = '';
 		}
 
+		if (isset($this->request->post['store_id'])) {
+			$store_id = $this->request->post['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (isset($this->request->post['language'])) {
+			$language = $this->request->post['language'];
+		} else {
+			$language = $this->config->get('config_language');
+		}
+
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
@@ -1309,7 +1321,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
-		// Hard coding css so they can be replaced via the events system.
+		// Hard coding css paths so that they can be replaced via the event's system.
 		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
 		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';

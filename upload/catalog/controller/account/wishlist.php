@@ -85,6 +85,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->load->model('account/wishlist');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+		$this->load->model('localisation/stock_status');
 
 		$results = $this->model_account_wishlist->getWishlist($this->customer->getId());
 
@@ -99,19 +100,19 @@ class WishList extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($product_info['quantity'] <= 0) {
-					$this->load->model('localisation/stock_status');
-
-					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
-
-					if ($stock_status_info) {
-						$stock = $stock_status_info['name'];
-					} else {
-						$stock = '';
-					}
+					$stock_status_id = $product_info['stock_status_id'];
 				} elseif ($this->config->get('config_stock_display')) {
-					$stock = $product_info['quantity'];
+					$stock_status_id = 0;
 				} else {
-					$stock = $this->language->get('text_instock');
+					$stock_status_id = (int)$this->config->get('stock_status_id');
+				}
+
+				$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);
+
+				if ($stock_status_info) {
+					$stock = $stock_status_info['name'];
+				} else {
+					$stock = $product_info['quantity'];
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {

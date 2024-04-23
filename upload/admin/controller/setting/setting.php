@@ -266,6 +266,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_api_id'] = $this->config->get('config_api_id');
 
 		// Stock
+		$this->load->model('localisation/stock_status');
+
+		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
+		
+		$data['config_stock_status_id'] = $this->config->get('config_stock_status_id');
 		$data['config_stock_display'] = $this->config->get('config_stock_display');
 		$data['config_stock_warning'] = $this->config->get('config_stock_warning');
 		$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');

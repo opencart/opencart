@@ -103,7 +103,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 				} elseif ($this->config->get('config_stock_display')) {
 					$stock_status_id = 0;
 				} else {
-					$stock_status_id = $this->config->get('stock_status_id');
+					$stock_status_id = (int)$this->config->get('stock_status_id');
 				}
 
 				$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);

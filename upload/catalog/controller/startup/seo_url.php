@@ -1,5 +1,4 @@
 <?php
-
 namespace Opencart\Catalog\Controller\Startup;
 /**
  * Class SeoUrl
@@ -118,11 +117,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$url .= str_replace('/index.php', '', $url_info['path']);
 
 		foreach ($paths as $result) {
-			if (($result['key'] == 'language') && ($result['value'] == $this->config->get('config_language_catalog')) && ((int)$this->config->get('config_store_id') == (int)$result['store_id'])) {
-				continue;
-			} else {
-				$url .= '/' . $result['keyword'];
-			}
+			$url .= '/' . $result['keyword'];
 		}
 
 		// Rebuild the URL query

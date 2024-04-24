@@ -65,6 +65,7 @@ $_['entry_checkout_guest']             = 'Guest Checkout';
 $_['entry_checkout']                   = 'Checkout Terms';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_checkout']             = 'Stock Checkout';
+$_['entry_stock_status']               = 'Stock Status';
 $_['entry_logo']                       = 'Store Logo';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                = 'Product Image Thumb Size (W x H)';
@@ -102,6 +103,7 @@ $_['help_checkout_guest']              = 'Allow customers to checkout without cr
 $_['help_checkout']                    = 'Forces people to agree to terms before an a customer can checkout.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_checkout']              = 'Allow customers to still checkout if the products they are ordering are not in stock.';
+$_['help_stock_status']                = 'Set the default stock status when a product is available on stock.';
 $_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
 
 // Error

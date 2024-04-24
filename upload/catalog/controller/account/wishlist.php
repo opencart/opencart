@@ -101,10 +101,10 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 				if ($product_info['quantity'] <= 0) {
 					$stock_status_id = $product_info['stock_status_id'];
-				} elseif ($this->config->get('config_stock_display')) {
-					$stock_status_id = 0;
-				} else {
+				} elseif (!$this->config->get('config_stock_display')) {
 					$stock_status_id = (int)$this->config->get('stock_status_id');
+				} else {
+					$stock_status_id = 0;
 				}
 
 				$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);

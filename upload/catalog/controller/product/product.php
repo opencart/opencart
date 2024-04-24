@@ -267,27 +267,21 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
-				$this->load->model('localisation/stock_status');
-
-				$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
-
-				if ($stock_status_info) {
-					$data['stock'] = $stock_status_info['name'];
-				} else {
-					$data['stock'] = '';
-				}
-			} elseif ($this->config->get('config_stock_display')) {
-				$data['stock'] = $product_info['quantity'];
+				$stock_status_id = $product_info['stock_status_id'];
+			} elseif (!$this->config->get('config_stock_display')) {
+				$stock_status_id = $this->config->get('config_stock_status_id');
 			} else {
-					$this->load->model('localisation/stock_status');
+				$stock_status_id = 0;
+			}
 
-					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($this->config->get('config_stock_status_id'));
+			$this->load->model('localisation/stock_status');
 
-					if ($stock_status_info) {
-						$data['stock'] = $stock_status_info['name'];
-					} else {
-						$data['stock'] = '';
-					}
+			$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);
+
+			if ($stock_status_info) {
+				$data['stock'] = $stock_status_info['name'];
+			} else {
+				$data['stock'] = $product_info['quantity'];
 			}
 
 			$data['rating'] = (int)$product_info['rating'];

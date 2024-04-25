@@ -277,7 +277,7 @@ function addModule(type) {
     html += '  </select>';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][position]" value="' + type.replaceAll('-', '_') + '" />';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="" />';
-    html += '  <a href=" data-bs-toggle="tooltip" title="{{ button_edit|escape('js') }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js ') }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>';
+    html += '  <a href=" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>';
     html += '  </div></td>';
     html += '</tr>';
 

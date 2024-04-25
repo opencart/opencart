@@ -1263,14 +1263,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			$session_id = '';
 		}
 
-		if (isset($this->request->post['store_id'])) {
-			$store_id = $this->request->post['store_id'];
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
 
-		if (isset($this->request->post['language'])) {
-			$language = $this->request->post['language'];
+		if (isset($this->request->get['language'])) {
+			$language = $this->request->get['language'];
 		} else {
 			$language = $this->config->get('config_language');
 		}
@@ -1285,11 +1285,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
 
+			$store->config->set('config_store_id', $store_id);
+
 			// 2. Add the request vars and remove the unneeded ones
 			$store->request->get = $this->request->get;
 			$store->request->post = $this->request->post;
 
 			$store->request->get['route'] = 'api/' . $call;
+			$store->request->get['language'] = $language;
 
 			// 3. Remove the unneeded keys
 			unset($store->request->get['call']);

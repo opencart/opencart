@@ -14,7 +14,7 @@ class ControllerExtensionExtensionPromotion extends Controller {
 
 		curl_close($curl);
 
-		if ($response) {
+		if ($response && curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200) {
 			return $response;
 		} else {
 			return '';

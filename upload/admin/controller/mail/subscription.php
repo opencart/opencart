@@ -253,8 +253,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 								// Store
 								$from = $this->config->get('config_email');
 								$store_name = $this->config->get('config_name');
-								$store_url = HTTP_CATALOG;
-								$alert_email = $this->config->get('config_mail_alert_email');
 
 								if ($comment) {
 									$data['comment'] = nl2br($comment);

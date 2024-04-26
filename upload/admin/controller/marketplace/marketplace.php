@@ -173,7 +173,11 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		curl_close($curl);
 
-		$response_info = json_decode($response, true);
+		if ($status == 200) {
+			$response_info = json_decode($response, true);
+		} else {
+			$response_info = [];
+		}
 
 		if (isset($response_info['extension_total'])) {
 			$extension_total = (int)$response_info['extension_total'];
@@ -828,6 +832,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 
 			$response = curl_exec($curl);
+
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 			curl_close($curl);
 

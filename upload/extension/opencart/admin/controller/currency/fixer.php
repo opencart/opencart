@@ -96,11 +96,17 @@ class Fixer extends \Opencart\System\Engine\Controller {
 
 			$response = curl_exec($curl);
 
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
 			curl_close($curl);
 
-			$response_info = json_decode($response, true);
+			if ($status == 200) {
+				$response_info = json_decode($response, true);
+			} else {
+				$response_info = [];
+			}
 
-			if (is_array($response_info) && isset($response_info['rates'])) {
+			if ($status && isset($response_info['rates'])) {
 				// Compile all the rates into an array
 				$currencies = [];
 

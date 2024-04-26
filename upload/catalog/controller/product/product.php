@@ -269,7 +269,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			if ($product_info['quantity'] <= 0) {
 				$stock_status_id = $product_info['stock_status_id'];
 			} elseif (!$this->config->get('config_stock_display')) {
-				$stock_status_id = $this->config->get('config_stock_status_id');
+				$stock_status_id = (int)$this->config->get('config_stock_status_id');
 			} else {
 				$stock_status_id = 0;
 			}

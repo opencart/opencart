@@ -60,9 +60,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		} else {
 			$response_info = [];
 		}
-
-		$response_info = json_decode($response, true);
-
+		
 		if ($response_info) {
 			$data['latest_version'] = $response_info['version'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));

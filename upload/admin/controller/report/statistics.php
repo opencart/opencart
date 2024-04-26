@@ -91,7 +91,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$this->load->model('report/statistics');
 			$this->load->model('sale/order');
 
-			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))]));
+			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge((array)$this->config->get('config_complete_status'), (array)$this->config->get('config_processing_status')))]));
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -145,7 +145,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$this->load->model('report/statistics');
 			$this->load->model('sale/order');
 
-			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $this->config->get('config_complete_status'))]));
+			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', (array)$this->config->get('config_complete_status'))]));
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -177,7 +177,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$results = $this->model_localisation_order_status->getOrderStatuses();
 
 			foreach ($results as $result) {
-				if (!in_array($result['order_status_id'], array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))) {
+				if (!in_array($result['order_status_id'], array_merge((array)$this->config->get('config_complete_status'), (array)$this->config->get('config_processing_status')))) {
 					$order_status_data[] = $result['order_status_id'];
 				}
 			}

@@ -37,7 +37,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Settings
 		$this->load->model('setting/setting');
 
-		$results = $this->model_setting_setting->getSettings($this->config->get('config_store_id'));
+		$results = $this->model_setting_setting->getSettings((int)$this->config->get('config_store_id'));
 
 		foreach ($results as $result) {
 			if (!$result['serialized']) {

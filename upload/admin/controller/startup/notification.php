@@ -32,7 +32,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			if ($status == 200) {
 				$notification = json_decode($response, true);
 			} else {
-				$notification = '';
+				$notification = [];
 			}
 
 			if (isset($notification['notification'])) {

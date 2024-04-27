@@ -106,7 +106,7 @@ class Fixer extends \Opencart\System\Engine\Controller {
 				$response_info = [];
 			}
 
-			if ($status && isset($response_info['rates'])) {
+			if (isset($response_info['rates'])) {
 				// Compile all the rates into an array
 				$currencies = [];
 

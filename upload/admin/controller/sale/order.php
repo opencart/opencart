@@ -1244,6 +1244,42 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * Method to call the storefront API and return a response.
 	 *
+	 * @Example
+	 *
+	 * $url = 'https://www.yourdomain.com/index.php?route=api/account/login&language=en-gb&store_id=0';
+	 *
+	 * $request_data = [
+	 * 		'username' => 'Default',
+	 *		'key'      => ''
+	 * ];
+	 *
+	 * $curl = curl_init();
+	 *
+	 * curl_setopt($curl, CURLOPT_URL, $url);
+	 * curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	 * curl_setopt($curl, CURLOPT_HEADER, false);
+	 * curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+	 * curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+	 * curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+	 * curl_setopt($curl, CURLOPT_POST, 1);
+	 * curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
+	 *
+	 * $response = curl_exec($curl);
+	 *
+	 * $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	 *
+	 * curl_close($curl);
+	 *
+	 * if ($status == 200) {
+	 *		$api_token = json_decode($response, true);
+	 *
+	 * 		if (isset($api_token['api_token'])) {
+	 *
+	 * 			// You can now store the session cookie as a var in the your current session or some of persistent storage
+	 * 			$session_id = $api_token['api_token'];
+	 * 		}
+	 * }
+	 *
 	 * @return void
 	 */
 	public function call(): void {
@@ -1252,25 +1288,25 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['call'])) {
-			$call = $this->request->get['call'];
+			$call = (string)$this->request->get['call'];
 		} else {
 			$call = '';
 		}
 
 		if (isset($this->session->data['api_session'])) {
-			$session_id = $this->session->data['api_session'];
+			$session_id = (string)$this->session->data['api_session'];
 		} else {
 			$session_id = '';
 		}
 
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
 
 		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
+			$language = (string)$this->request->get['language'];
 		} else {
 			$language = $this->config->get('config_language');
 		}
@@ -1279,7 +1315,50 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
+		$this->load->model('user/api');
+
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+
+		if (!$api_info) {
+			$json['error']['warning'] = $this->language->get('error_api');
+		}
+
 		if (!$json) {
+			$time = time();
+
+			// We create a hash from the data in a similar method to how amazon does things.
+			$string  = 'api/' . $call . "\n";
+			$string .= $api_info['username'] . "\n";
+			$string .= $this->request->server['HTTP_HOST'] . "\n";
+			$string .= $store_id . "\n";
+			$string .= $language . "\n";
+			$string .= json_encode($this->reqest->post) . "\n";
+			$string .= $time . "\n";
+
+			$signature = base64_encode(hash_hmac('sha1', $string, $api_info['key'], true));
+
+			$url  = '?route=api/' . $call;
+			$url .= '&username=' . urlencode($api_info['username']);
+			$url .= '&store_id=' . $store_id . "\n";
+			$url .= '&language=' . $language . "\n";
+			$url .= '&time=' . $time;
+			$url .= '&signature=' . rawurlencode($signature);
+
+			/*
+			$curl = curl_init(OPENCART_SERVER . 'index.php' . $url);
+
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+
+			$response = curl_exec($curl);
+
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+			curl_close($curl);
+			*/
+
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries
 			$this->load->model('setting/store');
 
@@ -1292,7 +1371,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->post = $this->request->post;
 
 			$store->request->get['route'] = 'api/' . $call;
-			$store->request->get['language'] = $language;
+
+
+			$store->request->get = string;
+
 
 			// 3. Remove the unneeded keys
 			unset($store->request->get['call']);

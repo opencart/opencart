@@ -13,7 +13,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_cookie_id'));
+			$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_cookie_id'));
 
 			if ($information_info) {
 				$this->load->language('common/cookie');

@@ -510,7 +510,7 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalOrdersByCompleteStatus(): int {
 		$implode = [];
 
-		$order_statuses = $this->config->get('config_complete_status');
+		$order_statuses = (array)$this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "`order_status_id` = '" . (int)$order_status_id . "'";

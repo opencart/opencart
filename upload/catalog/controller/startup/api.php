@@ -37,9 +37,9 @@ class Api extends \Opencart\System\Engine\Controller {
 			if ($status) {
 				$this->load->model('user/api');
 
-				$api_info = $this->model_user_api->getApiByUSername((string)$this->request->get['username']);
+				$api_info = $this->model_user_api->getApiByUsername((string)$this->request->get['username']);
 
-				if ($api_info && $api_info['status']) {
+				if ($api_info) {
 					// Check if IP is allowed
 					$ip_data = [];
 

@@ -475,9 +475,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
+	 * @return void
 	 * @throws \Exception
 	 *
-	 * @return void
 	 */
 	public function info(): void {
 		$this->load->language('sale/order');
@@ -1246,23 +1246,44 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * @Example
 	 *
-	 * $url = 'https://www.yourdomain.com/index.php?route=api/account/login&language=en-gb&store_id=0';
+	 * We create a hash from the data in a similar method to how amazon does things.
 	 *
-	 * $request_data = [
-	 * 		'username' => 'Default',
-	 *		'key'      => ''
-	 * ];
+	 * $route    = 'api/order.save';
+	 * $username = 'API username';
+	 * $key      = 'API Key';
+	 * $domain   = 'www.yourdomain.com';
+	 * $store_id = 0;
+	 * $language = 'en-gb';
+	 * $time     = time();
+	 *
+	 * $string  = $route . "\n";
+	 * $string .= $username . "\n";
+	 * $string .= $domain . "\n";
+	 * $string .= $store_id . "\n";
+	 * $string .= $language . "\n";
+	 * $string .= json_encode($_POST) . "\n";
+	 * $string .= $time . "\n";
+	 *
+	 * $signature = base64_encode(hash_hmac('sha1', $string, $key, true));
+	 *
+	 * Use this for remote calls
+	 *
+	 * $url  = '&username=' . urlencode($username);
+	 * $url .= '&store_id=' . $store_id;
+	 * $url .= '&language=' . $language;
+	 * $url .= '&time=' . $time;
+	 * $url .= '&signature=' . rawurlencode($signature);
 	 *
 	 * $curl = curl_init();
 	 *
-	 * curl_setopt($curl, CURLOPT_URL, $url);
+	 * curl_setopt($curl, CURLOPT_URL, 'https://' . $domain . '/index.php?route=' . $route . $url);
 	 * curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	 * curl_setopt($curl, CURLOPT_HEADER, false);
 	 * curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 	 * curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 	 * curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 	 * curl_setopt($curl, CURLOPT_POST, 1);
-	 * curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
+	 * curl_setopt($curl, CURLOPT_POSTFIELDS, $_POST);
 	 *
 	 * $response = curl_exec($curl);
 	 *
@@ -1271,13 +1292,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * curl_close($curl);
 	 *
 	 * if ($status == 200) {
-	 *		$api_token = json_decode($response, true);
-	 *
-	 * 		if (isset($api_token['api_token'])) {
-	 *
-	 * 			// You can now store the session cookie as a var in the your current session or some of persistent storage
-	 * 			$session_id = $api_token['api_token'];
-	 * 		}
+	 *      $response_info = json_decode($response, true);
+	 * } else {
+	 *      $response_info = [];
 	 * }
 	 *
 	 * @return void
@@ -1326,39 +1343,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$time = time();
 
-			// We create a hash from the data in a similar method to how amazon does things.
-			$string  = 'api/' . $call . "\n";
-			$string .= $api_info['username'] . "\n";
-			$string .= $this->request->server['HTTP_HOST'] . "\n";
-			$string .= $store_id . "\n";
-			$string .= $language . "\n";
-			$string .= json_encode($this->reqest->post) . "\n";
-			$string .= $time . "\n";
-
-			$signature = base64_encode(hash_hmac('sha1', $string, $api_info['key'], true));
-
-			$url  = '?route=api/' . $call;
-			$url .= '&username=' . urlencode($api_info['username']);
-			$url .= '&store_id=' . $store_id . "\n";
-			$url .= '&language=' . $language . "\n";
-			$url .= '&time=' . $time;
-			$url .= '&signature=' . rawurlencode($signature);
-
-			/*
-			$curl = curl_init(OPENCART_SERVER . 'index.php' . $url);
-
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-
-			$response = curl_exec($curl);
-
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-			curl_close($curl);
-			*/
-
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries
 			$this->load->model('setting/store');
 
@@ -1366,19 +1350,32 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store->config->set('config_store_id', $store_id);
 
-			// 2. Add the request vars and remove the unneeded ones
-			$store->request->get = $this->request->get;
-			$store->request->post = $this->request->post;
+			// We create a hash from the data in a similar method to how amazon does things.
+			$string = 'api/' . $call . "\n";
+			$string .= $api_info['username'] . "\n";
+			$string .= $this->request->server['HTTP_HOST'] . "\n";
+			$string .= $store_id . "\n";
+			$string .= $language . "\n";
+			$string .= json_encode($this->request->post) . "\n";
+			$string .= $time . "\n";
 
+			$signature = base64_encode(hash_hmac('sha1', $string, $api_info['key'], true));
+
+			// 2. Remove the unneeded keys
+			$request_data = $this->request->get;
+
+			unset($request_data['call']);
+			unset($request_data['user_token']);
+
+			$store->request->get = $request_data;
+
+			// 3. Add the request vars
 			$store->request->get['route'] = 'api/' . $call;
-
-
-			$store->request->get = string;
-
-
-			// 3. Remove the unneeded keys
-			unset($store->request->get['call']);
-			unset($store->request->get['user_token']);
+			$store->request->get['username'] = $api_info['username'];
+			$store->request->get['store_id'] = $store_id;
+			$store->request->get['language'] = $language;
+			$store->request->get['time'] = $time;
+			$store->request->get['signature'] = rawurlencode($signature);
 
 			// Call the required API controller
 			$store->load->controller($store->request->get['route']);

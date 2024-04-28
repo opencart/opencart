@@ -1854,67 +1854,11 @@ $('#input-store').on('change', function(e) {
 $('#input-language').on('change', function(e) {
     e.preventDefault();
 
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=language&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
-        type: 'post',
-        data: $('#form-language').serialize(),
-        dataType: 'json',
-        beforeSend: function() {
-            $('#input-language').prop('disabled', true);
-        },
-        complete: function() {
-            $('#input-language').prop('disabled', false);
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
 });
 
 $('#input-currency').on('change', function(e) {
     e.preventDefault();
 
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=currency&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
-        type: 'post',
-        data: $('#form-currency').serialize(),
-        dataType: 'json',
-        beforeSend: function() {
-            $('#input-currency').prop('disabled', true);
-        },
-        complete: function() {
-            $('#input-currency').prop('disabled', false);
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
 });
 
 // Coupon
@@ -2247,6 +2191,8 @@ $('#form-payment-address').on('submit', function(e) {
             $('#button-payment-address').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');

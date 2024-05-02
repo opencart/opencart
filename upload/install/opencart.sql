@@ -2002,6 +2002,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_article_description_length', '600', 0),
 (0, 'config', 'config_pagination', '10', 0),
 (0, 'config', 'config_pagination_admin', '10', 0),
+(0, 'config', 'config_autocomplete_limit', '5', 0),
 (0, 'config', 'config_product_count', '1', 0),
 (0, 'config', 'config_review_status', '1', 0),
 (0, 'config', 'config_review_guest', '1', 0),

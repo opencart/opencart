@@ -1334,7 +1334,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/api');
 
-		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		$api_info = $this->model_user_api->getApi((int)$this->config->get('config_api_id'));
 
 		if (!$api_info) {
 			$json['error']['warning'] = $this->language->get('error_api');

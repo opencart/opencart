@@ -327,6 +327,14 @@
                         </div>
                       </div>
                       <div class="row mb-3 required">
+                        <label for="input-autocomplete-limit" class="col-sm-2 col-form-label">{{ entry_autocomplete_limit }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="config_autocomplete_limit" value="{{ config_autocomplete_limit }}" placeholder="{{ entry_autocomplete_limit }}" id="input-autocomplete-limit" class="form-control"/>
+                          <div class="form-text">{{ help_autocomplete_limit }}</div>
+                          <div id="error-autocomplete-limit" class="invalid-feedback"></div>
+                        </div>
+                      </div>
+                      <div class="row mb-3 required">
                         <label class="col-sm-2 col-form-label">{{ entry_product_report }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">

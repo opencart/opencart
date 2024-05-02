@@ -2179,6 +2179,9 @@ $('#input-payment-address').on('change', function() {
 $('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
 
+
+    console.log($('#form-payment-address').serialize());
+
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_address&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         type: 'post',

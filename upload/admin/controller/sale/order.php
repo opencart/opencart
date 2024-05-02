@@ -779,51 +779,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Delete any old session
-		if (isset($this->session->data['api_session'])) {
-			$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
-			$session->start($this->session->data['api_session']);
-			$session->destroy();
-		}
-
-		if (!empty($order_info)) {
-			$store_id = $order_info['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		if (!empty($order_info)) {
-			$language = $order_info['language_code'];
-		} else {
-			$language = $this->config->get('config_language');
-		}
-
-		// Create a store instance using loader class to call controllers, models, views, libraries
-		$this->load->model('setting/store');
-
-		$store = $this->model_setting_store->createStoreInstance($store_id, $language);
-
-		// 2. Store the new session ID so we're not creating new session on every page load
-		$this->session->data['api_session'] = $store->session->getId();
-
-		// 3. To use the order API it requires an API ID.
-		$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
-
-		if (!empty($order_info)) {
-			// 4. Add the request vars and remove the unneeded ones
-			$store->request->get = $this->request->get;
-			$store->request->post = $this->request->post;
-
-			// 5. Load the order data
-			$store->request->get['route'] = 'api/order.load';
-			$store->request->get['language'] = $language;
-
-			unset($store->request->get['user_token']);
-			unset($store->request->get['action']);
-
-			$store->load->controller($store->request->get['route']);
-		}
-
 		// Store
 		$data['stores'] = [];
 
@@ -1310,12 +1265,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$call = '';
 		}
 
-		if (isset($this->session->data['api_session'])) {
-			$session_id = (string)$this->session->data['api_session'];
-		} else {
-			$session_id = '';
-		}
-
 		if (isset($this->request->get['store_id'])) {
 			$store_id = (int)$this->request->get['store_id'];
 		} else {
@@ -1325,7 +1274,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['language'])) {
 			$language = (string)$this->request->get['language'];
 		} else {
-			$language = $this->config->get('config_language');
+			$language = (string)$this->config->get('config_language');
 		}
 
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
@@ -1341,25 +1290,39 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+			/*
+			// Delete any old session
+			if (isset($this->session->data['api_session'])) {
+				$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
+				$session->start($this->session->data['api_session']);
+				$session->destroy();
+			}
+
+			// 3. To use the order API it requires an API ID.
+			$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
+			*/
 			$time = time();
 
-			// 1. Create a store instance using loader class to call controllers, models, views, libraries
+
+			if (isset($this->session->data['api_session'])) {
+				$session_id = (string)$this->session->data['api_session'];
+			} else {
+				$session_id = '';
+			}
+
 			$this->load->model('setting/store');
 
+			// 1. Create a store instance using loader class to call controllers, models, views, libraries
 			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
 
+			// Set the store ID
 			$store->config->set('config_store_id', $store_id);
 
-			// We create a hash from the data in a similar method to how amazon does things.
-			$string = 'api/' . $call . "\n";
-			$string .= $api_info['username'] . "\n";
-			$string .= $this->request->server['HTTP_HOST'] . "\n";
-			$string .= $store_id . "\n";
-			$string .= $language . "\n";
-			$string .= json_encode($this->request->post) . "\n";
-			$string .= $time . "\n";
-
-			$signature = base64_encode(hash_hmac('sha1', $string, $api_info['key'], true));
+			// 2. Store the new session ID so we are not creating new session on every page load
+			if (!$session_id) {
+				$this->session->data['api_session'] = $store->session->getId();
+			}
 
 			// 2. Remove the unneeded keys
 			$request_data = $this->request->get;
@@ -1369,13 +1332,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store->request->get = $request_data;
 
-			// 3. Add the request vars
+			// 3. Add the request GET vars
 			$store->request->get['route'] = 'api/' . $call;
-			$store->request->get['username'] = $api_info['username'];
-			$store->request->get['store_id'] = $store_id;
 			$store->request->get['language'] = $language;
-			$store->request->get['time'] = $time;
-			$store->request->get['signature'] = rawurlencode($signature);
+
+			// 4. Add the request POST var
+			$store->request->post = $this->request->post;
 
 			// Call the required API controller
 			$store->load->controller($store->request->get['route']);

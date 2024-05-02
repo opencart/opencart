@@ -1455,7 +1455,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'filter_name'  => $filter_name,
 				'filter_email' => $filter_email,
 				'start'        => 0,
-				'limit'        => 5
+				'limit'        => $this->config->get('config_autocomplete_limit')
 			];
 
 			$this->load->model('customer/customer');

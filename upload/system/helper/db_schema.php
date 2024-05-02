@@ -1,4 +1,20 @@
 <?php
+/**
+ * DB Create
+ *
+ * @param string $db_driver
+ * @param string $db_hostname
+ * @param string $db_username
+ * @param string $db_password
+ * @param string $db_database
+ * @param string $db_port
+ * @param string $db_prefix
+ * @param string $db_ssl_key
+ * @param string $db_ssl_cert
+ * @param string $db_ssl_ca
+ *
+ * @return bool
+ */
 function oc_db_create(string $db_driver, string $db_hostname, string $db_username, string $db_password, string $db_database, string $db_port, string $db_prefix, string $db_ssl_key, string $db_ssl_cert, string $db_ssl_ca): bool {
 	try {
 		// Database
@@ -55,14 +71,16 @@ function oc_db_create(string $db_driver, string $db_hostname, string $db_usernam
 }
 
 /**
+ * DB Schema
+ *
  * @return array<int, array<string, mixed>>
  */
 function oc_db_schema() {
 	$tables = [];
 
 	$tables[] = [
-		'name'    => 'address',
-		'field'   => [
+		'name'  => 'address',
+		'field' => [
 			[
 				'name'           => 'address_id',
 				'type'           => 'int(11)',
@@ -129,7 +147,7 @@ function oc_db_schema() {
 				'field' => 'customer_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'customer_id',
 				'key'  => [
@@ -143,8 +161,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'address_format',
-		'field'   => [
+		'name'  => 'address_format',
+		'field' => [
 			[
 				'name'           => 'address_format_id',
 				'type'           => 'int(11)',
@@ -168,8 +186,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'api',
-		'field'   => [
+		'name'  => 'api',
+		'field' => [
 			[
 				'name'           => 'api_id',
 				'type'           => 'int(11)',
@@ -205,8 +223,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'api_ip',
-		'field'   => [
+		'name'  => 'api_ip',
+		'field' => [
 			[
 				'name'           => 'api_ip_id',
 				'type'           => 'int(11)',
@@ -237,8 +255,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'api_session',
-		'field'   => [
+		'name'  => 'api_session',
+		'field' => [
 			[
 				'name'           => 'api_session_id',
 				'type'           => 'int(11)',
@@ -281,8 +299,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'attribute',
-		'field'   => [
+		'name'  => 'attribute',
+		'field' => [
 			[
 				'name'           => 'attribute_id',
 				'type'           => 'int(11)',
@@ -313,8 +331,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'attribute_description',
-		'field'   => [
+		'name'  => 'attribute_description',
+		'field' => [
 			[
 				'name' => 'attribute_id',
 				'type' => 'int(11)'
@@ -350,8 +368,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'attribute_group',
-		'field'   => [
+		'name'  => 'attribute_group',
+		'field' => [
 			[
 				'name'           => 'attribute_group_id',
 				'type'           => 'int(11)',
@@ -371,8 +389,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'attribute_group_description',
-		'field'   => [
+		'name'  => 'attribute_group_description',
+		'field' => [
 			[
 				'name' => 'attribute_group_id',
 				'type' => 'int(11)'
@@ -408,8 +426,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'banner',
-		'field'   => [
+		'name'  => 'banner',
+		'field' => [
 			[
 				'name'           => 'banner_id',
 				'type'           => 'int(11)',
@@ -433,8 +451,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'banner_image',
-		'field'   => [
+		'name'  => 'banner_image',
+		'field' => [
 			[
 				'name'           => 'banner_image_id',
 				'type'           => 'int(11)',
@@ -487,8 +505,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'antispam',
-		'field'   => [
+		'name'  => 'antispam',
+		'field' => [
 			[
 				'name'           => 'antispam_id',
 				'type'           => 'int(11)',
@@ -502,7 +520,7 @@ function oc_db_schema() {
 		'primary' => [
 			'antispam_id'
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'keyword',
 				'key'  => [
@@ -516,8 +534,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'article',
-		'field'   => [
+		'name'  => 'article',
+		'field' => [
 			[
 				'name'           => 'article_id',
 				'type'           => 'int(11)',
@@ -558,8 +576,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'article_comment',
-		'field'   => [
+		'name'  => 'article_comment',
+		'field' => [
 			[
 				'name'           => 'article_comment_id',
 				'type'           => 'int(11)',
@@ -618,7 +636,7 @@ function oc_db_schema() {
 				'field' => 'customer_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'article_id',
 				'key'  => [
@@ -644,8 +662,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'article_description',
-		'field'   => [
+		'name'  => 'article_description',
+		'field' => [
 			[
 				'name' => 'article_id',
 				'type' => 'int(11)'
@@ -694,7 +712,7 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'name',
 				'key'  => [
@@ -708,8 +726,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'article_rating',
-		'field'   => [
+		'name'  => 'article_rating',
+		'field' => [
 			[
 				'name'           => 'article_rating_id',
 				'type'           => 'int(11)',
@@ -771,7 +789,7 @@ function oc_db_schema() {
 				'field' => 'customer_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'article_comment_id',
 				'key'  => [
@@ -803,8 +821,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'article_to_layout',
-		'field'   => [
+		'name'  => 'article_to_layout',
+		'field' => [
 			[
 				'name' => 'article_id',
 				'type' => 'int(11)'
@@ -845,8 +863,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'article_to_store',
-		'field'   => [
+		'name'  => 'article_to_store',
+		'field' => [
 			[
 				'name' => 'article_id',
 				'type' => 'int(11)'
@@ -879,8 +897,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'topic',
-		'field'   => [
+		'name'  => 'topic',
+		'field' => [
 			[
 				'name'           => 'topic_id',
 				'type'           => 'int(11)',
@@ -905,8 +923,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'topic_description',
-		'field'   => [
+		'name'  => 'topic_description',
+		'field' => [
 			[
 				'name' => 'topic_id',
 				'type' => 'int(11)'
@@ -951,7 +969,7 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'name',
 				'key'  => [
@@ -965,8 +983,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'topic_to_store',
-		'field'   => [
+		'name'  => 'topic_to_store',
+		'field' => [
 			[
 				'name' => 'topic_id',
 				'type' => 'int(11)'
@@ -999,8 +1017,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'cart',
-		'field'   => [
+		'name'  => 'cart',
+		'field' => [
 			[
 				'name'           => 'cart_id',
 				'type'           => 'int(11)',
@@ -1090,7 +1108,7 @@ function oc_db_schema() {
 				'field' => 'subscription_plan_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'cart_id',
 				'key'  => [
@@ -1108,8 +1126,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'category',
-		'field'   => [
+		'name'  => 'category',
+		'field' => [
 			[
 				'name'           => 'category_id',
 				'type'           => 'int(11)',
@@ -1149,7 +1167,7 @@ function oc_db_schema() {
 		'primary' => [
 			'category_id'
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'parent_id',
 				'key'  => [
@@ -1163,8 +1181,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'category_description',
-		'field'   => [
+		'name'  => 'category_description',
+		'field' => [
 			[
 				'name' => 'category_id',
 				'type' => 'int(11)'
@@ -1205,7 +1223,7 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'name',
 				'key'  => [
@@ -1219,8 +1237,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'category_filter',
-		'field'   => [
+		'name'  => 'category_filter',
+		'field' => [
 			[
 				'name' => 'category_id',
 				'type' => 'int(11)'
@@ -1252,8 +1270,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'category_path',
-		'field'   => [
+		'name'  => 'category_path',
+		'field' => [
 			[
 				'name' => 'category_id',
 				'type' => 'int(11)'
@@ -1284,8 +1302,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'category_to_layout',
-		'field'   => [
+		'name'  => 'category_to_layout',
+		'field' => [
 			[
 				'name' => 'category_id',
 				'type' => 'int(11)'
@@ -1326,8 +1344,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'category_to_store',
-		'field'   => [
+		'name'  => 'category_to_store',
+		'field' => [
 			[
 				'name' => 'category_id',
 				'type' => 'int(11)'
@@ -1360,8 +1378,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'country',
-		'field'   => [
+		'name'  => 'country',
+		'field' => [
 			[
 				'name'           => 'country_id',
 				'type'           => 'int(11)',
@@ -1402,8 +1420,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'coupon',
-		'field'   => [
+		'name'  => 'coupon',
+		'field' => [
 			[
 				'name'           => 'coupon_id',
 				'type'           => 'int(11)',
@@ -1471,8 +1489,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'coupon_category',
-		'field'   => [
+		'name'  => 'coupon_category',
+		'field' => [
 			[
 				'name' => 'coupon_id',
 				'type' => 'int(11)'
@@ -1504,8 +1522,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'coupon_history',
-		'field'   => [
+		'name'  => 'coupon_history',
+		'field' => [
 			[
 				'name'           => 'coupon_history_id',
 				'type'           => 'int(11)',
@@ -1558,8 +1576,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'coupon_product',
-		'field'   => [
+		'name'  => 'coupon_product',
+		'field' => [
 			[
 				'name'           => 'coupon_product_id',
 				'type'           => 'int(11)',
@@ -1595,8 +1613,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'cron',
-		'field'   => [
+		'name'  => 'cron',
+		'field' => [
 			[
 				'name'           => 'cron_id',
 				'type'           => 'int(11)',
@@ -1640,8 +1658,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'currency',
-		'field'   => [
+		'name'  => 'currency',
+		'field' => [
 			[
 				'name'           => 'currency_id',
 				'type'           => 'int(11)',
@@ -1689,8 +1707,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer',
-		'field'   => [
+		'name'  => 'customer',
+		'field' => [
 			[
 				'name'           => 'customer_id',
 				'type'           => 'int(11)',
@@ -1786,7 +1804,7 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'email',
 				'key'  => [
@@ -1800,8 +1818,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_activity',
-		'field'   => [
+		'name'  => 'customer_activity',
+		'field' => [
 			[
 				'name'           => 'customer_activity_id',
 				'type'           => 'int(11)',
@@ -1844,8 +1862,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_affiliate',
-		'field'   => [
+		'name'  => 'customer_affiliate',
+		'field' => [
 			[
 				'name' => 'customer_id',
 				'type' => 'int(11)'
@@ -1936,8 +1954,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_affiliate_report',
-		'field'   => [
+		'name'  => 'customer_affiliate_report',
+		'field' => [
 			[
 				'name'           => 'customer_affiliate_report_id',
 				'type'           => 'int(11)',
@@ -1985,8 +2003,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_approval',
-		'field'   => [
+		'name'  => 'customer_approval',
+		'field' => [
 			[
 				'name'           => 'customer_approval_id',
 				'type'           => 'int(11)',
@@ -2021,8 +2039,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_authorize',
-		'field'   => [
+		'name'  => 'customer_authorize',
+		'field' => [
 			[
 				'name'           => 'customer_authorize_id',
 				'type'           => 'int(11)',
@@ -2073,8 +2091,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_group',
-		'field'   => [
+		'name'  => 'customer_group',
+		'field' => [
 			[
 				'name'           => 'customer_group_id',
 				'type'           => 'int(11)',
@@ -2098,8 +2116,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_group_description',
-		'field'   => [
+		'name'  => 'customer_group_description',
+		'field' => [
 			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)'
@@ -2139,8 +2157,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_history',
-		'field'   => [
+		'name'  => 'customer_history',
+		'field' => [
 			[
 				'name'           => 'customer_history_id',
 				'type'           => 'int(11)',
@@ -2168,8 +2186,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_login',
-		'field'   => [
+		'name'  => 'customer_login',
+		'field' => [
 			[
 				'name'           => 'customer_login_id',
 				'type'           => 'int(11)',
@@ -2199,7 +2217,7 @@ function oc_db_schema() {
 		'primary' => [
 			'customer_login_id'
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'email',
 				'key'  => [
@@ -2219,8 +2237,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_ip',
-		'field'   => [
+		'name'  => 'customer_ip',
+		'field' => [
 			[
 				'name'           => 'customer_ip_id',
 				'type'           => 'int(11)',
@@ -2262,7 +2280,7 @@ function oc_db_schema() {
 				'field' => 'store_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'ip',
 				'key'  => [
@@ -2276,8 +2294,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_online',
-		'field'   => [
+		'name'  => 'customer_online',
+		'field' => [
 			[
 				'name' => 'ip',
 				'type' => 'varchar(40)'
@@ -2308,8 +2326,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_reward',
-		'field'   => [
+		'name'  => 'customer_reward',
+		'field' => [
 			[
 				'name'           => 'customer_reward_id',
 				'type'           => 'int(11)',
@@ -2360,8 +2378,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_transaction',
-		'field'   => [
+		'name'  => 'customer_transaction',
+		'field' => [
 			[
 				'name'           => 'customer_transaction_id',
 				'type'           => 'int(11)',
@@ -2409,8 +2427,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_search',
-		'field'   => [
+		'name'  => 'customer_search',
+		'field' => [
 			[
 				'name'           => 'customer_search_id',
 				'type'           => 'int(11)',
@@ -2488,8 +2506,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'customer_wishlist',
-		'field'   => [
+		'name'  => 'customer_wishlist',
+		'field' => [
 			[
 				'name' => 'customer_id',
 				'type' => 'int(11)'
@@ -2535,8 +2553,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'custom_field',
-		'field'   => [
+		'name'  => 'custom_field',
+		'field' => [
 			[
 				'name'           => 'custom_field_id',
 				'type'           => 'int(11)',
@@ -2576,8 +2594,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'custom_field_customer_group',
-		'field'   => [
+		'name'  => 'custom_field_customer_group',
+		'field' => [
 			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)'
@@ -2613,8 +2631,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'custom_field_description',
-		'field'   => [
+		'name'  => 'custom_field_description',
+		'field' => [
 			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)'
@@ -2650,8 +2668,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'custom_field_value',
-		'field'   => [
+		'name'  => 'custom_field_value',
+		'field' => [
 			[
 				'name'           => 'custom_field_value_id',
 				'type'           => 'int(11)',
@@ -2682,8 +2700,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'custom_field_value_description',
-		'field'   => [
+		'name'  => 'custom_field_value_description',
+		'field' => [
 			[
 				'name' => 'custom_field_value_id',
 				'type' => 'int(11)'
@@ -2723,8 +2741,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'download',
-		'field'   => [
+		'name'  => 'download',
+		'field' => [
 			[
 				'name'           => 'download_id',
 				'type'           => 'int(11)',
@@ -2752,8 +2770,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'download_description',
-		'field'   => [
+		'name'  => 'download_description',
+		'field' => [
 			[
 				'name' => 'download_id',
 				'type' => 'int(11)'
@@ -2784,8 +2802,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'download_report',
-		'field'   => [
+		'name'  => 'download_report',
+		'field' => [
 			[
 				'name'           => 'download_report_id',
 				'type'           => 'int(11)',
@@ -2833,8 +2851,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'event',
-		'field'   => [
+		'name'  => 'event',
+		'field' => [
 			[
 				'name'           => 'event_id',
 				'type'           => 'int(11)',
@@ -2876,8 +2894,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'extension',
-		'field'   => [
+		'name'  => 'extension',
+		'field' => [
 			[
 				'name'           => 'extension_id',
 				'type'           => 'int(11)',
@@ -2905,8 +2923,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'extension_install',
-		'field'   => [
+		'name'  => 'extension_install',
+		'field' => [
 			[
 				'name'           => 'extension_install_id',
 				'type'           => 'int(11)',
@@ -2969,8 +2987,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'extension_path',
-		'field'   => [
+		'name'  => 'extension_path',
+		'field' => [
 			[
 				'name'           => 'extension_path_id',
 				'type'           => 'int(11)',
@@ -2995,7 +3013,7 @@ function oc_db_schema() {
 				'field' => 'extension_install_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'path',
 				'key'  => [
@@ -3009,8 +3027,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'filter',
-		'field'   => [
+		'name'  => 'filter',
+		'field' => [
 			[
 				'name'           => 'filter_id',
 				'type'           => 'int(11)',
@@ -3041,8 +3059,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'filter_description',
-		'field'   => [
+		'name'  => 'filter_description',
+		'field' => [
 			[
 				'name' => 'filter_id',
 				'type' => 'int(11)'
@@ -3073,8 +3091,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'filter_group',
-		'field'   => [
+		'name'  => 'filter_group',
+		'field' => [
 			[
 				'name'           => 'filter_group_id',
 				'type'           => 'int(11)',
@@ -3094,8 +3112,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'filter_group_description',
-		'field'   => [
+		'name'  => 'filter_group_description',
+		'field' => [
 			[
 				'name' => 'filter_group_id',
 				'type' => 'int(11)'
@@ -3131,8 +3149,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'gdpr',
-		'field'   => [
+		'name'  => 'gdpr',
+		'field' => [
 			[
 				'name'           => 'gdpr_id',
 				'type'           => 'int(11)',
@@ -3188,8 +3206,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'geo_zone',
-		'field'   => [
+		'name'  => 'geo_zone',
+		'field' => [
 			[
 				'name'           => 'geo_zone_id',
 				'type'           => 'int(11)',
@@ -3213,8 +3231,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'information',
-		'field'   => [
+		'name'  => 'information',
+		'field' => [
 			[
 				'name'           => 'information_id',
 				'type'           => 'int(11)',
@@ -3240,8 +3258,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'information_description',
-		'field'   => [
+		'name'  => 'information_description',
+		'field' => [
 			[
 				'name' => 'information_id',
 				'type' => 'int(11)'
@@ -3288,8 +3306,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'information_to_layout',
-		'field'   => [
+		'name'  => 'information_to_layout',
+		'field' => [
 			[
 				'name' => 'information_id',
 				'type' => 'int(11)'
@@ -3330,8 +3348,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'information_to_store',
-		'field'   => [
+		'name'  => 'information_to_store',
+		'field' => [
 			[
 				'name' => 'information_id',
 				'type' => 'int(11)'
@@ -3363,8 +3381,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'language',
-		'field'   => [
+		'name'  => 'language',
+		'field' => [
 			[
 				'name'           => 'language_id',
 				'type'           => 'int(11)',
@@ -3399,7 +3417,7 @@ function oc_db_schema() {
 		'primary' => [
 			'language_id'
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'name',
 				'key'  => [
@@ -3413,8 +3431,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'layout',
-		'field'   => [
+		'name'  => 'layout',
+		'field' => [
 			[
 				'name'           => 'layout_id',
 				'type'           => 'int(11)',
@@ -3434,8 +3452,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'layout_module',
-		'field'   => [
+		'name'  => 'layout_module',
+		'field' => [
 			[
 				'name'           => 'layout_module_id',
 				'type'           => 'int(11)',
@@ -3474,8 +3492,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'layout_route',
-		'field'   => [
+		'name'  => 'layout_route',
+		'field' => [
 			[
 				'name'           => 'layout_route_id',
 				'type'           => 'int(11)',
@@ -3515,8 +3533,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'length_class',
-		'field'   => [
+		'name'  => 'length_class',
+		'field' => [
 			[
 				'name'           => 'length_class_id',
 				'type'           => 'int(11)',
@@ -3536,8 +3554,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'length_class_description',
-		'field'   => [
+		'name'  => 'length_class_description',
+		'field' => [
 			[
 				'name' => 'length_class_id',
 				'type' => 'int(11)'
@@ -3577,8 +3595,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'location',
-		'field'   => [
+		'name'  => 'location',
+		'field' => [
 			[
 				'name'           => 'location_id',
 				'type'           => 'int(11)',
@@ -3616,7 +3634,7 @@ function oc_db_schema() {
 		'primary' => [
 			'location_id'
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'name',
 				'key'  => [
@@ -3630,8 +3648,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'manufacturer',
-		'field'   => [
+		'name'  => 'manufacturer',
+		'field' => [
 			[
 				'name'           => 'manufacturer_id',
 				'type'           => 'int(11)',
@@ -3659,8 +3677,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'manufacturer_to_layout',
-		'field'   => [
+		'name'  => 'manufacturer_to_layout',
+		'field' => [
 			[
 				'name' => 'manufacturer_id',
 				'type' => 'int(11)'
@@ -3701,8 +3719,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'manufacturer_to_store',
-		'field'   => [
+		'name'  => 'manufacturer_to_store',
+		'field' => [
 			[
 				'name' => 'manufacturer_id',
 				'type' => 'int(11)'
@@ -3734,8 +3752,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'marketing',
-		'field'   => [
+		'name'  => 'marketing',
+		'field' => [
 			[
 				'name'           => 'marketing_id',
 				'type'           => 'int(11)',
@@ -3772,8 +3790,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'marketing_report',
-		'field'   => [
+		'name'  => 'marketing_report',
+		'field' => [
 			[
 				'name'           => 'marketing_report_id',
 				'type'           => 'int(11)',
@@ -3821,8 +3839,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'modification',
-		'field'   => [
+		'name'  => 'modification',
+		'field' => [
 			[
 				'name'           => 'modification_id',
 				'type'           => 'int(11)',
@@ -3879,8 +3897,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'module',
-		'field'   => [
+		'name'  => 'module',
+		'field' => [
 			[
 				'name'           => 'module_id',
 				'type'           => 'int(11)',
@@ -3908,8 +3926,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'notification',
-		'field'   => [
+		'name'  => 'notification',
+		'field' => [
 			[
 				'name'           => 'notification_id',
 				'type'           => 'int(11)',
@@ -3941,8 +3959,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'option',
-		'field'   => [
+		'name'  => 'option',
+		'field' => [
 			[
 				'name'           => 'option_id',
 				'type'           => 'int(11)',
@@ -3966,8 +3984,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'option_description',
-		'field'   => [
+		'name'  => 'option_description',
+		'field' => [
 			[
 				'name' => 'option_id',
 				'type' => 'int(11)'
@@ -3998,8 +4016,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'option_value',
-		'field'   => [
+		'name'  => 'option_value',
+		'field' => [
 			[
 				'name'           => 'option_value_id',
 				'type'           => 'int(11)',
@@ -4034,8 +4052,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'option_value_description',
-		'field'   => [
+		'name'  => 'option_value_description',
+		'field' => [
 			[
 				'name' => 'option_value_id',
 				'type' => 'int(11)'
@@ -4075,8 +4093,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order',
-		'field'   => [
+		'name'  => 'order',
+		'field' => [
 			[
 				'name'           => 'order_id',
 				'type'           => 'int(11)',
@@ -4403,7 +4421,7 @@ function oc_db_schema() {
 				'field' => 'currency_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'email',
 				'key'  => [
@@ -4417,8 +4435,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_history',
-		'field'   => [
+		'name'  => 'order_history',
+		'field' => [
 			[
 				'name'           => 'order_history_id',
 				'type'           => 'int(11)',
@@ -4467,8 +4485,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_option',
-		'field'   => [
+		'name'  => 'order_option',
+		'field' => [
 			[
 				'name'           => 'order_option_id',
 				'type'           => 'int(11)',
@@ -4535,8 +4553,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_product',
-		'field'   => [
+		'name'  => 'order_product',
+		'field' => [
 			[
 				'name'           => 'order_product_id',
 				'type'           => 'int(11)',
@@ -4606,7 +4624,7 @@ function oc_db_schema() {
 				'field' => 'product_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'order_id',
 				'key'  => [
@@ -4620,8 +4638,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_subscription',
-		'field'   => [
+		'name'  => 'order_subscription',
+		'field' => [
 			[
 				'name'           => 'order_subscription_id',
 				'type'           => 'int(11)',
@@ -4717,7 +4735,7 @@ function oc_db_schema() {
 				'field' => 'subscription_status_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'order_id',
 				'key'  => [
@@ -4731,8 +4749,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_status',
-		'field'   => [
+		'name'  => 'order_status',
+		'field' => [
 			[
 				'name'           => 'order_status_id',
 				'type'           => 'int(11)',
@@ -4764,8 +4782,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_total',
-		'field'   => [
+		'name'  => 'order_total',
+		'field' => [
 			[
 				'name'           => 'order_total_id',
 				'type'           => 'int(10)',
@@ -4807,7 +4825,7 @@ function oc_db_schema() {
 				'field' => 'order_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'order_id',
 				'key'  => [
@@ -4821,8 +4839,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'order_voucher',
-		'field'   => [
+		'name'  => 'order_voucher',
+		'field' => [
 			[
 				'name'           => 'order_voucher_id',
 				'type'           => 'int(11)',
@@ -4894,8 +4912,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product',
-		'field'   => [
+		'name'  => 'product',
+		'field' => [
 			[
 				'name'           => 'product_id',
 				'type'           => 'int(11)',
@@ -5093,8 +5111,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_attribute',
-		'field'   => [
+		'name'  => 'product_attribute',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5140,8 +5158,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_description',
-		'field'   => [
+		'name'  => 'product_description',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5191,7 +5209,7 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'name',
 				'key'  => [
@@ -5205,8 +5223,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_discount',
-		'field'   => [
+		'name'  => 'product_discount',
+		'field' => [
 			[
 				'name'           => 'product_discount_id',
 				'type'           => 'int(11)',
@@ -5259,7 +5277,7 @@ function oc_db_schema() {
 				'field' => 'customer_group_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'product_id',
 				'key'  => [
@@ -5273,8 +5291,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_filter',
-		'field'   => [
+		'name'  => 'product_filter',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5306,8 +5324,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_image',
-		'field'   => [
+		'name'  => 'product_image',
+		'field' => [
 			[
 				'name'           => 'product_image_id',
 				'type'           => 'int(11)',
@@ -5337,7 +5355,7 @@ function oc_db_schema() {
 				'field' => 'product_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'product_id',
 				'key'  => [
@@ -5351,8 +5369,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_option',
-		'field'   => [
+		'name'  => 'product_option',
+		'field' => [
 			[
 				'name'           => 'product_option_id',
 				'type'           => 'int(11)',
@@ -5396,8 +5414,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_option_value',
-		'field'   => [
+		'name'  => 'product_option_value',
+		'field' => [
 			[
 				'name'           => 'product_option_value_id',
 				'type'           => 'int(11)',
@@ -5483,8 +5501,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_subscription',
-		'field'   => [
+		'name'  => 'product_subscription',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5534,8 +5552,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_related',
-		'field'   => [
+		'name'  => 'product_related',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5567,8 +5585,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_report',
-		'field'   => [
+		'name'  => 'product_report',
+		'field' => [
 			[
 				'name'           => 'product_report_id',
 				'type'           => 'int(11)',
@@ -5617,8 +5635,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_reward',
-		'field'   => [
+		'name'  => 'product_reward',
+		'field' => [
 			[
 				'name'           => 'product_reward_id',
 				'type'           => 'int(11)',
@@ -5661,8 +5679,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_special',
-		'field'   => [
+		'name'  => 'product_special',
+		'field' => [
 			[
 				'name'           => 'product_special_id',
 				'type'           => 'int(11)',
@@ -5710,7 +5728,7 @@ function oc_db_schema() {
 				'field' => 'customer_group_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'product_id',
 				'key'  => [
@@ -5724,8 +5742,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_to_category',
-		'field'   => [
+		'name'  => 'product_to_category',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5751,7 +5769,7 @@ function oc_db_schema() {
 				'field' => 'category_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'category_id',
 				'key'  => [
@@ -5765,8 +5783,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_to_download',
-		'field'   => [
+		'name'  => 'product_to_download',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5798,8 +5816,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_to_layout',
-		'field'   => [
+		'name'  => 'product_to_layout',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5840,8 +5858,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_to_store',
-		'field'   => [
+		'name'  => 'product_to_store',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5874,8 +5892,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'product_viewed',
-		'field'   => [
+		'name'  => 'product_viewed',
+		'field' => [
 			[
 				'name' => 'product_id',
 				'type' => 'int(11)'
@@ -5901,8 +5919,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'return',
-		'field'   => [
+		'name'  => 'return',
+		'field' => [
 			[
 				'name'           => 'return_id',
 				'type'           => 'int(11)',
@@ -6022,8 +6040,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'return_action',
-		'field'   => [
+		'name'  => 'return_action',
+		'field' => [
 			[
 				'name'           => 'return_action_id',
 				'type'           => 'int(11)',
@@ -6056,8 +6074,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'return_history',
-		'field'   => [
+		'name'  => 'return_history',
+		'field' => [
 			[
 				'name'           => 'return_history_id',
 				'type'           => 'int(11)',
@@ -6105,8 +6123,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'return_reason',
-		'field'   => [
+		'name'  => 'return_reason',
+		'field' => [
 			[
 				'name'           => 'return_reason_id',
 				'type'           => 'int(11)',
@@ -6139,8 +6157,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'return_status',
-		'field'   => [
+		'name'  => 'return_status',
+		'field' => [
 			[
 				'name'           => 'return_status_id',
 				'type'           => 'int(11)',
@@ -6173,8 +6191,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'review',
-		'field'   => [
+		'name'  => 'review',
+		'field' => [
 			[
 				'name'           => 'review_id',
 				'type'           => 'int(11)',
@@ -6231,7 +6249,7 @@ function oc_db_schema() {
 				'field' => 'customer_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'product_id',
 				'key'  => [
@@ -6245,8 +6263,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'startup',
-		'field'   => [
+		'name'  => 'startup',
+		'field' => [
 			[
 				'name'           => 'startup_id',
 				'type'           => 'int(11)',
@@ -6282,8 +6300,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'statistics',
-		'field'   => [
+		'name'  => 'statistics',
+		'field' => [
 			[
 				'name'           => 'statistics_id',
 				'type'           => 'int(11)',
@@ -6307,8 +6325,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'session',
-		'field'   => [
+		'name'  => 'session',
+		'field' => [
 			[
 				'name' => 'session_id',
 				'type' => 'varchar(32)'
@@ -6325,7 +6343,7 @@ function oc_db_schema() {
 		'primary' => [
 			'session_id'
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'expire',
 				'key'  => [
@@ -6339,8 +6357,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'setting',
-		'field'   => [
+		'name'  => 'setting',
+		'field' => [
 			[
 				'name'           => 'setting_id',
 				'type'           => 'int(11)',
@@ -6385,8 +6403,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'stock_status',
-		'field'   => [
+		'name'  => 'stock_status',
+		'field' => [
 			[
 				'name'           => 'stock_status_id',
 				'type'           => 'int(11)',
@@ -6418,8 +6436,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'store',
-		'field'   => [
+		'name'  => 'store',
+		'field' => [
 			[
 				'name'           => 'store_id',
 				'type'           => 'int(11)',
@@ -6443,8 +6461,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'subscription',
-		'field'   => [
+		'name'  => 'subscription',
+		'field' => [
 			[
 				'name'           => 'subscription_id',
 				'type'           => 'int(11)',
@@ -6629,7 +6647,7 @@ function oc_db_schema() {
 				'field' => 'subscription_status_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'order_id',
 				'key'  => [
@@ -6643,8 +6661,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'subscription_history',
-		'field'   => [
+		'name'  => 'subscription_history',
+		'field' => [
 			[
 				'name'           => 'subscription_history_id',
 				'type'           => 'int(11)',
@@ -6693,8 +6711,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'subscription_plan',
-		'field'   => [
+		'name'  => 'subscription_plan',
+		'field' => [
 			[
 				'name'           => 'subscription_plan_id',
 				'type'           => 'int(11)',
@@ -6746,8 +6764,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'subscription_plan_description',
-		'field'   => [
+		'name'  => 'subscription_plan_description',
+		'field' => [
 			[
 				'name' => 'subscription_plan_id',
 				'type' => 'int(11)'
@@ -6778,8 +6796,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'subscription_status',
-		'field'   => [
+		'name'  => 'subscription_status',
+		'field' => [
 			[
 				'name'           => 'subscription_status_id',
 				'type'           => 'int(11)',
@@ -6811,8 +6829,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'tax_class',
-		'field'   => [
+		'name'  => 'tax_class',
+		'field' => [
 			[
 				'name'           => 'tax_class_id',
 				'type'           => 'int(11)',
@@ -6836,8 +6854,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'tax_rate',
-		'field'   => [
+		'name'  => 'tax_rate',
+		'field' => [
 			[
 				'name'           => 'tax_rate_id',
 				'type'           => 'int(11)',
@@ -6878,8 +6896,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'tax_rate_to_customer_group',
-		'field'   => [
+		'name'  => 'tax_rate_to_customer_group',
+		'field' => [
 			[
 				'name' => 'tax_rate_id',
 				'type' => 'int(11)'
@@ -6911,8 +6929,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'tax_rule',
-		'field'   => [
+		'name'  => 'tax_rule',
+		'field' => [
 			[
 				'name'           => 'tax_rule_id',
 				'type'           => 'int(11)',
@@ -6957,8 +6975,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'theme',
-		'field'   => [
+		'name'  => 'theme',
+		'field' => [
 			[
 				'name'           => 'theme_id',
 				'type'           => 'int(11)',
@@ -7001,8 +7019,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'translation',
-		'field'   => [
+		'name'  => 'translation',
+		'field' => [
 			[
 				'name'           => 'translation_id',
 				'type'           => 'int(11)',
@@ -7054,8 +7072,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'upload',
-		'field'   => [
+		'name'  => 'upload',
+		'field' => [
 			[
 				'name'           => 'upload_id',
 				'type'           => 'int(11)',
@@ -7087,8 +7105,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'seo_url',
-		'field'   => [
+		'name'  => 'seo_url',
+		'field' => [
 			[
 				'name'           => 'seo_url_id',
 				'type'           => 'int(11)',
@@ -7134,7 +7152,7 @@ function oc_db_schema() {
 				'field' => 'language_id'
 			]
 		],
-		'index'   => [
+		'index' => [
 			[
 				'name' => 'store',
 				'key'  => [
@@ -7167,8 +7185,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'user',
-		'field'   => [
+		'name'  => 'user',
+		'field' => [
 			[
 				'name'           => 'user_id',
 				'type'           => 'int(11)',
@@ -7238,8 +7256,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'user_authorize',
-		'field'   => [
+		'name'  => 'user_authorize',
+		'field' => [
 			[
 				'name'           => 'user_authorize_id',
 				'type'           => 'int(11)',
@@ -7290,8 +7308,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'user_group',
-		'field'   => [
+		'name'  => 'user_group',
+		'field' => [
 			[
 				'name'           => 'user_group_id',
 				'type'           => 'int(11)',
@@ -7315,8 +7333,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'user_login',
-		'field'   => [
+		'name'  => 'user_login',
+		'field' => [
 			[
 				'name'           => 'user_login_id',
 				'type'           => 'int(11)',
@@ -7355,8 +7373,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'voucher',
-		'field'   => [
+		'name'  => 'voucher',
+		'field' => [
 			[
 				'name'           => 'voucher_id',
 				'type'           => 'int(11)',
@@ -7423,8 +7441,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'voucher_history',
-		'field'   => [
+		'name'  => 'voucher_history',
+		'field' => [
 			[
 				'name'           => 'voucher_history_id',
 				'type'           => 'int(11)',
@@ -7468,8 +7486,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'voucher_theme',
-		'field'   => [
+		'name'  => 'voucher_theme',
+		'field' => [
 			[
 				'name'           => 'voucher_theme_id',
 				'type'           => 'int(11)',
@@ -7489,8 +7507,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'voucher_theme_description',
-		'field'   => [
+		'name'  => 'voucher_theme_description',
+		'field' => [
 			[
 				'name' => 'voucher_theme_id',
 				'type' => 'int(11)'
@@ -7521,8 +7539,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'weight_class',
-		'field'   => [
+		'name'  => 'weight_class',
+		'field' => [
 			[
 				'name'           => 'weight_class_id',
 				'type'           => 'int(11)',
@@ -7543,8 +7561,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'weight_class_description',
-		'field'   => [
+		'name'  => 'weight_class_description',
+		'field' => [
 			[
 				'name' => 'weight_class_id',
 				'type' => 'int(11)'
@@ -7579,8 +7597,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'zone',
-		'field'   => [
+		'name'  => 'zone',
+		'field' => [
 			[
 				'name'           => 'zone_id',
 				'type'           => 'int(11)',
@@ -7620,8 +7638,8 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'    => 'zone_to_geo_zone',
-		'field'   => [
+		'name'  => 'zone_to_geo_zone',
+		'field' => [
 			[
 				'name'           => 'zone_to_geo_zone_id',
 				'type'           => 'int(11)',

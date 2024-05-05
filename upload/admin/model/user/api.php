@@ -40,7 +40,7 @@ class Api extends \Opencart\System\Engine\Model {
 	public function editApi(int $api_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `api_id` = '" . (int)$api_id . "'");
 
-		$this->deleteIp($api_id);
+		$this->deleteIps($api_id);
 
 		if (isset($data['api_ip'])) {
 			foreach ($data['api_ip'] as $ip) {
@@ -60,6 +60,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteApi(int $api_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api` WHERE `api_id` = '" . (int)$api_id . "'");
+
+		$this->deleteIps($api_id);
 	}
 
 	/**

@@ -1182,6 +1182,58 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
+
+		/*
+		// Delete any old session
+		if (isset($this->session->data['api_session'])) {
+			$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
+			$session->start($this->session->data['api_session']);
+			$session->destroy();
+		}
+
+		// 3. To use the order API it requires an API ID.
+		$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
+		*/
+
+		if (isset($this->session->data['api_session'])) {
+			$session_id = (string)$this->session->data['api_session'];
+		} else {
+			$session_id = '';
+		}
+
+		$this->load->model('setting/store');
+
+		// 1. Create a store instance using loader class to call controllers, models, views, libraries
+		$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
+
+		// Set the store ID
+		$store->config->set('config_store_id', $store_id);
+
+		// 2. Store the new session ID so we are not creating new session on every page load
+		if (!$session_id) {
+			$this->session->data['api_session'] = $store->session->getId();
+		}
+
+		// 2. Remove the unneeded keys
+		$request_data = $this->request->get;
+
+		unset($request_data['call']);
+		unset($request_data['user_token']);
+
+		$store->request->get = $request_data;
+
+		// 3. Add the request GET vars
+		$store->request->get['route'] = 'api/order.load';
+		$store->request->get['language'] = $language;
+
+		// 4. Add the request POST var
+		$store->request->post = $this->request->post;
+
+		// Call the required API controller
+		$store->load->controller($store->request->get['route']);
+
+		$output = $store->response->getOutput();
+
 		// Histories
 		$data['history'] = $this->getHistory();
 
@@ -1221,7 +1273,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * $signature = base64_encode(hash_hmac('sha1', $string, $key, true));
 	 *
-	 * Use this for remote calls
+	 * // Use this for remote calls
 	 *
 	 * $url  = '&username=' . urlencode($username);
 	 * $url .= '&store_id=' . $store_id;
@@ -1302,8 +1354,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			// 3. To use the order API it requires an API ID.
 			$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
 			*/
-			$time = time();
-
 
 			if (isset($this->session->data['api_session'])) {
 				$session_id = (string)$this->session->data['api_session'];

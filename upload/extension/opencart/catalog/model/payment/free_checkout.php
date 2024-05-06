@@ -9,7 +9,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *
-	 * @param array<mixed> $address
+	 * @param array<string, mixed> $address
 	 *
 	 * @return array<string, mixed>
 	 */

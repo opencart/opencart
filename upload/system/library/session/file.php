@@ -6,6 +6,9 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class File {
+	/**
+	 * @var object
+	 */
 	private object $config;
 
 	/**

@@ -1182,7 +1182,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
-
 		/*
 		// Delete any old session
 		if (isset($this->session->data['api_session'])) {
@@ -1204,10 +1203,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		// 1. Create a store instance using loader class to call controllers, models, views, libraries
-		$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
+		$store = $this->model_setting_store->createStoreInstance($data['store_id'], $data['language_code'], $session_id);
 
 		// Set the store ID
-		$store->config->set('config_store_id', $store_id);
+		$store->config->set('config_store_id', $data['store_id']);
 
 		// 2. Store the new session ID so we are not creating new session on every page load
 		if (!$session_id) {
@@ -1224,7 +1223,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// 3. Add the request GET vars
 		$store->request->get['route'] = 'api/order.load';
-		$store->request->get['language'] = $language;
+		$store->request->get['language'] = $data['language_code'];
 
 		// 4. Add the request POST var
 		$store->request->post = $this->request->post;
@@ -1259,13 +1258,16 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * $username = 'API username';
 	 * $key      = 'API Key';
 	 * $domain   = 'www.yourdomain.com';
+	 * $path     = '/';
 	 * $store_id = 0;
 	 * $language = 'en-gb';
 	 * $time     = time();
 	 *
+	 * // Build hash string
 	 * $string  = $route . "\n";
 	 * $string .= $username . "\n";
 	 * $string .= $domain . "\n";
+	 * $string .= $path . "\n";
 	 * $string .= $store_id . "\n";
 	 * $string .= $language . "\n";
 	 * $string .= json_encode($_POST) . "\n";
@@ -1273,8 +1275,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * $signature = base64_encode(hash_hmac('sha1', $string, $key, true));
 	 *
-	 * // Use this for remote calls
-	 *
+	 * // Make remote call
 	 * $url  = '&username=' . urlencode($username);
 	 * $url .= '&store_id=' . $store_id;
 	 * $url .= '&language=' . $language;
@@ -1283,7 +1284,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * $curl = curl_init();
 	 *
-	 * curl_setopt($curl, CURLOPT_URL, 'https://' . $domain . '/index.php?route=' . $route . $url);
+	 * curl_setopt($curl, CURLOPT_URL, 'https://' . $domain . $path . 'index.php?route=' . $route . $url);
 	 * curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	 * curl_setopt($curl, CURLOPT_HEADER, false);
 	 * curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

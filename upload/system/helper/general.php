@@ -1,5 +1,22 @@
 <?php
-// String
+/*
+ * @return string
+ */
+function oc_get_ip(): string {
+	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		return $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		return $_SERVER['HTTP_CLIENT_IP'];
+	} else {
+		return $_SERVER['REMOTE_ADDR'];
+	}
+}
+
+/**
+ * @param string $string
+ *
+ * @return string
+ */
 function oc_strlen(string $string): int {
 	return mb_strlen($string);
 }

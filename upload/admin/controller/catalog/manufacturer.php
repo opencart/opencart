@@ -419,7 +419,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 5
+				'limit'       => $this->config->get('config_autocomplete_limit')
 			];
 
 			$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);

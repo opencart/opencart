@@ -1312,7 +1312,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = 5;
+			$limit = $this->config->get('config_autocomplete_limit');
 		}
 
 		$filter_data = [

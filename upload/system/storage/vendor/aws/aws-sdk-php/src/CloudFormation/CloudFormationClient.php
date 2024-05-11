@@ -118,6 +118,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listStackInstancesAsync(array $args = [])
  * @method \Aws\Result listStackResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStackResourcesAsync(array $args = [])
+ * @method \Aws\Result listStackSetAutoDeploymentTargets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listStackSetAutoDeploymentTargetsAsync(array $args = [])
  * @method \Aws\Result listStackSetOperationResults(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStackSetOperationResultsAsync(array $args = [])
  * @method \Aws\Result listStackSetOperations(array $args = [])

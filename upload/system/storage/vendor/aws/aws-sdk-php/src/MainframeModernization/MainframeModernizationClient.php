@@ -45,6 +45,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listBatchJobDefinitionsAsync(array $args = [])
  * @method \Aws\Result listBatchJobExecutions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBatchJobExecutionsAsync(array $args = [])
+ * @method \Aws\Result listBatchJobRestartPoints(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBatchJobRestartPointsAsync(array $args = [])
  * @method \Aws\Result listDataSetImportHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDataSetImportHistoryAsync(array $args = [])
  * @method \Aws\Result listDataSets(array $args = [])

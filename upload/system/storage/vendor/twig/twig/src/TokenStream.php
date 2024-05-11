@@ -25,7 +25,7 @@ final class TokenStream
     private $current = 0;
     private $source;
 
-    public function __construct(array $tokens, Source $source = null)
+    public function __construct(array $tokens, ?Source $source = null)
     {
         $this->tokens = $tokens;
         $this->source = $source ?: new Source('', '');
@@ -60,15 +60,13 @@ final class TokenStream
      */
     public function nextIf($primary, $secondary = null)
     {
-        if ($this->tokens[$this->current]->test($primary, $secondary)) {
-            return $this->next();
-        }
+        return $this->tokens[$this->current]->test($primary, $secondary) ? $this->next() : null;
     }
 
     /**
      * Tests a token and returns it or throws a syntax error.
      */
-    public function expect($type, $value = null, string $message = null): Token
+    public function expect($type, $value = null, ?string $message = null): Token
     {
         $token = $this->tokens[$this->current];
         if (!$token->test($type, $value)) {

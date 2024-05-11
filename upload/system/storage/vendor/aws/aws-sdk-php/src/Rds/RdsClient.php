@@ -282,6 +282,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyDBSnapshotAttributeAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result modifyGlobalCluster(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise modifyGlobalClusterAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result modifyIntegration(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise modifyIntegrationAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result modifyTenantDatabase(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise modifyTenantDatabaseAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result promoteReadReplicaDBCluster(array $args = []) (supported in versions 2014-10-31)

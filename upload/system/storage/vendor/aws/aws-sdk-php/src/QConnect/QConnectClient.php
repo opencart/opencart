@@ -89,5 +89,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateKnowledgeBaseTemplateUriAsync(array $args = [])
  * @method \Aws\Result updateQuickResponse(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateQuickResponseAsync(array $args = [])
+ * @method \Aws\Result updateSession(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSessionAsync(array $args = [])
  */
 class QConnectClient extends AwsClient {}

@@ -96,6 +96,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeInstancePatchStatesForPatchGroupAsync(array $args = [])
  * @method \Aws\Result describeInstancePatches(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeInstancePatchesAsync(array $args = [])
+ * @method \Aws\Result describeInstanceProperties(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeInstancePropertiesAsync(array $args = [])
  * @method \Aws\Result describeInventoryDeletions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeInventoryDeletionsAsync(array $args = [])
  * @method \Aws\Result describeMaintenanceWindowExecutionTaskInvocations(array $args = [])

@@ -33,7 +33,7 @@ class Url {
 	}
 
 	/**
-	 * addRewrite
+	 * Add Rewrite
 	 *
 	 * Add a rewrite method to the URL system
 	 *

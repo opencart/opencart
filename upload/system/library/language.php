@@ -44,7 +44,7 @@ class Language {
 	}
 
 	/**
-	 * addPath
+	 * Add Path
 	 *
 	 * @param string $namespace
 	 * @param string $directory

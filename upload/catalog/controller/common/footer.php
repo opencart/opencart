@@ -66,14 +66,6 @@ class Footer extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_customer_online')) {
 			$this->load->model('tool/online');
 
-			if (isset($this->request->server['HTTP_X_REAL_IP'])) {
-				$ip = $this->request->server['HTTP_X_REAL_IP'];
-			} elseif (isset($this->request->server['REMOTE_ADDR'])) {
-				$ip = $this->request->server['REMOTE_ADDR'];
-			} else {
-				$ip = '';
-			}
-
 			if (isset($this->request->server['HTTP_HOST']) && isset($this->request->server['REQUEST_URI'])) {
 				$url = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];
 			} else {
@@ -86,7 +78,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 				$referer = '';
 			}
 
-			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
+			$this->model_tool_online->addOnline(oc_get_ip(), $this->customer->getId(), $url, $referer);
 		}
 
 		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';

@@ -38,7 +38,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$data['username'] = $this->user->getUsername();
 			$data['code'] = $code;
-			$data['ip'] = $this->request->server['REMOTE_ADDR'];
+			$data['ip'] = oc_get_ip();
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			if ($this->config->get('config_mail_engine')) {
@@ -99,7 +99,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$data['username'] = $this->user->getUsername();
 			$data['reset'] = $this->url->link('common/authorize.reset', 'email=' . $email . '&code=' . $code, true);
-			$data['ip'] = $this->request->server['REMOTE_ADDR'];
+			$data['ip'] = oc_get_ip();
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			if ($this->config->get('config_mail_engine')) {

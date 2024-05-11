@@ -27,7 +27,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$marketing_info = $this->model_marketing_marketing->getMarketingByCode($tracking);
 
 			if ($marketing_info) {
-				$this->model_marketing_marketing->addReport($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
+				$this->model_marketing_marketing->addReport($marketing_info['marketing_id'], oc_get_ip());
 			}
 
 			if ($this->config->get('config_affiliate_status')) {
@@ -36,7 +36,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($tracking);
 
 				if ($affiliate_info && $affiliate_info['status']) {
-					$this->model_account_affiliate->addReport($affiliate_info['customer_id'], $this->request->server['REMOTE_ADDR']);
+					$this->model_account_affiliate->addReport($affiliate_info['customer_id'], oc_get_ip());
 				}
 
 				if ($marketing_info || ($affiliate_info && $affiliate_info['status'])) {

@@ -148,7 +148,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 					readfile($file);
 
-					$this->model_account_download->addReport($download_id, $this->request->server['REMOTE_ADDR']);
+					$this->model_account_download->addReport($download_id, oc_get_ip());
 
 					exit();
 				} else {

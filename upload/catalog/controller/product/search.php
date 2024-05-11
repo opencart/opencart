@@ -423,12 +423,6 @@ class Search extends \Opencart\System\Engine\Controller {
 					$customer_id = 0;
 				}
 
-				if (isset($this->request->server['REMOTE_ADDR'])) {
-					$ip = $this->request->server['REMOTE_ADDR'];
-				} else {
-					$ip = '';
-				}
-
 				$search_data = [
 					'keyword'      => $filter_tag ? $filter_tag : $filter_search,
 					'description'  => $filter_description,
@@ -436,7 +430,7 @@ class Search extends \Opencart\System\Engine\Controller {
 					'sub_category' => $filter_sub_category,
 					'products'     => $product_total,
 					'customer_id'  => $customer_id,
-					'ip'           => $ip
+					'ip'           => oc_get_ip()
 				];
 
 				$this->model_account_search->addSearch($search_data);

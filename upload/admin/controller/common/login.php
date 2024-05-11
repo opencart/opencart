@@ -118,7 +118,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['login_token']);
 
 			$login_data = [
-				'ip'         => $this->request->server['REMOTE_ADDR'],
+				'ip'         => oc_get_ip(),
 				'user_agent' => $this->request->server['HTTP_USER_AGENT']
 			];
 

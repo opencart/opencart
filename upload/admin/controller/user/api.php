@@ -182,7 +182,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
+		$data['text_ip'] = sprintf($this->language->get('text_ip'), oc_get_ip());
 
 		if (isset($this->request->get['api_id'])) {
 			$data['api_id'] = $this->request->get['api_id'];

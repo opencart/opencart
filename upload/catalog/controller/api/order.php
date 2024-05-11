@@ -626,7 +626,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['currency_code'] = $this->session->data['currency'];
 			$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
 
-			$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
+			$order_data['ip'] = oc_get_ip();
 
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
 				$order_data['forwarded_ip'] = $this->request->server['HTTP_X_FORWARDED_FOR'];
@@ -1165,7 +1165,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['currency_code'] = $this->session->data['currency'];
 			$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
 
-			$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
+			$order_data['ip'] = oc_get_ip();
 
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
 				$order_data['forwarded_ip'] = $this->request->server['HTTP_X_FORWARDED_FOR'];

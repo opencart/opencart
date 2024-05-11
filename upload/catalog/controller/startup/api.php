@@ -49,7 +49,7 @@ class Api extends \Opencart\System\Engine\Controller {
 						$ip_data[] = trim($result['ip']);
 					}
 
-					if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
+					if (!in_array(oc_get_ip(), $ip_data)) {
 						$status = false;
 					}
 				} else {

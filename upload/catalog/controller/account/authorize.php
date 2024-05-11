@@ -47,7 +47,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$authorize_data = [
 				'token'      => $token,
-				'ip'         => $this->request->server['REMOTE_ADDR'],
+				'ip'         => oc_get_ip(),
 				'user_agent' => $this->request->server['HTTP_USER_AGENT']
 			];
 

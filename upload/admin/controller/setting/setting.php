@@ -172,6 +172,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_pagination'] = $this->config->get('config_pagination');
 		$data['config_product_count'] = $this->config->get('config_product_count');
 		$data['config_pagination_admin'] = $this->config->get('config_pagination_admin');
+		$data['config_autocomplete_limit'] = $this->config->get('config_autocomplete_limit');
 		$data['config_product_report_status'] = $this->config->get('config_product_report_status');
 
 		// Review
@@ -501,6 +502,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_pagination_admin']) {
 			$json['error']['pagination_admin'] = $this->language->get('error_pagination');
+		}
+
+		if (!$this->request->post['config_autocomplete_limit']) {
+			$json['error']['autocomplete_limit'] = $this->language->get('error_autocomplete_limit');
 		}
 
 		if (!$this->request->post['config_article_description_length']) {

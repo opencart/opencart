@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Statistics extends \Opencart\System\Engine\Controller {
 	/**
-	 * addReview
+	 * Add Review
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -24,7 +24,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * deleteReview
+	 * Delete Review
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -41,7 +41,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * addReturn
+	 * Add Return
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -58,7 +58,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * deleteReturn
+	 * Delete Return
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

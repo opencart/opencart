@@ -518,7 +518,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				'sort'        => 'name',
 				'order'       => 'ASC',
 				'start'       => 0,
-				'limit'       => 5
+				'limit'       => $this->config->get('config_autocomplete_limit')
 			];
 
 			$results = $this->model_catalog_category->getCategories($filter_data);

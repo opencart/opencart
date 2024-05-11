@@ -878,7 +878,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_price'])) {
-			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . "'";
+			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . '%' . "'";
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
@@ -961,7 +961,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_price']) && $data['filter_price'] !== '') {
-			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . "'";
+			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . '%' . "'";
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {

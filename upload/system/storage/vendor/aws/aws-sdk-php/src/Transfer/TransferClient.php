@@ -93,6 +93,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listWorkflowsAsync(array $args = [])
  * @method \Aws\Result sendWorkflowStepState(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendWorkflowStepStateAsync(array $args = [])
+ * @method \Aws\Result startDirectoryListing(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startDirectoryListingAsync(array $args = [])
  * @method \Aws\Result startFileTransfer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startFileTransferAsync(array $args = [])
  * @method \Aws\Result startServer(array $args = [])

@@ -38,7 +38,7 @@ class Mail {
 	}
 
 	/**
-	 * setTo
+	 * Set To
 	 *
 	 * @param array<string>|string $to
 	 *
@@ -49,7 +49,7 @@ class Mail {
 	}
 
 	/**
-	 * setFrom
+	 * Set From
 	 *
 	 * @param string $from
 	 *
@@ -60,7 +60,7 @@ class Mail {
 	}
 
 	/**
-	 * setSender
+	 * Set Sender
 	 *
 	 * @param string $sender
 	 *
@@ -71,7 +71,7 @@ class Mail {
 	}
 
 	/**
-	 * setReplyTo
+	 * Set Reply To
 	 *
 	 * @param string $reply_to
 	 *
@@ -82,7 +82,7 @@ class Mail {
 	}
 
 	/**
-	 * setSubject
+	 * Set Subject
 	 *
 	 * @param string $subject
 	 *
@@ -93,7 +93,7 @@ class Mail {
 	}
 
 	/**
-	 * setText
+	 * Set Text
 	 *
 	 * @param string $text
 	 *
@@ -104,7 +104,7 @@ class Mail {
 	}
 
 	/**
-	 * setHtml
+	 * Set Html
 	 *
 	 * @param string $html
 	 *
@@ -115,7 +115,7 @@ class Mail {
 	}
 
 	/**
-	 * addAttachment
+	 * Add Attachment
 	 *
 	 * @param string $filename
 	 *

@@ -27,7 +27,7 @@ class Config {
 	private array $data = [];
 
 	/**
-	 * addPath
+	 * Add Path
 	 *
 	 * @param string $namespace
 	 * @param string $directory

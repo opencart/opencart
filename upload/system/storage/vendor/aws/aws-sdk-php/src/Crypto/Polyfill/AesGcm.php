@@ -14,8 +14,6 @@ use RangeException;
  * 2. Only 128-bit authentication tags are supported. (i.e. non-truncated)
  *
  * Supports AES key sizes of 128-bit, 192-bit, and 256-bit.
- *
- * @package Aws\Crypto\Polyfill
  */
 class AesGcm
 {

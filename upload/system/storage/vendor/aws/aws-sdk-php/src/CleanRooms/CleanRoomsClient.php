@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchGetCollaborationAnalysisTemplateAsync(array $args = [])
  * @method \Aws\Result batchGetSchema(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetSchemaAsync(array $args = [])
+ * @method \Aws\Result batchGetSchemaAnalysisRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetSchemaAnalysisRuleAsync(array $args = [])
  * @method \Aws\Result createAnalysisTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAnalysisTemplateAsync(array $args = [])
  * @method \Aws\Result createCollaboration(array $args = [])

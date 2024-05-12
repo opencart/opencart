@@ -149,6 +149,7 @@ abstract class IntegrationTestCase extends TestCase
         }
 
         if ($condition) {
+            $ret = '';
             eval('$ret = '.$condition.';');
             if (!$ret) {
                 $this->markTestSkipped($condition);
@@ -187,7 +188,7 @@ abstract class IntegrationTestCase extends TestCase
             // avoid using the same PHP class name for different cases
             $p = new \ReflectionProperty($twig, 'templateClassPrefix');
             $p->setAccessible(true);
-            $p->setValue($twig, '__TwigTemplate_'.hash(\PHP_VERSION_ID < 80100 ? 'sha256' : 'xxh128', uniqid(mt_rand(), true), false).'_');
+            $p->setValue($twig, '__TwigTemplate_'.hash(\PHP_VERSION_ID < 80100 ? 'sha256' : 'xxh128', uniqid((string) mt_rand(), true), false).'_');
 
             $deprecations = [];
             try {
@@ -234,7 +235,7 @@ abstract class IntegrationTestCase extends TestCase
             }
 
             if (false !== $exception) {
-                list($class) = explode(':', $exception);
+                [$class] = explode(':', $exception);
                 $constraintClass = class_exists('PHPUnit\Framework\Constraint\Exception') ? 'PHPUnit\Framework\Constraint\Exception' : 'PHPUnit_Framework_Constraint_Exception';
                 $this->assertThat(null, new $constraintClass($class));
             }

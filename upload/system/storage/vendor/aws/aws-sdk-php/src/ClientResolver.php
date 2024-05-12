@@ -608,6 +608,7 @@ class ClientResolver
                 new Credentials('', '')
             );
             $args['config']['signature_version'] = 'anonymous';
+            $args['config']['configured_signature_version'] = true;
         } elseif ($value instanceof CacheInterface) {
             $args['credentials'] = CredentialProvider::defaultProvider($args);
         } else {

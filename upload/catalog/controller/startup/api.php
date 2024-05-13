@@ -72,7 +72,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				$string .= (string)$this->request->server['HTTP_HOST'] . "\n";
 				$string .= (int)$this->request->get['store_id'] . "\n";
 				$string .= (string)$this->request->get['language'] . "\n";
-				$string .= json_encode($this->reqest->post) . "\n";
+				$string .= json_encode($this->request->post) . "\n";
 				$string .= $time . "\n";
 
 				if ($this->request->get['signature'] != base64_encode(hash_hmac('sha1', $string, $api_info['key'], 1))) {
@@ -92,6 +92,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->language->load('error/permission');
 
 		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 403 Forbidden');
-		$this->response->setOutput(['error' => $this->language->get('text_error')]);
+		$this->response->setOutput(json_encode(['error' => $this->language->get('text_error')]));
 	}
 }

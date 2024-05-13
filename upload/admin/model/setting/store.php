@@ -208,6 +208,8 @@ class Store extends \Opencart\System\Engine\Model {
 		$request->server = $this->request->server;
 		$request->cookie = [];
 
+
+
 		// Request
 		$registry->set('request', $request);
 

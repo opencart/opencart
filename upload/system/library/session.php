@@ -64,11 +64,7 @@ class Session {
 	 */
 	public function start(string $session_id = ''): string {
 		if (!$session_id) {
-			if (function_exists('random_bytes')) {
-				$session_id = substr(bin2hex(random_bytes(26)), 0, 26);
-			} else {
-				$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
-			}
+			$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 		}
 
 		if (preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {

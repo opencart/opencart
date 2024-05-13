@@ -1182,36 +1182,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
-		/*
-		// Delete any old session
-		if (isset($this->session->data['api_session'])) {
-			$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
-			$session->start($this->session->data['api_session']);
-			$session->destroy();
-		}
-
-		// 3. To use the order API it requires an API ID.
-		$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
-		*/
-
-		if (isset($this->session->data['api_session'])) {
-			$session_id = (string)$this->session->data['api_session'];
-		} else {
-			$session_id = '';
+		// 2. Store the new session ID so we are not creating new session on every page load
+		if (!isset($this->session->data['api_session'])) {
+			$this->session->data['api_session'] = 'api-' . substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 		}
 
 		$this->load->model('setting/store');
 
 		// 1. Create a store instance using loader class to call controllers, models, views, libraries
-		$store = $this->model_setting_store->createStoreInstance($data['store_id'], $data['language_code'], $session_id);
-
-		// Set the store ID
-		$store->config->set('config_store_id', $data['store_id']);
-
-		// 2. Store the new session ID so we are not creating new session on every page load
-		if (!$session_id) {
-			$this->session->data['api_session'] = $store->session->getId();
-		}
+		$store = $this->model_setting_store->createStoreInstance($data['store_id'], $data['language_code'], $this->session->data['api_session']);
 
 		// 2. Remove the unneeded keys
 		$request_data = $this->request->get;
@@ -1317,7 +1296,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$call = '';
 		}
-
 		if (isset($this->request->get['store_id'])) {
 			$store_id = (int)$this->request->get['store_id'];
 		} else {
@@ -1343,39 +1321,20 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
-			/*
-			// Delete any old session
-			if (isset($this->session->data['api_session'])) {
-				$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
-				$session->start($this->session->data['api_session']);
-				$session->destroy();
-			}
-
-			// 3. To use the order API it requires an API ID.
-			$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
-			*/
-
-			if (isset($this->session->data['api_session'])) {
-				$session_id = (string)$this->session->data['api_session'];
-			} else {
-				$session_id = '';
+			// 1. Store the new session ID so we are not creating new session on every page load
+			if (!isset($this->session->data['api_session'])) {
+				$this->session->data['api_session'] = 'api-' . substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 			}
 
 			$this->load->model('setting/store');
 
-			// 1. Create a store instance using loader class to call controllers, models, views, libraries
-			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
+			// 2. Create a store instance using loader class to call controllers, models, views, libraries
+			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $this->session->data['api_session']);
 
 			// Set the store ID
 			$store->config->set('config_store_id', $store_id);
 
-			// 2. Store the new session ID so we are not creating new session on every page load
-			if (!$session_id) {
-				$this->session->data['api_session'] = $store->session->getId();
-			}
-
-			// 2. Remove the unneeded keys
+			// 3. Remove the unneeded keys
 			$request_data = $this->request->get;
 
 			unset($request_data['call']);
@@ -1383,11 +1342,11 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store->request->get = $request_data;
 
-			// 3. Add the request GET vars
+			// 4. Add the request GET vars
 			$store->request->get['route'] = 'api/' . $call;
 			$store->request->get['language'] = $language;
 
-			// 4. Add the request POST var
+			// 5. Add the request POST var
 			$store->request->post = $this->request->post;
 
 			// Call the required API controller

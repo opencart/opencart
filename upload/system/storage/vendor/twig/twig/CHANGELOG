@@ -1,3 +1,57 @@
+# 3.10.1 (2024-05-12)
+
+ * Fix BC break on escaper extension
+ * Fix constant return type
+
+# 3.10.0 (2024-05-11)
+
+ * Make `CoreExtension::formatDate`, `CoreExtension::convertDate`, and
+   `CoreExtension::formatNumber` part of the public API
+ * Add `needs_charset` option for filters and functions
+ * Extract the escaping logic from the `EscaperExtension` class to a new
+   `EscaperRuntime` class.
+
+   The following methods from ``Twig\\Extension\\EscaperExtension`` are
+   deprecated: ``setEscaper()``, ``getEscapers()``, ``setSafeClasses``,
+   ``addSafeClasses()``. Use the same methods on the
+   ``Twig\\Runtime\\EscaperRuntime`` class instead.
+  * Fix capturing output from extensions that still use echo
+  * Fix a PHP warning in the Lexer on malformed templates
+  * Fix blocks not available under some circumstances
+  * Synchronize source context in templates when setting a Node on a Node
+
+# 3.9.3 (2024-04-18)
+
+ * Add missing `twig_escape_filter_is_safe` deprecated function
+ * Fix yield usage with CaptureNode
+ * Add missing unwrap call when using a TemplateWrapper instance internally
+ * Ensure Lexer is initialized early on
+
+# 3.9.2 (2024-04-17)
+
+ * Fix usage of display_end hook
+
+# 3.9.1 (2024-04-17)
+
+ * Fix missing `$blocks` variable in `CaptureNode`
+
+# 3.9.0 (2024-04-16)
+
+ * Add support for PHP 8.4
+ * Deprecate AbstractNodeVisitor
+ * Deprecate passing Template to Environment::resolveTemplate(), Environment::load(), and Template::loadTemplate()
+ * Add a new "yield" mode for output generation;
+   Node implementations that use "echo" or "print" should use "yield" instead;
+   all Node implementations should be flagged with `#[YieldReady]` once they've been made ready for "yield";
+   the "use_yield" Environment option can be turned on when all nodes have been made `#[YieldReady]`;
+   "yield" will be the only strategy supported in the next major version
+ * Add return type for Symfony 7 compatibility
+ * Fix premature loop exit in Security Policy lookup of allowed methods/properties
+ * Deprecate all internal extension functions in favor of methods on the extension classes
+ * Mark all extension functions as @internal
+ * Add SourcePolicyInterface to selectively enable the Sandbox based on a template's Source
+ * Throw a proper Twig exception when using cycle on an empty array
+
 # 3.8.0 (2023-11-21)
 
  * Catch errors thrown during template rendering
@@ -186,7 +240,7 @@
  * removed Parser::isReservedMacroName()
  * removed SanboxedPrintNode
  * removed Node::setTemplateName()
- * made classes maked as "@final" final
+ * made classes marked as "@final" final
  * removed InitRuntimeInterface, ExistsLoaderInterface, and SourceContextLoaderInterface
  * removed the "spaceless" tag
  * removed Twig\Environment::getBaseTemplateClass() and Twig\Environment::setBaseTemplateClass()

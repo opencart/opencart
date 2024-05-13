@@ -2,6 +2,8 @@
 namespace Aws\CloudWatchLogs;
 
 use Aws\AwsClient;
+use Aws\CommandInterface;
+use Generator;
 
 /**
  * This client is used to interact with the **Amazon CloudWatch Logs** service.
@@ -155,4 +157,64 @@ use Aws\AwsClient;
  * @method \Aws\Result updateLogAnomalyDetector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLogAnomalyDetectorAsync(array $args = [])
  */
-class CloudWatchLogsClient extends AwsClient {}
+class CloudWatchLogsClient extends AwsClient {
+    static $streamingCommands = [
+        'StartLiveTail' => true
+    ];
+
+    public function __construct(array $args)
+    {
+        parent::__construct($args);
+        $this->addStreamingFlagMiddleware();
+    }
+
+    private function addStreamingFlagMiddleware()
+    {
+        $this->getHandlerList()
+            -> appendInit(
+                $this->getStreamingFlagMiddleware(),
+                'streaming-flag-middleware'
+            );
+    }
+
+    private function getStreamingFlagMiddleware(): callable
+    {
+        return function (callable $handler) {
+            return function (CommandInterface $command, $request = null) use ($handler) {
+                if (!empty(self::$streamingCommands[$command->getName()])) {
+                    $command['@http']['stream'] = true;
+                }
+
+                return $handler($command, $request);
+            };
+        };
+    }
+
+    /**
+     * Helper method for 'startLiveTail' operation that checks for results.
+     *
+     * Initiates 'startLiveTail' operation with given arguments, and continuously
+     * checks response stream for session updates or results, yielding each
+     * stream chunk when results are not empty. This method abstracts from users
+     * the need of checking if there are logs entry available to be watched, which means
+     * that users will always get a next item to be iterated when more log entries are
+     * available.
+     *
+     * @param array $args Command arguments.
+     *
+     * @return Generator Yields session update or result stream chunks.
+     */
+    public function startLiveTailCheckingForResults(array $args): Generator
+    {
+        $response = $this->startLiveTail($args);
+        foreach ($response['responseStream'] as $streamChunk) {
+            if (isset($streamChunk['sessionUpdate'])) {
+                if (!empty($streamChunk['sessionUpdate']['sessionResults'])) {
+                    yield $streamChunk;
+                }
+            } else {
+                yield $streamChunk;
+            }
+        }
+    }
+}

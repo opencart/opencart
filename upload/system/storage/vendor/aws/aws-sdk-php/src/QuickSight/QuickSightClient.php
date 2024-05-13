@@ -325,6 +325,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateRefreshScheduleAsync(array $args = [])
  * @method \Aws\Result updateRoleCustomPermission(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoleCustomPermissionAsync(array $args = [])
+ * @method \Aws\Result updateSPICECapacityConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSPICECapacityConfigurationAsync(array $args = [])
  * @method \Aws\Result updateTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTemplateAsync(array $args = [])
  * @method \Aws\Result updateTemplateAlias(array $args = [])

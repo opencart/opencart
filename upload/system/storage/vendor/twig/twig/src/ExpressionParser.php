@@ -452,14 +452,14 @@ class ExpressionParser
                     throw new SyntaxError('The "block" function takes one argument (the block name).', $line, $this->parser->getStream()->getSourceContext());
                 }
 
-                return new BlockReferenceExpression($args->getNode(0), \count($args) > 1 ? $args->getNode(1) : null, $line);
+                return new BlockReferenceExpression($args->getNode('0'), \count($args) > 1 ? $args->getNode('1') : null, $line);
             case 'attribute':
                 $args = $this->parseArguments();
                 if (\count($args) < 2) {
                     throw new SyntaxError('The "attribute" function takes at least two arguments (the variable and the attributes).', $line, $this->parser->getStream()->getSourceContext());
                 }
 
-                return new GetAttrExpression($args->getNode(0), $args->getNode(1), \count($args) > 2 ? $args->getNode(2) : null, Template::ANY_CALL, $line);
+                return new GetAttrExpression($args->getNode('0'), $args->getNode('1'), \count($args) > 2 ? $args->getNode('2') : null, Template::ANY_CALL, $line);
             default:
                 if (null !== $alias = $this->parser->getImportedSymbol('function', $name)) {
                     $arguments = new ArrayExpression([], $line);
@@ -704,7 +704,7 @@ class ExpressionParser
     private function parseTestExpression(Node $node): TestExpression
     {
         $stream = $this->parser->getStream();
-        list($name, $test) = $this->getTest($node->getTemplateLine());
+        [$name, $test] = $this->getTest($node->getTemplateLine());
 
         $class = $this->getTestNodeClass($test);
         $arguments = null;

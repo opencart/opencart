@@ -57,6 +57,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAlarmRecommendationsAsync(array $args = [])
  * @method \Aws\Result listAppAssessmentComplianceDrifts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAppAssessmentComplianceDriftsAsync(array $args = [])
+ * @method \Aws\Result listAppAssessmentResourceDrifts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAppAssessmentResourceDriftsAsync(array $args = [])
  * @method \Aws\Result listAppAssessments(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAppAssessmentsAsync(array $args = [])
  * @method \Aws\Result listAppComponentCompliances(array $args = [])

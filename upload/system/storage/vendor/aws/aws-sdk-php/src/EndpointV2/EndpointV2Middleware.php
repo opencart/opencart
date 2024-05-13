@@ -3,6 +3,7 @@ namespace Aws\EndpointV2;
 
 use Aws\Api\Operation;
 use Aws\Api\Service;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\CommandInterface;
 use Closure;
 use GuzzleHttp\Promise\Promise;
@@ -18,11 +19,11 @@ use GuzzleHttp\Promise\Promise;
 class EndpointV2Middleware
 {
     private static $validAuthSchemes = [
-        'sigv4' => true,
-        'sigv4a' => true,
-        'none' => true,
-        'bearer' => true,
-        'sigv4-s3express' => true
+        'sigv4' => 'v4',
+        'sigv4a' => 'v4a',
+        'none' => 'anonymous',
+        'bearer' => 'bearer',
+        'sigv4-s3express' => 'v4-s3express'
     ];
 
     /** @var callable */
@@ -246,20 +247,24 @@ class EndpointV2Middleware
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
-            if (isset(self::$validAuthSchemes[$authScheme['name']])) {
+            if ($this->isValidAuthScheme($authScheme['name'])) {
                 return $this->normalizeAuthScheme($authScheme);
-            } else {
-                $invalidAuthSchemes[] = "`{$authScheme['name']}`";
             }
+            $invalidAuthSchemes[$authScheme['name']] = false;
         }
 
-        $invalidAuthSchemesString = implode(', ', $invalidAuthSchemes);
-        $validAuthSchemesString = '`'
-            . implode('`, `', array_keys(self::$validAuthSchemes))
+        $invalidAuthSchemesString = '`' . implode(
+            '`, `',
+            array_keys($invalidAuthSchemes))
             . '`';
-        throw new \InvalidArgumentException(
+        $validAuthSchemesString = '`'
+            . implode('`, `', array_keys(
+                array_diff_key(self::$validAuthSchemes, $invalidAuthSchemes))
+            )
+            . '`';
+        throw new UnresolvedAuthSchemeException(
             "This operation requests {$invalidAuthSchemesString}"
-            . " auth schemes, but the client only supports {$validAuthSchemesString}."
+            . " auth schemes, but the client currently supports {$validAuthSchemesString}."
         );
     }
 
@@ -285,13 +290,8 @@ class EndpointV2Middleware
             && $authScheme['name'] !== 'sigv4-s3express'
         ) {
             $normalizedAuthScheme['version'] = 's3v4';
-        } elseif ($authScheme['name'] === 'none') {
-            $normalizedAuthScheme['version'] = 'anonymous';
-        }
-        else {
-            $normalizedAuthScheme['version'] = str_replace(
-                'sig', '', $authScheme['name']
-            );
+        } else {
+            $normalizedAuthScheme['version'] = self::$validAuthSchemes[$authScheme['name']];
         }
 
         $normalizedAuthScheme['name'] = isset($authScheme['signingName']) ?
@@ -302,5 +302,16 @@ class EndpointV2Middleware
             $authScheme['signingRegionSet'] : null;
 
         return $normalizedAuthScheme;
+    }
+
+    private function isValidAuthScheme($signatureVersion): bool
+    {
+        if (isset(self::$validAuthSchemes[$signatureVersion])) {
+              if ($signatureVersion === 'sigv4a') {
+                  return extension_loaded('awscrt');
+              }
+              return true;
+        }
+        return false;
     }
 }

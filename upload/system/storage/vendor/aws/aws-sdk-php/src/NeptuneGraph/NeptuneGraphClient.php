@@ -53,6 +53,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resetGraphAsync(array $args = [])
  * @method \Aws\Result restoreGraphFromSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreGraphFromSnapshotAsync(array $args = [])
+ * @method \Aws\Result startImportTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startImportTaskAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

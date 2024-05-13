@@ -71,8 +71,6 @@ class Lexer
             return;
         }
 
-        $this->isInitialized = true;
-
         // when PHP 7.3 is the min version, we will be able to remove the '#' part in preg_quote as it's part of the default
         $this->regexes = [
             // }}
@@ -160,6 +158,8 @@ class Lexer
             'interpolation_start' => '{'.preg_quote($this->options['interpolation'][0], '#').'\s*}A',
             'interpolation_end' => '{\s*'.preg_quote($this->options['interpolation'][1], '#').'}A',
         ];
+
+        $this->isInitialized = true;
     }
 
     public function tokenize(Source $source): TokenStream
@@ -210,7 +210,7 @@ class Lexer
         $this->pushToken(/* Token::EOF_TYPE */ -1);
 
         if (!empty($this->brackets)) {
-            list($expect, $lineno) = array_pop($this->brackets);
+            [$expect, $lineno] = array_pop($this->brackets);
             throw new SyntaxError(sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
         }
 
@@ -321,7 +321,7 @@ class Lexer
             $this->moveCursor('...');
         }
         // arrow function
-        elseif ('=' === $this->code[$this->cursor] && '>' === $this->code[$this->cursor + 1]) {
+        elseif ('=' === $this->code[$this->cursor] && ($this->cursor + 1 < $this->end) && '>' === $this->code[$this->cursor + 1]) {
             $this->pushToken(Token::ARROW_TYPE, '=>');
             $this->moveCursor('=>');
         }
@@ -356,7 +356,7 @@ class Lexer
                     throw new SyntaxError(sprintf('Unexpected "%s".', $this->code[$this->cursor]), $this->lineno, $this->source);
                 }
 
-                list($expect, $lineno) = array_pop($this->brackets);
+                [$expect, $lineno] = array_pop($this->brackets);
                 if ($this->code[$this->cursor] != strtr($expect, '([{', ')]}')) {
                     throw new SyntaxError(sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
                 }
@@ -426,7 +426,7 @@ class Lexer
             $this->pushToken(/* Token::STRING_TYPE */ 7, stripcslashes($match[0]));
             $this->moveCursor($match[0]);
         } elseif (preg_match(self::REGEX_DQ_STRING_DELIM, $this->code, $match, 0, $this->cursor)) {
-            list($expect, $lineno) = array_pop($this->brackets);
+            [$expect, $lineno] = array_pop($this->brackets);
             if ('"' != $this->code[$this->cursor]) {
                 throw new SyntaxError(sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
             }

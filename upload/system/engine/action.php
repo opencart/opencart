@@ -45,7 +45,7 @@ class Action {
 	}
 
 	/**
-	 * getId
+	 * Get Id
 	 *
 	 * @return string
 	 */

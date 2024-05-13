@@ -233,7 +233,7 @@ class AwsClient implements AwsClientInterface
         $this->defaultRequestOptions = $config['http'];
         $this->endpointProvider = $config['endpoint_provider'];
         $this->serializer = $config['serializer'];
-        $this->addSignatureMiddleware();
+        $this->addSignatureMiddleware($args);
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
@@ -403,7 +403,7 @@ class AwsClient implements AwsClientInterface
         }
     }
 
-    private function addSignatureMiddleware()
+    private function addSignatureMiddleware(array $args)
     {
         $api = $this->getApi();
         $provider = $this->signatureProvider;
@@ -411,9 +411,17 @@ class AwsClient implements AwsClientInterface
         $name = $this->config['signing_name'];
         $region = $this->config['signing_region'];
 
+        if (isset($args['signature_version'])
+         || isset($this->config['configured_signature_version'])
+        ) {
+            $configuredSignatureVersion = true;
+        } else {
+            $configuredSignatureVersion = false;
+        }
+
         $resolver = static function (
             CommandInterface $c
-        ) use ($api, $provider, $name, $region, $version) {
+        ) use ($api, $provider, $name, $region, $version, $configuredSignatureVersion) {
             if (!empty($c['@context']['signing_region'])) {
                 $region = $c['@context']['signing_region'];
             }
@@ -421,30 +429,33 @@ class AwsClient implements AwsClientInterface
                 $name = $c['@context']['signing_service'];
             }
 
-            $authType = $api->getOperation($c->getName())['authtype'];
-            switch ($authType){
-                case 'none':
-                    $version = 'anonymous';
-                    break;
-                case 'v4-unsigned-body':
-                    $version = 'v4-unsigned-body';
-                    break;
-                case 'bearer':
-                    $version = 'bearer';
-                    break;
-            }
-            if (isset($c['@context']['signature_version'])) {
-                if ($c['@context']['signature_version'] == 'v4a') {
-                    $version = 'v4a';
+            if (!$configuredSignatureVersion) {
+                $authType = $api->getOperation($c->getName())['authtype'];
+                switch ($authType){
+                    case 'none':
+                        $version = 'anonymous';
+                        break;
+                    case 'v4-unsigned-body':
+                        $version = 'v4-unsigned-body';
+                        break;
+                    case 'bearer':
+                        $version = 'bearer';
+                        break;
+                }
+                if (isset($c['@context']['signature_version'])) {
+                    if ($c['@context']['signature_version'] == 'v4a') {
+                        $version = 'v4a';
+                    }
+                }
+                if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
+                    $version = $endpointAuthSchemes['version'];
+                    $name = isset($endpointAuthSchemes['name']) ?
+                        $endpointAuthSchemes['name'] : $name;
+                    $region = isset($endpointAuthSchemes['region']) ?
+                        $endpointAuthSchemes['region'] : $region;
                 }
             }
-            if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
-                $version = $endpointAuthSchemes['version'];
-                $name = isset($endpointAuthSchemes['name']) ?
-                    $endpointAuthSchemes['name'] : $name;
-                $region = isset($endpointAuthSchemes['region']) ?
-                    $endpointAuthSchemes['region'] : $region;
-            }
+
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(

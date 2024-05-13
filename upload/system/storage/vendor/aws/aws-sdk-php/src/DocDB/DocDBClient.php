@@ -112,6 +112,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise startDBClusterAsync(array $args = [])
  * @method \Aws\Result stopDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopDBClusterAsync(array $args = [])
+ * @method \Aws\Result switchoverGlobalCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise switchoverGlobalClusterAsync(array $args = [])
  */
 class DocDBClient extends AwsClient {
     public function __construct(array $args)

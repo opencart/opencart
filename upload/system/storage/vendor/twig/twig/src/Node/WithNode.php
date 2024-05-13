@@ -11,6 +11,7 @@
 
 namespace Twig\Node;
 
+use Twig\Attribute\YieldReady;
 use Twig\Compiler;
 
 /**
@@ -18,9 +19,10 @@ use Twig\Compiler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
+#[YieldReady]
 class WithNode extends Node
 {
-    public function __construct(Node $body, ?Node $variables, bool $only, int $lineno, string $tag = null)
+    public function __construct(Node $body, ?Node $variables, bool $only, int $lineno, ?string $tag = null)
     {
         $nodes = ['body' => $body];
         if (null !== $variables) {
@@ -52,7 +54,7 @@ class WithNode extends Node
                 ->raw(", \$this->getSourceContext());\n")
                 ->outdent()
                 ->write("}\n")
-                ->write(sprintf("\$%s = twig_to_array(\$%s);\n", $varsName, $varsName))
+                ->write(sprintf("\$%s = CoreExtension::toArray(\$%s);\n", $varsName, $varsName))
             ;
 
             if ($this->getAttribute('only')) {

@@ -3,7 +3,6 @@ namespace Aws\Crypto\Polyfill;
 
 /**
  * Class ByteArray
- * @package Aws\Crypto\Polyfill
  */
 class ByteArray extends \SplFixedArray
 {

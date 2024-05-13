@@ -5,7 +5,6 @@ use Aws\Exception\CryptoPolyfillException;
 
 /**
  * Trait NeedsTrait
- * @package Aws\Crypto\Polyfill
  */
 trait NeedsTrait
 {

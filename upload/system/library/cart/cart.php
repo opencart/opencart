@@ -249,6 +249,12 @@ class Cart {
 						}
 					}
 
+					// Stock
+					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $product_total)) {
+						$stock = false;
+					}
+
+					// Minimum quantity
 					if ($product_query->row['minimum'] > $product_total) {
 						$minimum = false;
 					} else {
@@ -276,11 +282,6 @@ class Cart {
 							'filename'    => $download['filename'],
 							'mask'        => $download['mask']
 						];
-					}
-
-					// Stock
-					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $cart['quantity'])) {
-						$stock = false;
 					}
 
 					$subscription_data = [];

@@ -279,7 +279,12 @@ class Cart {
 					}
 
 					// Stock
-					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $cart['quantity'])) {
+					$productCartQuantity = 0;
+					foreach ($cart_query->rows as $cart_3) {
+						if ($cart_3['product_id'] == $cart['product_id']) $productCartQuantity = $productCartQuantity + $cart_3['quantity'];
+					}
+					
+					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $productCartQuantity)) {
 						$stock = false;
 					}
 

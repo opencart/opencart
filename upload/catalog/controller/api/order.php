@@ -65,8 +65,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->session->data['order_id'] = 0;
 		}
 
-
-
 		// Customer
 		$this->load->model('account/customer');
 

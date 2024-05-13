@@ -208,8 +208,6 @@ class Store extends \Opencart\System\Engine\Model {
 		$request->server = $this->request->server;
 		$request->cookie = [];
 
-
-
 		// Request
 		$registry->set('request', $request);
 
@@ -236,10 +234,14 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry->set('template', $template);
 
 		// Adding language var to the GET variable so there is a default language
-		$request->get['language'] = $language;
+		if ($language) {
+			$request->get['language'] = $language;
+		} else {
+			$request->get['language'] = $config->get('language_code');
+		}
 
 		// Language
-		$language = new \Opencart\System\Library\Language($config->get('language_code'));
+		$language = new \Opencart\System\Library\Language($request->get['language']);
 		$language->addPath(DIR_CATALOG . 'language/');
 		$language->load('default');
 		$registry->set('language', $language);

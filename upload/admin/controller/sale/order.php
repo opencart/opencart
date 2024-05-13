@@ -1202,7 +1202,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// 3. Add the request GET vars
 		$store->request->get['route'] = 'api/order.load';
-		$store->request->get['language'] = $data['language_code'];
 
 		// 4. Add the request POST var
 		$store->request->post = $this->request->post;
@@ -1344,7 +1343,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// 4. Add the request GET vars
 			$store->request->get['route'] = 'api/' . $call;
-			$store->request->get['language'] = $language;
 
 			// 5. Add the request POST var
 			$store->request->post = $this->request->post;

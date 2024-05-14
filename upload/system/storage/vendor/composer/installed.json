@@ -59,17 +59,17 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.306.4",
-            "version_normalized": "3.306.4.0",
+            "version": "3.306.5",
+            "version_normalized": "3.306.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "f50ff987dbe6d3e60d68794970422eae71ffb525"
+                "reference": "07fa90825034bf64ab3fdddc1e1f1ca2fa33d6c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f50ff987dbe6d3e60d68794970422eae71ffb525",
-                "reference": "f50ff987dbe6d3e60d68794970422eae71ffb525",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/07fa90825034bf64ab3fdddc1e1f1ca2fa33d6c2",
+                "reference": "07fa90825034bf64ab3fdddc1e1f1ca2fa33d6c2",
                 "shasum": ""
             },
             "require": {
@@ -110,7 +110,7 @@
                 "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
                 "ext-sockets": "To use client-side monitoring"
             },
-            "time": "2024-05-10T18:23:57+00:00",
+            "time": "2024-05-13T18:04:50+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -151,7 +151,7 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.306.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.306.5"
             },
             "install-path": "../aws/aws-sdk-php"
         },
@@ -1177,17 +1177,17 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.10.1",
-            "version_normalized": "3.10.1.0",
+            "version": "v3.10.2",
+            "version_normalized": "3.10.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3af5ab2e52279e5e23dc192b1a26db3b8cffa4e7"
+                "reference": "7aaed0b8311a557cc8c4047a71fd03153a00e755"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3af5ab2e52279e5e23dc192b1a26db3b8cffa4e7",
-                "reference": "3af5ab2e52279e5e23dc192b1a26db3b8cffa4e7",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7aaed0b8311a557cc8c4047a71fd03153a00e755",
+                "reference": "7aaed0b8311a557cc8c4047a71fd03153a00e755",
                 "shasum": ""
             },
             "require": {
@@ -1201,7 +1201,7 @@
                 "psr/container": "^1.0|^2.0",
                 "symfony/phpunit-bridge": "^5.4.9|^6.4|^7.0"
             },
-            "time": "2024-05-12T06:16:18+00:00",
+            "time": "2024-05-14T06:04:16+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1243,7 +1243,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.10.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.10.2"
             },
             "funding": [
                 {

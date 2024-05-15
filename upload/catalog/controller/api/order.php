@@ -137,7 +137,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
 		}
 
-
 		// Products
 		if (!$json) {
 			$this->load->model('catalog/product');

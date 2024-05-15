@@ -801,7 +801,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!empty($order_info)) {
 			$data['store_id'] = $order_info['store_id'];
 		} else {
-			$data['store_id'] = $this->config->get('config_store_id');
+			$data['store_id'] = (int)$this->config->get('config_store_id');
 		}
 
 		// Language
@@ -1320,7 +1320,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// 1. Store the new session ID so we are not creating new session on every page load
+			// 1. Store the new session ID so not creating new session on every page load
 			if (!isset($this->session->data['api_session'])) {
 				$this->session->data['api_session'] = 'api-' . substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 			}

@@ -47,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise extendTransactionAsync(array $args = [])
  * @method \Aws\Result getDataCellsFilter(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataCellsFilterAsync(array $args = [])
+ * @method \Aws\Result getDataLakePrincipal(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDataLakePrincipalAsync(array $args = [])
  * @method \Aws\Result getDataLakeSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataLakeSettingsAsync(array $args = [])
  * @method \Aws\Result getEffectivePermissionsForPath(array $args = [])

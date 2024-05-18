@@ -270,6 +270,15 @@ class ClientResolver
             'fn'       => [__CLASS__, '_apply_handler'],
             'default'  => [__CLASS__, '_default_handler']
         ],
+        'app_id' => [
+            'type' => 'value',
+            'valid' => ['string'],
+            'doc' => 'app_id(AppId) is an optional application specific identifier that can be set. 
+             When set it will be appended to the User-Agent header of every request in the form of App/{AppId}. 
+             This value is also sourced from environment variable AWS_SDK_UA_APP_ID or the shared config profile attribute sdk_ua_app_id.',
+            'fn' => [__CLASS__, '_apply_app_id'],
+            'default' => [__CLASS__, '_default_app_id']
+        ],
         'ua_append' => [
             'type'     => 'value',
             'valid'    => ['string', 'array'],
@@ -917,17 +926,43 @@ class ClientResolver
         );
     }
 
+    public static function _apply_app_id($value, array &$args)
+    {
+        // AppId should not be longer than 50 chars
+        static $MAX_APP_ID_LENGTH = 50;
+        if (strlen($value) > $MAX_APP_ID_LENGTH) {
+            trigger_error("The provided or configured value for `AppId`, "
+                ."which is an user agent parameter, exceeds the maximum length of "
+            ."$MAX_APP_ID_LENGTH characters.", E_USER_WARNING);
+        }
+
+        $args['app_id'] = $value;
+    }
+
+    public static function _default_app_id(array $args)
+    {
+        return ConfigurationResolver::resolve(
+            'sdk_ua_app_id',
+            '',
+            'string',
+            $args
+        );
+    }
+
     public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
     {
-        //Add SDK version
+        // Add SDK version
         $userAgent = ['aws-sdk-php/' . Sdk::VERSION];
 
-        //If on HHVM add the HHVM version
+        // User Agent Metadata
+        $userAgent[] = 'ua/2.0';
+
+        // If on HHVM add the HHVM version
         if (defined('HHVM_VERSION')) {
             $userAgent []= 'HHVM/' . HHVM_VERSION;
         }
 
-        //Add OS version
+        // Add OS version
         $disabledFunctions = explode(',', ini_get('disable_functions'));
         if (function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
@@ -938,15 +973,15 @@ class ClientResolver
             }
         }
 
-        //Add the language version
+        // Add the language version
         $userAgent []= 'lang/php#' . phpversion();
 
-        //Add exec environment if present
+        // Add exec environment if present
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
             $userAgent []= $executionEnvironment;
         }
 
-        //Add endpoint discovery if set
+        // Add endpoint discovery if set
         if (isset($args['endpoint_discovery'])) {
             if (($args['endpoint_discovery'] instanceof \Aws\EndpointDiscovery\Configuration
                 && $args['endpoint_discovery']->isEnabled())
@@ -960,7 +995,7 @@ class ClientResolver
             }
         }
 
-        //Add retry mode if set
+        // Add retry mode if set
         if (isset($args['retries'])) {
             if ($args['retries'] instanceof \Aws\Retry\Configuration) {
                 $userAgent []= 'cfg/retry-mode#' . $args["retries"]->getMode();
@@ -970,7 +1005,13 @@ class ClientResolver
                 $userAgent []= 'cfg/retry-mode#' . $args["retries"]["mode"];
             }
         }
-        //Add the input to the end
+
+        // AppID Metadata
+        if (!empty($args['app_id'])) {
+            $userAgent[] = 'app/' . $args['app_id'];
+        }
+
+        // Add the input to the end
         if ($inputUserAgent){
             if (!is_array($inputUserAgent)) {
                 $inputUserAgent = [$inputUserAgent];
@@ -1188,7 +1229,7 @@ class ClientResolver
 
         return $value;
     }
-  
+
     public static function _apply_region($value, array &$args)
     {
         if (empty($value)) {

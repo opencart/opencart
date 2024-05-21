@@ -52,6 +52,8 @@
               $('#button-quote').button('reset');
           },
           success: function(json) {
+              console.log(json);
+
               $('.alert-dismissible').remove();
               $('#form-shipping').find('.is-invalid').removeClass('is-invalid');
               $('#form-shipping').find('.invalid-feedback').removeClass('d-block');
@@ -141,6 +143,8 @@
               $('#button-shipping-method').button('reset');
           },
           success: function(json) {
+              console.log(json);
+
               $('.alert-dismissible').remove();
 
               if (json['error']) {

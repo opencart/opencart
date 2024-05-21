@@ -1,72 +1,101 @@
-
-
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <td class="text-center">{{ column_image }}</td>
-        <td class="text-start">{{ column_name }}</td>
-        <td class="text-start">{{ column_model }}</td>
-        <td class="text-start">{{ column_quantity }}</td>
-        <td class="text-end">{{ column_price }}</td>
-        <td class="text-end">{{ column_total }}</td>
-      </tr>
-    </thead>
-    <tbody>
-
-      {% for product in products %}
+{% if products or vouchers %}
+  {% if attention %}
+    <div class="alert alert-info"><i class="fa-solid fa-circle-info"></i> {{ attention }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
         <tr>
-          <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
-          <td class="text-start text-wrap"><a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
-            {% for option in product.option %}
-              <br/>
-              <small> - {{ option.name }}: {{ option.value }}</small>
-            {% endfor %}
-            {% if product.reward %}
-              <br/>
-              <small> - {{ text_points }}: {{ product.reward }}</small>
-            {% endif %}
-            {% if product.subscription %}
-              <br/>
-              <small> - {{ text_subscription }}: {{ product.subscription }}</small>
-            {% endif %}</td>
-          <td class="text-start">{{ product.model }}</td>
-          <td class="text-start">
-            <form method="post" data-oc-target="#shopping-cart">
-              <div class="input-group">
-                <input type="hidden" name="key" value="{{ product.cart_id }}"/>
-                <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control"/>
-                <button type="submit" formaction="{{ product_edit }}" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
-                <a href="{{ product.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
-              </div>
-            </form>
-          </td>
-          <td class="text-end">{{ product.price }}</td>
-          <td class="text-end">{{ product.total }}</td>
+          <td class="text-center">{{ column_image }}</td>
+          <td class="text-start">{{ column_name }}</td>
+          <td class="text-start">{{ column_model }}</td>
+          <td class="text-start">{{ column_quantity }}</td>
+          <td class="text-end">{{ column_price }}</td>
+          <td class="text-end">{{ column_total }}</td>
         </tr>
-      {% endfor %}
+      </thead>
+      <tbody>
+        {% for product in products %}
+          <tr>
+            <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
+            <td class="text-start text-wrap"><a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
+              {% for option in product.option %}
+                <br/>
+                <small> - {{ option.name }}: {{ option.value }}</small>
+              {% endfor %}
 
-      {% for voucher in vouchers %}
-        <tr>
-          <td></td>
-          <td class="text-start text-wrap">{{ voucher.description }}</td>
-          <td class="text-start"></td>
-          <td class="text-start">
-            <div class="input-group"><input type="text" name="quantity" value="1" size="1" class="form-control" disabled/> <a href="{{ voucher.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a></div>
-          </td>
-          <td class="text-end">{{ voucher.amount }}</td>
-          <td class="text-end">{{ voucher.amount }}</td>
-        </tr>
-      {% endfor %}
+              {% if product.reward %}
+                <br/>
+                <small> - {{ text_points }}: {{ product.reward }}</small>
+              {% endif %}
 
-    </tbody>
-    <tfoot id="checkout-total">
-      {% for total in totals %}
-        <tr>
-          <td colspan="5" class="text-end"><strong>{{ total.title }}</strong></td>
-          <td class="text-end">{{ total.text }}</td>
-        </tr>
+              {% if product.subscription %}
+                <br/>
+                <small> - {{ text_subscription }}: {{ product.subscription }}</small>
+              {% endif %}
+
+            </td>
+            <td class="text-start">{{ product.model }}</td>
+            <td class="text-start">
+              <form method="post" data-oc-target="#shopping-cart">
+                <div class="input-group">
+                  <input type="hidden" name="key" value="{{ product.cart_id }}"/> <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control"/>
+                  <button type="submit" formaction="{{ product_edit }}" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
+                  <a href="{{ product.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
+                </div>
+              </form>
+            </td>
+            <td class="text-end">{{ product.price }}</td>
+            <td class="text-end">{{ product.total }}</td>
+          </tr>
+        {% endfor %}
+
+        {% for voucher in vouchers %}
+          <tr>
+            <td></td>
+            <td class="text-start text-wrap">{{ voucher.description }}</td>
+            <td class="text-start"></td>
+            <td class="text-start">
+              <div class="input-group"><input type="text" name="quantity" value="1" size="1" class="form-control" disabled/> <a href="{{ voucher.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a></div>
+            </td>
+            <td class="text-end">{{ voucher.amount }}</td>
+            <td class="text-end">{{ voucher.amount }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot id="checkout-total">
+        {% for total in totals %}
+          <tr>
+            <td colspan="5" class="text-end"><strong>{{ total.title }}</strong></td>
+            <td class="text-end">{{ total.text }}</td>
+          </tr>
+        {% endfor %}
+      </tfoot>
+    </table>
+  </div>
+  {% if modules %}
+    <h2>{{ text_next }}</h2>
+    <p>{{ text_next_choice }}</p>
+    <div id="accordion" class="accordion">
+      {% for module in modules %}
+        {{ module }}
       {% endfor %}
-    </tfoot>
-  </table>
-</div>
+    </div>
+  {% endif %}
+  <br/>
+  <div class="row">
+    <div class="col"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
+    <div class="col text-end"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
+  </div>
+{% else %}
+  <h1>{{ heading_title }}</h1>
+  <p>{{ text_no_results }}</p>
+  <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+{% endif %}

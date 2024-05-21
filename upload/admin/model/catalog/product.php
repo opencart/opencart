@@ -1750,6 +1750,17 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Stores By Store ID
+	 *
+	 * @param int $store_id
+	 *
+	 * @return void
+	 */
+	public function deleteStoresByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+	}
+
+	/**
 	 * Get Stores
 	 *
 	 * @param int $product_id

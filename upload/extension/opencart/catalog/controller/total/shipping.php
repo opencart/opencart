@@ -163,6 +163,9 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_shipping');
 		}
 
+		print_r($this->request->post);
+		print_r($this->session->data);
+
 		if (!$json) {
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Layout
@@ -164,12 +165,13 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * Add Route
 	 *
 	 * @param int                  $layout_id
+	 * @param int                  $store_id
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
-	public function addRoute(int $layout_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_route` SET `layout_id` = '" . (int)$layout_id . "', `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "'");
+	public function addRoute(int $layout_id, int $store_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_route` SET `layout_id` = '" . (int)$layout_id . "', `store_id` = '" . (int)$store_id . "', `route` = '" . $this->db->escape($data['route']) . "'");
 	}
 
 	/**

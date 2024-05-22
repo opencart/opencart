@@ -48,6 +48,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['text_zlib'] = $this->language->get('text_zlib');
 		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
+		$data['text_xml'] = $this->language->get('text_xml');
 		$data['text_file'] = $this->language->get('text_file');
 		$data['text_directory'] = $this->language->get('text_directory');
 		$data['text_status'] = $this->language->get('text_status');
@@ -92,9 +93,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['zip'] = extension_loaded('zip');
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
-
-		$data['catalog_config'] = DIR_OPENCART . 'config.php';
-		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
+		$data['xml'] = extension_loaded('xml');
 
 		// catalog config
 		if (!is_file(DIR_OPENCART . 'config.php')) {
@@ -174,6 +173,10 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
 			$this->error['warning'] = $this->language->get('error_mbstring');
+		}
+
+		if (!extension_loaded('xml')) {
+			$this->error['warning'] = $this->language->get('error_xml');
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {

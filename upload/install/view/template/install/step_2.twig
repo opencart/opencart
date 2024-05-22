@@ -210,6 +210,20 @@
 											{% endif %}</td>
 									</tr>
 								{% endif %}
+                <tr{% if not xml %} class="table-danger"{% endif %}>
+                  <td>{{ text_xml }}</td>
+                  <td>{% if xml %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if xml %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
 							</tbody>
 						</table>
 					</fieldset>

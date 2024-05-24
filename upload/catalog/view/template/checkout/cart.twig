@@ -16,7 +16,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#shopping-cart').on('submit', 'form', function(e) {
+$('#shopping-cart').on('submit', '#cart form', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -63,7 +63,7 @@ $('#shopping-cart').on('submit', 'form', function(e) {
     });
 });
 
-$('#shopping-cart').on('click', '.btn-danger', function(e) {
+$('#cart').on('click', '#cart .btn-danger', function(e) {
     e.preventDefault();
 
     var element = this;

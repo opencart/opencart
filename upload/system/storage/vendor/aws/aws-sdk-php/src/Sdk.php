@@ -440,6 +440,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMachineLearning(array $args = [])
  * @method \Aws\Macie2\Macie2Client createMacie2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMacie2(array $args = [])
+ * @method \Aws\MailManager\MailManagerClient createMailManager(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMailManager(array $args = [])
  * @method \Aws\MainframeModernization\MainframeModernizationClient createMainframeModernization(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMainframeModernization(array $args = [])
  * @method \Aws\ManagedBlockchain\ManagedBlockchainClient createManagedBlockchain(array $args = [])
@@ -767,7 +769,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.307.1';
+    const VERSION = '3.308.0';
 
     /** @var array Arguments for creating clients */
     private $args;

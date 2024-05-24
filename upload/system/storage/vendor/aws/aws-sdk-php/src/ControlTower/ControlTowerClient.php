@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getLandingZoneOperationAsync(array $args = [])
  * @method \Aws\Result listBaselines(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBaselinesAsync(array $args = [])
+ * @method \Aws\Result listControlOperations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listControlOperationsAsync(array $args = [])
  * @method \Aws\Result listEnabledBaselines(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnabledBaselinesAsync(array $args = [])
  * @method \Aws\Result listEnabledControls(array $args = [])

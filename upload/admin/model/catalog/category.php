@@ -412,7 +412,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalCategories(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `category_description` `cd` WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$implode = [];
 

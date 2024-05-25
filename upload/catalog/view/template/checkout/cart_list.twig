@@ -30,17 +30,14 @@
                 <br/>
                 <small> - {{ option.name }}: {{ option.value }}</small>
               {% endfor %}
-
               {% if product.reward %}
                 <br/>
                 <small> - {{ text_points }}: {{ product.reward }}</small>
               {% endif %}
-
               {% if product.subscription %}
                 <br/>
                 <small> - {{ text_subscription }}: {{ product.subscription }}</small>
               {% endif %}
-
             </td>
             <td class="text-start">{{ product.model }}</td>
             <td class="text-start">
@@ -57,7 +54,6 @@
             <td class="text-end">{{ product.total }}</td>
           </tr>
         {% endfor %}
-
         {% for voucher in vouchers %}
           <tr>
             <td></td>

@@ -118,8 +118,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$this->load->model('localisation/currency');
 
 		if ($this->validateRefresh()) {
-			$config_currency_engine = $this->config->get('config_currency_engine');
-			$this->load->controller('extension/currency/'.$config_currency_engine.'/currency');
+			$this->model_localisation_currency->refresh();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -136,8 +135,6 @@ class ControllerLocalisationCurrency extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-
-			//$this->response->redirect($this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();

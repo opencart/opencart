@@ -92,9 +92,10 @@ class ControllerCommonDashboard extends Controller {
 
 		// Run currency update
 		if ($this->config->get('config_currency_auto')) {
-			$this->load->model('localisation/currency');
-
-			$this->model_localisation_currency->refresh();
+			$config_currency_engine = $this->config->get('config_currency_engine');
+			if ($config_currency_engine) {
+				$this->load->controller('extension/currency/'.$config_currency_engine.'/currency');
+			}
 		}
 
 		$this->response->setOutput($this->load->view('common/dashboard', $data));

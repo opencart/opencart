@@ -412,22 +412,14 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalCategories(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `category_description` `cd` WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
-		$implode = [];
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`cd2`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
 		if (isset($data['filter_parent_id'])) {
-			$sql .= " AND `parent_id` = '" . (int)$data['filter_parent_id'] . "'";
-		}
-
-		// `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND category_description
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+			$sql .= " AND `c`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
 		}
 
 		$query = $this->db->query($sql);

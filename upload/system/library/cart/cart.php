@@ -330,7 +330,8 @@ class Cart {
 						'subscription'    => $subscription_data,
 						'download'        => $download_data,
 						'quantity'        => $cart['quantity'],
-						'minimum'         => $minimum,
+						'minimum'         => $product_query->row['minimum'],
+						'minimum_status'  => $minimum,
 						'subtract'        => $product_query->row['subtract'],
 						'stock'           => $stock,
 						'price'           => $price,
@@ -583,7 +584,7 @@ class Cart {
 	 */
 	public function hasMinimum() {
 		foreach ($this->getProducts() as $product) {
-			if (!$product['minimum']) {
+			if (!$product['minimum_status']) {
 				return false;
 			}
 		}

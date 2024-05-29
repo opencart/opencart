@@ -44,7 +44,9 @@ function oc_validate_email(string $email): bool {
  *
  */
 function oc_validate_regex(string $string, string $pattern): bool {
-	return !filter_var($string, FILTER_VALIDATE_REGEXP, html_entity_decode($pattern, ENT_QUOTES, 'UTF-8'));
+	$option = ['regexp' => html_entity_decode($pattern, ENT_QUOTES, 'UTF-8')];
+
+	return filter_var($string, FILTER_VALIDATE_REGEXP, ['options' => $option]);
 }
 
 

@@ -15,7 +15,7 @@ function oc_validate_length(string $string, int $minimum, int $maximum): bool {
 /**
  * Validate Email
  *
- * @param string $email
+ * @param string $email The email to validate
  *
  * @return bool
  */
@@ -40,15 +40,18 @@ function oc_validate_email(string $email): bool {
 }
 
 /**
+ * Validate Regular Expression
  *
+ * @param string $string    The string to validate
+ * @param string $pattern   The regular expression pattern
  *
+ * @return bool
  */
 function oc_validate_regex(string $string, string $pattern): bool {
 	$option = ['regexp' => html_entity_decode($pattern, ENT_QUOTES, 'UTF-8')];
 
 	return filter_var($string, FILTER_VALIDATE_REGEXP, ['options' => $option]);
 }
-
 
 /**
  * Validate IP

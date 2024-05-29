@@ -97,13 +97,24 @@ class EcsCredentialProvider
     private function getEcsAuthToken()
     {
         if (!empty($path = getenv(self::ENV_AUTH_TOKEN_FILE))) {
-            if (is_readable($path)) {
-                return file_get_contents($path);
+            $token =  @file_get_contents($path);
+            if (false === $token) {
+                clearstatcache(true, dirname($path) . DIRECTORY_SEPARATOR . @readlink($path));
+                clearstatcache(true, dirname($path) . DIRECTORY_SEPARATOR . dirname(@readlink($path)));
+                clearstatcache(true, $path);
             }
 
-            throw new CredentialsException(
-                "Failed to read authorization token from '{$path}': no such file or directory."
-            );
+            if (!is_readable($path)) {
+                throw new CredentialsException("Failed to read authorization token from '{$path}': no such file or directory.");
+            }
+
+            $token = @file_get_contents($path);
+
+            if (empty($token)) {
+                throw new CredentialsException("Invalid authorization token read from `$path`. Token file is empty!");
+            }
+
+            return $token;
         }
 
         return getenv(self::ENV_AUTH_TOKEN);

@@ -57,11 +57,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-			$data['error_warning'] = $this->language->get('error_stock');
-		} elseif (!$this->cart->hasMinimum()) {
-			$data['error_warning'] = $this->language->get('error_minimum');
-		} elseif (isset($this->session->data['error'])) {
+		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
 			unset($this->session->data['error']);
@@ -69,10 +65,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-			$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
+		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+			$data['error_stock'] = $this->language->get('error_stock');
 		} else {
-			$data['attention'] = '';
+			$data['error_stock'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -81,6 +77,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['success']);
 		} else {
 			$data['success'] = '';
+		}
+
+		if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
+			$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
+		} else {
+			$data['attention'] = '';
 		}
 
 		if ($this->config->get('config_cart_weight')) {
@@ -150,7 +152,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'subscription' => $description,
 				'quantity'     => $product['quantity'],
 				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'minimum'      => $product['minimum'] ? $product['minimum'] : sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']),
+				'minimum'      => !$product['minimum'] ? sprintf($this->language->get('error_minimum'), $product['minimum']) : 0,
 				'reward'       => $product['reward'],
 				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
 				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',

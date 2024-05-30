@@ -758,13 +758,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		// Custom field validation
 		if ($customer_info) {
-			$this->load->model('customer/custom_field');
-
 			$filter_data = [
 				'filter_location'          => 'account',
 				'filter_customer_group_id' => $this->request->post['customer_group_id'],
 				'filter_status'            => 1
 			];
+
+			$this->load->model('customer/custom_field');
 
 			$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_info['customer_group_id']]);
 

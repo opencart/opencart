@@ -55,26 +55,10 @@ class Cart extends \Opencart\System\Engine\Model {
 				];
 			}
 
-			$product_data[] = [
-				'cart_id'      => $product['cart_id'],
-				'product_id'   => $product['product_id'],
-				'master_id'    => $product['master_id'],
-				'image'        => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
-				'name'         => $product['name'],
-				'model'        => $product['model'],
-				'option'       => $option_data,
-				'subscription' => $product['subscription'],
-				'download'     => $product['download'],
-				'quantity'     => $product['quantity'],
-				'stock'        => $product['stock'],
-				'minimum'      => $product['minimum'],
-				'shipping'     => $product['shipping'],
-				'subtract'     => $product['subtract'],
-				'reward'       => $product['reward'],
-				'tax_class_id' => $product['tax_class_id'],
-				'price'        => $product['price'],
-				'total'        => $product['total']
-			];
+			$product_data[] =  [
+				'image'  => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
+				'option' => $option_data
+			] + $product;
 		}
 
 		return $product_data;
@@ -89,19 +73,7 @@ class Cart extends \Opencart\System\Engine\Model {
 		$voucher_data = [];
 
 		if (!empty($this->session->data['vouchers'])) {
-			foreach ($this->session->data['vouchers'] as $key => $voucher) {
-				$voucher_data[$key] = [
-					'code'             => $voucher['code'],
-					'description'      => $voucher['description'],
-					'from_name'        => $voucher['from_name'],
-					'from_email'       => $voucher['from_email'],
-					'to_name'          => $voucher['to_name'],
-					'to_email'         => $voucher['to_email'],
-					'voucher_theme_id' => $voucher['voucher_theme_id'],
-					'message'          => $voucher['message'],
-					'amount'           => $voucher['amount']
-				];
-			}
+			$voucher_data = $this->session->data['vouchers'];
 		}
 
 		return $voucher_data;

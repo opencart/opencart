@@ -55,7 +55,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				];
 			}
 
-			$product_data[] =  [
+			$product_data[] = [
 				'image'  => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
 				'option' => $option_data
 			] + $product;

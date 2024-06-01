@@ -29,8 +29,16 @@ class Cod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['order_id'])) {
-			$json['error'] = $this->language->get('error_order_id');
+		if (isset($this->session->data['order_id'])) {
+			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+			if (!$order_info) {
+				$json['redirect'] = $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true);
+
+				unset($this->session->data['order_id']);
+			}
+		} else {
+			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method']['code'] != 'cod.cod') {

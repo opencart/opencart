@@ -73,7 +73,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
 		// Generate order if payment method is set
 		if ($status) {
 			$order_data = [];

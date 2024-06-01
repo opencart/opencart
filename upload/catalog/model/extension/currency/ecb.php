@@ -38,7 +38,6 @@ class ModelExtensionCurrencyEcb extends Model {
 
 			if ($currencies) {
 				$this->load->model('localisation/currency');
-				$this->load->model('extension/currency/ecb');
 
 				$default = $this->config->get('config_currency');
 

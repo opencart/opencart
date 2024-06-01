@@ -6,6 +6,13 @@ namespace Opencart\catalog\controller\api;
  * @package Opencart\Catalog\Controller\Api
  */
 class Order extends \Opencart\System\Engine\Controller {
+	private $filter = [
+		//'language'          => FILTER_VALIDATE_STRING,
+		//'customer_id'       => FILTER_VALIDATE_INT,
+		//'customer_group_id' => FILTER_VALIDATE_INT,
+		//'firstname'         => FILTER_SANITIZE_STRING
+	];
+
 	public function save(): void {
 		$this->load->language('api/sale/order');
 
@@ -14,6 +21,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Add keys for missing post vars
 		$keys = [
 			'order_id',
+			'language',
+			'currency',
 			'customer_id',
 			'customer_group_id',
 			'firstname',
@@ -137,11 +146,42 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
 		}
 
-		// Products
+		// Currency
+		if (isset($this->request->post['currency'])) {
+			$currency = (string)$this->request->post['currency'];
+		} else {
+			$currency = $this->config->get('config_currency');
+		}
+
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
+
+		if (!$currency_info) {
+			$json['error']['currency'] = $this->language->get('error_currency');
+		}
+
 		if (!$json) {
+			$this->session->data['currency'] = $currency;
+		}
+
+
+
+
+
+
+
+
+
+
+		// Products
+		if (!empty($this->session->data['products'])) {
 			$this->load->model('catalog/product');
 
 			foreach ($this->request->post['products'] as $product) {
+
+
+
 				if (isset($product['quantity'])) {
 					$quantity = (int)$product['quantity'];
 				} else {
@@ -193,7 +233,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 
 						if (!in_array($subscription_plan_id, $subscription_plan_ids)) {
-							$json['error']['subscription'] = $this->language->get('error_subscription');
+							$json['error']['subscription'][$key] = $this->language->get('error_subscription');
 						}
 					}
 				} else {
@@ -202,20 +242,66 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			// Gift Voucher
-			$order_data['vouchers'] = [];
-
 			if (!empty($this->session->data['vouchers'])) {
-				foreach ($this->session->data['vouchers'] as $voucher) {
-					$order_data['vouchers'][] = [
-						'description'      => $voucher['description'],
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+					$keys = [
+						'to_name',
+						'to_email',
+						'from_name',
+						'from_email',
+						'voucher_theme_id',
+						'amount',
+						'agree'
+					];
+
+					foreach ($keys as $key) {
+						if (!isset($this->request->post[$key])) {
+							$this->request->post[$key] = '';
+						}
+					}
+
+					if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
+						$json['redirect'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'), true);
+					}
+
+					if (!oc_validate_length($this->request->post['to_name'], 1, 64)) {
+						$json['error']['to_name'] = $this->language->get('error_to_name');
+					}
+
+					if ((oc_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
+						$json['error']['to_email'] = $this->language->get('error_email');
+					}
+
+					if (!oc_validate_length($this->request->post['from_name'], 1, 64)) {
+						$json['error']['from_name'] = $this->language->get('error_from_name');
+					}
+
+					if ((oc_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
+						$json['error']['from_email'] = $this->language->get('error_email');
+					}
+
+					if (!$this->request->post['voucher_theme_id']) {
+						$json['error']['theme'] = $this->language->get('error_theme');
+					}
+
+					if (($this->currency->convert((int)$this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency')) < $this->config->get('config_voucher_min')) || ($this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency')) > $this->config->get('config_voucher_max'))) {
+						$json['error']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
+					}
+
+					if (empty($this->request->post['agree'])) {
+						$json['error']['warning'] = $this->language->get('error_agree');
+					}
+
+					$this->session->data['vouchers'][] = [
 						'code'             => oc_token(10),
-						'to_name'          => $voucher['to_name'],
-						'to_email'         => $voucher['to_email'],
-						'from_name'        => $voucher['from_name'],
-						'from_email'       => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message'          => $voucher['message'],
-						'amount'           => $voucher['amount']
+						'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->request->post['amount'], $this->session->data['currency'], 1.0), $this->request->post['to_name']),
+						'to_name'          => $this->request->post['to_name'],
+						'to_email'         => $this->request->post['to_email'],
+						'from_name'        => $this->request->post['from_name'],
+						'from_email'       => $this->request->post['from_email'],
+						'voucher_theme_id' => $this->request->post['voucher_theme_id'],
+						'message'          => $this->request->post['message'],
+						'amount'           => $this->currency->convert((int)$this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 					];
 				}
 			}
@@ -1096,19 +1182,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['vouchers'] = [];
 
 			if (!empty($this->session->data['vouchers'])) {
-				foreach ($this->session->data['vouchers'] as $voucher) {
-					$order_data['vouchers'][] = [
-						'description'      => $voucher['description'],
-						'code'             => oc_token(10),
-						'to_name'          => $voucher['to_name'],
-						'to_email'         => $voucher['to_email'],
-						'from_name'        => $voucher['from_name'],
-						'from_email'       => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message'          => $voucher['message'],
-						'amount'           => $voucher['amount']
-					];
-				}
+				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
 			if (isset($this->session->data['comment'])) {

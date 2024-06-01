@@ -672,7 +672,7 @@ class AwsClient implements AwsClientInterface
     public static function applyDocFilters(array $api, array $docs)
     {
         $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
-        $serviceId = $api['metadata']['serviceId'];
+        $serviceId = $api['metadata']['serviceId'] ?? '';
         $version = $api['metadata']['apiVersion'];
 
         // Replace names for any operations with SDK aliases

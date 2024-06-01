@@ -65,6 +65,15 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
+		if (isset($this->session->data['order_id'])) {
+			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+			if (!$order_info) {
+				unset($this->session->data['order_id']);
+			}
+		}
+
+
 		// Generate order if payment method is set
 		if ($status) {
 			$order_data = [];
@@ -301,12 +310,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			if (!isset($this->session->data['order_id'])) {
 				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
-			} else {
-				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
-				if ($order_info && !$order_info['order_status_id']) {
-					$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
-				}
+			} elseif ($order_info && !$order_info['order_status_id']) {
+				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 			}
 		}
 

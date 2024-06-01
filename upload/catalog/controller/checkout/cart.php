@@ -144,20 +144,20 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['products'][] = [
-				'cart_id'        => $product['cart_id'],
-				'thumb'          => $product['image'],
-				'name'           => $product['name'],
-				'model'          => $product['model'],
-				'option'         => $product['option'],
-				'subscription'   => $description,
-				'quantity'       => $product['quantity'],
-				'stock'          => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'minimum'        => !$product['minimum_status'] ? sprintf($this->language->get('error_minimum'), $product['minimum']) : 0,
-				'reward'         => $product['reward'],
-				'price'          => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
-				'total'          => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
-				'href'           => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
-				'remove'         => $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language') . '&key=' . $product['cart_id'])
+				'cart_id'      => $product['cart_id'],
+				'thumb'        => $product['image'],
+				'name'         => $product['name'],
+				'model'        => $product['model'],
+				'option'       => $product['option'],
+				'subscription' => $description,
+				'quantity'     => $product['quantity'],
+				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'minimum'      => !$product['minimum_status'] ? sprintf($this->language->get('error_minimum'), $product['minimum']) : 0,
+				'reward'       => $product['reward'],
+				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
+				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
+				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+				'remove'       => $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language') . '&key=' . $product['cart_id'])
 			];
 		}
 

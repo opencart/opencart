@@ -275,8 +275,12 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			// Create customer token
 			$this->session->data['customer_token'] = oc_token(26);
-
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true));
+			
+			$url = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$response = "<script>window.location.href = '".$url."'</script>";
+			$this->response->setOutput($response);
+			//this is necessary to accept a new cookie when on a different domain
+			
 		} else {
 			$this->session->data['error'] = $this->language->get('error_login');
 

@@ -4,6 +4,8 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
+use Aws\Auth\AuthSelectionMiddleware;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2Middleware;
@@ -35,6 +37,9 @@ class AwsClient implements AwsClientInterface
 
     /** @var callable */
     private $signatureProvider;
+
+    /** @var AuthSchemeResolverInterface */
+    private $authSchemeResolver;
 
     /** @var callable */
     private $credentialProvider;
@@ -230,10 +235,11 @@ class AwsClient implements AwsClientInterface
         $config = $resolver->resolve($args, $this->handlerList);
         $this->api = $config['api'];
         $this->signatureProvider = $config['signature_provider'];
+        $this->authSchemeResolver = $config['auth_scheme_resolver'];
         $this->endpoint = new Uri($config['endpoint']);
         $this->credentialProvider = $config['credentials'];
         $this->tokenProvider = $config['token'];
-        $this->region = isset($config['region']) ? $config['region'] : null;
+        $this->region = $config['region'] ?? null;
         $this->config = $config['config'];
         $this->setClientBuiltIns($args);
         $this->clientContextParams = $this->setClientContextParams($args);
@@ -251,6 +257,7 @@ class AwsClient implements AwsClientInterface
         if ($this->isUseEndpointV2()) {
             $this->addEndpointV2Middleware();
         }
+        $this->addAuthSelectionMiddleware();
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -270,9 +277,7 @@ class AwsClient implements AwsClientInterface
     {
         return $option === null
             ? $this->config
-            : (isset($this->config[$option])
-                ? $this->config[$option]
-                : null);
+            : $this->config[$option] ?? null;
     }
 
     public function getCredentials()
@@ -414,7 +419,7 @@ class AwsClient implements AwsClientInterface
     {
         $api = $this->getApi();
         $provider = $this->signatureProvider;
-        $version = $this->config['signature_version'];
+        $signatureVersion = $this->config['signature_version'];
         $name = $this->config['signing_name'];
         $region = $this->config['signing_region'];
 
@@ -428,42 +433,33 @@ class AwsClient implements AwsClientInterface
 
         $resolver = static function (
             CommandInterface $c
-        ) use ($api, $provider, $name, $region, $version, $configuredSignatureVersion) {
-            if (!empty($c['@context']['signing_region'])) {
-                $region = $c['@context']['signing_region'];
-            }
-            if (!empty($c['@context']['signing_service'])) {
-                $name = $c['@context']['signing_service'];
-            }
-
+        ) use ($api, $provider, $name, $region, $signatureVersion, $configuredSignatureVersion) {
             if (!$configuredSignatureVersion) {
+                if (!empty($c['@context']['signing_region'])) {
+                    $region = $c['@context']['signing_region'];
+                }
+                if (!empty($c['@context']['signing_service'])) {
+                    $name = $c['@context']['signing_service'];
+                }
+                if (!empty($c['@context']['signature_version'])) {
+                    $signatureVersion = $c['@context']['signature_version'];
+                }
+
                 $authType = $api->getOperation($c->getName())['authtype'];
                 switch ($authType){
                     case 'none':
-                        $version = 'anonymous';
+                        $signatureVersion = 'anonymous';
                         break;
                     case 'v4-unsigned-body':
-                        $version = 'v4-unsigned-body';
+                        $signatureVersion = 'v4-unsigned-body';
                         break;
                     case 'bearer':
-                        $version = 'bearer';
+                        $signatureVersion = 'bearer';
                         break;
-                }
-                if (isset($c['@context']['signature_version'])) {
-                    if ($c['@context']['signature_version'] == 'v4a') {
-                        $version = 'v4a';
-                    }
-                }
-                if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
-                    $version = $endpointAuthSchemes['version'];
-                    $name = isset($endpointAuthSchemes['name']) ?
-                        $endpointAuthSchemes['name'] : $name;
-                    $region = isset($endpointAuthSchemes['region']) ?
-                        $endpointAuthSchemes['region'] : $region;
                 }
             }
 
-            return SignatureProvider::resolve($provider, $version, $name, $region);
+            return SignatureProvider::resolve($provider, $signatureVersion, $name, $region);
         };
         $this->handlerList->appendSign(
             Middleware::signer($this->credentialProvider,
@@ -534,6 +530,19 @@ class AwsClient implements AwsClientInterface
         // originating in supported Lambda runtimes
         $this->handlerList->appendBuild(
             Middleware::recursionDetection(), 'recursion-detection'
+        );
+    }
+
+    private function addAuthSelectionMiddleware()
+    {
+        $list = $this->getHandlerList();
+
+        $list->prependBuild(
+            AuthSelectionMiddleware::wrap(
+                $this->authSchemeResolver,
+                $this->getApi()
+            ),
+            'auth-selection'
         );
     }
 

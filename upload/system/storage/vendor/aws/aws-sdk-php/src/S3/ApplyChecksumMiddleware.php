@@ -56,21 +56,15 @@ class ApplyChecksumMiddleware
         $body = $request->getBody();
 
         //Checks if AddContentMD5 has been specified for PutObject or UploadPart
-        $addContentMD5 = isset($command['AddContentMD5'])
-            ?  $command['AddContentMD5']
-            : null;
+        $addContentMD5 = $command['AddContentMD5'] ?? null;
 
         $op = $this->api->getOperation($command->getName());
 
-        $checksumInfo = isset($op['httpChecksum'])
-            ? $op['httpChecksum']
-            : [];
+        $checksumInfo = $op['httpChecksum'] ?? [];
         $checksumMemberName = array_key_exists('requestAlgorithmMember', $checksumInfo)
             ? $checksumInfo['requestAlgorithmMember']
             : "";
-        $requestedAlgorithm = isset($command[$checksumMemberName])
-            ? $command[$checksumMemberName]
-            : null;
+        $requestedAlgorithm = $command[$checksumMemberName] ?? null;
         if (!empty($checksumMemberName) && !empty($requestedAlgorithm)) {
             $requestedAlgorithm = strtolower($requestedAlgorithm);
             $checksumMember = $op->getInput()->getMember($checksumMemberName);
@@ -93,9 +87,7 @@ class ApplyChecksumMiddleware
 
         if (!empty($checksumInfo)) {
         //if the checksum member is absent, check if it's required
-        $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
-            ? $checksumInfo['requestChecksumRequired']
-            : null;
+        $checksumRequired = $checksumInfo['requestChecksumRequired'] ?? null;
             if ((!empty($checksumRequired))
                 || (in_array($name, self::$sha256AndMd5) && $addContentMD5)
             ) {
@@ -147,9 +139,9 @@ class ApplyChecksumMiddleware
      * @param CommandInterface $command
      * @return bool
      */
-    private function isS3Express($command): bool
+    private function isS3Express(CommandInterface $command): bool
     {
-        $authSchemes = $command->getAuthSchemes();
-        return isset($authSchemes['name']) && $authSchemes['name'] == 's3express';
+        return isset($command['@context']['signing_service'])
+            && $command['@context']['signing_service'] === 's3express';
     }
 }

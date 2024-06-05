@@ -51,7 +51,7 @@ class EndpointV2Middleware
         EndpointProviderV2 $endpointProvider,
         Service $api,
         array $args
-    ) : Closure
+    ): Closure
     {
         return function (callable $handler) use ($endpointProvider, $api, $args) {
             return new self($handler, $endpointProvider, $api, $args);
@@ -110,7 +110,7 @@ class EndpointV2Middleware
      *
      * @return array
      */
-    private function resolveArgs(array $commandArgs, Operation $operation) : array
+    private function resolveArgs(array $commandArgs, Operation $operation): array
     {
         $rulesetParams = $this->endpointProvider->getRuleset()->getParameters();
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
@@ -144,7 +144,7 @@ class EndpointV2Middleware
     private function filterEndpointCommandArgs(
         array $rulesetParams,
         array $commandArgs
-    ) : array
+    ): array
     {
         $endpointMiddlewareOpts = [
             '@use_dual_stack_endpoint' => 'UseDualStack',
@@ -181,7 +181,7 @@ class EndpointV2Middleware
      *
      * @return array
      */
-    private function bindStaticContextParams($staticContextParams) : array
+    private function bindStaticContextParams($staticContextParams): array
     {
         $scopedParams = [];
 
@@ -204,7 +204,7 @@ class EndpointV2Middleware
     private function bindContextParams(
         array $commandArgs,
         array $contextParams
-    ) : array
+    ): array
     {
         $scopedParams = [];
 
@@ -228,10 +228,22 @@ class EndpointV2Middleware
     private function applyAuthScheme(
         array $authSchemes,
         CommandInterface $command
-    ) : void
+    ): void
     {
         $authScheme = $this->resolveAuthScheme($authSchemes);
-        $command->setAuthSchemes($authScheme);
+        @$command->setAuthSchemes($authScheme);
+
+        $command['@context']['signature_version'] = $authScheme['version'];
+
+        if (isset($authScheme['name'])) {
+            $command['@context']['signing_service'] = $authScheme['name'];
+        }
+
+        if (isset($authScheme['region'])) {
+            $command['@context']['signing_region'] = $authScheme['region'];
+        } elseif (isset($authScheme['signingRegionSet'])) {
+            $command['@context']['signing_region_set'] = $authScheme['signingRegionSet'];
+        }
     }
 
     /**
@@ -242,7 +254,7 @@ class EndpointV2Middleware
      *
      * @return array
      */
-    private function resolveAuthScheme(array $authSchemes) : array
+    private function resolveAuthScheme(array $authSchemes): array
     {
         $invalidAuthSchemes = [];
 
@@ -275,7 +287,7 @@ class EndpointV2Middleware
      * @param array $authScheme
      * @return array
      */
-    private function normalizeAuthScheme(array $authScheme) : array
+    private function normalizeAuthScheme(array $authScheme): array
     {
         /*
             sigv4a will contain a regionSet property. which is guaranteed to be `*`
@@ -294,12 +306,9 @@ class EndpointV2Middleware
             $normalizedAuthScheme['version'] = self::$validAuthSchemes[$authScheme['name']];
         }
 
-        $normalizedAuthScheme['name'] = isset($authScheme['signingName']) ?
-            $authScheme['signingName'] : null;
-        $normalizedAuthScheme['region'] = isset($authScheme['signingRegion']) ?
-            $authScheme['signingRegion'] : null;
-        $normalizedAuthScheme['signingRegionSet'] = isset($authScheme['signingRegionSet']) ?
-            $authScheme['signingRegionSet'] : null;
+        $normalizedAuthScheme['name'] = $authScheme['signingName'] ?? null;
+        $normalizedAuthScheme['region'] = $authScheme['signingRegion'] ?? null;
+        $normalizedAuthScheme['signingRegionSet'] = $authScheme['signingRegionSet'] ?? null;
 
         return $normalizedAuthScheme;
     }

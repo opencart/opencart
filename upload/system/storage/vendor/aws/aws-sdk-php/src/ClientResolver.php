@@ -4,6 +4,9 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Api\Validator;
+use Aws\Auth\AuthResolver;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
@@ -195,6 +198,12 @@ class ClientResolver
             'doc'     => 'Specifies the token used to authorize requests. Provide an Aws\Token\TokenInterface object, an associative array of "token", and an optional "expiration" key, `false` to use a null token, or a callable token provider used to fetch a token or return null. See Aws\\Token\\TokenProvider for a list of built-in credentials providers. If no token is provided, the SDK will attempt to load one from the environment.',
             'fn'      => [__CLASS__, '_apply_token'],
             'default' => [__CLASS__, '_default_token_provider'],
+        ],
+        'auth_scheme_resolver' => [
+            'type'    => 'value',
+            'valid'   => [AuthSchemeResolverInterface::class],
+            'doc'     => 'An instance of Aws\Auth\AuthSchemeResolverInterface which selects a modeled auth scheme and returns a signature version',
+            'default' => [__CLASS__, '_default_auth_scheme_resolver'],
         ],
         'endpoint_discovery' => [
             'type'     => 'value',
@@ -608,8 +617,8 @@ class ClientResolver
                 new Credentials(
                     $value['key'],
                     $value['secret'],
-                    isset($value['token']) ? $value['token'] : null,
-                    isset($value['expires']) ? $value['expires'] : null
+                    $value['token'] ?? null,
+                    $value['expires'] ?? null
                 )
             );
         } elseif ($value === false) {
@@ -647,7 +656,7 @@ class ClientResolver
             $args['token'] = TokenProvider::fromToken(
                 new Token(
                     $value['token'],
-                    isset($value['expires']) ? $value['expires'] : null
+                    $value['expires'] ?? null
                 )
             );
         } elseif ($value instanceof CacheInterface) {
@@ -731,9 +740,7 @@ class ClientResolver
                     ->getPartition($args['region'], $args['service']);
             }
 
-            $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
-                ? $args['api']['metadata']['endpointPrefix']
-                : $args['service'];
+            $endpointPrefix = $args['api']['metadata']['endpointPrefix'] ?? $args['service'];
 
             // Check region is a valid host label when it is being used to
             // generate an endpoint
@@ -1083,7 +1090,7 @@ class ClientResolver
 
     public static function _default_endpoint_provider(array $args)
     {
-        $service =  isset($args['api']) ? $args['api'] : null;
+        $service = $args['api'] ?? null;
         $serviceName = isset($service) ? $service->getServiceName() : null;
         $apiVersion = isset($service) ? $service->getApiVersion() : null;
 
@@ -1115,6 +1122,11 @@ class ClientResolver
     public static function _default_signature_provider()
     {
         return SignatureProvider::defaultProvider();
+    }
+
+    public static function _default_auth_scheme_resolver(array $args)
+    {
+        return new AuthSchemeResolver($args['credentials'], $args['token']);
     }
 
     public static function _default_signature_version(array &$args)
@@ -1172,9 +1184,7 @@ class ClientResolver
                 'region' => $args['region'],
             ]);
 
-        return isset($args['__partition_result']['signingRegion'])
-            ? $args['__partition_result']['signingRegion']
-            : $args['region'];
+        return $args['__partition_result']['signingRegion'] ?? $args['region'];
     }
 
     public static function _apply_ignore_configured_endpoint_urls($value, array &$args)
@@ -1245,7 +1255,7 @@ class ClientResolver
 
     public static function _missing_region(array $args)
     {
-        $service = isset($args['service']) ? $args['service'] : '';
+        $service = $args['service'] ?? '';
 
         $msg = <<<EOT
 Missing required client configuration options:
@@ -1310,8 +1320,7 @@ EOT;
                 $definition = [
                     'type' => 'value',
                     'valid' => [$paramDefinition['type']],
-                    'doc' => isset($paramDefinition['documentation']) ?
-                        $paramDefinition['documentation'] : null
+                    'doc' => $paramDefinition['documentation'] ?? null
                 ];
                 $this->argDefinitions[$paramName] = $definition;
 

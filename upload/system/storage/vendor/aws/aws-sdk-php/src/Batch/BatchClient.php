@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeJobsAsync(array $args = [])
  * @method \Aws\Result describeSchedulingPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSchedulingPoliciesAsync(array $args = [])
+ * @method \Aws\Result getJobQueueSnapshot(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getJobQueueSnapshotAsync(array $args = [])
  * @method \Aws\Result listJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result listSchedulingPolicies(array $args = [])

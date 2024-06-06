@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Account** service.
+ * @method \Aws\Result acceptPrimaryEmailUpdate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise acceptPrimaryEmailUpdateAsync(array $args = [])
  * @method \Aws\Result deleteAlternateContact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAlternateContactAsync(array $args = [])
  * @method \Aws\Result disableRegion(array $args = [])
@@ -15,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getAlternateContactAsync(array $args = [])
  * @method \Aws\Result getContactInformation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getContactInformationAsync(array $args = [])
+ * @method \Aws\Result getPrimaryEmail(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPrimaryEmailAsync(array $args = [])
  * @method \Aws\Result getRegionOptStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRegionOptStatusAsync(array $args = [])
  * @method \Aws\Result listRegions(array $args = [])
@@ -23,5 +27,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putAlternateContactAsync(array $args = [])
  * @method \Aws\Result putContactInformation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putContactInformationAsync(array $args = [])
+ * @method \Aws\Result startPrimaryEmailUpdate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startPrimaryEmailUpdateAsync(array $args = [])
  */
 class AccountClient extends AwsClient {}

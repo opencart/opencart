@@ -7,11 +7,11 @@ namespace Opencart\System\Library\Cache;
  */
 class Redis {
 	/**
-	 * @var \Redis
+	 * @var \Redis $redis
 	 */
 	private \Redis $redis;
 	/**
-	 * @var int
+	 * @var int $expire
 	 */
 	private int $expire;
 

@@ -14,27 +14,27 @@ namespace Opencart\System\Library;
  */
 class Image {
 	/**
-	 * @var string
+	 * @var string $file
 	 */
 	private string $file;
 	/**
-	 * @var mixed
+	 * @var mixed $image
 	 */
 	private $image;
 	/**
-	 * @var int
+	 * @var int $width
 	 */
 	private int $width;
 	/**
-	 * @var int
+	 * @var int $height
 	 */
 	private int $height;
 	/**
-	 * @var string
+	 * @var string $bits
 	 */
 	private string $bits;
 	/**
-	 * @var string
+	 * @var string $mime
 	 */
 	private string $mime;
 

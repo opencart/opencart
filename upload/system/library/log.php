@@ -14,7 +14,7 @@ namespace Opencart\System\Library;
  */
 class Log {
 	/**
-	 * @var string
+	 * @var string $file
 	 */
 	private string $file;
 

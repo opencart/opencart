@@ -11,7 +11,7 @@ class Mem {
 	 */
 	private \Memcache $memcache;
 	/**
-	 * @var int
+	 * @var int $expire
 	 */
 	private int $expire;
 

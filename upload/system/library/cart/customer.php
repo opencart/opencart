@@ -7,55 +7,55 @@ namespace Opencart\System\Library\Cart;
  */
 class Customer {
 	/**
-	 * @var object
+	 * @var object $db
 	 */
 	private object $db;
 	/**
-	 * @var object
+	 * @var object $config
 	 */
 	private object $config;
 	/**
-	 * @var object
+	 * @var object $request
 	 */
 	private object $request; // Do not add namespace as it stops devs being able to extend classes
 	/**
-	 * @var object
+	 * @var object $session
 	 */
 	private object $session;
 	/**
-	 * @var int
+	 * @var int $customer_id
 	 */
 	private int $customer_id = 0;
 	/**
-	 * @var string
+	 * @var string $firstname
 	 */
 	private string $firstname = '';
 	/**
-	 * @var string
+	 * @var string $lastname
 	 */
 	private string $lastname = '';
 	/**
-	 * @var int
+	 * @var int $customer_group_id
 	 */
 	private int $customer_group_id = 0;
 	/**
-	 * @var string
+	 * @var string $email
 	 */
 	private string $email = '';
 	/**
-	 * @var string
+	 * @var string $telephone
 	 */
 	private string $telephone = '';
 	/**
-	 * @var bool
+	 * @var bool $newsletter
 	 */
 	private bool $newsletter = false;
 	/**
-	 * @var bool
+	 * @var bool $safe
 	 */
 	private bool $safe = false;
 	/**
-	 * @var bool
+	 * @var bool $commenter
 	 */
 	private bool $commenter = false;
 

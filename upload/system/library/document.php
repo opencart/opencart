@@ -14,27 +14,27 @@ namespace Opencart\System\Library;
  */
 class Document {
 	/**
-	 * @var string
+	 * @var string $title
 	 */
 	private string $title = '';
 	/**
-	 * @var string
+	 * @var string $description
 	 */
 	private string $description = '';
 	/**
-	 * @var string
+	 * @var string $keywords
 	 */
 	private string $keywords = '';
 	/**
-	 * @var array<string, array<string, string>>
+	 * @var array<string, array<string, string>> $links
 	 */
 	private array $links = [];
 	/**
-	 * @var array<string, array<string, string>>
+	 * @var array<string, array<string, string>> $styles
 	 */
 	private array $styles = [];
 	/**
-	 * @var array<string, array<string, array<string, string>>>
+	 * @var array<string, array<string, array<string, string>>> $scripts
 	 */
 	private array $scripts = [];
 

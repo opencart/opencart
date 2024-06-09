@@ -15,11 +15,11 @@ namespace Opencart\System\Library;
  */
 class Url {
 	/**
-	 * @var string
+	 * @var string $url
 	 */
 	private string $url;
 	/**
-	 * @var array<int, object>
+	 * @var array<int, object> $rewrite
 	 */
 	private array $rewrite = [];
 

@@ -7,7 +7,7 @@ namespace Opencart\System\Library\Session;
  */
 class File {
 	/**
-	 * @var object
+	 * @var object $config
 	 */
 	private object $config;
 

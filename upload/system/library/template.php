@@ -14,7 +14,7 @@ namespace Opencart\System\Library;
  */
 class Template {
 	/**
-	 * @var object $adaptor
+	 * @var object
 	 */
 	private object $adaptor;
 

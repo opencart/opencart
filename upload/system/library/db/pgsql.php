@@ -7,7 +7,7 @@ namespace Opencart\System\Library\DB;
  */
 class PgSQL {
 	/**
-	 * @var mixed $connection
+	 * @var mixed
 	 */
 	private $connection;
 

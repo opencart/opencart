@@ -7,15 +7,15 @@ namespace Opencart\System\Library\Cart;
  */
 class Length {
 	/**
-	 * @var object $db
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object $config
+	 * @var object
 	 */
 	private object $config;
 	/**
-	 * @var array<int, array<string, mixed>> $lengths
+	 * @var array<int, array<string, mixed>>
 	 */
 	private array $lengths = [];
 

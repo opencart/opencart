@@ -14,23 +14,23 @@ namespace Opencart\System\Library;
  */
 class Request {
 	/**
-	 * @var array<string, mixed> $get
+	 * @var array<string, mixed>
 	 */
 	public array $get = [];
 	/**
-	 * @var array<string, mixed> $post
+	 * @var array<string, mixed>
 	 */
 	public array $post = [];
 	/**
-	 * @var array<string, mixed> $cookie
+	 * @var array<string, mixed>
 	 */
 	public array $cookie = [];
 	/**
-	 * @var array<string, mixed> $files
+	 * @var array<string, mixed>
 	 */
 	public array $files = [];
 	/**
-	 * @var array<string, mixed> $server
+	 * @var array<string, mixed>
 	 */
 	public array $server = [];
 

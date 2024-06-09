@@ -42,8 +42,8 @@ function oc_validate_email(string $email): bool {
 /**
  * Validate Regular Expression
  *
- * @param string $string    The string to validate
- * @param string $pattern   The regular expression pattern
+ * @param string $string  The string to validate
+ * @param string $pattern The regular expression pattern
  *
  * @return bool
  */

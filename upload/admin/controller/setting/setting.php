@@ -270,7 +270,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/stock_status');
 
 		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
-		
+
 		$data['config_stock_status_id'] = $this->config->get('config_stock_status_id');
 		$data['config_stock_display'] = $this->config->get('config_stock_display');
 		$data['config_stock_warning'] = $this->config->get('config_stock_warning');

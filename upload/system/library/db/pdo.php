@@ -7,15 +7,15 @@ namespace Opencart\System\Library\DB;
  */
 class PDO {
 	/**
-	 * @var \PDO|null $connection
+	 * @var \PDO|null
 	 */
 	private ?\PDO $connection;
 	/**
-	 * @var array<string, string> $data
+	 * @var array<string, string>
 	 */
 	private array $data = [];
 	/**
-	 * @var int $affected
+	 * @var int
 	 */
 	private int $affected;
 

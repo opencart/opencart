@@ -7,31 +7,31 @@ namespace Opencart\System\Library\Cart;
  */
 class Cart {
 	/**
-	 * @var object $db
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object $config
+	 * @var object
 	 */
 	private object $config;
 	/**
-	 * @var object $customer
+	 * @var object
 	 */
 	private object $customer;
 	/**
-	 * @var object $session
+	 * @var object
 	 */
 	private object $session;
 	/**
-	 * @var object $tax
+	 * @var object
 	 */
 	private object $tax;
 	/**
-	 * @var object $weight
+	 * @var object
 	 */
 	private object $weight;
 	/**
-	 * @var array<int, array<string, mixed>> $data
+	 * @var array<int, array<string, mixed>>
 	 */
 	private array $data = [];
 
@@ -315,7 +315,7 @@ class Cart {
 					if ($cart['override']) {
 						$price = $cart['price'];
 					} else {
-						$price = $price + $option_price;
+						$price += $option_price;
 					}
 
 					$this->data[$cart['cart_id']] = [

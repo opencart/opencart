@@ -14,15 +14,15 @@ namespace Opencart\System\Library;
  */
 class Session {
 	/**
-	 * @var object $adaptor
+	 * @var object
 	 */
 	protected object $adaptor;
 	/**
-	 * @var string $session_id
+	 * @var string
 	 */
 	protected string $session_id;
 	/**
-	 * @var array<mixed> $data
+	 * @var array<mixed>
 	 */
 	public array $data = [];
 

@@ -1,7 +1,5 @@
 <?php
-/*
- * @return string
- */
+// @return string
 function oc_get_ip(): string {
 	$headers = [
 		'HTTP_CF_CONNECTING_IP', // CloudFlare

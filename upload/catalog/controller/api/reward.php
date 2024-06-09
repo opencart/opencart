@@ -55,7 +55,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	function remove() {
+	public function remove(): void {
 		$this->load->language('api/sale/reward');
 
 		$json['success'] = $this->language->get('text_remove');
@@ -65,7 +65,6 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 
 	/**
 	 * Maximum

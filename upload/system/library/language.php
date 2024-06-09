@@ -14,23 +14,23 @@ namespace Opencart\System\Library;
  */
 class Language {
 	/**
-	 * @var string $code
+	 * @var string
 	 */
 	protected string $code;
 	/**
-	 * @var string $directory
+	 * @var string
 	 */
 	protected string $directory;
 	/**
-	 * @var array<string, string> $path
+	 * @var array<string, string>
 	 */
 	protected array $path = [];
 	/**
-	 * @var array<string, string> $data
+	 * @var array<string, string>
 	 */
 	protected array $data = [];
 	/**
-	 * @var array<string, array<string, array<string, mixed>>> $cache
+	 * @var array<string, array<string, array<string, mixed>>>
 	 */
 	protected array $cache = [];
 

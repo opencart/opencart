@@ -15,7 +15,7 @@ namespace Opencart\System\Library;
 class Mail {
 	private object $adaptor;
 	/**
-	 * @var array<string, mixed> $option
+	 * @var array<string, mixed>
 	 */
 	private array $option = [];
 

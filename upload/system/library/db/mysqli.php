@@ -7,7 +7,7 @@ namespace Opencart\System\Library\DB;
  */
 class MySQLi {
 	/**
-	 * @var ?\mysqli $connection
+	 * @var ?\mysqli
 	 */
 	private ?\mysqli $connection;
 

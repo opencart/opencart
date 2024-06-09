@@ -7,11 +7,11 @@ namespace Opencart\System\Library\Cache;
  */
 class Apcu {
 	/**
-	 * @var int $expire
+	 * @var int
 	 */
 	private int $expire;
 	/**
-	 * @var bool $active
+	 * @var bool
 	 */
 	private bool $active;
 

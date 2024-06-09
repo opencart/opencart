@@ -11,7 +11,7 @@ class Memcached {
 	 */
 	private \Memcached $memcached;
 	/**
-	 * @var int $expire
+	 * @var int
 	 */
 	private int $expire;
 

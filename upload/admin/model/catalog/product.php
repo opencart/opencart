@@ -1556,7 +1556,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 	}
 
-
 	/**
 	 * Get Discounts
 	 *

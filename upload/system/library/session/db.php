@@ -15,11 +15,11 @@ namespace Opencart\System\Library\Session;
  */
 class DB {
 	/**
-	 * @var object $db
+	 * @var object
 	 */
 	private object $db;
 	/**
-	 * @var object $config
+	 * @var object
 	 */
 	private object $config;
 

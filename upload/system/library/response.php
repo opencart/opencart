@@ -16,15 +16,15 @@ namespace Opencart\System\Library;
  */
 class Response {
 	/**
-	 * @var array<int, string> $headers
+	 * @var array<int, string>
 	 */
 	private array $headers = [];
 	/**
-	 * @var int $level
+	 * @var int
 	 */
 	private int $level = 0;
 	/**
-	 * @var string $output
+	 * @var string
 	 */
 	private string $output = '';
 

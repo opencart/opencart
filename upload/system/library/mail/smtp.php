@@ -8,11 +8,11 @@ namespace Opencart\System\Library\Mail;
  */
 class Smtp {
 	/**
-	 * @var array<string, mixed> $option
+	 * @var array<string, mixed>
 	 */
 	protected array $option = [];
 	/**
-	 * @var array<string, false|int> $default
+	 * @var array<string, false|int>
 	 */
 	protected array $default = [
 		'smtp_port'    => 25,

@@ -7,19 +7,19 @@ namespace Opencart\System\Library\Template;
  */
 class Twig {
 	/**
-	 * @var string $root
+	 * @var string
 	 */
 	protected string $root;
 	/**
-	 * @var \Twig\Loader\FilesystemLoader $loader
+	 * @var \Twig\Loader\FilesystemLoader
 	 */
 	protected \Twig\Loader\FilesystemLoader $loader;
 	/**
-	 * @var string $directory
+	 * @var string
 	 */
 	protected string $directory;
 	/**
-	 * @var array<string, string> $path
+	 * @var array<string, string>
 	 */
 	protected array $path = [];
 

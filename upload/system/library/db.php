@@ -16,7 +16,7 @@ namespace Opencart\System\Library;
  */
 class DB {
 	/**
-	 * @var object $adaptor
+	 * @var object
 	 */
 	private object $adaptor;
 

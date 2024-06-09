@@ -14,15 +14,15 @@ namespace Opencart\System\Engine;
  */
 class Config {
 	/**
-	 * @var string $directory
+	 * @var string
 	 */
 	protected string $directory;
 	/**
-	 * @var array<string, string> $path
+	 * @var array<string, string>
 	 */
 	private array $path = [];
 	/**
-	 * @var array<string, string> $data
+	 * @var array<string, string>
 	 */
 	private array $data = [];
 

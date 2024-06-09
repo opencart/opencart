@@ -20,7 +20,7 @@ class Event {
 	 */
 	protected \Opencart\System\Engine\Registry $registry;
 	/**
-	 * @var array<int, array<string, mixed>> $data
+	 * @var array<int, array<string, mixed>>
 	 */
 	protected array $data = [];
 

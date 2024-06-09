@@ -16,12 +16,12 @@ namespace Opencart\System\Engine;
  */
 class Action {
 	/**
-	 * @var string $route
+	 * @var string
 	 */
 	private string $route;
 
 	/**
-	 * @var string $method
+	 * @var string
 	 */
 	private string $method;
 

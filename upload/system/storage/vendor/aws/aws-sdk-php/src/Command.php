@@ -66,10 +66,21 @@ class Command implements CommandInterface
      *
      * @param array $authSchemes
      *
+     * @deprecated In favor of using the @context property bag.
+     *             Auth Schemes are now accessible via the `signature_version` key
+     *             in a Command's context, if applicable. Auth Schemes set using
+     *             This method are no longer consumed.
+     *
      * @internal
      */
     public function setAuthSchemes(array $authSchemes)
     {
+        trigger_error(__METHOD__ . ' is deprecated.  Auth schemes '
+            . 'resolved using the service `auth` trait or via endpoint resolution '
+            . 'are now set in the command `@context` property.`'
+            , E_USER_DEPRECATED
+        );
+
         $this->authSchemes = $authSchemes;
     }
 
@@ -78,9 +89,19 @@ class Command implements CommandInterface
      * for endpoint resolution
      *
      * @returns array
+     *
+     * @deprecated In favor of using the @context property bag.
+     *             Auth schemes are now accessible via the `signature_version` key
+     *             in a Command's context, if applicable.
      */
     public function getAuthSchemes()
     {
+        trigger_error(__METHOD__ . ' is deprecated.  Auth schemes '
+        . 'resolved using the service `auth` trait or via endpoint resolution '
+        . 'can now be found in the command `@context` property.`'
+        , E_USER_DEPRECATED
+        );
+
         return $this->authSchemes ?: [];
     }
 

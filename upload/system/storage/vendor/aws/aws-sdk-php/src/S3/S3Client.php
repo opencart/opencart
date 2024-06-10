@@ -420,9 +420,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
                     'disable_multiregion_access_points' =>
                         $this->getConfig('disable_multiregion_access_points'),
-                    'endpoint' => isset($args['endpoint'])
-                        ? $args['endpoint']
-                        : null
+                    'endpoint' => $args['endpoint'] ?? null
                 ],
                 $this->isUseEndpointV2()
             ),
@@ -502,9 +500,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         $command = clone $command;
         $command->getHandlerList()->remove('signer');
         $request = \Aws\serialize($command);
-        $signing_name = empty($command->getAuthSchemes())
-            ? $this->getSigningName($request->getUri()->getHost())
-            : $command->getAuthSchemes()['name'];
+        $signing_name = $command['@context']['signing_service']
+            ?? $this->getSigningName($request->getUri()->getHost());
         $signature_version = $this->getSignatureVersionFromCommand($command);
 
         /** @var \Aws\Signature\SignatureInterface $signer */
@@ -574,9 +571,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         return static function (callable $handler) use ($region) {
             return function (Command $command, $request = null) use ($handler, $region) {
                 if ($command->getName() === 'CreateBucket') {
-                    $locationConstraint = isset($command['CreateBucketConfiguration']['LocationConstraint'])
-                        ? $command['CreateBucketConfiguration']['LocationConstraint']
-                        : null;
+                    $locationConstraint = $command['CreateBucketConfiguration']['LocationConstraint']
+                        ?? null;
 
                     if ($locationConstraint === 'us-east-1') {
                         unset($command['CreateBucketConfiguration']);
@@ -723,12 +719,10 @@ class S3Client extends AwsClient implements S3ClientInterface
                 CommandInterface $command,
                 RequestInterface $request = null
             ) use ($handler) {
-                if (!empty($command->getAuthSchemes()['version'] )
-                    && $command->getAuthSchemes()['version'] == 'v4-s3express'
+                if (!empty($command['@context']['signature_version'])
+                    && $command['@context']['signature_version'] === 'v4-s3express'
                 ) {
-                    $authScheme = $command->getAuthSchemes();
-                    $authScheme['version'] = 's3v4';
-                    $command->setAuthSchemes($authScheme);
+                    $command['@context']['signature_version'] = 's3v4';
                 }
                 return $handler($command, $request);
             };
@@ -847,9 +841,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                 $maxRetries = $config->getMaxAttempts() - 1;
                 $decider = RetryMiddleware::createDefaultDecider($maxRetries);
                 $decider = function ($retries, $command, $request, $result, $error) use ($decider, $maxRetries) {
-                    $maxRetries = null !== $command['@retries']
-                        ? $command['@retries']
-                        : $maxRetries;
+                    $maxRetries = $command['@retries'] ?? $maxRetries;
 
                     if ($decider($retries, $command, $request, $result, $error)) {
                         return true;
@@ -1111,10 +1103,7 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     private function getSignatureVersionFromCommand(CommandInterface $command)
     {
-        $signatureVersion = empty($command->getAuthSchemes())
-            ? $this->getConfig('signature_version')
-            : $command->getAuthSchemes()['version'];
-        return $signatureVersion;
+        return $command['@context']['signature_version']
+            ?? $this->getConfig('signature_version');
     }
-
 }

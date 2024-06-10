@@ -95,6 +95,12 @@ legend {
     font-weight: bold;
 }
 
+.form-switch-lg {
+    font-size: 26px;
+    min-height: 36px;
+    line-height: 36px;
+}
+
 .form-control:hover {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;

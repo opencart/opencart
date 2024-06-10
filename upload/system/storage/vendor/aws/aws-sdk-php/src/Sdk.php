@@ -52,6 +52,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationDiscoveryService(array $args = [])
  * @method \Aws\ApplicationInsights\ApplicationInsightsClient createApplicationInsights(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionApplicationInsights(array $args = [])
+ * @method \Aws\ApplicationSignals\ApplicationSignalsClient createApplicationSignals(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionApplicationSignals(array $args = [])
  * @method \Aws\Appstream\AppstreamClient createAppstream(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppstream(array $args = [])
  * @method \Aws\Artifact\ArtifactClient createArtifact(array $args = [])
@@ -771,7 +773,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.311.2';
+    const VERSION = '3.312.0';
 
     /** @var array Arguments for creating clients */
     private $args;

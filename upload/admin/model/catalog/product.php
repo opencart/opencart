@@ -877,12 +877,28 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
 		}
 
-		if (!empty($data['filter_price'])) {
-			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . '%' . "'";
+		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
+			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
 		}
 
-		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
-			$sql .= " AND `p`.`quantity` = '" . (int)$data['filter_quantity'] . "'";
+		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
+			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
+			$sql .= " AND `p`.`price` >= '" . (float)$data['filter_price_from'] . "'";
+		}
+
+		if (isset($data['filter_price_to']) && $data['filter_price_to'] !== '') {
+			$sql .= " AND `p`.`price` <= '" . (float)$data['filter_price_to'] . "'";
+		}
+
+		if (isset($data['filter_quantity_from']) && $data['filter_quantity_from'] !== '') {
+			$sql .= " AND `p`.`quantity` >= '" . (int)$data['filter_quantity_from'] . "'";
+		}
+
+		if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
+			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -960,12 +976,28 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
 		}
 
-		if (isset($data['filter_price']) && $data['filter_price'] !== '') {
-			$sql .= " AND `p`.`price` LIKE '" . (float)$data['filter_price'] . '%' . "'";
+		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
+			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
 		}
 
-		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
-			$sql .= " AND `p`.`quantity` = '" . (int)$data['filter_quantity'] . "'";
+		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
+			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
+			$sql .= " AND `p`.`price` >= '" . (float)$data['filter_price_from'] . "'";
+		}
+
+		if (isset($data['filter_price_to']) && $data['filter_price_to'] !== '') {
+			$sql .= " AND `p`.`price` <= '" . (float)$data['filter_price_to'] . "'";
+		}
+
+		if (isset($data['filter_quantity_from']) && $data['filter_quantity_from'] !== '') {
+			$sql .= " AND `p`.`quantity` >= '" . (int)$data['filter_quantity_from'] . "'";
+		}
+
+		if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
+			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {

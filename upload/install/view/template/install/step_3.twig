@@ -13,7 +13,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-cogs"></i> {{ text_step_3 }}</div>
       <div class="card-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data">
+        <form id="step-3">
           <fieldset>
             <legend>{{ text_db_connection }}</legend>
             <div class="row">
@@ -27,30 +27,24 @@
                 </div>
               </div>
               <div class="col-md-8 order-md-1">
-
                 <div class="row mb-3">
                   <div class="col">
-                    <label for="input-db-driver" class="form-label">{{ entry_db_driver }}</label>
-                    <select name="db_driver" id="input-db-driver" class="form-control" onchange="javascript:document.getElementById('db-advanced').style.display=(this.value=='mysqli')?'block':'none';">
+                    <label for="input-db-driver" class="form-label">{{ entry_db_driver }}</label> <select name="db_driver" id="input-db-driver" class="form-control" onchange="javascript:document.getElementById('db-advanced').style.display=(this.value=='mysqli')?'block':'none';">
                       {% for driver in drivers %}
                         <option value="{{ driver.value }}"{% if db_driver == driver.value %} selected{% endif %}>{{ driver.text }}</option>
                       {% endfor %}
                     </select>
-
                     {% if error_db_driver %}
                       <div class="text-danger">{{ error_db_driver }}</div>
                     {% endif %}
                   </div>
-
                   <div class="col required">
-                    <label for="input-db-hostname" class="form-label">{{ entry_db_hostname }}</label>
-                    <input type="text" name="db_hostname" value="{{ db_hostname }}" id="input-db-hostname" class="form-control"/>
+                    <label for="input-db-hostname" class="form-label">{{ entry_db_hostname }}</label> <input type="text" name="db_hostname" value="{{ db_hostname }}" id="input-db-hostname" class="form-control"/>
                     {% if error_db_hostname %}
                       <div class="text-danger">{{ error_db_hostname }}</div>
                     {% endif %}
                   </div>
                 </div>
-
                 <div class="row mb-3">
                   <div class="col required">
                     <label for="input-db-username" class="form-label">{{ entry_db_username }}</label>
@@ -64,49 +58,6 @@
                     <input type="password" name="db_password" value="{{ db_password }}" id="input-db-password" class="form-control" autocomplete="new-password"/>
                   </div>
                 </div>
-
-                <div class="row mb-3">
-                  <div class="accordion" id="db-advanced" style="display:{{ db_driver =='mysqli'?'block':'none' }};">
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="db-advanced-heading">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#db-advanced-collapse" aria-expanded="false" aria-controls="db-advanced-collapse">
-                          {{ entry_db_advanced }}
-                        </button>
-                      </h2>
-                      <div id="db-advanced-collapse" class="accordion-collapse collapse" aria-labelledby="db-advanced-heading">
-                        <div class="accordion-body">
-                        <div class="alert alert-primary d-flex align-items-center" role="alert">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                          </svg>
-                          <div>
-                            {{ entry_db_ssl_info }}
-                          </div>
-                        </div>
-                          <div class="row mb-3">
-                            <div class="col">
-                              <label for="input-db-ssl-key" class="form-label">{{ entry_db_ssl_key }}</label>
-                              <textarea name="db_ssl_key" id="input-db-ssl-key" class="form-control">{{ db_ssl_key }}</textarea>
-                            </div>
-                          </div>
-                          <div class="row mb-3">
-                            <div class="col">
-                              <label for="input-db-ssl-cert" class="form-label">{{ entry_db_ssl_cert }}</label>
-                              <textarea name="db_ssl_cert" id="input-db-ssl-cert" class="form-control">{{ db_ssl_cert }}</textarea>
-                            </div>
-                          </div>
-                          <div class="row mb-3">
-                            <div class="col">
-                              <label for="input-db-ssl-ca" class="form-label">{{ entry_db_ssl_ca }}</label>
-                              <textarea name="db_ssl_ca" id="input-db-ssl-ca" class="form-control">{{ db_ssl_ca }}</textarea>
-                            </div>
-                          </div>                        
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 <div class="row mb-3">
                   <div class="col-6 required">
                     <label for="input-db-database" class="form-label">{{ entry_db_database }}</label>
@@ -130,6 +81,56 @@
                     {% endif %}
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                  <div class="col-3">
+                    <label for="input-db-advanced" class="form-label">{{ entry_db_advanced }}</label>
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="advanced" value="0"/>
+                      <input type="checkbox" name="advanced" value="1" id="input-db-advanced" class="form-check-input"/>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="advanced" class="row mb-3">
+                  <div class="accordion" id="db-advanced" style="display:{{ db_driver =='mysqli' ? 'block' : 'none' }};">
+
+                      <h2 class="accordion-header" id="db-advanced-heading">{{ entry_db_advanced }}</h2>
+                      <div id="db-advanced-collapse" class="accordion-collapse collapse" >
+                        <div class="accordion-body">
+                          <div class="alert alert-primary d-flex align-items-center" role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                            <div>
+                              {{ entry_db_ssl_info }}
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col">
+                              <label for="input-db-ssl-key" class="form-label">{{ entry_db_ssl_key }}</label>
+                              <textarea name="db_ssl_key" id="input-db-ssl-key" class="form-control">{{ db_ssl_key }}</textarea>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col">
+                              <label for="input-db-ssl-cert" class="form-label">{{ entry_db_ssl_cert }}</label>
+                              <textarea name="db_ssl_cert" id="input-db-ssl-cert" class="form-control">{{ db_ssl_cert }}</textarea>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col">
+                              <label for="input-db-ssl-ca" class="form-label">{{ entry_db_ssl_ca }}</label>
+                              <textarea name="db_ssl_ca" id="input-db-ssl-ca" class="form-control">{{ db_ssl_ca }}</textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </fieldset>
@@ -138,15 +139,13 @@
             <legend>{{ text_db_administration }}</legend>
             <div class="row mb-3">
               <div class="col required">
-                <label for="input-username" class="form-label">{{ entry_username }}</label>
-                <input type="text" name="username" value="{{ username }}" id="input-username" class="form-control"/>
+                <label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="username" value="{{ username }}" id="input-username" class="form-control"/>
                 {% if error_username %}
                   <div class="text-danger">{{ error_username }}</div>
                 {% endif %}
               </div>
               <div class="col required">
-                <label for="input-password" class="form-label">{{ entry_password }}</label>
-                <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control"/>
+                <label for="input-password" class="form-label">{{ entry_password }}</label> <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control"/>
                 {% if error_password %}
                   <div class="text-danger">{{ error_password }}</div>
                 {% endif %}

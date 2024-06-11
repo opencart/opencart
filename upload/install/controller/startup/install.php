@@ -36,6 +36,7 @@ class Install extends \Opencart\System\Engine\Controller {
 		$language = new \Opencart\System\Library\Language($this->config->get('language_code'));
 		$language->addPath(DIR_LANGUAGE);
 		$language->load($this->config->get('language_code'));
+
 		$this->registry->set('language', $language);
 	}
 }

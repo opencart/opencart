@@ -360,15 +360,35 @@ class Category extends \Opencart\System\Engine\Model {
 	public function getCategories(array $data = []): array {
 		$sql = "SELECT `cp`.`category_id` AS `category_id`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' > ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`cd2`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-		}
+		// if (!empty($data['filter_name'])) {
+		// 	$sql .= " AND LCASE(`cd2`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		// }
 
 		if (isset($data['filter_parent_id'])) {
 			$sql .= " AND `c1`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
 		}
 
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `c1`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
 		$sql .= " GROUP BY `cp`.`category_id`";
+
+		// path name filter in category list "Components > Monitors > test 1" or "Components > Monitors" or "Monitors" or "test 1"
+		if (!empty($data['filter_name'])) {
+			$implode = [];
+
+			// split category path, clear > symbols and extra spaces
+			$words = explode(' ', trim(preg_replace('/\s+/', ' ', str_ireplace([' &gt; ', ' > '], ' ', $data['filter_name']))));
+
+			foreach ($words as $word) {
+				$implode[] = "LCASE(`name`) LIKE '" . $this->db->escape('%' . oc_strtolower($word) . '%') . "'";
+			}
+
+			if ($implode) {
+				$sql .= " HAVING ((" . implode(" AND ", $implode) . ") OR LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "')";
+			}
+		}
 
 		$sort_data = [
 			'name',
@@ -412,19 +432,33 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getTotalCategories(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+			// category path name filter "Components > Monitors > test 1"
+			$data['start'] = 0;
+			$data['limit'] = 999999999999;
+
+			$categories = $this->model_catalog_category->getCategories($data);
+
+			return count($categories);
+		} else {
+			$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+			// if (!empty($data['filter_name'])) {
+			// 	$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+			// }
+
+			if (isset($data['filter_parent_id'])) {
+				$sql .= " AND `c`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
+			}
+
+			if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+				$sql .= " AND `c`.`status` = '" . (int)$data['filter_status'] . "'";
+			}
+
+			$query = $this->db->query($sql);
+
+			return (int)$query->row['total'];
 		}
-
-		if (isset($data['filter_parent_id'])) {
-			$sql .= " AND `c`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
 	}
 
 	/**

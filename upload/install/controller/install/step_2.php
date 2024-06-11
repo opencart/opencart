@@ -186,7 +186,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$json['redirect'] = $this->url->link('install/step_3', 'language=' . $this->config->get('language_code'));
-
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

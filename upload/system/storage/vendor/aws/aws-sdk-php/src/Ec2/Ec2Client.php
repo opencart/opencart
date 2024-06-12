@@ -840,6 +840,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeSnapshotTierStatusAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeStoreImageTasks(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeStoreImageTasksAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result describeTrafficMirrorFilterRules(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise describeTrafficMirrorFilterRulesAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeTrafficMirrorFilters(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeTrafficMirrorFiltersAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeTrafficMirrorSessions(array $args = []) (supported in versions 2016-11-15)

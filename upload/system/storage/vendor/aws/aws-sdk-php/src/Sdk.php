@@ -42,6 +42,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppRunner(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppSync(array $args = [])
+ * @method \Aws\AppTest\AppTestClient createAppTest(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppTest(array $args = [])
  * @method \Aws\Appflow\AppflowClient createAppflow(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppflow(array $args = [])
  * @method \Aws\ApplicationAutoScaling\ApplicationAutoScalingClient createApplicationAutoScaling(array $args = [])
@@ -76,8 +78,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
  * @method \Aws\BackupGateway\BackupGatewayClient createBackupGateway(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBackupGateway(array $args = [])
- * @method \Aws\BackupStorage\BackupStorageClient createBackupStorage(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionBackupStorage(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Bedrock\BedrockClient createBedrock(array $args = [])
@@ -775,7 +775,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.313.0';
+    const VERSION = '3.314.0';
 
     /** @var array Arguments for creating clients */
     private $args;

@@ -26,6 +26,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteCustomKeyStoreAsync(array $args = [])
  * @method \Aws\Result deleteImportedKeyMaterial(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteImportedKeyMaterialAsync(array $args = [])
+ * @method \Aws\Result deriveSharedSecret(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deriveSharedSecretAsync(array $args = [])
  * @method \Aws\Result describeCustomKeyStores(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeCustomKeyStoresAsync(array $args = [])
  * @method \Aws\Result describeKey(array $args = [])

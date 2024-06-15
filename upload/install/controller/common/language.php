@@ -20,12 +20,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$route = $this->config->get('action_default');
 		}
 
-		if (isset($this->request->get['language'])) {
-			$data['code'] = $this->request->get['language'];
-		} else {
-			$data['code'] = $this->config->get('language_code');
-		}
-
 		$data['languages'] = [];
 
 		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
@@ -42,6 +36,12 @@ class Language extends \Opencart\System\Engine\Controller {
 				'code' => $code,
 				'href' => $this->url->link($route, 'language=' . $code)
 			];
+		}
+
+		if (isset($this->request->get['language'])) {
+			$data['code'] = $this->request->get['language'];
+		} else {
+			$data['code'] = $this->config->get('language_code');
 		}
 
 		return $this->load->view('common/language', $data);

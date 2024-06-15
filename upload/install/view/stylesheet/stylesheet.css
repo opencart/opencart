@@ -20,7 +20,7 @@ body {
 
 }
 
-body, p, td, th, input, textarea, select, option {
+body, td, th, input, textarea, select, option {
     color: #777777;
     text-decoration: none;
     font-size: 13px;

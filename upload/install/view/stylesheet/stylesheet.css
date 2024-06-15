@@ -114,7 +114,6 @@ div.required .form-label:not(span):before, td.required:before {
     font-weight: bold;
 }
 
-
 .table thead td span[data-toggle="tooltip"]:after, label.form-label span:after {
     font-family: 'Font Awesome 5 Free';
     font-weight: 600;

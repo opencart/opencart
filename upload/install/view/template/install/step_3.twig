@@ -56,41 +56,40 @@
                     <label for="input-db-port" class="form-label">{{ entry_db_port }}</label> <input type="text" name="db_port" value="3306" placeholder="{{ entry_db_port }}" id="input-db-port" class="form-control"/>
                     <div id="error-db-port" class="invalid-feedback"></div>
                   </div>
-                  <div class="col-12 col-md-6">
+                  <div class="col-12 col-md-6 mb-3 db-advanced">
                     <label for="input-db-advanced" class="form-label">{{ entry_db_advanced }}</label>
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="advanced" value="0"/> <input type="checkbox" name="advanced" value="1" data-bs-toggle="collapse" data-bs-target="#collapse-advanced" class="form-check-input"/>
+                      <input type="hidden" name="advanced" value="0"/> <input type="checkbox" name="advanced" value="1" id="input-db-advanced" data-bs-toggle="collapse" data-bs-target="#collapse-advanced" class="form-check-input collapsed"/>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </fieldset>
-          <div id="collapse-advanced">
-            <fieldset>
-              <legend>{{ text_db_advanced }}</legend>
-              <div class="row">
-                <div class="col-md-4 order-md-2">
-                  <div class="alert alert-info">{{ text_db_ssl }}</div>
-                </div>
-                <div class="col-md-8 order-md-1">
-                  <div class="row">
-                    <div class="col-12 col-md-6 mb-3">
-                      <label for="input-db-ssl-key" class="form-label">{{ entry_db_ssl_key }}</label>
-                      <textarea name="db_ssl_key" placeholder="{{ entry_db_ssl_key }}" id="input-db-ssl-key" rows="5" class="form-control">{{ db_ssl_key }}</textarea>
-                    </div>
-                    <div class="col-12 col-md-6 mb-3">
-                      <label for="input-db-ssl-cert" class="form-label">{{ entry_db_ssl_cert }}</label>
-                      <textarea name="db_ssl_cert" placeholder="{{ entry_db_ssl_cert }}" id="input-db-ssl-cert" rows="5" class="form-control">{{ db_ssl_cert }}</textarea>
-                    </div>
-                    <div class="col-12 col-md-6 mb-3">
-                      <label for="input-db-ssl-ca" class="form-label">{{ entry_db_ssl_ca }}</label>
-                      <textarea name="db_ssl_ca" placeholder="{{ entry_db_ssl_ca }}" id="input-db-ssl-ca" rows="5" class="form-control">{{ db_ssl_ca }}</textarea>
+          <div class="db-advanced">
+            <div id="collapse-advanced" class="collapse">
+              <fieldset>
+                <legend>{{ text_db_advanced }}</legend>
+                <div class="row">
+                  <div class="col-md-4 order-md-2">
+                    <div class="alert alert-info">{{ text_db_ssl }}</div>
+                  </div>
+                  <div class="col-md-8 order-md-1">
+                    <div class="row">
+                      <div class="mb-3">
+                        <label for="input-db-ssl-key" class="form-label">{{ entry_db_ssl_key }}</label> <textarea name="db_ssl_key" placeholder="{{ entry_db_ssl_key }}" id="input-db-ssl-key" rows="5" class="form-control">{{ db_ssl_key }}</textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="input-db-ssl-cert" class="form-label">{{ entry_db_ssl_cert }}</label> <textarea name="db_ssl_cert" placeholder="{{ entry_db_ssl_cert }}" id="input-db-ssl-cert" rows="5" class="form-control">{{ db_ssl_cert }}</textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="input-db-ssl-ca" class="form-label">{{ entry_db_ssl_ca }}</label> <textarea name="db_ssl_ca" placeholder="{{ entry_db_ssl_ca }}" id="input-db-ssl-ca" rows="5" class="form-control">{{ db_ssl_ca }}</textarea>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </fieldset>
+              </fieldset>
+            </div>
           </div>
           <fieldset>
             <legend>{{ text_db_administration }}</legend>
@@ -130,13 +129,14 @@
 $('#input-db-driver').on('change', function(e) {
     e.preventDefault();
 
-    //if (element ==) {
-
-
-   // }
-    //display:{{ db_driver =='mysqli' ? 'block' : 'none' }};
-
+    if ($(this).val() == 'mysqli') {
+        $('.db-advanced').show();
+    } else {
+        $('.db-advanced').hide();
+    }
 });
+
+$('#input-db-driver').trigger('change');
 
 $('#form-step-3').on('submit', function(e) {
     e.preventDefault();

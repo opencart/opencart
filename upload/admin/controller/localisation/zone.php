@@ -14,8 +14,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('localisation/zone');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = (string)$this->request->get['filter_name'];
 		} else {
@@ -33,6 +31,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_code = '';
 		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
 

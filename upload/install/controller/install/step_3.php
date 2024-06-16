@@ -7,11 +7,6 @@ namespace Opencart\Install\Controller\Install;
  */
 class Step3 extends \Opencart\System\Engine\Controller {
 	/**
-	 * @var array<string, string>
-	 */
-	private array $error = [];
-
-	/**
 	 * @return void
 	 */
 	public function index(): void {
@@ -31,15 +26,14 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$data['text_db_connection'] = $this->language->get('text_db_connection');
 		$data['text_db_advanced'] = $this->language->get('text_db_advanced');
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
+		$data['text_db_ssl'] = $this->language->get('text_db_ssl');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
 		$data['text_help'] = $this->language->get('text_help');
 		$data['text_cpanel'] = $this->language->get('text_cpanel');
 		$data['text_plesk'] = $this->language->get('text_plesk');
-		$data['text_db_ssl'] = $this->language->get('text_db_ssl');
 
 		$data['entry_db_driver'] = $this->language->get('entry_db_driver');
-		$data['entry_db_driver_select'] = $this->language->get('entry_db_driver_select');
 		$data['entry_db_hostname'] = $this->language->get('entry_db_hostname');
 		$data['entry_db_username'] = $this->language->get('entry_db_username');
 		$data['entry_db_password'] = $this->language->get('entry_db_password');

@@ -30,9 +30,6 @@ $_['entry_username']         = 'Username';
 $_['entry_password']         = 'Password';
 $_['entry_email']            = 'E-Mail';
 
-// Help
-
-
 // Error
 $_['error_db_driver']        = 'Database Driver required!';
 $_['error_db_hostname']      = 'Hostname required!';

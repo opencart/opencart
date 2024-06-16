@@ -14,8 +14,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketing/marketing');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
@@ -39,6 +37,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_date_to = '';
 		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
 

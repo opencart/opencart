@@ -92,23 +92,23 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->request->post['db_hostname']) {
-			$json['db_hostname'] = $this->language->get('error_db_hostname');
+			$json['error']['db_hostname'] = $this->language->get('error_db_hostname');
 		}
 
 		if (!$this->request->post['db_username']) {
-			$json['db_username'] = $this->language->get('error_db_username');
+			$json['error']['db_username'] = $this->language->get('error_db_username');
 		}
 
 		if (!$this->request->post['db_database']) {
-			$json['db_database'] = $this->language->get('error_db_database');
+			$json['error']['db_database'] = $this->language->get('error_db_database');
 		}
 
 		if (!$this->request->post['db_port']) {
-			$json['db_port'] = $this->language->get('error_db_port');
+			$json['error']['db_port'] = $this->language->get('error_db_port');
 		}
 
 		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
-			$json['db_prefix'] = $this->language->get('error_db_prefix');
+			$json['error']['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 
 		$db_drivers = [
@@ -118,33 +118,35 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!in_array($this->request->post['db_driver'], $db_drivers)) {
-			$json['db_driver'] = $this->language->get('error_db_driver');
-		} else {
+			$json['error']['db_driver'] = $this->language->get('error_db_driver');
+		}
+
+		if (!$json) {
 			try {
 				$db = new \Opencart\System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port'], $this->request->post['db_ssl_key'], $this->request->post['db_ssl_cert'], $this->request->post['db_ssl_ca']);
 			} catch (\Exception $e) {
-				$json['warning'] = $e->getMessage();
+				$json['error']['warning'] = $e->getMessage();
 			}
 		}
 
 		if (!$this->request->post['username']) {
-			$json['username'] = $this->language->get('error_username');
+			$json['error']['username'] = $this->language->get('error_username');
 		}
 
 		if (!oc_validate_email($this->request->post['email'])) {
-			$json['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if (!$this->request->post['password']) {
-			$json['password'] = $this->language->get('error_password');
+			$json['error']['password'] = $this->language->get('error_password');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$json['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'config.php!';
+			$json['error']['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'config.php!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$json['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
+			$json['error']['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
 		}
 
 		if (!$json) {

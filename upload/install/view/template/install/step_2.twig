@@ -264,6 +264,8 @@ $('#form-step-2').on('submit', function(e) {
             $('#button-continue').prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['redirect']) {

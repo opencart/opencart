@@ -10,7 +10,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-cogs"></i> {{ text_step_3 }}</div>
       <div class="card-body">
-        <form id="step-3">
+        <form id="form-step-3">
           <fieldset>
             <legend>{{ text_db_connection }}</legend>
             <div class="row">
@@ -26,7 +26,8 @@
               <div class="col-md-8 order-md-1">
                 <div class="row">
                   <div class="col-12 col-md-6 mb-3">
-                    <label for="input-db-driver" class="form-label">{{ entry_db_driver }}</label> <select name="db_driver" id="input-db-driver" class="form-control">
+                    <label for="input-db-driver" class="form-label">{{ entry_db_driver }}</label>
+                    <select name="db_driver" id="input-db-driver" class="form-control">
                       {% for driver in drivers %}
                         <option value="{{ driver.value }}">{{ driver.text }}</option>
                       {% endfor %}
@@ -34,32 +35,39 @@
                     <div id="error-db-driver" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 mb-3 required">
-                    <label for="input-db-hostname" class="form-label">{{ entry_db_hostname }}</label> <input type="text" name="db_hostname" value="localhost" placeholder="{{ entry_db_hostname }}" id="input-db-hostname" class="form-control"/>
+                    <label for="input-db-hostname" class="form-label">{{ entry_db_hostname }}</label>
+                    <input type="text" name="db_hostname" value="localhost" placeholder="{{ entry_db_hostname }}" id="input-db-hostname" class="form-control"/>
                     <div id="error-db-hostname" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 mb-3 required">
-                    <label for="input-db-username" class="form-label">{{ entry_db_username }}</label> <input type="text" name="db_username" value="root" placeholder="{{ entry_db_username }}" id="input-db-username" class="form-control"/>
+                    <label for="input-db-username" class="form-label">{{ entry_db_username }}</label>
+                    <input type="text" name="db_username" value="root" placeholder="{{ entry_db_username }}" id="input-db-username" class="form-control"/>
                     <div id="error-db-username" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label for="input-db-password" class="form-label">{{ entry_db_password }}</label> <input type="password" name="db_password" value="" placeholder="{{ entry_db_password }}" id="input-db-password" class="form-control" autocomplete="new-password"/>
+                    <label for="input-db-password" class="form-label">{{ entry_db_password }}</label>
+                    <input type="password" name="db_password" value="" placeholder="{{ entry_db_password }}" id="input-db-password" class="form-control" autocomplete="new-password"/>
                   </div>
                   <div class="col-12 col-md-6 mb-3 required">
-                    <label for="input-db-database" class="form-label">{{ entry_db_database }}</label> <input type="text" name="db_database" value="" placeholder="{{ entry_db_database }}" id="input-db-database" class="form-control"/>
+                    <label for="input-db-database" class="form-label">{{ entry_db_database }}</label>
+                    <input type="text" name="db_database" value="" placeholder="{{ entry_db_database }}" id="input-db-database" class="form-control"/>
                     <div id="error-db-database" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 mb-3">
-                    <label for="input-db-prefix" class="form-label">{{ entry_db_prefix }}</label> <input type="text" name="db_prefix" value="oc_" placeholder="{{ entry_db_prefix }}" id="input-db-prefix" class="form-control"/>
+                    <label for="input-db-prefix" class="form-label">{{ entry_db_prefix }}</label>
+                    <input type="text" name="db_prefix" value="oc_" placeholder="{{ entry_db_prefix }}" id="input-db-prefix" class="form-control"/>
                     <div id="error-db-prefix" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 mb-3 required">
-                    <label for="input-db-port" class="form-label">{{ entry_db_port }}</label> <input type="text" name="db_port" value="3306" placeholder="{{ entry_db_port }}" id="input-db-port" class="form-control"/>
+                    <label for="input-db-port" class="form-label">{{ entry_db_port }}</label>
+                    <input type="text" name="db_port" value="3306" placeholder="{{ entry_db_port }}" id="input-db-port" class="form-control"/>
                     <div id="error-db-port" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 mb-3 db-advanced">
                     <label for="input-db-advanced" class="form-label">{{ entry_db_advanced }}</label>
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="advanced" value="0"/> <input type="checkbox" name="advanced" value="1" id="input-db-advanced" data-bs-toggle="collapse" data-bs-target="#collapse-advanced" class="form-check-input collapsed"/>
+                      <input type="hidden" name="advanced" value="0"/>
+                      <input type="checkbox" name="advanced" value="1" data-bs-toggle="collapse" data-bs-target="#collapse-advanced" class="form-check-input collapsed"/>
                     </div>
                   </div>
                 </div>
@@ -141,8 +149,10 @@ $('#input-db-driver').trigger('change');
 $('#form-step-3').on('submit', function(e) {
     e.preventDefault();
 
+    var element = this;
+
     $.ajax({
-        url: 'index.php?route=install/step_2.save&language=' + $('#input-language').val(),
+        url: 'index.php?route=install/step_3.save&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-step-3').serialize(),
         dataType: 'json',
@@ -153,14 +163,26 @@ $('#form-step-3').on('submit', function(e) {
             $('#button-continue').prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
+            $(element).find('.is-invalid').removeClass('is-invalid');
+            $(element).find('.invalid-feedback').removeClass('d-block');
 
             if (json['redirect']) {
                 location = json['redirect'];
             }
 
             if (json['error']) {
-                $('#form-step-2').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                if (json['error']['warning']) {
+                    $('#form-step-3').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

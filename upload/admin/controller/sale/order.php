@@ -14,8 +14,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('sale/order');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = (int)$this->request->get['filter_order_id'];
 		} else {
@@ -69,6 +67,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_date_to = '';
 		}
+
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
 

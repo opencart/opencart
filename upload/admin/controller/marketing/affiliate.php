@@ -14,8 +14,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketing/affiliate');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
@@ -63,6 +61,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		} else {
 			$limit = $this->config->get('config_pagination');
 		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
 

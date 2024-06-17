@@ -12,13 +12,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/authorize');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->cookie['authorize'])) {
 			$token = $this->request->cookie['authorize'];
 		} else {
 			$token = '';
 		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		// Check to see if user is using incorrect token
 		if (isset($this->session->data['error'])) {

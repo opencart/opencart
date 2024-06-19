@@ -152,7 +152,7 @@ $('#form-step-3').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=install/step_3.save&language=' + $('#input-language').val(),
+        url: 'index.php?route=install/step_3.save&language={{ language_code }}',
         type: 'post',
         data: $('#form-step-3').serialize(),
         dataType: 'json',

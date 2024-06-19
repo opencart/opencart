@@ -17,12 +17,6 @@ class Step2 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('install/step_2');
 
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('language_code');
-		}
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -110,7 +104,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['catalog_config'] = DIR_OPENCART . 'config.php';
 		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
 
-		$data['back'] = $this->url->link('install/step_1', 'language=' . $language);
+		$data['back'] = $this->url->link('install/step_1', 'language=' . $this->config->get('language_code'));
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
@@ -126,12 +120,6 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$this->load->language('install/step_2');
 
 		$json = [];
-
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('language_code');
-		}
 
 		if (version_compare(PHP_VERSION, '7.4', '<')) {
 			$json['error'] = $this->language->get('error_version');
@@ -190,7 +178,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['redirect'] = $this->url->link('install/step_3', 'language=' . $language, true);
+			$json['redirect'] = $this->url->link('install/step_3', 'language=' . $this->config->get('language_code'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

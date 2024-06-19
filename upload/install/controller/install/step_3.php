@@ -12,12 +12,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('install/step_3');
 
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('language_code');
-		}
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -68,7 +62,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['back'] = $this->url->link('install/step_2', 'language=' . $language);
+		$data['back'] = $this->url->link('install/step_2', 'language=' . $this->config->get('language_code'));
+
+		$data['language_code'] = $this->config->get('language_code');
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
@@ -84,12 +80,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$this->load->language('install/step_3');
 
 		$json = [];
-
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('language_code');
-		}
 
 		if (!$this->request->post['db_hostname']) {
 			$json['error']['db_hostname'] = $this->language->get('error_db_hostname');
@@ -184,6 +174,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
+			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');';
 
 			if (!empty($this->request->post['db_ssl_key'])) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($this->request->post['db_ssl_key']) . '\');' . "\n";
@@ -202,10 +195,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			} else {
 				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 			}
-
-			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
-			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');';
 
 			$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
@@ -244,6 +233,10 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
+			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
+
 
 			if ((isset($this->request->post['db_ssl_key']) && $this->request->post['db_ssl_key'] !== '')) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($this->request->post['db_ssl_key']) . '\');' . "\n";
@@ -263,10 +256,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
-			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
-
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
@@ -276,7 +265,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 			fclose($file);
 
-			$json['redirect'] = $this->url->link('install/step_4', 'language=' . $language);
+			$json['redirect'] = $this->url->link('install/step_4', 'language=' . $this->config->get('language_code'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

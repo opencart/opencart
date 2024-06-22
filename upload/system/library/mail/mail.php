@@ -69,7 +69,7 @@ class Mail {
 			if (!empty($this->option['text'])) {
 				$message .= chunk_split(base64_encode($this->option['text']), 950) . $eol;
 			} else {
-				$message .= chunk_split(base64_encode('This is a HTML email and your email client software does not support HTML email!'), 950) . $eol;
+				$message .= chunk_split(base64_encode(strip_tags($this->option['html'])), 950) . $eol;
 			}
 
 			$message .= '--' . $boundary . '_alt' . $eol;

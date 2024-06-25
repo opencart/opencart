@@ -3,7 +3,7 @@
         'name' => 'opencart/opencart',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '370ff4c2711032444fa41270d32339ce74216a99',
+        'reference' => '1fc3d580b4b399a6047e4c7294a0dc6b3377df79',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'aws/aws-crt-php' => array(
-            'pretty_version' => 'v1.2.5',
-            'version' => '1.2.5.0',
-            'reference' => '0ea1f04ec5aa9f049f97e012d1ed63b76834a31b',
+            'pretty_version' => 'v1.2.6',
+            'version' => '1.2.6.0',
+            'reference' => 'a63485b65b6b3367039306496d49737cf1995408',
             'type' => 'library',
             'install_path' => __DIR__ . '/../aws/aws-crt-php',
             'aliases' => array(),
@@ -67,7 +67,7 @@
         'opencart/opencart' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '370ff4c2711032444fa41270d32339ce74216a99',
+            'reference' => '1fc3d580b4b399a6047e4c7294a0dc6b3377df79',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),

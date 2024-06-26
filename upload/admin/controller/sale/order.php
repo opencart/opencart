@@ -476,9 +476,9 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * @return void
 	 * @throws \Exception
 	 *
+	 * @return void
 	 */
 	public function info(): void {
 		$this->load->language('sale/order');

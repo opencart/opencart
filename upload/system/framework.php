@@ -222,7 +222,7 @@ $trigger = $route;
 
 $args = [];
 
-	// Trigger the pre events
+// Trigger the pre events
 $event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 // Action to execute

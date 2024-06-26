@@ -88,7 +88,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		return null;
 	}
 
-	public function permission() {
+	public function permission(): void {
 		$this->language->load('error/permission');
 
 		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 403 Forbidden');

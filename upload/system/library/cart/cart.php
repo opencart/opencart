@@ -315,7 +315,7 @@ class Cart {
 					if ($cart['override']) {
 						$price = $cart['price'];
 					} else {
-						$price = $price + $option_price;
+						$price += $option_price;
 					}
 
 					$this->data[$cart['cart_id']] = [

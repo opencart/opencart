@@ -51,6 +51,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putPolicyAsync(array $args = [])
+ * @method \Aws\Result searchJobs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchJobsAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

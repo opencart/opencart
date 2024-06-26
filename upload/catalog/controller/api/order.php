@@ -165,22 +165,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->session->data['currency'] = $currency;
 		}
 
-
-
-
-
-
-
-
-
-
 		// Products
 		if (!empty($this->session->data['products'])) {
 			$this->load->model('catalog/product');
 
 			foreach ($this->request->post['products'] as $product) {
-
-
 
 				if (isset($product['quantity'])) {
 					$quantity = (int)$product['quantity'];
@@ -491,7 +480,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
 		if (!$json) {
 			$order_data = [];
 
@@ -764,13 +752,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 		}
-
-
-
-
-
-
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

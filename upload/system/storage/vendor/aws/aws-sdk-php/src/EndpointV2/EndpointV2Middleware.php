@@ -231,7 +231,6 @@ class EndpointV2Middleware
     ): void
     {
         $authScheme = $this->resolveAuthScheme($authSchemes);
-        @$command->setAuthSchemes($authScheme);
 
         $command['@context']['signature_version'] = $authScheme['version'];
 

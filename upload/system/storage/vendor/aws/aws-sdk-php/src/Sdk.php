@@ -42,6 +42,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppRunner(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppSync(array $args = [])
+ * @method \Aws\AppTest\AppTestClient createAppTest(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppTest(array $args = [])
  * @method \Aws\Appflow\AppflowClient createAppflow(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppflow(array $args = [])
  * @method \Aws\ApplicationAutoScaling\ApplicationAutoScalingClient createApplicationAutoScaling(array $args = [])
@@ -52,6 +54,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationDiscoveryService(array $args = [])
  * @method \Aws\ApplicationInsights\ApplicationInsightsClient createApplicationInsights(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionApplicationInsights(array $args = [])
+ * @method \Aws\ApplicationSignals\ApplicationSignalsClient createApplicationSignals(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionApplicationSignals(array $args = [])
  * @method \Aws\Appstream\AppstreamClient createAppstream(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppstream(array $args = [])
  * @method \Aws\Artifact\ArtifactClient createArtifact(array $args = [])
@@ -74,8 +78,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
  * @method \Aws\BackupGateway\BackupGatewayClient createBackupGateway(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBackupGateway(array $args = [])
- * @method \Aws\BackupStorage\BackupStorageClient createBackupStorage(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionBackupStorage(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Bedrock\BedrockClient createBedrock(array $args = [])
@@ -538,6 +540,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPaymentCryptographyData(array $args = [])
  * @method \Aws\PcaConnectorAd\PcaConnectorAdClient createPcaConnectorAd(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPcaConnectorAd(array $args = [])
+ * @method \Aws\PcaConnectorScep\PcaConnectorScepClient createPcaConnectorScep(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPcaConnectorScep(array $args = [])
  * @method \Aws\Personalize\PersonalizeClient createPersonalize(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPersonalize(array $args = [])
  * @method \Aws\PersonalizeEvents\PersonalizeEventsClient createPersonalizeEvents(array $args = [])
@@ -771,7 +775,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.311.0';
+    const VERSION = '3.314.8';
 
     /** @var array Arguments for creating clients */
     private $args;

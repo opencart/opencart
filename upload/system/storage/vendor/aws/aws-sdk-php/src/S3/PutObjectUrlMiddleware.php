@@ -49,7 +49,7 @@ class PutObjectUrlMiddleware
                             : null;
                         break;
                     case 'CompleteMultipartUpload':
-                        $result['ObjectURL'] = $result['Location'];
+                        $result['ObjectURL'] = urldecode($result['Location'] ?? '');
                         break;
                 }
                 return $result;

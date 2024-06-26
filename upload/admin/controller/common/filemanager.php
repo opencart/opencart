@@ -387,10 +387,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			// Validate the filename length
 			if (oc_validate_length($folder, 3, 128)) {
 				$json['error'] = $this->language->get('error_folder');
-			}
-
-			// Check if directory already exists or not
-			if (is_dir($directory . $folder)) {
+			} elseif (is_dir($directory . $folder)) {
 				$json['error'] = $this->language->get('error_exists');
 			}
 		}

@@ -30,19 +30,19 @@ class File {
 	public function get(string $key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
-        foreach ($files as $file) {
-            $time = substr(strrchr($file, '.'), 1);
+		foreach ($files as $file) {
+			$time = substr(strrchr($file, '.'), 1);
 
-            if ($time < time()) {
-                if (!@unlink($file)) {
-                    clearstatcache(false, $file);
-                }
-            } else {
-                return json_decode(file_get_contents($file), true);
-            }
-        }
+			if ($time < time()) {
+				if (!@unlink($file)) {
+					clearstatcache(false, $file);
+				}
+			} else {
+				return json_decode(file_get_contents($file), true);
+			}
+		}
 
-        return [];
+		return [];
 	}
 
 	/**

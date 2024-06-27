@@ -68,7 +68,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$filter_date_to = '';
 		}
 
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';

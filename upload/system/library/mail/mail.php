@@ -59,7 +59,7 @@ class Mail {
 		if (empty($this->option['html'])) {
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= chunk_split(base64_encode($this->option['text']), 950) . $eol;
+			$message .= chunk_split(base64_encode($this->option['text'])) . $eol;
 		} else {
 			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $eol . $eol;
 			$message .= '--' . $boundary . '_alt' . $eol;
@@ -67,15 +67,15 @@ class Mail {
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
 
 			if (!empty($this->option['text'])) {
-				$message .= chunk_split(base64_encode($this->option['text']), 950) . $eol;
+				$message .= chunk_split(base64_encode($this->option['text'])) . $eol;
 			} else {
-				$message .= chunk_split(base64_encode(strip_tags($this->option['html'])), 950) . $eol;
+				$message .= chunk_split(base64_encode(strip_tags($this->option['html']))) . $eol;
 			}
 
 			$message .= '--' . $boundary . '_alt' . $eol;
 			$message .= 'Content-Type: text/html; charset="utf-8"' . $eol;
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= chunk_split(base64_encode($this->option['html']), 950) . $eol;
+			$message .= chunk_split(base64_encode($this->option['html'])) . $eol;
 			$message .= '--' . $boundary . '_alt--' . $eol;
 		}
 
@@ -94,7 +94,7 @@ class Mail {
 					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . $eol;
 					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . $eol;
 					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . $eol . $eol;
-					$message .= chunk_split(base64_encode($content), 950);
+					$message .= chunk_split(base64_encode($content));
 				}
 			}
 		}

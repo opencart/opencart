@@ -237,7 +237,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
 			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
 
-
 			if ((isset($this->request->post['db_ssl_key']) && $this->request->post['db_ssl_key'] !== '')) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($this->request->post['db_ssl_key']) . '\');' . "\n";
 			} else {

@@ -29,9 +29,8 @@ class Mail {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->option = &$option;
-
-			$this->adaptor = new $class($option);
+			$this->adaptor = $adaptor;
+			$this->option = $option;
 		} else {
 			throw new \Exception('Error: Could not load mail adaptor ' . $adaptor . '!');
 		}
@@ -151,6 +150,8 @@ class Mail {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 
-		return $this->adaptor->send();
+		$mail = new $this->adaptor($this->option);
+
+		return $mail->send();
 	}
 }

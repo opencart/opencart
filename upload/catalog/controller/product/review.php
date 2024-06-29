@@ -54,6 +54,64 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('product/review');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
+		if (isset($this->request->get['product_id'])) {
+			$product_id = (int)$this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['reviews'] = [];
+
+		$this->load->model('catalog/review');
+
+		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * 5, 5);
+
+		foreach ($results as $result) {
+			$data['reviews'][] = [
+				'author'     => $result['author'],
+				'text'       => nl2br($result['text']),
+				'rating'     => (int)$result['rating'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $review_total,
+			'page'  => $page,
+			'limit' => 5,
+			'url'   => $this->url->link('product/review.list', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
+
+		return $this->load->view('product/review_list', $data);
+	}
+
+	/**
 	 * Write
 	 *
 	 * @return void
@@ -110,7 +168,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->customer->isLogged() && !$this->config->get('config_review_guest')) {
-			$json['error']['warning']  = $this->language->get('error_login');
+			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
 		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
@@ -144,63 +202,5 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
-	public function list(): void {
-		$this->load->language('product/review');
-
-		$this->response->setOutput($this->getList());
-	}
-
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
-	public function getList(): string {
-		if (isset($this->request->get['product_id'])) {
-			$product_id = (int)$this->request->get['product_id'];
-		} else {
-			$product_id = 0;
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$data['reviews'] = [];
-
-		$this->load->model('catalog/review');
-
-		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * 5, 5);
-
-		foreach ($results as $result) {
-			$data['reviews'][] = [
-				'author'     => $result['author'],
-				'text'       => nl2br($result['text']),
-				'rating'     => (int)$result['rating'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
-		}
-
-		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
-
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $review_total,
-			'page'  => $page,
-			'limit' => 5,
-			'url'   => $this->url->link('product/review.list', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
-		]);
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
-
-		return $this->load->view('product/review_list', $data);
 	}
 }

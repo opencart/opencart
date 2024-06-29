@@ -101,7 +101,7 @@ class Smtp {
 			if (!empty($this->option['text'])) {
 				$message .= chunk_split(base64_encode($this->option['text']), 950) . PHP_EOL;
 			} else {
-				$message .= chunk_split(base64_encode('This is a HTML email and your email client software does not support HTML email!'), 950) . PHP_EOL;
+				$message .= chunk_split(base64_encode(strip_tags($this->option['html'])), 950) . PHP_EOL;
 			}
 
 			$message .= '--' . $boundary . '_alt' . PHP_EOL;

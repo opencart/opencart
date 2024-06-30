@@ -32,15 +32,25 @@ class Cart extends \Opencart\System\Engine\Model {
 			$option_data = [];
 
 			foreach ($product['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['value'];
-				} else {
+				$value = $option['value'];
+
+				if ($option['type'] == 'date') {
+					$value = date('Y-m-d', strtotime($option['value']));
+				}
+
+				if ($option['type'] == 'time') {
+					$value = date('H:i:s', strtotime($option['value']));
+				}
+
+				if ($option['type'] == 'datetime') {
+					$value = date('Y-m-d H:i:s', strtotime($option['value']));
+				}
+
+				if ($option['type'] == 'file') {
 					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 					if ($upload_info) {
 						$value = $upload_info['code'];
-					} else {
-						$value = '';
 					}
 				}
 

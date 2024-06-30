@@ -11,17 +11,11 @@
           </div>
           <div class="mb-3">
             <label for="input-date-start" class="form-label">{{ entry_date_start }}</label>
-            <div class="input-group">
-              <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
-              <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-            </div>
+            <input type="date" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
           </div>
           <div class="mb-3">
             <label for="input-date-end" class="form-label">{{ entry_date_end }}</label>
-            <div class="input-group">
-              <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
-              <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
-            </div>
+            <input type="date" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
           </div>
           <div class="text-end">
             <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>

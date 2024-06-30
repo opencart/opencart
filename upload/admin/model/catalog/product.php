@@ -1424,13 +1424,27 @@ class Product extends \Opencart\System\Engine\Model {
 				];
 			}
 
+			$value = $product_option['value'];
+
+			if ($product_option['type'] == 'date') {
+				$value = date('Y-m-d', strtotime($product_option['value']));
+			}
+
+			if ($product_option['type'] == 'time') {
+				$value = date('H:i:s', strtotime($product_option['value']));
+			}
+
+			if ($product_option['type'] == 'datetime') {
+				$value = date('Y-m-d H:i:s', strtotime($product_option['value']));
+			}
+
 			$product_option_data[] = [
 				'product_option_id'    => $product_option['product_option_id'],
 				'product_option_value' => $product_option_value_data,
 				'option_id'            => $product_option['option_id'],
 				'name'                 => $product_option['name'],
 				'type'                 => $product_option['type'],
-				'value'                => $product_option['value'],
+				'value'                => $value,
 				'required'             => $product_option['required']
 			];
 		}

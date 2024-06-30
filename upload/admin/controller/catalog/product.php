@@ -768,7 +768,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($product_info)) {
-			$data['date_available'] = ($product_info['date_available'] != '0000-00-00') ? $product_info['date_available'] : '';
+			$data['date_available'] = ($product_info['date_available'] != '0000-00-00') ? date('Y-m-d', strtotime($product_info['date_available'])) : '';
 		} else {
 			$data['date_available'] = date('Y-m-d');
 		}
@@ -1028,6 +1028,10 @@ class Product extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+
+
+
 
 			$data['product_options'][] = [
 				'product_option_id'    => $product_option['product_option_id'],

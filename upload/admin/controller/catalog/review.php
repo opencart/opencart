@@ -433,9 +433,9 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($review_info)) {
-			$data['date_added'] = ($review_info['date_added'] != '0000-00-00' ? date('Y-m-d', strtotime($review_info['date_added'])) : date('Y-m-d'));
+			$data['date_added'] = ($review_info['date_added'] != '0000-00-00 00:00:00' ? $review_info['date_added'] : date('Y-m-d H:i:s'));
 		} else {
-			$data['date_added'] = date('Y-m-d');
+			$data['date_added'] = date('Y-m-d H:i:s');
 		}
 
 		if (!empty($review_info)) {

@@ -5,7 +5,7 @@
       <div class="card-body">
       <form id="form-filter">
         <div class="mb-3">
-          <label for="input-group" class="col-form-label">{{ entry_group }}</label>
+          <label for="input-group" class="form-label">{{ entry_group }}</label>
           <select name="filter_group" id="input-group" class="form-select">
             {% for group in groups %}
               <option value="{{ group.value }}"{% if group.value == filter_group %} selected{% endif %}>{{ group.text }}</option>

@@ -63,7 +63,7 @@ $('#button-upload').on('click', function() {
             if (!this.files[0].name.endsWith('.ocmod.zip')) {
                 $(this).val('');
 
-                alert('{{ error_filetype }}');
+                alert('{{ error_file_type }}');
             }
         });
 

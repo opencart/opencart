@@ -5,14 +5,14 @@
       <div class="card-body">
       <form id="form-filter">
         <div class="mb-3">
-          <label for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-select">
+          <label for="input-group" class="form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-select">
             {% for group in groups %}
               <option value="{{ group.value }}"{% if group.value == filter_group %} selected{% endif %}>{{ group.text }}</option>
             {% endfor %}
           </select>
         </div>
         <div class="mb-3">
-          <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label>
+          <label for="input-order-status" class="form-label">{{ entry_order_status }}</label>
           <select name="filter_order_status_id" id="input-order-status" class="form-select">
             <option value="0">{{ text_all_status }}</option>
             {% for order_status in order_statuses %}
@@ -21,11 +21,11 @@
           </select>
         </div>
         <div class="mb-3">
-          <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
+          <label for="input-date-start" class="form-label">{{ entry_date_start }}</label>
           <input type="date" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
         </div>
         <div class="mb-3">
-          <label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
+          <label for="input-date-end" class="form-label">{{ entry_date_end }}</label>
           <input type="date" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
         </div>
         <div class="text-end">

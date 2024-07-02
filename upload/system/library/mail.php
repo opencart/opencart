@@ -13,7 +13,7 @@ namespace Opencart\System\Library;
  * Class Mail
  */
 class Mail {
-	private object $adaptor;
+	private string $adaptor;
 	/**
 	 * @var array<string, mixed>
 	 */

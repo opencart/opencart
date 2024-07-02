@@ -165,10 +165,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['key'])) {
-			$key = $this->request->get['key'];
+		if (isset($this->request->post['key'])) {
+			$key = (int)$this->request->post['key'];
 		} else {
-			$key = '';
+			$key = 0;
 		}
 
 		if (!isset($this->session->data['vouchers'][$key])) {
@@ -188,6 +188,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
+
+			$this->session->data['vouchers'] = array_values($this->session->data['vouchers']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -13,7 +13,7 @@ namespace Opencart\System\Library;
  * Class Mail
  */
 class Mail {
-	private string $adaptor;
+	private string $class;
 	/**
 	 * @var array<string, mixed>
 	 */
@@ -29,7 +29,7 @@ class Mail {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = $adaptor;
+			$this->class = $class;
 			$this->option = $option;
 		} else {
 			throw new \Exception('Error: Could not load mail adaptor ' . $adaptor . '!');
@@ -150,7 +150,7 @@ class Mail {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 
-		$mail = new $this->adaptor($this->option);
+		$mail = new $this->class($this->option);
 
 		return $mail->send();
 	}

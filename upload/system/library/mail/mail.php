@@ -16,8 +16,8 @@ class Mail {
 	 *
 	 * @param array<string, mixed> $option
 	 */
-	public function __construct(array &$option = []) {
-		$this->option = &$option;
+	public function __construct(array $option = []) {
+		$this->option = $option;
 	}
 
 	/**

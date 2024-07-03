@@ -26,14 +26,14 @@ class Smtp {
 	 *
 	 * @param array<string, mixed> $option
 	 */
-	public function __construct(array &$option = []) {
+	public function __construct(array $option = []) {
 		foreach ($this->default as $key => $value) {
 			if (!isset($option[$key])) {
 				$option[$key] = $value;
 			}
 		}
 
-		$this->option = &$option;
+		$this->option = $option;
 	}
 
 	/**

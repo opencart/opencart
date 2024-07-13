@@ -568,6 +568,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPrometheusService(array $args = [])
  * @method \Aws\Proton\ProtonClient createProton(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionProton(array $args = [])
+ * @method \Aws\QApps\QAppsClient createQApps(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionQApps(array $args = [])
  * @method \Aws\QBusiness\QBusinessClient createQBusiness(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionQBusiness(array $args = [])
  * @method \Aws\QConnect\QConnectClient createQConnect(array $args = [])
@@ -775,7 +777,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.315.6';
+    const VERSION = '3.316.3';
 
     /** @var array Arguments for creating clients */
     private $args;

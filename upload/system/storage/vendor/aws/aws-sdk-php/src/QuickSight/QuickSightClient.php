@@ -5,6 +5,10 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon QuickSight** service.
+ * @method \Aws\Result batchCreateTopicReviewedAnswer(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchCreateTopicReviewedAnswerAsync(array $args = [])
+ * @method \Aws\Result batchDeleteTopicReviewedAnswer(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteTopicReviewedAnswerAsync(array $args = [])
  * @method \Aws\Result cancelIngestion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelIngestionAsync(array $args = [])
  * @method \Aws\Result createAccountCustomization(array $args = [])
@@ -249,6 +253,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listThemesAsync(array $args = [])
  * @method \Aws\Result listTopicRefreshSchedules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTopicRefreshSchedulesAsync(array $args = [])
+ * @method \Aws\Result listTopicReviewedAnswers(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTopicReviewedAnswersAsync(array $args = [])
  * @method \Aws\Result listTopics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTopicsAsync(array $args = [])
  * @method \Aws\Result listUserGroups(array $args = [])

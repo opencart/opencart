@@ -44,7 +44,7 @@ Your code standards should match the [OpenCart coding standards](https://github.
 
 ## How do run the application Locally (Docker Image)
 
-### Widows OS
+### Windows OS
 
 * make sure you have Docker Desktop installed on your Local Machine
 * in the terminal in the file containing the projects run `docker-compose up -d`

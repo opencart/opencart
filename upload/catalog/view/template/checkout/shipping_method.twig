@@ -50,6 +50,8 @@ $('#button-shipping-methods').on('click', function() {
                         html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
                         if (!json['shipping_methods'][i]['error']) {
+                            var first = true;
+
                             for (j in json['shipping_methods'][i]['quote']) {
                                 html += '<div class="form-check">';
 
@@ -57,8 +59,14 @@ $('#button-shipping-methods').on('click', function() {
 
                                 html += '<input type="radio" name="shipping_method" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
 
-                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-code').val()) {
+                                var method = $('#input-shipping-code').val();
+
+                                console.log(i);
+
+                                if ((json['shipping_methods'][i]['quote'][j]['code'] == method) || (!method && first)) {
                                     html += ' checked';
+
+                                    first = false;
                                 }
 
                                 html += '/>';

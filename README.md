@@ -42,7 +42,7 @@ Please be very clear on your commit messages and pull request, empty pull reques
 
 Your code standards should match the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards). We use an automated code scanner to check for most basic mistakes - if the test fails your pull request will be rejected.
 
-## How do run the application Locally (Docker Image)
+## How to run the application Locally (Docker Image)
 
 ### Windows OS
 

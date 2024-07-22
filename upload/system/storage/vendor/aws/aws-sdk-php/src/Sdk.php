@@ -496,8 +496,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubRefactorSpaces(array $args = [])
  * @method \Aws\MigrationHubStrategyRecommendations\MigrationHubStrategyRecommendationsClient createMigrationHubStrategyRecommendations(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubStrategyRecommendations(array $args = [])
- * @method \Aws\Mobile\MobileClient createMobile(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
  * @method \Aws\NeptuneGraph\NeptuneGraphClient createNeptuneGraph(array $args = [])
@@ -777,7 +775,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.316.4';
+    const VERSION = '3.316.5';
 
     /** @var array Arguments for creating clients */
     private $args;

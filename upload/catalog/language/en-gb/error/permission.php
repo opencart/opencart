@@ -1,3 +1,3 @@
 <?php
 // Text
-$_['text_error'] = 'The page you requested cannot be found.';
+$_['text_error'] = 'You do not have permission to access this page.';

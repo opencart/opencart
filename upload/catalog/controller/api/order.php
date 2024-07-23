@@ -20,7 +20,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Add keys for missing post vars
 		$keys = [
-			'order_id',
 			'language',
 			'currency',
 			'customer_id',
@@ -70,9 +69,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
-			$this->session->data['order_id'] = 0;
-		}
+
+		echo 'hi';
 
 		// Customer
 		$this->load->model('account/customer');
@@ -232,23 +230,23 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// Gift Voucher
 			if (!empty($this->session->data['vouchers'])) {
-				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					$keys = [
-						'to_name',
-						'to_email',
-						'from_name',
-						'from_email',
-						'voucher_theme_id',
-						'amount',
-						'agree'
-					];
+				$keys = [
+					'to_name',
+					'to_email',
+					'from_name',
+					'from_email',
+					'voucher_theme_id',
+					'amount',
+					'agree'
+				];
 
-					foreach ($keys as $key) {
-						if (!isset($this->request->post[$key])) {
-							$this->request->post[$key] = '';
-						}
+				foreach ($keys as $key) {
+					if (!isset($this->request->post[$key])) {
+						$this->request->post[$key] = '';
 					}
+				}
 
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
 					if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
 						$json['redirect'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'), true);
 					}

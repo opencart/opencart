@@ -19,14 +19,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		if (substr($route, 0, 4) == 'api/') {
 			$status = true;
 
-			echo $route . "\n";
-			print_r($this->request->get);
-			print_r($this->request->post);
-			echo "\n";
-
-
-			echo 'IP ' . oc_get_ip() . "\n";
-
 			$required = [
 				'route',
 				'username',
@@ -78,28 +70,15 @@ class Api extends \Opencart\System\Engine\Controller {
 				$string  = (string)$route . "\n";
 				$string .= $api_info['username'] . "\n";
 				$string .= (string)$this->request->server['HTTP_HOST'] . "\n";
+				$string .= (!empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/') . "\n";
 				$string .= (int)$this->request->get['store_id'] . "\n";
 				$string .= (string)$this->request->get['language'] . "\n";
-				$string .= json_encode($this->request->post) . "\n";
-				//$string .= $time . "\n";
+				$string .= md5(http_build_query($this->request->post)) . "\n";
+				$string .= $time . "\n";
 
-				echo $string . "\n";
-
-				echo base64_encode(hash_hmac('sha1', $string, $api_info['key'], 1)) . "\n";
-				echo html_entity_decode($this->request->get['signature']);
-
-
-				if (base64_decode($this->request->get['signature']) != base64_encode(hash_hmac('sha1', $string, $api_info['key'], 1))) {
+				if (rawurldecode($this->request->get['signature']) != base64_encode(hash_hmac('sha1', $string, $api_info['key'], 1))) {
 					$status = false;
 				}
-
-
-
-
-			}
-
-			if ($status) {
-				echo 'WORKS';
 			}
 
 			if (!$status) {

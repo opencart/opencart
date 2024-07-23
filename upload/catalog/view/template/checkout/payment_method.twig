@@ -71,7 +71,7 @@ $('#button-payment-methods').on('click', function() {
 
                                 var method = $('#input-payment-code').val();
 
-                                if (json['payment_methods'][i]['option'][j]['code'] == method || (!method && first)) {
+                                if ((json['payment_methods'][i]['option'][j]['code'] == method) || (!method && first)) {
                                     html += ' checked';
 
                                     first = false;

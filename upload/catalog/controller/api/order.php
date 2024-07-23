@@ -69,9 +69,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-		echo 'hi';
-
 		// Customer
 		$this->load->model('account/customer');
 
@@ -478,6 +475,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if () {
+
+		}
+		
 		if (!$json) {
 			$order_data = [];
 

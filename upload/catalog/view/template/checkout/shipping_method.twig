@@ -61,8 +61,6 @@ $('#button-shipping-methods').on('click', function() {
 
                                 var method = $('#input-shipping-code').val();
 
-                                console.log(i);
-
                                 if ((json['shipping_methods'][i]['quote'][j]['code'] == method) || (!method && first)) {
                                     html += ' checked';
 

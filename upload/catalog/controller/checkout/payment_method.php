@@ -168,6 +168,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	 */
 	public function comment(): void {
 		$this->load->language('checkout/payment_method');
+		$this->load->model('checkout/order');
 
 		$json = [];
 
@@ -185,8 +186,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->session->data['comment'] = $this->request->post['comment'];
-
-			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->editComment($order_id, $this->request->post['comment']);
 

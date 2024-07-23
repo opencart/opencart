@@ -32,7 +32,19 @@ class Cart extends \Opencart\System\Engine\Controller {
 		foreach ($products as $product) {
 			if ($product['option']) {
 				foreach ($product['option'] as $key => $option) {
-					$product['option'][$key]['value'] = (oc_strlen($option['value']) > 20 ? oc_substr($option['value'], 0, 20) . '..' : $option['value']);
+					if ($option['type'] != 'file') {
+						$value = $option['value'];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
+					}
+
+					$product['option'][$key]['value'] = (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value);
 				}
 			}
 

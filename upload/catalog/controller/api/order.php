@@ -6,13 +6,6 @@ namespace Opencart\catalog\controller\api;
  * @package Opencart\Catalog\Controller\Api
  */
 class Order extends \Opencart\System\Engine\Controller {
-	private $filter = [
-		//'language'          => FILTER_VALIDATE_STRING,
-		//'customer_id'       => FILTER_VALIDATE_INT,
-		//'customer_group_id' => FILTER_VALIDATE_INT,
-		//'firstname'         => FILTER_SANITIZE_STRING
-	];
-
 	public function save(): void {
 		$this->load->language('api/sale/order');
 
@@ -20,8 +13,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Add keys for missing post vars
 		$keys = [
-			'language',
-			'currency',
 			'customer_id',
 			'customer_group_id',
 			'firstname',
@@ -68,6 +59,30 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->request->post[$key] = '';
 			}
 		}
+
+
+
+		// Currency
+		if (isset($this->request->post['currency'])) {
+			$currency = (string)$this->request->post['currency'];
+		} else {
+			$currency = $this->config->get('config_currency');
+		}
+
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
+
+		if (!$currency_info) {
+			$json['error']['currency'] = $this->language->get('error_currency');
+		}
+
+		if (!$json) {
+			$this->session->data['currency'] = $currency;
+		}
+
+
+
 
 		// Customer
 		$this->load->model('account/customer');
@@ -141,31 +156,13 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
 		}
 
-		// Currency
-		if (isset($this->request->post['currency'])) {
-			$currency = (string)$this->request->post['currency'];
-		} else {
-			$currency = $this->config->get('config_currency');
-		}
 
-		$this->load->model('localisation/currency');
-
-		$currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
-
-		if (!$currency_info) {
-			$json['error']['currency'] = $this->language->get('error_currency');
-		}
-
-		if (!$json) {
-			$this->session->data['currency'] = $currency;
-		}
 
 		// Products
 		if (!empty($this->session->data['products'])) {
 			$this->load->model('catalog/product');
 
 			foreach ($this->request->post['products'] as $product) {
-
 				if (isset($product['quantity'])) {
 					$quantity = (int)$product['quantity'];
 				} else {
@@ -223,6 +220,9 @@ class Order extends \Opencart\System\Engine\Controller {
 				} else {
 					$json['error']['warning'] = $this->language->get('error_product');
 				}
+
+
+
 			}
 
 			// Gift Voucher
@@ -233,17 +233,18 @@ class Order extends \Opencart\System\Engine\Controller {
 					'from_name',
 					'from_email',
 					'voucher_theme_id',
-					'amount',
-					'agree'
+					'amount'
 				];
 
-				foreach ($keys as $key) {
-					if (!isset($this->request->post[$key])) {
-						$this->request->post[$key] = '';
-					}
-				}
-
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+					foreach ($keys as $key) {
+						if (!isset($this->request->post[$key])) {
+							$this->request->post[$key] = '';
+						}
+					}
+
+
+
 					if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
 						$json['redirect'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'), true);
 					}
@@ -475,10 +476,55 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if () {
+
+
+
+		if (!$json) {
+			// Validate cart has products and has stock.
+			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
+				$json['error_payment_menthod'] = '';
+			}
+
+			// Validate has payment address if required
+			if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+				$json['error'] = $this->language->get('error_payment_address');
+			}
+
+			// Validate payment methods
+			if (isset($this->request->post['payment_method']) && isset($this->session->data['payment_methods'])) {
+				$payment = explode('.', $this->request->post['payment_method']);
+
+				if (!isset($payment[0]) || !isset($payment[1]) || !isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
+					$json['error'] = $this->language->get('error_payment_method');
+				}
+			} else {
+				$json['error'] = $this->language->get('error_payment_method');
+			}
+
+
+
+			if (!$json) {
+				$this->session->data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]];
+
+				$json['success'] = $this->language->get('text_success');
+			}
 
 		}
-		
+
+
+		// Validate shipping
+		if ($this->cart->hasShipping()) {
+			// Validate shipping address
+			if (!isset($this->session->data['shipping_address']['address_id'])) {
+				$json['error'] = $this->language->get('error_shipping_address');
+			}
+
+			// Validate shipping method
+			if (!isset($this->session->data['shipping_method'])) {
+				$json['error'] = $this->language->get('error_shipping_method');
+			}
+		}
+
 		if (!$json) {
 			$order_data = [];
 

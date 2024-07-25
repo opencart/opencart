@@ -115,6 +115,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getEnvironmentBlueprintAsync(array $args = [])
  * @method \Aws\Result getEnvironmentBlueprintConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnvironmentBlueprintConfigurationAsync(array $args = [])
+ * @method \Aws\Result getEnvironmentCredentials(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getEnvironmentCredentialsAsync(array $args = [])
  * @method \Aws\Result getEnvironmentProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnvironmentProfileAsync(array $args = [])
  * @method \Aws\Result getFormType(array $args = [])

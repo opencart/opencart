@@ -19,10 +19,18 @@ class Modification extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
-		if (substr($route, 0, 10) !== 'extension/') {
-			$class = 'Opencart\Catalog\Controller\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		$pos = strrpos($route, '.');
+
+		if ($pos !== false) {
+			$class = substr($route, 0, $pos);
 		} else {
-			$class = 'Opencart\Catalog\Controller\Extension\Ocmod\Extension\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($route, 10), '_/'));
+			$class = $route;
+		}
+
+		if (substr($route, 0, 10) !== 'extension/') {
+			$class = 'Opencart\Catalog\Controller\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($class, '_/'));
+		} else {
+			$class = 'Opencart\Catalog\Controller\Extension\Ocmod\Extension\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($class, 10), '_/'));
 		}
 
 		if (class_exists($class)) {

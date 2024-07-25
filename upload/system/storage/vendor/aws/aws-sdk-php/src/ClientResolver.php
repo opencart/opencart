@@ -308,6 +308,13 @@ class ClientResolver
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
         ],
+        'sigv4a_signing_region_set' => [
+            'type' => 'value',
+            'valid' => ['array', 'string'],
+            'doc' => 'A comma-delimited list of supported regions sent in sigv4a requests.',
+            'fn' => [__CLASS__, '_apply_sigv4a_signing_region_set'],
+            'default' => [__CLASS__, '_default_sigv4a_signing_region_set']
+        ]
     ];
 
     /**
@@ -1238,6 +1245,26 @@ class ClientResolver
         }
 
         return $value;
+    }
+
+    public static function _apply_sigv4a_signing_region_set($value, array &$args)
+    {
+        if (empty($value)) {
+            $args['sigv4a_signing_region_set'] = null;
+        } elseif (is_array($value)) {
+            $args['sigv4a_signing_region_set'] = implode(', ', $value);
+        } else {
+            $args['sigv4a_signing_region_set'] = $value;
+        }
+    }
+
+    public static function _default_sigv4a_signing_region_set(array &$args)
+    {
+        return ConfigurationResolver::resolve(
+            'sigv4a_signing_region_set',
+            '',
+            'string'
+        );
     }
 
     public static function _apply_region($value, array &$args)

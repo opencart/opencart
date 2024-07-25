@@ -56,7 +56,7 @@ class Weight extends \Opencart\System\Engine\Model {
 				if ((string)$cost != '') {
 					$quote_data['weight_' . $result['geo_zone_id']] = [
 						'code'         => 'weight.weight_' . $result['geo_zone_id'],
-						'name'         => $result['name'] . '  (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')',
+						'name'         => $result['name'] . ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')',
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('shipping_weight_tax_class_id'),
 						'text'         => $this->currency->format($this->tax->calculate((float)$cost, $this->config->get('shipping_weight_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])

@@ -30,6 +30,9 @@ class AwsClient implements AwsClientInterface
     private $region;
 
     /** @var string */
+    private $signingRegionSet;
+
+    /** @var string */
     private $endpoint;
 
     /** @var Service */
@@ -240,6 +243,7 @@ class AwsClient implements AwsClientInterface
         $this->credentialProvider = $config['credentials'];
         $this->tokenProvider = $config['token'];
         $this->region = $config['region'] ?? null;
+        $this->signingRegionSet = $config['sigv4a_signing_region_set'] ?? null;
         $this->config = $config['config'];
         $this->setClientBuiltIns($args);
         $this->clientContextParams = $this->setClientContextParams($args);
@@ -422,6 +426,7 @@ class AwsClient implements AwsClientInterface
         $signatureVersion = $this->config['signature_version'];
         $name = $this->config['signing_name'];
         $region = $this->config['signing_region'];
+        $signingRegionSet = $this->signingRegionSet;
 
         if (isset($args['signature_version'])
          || isset($this->config['configured_signature_version'])
@@ -433,7 +438,15 @@ class AwsClient implements AwsClientInterface
 
         $resolver = static function (
             CommandInterface $c
-        ) use ($api, $provider, $name, $region, $signatureVersion, $configuredSignatureVersion) {
+        ) use (
+                $api,
+                $provider,
+                $name,
+                $region,
+                $signatureVersion,
+                $configuredSignatureVersion,
+                $signingRegionSet
+        ) {
             if (!$configuredSignatureVersion) {
                 if (!empty($c['@context']['signing_region'])) {
                     $region = $c['@context']['signing_region'];
@@ -457,6 +470,16 @@ class AwsClient implements AwsClientInterface
                         $signatureVersion = 'bearer';
                         break;
                 }
+            }
+
+            if ($signatureVersion === 'v4a') {
+                $commandSigningRegionSet = !empty($c['@context']['signing_region_set'])
+                    ? implode(', ', $c['@context']['signing_region_set'])
+                    : null;
+
+                $region = $signingRegionSet
+                    ?? $commandSigningRegionSet
+                    ?? $region;
             }
 
             return SignatureProvider::resolve($provider, $signatureVersion, $name, $region);

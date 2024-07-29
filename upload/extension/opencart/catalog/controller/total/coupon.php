@@ -16,6 +16,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$this->load->language('extension/opencart/total/coupon');
 
 			$data['save'] = $this->url->link('extension/opencart/total/coupon.save', 'language=' . $this->config->get('config_language'), true);
+			$data['remove'] = $this->url->link('extension/opencart/total/coupon.remove', 'language=' . $this->config->get('config_language'), true);
 			$data['list'] = $this->url->link('checkout/cart.list', 'language=' . $this->config->get('config_language'), true);
 
 			if (isset($this->session->data['coupon'])) {
@@ -50,26 +51,45 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_status');
 		}
 
-		if ($coupon) {
-			$this->load->model('marketing/coupon');
+		$this->load->model('marketing/coupon');
 
-			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
+		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-			if (!$coupon_info) {
-				$json['error'] = $this->language->get('error_coupon');
-			}
+		if (!$coupon_info) {
+			$json['error'] = $this->language->get('error_coupon');
 		}
 
 		if (!$json) {
-			if ($coupon) {
-				$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 
-				$this->session->data['coupon'] = $coupon;
-			} else {
-				$json['success'] = $this->language->get('text_remove');
+			$this->session->data['coupon'] = $coupon;
 
-				unset($this->session->data['coupon']);
-			}
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Remove
+	 *
+	 * @return void
+	 */
+	public function remove() {
+		$this->load->language('extension/opencart/total/coupon');
+
+		$json = [];
+
+		if (!isset($this->session->data['coupon'])) {
+			$json['error'] = $this->language->get('error_remove');
+		}
+
+		if (!$json) {
+			$json['success'] = $this->language->get('text_remove');
+
+			unset($this->session->data['coupon']);
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

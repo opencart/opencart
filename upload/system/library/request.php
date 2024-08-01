@@ -45,6 +45,62 @@ class Request {
 		$this->server = $this->clean($_SERVER);
 	}
 
+	public function get(string $key, string $type = ''): mixed {
+		if (isset($this->get[$key])) {
+			$value = $this->get[$key];
+		} else {
+			$value = null;
+		}
+
+		switch ($type) {
+			case 'string':
+				return (string)$value;
+				break;
+			case 'int':
+				return (int)$value;
+				break;
+			case 'float':
+				return (float)$value;
+				break;
+			case 'bool':
+				return (bool)$value;
+				break;
+			case 'array':
+				return (array)$value;
+				break;
+			default:
+				return $value;
+		}
+	}
+
+	public function post(string $key, string $type = ''): mixed {
+		if (isset($this->post[$key])) {
+			$value = $this->post[$key];
+		} else {
+			$value = null;
+		}
+
+		switch ($type) {
+			case 'string':
+				return (string)$value;
+				break;
+			case 'int':
+				return (int)$value;
+				break;
+			case 'float':
+				return (float)$value;
+				break;
+			case 'bool':
+				return (bool)$value;
+				break;
+			case 'array':
+				return (array)$value;
+				break;
+			default:
+				return $value;
+		}
+	}
+
 	/**
 	 * Clean
 	 *

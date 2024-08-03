@@ -10,7 +10,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/cart');
+		$this->load->language('api/cart');
 
 		$json = [];
 
@@ -105,7 +105,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function add(): void {
-		$this->load->language('api/sale/cart');
+		$this->load->language('api/cart');
 
 		$json = [];
 
@@ -191,7 +191,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function edit(): void {
-		$this->load->language('api/sale/cart');
+		$this->load->language('api/cart');
 
 		$json = [];
 
@@ -223,7 +223,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove(): void {
-		$this->load->language('api/sale/cart');
+		$this->load->language('api/cart');
 
 		$json = [];
 

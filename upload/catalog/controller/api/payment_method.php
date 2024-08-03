@@ -10,9 +10,13 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/payment_method');
+		$this->load->language('api/payment_method');
 
 		$json = [];
+
+		if (!isset($this->session->data['customer'])) {
+			$json['error'] = $this->language->get('error_customer');
+		}
 
 		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
 			$json['error'] = $this->language->get('error_product');
@@ -20,6 +24,16 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$json['error'] = $this->language->get('error_payment_address');
+		}
+
+		if ($this->cart->hasShipping()) {
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_shipping_address');
+			}
+
+			if (!isset($this->session->data['shipping_method'])) {
+				$json['error'] = $this->language->get('error_shipping_method');
+			}
 		}
 
 		if (!$json) {
@@ -52,7 +66,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('api/sale/payment_method');
+		$this->load->language('api/payment_method');
 
 		$json = [];
 
@@ -76,6 +90,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]];
+
+
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

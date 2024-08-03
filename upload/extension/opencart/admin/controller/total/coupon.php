@@ -71,4 +71,18 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+	/**
+	 * Total
+	 *
+	 * get toal
+	 *
+	 * @return void
+	 */
+	public function order(): void {
+
+
+		$this->response->setOutput($this->load->view('extension/opencart/total/coupon_order', $data));
+	}
 }

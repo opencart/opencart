@@ -10,7 +10,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/shipping_address');
+		$this->load->language('api/shipping_address');
 
 		$json = [];
 

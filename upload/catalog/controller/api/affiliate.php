@@ -10,7 +10,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/affiliate');
+		$this->load->language('api/affiliate');
 
 		$json = [];
 
@@ -67,7 +67,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove(): void {
-		$this->load->language('api/sale/affiliate');
+		$this->load->language('api/affiliate');
 
 		$json['success'] = $this->language->get('text_remove');
 

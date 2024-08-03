@@ -10,7 +10,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/coupon');
+		$this->load->language('api/coupon');
 
 		$json = [];
 
@@ -46,7 +46,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove(): void {
-		$this->load->language('api/sale/coupon');
+		$this->load->language('api/coupon');
 
 		$json['success'] = $this->language->get('text_remove');
 

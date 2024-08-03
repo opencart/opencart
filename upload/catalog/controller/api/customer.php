@@ -10,7 +10,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/customer');
+		$this->load->language('api/customer');
 
 		$json = [];
 

@@ -10,7 +10,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/reward');
+		$this->load->language('api/reward');
 
 		$json = [];
 
@@ -56,7 +56,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove(): void {
-		$this->load->language('api/sale/reward');
+		$this->load->language('api/reward');
 
 		$json['success'] = $this->language->get('text_remove');
 
@@ -72,7 +72,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function maximum(): void {
-		$this->load->language('api/sale/reward');
+		$this->load->language('api/reward');
 
 		$json = [];
 

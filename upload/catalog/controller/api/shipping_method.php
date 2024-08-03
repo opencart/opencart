@@ -14,6 +14,10 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!isset($this->session->data['customer'])) {
+			$json['error'] = $this->language->get('error_customer');
+		}
+
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
@@ -44,7 +48,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('api/sale/shipping_method');
+		$this->load->language('api/shipping_method');
 
 		$json = [];
 

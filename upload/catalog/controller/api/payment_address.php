@@ -10,7 +10,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/sale/payment_address');
+		$this->load->language('api/payment_address');
 
 		$json = [];
 

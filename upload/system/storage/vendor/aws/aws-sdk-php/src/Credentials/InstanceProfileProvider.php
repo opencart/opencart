@@ -226,7 +226,8 @@ class InstanceProfileProvider
                     $result['AccessKeyId'],
                     $result['SecretAccessKey'],
                     $result['Token'],
-                    strtotime($result['Expiration'])
+                    strtotime($result['Expiration']),
+                    $result['AccountId'] ?? null
                 );
             }
 

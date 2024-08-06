@@ -15,6 +15,7 @@ class Credentials extends AwsCredentialIdentity implements
     private $secret;
     private $token;
     private $expires;
+    private $accountId;
 
     /**
      * Constructs a new BasicAWSCredentials object, with the specified AWS
@@ -25,12 +26,13 @@ class Credentials extends AwsCredentialIdentity implements
      * @param string $token   Security token to use
      * @param int    $expires UNIX timestamp for when credentials expire
      */
-    public function __construct($key, $secret, $token = null, $expires = null)
+    public function __construct($key, $secret, $token = null, $expires = null, $accountId = null)
     {
         $this->key = trim((string) $key);
         $this->secret = trim((string) $secret);
         $this->token = $token;
         $this->expires = $expires;
+        $this->accountId = $accountId;
     }
 
     public static function __set_state(array $state)
@@ -39,7 +41,8 @@ class Credentials extends AwsCredentialIdentity implements
             $state['key'],
             $state['secret'],
             $state['token'],
-            $state['expires']
+            $state['expires'],
+            $state['accountId']
         );
     }
 
@@ -68,13 +71,19 @@ class Credentials extends AwsCredentialIdentity implements
         return $this->expires !== null && time() >= $this->expires;
     }
 
+    public function getAccountId()
+    {
+        return $this->accountId;
+    }
+
     public function toArray()
     {
         return [
             'key'     => $this->key,
             'secret'  => $this->secret,
             'token'   => $this->token,
-            'expires' => $this->expires
+            'expires' => $this->expires,
+            'accountId' =>  $this->accountId
         ];
     }
 
@@ -101,6 +110,7 @@ class Credentials extends AwsCredentialIdentity implements
         $this->secret = $data['secret'];
         $this->token = $data['token'];
         $this->expires = $data['expires'];
+        $this->accountId = $data['accountId'];
     }
 
     /**

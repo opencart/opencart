@@ -7,38 +7,97 @@ namespace Opencart\catalog\controller\api;
  */
 class Order extends \Opencart\System\Engine\Controller {
 	public function index() {
+		if ($this->request->get['call']) {
+			$call = $this->request->get['call'];
+		} else {
+			$call = '';
+		}
+
 		$routes = [];
+
+		// get customer
+		$result = $this->load->controller('api/customer');
+
+		if ($call == 'customer') {
+			$output = $result;
+		}
+
+		$this->load->controller('api/currency');
+		$this->load->controller('api/cart');
+
+		$result = $this->load->controller('api/shipping_address');
+
+		if ($call == 'shipping_address') {
+			$output = $result;
+		}
+
+
+
+		$this->load->controller('api/shipping_method');
+
+		if ($call == 'shipping_address') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/currency');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/shipping_address');
+
+			$output = $this->response->getOutput();
+
+
+		}
+
+		// get shipping_methods
+
+		// get payment_methods
+		if ($call == 'payment_methods') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/currency');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/payment_address');
+			$this->load->controller('api/shipping_address');
+			$this->load->controller('api/shipping_method.save');
+
+			$this->load->controller('api/payment_method');
+
+			$output = $this->response->getOutput();
+		}
+
+
+
+		$this->load->controller('api/cart.getProducts');
+		$this->load->controller('api/cart.getVouchers');
+		$this->load->controller('api/cart.getTotals');
+
+
+
 
 		$routes[] = 'api/customer';
 		$routes[] = 'api/currency';
 		$routes[] = 'api/cart';
-
-		if ($this->config->get('config_payment_address')) {
-			$routes[] = 'api/payment_address';
-		}
-
-		if ($this->cart->hasShipping()) {
-			$routes[] = 'api/shipping_address';
-			$routes[] = 'api/shipping_method.save';
-		}
-
+		$routes[] = 'api/payment_address';
+		$routes[] = 'api/shipping_address';
+		$routes[] = 'api/shipping_method.save';
+		$routes[] = 'api/cart.add';
 		$routes[] = 'api/coupon';
 		$routes[] = 'api/voucher';
 		$routes[] = 'api/reward';
-		$routes[] = 'api/affiliate';
-
 		$routes[] = 'api/payment_method.save';
-
-
+		$routes[] = 'api/affiliate';
 		$routes[] = 'api/order.save';
 
-		foreach ($routes as $route) {
 
+
+		foreach ($routes as $route) {
+			if ($call == $route) {
+				$this->load->controller($route);
+
+				$output = $this->response->getOutput();
+			}
 		}
 	}
 
 	public function save(): void {
-		$this->load->language('api/sale/order');
+		$this->load->language('api/order');
 
 		$json = [];
 
@@ -63,6 +122,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'payment_zone_id',
 			'payment_country_id',
 			'payment_custom_field',
+
 			'payment_method',
 
 			'shipping_address_id',
@@ -76,6 +136,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'shipping_zone_id',
 			'shipping_country_id',
 			'shipping_custom_field',
+
 			'shipping_method',
 
 			'products',
@@ -96,108 +157,93 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 
+		$this->load->controller('api/customer');
+		$this->load->controller('api/cart');
+		$this->load->controller('api/shipping_address');
+		$this->load->controller('api/shipping_method.save');
+		$this->load->controller('api/payment_method.save');
+		$this->load->controller('api/cart.getProducts');
+		$this->load->controller('api/cart.getVouchers');
+		$this->load->controller('api/cart.getTotals');
 
-
-
-
-		// Currency
-		if (isset($this->request->post['currency'])) {
-			$currency = (string)$this->request->post['currency'];
-		} else {
-			$currency = $this->config->get('config_currency');
-		}
-
-		$this->load->model('localisation/currency');
-
-		$currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
-
-		if (!$currency_info) {
-			$json['error']['currency'] = $this->language->get('error_currency');
-		}
 
 		if (!$json) {
-			$this->session->data['currency'] = $currency;
-		}
+			// Customer
+			$this->load->model('account/customer');
 
+			if ($this->request->post['customer_id']) {
+				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
 
-
-
-		// Customer
-		$this->load->model('account/customer');
-
-		if ($this->request->post['customer_id']) {
-			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
-
-			if (!$customer_info) {
-				$json['error']['warning'] = $this->language->get('error_customer');
-			}
-		}
-
-		// Customer Group
-		if ($this->request->post['customer_group_id']) {
-			$customer_group_id = (int)$this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = (int)$this->config->get('config_customer_group_id');
-		}
-
-		$this->load->model('account/customer_group');
-
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
-
-		if (!$customer_group_info) {
-			$json['error']['warning'] = $this->language->get('error_customer_group');
-		}
-
-		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
-			$json['error']['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
-			$json['error']['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if (!oc_validate_email($this->request->post['email'])) {
-			$json['error']['email'] = $this->language->get('error_email');
-		}
-
-		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
-		}
-
-		// Custom field validation
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+				if (!$customer_info) {
+					$json['error']['warning'] = $this->language->get('error_customer');
 				}
 			}
-		}
-
-		if (!$json) {
-			$this->session->data['customer'] = [
-				'customer_id'       => $this->request->post['customer_id'],
-				'customer_group_id' => $this->request->post['customer_group_id'],
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
 
 			// Customer Group
-			$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
-		}
+			if ($this->request->post['customer_group_id']) {
+				$customer_group_id = (int)$this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = (int)$this->config->get('config_customer_group_id');
+			}
 
+			$this->load->model('account/customer_group');
+
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+			if (!$customer_group_info) {
+				$json['error']['warning'] = $this->language->get('error_customer_group');
+			}
+
+			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
+
+			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+
+			if (!oc_validate_email($this->request->post['email'])) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
+
+			if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
+			}
+
+			// Custom field validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'account') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+
+			if (!$json) {
+				$this->session->data['customer'] = [
+					'customer_id'       => $this->request->post['customer_id'],
+					'customer_group_id' => $this->request->post['customer_group_id'],
+					'firstname'         => $this->request->post['firstname'],
+					'lastname'          => $this->request->post['lastname'],
+					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['telephone'],
+					'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
+
+				// Customer Group
+				$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
+			}
+		}
 
 
 		// Products
-		if (!empty($this->session->data['products'])) {
+		if (!empty($this->request->data['products'])) {
 			$this->load->model('catalog/product');
 
 			foreach ($this->request->post['products'] as $product) {
@@ -255,61 +301,63 @@ class Order extends \Opencart\System\Engine\Controller {
 							$json['error']['subscription'][$key] = $this->language->get('error_subscription');
 						}
 					}
-				} else {
-					$json['error']['warning'] = $this->language->get('error_product');
 				}
 			}
+		} else {
+			$json['error']['warning'] = $this->language->get('error_product');
+		}
 
-			// Gift Voucher
-			if (!empty($this->session->data['vouchers'])) {
-				$keys = [
-					'to_name',
-					'to_email',
-					'from_name',
-					'from_email',
-					'voucher_theme_id',
-					'amount'
-				];
 
-				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					if (!oc_validate_length($voucher['to_name'], 1, 64)) {
-						$json['error'][$key]['to_name'] = $this->language->get('error_to_name');
-					}
+		// Gift Voucher
+		if (!empty($this->session->data['vouchers'])) {
+			$keys = [
+				'to_name',
+				'to_email',
+				'from_name',
+				'from_email',
+				'voucher_theme_id',
+				'amount'
+			];
 
-					if ((oc_strlen($voucher['to_email']) > 96) || !filter_var($voucher['to_email'], FILTER_VALIDATE_EMAIL)) {
-						$json['error'][$key]['to_email'] = $this->language->get('error_email');
-					}
-
-					if (!oc_validate_length($voucher['from_name'], 1, 64)) {
-						$json['error'][$key]['from_name'] = $this->language->get('error_from_name');
-					}
-
-					if ((oc_strlen($voucher['from_email']) > 96) || !filter_var($voucher['from_email'], FILTER_VALIDATE_EMAIL)) {
-						$json['error'][$key]['from_email'] = $this->language->get('error_email');
-					}
-
-					if (!$voucher['voucher_theme_id']) {
-						$json['error'][$key]['theme'] = $this->language->get('error_theme');
-					}
-
-					if (($this->currency->convert((int)$voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency')) < $this->config->get('config_voucher_min')) || ($this->currency->convert($voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency')) > $this->config->get('config_voucher_max'))) {
-						$json['error'][$key]['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
-					}
-
-					$this->session->data['vouchers'][] = [
-						'code'             => oc_token(10),
-						'description'      => sprintf($this->language->get('text_for'), $this->currency->format($voucher['amount'], $this->session->data['currency'], 1.0), $voucher['to_name']),
-						'to_name'          => $voucher['to_name'],
-						'to_email'         => $voucher['to_email'],
-						'from_name'        => $voucher['from_name'],
-						'from_email'       => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message'          => $voucher['message'],
-						'amount'           => $this->currency->convert((int)$voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
-					];
+			foreach ($this->session->data['vouchers'] as $key => $voucher) {
+				if (!oc_validate_length($voucher['to_name'], 1, 64)) {
+					$json['error'][$key]['to_name'] = $this->language->get('error_to_name');
 				}
+
+				if ((oc_strlen($voucher['to_email']) > 96) || !filter_var($voucher['to_email'], FILTER_VALIDATE_EMAIL)) {
+					$json['error'][$key]['to_email'] = $this->language->get('error_email');
+				}
+
+				if (!oc_validate_length($voucher['from_name'], 1, 64)) {
+					$json['error'][$key]['from_name'] = $this->language->get('error_from_name');
+				}
+
+				if ((oc_strlen($voucher['from_email']) > 96) || !filter_var($voucher['from_email'], FILTER_VALIDATE_EMAIL)) {
+					$json['error'][$key]['from_email'] = $this->language->get('error_email');
+				}
+
+				if (!$voucher['voucher_theme_id']) {
+					$json['error'][$key]['theme'] = $this->language->get('error_theme');
+				}
+
+				if (($this->currency->convert((int)$voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency')) < $this->config->get('config_voucher_min')) || ($this->currency->convert($voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency')) > $this->config->get('config_voucher_max'))) {
+					$json['error'][$key]['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
+				}
+
+				$this->session->data['vouchers'][] = [
+					'code'             => oc_token(10),
+					'description'      => sprintf($this->language->get('text_for'), $this->currency->format($voucher['amount'], $this->session->data['currency'], 1.0), $voucher['to_name']),
+					'to_name'          => $voucher['to_name'],
+					'to_email'         => $voucher['to_email'],
+					'from_name'        => $voucher['from_name'],
+					'from_email'       => $voucher['from_email'],
+					'voucher_theme_id' => $voucher['voucher_theme_id'],
+					'message'          => $voucher['message'],
+					'amount'           => $this->currency->convert((int)$voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
+				];
 			}
 		}
+
 
 		// Payment Address
 		if ($this->config->get('config_payment_address')) {
@@ -827,7 +875,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function load(): void {
-		$this->load->language('api/sale/order');
+		$this->load->language('api/order');
 
 		$json = [];
 
@@ -996,7 +1044,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function comment(): void {
-		$this->load->language('api/sale/order');
+		$this->load->language('api/order');
 
 		$json = [];
 
@@ -1020,7 +1068,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function confirm(): void {
-		$this->load->language('api/sale/order');
+		$this->load->language('api/order');
 
 		$json = [];
 
@@ -1096,7 +1144,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			// Payment Details
-			if ($this->config->get('config_checkout_payment_address')) {
+			if (isset($this->session->data['payment_address'])) {
 				$order_data['payment_address_id'] = $this->session->data['payment_address']['address_id'];
 				$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 				$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
@@ -1381,7 +1429,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addHistory(): void {
-		$this->load->language('api/sale/order');
+		$this->load->language('api/order');
 
 		$json = [];
 

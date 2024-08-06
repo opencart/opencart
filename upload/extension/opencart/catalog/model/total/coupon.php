@@ -171,6 +171,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 	public function unconfirm(array $order_info): void {
 		$this->load->model('marketing/coupon');
 
-		$this->model_marketing_coupon->deleteHistoryByOrderId($order_info['order_id']);
+		$this->model_marketing_coupon->deleteHistoriesByOrderId($order_info['order_id']);
 	}
 }

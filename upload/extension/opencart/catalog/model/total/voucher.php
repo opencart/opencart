@@ -88,6 +88,6 @@ class Voucher extends \Opencart\System\Engine\Model {
 	public function unconfirm(array $order_info): void {
 		$this->load->model('checkout/voucher');
 
-		$this->model_checkout_voucher->deleteHistoryByOrderId($order_info['order_id']);
+		$this->model_checkout_voucher->deleteHistoriesByOrderId($order_info['order_id']);
 	}
 }

@@ -21,7 +21,7 @@ class Reward extends \Opencart\System\Engine\Model {
 
 			$points = $this->customer->getRewardPoints();
 
-			if ($this->session->data['reward'] <= $points) {
+			if ($this->session->data['reward'] <= $points && $this->session->data['reward'] > 0) {
 				$discount_total = 0;
 
 				$points_total = 0;

@@ -22,10 +22,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_product');
 		}
 
-		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_payment_address');
-		}
-
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
@@ -34,6 +30,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if (!isset($this->session->data['shipping_method'])) {
 				$json['error'] = $this->language->get('error_shipping_method');
 			}
+		}
+
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+			$json['error'] = $this->language->get('error_payment_address');
 		}
 
 		if (!$json) {

@@ -42,6 +42,10 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function getMethods(): void {
+
+	}
+
 	/**
 	 * Save
 	 *
@@ -58,7 +62,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->post['shipping_method'])) {
+
+
+				if (!isset($this->request->post['shipping_method']['code'])) {
+
+
+				}
+
+
 				$shipping = explode('.', $this->request->post['shipping_method']);
+
+
+
+
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 					$json['error'] = $this->language->get('error_shipping_method');

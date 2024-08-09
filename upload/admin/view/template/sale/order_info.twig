@@ -222,7 +222,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div id="shipping-address" class="col{% if not shipping_method %} d-none{% endif %}">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -266,7 +265,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
         </div>
         <div class="row">
 
@@ -440,7 +438,6 @@
           {% endfor %}
         </ul>
         <div class="tab-content">
-
           <div id="tab-history" class="tab-pane active">
             <fieldset>
               <legend>{{ text_history }}</legend>
@@ -491,7 +488,6 @@
               <input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
             </form>
           </div>
-
           <div id="tab-additional" class="tab-pane">
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -541,7 +537,6 @@
       </div>
       <div class="modal-body">
         <form id="form-customer">
-
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
@@ -551,7 +546,6 @@
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
-
           <div class="mb-3">
             <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label>
             <select name="customer_group_id" id="input-customer-group" class="form-select">
@@ -560,19 +554,16 @@
               {% endfor %}
             </select>
           </div>
-
           <div class="mb-3 required">
             <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
             <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
             <div id="error-firstname" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
             <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
             <div id="error-lastname" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-email" class="form-label">{{ entry_email }}</label>
             <div class="input-group">
@@ -580,7 +571,6 @@
             </div>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
             <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
             <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
@@ -784,8 +774,6 @@
   </div>
 </div>
 
-
-
 <div id="modal-payment-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -950,27 +938,6 @@
     </div>
   </div>
 </div>
-
-<div id="modal-payment" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="form-payment-method">
-          <p>{{ text_payment }}</p>
-          <div id="payment-methods"></div>
-          <div class="text-end">
-            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div id="modal-shipping-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1167,6 +1134,26 @@
   </div>
 </div>
 
+<div id="modal-payment" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+
+        <form id="form-payment-method">
+          <p>{{ text_payment }}</p>
+          <div id="payment-methods"></div>
+          <div class="text-end">
+            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="modal-affiliate" class="modal">
   <div class="modal-dialog">
@@ -1191,7 +1178,6 @@
     </div>
   </div>
 </div>
-
 
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
@@ -2358,7 +2344,6 @@ $('#order-vouchers').on('submit', 'form', function(e) {
     });
 });
 
-
 // Coupon
 $('#form-coupon').on('submit', function(e) {
     e.preventDefault();
@@ -2801,6 +2786,10 @@ $('#button-confirm').on('click', function() {
             if (json['error']) {
                 for (i in json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['error']['customer']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
             }
 

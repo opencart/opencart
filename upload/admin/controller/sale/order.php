@@ -825,65 +825,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
-		// Coupon, Voucher, Reward
-		$data['total_coupon'] = '';
-		$data['total_voucher'] = '';
-		$data['total_reward'] = 0;
-
-		if ($order_id) {
-			$order_totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
-				$start = strpos($order_total['title'], '(');
-				$end = strrpos($order_total['title'], ')');
-
-				if ($start !== false && $end !== false) {
-					$data['total_' . $order_total['code']] = substr($order_total['title'], $start + 1, $end - ($start + 1));
-				}
-			}
-		}
-
-		// Reward Points
-		if (!empty($order_info)) {
-			$data['points'] = $this->model_sale_order->getRewardTotal($order_id);
-		} else {
-			$data['points'] = 0;
-		}
-
-		// Reward Points
-		if (!empty($order_info)) {
-			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
-		} else {
-			$data['reward_total'] = 0;
-		}
-
-		// Affiliate
-		if (!empty($order_info)) {
-			$data['affiliate_id'] = $order_info['affiliate_id'];
-		} else {
-			$data['affiliate_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['affiliate'] = $order_info['affiliate'];
-		} else {
-			$data['affiliate'] = '';
-		}
-
-		// Commission
-		if (!empty($order_info) && (float)$order_info['commission']) {
-			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'));
-		} else {
-			$data['commission'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
-		} else {
-			$data['commission_total'] = '';
-		}
-
 		// Addresses
 		if (!empty($order_info)) {
 			$this->load->model('customer/customer');
@@ -1080,6 +1021,65 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_code'] = $order_info['shipping_method']['code'];
 		} else {
 			$data['shipping_code'] = '';
+		}
+
+		// Coupon, Voucher, Reward
+		$data['total_coupon'] = '';
+		$data['total_voucher'] = '';
+		$data['total_reward'] = 0;
+
+		if ($order_id) {
+			$order_totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(');
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start !== false && $end !== false) {
+					$data['total_' . $order_total['code']] = substr($order_total['title'], $start + 1, $end - ($start + 1));
+				}
+			}
+		}
+
+		// Reward Points
+		if (!empty($order_info)) {
+			$data['points'] = $this->model_sale_order->getRewardTotal($order_id);
+		} else {
+			$data['points'] = 0;
+		}
+
+		// Reward Points
+		if (!empty($order_info)) {
+			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+		} else {
+			$data['reward_total'] = 0;
+		}
+
+		// Affiliate
+		if (!empty($order_info)) {
+			$data['affiliate_id'] = $order_info['affiliate_id'];
+		} else {
+			$data['affiliate_id'] = 0;
+		}
+
+		if (!empty($order_info)) {
+			$data['affiliate'] = $order_info['affiliate'];
+		} else {
+			$data['affiliate'] = '';
+		}
+
+		// Commission
+		if (!empty($order_info) && (float)$order_info['commission']) {
+			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'));
+		} else {
+			$data['commission'] = '';
+		}
+
+		if (!empty($order_info)) {
+			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
+		} else {
+			$data['commission_total'] = '';
 		}
 
 		// Comment

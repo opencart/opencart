@@ -66,6 +66,7 @@ $_['entry_checkout']                   = 'Checkout Terms';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_checkout']             = 'Stock Checkout';
 $_['entry_logo']                       = 'Store Logo';
+$_['entry_icon']                       = 'Icon';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                = 'Product Image Thumb Size (W x H)';
 $_['entry_image_popup']                = 'Product Image Popup Size (W x H)';

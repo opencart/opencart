@@ -464,6 +464,21 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['logo'] = $data['placeholder'];
 		}
 
+		// Fav Icon
+		if (isset($store_info['config_icon'])) {
+			$data['config_icon'] = $store_info['config_icon'];
+		} else {
+			$data['config_icon'] = '';
+		}
+		
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+
+		if ($data['config_icon'] && is_file(DIR_IMAGE . html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'))) {
+			$data['icon'] = $this->model_tool_image->resize($data['config_icon'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+		} else {
+			$data['icon'] = '';
+		}
+
 		if (isset($store_info['config_image_category_width'])) {
 			$data['config_image_category_width'] = $store_info['config_image_category_width'];
 		} else {

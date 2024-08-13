@@ -22,7 +22,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output = $result;
 		}
 
-		$this->load->controller('api/currency');
 		$this->load->controller('api/cart');
 
 		$result = $this->load->controller('api/shipping_address');
@@ -30,8 +29,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		if ($call == 'shipping_address') {
 			$output = $result;
 		}
-
-
 
 		$this->load->controller('api/shipping_method');
 
@@ -42,12 +39,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->load->controller('api/shipping_address');
 
 			$output = $this->response->getOutput();
-
-
 		}
 
 		// get shipping_methods
-
 		// get payment_methods
 		if ($call == 'payment_methods') {
 			$this->load->controller('api/customer');
@@ -62,36 +56,31 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output = $this->response->getOutput();
 		}
 
-
-
 		$this->load->controller('api/cart.getProducts');
 		$this->load->controller('api/cart.getVouchers');
 		$this->load->controller('api/cart.getTotals');
 
-
-
-
 		$routes[] = 'api/customer';
-		$routes[] = 'api/currency';
 		$routes[] = 'api/cart';
 		$routes[] = 'api/payment_address';
 		$routes[] = 'api/shipping_address';
+		$routes[] = 'api/shipping_method';
 		$routes[] = 'api/shipping_method.save';
 		$routes[] = 'api/cart.add';
 		$routes[] = 'api/coupon';
 		$routes[] = 'api/voucher';
 		$routes[] = 'api/reward';
+		$routes[] = 'api/payment_method';
 		$routes[] = 'api/payment_method.save';
 		$routes[] = 'api/affiliate';
+
 		$routes[] = 'api/order.save';
 
-
-
 		foreach ($routes as $route) {
-			if ($call == $route) {
-				$this->load->controller($route);
+			$result = $this->load->controller($route);
 
-				$output = $this->response->getOutput();
+			if (isset($result['error'])) {
+				$json = array_merge($result, $json);
 			}
 		}
 	}
@@ -1072,29 +1061,18 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Validate cart has products and has stock.
-		if (($this->cart->hasProducts() || !empty($this->session->data['vouchers']))) {
-			if (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) {
-				$json['error']['stock'] = $this->language->get('error_stock');
-			}
-		} else {
-			$json['error']['product'] = $this->language->get('error_product');
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			if (!$product['minimum']) {
-				$json['error']['minimum'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-
-				break;
-			}
-		}
-
 		// Customer
 		if (!isset($this->session->data['customer'])) {
 			$json['error']['customer'] = $this->language->get('error_customer');
+		}
+
+		// Validate cart has products and has stock.
+		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
+			$json['error']['product'] = $this->language->get('error_product');
+		}
+
+		if ((!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
+			$json['error']['stock'] = $this->language->get('error_stock');
 		}
 
 		// Payment Address
@@ -1120,7 +1098,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (empty($this->session->data['payment_method'])) {
+		if (!isset($this->session->data['payment_method'])) {
 			$json['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 

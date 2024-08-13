@@ -14,6 +14,143 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Products
+		if (!empty($this->request->data['products'])) {
+			$json['error']['warning'] = $this->language->get('error_product');
+
+			$this->load->model('catalog/product');
+
+			foreach ($this->request->post['products'] as $product) {
+				if (isset($product['option'])) {
+					$option = array_filter($product['option']);
+				} else {
+					$option = [];
+				}
+
+				if (isset($product['subscription_plan_id'])) {
+					$subscription_plan_id = (int)$product['subscription_plan_id'];
+				} else {
+					$subscription_plan_id = 0;
+				}
+
+				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+
+				if ($product_info) {
+					// If variant get master product
+					if ($product_info['master_id']) {
+						$product_id = $product_info['master_id'];
+					}
+
+					// Merge variant code with options
+					foreach ($product_info['variant'] as $key => $value) {
+						$option[$key] = $value;
+					}
+
+					// Validate options
+					$product_options = $this->model_catalog_product->getOptions($product['product_id']);
+
+					foreach ($product_options as $product_option) {
+						if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+							$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+						}
+					}
+
+					// Validate Subscription plan
+					$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
+
+					if ($subscriptions) {
+						$subscription_plan_ids = [];
+
+						foreach ($subscriptions as $subscription) {
+							$subscription_plan_ids[] = $subscription['subscription_plan_id'];
+						}
+
+						if (!in_array($subscription_plan_id, $subscription_plan_ids)) {
+							$json['error']['subscription'][$key] = $this->language->get('error_subscription');
+						}
+					}
+				}
+			}
+
+		}
+
+
+		if (!$json) {
+
+			$this->load->model('catalog/product');
+
+			foreach ($this->request->post['products'] as $product) {
+				if (isset($product['quantity'])) {
+					$quantity = (int)$product['quantity'];
+				} else {
+					$quantity = 1;
+				}
+
+				if (isset($product['option'])) {
+					$option = array_filter($product['option']);
+				} else {
+					$option = [];
+				}
+
+				if (isset($product['subscription_plan_id'])) {
+					$subscription_plan_id = (int)$product['subscription_plan_id'];
+				} else {
+					$subscription_plan_id = 0;
+				}
+
+				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+
+				if ($product_info) {
+					// If variant get master product
+					if ($product_info['master_id']) {
+						$product_id = $product_info['master_id'];
+					}
+
+					// Merge variant code with options
+					foreach ($product_info['variant'] as $key => $value) {
+						$option[$key] = $value;
+					}
+
+					// Validate options
+					$product_options = $this->model_catalog_product->getOptions($product['product_id']);
+
+					foreach ($product_options as $product_option) {
+						if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+							$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+						}
+					}
+
+					// Validate Subscription plan
+					$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
+
+					if ($subscriptions) {
+						$subscription_plan_ids = [];
+
+						foreach ($subscriptions as $subscription) {
+							$subscription_plan_ids[] = $subscription['subscription_plan_id'];
+						}
+
+						if (!in_array($subscription_plan_id, $subscription_plan_ids)) {
+							$json['error']['subscription'][$key] = $this->language->get('error_subscription');
+						}
+					}
+				}
+			}
+
+		}
+
+
+
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getProducts() {
+		$this->load->language('api/cart');
+
+		$json = [];
+
 		// Stock
 		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 			$json['error']['stock'] = $this->language->get('error_stock');

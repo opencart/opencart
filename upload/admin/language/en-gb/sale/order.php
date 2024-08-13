@@ -14,6 +14,7 @@ $_['text_customer']              = 'Customer';
 $_['text_cart_add']              = 'Add Item';
 $_['text_product_add']           = 'Add Product';
 $_['text_voucher_add']           = 'Add Voucher';
+$_['text_for']                   = '%s Gift certificate for %s';
 $_['text_points']                = 'Points';
 $_['text_reward']                = 'Reward Points';
 $_['text_reward_add']            = 'Success: Reward points added!';

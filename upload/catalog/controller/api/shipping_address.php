@@ -17,15 +17,15 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if ($this->cart->hasShipping()) {
 			// Add keys for missing post vars
 			$keys = [
-				'firstname',
-				'lastname',
-				'company',
-				'address_1',
-				'address_2',
-				'postcode',
-				'city',
-				'zone_id',
-				'country_id'
+				'shipping_firstname',
+				'shipping_lastname',
+				'shipping_company',
+				'shipping_address_1',
+				'shipping_address_2',
+				'shipping_postcode',
+				'shipping_city',
+				'shipping_zone_id',
+				'shipping_country_id'
 			];
 
 			foreach ($keys as $key) {
@@ -34,35 +34,35 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
+			if (!oc_validate_length($this->request->post['shipping_firstname'], 1, 32)) {
+				$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 			}
 
-			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
+			if (!oc_validate_length($this->request->post['shipping_lastname'], 1, 32)) {
+				$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
 			}
 
-			if (!oc_validate_length($this->request->post['address_1'], 3, 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
+			if (!oc_validate_length($this->request->post['shipping_address_1'], 3, 128)) {
+				$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 			}
 
-			if (!oc_validate_length($this->request->post['city'], 2, 128)) {
-				$json['error']['city'] = $this->language->get('error_city');
+			if (!oc_validate_length($this->request->post['shipping_city'], 2, 128)) {
+				$json['error']['shipping_city'] = $this->language->get('error_city');
 			}
 
 			$this->load->model('localisation/country');
 
-			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
 
-			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['postcode'], 2, 10)) {
+			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['shipping_postcode'], 2, 10)) {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if (!$country_info || $this->request->post['country_id'] == '') {
+			if (!$country_info || $this->request->post['shipping_country_id'] == '') {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if ($this->request->post['zone_id'] == '') {
+			if ($this->request->post['shipping_zone_id'] == '') {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
@@ -73,9 +73,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address') {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					if ($custom_field['required'] && empty($this->request->post['shipping_custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['shipping_custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
@@ -110,23 +110,23 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['shipping_address'] = [
-				'address_id'     => $this->request->post['address_id'],
-				'firstname'      => $this->request->post['firstname'],
-				'lastname'       => $this->request->post['lastname'],
-				'company'        => $this->request->post['company'],
-				'address_1'      => $this->request->post['address_1'],
-				'address_2'      => $this->request->post['address_2'],
-				'postcode'       => $this->request->post['postcode'],
-				'city'           => $this->request->post['city'],
-				'zone_id'        => $this->request->post['zone_id'],
+				'address_id'     => $this->request->post['shipping_address_id'],
+				'firstname'      => $this->request->post['shipping_firstname'],
+				'lastname'       => $this->request->post['shipping_lastname'],
+				'company'        => $this->request->post['shipping_company'],
+				'address_1'      => $this->request->post['shipping_address_1'],
+				'address_2'      => $this->request->post['shipping_address_2'],
+				'postcode'       => $this->request->post['shipping_postcode'],
+				'city'           => $this->request->post['shipping_city'],
+				'zone_id'        => $this->request->post['shipping_zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
-				'country_id'     => (int)$this->request->post['country_id'],
+				'country_id'     => (int)$this->request->post['shipping_country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => $this->request->post['custom_field'] ?? []
+				'custom_field'   => $this->request->post['shipping_custom_field'] ?? []
 			];
 
 			$json['success'] = $this->language->get('text_success');

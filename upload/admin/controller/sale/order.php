@@ -1316,6 +1316,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$language = (string)$this->config->get('config_language');
 		}
 
+		if (isset($this->request->get['currency'])) {
+			$currency = (int)$this->request->get['currency'];
+		} else {
+			$currency = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}

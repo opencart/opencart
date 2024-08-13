@@ -69,18 +69,13 @@ class EcsCredentialProvider
     public function __invoke()
     {
         $this->attempts = 0;
-
         $uri = $this->getEcsUri();
-
         if ($this->isCompatibleUri($uri)) {
             return Promise\Coroutine::of(function () {
                 $client = $this->client;
                 $request = new Request('GET', $this->getEcsUri());
-
                 $headers = $this->getHeadersForAuthToken();
-
                 $credentials = null;
-
                 while ($credentials === null) {
                     $credentials = (yield $client(
                         $request,
@@ -95,7 +90,8 @@ class EcsCredentialProvider
                             $result['AccessKeyId'],
                             $result['SecretAccessKey'],
                             $result['Token'],
-                            strtotime($result['Expiration'])
+                            strtotime($result['Expiration']),
+                            $result['AccountId'] ?? null
                         );
                     })->otherwise(function ($reason) {
                         $reason = is_array($reason) ? $reason['exception'] : $reason;

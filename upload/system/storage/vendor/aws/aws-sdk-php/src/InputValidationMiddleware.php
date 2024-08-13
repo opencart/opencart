@@ -72,5 +72,4 @@ class InputValidationMiddleware
         }
         return $nextHandler($cmd);
     }
-
 }

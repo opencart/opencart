@@ -142,6 +142,7 @@ $_['entry_return_status']                 = 'Return Status';
 $_['entry_captcha']                       = 'Captcha';
 $_['entry_captcha_page']                  = 'Captcha Page';
 $_['entry_logo']                          = 'Store Logo';
+$_['entry_icon']                 		  = 'Icon';
 $_['entry_image_default']                 = 'Default Image Size (W x H)';
 $_['entry_image_category']                = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                   = 'Product Image Thumb Size (W x H)';
@@ -184,6 +185,7 @@ $_['entry_status']                        = 'Status';
 
 // Help
 $_['help_geocode']                        = 'Please enter your store location geocode manually.';
+$_['help_icon']                      = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_open']                           = 'Fill in your store\'s opening times.';
 $_['help_comment']                        = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
 $_['help_location']                       = 'The different store locations you have that you want displayed on the contact us form.';

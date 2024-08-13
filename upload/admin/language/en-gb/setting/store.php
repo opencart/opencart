@@ -66,6 +66,7 @@ $_['entry_checkout']                   = 'Checkout Terms';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_checkout']             = 'Stock Checkout';
 $_['entry_logo']                       = 'Store Logo';
+$_['entry_icon']                       = 'Icon';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                = 'Product Image Thumb Size (W x H)';
 $_['entry_image_popup']                = 'Product Image Popup Size (W x H)';
@@ -83,6 +84,7 @@ $_['entry_height']                     = 'Height';
 
 // Help
 $_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br/><br/>Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_icon']                        = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_geocode']                     = 'Please enter your store location geocode manually.';
 $_['help_open']                        = 'Fill in your stores opening times.';
 $_['help_comment']                     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';

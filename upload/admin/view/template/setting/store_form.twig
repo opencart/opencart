@@ -67,6 +67,20 @@
                 </div>
               </div>
               <div class="row mb-3">
+                <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
+                <div class="col-sm-10">
+                  <div class="border rounded d-block" style="max-width: 300px;">
+                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                    <div class="d-grid">
+                      <button type="button" data-oc-toggle="image" data-oc-target="#input-icon" data-oc-thumb="#thumb-icon" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-oc-toggle="clear" data-oc-target="#input-icon" data-oc-thumb="#thumb-icon" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                    </div>
+				      	 <div class="form-text">{{ help_icon }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
                 <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-select">

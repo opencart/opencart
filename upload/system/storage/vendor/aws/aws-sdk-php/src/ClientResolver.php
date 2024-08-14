@@ -308,6 +308,13 @@ class ClientResolver
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
         ],
+        'suppress_php_deprecation_warning' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc' => 'Set to true to suppress PHP runtime deprecation warnings. The current deprecation campaign is PHP versions 8.0.x and below, taking effect on 1/13/2025.',
+            'default' => false,
+            'fn' => [__CLASS__, '_apply_suppress_php_deprecation_warning']
+        ],
         'account_id_endpoint_mode' => [
             'type'      => 'value',
             'valid'     => ['string'],
@@ -1230,6 +1237,28 @@ class ClientResolver
         $args['config']['ignore_configured_endpoint_urls'] = $value;
     }
 
+    public static function _apply_suppress_php_deprecation_warning($value, &$args)
+    {
+        if ($value)  {
+            $args['suppress_php_deprecation_warning'] = true;
+        } elseif (!empty(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"))) {
+            $args['suppress_php_deprecation_warning']
+                = \Aws\boolean_value(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"));
+        } elseif (!empty($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
+            $args['suppress_php_deprecation_warning'] =
+                \Aws\boolean_value($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"]);
+        } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
+            $args['suppress_php_deprecation_warning'] =
+                \Aws\boolean_value($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"]);
+        }
+
+        if ($args['suppress_php_deprecation_warning'] === false
+            && PHP_VERSION_ID < 80100
+        ) {
+            self::emitDeprecationWarning();
+        }
+    }
+
     public static function _default_ignore_configured_endpoint_urls(array &$args)
     {
         return ConfigurationResolver::resolve(
@@ -1392,7 +1421,8 @@ EOT;
         }
     }
 
-    private static function isValidService($service) {
+    private static function isValidService($service)
+    {
         if (is_null($service)) {
             return false;
         }
@@ -1400,12 +1430,30 @@ EOT;
         return isset($services[$service]);
     }
 
-    private static function isValidApiVersion($service, $apiVersion) {
+    private static function isValidApiVersion($service, $apiVersion)
+    {
         if (is_null($apiVersion)) {
             return false;
         }
         return is_dir(
             __DIR__ . "/data/{$service}/$apiVersion"
+        );
+    }
+
+    private static function emitDeprecationWarning()
+    {
+        $phpVersionString = phpversion();
+        trigger_error(
+            "This installation of the SDK is using PHP version"
+            .  " {$phpVersionString}, which will be deprecated on January"
+            .  " 13th, 2025.\nPlease upgrade your PHP version to a minimum of"
+            .  " 8.1.x to continue receiving updates for the AWS"
+            .  " SDK for PHP.\nTo disable this warning, set"
+            .  " suppress_php_deprecation_warning to true on the client constructor"
+            .  " or set the environment variable AWS_SUPPRESS_PHP_DEPRECATION_WARNING"
+            .  " to true.\nMore information can be found at: "
+            .   "https://aws.amazon.com/blogs/developer/announcing-the-end-of-support-for-php-runtimes-8-0-x-and-below-in-the-aws-sdk-for-php/\n",
+            E_USER_WARNING
         );
     }
 }

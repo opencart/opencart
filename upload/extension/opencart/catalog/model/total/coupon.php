@@ -54,7 +54,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					}
 
 					if ($status) {
-						if ($coupon_info['type'] == 'F') {
+						if ($coupon_info['type'] == 'F' && $sub_total) {
 							$discount = $coupon_info['discount'] * ($product['total'] / $sub_total);
 						} elseif ($coupon_info['type'] == 'P') {
 							$discount = $product['total'] / 100 * $coupon_info['discount'];

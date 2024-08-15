@@ -78,6 +78,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describePendingMaintenanceActionsAsync(array $args = [])
  * @method \Aws\Result failoverDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise failoverDBClusterAsync(array $args = [])
+ * @method \Aws\Result failoverGlobalCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise failoverGlobalClusterAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result modifyDBCluster(array $args = [])

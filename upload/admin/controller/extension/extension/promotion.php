@@ -12,11 +12,11 @@ class ControllerExtensionExtensionPromotion extends Controller {
 
 		$response = curl_exec($curl);
 
-		curl_close($curl);
-
 		if ($response && curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200) {
+			curl_close($curl);
 			return $response;
 		} else {
+			curl_close($curl);
 			return '';
 		}
 	}

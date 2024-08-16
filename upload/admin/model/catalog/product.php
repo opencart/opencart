@@ -1088,7 +1088,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $product_id
 	 *
@@ -1569,7 +1569,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Discount
+	 * Add Discount
 	 *
 	 * @param int                  $product_id primary key of the product record to be fetched
 	 * @param array<string, mixed> $data
@@ -1581,7 +1581,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Discounts
+	 * Delete Discounts
 	 *
 	 * @param int $product_id primary key of the product record to be deleted
 	 *
@@ -1953,6 +1953,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id
 	 * @param array<string, mixed> $data
+	 * 
+	 * @return void
 	 */
 	public function addSubscription(int $product_id, array $data): void {
 		$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$data['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "'");

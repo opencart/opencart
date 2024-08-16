@@ -10,6 +10,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * Add Filter Group
 	 *
 	 * @param array<string, mixed> $data
+	 * 
+	 * @return int
 	 */
 	public function addFilterGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -160,6 +162,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id
+	 * 
+	 * @return void
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `language_id` = '" . (int)$language_id . "'");

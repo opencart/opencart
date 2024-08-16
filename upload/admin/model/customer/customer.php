@@ -327,7 +327,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Address
+	 * Delete Addresses
 	 *
 	 * @param int $customer_id
 	 * @param int $address_id

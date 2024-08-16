@@ -184,7 +184,7 @@ $('#button-delete').on('click', function(e) {
 
     if (confirm('{{ text_confirm }}')) {
         $.ajax({
-            url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.delete',
+            url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.delete',
             type: 'post',
             data: $('#form-order').serialize(),
             dataType: 'json',

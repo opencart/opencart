@@ -25,7 +25,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Activity
+	 * Delete Activities
 	 *
 	 * @param int $customer_id
 	 *

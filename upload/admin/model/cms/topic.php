@@ -11,7 +11,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data
 	 *
-	 * @return int $topic
+	 * @return int
 	 */
 	public function addTopic(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");

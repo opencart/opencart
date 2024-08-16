@@ -95,7 +95,6 @@ $_['button_approve']                = 'Approve';
 $_['button_deny']                   = 'Deny';
 $_['button_reset']                  = 'Reset';
 $_['button_generate']               = 'Generate';
-$_['button_voucher_add']            = 'Add Voucher';
 $_['button_view']                   = 'View';
 $_['button_reward_add']             = 'Add Reward Points';
 $_['button_reward_remove']          = 'Remove Reward Points';
@@ -154,7 +153,6 @@ $_['tab_payment_method']            = 'Payment Methods';
 $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';
 $_['tab_transaction']               = 'Transactions';
-$_['tab_voucher']                   = 'Vouchers';
 $_['tab_subscription']              = 'Subscription';
 $_['tab_report']                    = 'Report';
 

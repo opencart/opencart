@@ -19,13 +19,7 @@ class SubTotal extends \Opencart\System\Engine\Model {
 		$this->load->language('extension/opencart/total/sub_total');
 
 		$sub_total = $this->cart->getSubTotal();
-
-		if (!empty($this->session->data['vouchers'])) {
-			foreach ($this->session->data['vouchers'] as $voucher) {
-				$sub_total += $voucher['amount'];
-			}
-		}
-
+		
 		$totals[] = [
 			'extension'  => 'opencart',
 			'code'       => 'sub_total',

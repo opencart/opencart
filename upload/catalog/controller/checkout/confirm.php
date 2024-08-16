@@ -29,7 +29,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
+		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
 			$status = false;
 		}
 
@@ -300,13 +300,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			// Gift Voucher
-			$order_data['vouchers'] = [];
-
-			if (!empty($this->session->data['vouchers'])) {
-				$order_data['vouchers'] = $this->session->data['vouchers'];
-			}
-
 			$this->load->model('checkout/order');
 
 			if (!isset($this->session->data['order_id'])) {
@@ -373,18 +366,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
 				'reward'       => $product['reward'],
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-			];
-		}
-
-		// Gift Voucher
-		$data['vouchers'] = [];
-
-		$vouchers = $this->model_checkout_cart->getVouchers();
-
-		foreach ($vouchers as $voucher) {
-			$data['vouchers'][] = [
-				'description' => $voucher['description'],
-				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
 			];
 		}
 

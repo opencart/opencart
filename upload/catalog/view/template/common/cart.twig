@@ -1,7 +1,7 @@
 <div class="dropdown d-grid">
   <button type="button" data-bs-toggle="dropdown" class="btn btn-lg btn-inverse btn-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items }}</button>
   <ul class="dropdown-menu dropdown-menu-end p-2">
-    {% if products or vouchers %}
+    {% if products %}
       <li>
         <table class="table table-striped mb-2">
           {% for product in products %}
@@ -25,22 +25,8 @@
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
               <td class="text-end">
-                <form action="{{ product_remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
+                <form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
                   <input type="hidden" name="key" value="{{ product.cart_id }}">
-                  <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
-                </form>
-              </td>
-            </tr>
-          {% endfor %}
-          {% for voucher in vouchers %}
-            <tr>
-              <td class="text-center"></td>
-              <td class="text-start">{{ voucher.description }}</td>
-              <td class="text-end">x&nbsp;1</td>
-              <td class="text-end">{{ voucher.amount }}</td>
-              <td class="text-end">
-                <form action="{{ voucher_remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
-                  <input type="hidden" name="key" value="{{ voucher.key }}"/>
                   <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
                 </form>
               </td>

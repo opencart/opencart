@@ -214,19 +214,6 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Vouchers
-	 *
-	 * @param int $order_id
-	 *
-	 * @return array<int, array<string, mixed>>
-	 */
-	public function getVouchers(int $order_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
-
-		return $query->rows;
-	}
-
-	/**
 	 * Get Totals
 	 *
 	 * @param int $order_id
@@ -310,23 +297,6 @@ class Order extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalProductsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
-
-		if ($query->num_rows) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
-	}
-
-	/**
-	 * Get Total Vouchers By Order ID
-	 *
-	 * @param int $order_id
-	 *
-	 * @return int
-	 */
-	public function getTotalVouchersByOrderId(int $order_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

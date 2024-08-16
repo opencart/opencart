@@ -107,19 +107,6 @@
                   <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
               </tr>
             {% endfor %}
-
-            {% for voucher in vouchers %}
-              <tr>
-                <td class="text-start">{{ voucher.description }}</td>
-                <td class="text-start"></td>
-                <td class="text-end">1</td>
-                <td class="text-end">{{ voucher.amount }}</td>
-                <td class="text-end">{{ voucher.amount }}</td>
-                {% if products %}
-                  <td></td>
-                {% endif %}
-              </tr>
-            {% endfor %}
           </tbody>
           <tfoot>
             {% for total in totals %}

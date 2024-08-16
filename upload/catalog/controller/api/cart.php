@@ -209,18 +209,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$json['vouchers'] = [];
-
-		$vouchers = $this->model_checkout_cart->getVouchers();
-
-		foreach ($vouchers as $key => $voucher) {
-			$json['vouchers'][] = [
-				'key'         => $key,
-				'description' => sprintf($this->language->get('text_for'), $this->currency->format($voucher['amount'], $this->session->data['currency']), $voucher['to_name']),
-				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
-			];
-		}
-
 		$json['totals'] = [];
 
 		foreach ($totals as $total) {

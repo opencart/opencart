@@ -75,21 +75,6 @@ class Cart extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Vouchers
-	 *
-	 * @return array<string, array<string, mixed>>
-	 */
-	public function getVouchers(): array {
-		$voucher_data = [];
-
-		if (!empty($this->session->data['vouchers'])) {
-			$voucher_data = $this->session->data['vouchers'];
-		}
-
-		return $voucher_data;
-	}
-
-	/**
 	 * Get Totals
 	 *
 	 * @param array<int, array<string, mixed>> $totals

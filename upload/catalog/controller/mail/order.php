@@ -321,18 +321,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Vouchers
-		$data['vouchers'] = [];
-
-		$order_vouchers = $this->model_checkout_order->getVouchers($order_info['order_id']);
-
-		foreach ($order_vouchers as $order_voucher) {
-			$data['vouchers'][] = [
-				'description' => $order_voucher['description'],
-				'amount'      => $this->currency->format($order_voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-			];
-		}
-
 		// Order Totals
 		$data['totals'] = [];
 
@@ -596,17 +584,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'option'       => $option_data,
 					'subscription' => $description,
 					'total'        => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? $order_product['tax'] * $order_product['quantity'] : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				];
-			}
-
-			$data['vouchers'] = [];
-
-			$order_vouchers = $this->model_checkout_order->getVouchers($order_id);
-
-			foreach ($order_vouchers as $order_voucher) {
-				$data['vouchers'][] = [
-					'description' => $order_voucher['description'],
-					'amount'      => html_entity_decode($this->currency->format($order_voucher['amount'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
 				];
 			}
 

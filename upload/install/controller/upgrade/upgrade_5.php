@@ -134,12 +134,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'mail_voucher',
-				'trigger' => 'catalog/model/checkout/order/addHistory/after',
-				'action'  => 'account/voucher.send'
-			];
-
-			$events[] = [
 				'code'    => 'mail_order_add',
 				'trigger' => 'catalog/model/checkout/order/addHistory/before',
 				'action'  => 'mail/order'

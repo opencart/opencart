@@ -1,4 +1,4 @@
-{% if products or vouchers %}
+{% if products %}
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
@@ -71,20 +71,6 @@
             <td class="text-end">{{ product.total }}</td>
           </tr>
         {% endfor %}
-
-        {% for voucher in vouchers %}
-          <tr>
-            <td></td>
-            <td class="text-start text-wrap">{{ voucher.description }}</td>
-            <td class="text-start"></td>
-            <td class="text-start">
-              <div class="input-group"><input type="text" name="quantity" value="1" size="1" class="form-control" disabled/> <a href="{{ voucher.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a></div>
-            </td>
-            <td class="text-end">{{ voucher.amount }}</td>
-            <td class="text-end">{{ voucher.amount }}</td>
-          </tr>
-        {% endfor %}
-
       </tbody>
       <tfoot id="checkout-total">
         {% for total in totals %}

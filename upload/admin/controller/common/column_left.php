@@ -350,33 +350,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			// Voucher
-			$voucher = [];
-
-			if ($this->user->hasPermission('access', 'sale/voucher')) {
-				$voucher[] = [
-					'name'     => $this->language->get('text_voucher'),
-					'href'     => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'sale/voucher_theme')) {
-				$voucher[] = [
-					'name'     => $this->language->get('text_voucher_theme'),
-					'href'     => $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($voucher) {
-				$sale[] = [
-					'name'     => $this->language->get('text_voucher'),
-					'href'     => '',
-					'children' => $voucher
-				];
-			}
-
 			if ($sale) {
 				$data['menus'][] = [
 					'id'       => 'menu-sale',

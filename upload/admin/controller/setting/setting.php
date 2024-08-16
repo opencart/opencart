@@ -186,10 +186,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_comment_approve'] = $this->config->get('config_comment_approve');
 		$data['config_comment_interval'] = $this->config->get('config_comment_interval');
 
-		// Voucher
-		$data['config_voucher_min'] = $this->config->get('config_voucher_min');
-		$data['config_voucher_max'] = $this->config->get('config_voucher_max');
-
 		// Legal
 		$data['config_cookie_id'] = $this->config->get('config_cookie_id');
 		$data['config_gdpr_id'] = $this->config->get('config_gdpr_id');
@@ -531,14 +527,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_customer_online_expire']) {
 			$json['error']['customer_online_expire'] = $this->language->get('error_customer_online_expire');
-		}
-
-		if (!$this->request->post['config_voucher_min']) {
-			$json['error']['voucher_min'] = $this->language->get('error_voucher_min');
-		}
-
-		if (!$this->request->post['config_voucher_max']) {
-			$json['error']['voucher_max'] = $this->language->get('error_voucher_max');
 		}
 
 		if (!isset($this->request->post['config_processing_status'])) {

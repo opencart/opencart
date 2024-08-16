@@ -24,8 +24,6 @@ class Success extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['agree']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
-			unset($this->session->data['voucher']);
-			unset($this->session->data['vouchers']);
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));

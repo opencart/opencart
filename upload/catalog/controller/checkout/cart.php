@@ -93,7 +93,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['product_edit'] = $this->url->link('checkout/cart.edit', 'language=' . $this->config->get('config_language'));
 		$data['product_remove'] = $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language'));
-		$data['voucher_remove'] = $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language'));
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -173,20 +172,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Gift Voucher
-		$data['vouchers'] = [];
-
-		$vouchers = $this->model_checkout_cart->getVouchers();
-
-		foreach ($vouchers as $key => $voucher) {
-			$data['vouchers'][] = [
-				'key'         => $key,
-				'description' => $voucher['description'],
-				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-				'remove'      => $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language') . '&key=' . $key)
-			];
-		}
-
 		$data['totals'] = [];
 
 		$totals = [];
@@ -219,7 +204,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($products || $vouchers) {
+		if ($products) {
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		} else {
@@ -357,7 +342,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Handles single item update
 		$this->cart->update($key, $quantity);
 
-		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+		if ($this->cart->hasProducts()) {
 			$json['success'] = $this->language->get('text_edit');
 		} else {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -392,7 +377,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Remove
 		$this->cart->remove($key);
 
-		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+		if ($this->cart->hasProducts()) {
 			$json['success'] = $this->language->get('text_remove');
 		} else {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);

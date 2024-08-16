@@ -155,15 +155,6 @@
               <td class="text-end">{{ product.total }}</td>
             </tr>
           {% endfor %}
-          {% for voucher in order.voucher %}
-            <tr>
-              <td>{{ voucher.description }}</td>
-              <td></td>
-              <td class="text-end">1</td>
-              <td class="text-end">{{ voucher.amount }}</td>
-              <td class="text-end">{{ voucher.amount }}</td>
-            </tr>
-          {% endfor %}
           {% for total in order.total %}
             <tr>
               <td class="text-end" colspan="4"><b>{{ total.title }}</b></td>

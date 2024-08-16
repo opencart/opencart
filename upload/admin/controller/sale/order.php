@@ -754,19 +754,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Vouchers
-		$data['order_vouchers'] = [];
-
-		$vouchers = $this->model_sale_order->getVouchers($order_id);
-
-		foreach ($vouchers as $voucher) {
-			$data['order_vouchers'][] = [
-				'description' => $voucher['description'],
-				'amount'      => $this->currency->format($voucher['amount'], $data['currency_code'], $currency_value),
-				'href'        => $this->url->link('sale/voucher.form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
-			];
-		}
-
 		// Totals
 		$data['order_totals'] = [];
 
@@ -814,11 +801,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['language_code'] = $this->config->get('config_language');
 		}
-
-		// Voucher themes
-		$this->load->model('sale/voucher_theme');
-
-		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		// Currency
 		$this->load->model('localisation/currency');
@@ -1023,16 +1005,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_code'] = '';
 		}
 
-		// Coupon, Voucher, Reward
+		// Coupon, Reward
 		$data['total_coupon'] = '';
-		$data['total_voucher'] = '';
 		$data['total_reward'] = 0;
 
 		if ($order_id) {
 			$order_totals = $this->model_sale_order->getTotals($order_id);
 
 			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
+				// If coupon or reward points
 				$start = strpos($order_total['title'], '(');
 				$end = strrpos($order_total['title'], ')');
 
@@ -1593,17 +1574,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 
-				$voucher_data = [];
-
-				$vouchers = $this->model_sale_order->getVouchers($order_id);
-
-				foreach ($vouchers as $voucher) {
-					$voucher_data[] = [
-						'description' => $voucher['description'],
-						'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
-					];
-				}
-
 				$total_data = [];
 
 				$totals = $this->model_sale_order->getTotals($order_id);
@@ -1631,7 +1601,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'payment_address'  => $payment_address,
 					'payment_method'   => $order_info['payment_method']['name'],
 					'product'          => $product_data,
-					'voucher'          => $voucher_data,
 					'total'            => $total_data,
 					'comment'          => nl2br($order_info['comment'])
 				];

@@ -27,8 +27,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_customer');
 		}
 
-		// 2. Validate cart has products or vouchers
-		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
+		// 2. Validate cart has products
+		if (!$this->cart->hasProducts()) {
 			$json['error'] = $this->language->get('error_product');
 		}
 
@@ -87,7 +87,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_customer');
 		}
 
-		// 2. Validate cart has products or vouchers
+		// 2. Validate cart has products
 		if (!$this->cart->hasProducts()) {
 			$json['error'] = $this->language->get('error_product');
 		}

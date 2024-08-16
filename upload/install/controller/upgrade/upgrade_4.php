@@ -101,20 +101,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			}
 
 			$missing[] = [
-				'key'        => 'config_voucher_min',
-				'value'      => 1,
-				'code'       => 'config',
-				'serialized' => 0
-			];
-
-			$missing[] = [
-				'key'        => 'config_voucher_max',
-				'value'      => 1000,
-				'code'       => 'config',
-				'serialized' => 0
-			];
-
-			$missing[] = [
 				'key'        => 'config_fraud_status_id',
 				'value'      => 8,
 				'code'       => 'config',
@@ -397,7 +383,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				'category',
 				'account',
 				'reward',
-				'voucher',
 				'free_checkout',
 				'featured',
 				'basic',
@@ -438,7 +423,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE(image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE(image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE(image, 'data/', 'catalog/')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE(image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE(value, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE(value, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `description` = REPLACE(description, 'data/', 'catalog/')");

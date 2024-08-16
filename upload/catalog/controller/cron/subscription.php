@@ -282,9 +282,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						];
 					}
 
-					// Vouchers can not be in subscriptions
-					$order_data['vouchers'] = [];
-
 					// Order Totals
 					$totals = [];
 					$taxes = $store->cart->getTaxes();

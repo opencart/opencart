@@ -347,33 +347,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		return $query->row;
 	}
-
-	/**
-	 * Get Vouchers
-	 *
-	 * @param int $order_id
-	 *
-	 * @return array<int, array<string, mixed>>
-	 */
-	public function getVouchers(int $order_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
-
-		return $query->rows;
-	}
-
-	/**
-	 * Get Voucher By Voucher ID
-	 *
-	 * @param int $voucher_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function getVoucherByVoucherId(int $voucher_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
-
-		return $query->row;
-	}
-
+	
 	/**
 	 * Get Totals
 	 *

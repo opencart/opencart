@@ -9,7 +9,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function index() {
 
 		$this->load->controller('api/cart.getProducts');
-		$this->load->controller('api/cart.getVouchers');
 		$this->load->controller('api/cart.getTotals');
 	}
 
@@ -138,35 +137,15 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->cart->add($product['product_id'], $product['quantity'], $option_data, $subscription_plan_id, true, $product['price']);
 			}
 
-			$this->session->data['vouchers'] = [];
-
-			$this->load->model('checkout/voucher');
-
-			$vouchers = $this->model_checkout_order->getVouchers($order_id);
-
-			foreach ($vouchers as $voucher) {
-				$this->session->data['vouchers'][] = [
-					'code'             => $voucher['code'],
-					'description'      => sprintf($this->language->get('text_for'), $this->currency->format($voucher['amount'], $this->session->data['currency'], 1.0), $voucher['to_name']),
-					'to_name'          => $voucher['to_name'],
-					'to_email'         => $voucher['to_email'],
-					'from_name'        => $voucher['from_name'],
-					'from_email'       => $voucher['from_email'],
-					'voucher_theme_id' => $voucher['voucher_theme_id'],
-					'message'          => $voucher['message'],
-					'amount'           => $this->currency->convert($voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
-				];
-			}
-
 			if ($order_info['affiliate_id']) {
 				$this->session->data['affiliate_id'] = $order_info['affiliate_id'];
 			}
 
-			// Coupon, Voucher, Reward
+			// Coupon, Reward
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
 			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
+				// If coupon or reward points
 				$start = strpos($order_total['title'], '(');
 				$end = strrpos($order_total['title'], ')');
 
@@ -194,7 +173,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
-		$this->load->controller('api/voucher');
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method.save');
@@ -205,8 +183,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
-		// 2. Validate cart has products or vouchers .
-		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
+		// 2. Validate cart has products.
+		if (!$this->cart->hasProducts()) {
 			$json['error']['product'] = $this->language->get('error_product');
 		}
 
@@ -386,13 +364,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 
 				$points += $product['reward'];
-			}
-
-			// Gift Voucher
-			$order_data['vouchers'] = [];
-
-			if (!empty($this->session->data['vouchers'])) {
-				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
 			if (isset($this->session->data['comment'])) {

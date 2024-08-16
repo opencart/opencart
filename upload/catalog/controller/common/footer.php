@@ -46,7 +46,6 @@ class Footer extends \Opencart\System\Engine\Controller {
 
 		$data['sitemap'] = $this->url->link('information/sitemap', 'language=' . $this->config->get('config_language'));
 		$data['manufacturer'] = $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'));
-		$data['voucher'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'));
 
 		if ($this->config->get('config_affiliate_status')) {
 			$data['affiliate'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));

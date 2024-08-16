@@ -25,12 +25,6 @@
           <td class="text-end">{{ product.total }}</td>
         </tr>
       {% endfor %}
-      {% for voucher in vouchers %}
-        <tr>
-          <td class="text-start">1x {{ voucher.description }}</td>
-          <td class="text-end">{{ voucher.amount }}</td>
-        </tr>
-      {% endfor %}
     </tbody>
     <tfoot>
       {% for total in totals %}

@@ -67,15 +67,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_status = '';
 			}
 
-			$product_total = $this->model_account_order->getTotalProductsByOrderId($result['order_id']);
-			$voucher_total = $this->model_account_order->getTotalVouchersByOrderId($result['order_id']);
-
 			$data['orders'][] = [
 				'order_id'   => $result['order_id'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $order_status,
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'products'   => ($product_total + $voucher_total),
+				'products'   => $this->model_account_order->getTotalProductsByOrderId($result['order_id']),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'view'       => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id']),
 			];
@@ -361,18 +358,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'href'                     => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
 					'reorder'                  => $reorder,
 					'return'                   => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
-				];
-			}
-
-			// Voucher
-			$data['vouchers'] = [];
-
-			$vouchers = $this->model_account_order->getVouchers($order_id);
-
-			foreach ($vouchers as $voucher) {
-				$data['vouchers'][] = [
-					'description' => $voucher['description'],
-					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
 				];
 			}
 

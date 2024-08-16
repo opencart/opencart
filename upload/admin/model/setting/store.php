@@ -152,13 +152,13 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int    $store_id
 	 * @param string $language
-	 * @param string $session_id
+	 * @param string $currency
 	 *
 	 * @throws \Exception
 	 *
 	 * @return \Opencart\System\Engine\Registry
 	 */
-	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): \Opencart\System\Engine\Registry {
+	public function createStoreInstance(int $store_id = 0, string $language = '', string $currency = ''): \Opencart\System\Engine\Registry {
 		// Autoloader
 		$this->autoloader->register('Opencart\Catalog', DIR_CATALOG);
 
@@ -222,11 +222,9 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry->set('cache', $this->cache);
 
 		// Session
-		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
+		$session = new \Opencart\System\Library\Session('Mock', $registry);
+		$session->start();
 		$registry->set('session', $session);
-
-		// Start session
-		$session->start($session_id);
 
 		// Template
 		$template = new \Opencart\System\Library\Template($config->get('template_engine'));

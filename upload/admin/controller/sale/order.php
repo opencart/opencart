@@ -1163,43 +1163,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
-		$this->session->data['order'] = [];
-
-		// 2. Store the new session ID so we are not creating new session on every page load
-		if (!isset($this->session->data['api_session'])) {
-			$this->session->data['api_session'] = 'api-' . substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
-		}
-
-		if ($this->request->get['order_id']) {
-			// 1. Create a store instance using loader class to call controllers, models, views, libraries
-			$this->load->model('setting/store');
-
-			$store = $this->model_setting_store->createStoreInstance($data['store_id'], $data['language_code']);
-
-			// 3. Add the request GET vars
-			$request_data = $this->request->get;
-
-			// 4. Remove the unneeded keys
-			unset($request_data['call']);
-			unset($request_data['user_token']);
-
-			$store->request->get = $request_data;
-
-			// 5. Add the route to the GET vars
-			$store->request->get['route'] = 'api/order.load';
-
-			// 6. Create fake session class to store data
-			$store->session->data = [];
-
-			// Call the required API controller
-			$store->load->controller($store->request->get['route']);
-
-			$output = $store->response->getOutput();
-
-			// 7. Store the store session data in the current session
-			$this->session->data['order'] = $store->session->data;
-		}
-
 		// Histories
 		$data['history'] = $this->getHistory();
 
@@ -1322,7 +1285,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries
 			$this->load->model('setting/store');
 
-			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $this->session->data['api_session']);
+			$store = $this->model_setting_store->createStoreInstance($store_id, $language, 'USD');
 
 			// Set the store ID
 			$store->config->set('config_store_id', $store_id);

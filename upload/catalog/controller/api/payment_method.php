@@ -14,11 +14,13 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Customer
-		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
-		$this->load->controller('api/shipping_address');
-		$this->load->controller('api/shipping_method.save');
+		if ($this->request->get['route'] == 'api/payment_method') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/payment_address');
+			$this->load->controller('api/shipping_address');
+			$this->load->controller('api/shipping_method.save');
+		}
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
@@ -47,17 +49,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$payment_address = [];
-
-			if (isset($this->session->data['payment_address'])) {
-				$payment_address = $this->session->data['payment_address'];
-			} elseif ($this->config->get('config_checkout_shipping_address') && isset($this->session->data['shipping_address'])) {
-				$payment_address = $this->session->data['shipping_address'];
-			}
-
 			$this->load->model('checkout/payment_method');
 
-			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
+			$payment_methods = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
 
 			if ($payment_methods) {
 				$json['payment_methods'] = $this->session->data['payment_methods'] = $payment_methods;
@@ -80,13 +74,21 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->request->get['route'] == 'api/payment_method.save') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/payment_address');
+			$this->load->controller('api/shipping_address');
+			$this->load->controller('api/shipping_method.save');
+		}
+
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
 			$json['error'] = $this->language->get('error_customer');
 		}
 
 		// 2. Validate cart has products or vouchers
-		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
+		if (!$this->cart->hasProducts()) {
 			$json['error'] = $this->language->get('error_product');
 		}
 

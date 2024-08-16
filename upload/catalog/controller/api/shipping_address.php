@@ -14,6 +14,10 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->request->get['route'] == 'api/shipping_address') {
+			$this->load->controller('api/cart');
+		}
+
 		if ($this->cart->hasShipping()) {
 			// Add keys for missing post vars
 			$keys = [

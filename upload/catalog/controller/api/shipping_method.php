@@ -14,6 +14,12 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->request->get['route'] == 'api/shipping_method') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/shipping_address');
+		}
+
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
 			$json['error'] = $this->language->get('error_customer');
@@ -53,6 +59,12 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('api/shipping_method');
 
 		$json = [];
+
+		if ($this->request->get['route'] == 'api/shipping_method.save') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/shipping_address');
+		}
 
 		if ($this->cart->hasShipping()) {
 			// 1. Validate customer data exists

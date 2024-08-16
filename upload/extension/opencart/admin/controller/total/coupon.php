@@ -83,6 +83,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	public function order(): void {
 
 
+
 		$this->response->setOutput($this->load->view('extension/opencart/total/coupon_order', $data));
 	}
 }

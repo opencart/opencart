@@ -71,7 +71,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['account_custom_field'] = $customer_info['custom_field'];
+		$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 

@@ -7,6 +7,8 @@ namespace Opencart\catalog\controller\api;
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 * 
 	 * @return void
 	 */
 	public function index(): void {

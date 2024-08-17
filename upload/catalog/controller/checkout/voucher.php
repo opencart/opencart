@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Checkout;
  */
 class Voucher extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 * 
 	 * @return void
 	 */
 	public function index(): void {

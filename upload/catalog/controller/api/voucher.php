@@ -8,6 +8,8 @@ namespace Opencart\catalog\controller\api;
 class Voucher extends \Opencart\System\Engine\Controller {
 	// Apply voucher
 	/**
+	 * Index
+	 * 
 	 * @return void
 	 */
 	public function index(): void {

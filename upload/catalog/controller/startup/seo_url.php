@@ -9,6 +9,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	private $data = [];
 
 	/**
+	 * Index
+	 * 
 	 * @return null
 	 */
 	public function index() {

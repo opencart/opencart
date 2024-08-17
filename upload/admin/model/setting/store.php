@@ -222,7 +222,7 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry->set('cache', $this->cache);
 
 		// Session
-		$session = new \Opencart\System\Library\Session('Mock', $registry);
+		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
 		$session->start();
 		$registry->set('session', $session);
 

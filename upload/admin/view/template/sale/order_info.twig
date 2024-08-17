@@ -65,7 +65,8 @@
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                   {% endfor %}
-                </select> <label for="input-store">{{ entry_store }}</label>
+                </select>
+                <label for="input-store">{{ entry_store }}</label>
               </div>
             </form>
           </div>
@@ -77,7 +78,8 @@
                   {% for language in languages %}
                     <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                   {% endfor %}
-                </select> <label for="input-language">{{ entry_language }}</label>
+                </select>
+                <label for="input-language">{{ entry_language }}</label>
               </div>
             </form>
           </div>
@@ -89,7 +91,8 @@
                   {% for currency in currencies %}
                     <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                   {% endfor %}
-                </select> <label for="input-currency">{{ entry_currency }}</label>
+                </select>
+                <label for="input-currency">{{ entry_currency }}</label>
               </div>
             </form>
           </div>
@@ -107,8 +110,9 @@
               <td class="text-end" style="width: 1px;">{{ column_action }}</td>
             </tr>
           </thead>
-          <tbody id="order-products">
+          <tbody id="order-product">
             {% if order_products %}
+              {% set order_product_row = 0 %}
 
               {% for order_product in order_products %}
                 <tr>
@@ -119,25 +123,31 @@
                         {% if option.type != 'file' %}
                           <small> - {{ option.name }}: {{ option.value }}</small>
                         {% else %}
-                          <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
+                          <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>{% endif %}
                       {% endfor %}
                     {% endif %}
-
                     {% if order_product.reward %}
                       <br/>
                       <small> - {{ text_points }}: {{ order_product.reward }}</small>
                     {% endif %}
-
                     {% if order_product.subscription %}
                       <br/>
                       <small> - {{ text_subscription }}: <a href="{{ order_product.subscription }}" target="_blank">{{ order_product.subscription_description }}</a></small>
                     {% endif %}
-
-                    <form id="cart-">
-
-                      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
-                      <input type="hidden" name="key" value="{{ order_product.cart_id }}"/> <input type="hidden" name="key" value="{{ order_product.cart_id }}"/> <input type="hidden" name="key" value="{{ order_product.cart_id }}"/> <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
-
+                    <form>
+                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/>
+                      {% for option in order_product.option %}
+                        - <small>{{ option.name }}: {{ option.value }}</small><br />
+                        {% if option.type == 'select' or option.type == 'radio' %}
+                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                        {% endif %}
+                        {% if option.type == 'checkbox' %}
+                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                        {% endif %}
+                        {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+                        {% endif %}
+                      {% endfor %}
                     </form>
                   </td>
                   <td class="text-start">{{ order_product.model }}</td>
@@ -151,6 +161,7 @@
                     </form>
                   </td>
                 </tr>
+                {% set order_product_row = order_product_row + 1 %}
               {% endfor %}
             {% else %}
               <tr>
@@ -392,7 +403,7 @@
         </div>
 
         <table class="table table-bordered">
-          <tbody id="order-totals">
+          <tbody id="order-total">
             {% for order_total in order_totals %}
               <tr>
                 <td class="text-end"><strong>{{ order_total.title }}</strong></td>
@@ -1547,7 +1558,7 @@ $('#form-product-add').on('submit', function(e) {
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-product-add, #form-cart').serialize(),
+        data: $('#form-product-add, #order-product form').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -1577,6 +1588,10 @@ $('#form-product-add').on('submit', function(e) {
             if (json['success']) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+
+
+
+
                 // Force refresh
                 $('#button-confirm').prop('disabled', true);
             }
@@ -1588,43 +1603,13 @@ $('#form-product-add').on('submit', function(e) {
 });
 
 // Remove product
-$('#order-products').on('submit', 'form', function(e) {
+$('#order-product').on('click', 'button', function(e) {
     e.preventDefault();
 
     var element = this;
 
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.remove&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
-        type: 'post',
-        data: $(element).serialize(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(e.target).button('loading');
-        },
-        complete: function() {
-            $(e.target).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            // Check for errors
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                // Refresh products and totals
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+    // Refresh products and totals
+    $('#button-refresh').trigger('click');
 });
 
 // Payment Address
@@ -2449,12 +2434,17 @@ $('#form-comment').on('submit', function(e) {
     });
 });
 
+
+
 // Refresh all products and totals
 $('#button-refresh').on('click', function() {
+    console.log($('#form-customer, #order-product form, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment').serialize());
+
+
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment').serialize(),
+        data: $('#form-customer, #order-product form, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -2515,7 +2505,7 @@ $('#button-refresh').on('click', function() {
                 html += '</tr>';
             }
 
-            $('#order-products').html(html);
+            $('#order-product').html(html);
 
             // Totals
             html = '';
@@ -2531,7 +2521,7 @@ $('#button-refresh').on('click', function() {
                 }
             }
 
-            $('#order-totals').html(html);
+            $('#order-total').html(html);
 
             if (json['shipping_required']) {
                 $('#shipping-address').removeClass('d-none');

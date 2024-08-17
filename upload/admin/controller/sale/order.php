@@ -687,19 +687,23 @@ class Order extends \Opencart\System\Engine\Controller {
 			foreach ($options as $option) {
 				if ($option['type'] != 'file') {
 					$option_data[] = [
-						'name'  => $option['name'],
-						'value' => $option['value'],
-						'type'  => $option['type']
+						'product_option_id'       => $option['product_option_id'],
+						'product_option_value_id' => $option['product_option_value_id'],
+						'name'                    => $option['name'],
+						'value'                   => $option['value'],
+						'type'                    => $option['type']
 					];
 				} else {
 					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 					if ($upload_info) {
 						$option_data[] = [
-							'name'  => $option['name'],
-							'value' => $upload_info['name'],
-							'type'  => $option['type'],
-							'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+							'product_option_id'       => $option['product_option_id'],
+							'product_option_value_id' => $option['product_option_value_id'],
+							'name'                    => $option['name'],
+							'value'                   => $upload_info['name'],
+							'type'                    => $option['type'],
+							'href'                    => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 						];
 					}
 				}
@@ -1209,6 +1213,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * $url  = '&username=' . urlencode($username);
 	 * $url .= '&store_id=' . $store_id;
 	 * $url .= '&language=' . $language;
+	 * $url .= '&currency=' . $currency;
 	 * $url .= '&time=' . $time;
 	 * $url .= '&signature=' . rawurlencode($signature);
 	 *
@@ -1261,9 +1266,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['currency'])) {
-			$currency = (int)$this->request->get['currency'];
+			$currency = (string)$this->request->get['currency'];
 		} else {
-			$currency = '';
+			$currency = (string)$this->config->get('config_currency');
 		}
 
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
@@ -1279,18 +1284,17 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
-
-
-			// 1. Create a store instance using loader class to call controllers, models, views, libraries
+			// 1. Create a store instance using loader class to call controllers, models, views, libraries.
 			$this->load->model('setting/store');
 
-			$store = $this->model_setting_store->createStoreInstance($store_id, $language, 'USD');
+			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
 
-			// Set the store ID
+			// Set the store ID.
 			$store->config->set('config_store_id', $store_id);
 
-			// 2. Remove the unneeded keys
+			$store->session->data['currency'] = $currency;
+
+			// 2. Remove the unneeded keys.
 			$request_data = $this->request->get;
 
 			unset($request_data['call']);
@@ -1298,27 +1302,23 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store->request->get = $request_data;
 
-			// 3. Add the request GET vars
+			// 3. Add the request GET vars.
 			$store->request->get['route'] = 'api/' . $call;
 
 			// 4. Add the request POST var
 			$store->request->post = $this->request->post;
 
-			// 5. Set the session data
-			if (isset($this->session->data['order'])) {
-				$store->session->data = $this->session->data['order'];
-			} else {
-				$store->session->data = [];
-			}
-
-			// 6. Call the required API controller
+			// 5. Call the required API controller.
 			$store->load->controller($store->request->get['route']);
 
-			// Call the required API controller
+			// 6. Call the required API controller and get the output.
 			$output = $store->response->getOutput();
 
-			// 7. Store the store session data in the current session
-			$this->session->data['order'] = $store->session->data;
+			// 7. Clean up data by clearing cart.
+			$store->cart->clear();
+
+			// 8. Deleting the current session so we are not creating infinite sessions.
+			$store->session->destroy();
 		} else {
 			$output = json_encode($json);
 		}

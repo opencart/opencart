@@ -161,6 +161,8 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
 
+		$sql .= " GROUP BY `p`.`product_id`";
+
 		$sort_data = [
 			'pd.name',
 			'p.model',

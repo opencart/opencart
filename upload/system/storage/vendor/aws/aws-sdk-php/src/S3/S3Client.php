@@ -19,6 +19,9 @@ use Aws\ResultInterface;
 use Aws\Retry\QuotaManager;
 use Aws\RetryMiddleware;
 use Aws\RetryMiddlewareV2;
+use Aws\S3\Parser\GetBucketLocationResultMutator;
+use Aws\S3\Parser\S3Parser;
+use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Aws\S3\RegionalEndpoint\ConfigurationProvider;
 use Aws\S3\UseArnRegion\Configuration;
 use Aws\S3\UseArnRegion\ConfigurationInterface;
@@ -947,19 +950,21 @@ class S3Client extends AwsClient implements S3ClientInterface
     public static function _applyApiProvider($value, array &$args, HandlerList $list)
     {
         ClientResolver::_apply_api_provider($value, $args);
-        $args['parser'] = new GetBucketLocationParser(
-            new ValidateResponseChecksumParser(
-                new AmbiguousSuccessParser(
-                    new RetryableMalformedResponseParser(
-                        $args['parser'],
-                        $args['exception_class']
-                    ),
-                    $args['error_parser'],
-                    $args['exception_class']
-                ),
-                $args['api']
-            )
+        $s3Parser = new S3Parser(
+            $args['parser'],
+            $args['error_parser'],
+            $args['api'],
+            $args['exception_class']
         );
+        $s3Parser->addS3ResultMutator(
+            'get-bucket-location',
+            new GetBucketLocationResultMutator()
+        );
+        $s3Parser->addS3ResultMutator(
+            'validate-response-checksum',
+            new ValidateResponseChecksumResultMutator($args['api'])
+        );
+        $args['parser'] = $s3Parser;
     }
 
     /**

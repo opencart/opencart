@@ -321,7 +321,8 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
         );
         return $client->createPresignedRequest(
             $client->getCommand($command->getName(), $command->toArray()),
-            $expires
+            $expires,
+            $options
         );
     }
 

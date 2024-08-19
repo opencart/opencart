@@ -26,7 +26,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 	private function getProducts(): array {
 		$product_data = [];
 
@@ -60,24 +59,24 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			$product_data[] = [
-				'cart_id'      => $product['cart_id'],
-				'product_id'   => $product['product_id'],
-				'name'         => $product['name'],
-				'model'        => $product['model'],
-				'option'       => $product['option'],
-				'subscription' => $description,
-				'quantity'     => $product['quantity'],
-				'stock'        => $product['stock'],
-				'minimum'      => $product['minimum'],
-				'reward'       => $product['reward'],
-				'price'        => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total'        => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency'])
+				'cart_id'              => $product['cart_id'],
+				'product_id'           => $product['product_id'],
+				'name'                 => $product['name'],
+				'model'                => $product['model'],
+				'option'               => $product['option'],
+				'subscription_plan_id' => $product['subscription'] ? $product['subscription']['subscription_plan_id'] : 0,
+				'subscription'         => $description,
+				'quantity'             => $product['quantity'],
+				'stock'                => $product['stock'],
+				'minimum'              => $product['minimum'],
+				'reward'               => $product['reward'],
+				'price'                => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total'                => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency'])
 			];
 		}
 
 		return $product_data;
 	}
-
 	private function getTotals(): array {
 		$total_data = [];
 
@@ -115,14 +114,30 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$products = [];
 		}
 
-		print_r($products);
-
 		$this->load->model('catalog/product');
 
-		foreach ($products as $product) {
+		foreach ($products as $key => $product) {
 			$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 			if ($product_info) {
+				if (isset($product['quantity'])) {
+					$quantity = (int)$product['quantity'];
+				} else {
+					$quantity = 1;
+				}
+
+				if (isset($product['option'])) {
+					$option = array_filter((array)$product['option']);
+				} else {
+					$option = [];
+				}
+
+				if (isset($product['subscription_plan_id'])) {
+					$subscription_plan_id = (int)$product['subscription_plan_id'];
+				} else {
+					$subscription_plan_id = 0;
+				}
+
 				// Merge variant code with options
 				foreach ($product_info['variant'] as $option_id => $value) {
 					$option[$option_id] = $value;
@@ -146,19 +161,22 @@ class Cart extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error']['product'] = $this->language->get('error_product');
 			}
+
+
+			if (!$json) {
+				$this->cart->add($product['product_id'], $quantity, $option, $subscription_plan_id);
+			}
 		}
 
 		if (!$json) {
-			foreach ($products as $product) {
-				$this->cart->add($product['product_id'], $product['quantity'], array_filter($product['option']), $product['subscription_plan_id']);
-			}
-
 			$json['success'] = $this->language->get('text_success');
 
 			$json['products'] = $this->getProducts();
 			$json['totals'] = $this->getTotals();
 			$json['shipping_required'] = $this->cart->hasShipping();
 		}
+
+		//print_r($json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -189,7 +207,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['option'])) {
-			$option = array_filter($this->request->post['option']);
+			$option = array_filter((array)$this->request->post['option']);
 		} else {
 			$option = [];
 		}

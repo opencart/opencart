@@ -17,7 +17,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+		$this->load->controller('api/cart.add');
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method.save');

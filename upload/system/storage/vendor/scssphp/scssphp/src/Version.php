@@ -19,5 +19,5 @@ namespace ScssPhp\ScssPhp;
  */
 class Version
 {
-    const VERSION = '1.12.1';
+    const VERSION = '1.13.0';
 }

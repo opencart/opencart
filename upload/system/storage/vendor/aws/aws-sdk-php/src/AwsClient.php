@@ -684,6 +684,11 @@ class AwsClient implements AwsClientInterface
     }
 
     public static function emitDeprecationWarning() {
+        trigger_error(
+            "This method is deprecated. It will be removed in an upcoming release."
+            , E_USER_DEPRECATED
+        );
+
         $phpVersion = PHP_VERSION_ID;
         if ($phpVersion <  70205) {
             $phpVersionString = phpversion();

@@ -13,6 +13,7 @@
 namespace ScssPhp\ScssPhp\Block;
 
 use ScssPhp\ScssPhp\Block;
+use ScssPhp\ScssPhp\Node\Number;
 use ScssPhp\ScssPhp\Type;
 
 /**
@@ -21,7 +22,7 @@ use ScssPhp\ScssPhp\Type;
 class IfBlock extends Block
 {
     /**
-     * @var array
+     * @var array|Number
      */
     public $cond;
 

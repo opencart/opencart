@@ -95,6 +95,9 @@ class Type
      * @internal
      */
     const T_FOR = 'for';
+    /**
+     * @internal
+     */
     const T_FUNCTION = 'function';
     /**
      * @internal

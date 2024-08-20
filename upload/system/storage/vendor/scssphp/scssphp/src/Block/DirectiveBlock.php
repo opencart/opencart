@@ -13,6 +13,7 @@
 namespace ScssPhp\ScssPhp\Block;
 
 use ScssPhp\ScssPhp\Block;
+use ScssPhp\ScssPhp\Node\Number;
 use ScssPhp\ScssPhp\Type;
 
 /**
@@ -26,7 +27,7 @@ class DirectiveBlock extends Block
     public $name;
 
     /**
-     * @var string|array|null
+     * @var array|Number|null
      */
     public $value;
 

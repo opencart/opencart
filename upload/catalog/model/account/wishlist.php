@@ -21,7 +21,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Wishlist
+	 * Delete Customer Wishlist
 	 *
 	 * @param int $customer_id
 	 * @param int $product_id

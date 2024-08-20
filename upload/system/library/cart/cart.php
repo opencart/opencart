@@ -31,7 +31,7 @@ class Cart {
 	 */
 	private object $weight;
 	/**
-	 * @var array<int, array<string, mixed>>
+	 * @var array<int, array<string, mixed>> $data
 	 */
 	private array $data = [];
 

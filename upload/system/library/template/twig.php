@@ -19,7 +19,7 @@ class Twig {
 	 */
 	protected string $directory;
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $path
 	 */
 	protected array $path = [];
 

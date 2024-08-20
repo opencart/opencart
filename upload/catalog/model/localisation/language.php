@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Localisation;
  */
 class Language extends \Opencart\System\Engine\Model {
 	/**
-	 * @var array<int|string, array<string, mixed>>
+	 * @var array<int|string, array<string, mixed>> $data
 	 */
 	private array $data = [];
 

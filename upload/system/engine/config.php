@@ -18,11 +18,11 @@ class Config {
 	 */
 	protected string $directory;
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $path
 	 */
 	private array $path = [];
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $data
 	 */
 	private array $data = [];
 

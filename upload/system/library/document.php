@@ -26,15 +26,15 @@ class Document {
 	 */
 	private string $keywords = '';
 	/**
-	 * @var array<string, array<string, string>>
+	 * @var array<string, array<string, string>> $links
 	 */
 	private array $links = [];
 	/**
-	 * @var array<string, array<string, string>>
+	 * @var array<string, array<string, string>> $styles
 	 */
 	private array $styles = [];
 	/**
-	 * @var array<string, array<string, array<string, string>>>
+	 * @var array<string, array<string, array<string, string>>> $scripts
 	 */
 	private array $scripts = [];
 

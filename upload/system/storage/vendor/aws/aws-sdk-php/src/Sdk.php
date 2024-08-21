@@ -166,8 +166,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCodeGuruSecurity(array $args = [])
  * @method \Aws\CodePipeline\CodePipelineClient createCodePipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodePipeline(array $args = [])
- * @method \Aws\CodeStar\CodeStarClient createCodeStar(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionCodeStar(array $args = [])
  * @method \Aws\CodeStarNotifications\CodeStarNotificationsClient createCodeStarNotifications(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeStarNotifications(array $args = [])
  * @method \Aws\CodeStarconnections\CodeStarconnectionsClient createCodeStarconnections(array $args = [])
@@ -777,7 +775,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.320.4';
+    const VERSION = '3.320.5';
 
     /** @var array Arguments for creating clients */
     private $args;

@@ -1249,7 +1249,7 @@ class ClientResolver
                 \Aws\boolean_value($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"]);
         } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
             $args['suppress_php_deprecation_warning'] =
-                \Aws\boolean_value($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"]);
+                \Aws\boolean_value($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"]);
         }
 
         if ($args['suppress_php_deprecation_warning'] === false

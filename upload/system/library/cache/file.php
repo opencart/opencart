@@ -15,6 +15,7 @@ class File {
 				if ($time < time()) {
 					if (file_exists($file)) {
 						unlink($file);
+						clearstatcache(false, $file);
 					}
 				}
 			}
@@ -70,6 +71,7 @@ class File {
 			foreach ($files as $file) {
 				if (file_exists($file)) {
 					unlink($file);
+					clearstatcache(false, $file);
 				}
 			}
 		}

@@ -140,13 +140,28 @@ class Compiler
     /** @deprecated */
     public static $Infinity     = [Type::T_KEYWORD, 'Infinity'];
     public static $null         = [Type::T_NULL];
+    /**
+     * @internal
+     */
     public static $nullString   = [Type::T_STRING, '', []];
+    /**
+     * @internal
+     */
     public static $defaultValue = [Type::T_KEYWORD, ''];
+    /**
+     * @internal
+     */
     public static $selfSelector = [Type::T_SELF];
     public static $emptyList    = [Type::T_LIST, '', []];
     public static $emptyMap     = [Type::T_MAP, [], []];
     public static $emptyString  = [Type::T_STRING, '"', []];
+    /**
+     * @internal
+     */
     public static $with         = [Type::T_KEYWORD, 'with'];
+    /**
+     * @internal
+     */
     public static $without      = [Type::T_KEYWORD, 'without'];
     private static $emptyArgumentList = [Type::T_LIST, '', [], []];
 
@@ -1656,6 +1671,7 @@ class Compiler
                 $parser = $this->parserFactory(__METHOD__);
 
                 if ($parser->parseValue($buffer, $reParsedWith)) {
+                    \assert(\is_array($reParsedWith));
                     $withCondition = $reParsedWith;
                 }
             }
@@ -5702,7 +5718,33 @@ EOL;
             @trigger_error('Omitting the argument declaration when registering custom function is deprecated and won\'t be supported in ScssPhp 2.0 anymore.', E_USER_DEPRECATED);
         }
 
+        if ($this->reflectCallable($callback)->getNumberOfRequiredParameters() > 1) {
+            @trigger_error('The second argument passed to the callback of custom functions is deprecated and won\'t be supported in ScssPhp 2.0 anymore. Register a callback accepting only 1 parameter instead.', E_USER_DEPRECATED);
+        }
+
         $this->userFunctions[$this->normalizeName($name)] = [$callback, $argumentDeclaration];
+    }
+
+    /**
+     * @return \ReflectionFunctionAbstract
+     */
+    private function reflectCallable(callable $c)
+    {
+        if (\is_object($c) && !$c instanceof \Closure) {
+            $c = [$c, '__invoke'];
+        }
+
+        if (\is_string($c) && false !== strpos($c, '::')) {
+            $c = explode('::', $c, 2);
+        }
+
+        if (\is_array($c)) {
+            return new \ReflectionMethod($c[0], $c[1]);
+        }
+
+        \assert(\is_string($c) || $c instanceof \Closure);
+
+        return new \ReflectionFunction($c);
     }
 
     /**

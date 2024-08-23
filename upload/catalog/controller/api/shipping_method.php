@@ -79,21 +79,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 			// 3. Validate shipping method
 			if (isset($this->request->post['shipping_method'])) {
-				$shipping = $this->request->post['shipping_method'];
-
-				if (!isset($shipping['name'])) {
+				if (!isset($this->request->post['shipping_method']['name'])) {
 					$json['error'] = $this->language->get('error_name');
 				}
 
-				if (!isset($shipping['code'])) {
+				if (!isset($this->request->post['shipping_method']['code'])) {
 					$json['error'] = $this->language->get('error_code');
 				}
 
-				if (!isset($shipping['cost'])) {
+				if (!isset($this->request->post['shipping_method']['cost'])) {
 					$json['error'] = $this->language->get('error_cost');
 				}
 
-				if (!isset($shipping['tax_class_id'])) {
+				if (!isset($this->request->post['shipping_method']['tax_class_id'])) {
 					$json['error'] = $this->language->get('error_tax_class');
 				}
 			} else {
@@ -106,7 +104,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
 
-			$this->session->data['shipping_method'] = $shipping + ['text' => $this->currency->format($this->tax->calculate($shipping['cost'], $shipping['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])];
+			$this->session->data['shipping_method'] = $this->request->post['shipping_method'] + ['text' => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method']['cost'], (int)$this->request->post['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -1,0 +1,42 @@
+
+<form id="form-reward">
+  <div class="input-group form-floating">
+    <input type="text" name="reward" value="{{ total_reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
+    <label for="input-reward">{{ entry_reward }}</label>
+    <button type="submit" id="button-reward" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
+  </div>
+</form>
+<script type="text/javascript"><!--
+$('#form-reward').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=reward&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#collapse-order form, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method').serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-reward').button('loading');
+        },
+        complete: function() {
+            $('#button-reward').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

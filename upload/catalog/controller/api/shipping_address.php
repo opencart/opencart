@@ -103,7 +103,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('localisation/zone');
 
-			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+			$zone_info = $this->model_localisation_zone->getZone($this->request->post['shipping_zone_id']);
 
 			if ($zone_info) {
 				$zone = $zone_info['name'];

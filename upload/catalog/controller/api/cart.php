@@ -26,6 +26,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
 	private function getProducts(): array {
 		$product_data = [];
 
@@ -77,6 +78,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		return $product_data;
 	}
+
 	private function getTotals(): array {
 		$total_data = [];
 
@@ -108,7 +110,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!empty($this->request->post['product'])) {
+		if (isset($this->request->post['product'])) {
 			$products = (array)$this->request->post['product'];
 		} else {
 			$products = [];
@@ -175,8 +177,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['totals'] = $this->getTotals();
 			$json['shipping_required'] = $this->cart->hasShipping();
 		}
-
-		//print_r($json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

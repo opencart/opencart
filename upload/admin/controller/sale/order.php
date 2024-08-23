@@ -905,16 +905,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (isset($order_info['payment_method']['name'])) {
-			$data['payment_method'] = $order_info['payment_method']['name'];
+		if (isset($order_info['payment_method'])) {
+			$data['payment_method_name'] = $order_info['payment_method']['name'];
+			$data['payment_method_code'] = $order_info['payment_method']['code'];
 		} else {
-			$data['payment_method'] = '';
-		}
-
-		if (isset($order_info['payment_method']['code'])) {
-			$data['payment_code'] = $order_info['payment_method']['code'];
-		} else {
-			$data['payment_code'] = '';
+			$data['payment_method_name'] = '';
+			$data['payment_method_code'] = '';
 		}
 
 		// Shipping Address
@@ -997,18 +993,18 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping method
-		if (isset($order_info['shipping_method']['name'])) {
-			$data['shipping_method'] = $order_info['shipping_method']['name'];
+		if (isset($order_info['shipping_method'])) {
+			$data['shipping_method_name'] = $order_info['shipping_method']['name'];
+			$data['shipping_method_code'] = $order_info['shipping_method']['code'];
+			$data['shipping_method_cost'] = $order_info['shipping_method']['cost'];
+			$data['shipping_method_tax_class_id'] = $order_info['shipping_method']['tax_class_id'];
 		} else {
-			$data['shipping_method'] = '';
+			$data['shipping_method_name'] = '';
+			$data['shipping_method_code'] = '';
+			$data['shipping_method_cost'] = '';
+			$data['shipping_method_tax_class_id'] = 0;
 		}
-
-		if (isset($order_info['shipping_method']['code'])) {
-			$data['shipping_code'] = $order_info['shipping_method']['code'];
-		} else {
-			$data['shipping_code'] = '';
-		}
-
+		
 		// Coupon, Reward
 		$data['total_coupon'] = '';
 		$data['total_reward'] = 0;

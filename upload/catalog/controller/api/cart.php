@@ -62,7 +62,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$json['error']['product_' . $key]['subscription'] = $this->language->get('error_subscription');
 				}
 			} else {
-				$json['error']['product'] = $this->language->get('error_product');
+				$json['error']['product_' . $key]['product'] = $this->language->get('error_product');
 			}
 
 			if (!$json) {

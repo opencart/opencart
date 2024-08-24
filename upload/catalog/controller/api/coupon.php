@@ -20,6 +20,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
+		if (!$this->config->get('total_coupon_status')) {
+			$json['error'] = $this->language->get('error_status');
+		}
+
 		if ($coupon) {
 			$this->load->model('marketing/coupon');
 
@@ -35,22 +39,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['coupon'] = $coupon;
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Remove
-	 *
-	 * @return void
-	 */
-	public function remove(): void {
-		$this->load->language('api/coupon');
-
-		$json['success'] = $this->language->get('text_remove');
-
-		unset($this->session->data['coupon']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

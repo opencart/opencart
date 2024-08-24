@@ -300,13 +300,21 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if (!isset($this->session->data['order_id'])) {
+				$order_id = $this->model_checkout_order->addOrder($order_data);
+			} else {
+				$order_id = 0;
+			}
+
 			$this->load->model('checkout/order');
 
-			if (!isset($this->session->data['order_id'])) {
-				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			if (!$order_id) {
+				$order_id = $this->model_checkout_order->addOrder($order_data);
 			} elseif ($order_info && !$order_info['order_status_id']) {
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
+				$this->model_checkout_order->editOrder($order_id, $order_data);
 			}
+
+			$this->session->data['order_id'] = $order_id;
 		}
 
 		// Display prices

@@ -311,7 +311,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_status_id = (int)$this->config->get('config_order_status_id');
 			}
 
-			$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
+			$this->model_checkout_order->addHistory($order_id, $order_status_id);
 
 			$json['success'] = $this->language->get('text_success');
 

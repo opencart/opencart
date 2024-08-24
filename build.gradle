@@ -1,0 +1,32 @@
+plugins {
+    id 'base'
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task installDependencies(type: Exec) {
+    description = 'Install PHP dependencies'
+    commandLine 'composer', 'install'
+}
+
+task lint(type: Exec) {
+    description = 'Lint PHP code'
+    commandLine 'phpcs', '--standard=PSR12', 'upload'
+}
+
+task test(type: Exec) {
+    description = 'Run PHPUnit tests'
+    commandLine 'vendor/bin/phpunit'
+}
+
+task package(type: Zip) {
+    from 'upload'
+    archiveFileName = 'opencart.zip'
+    destinationDirectory = file("${buildDir}/distributions")
+}
+
+task build {
+    dependsOn clean, installDependencies, lint, test, package
+}

@@ -284,19 +284,25 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
+			if (isset($this->request->post['order_id'])) {
+				$order_id = (int)$this->request->post['order_id'];
+			} else {
+				$order_id = 0;
+			}
+
 			$this->load->model('checkout/order');
 
-			if (!isset($this->session->data['order_id'])) {
-				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			if (!$order_id) {
+				$order_id = $this->model_checkout_order->addOrder($order_data);
 			} else {
-				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+				$order_info = $this->model_checkout_order->getOrder($order_id);
 
 				if ($order_info) {
-					$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
+					$this->model_checkout_order->editOrder($order_id, $order_data);
 				}
 			}
 
-			$json['order_id'] = $this->session->data['order_id'];
+			$json['order_id'] = $order_id;
 
 			// Set the order history
 			if (isset($this->request->post['order_status_id'])) {

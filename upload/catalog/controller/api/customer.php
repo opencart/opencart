@@ -30,10 +30,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Force types to avoid hacking
-		//\oc_filter_types($keys, $this->request->post);
-		// $this->request->filter('post', $keys);
-
 		// Customer
 		$this->load->model('account/customer');
 

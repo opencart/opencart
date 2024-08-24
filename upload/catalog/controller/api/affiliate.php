@@ -60,20 +60,4 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-	/**
-	 * Remove
-	 *
-	 * @return void
-	 */
-	public function remove(): void {
-		$this->load->language('api/affiliate');
-
-		$json['success'] = $this->language->get('text_remove');
-
-		unset($this->session->data['affiliate_id']);
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 }

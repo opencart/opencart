@@ -133,6 +133,12 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
+		if ($this->request->get['route'] == 'api/payment_method.save') {
+			$json['products'] = $this->load->controller('api/cart.getProducts');
+			$json['totals'] = $this->load->controller('api/cart.getTotals');
+			$json['shipping_required'] = $this->cart->hasShipping();
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

@@ -17,7 +17,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart.add');
+		$this->load->controller('api/cart');
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method.save');
@@ -59,7 +59,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_method']);
 		}
 
-		// 6. Validate payment Method
+		// 6. Validate payment method
 		if (!isset($this->session->data['payment_method'])) {
 			$json['error']['payment_method'] = $this->language->get('error_payment_method');
 		}

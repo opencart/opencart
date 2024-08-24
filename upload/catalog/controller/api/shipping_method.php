@@ -102,9 +102,15 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-
 			$this->session->data['shipping_method'] = $this->request->post['shipping_method'] + ['text' => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method']['cost'], (int)$this->request->post['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])];
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		if ($this->request->get['route'] == 'api/shipping_method.save') {
+			$json['products'] = $this->load->controller('api/cart.getProducts');
+			$json['totals'] = $this->load->controller('api/cart.getTotals');
+			$json['shipping_required'] = $this->cart->hasShipping();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

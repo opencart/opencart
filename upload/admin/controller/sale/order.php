@@ -662,14 +662,46 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Products
-		$data['order_products'] = [];
+		// Store
+		$data['stores'] = [];
 
-		$this->load->model('sale/order');
-		$this->load->model('sale/subscription');
-		$this->load->model('tool/upload');
+		$data['stores'][] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
 
-		$products = $this->model_sale_order->getProducts($order_id);
+		$this->load->model('setting/store');
+
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = [
+				'store_id' => $result['store_id'],
+				'name'     => $result['name']
+			];
+		}
+
+		if (!empty($order_info)) {
+			$data['store_id'] = $order_info['store_id'];
+		} else {
+			$data['store_id'] = (int)$this->config->get('config_store_id');
+		}
+
+		// Language
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (!empty($order_info)) {
+			$data['language_code'] = $order_info['language_code'];
+		} else {
+			$data['language_code'] = $this->config->get('config_language');
+		}
+
+		// Currency
+		$this->load->model('localisation/currency');
+
+		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		if (!empty($order_info)) {
 			$data['currency_code'] = $order_info['currency_code'];
@@ -678,6 +710,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['currency_code'] = $this->config->get('config_currency');
 			$currency_value = 1;
 		}
+
+		// Products
+		$data['order_products'] = [];
+
+		$this->load->model('sale/order');
+		$this->load->model('sale/subscription');
+		$this->load->model('tool/upload');
+
+		$products = $this->model_sale_order->getProducts($order_id);
 
 		foreach ($products as $product) {
 			$option_data = [];
@@ -769,47 +810,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				'text'  => $this->currency->format($total['value'], $data['currency_code'], $currency_value)
 			];
 		}
-
-		// Store
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = [
-				'store_id' => $result['store_id'],
-				'name'     => $result['name']
-			];
-		}
-
-		if (!empty($order_info)) {
-			$data['store_id'] = $order_info['store_id'];
-		} else {
-			$data['store_id'] = (int)$this->config->get('config_store_id');
-		}
-
-		// Language
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-
-		if (!empty($order_info)) {
-			$data['language_code'] = $order_info['language_code'];
-		} else {
-			$data['language_code'] = $this->config->get('config_language');
-		}
-
-		// Currency
-		$this->load->model('localisation/currency');
-
-		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		// Addresses
 		if (!empty($order_info)) {

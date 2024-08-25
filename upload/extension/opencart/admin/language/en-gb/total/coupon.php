@@ -5,7 +5,7 @@ $_['heading_title']    = 'Coupon';
 // Text
 $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified coupon total!';
-$_['text_edit']        = 'Edit Coupon';
+$_['text_edit']        = 'Edit Coupon Total';
 
 // Entry
 $_['entry_coupon']     = 'Coupon';

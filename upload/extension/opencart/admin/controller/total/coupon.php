@@ -72,7 +72,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
 	/**
 	 * Total
 	 *
@@ -81,8 +80,24 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function order(): void {
+		$this->load->language('extension/opencart/total/coupon');
 
+		// Coupon, Reward
+		$data['coupon'] = '';
 
+		if ($order_id) {
+			$order_totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon or reward points
+				$start = strpos($order_total['title'], '(');
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start !== false && $end !== false) {
+					$data['total_' . $order_total['code']] = substr($order_total['title'], $start + 1, $end - ($start + 1));
+				}
+			}
+		}
 
 		$this->response->setOutput($this->load->view('extension/opencart/total/coupon_order', $data));
 	}

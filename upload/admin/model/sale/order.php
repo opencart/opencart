@@ -362,6 +362,19 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total By Code
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getTotalByCode(int $order_id, $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' AND code = '" . $this->db->escape($code) . "' ORDER BY `sort_order`");
+
+		return $query->rows;
+	}
+
+	/**
 	 * Get Total Orders
 	 *
 	 * @param array<string, mixed> $data

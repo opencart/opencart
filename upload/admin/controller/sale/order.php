@@ -1004,24 +1004,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_method_cost'] = '';
 			$data['shipping_method_tax_class_id'] = 0;
 		}
-		
-		// Coupon, Reward
-		$data['total_coupon'] = '';
-		$data['total_reward'] = 0;
-
-		if ($order_id) {
-			$order_totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($order_totals as $order_total) {
-				// If coupon or reward points
-				$start = strpos($order_total['title'], '(');
-				$end = strrpos($order_total['title'], ')');
-
-				if ($start !== false && $end !== false) {
-					$data['total_' . $order_total['code']] = substr($order_total['title'], $start + 1, $end - ($start + 1));
-				}
-			}
-		}
 
 		// Reward Points
 		if (!empty($order_info)) {

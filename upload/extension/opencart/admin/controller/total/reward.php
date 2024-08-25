@@ -71,4 +71,34 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	 * Total
+	 *
+	 * get total
+	 *
+	 * @return void
+	 */
+	public function order(): void {
+		$this->load->language('extension/opencart/total/reward');
+
+		// Coupon, Reward
+		$data['total_reward'] = 0;
+
+		if ($order_id) {
+			$order_totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon or reward points
+				$start = strpos($order_total['title'], '(');
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start !== false && $end !== false) {
+					$data['total_' . $order_total['code']] = substr($order_total['title'], $start + 1, $end - ($start + 1));
+				}
+			}
+		}
+
+		$this->response->setOutput($this->load->view('extension/opencart/total/reward_order', $data));
+	}
 }

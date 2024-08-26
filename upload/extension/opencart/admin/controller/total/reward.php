@@ -39,6 +39,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$data['total_reward_status'] = $this->config->get('total_reward_status');
 		$data['total_reward_sort_order'] = $this->config->get('total_reward_sort_order');
 
+
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -75,7 +77,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function order(): void {
+	public function order(): string {
 		$this->load->language('extension/opencart/total/reward');
 
 		if (isset($this->request->get['order_id'])) {
@@ -100,6 +102,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/opencart/total/reward_order', $data));
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('extension/opencart/total/reward_order', $data);
 	}
 }

@@ -125,8 +125,7 @@
                         <small> - {{ text_subscription }}: <a href="{{ order_product.subscription }}" target="_blank">{{ order_product.subscription_description }}</a></small>
                       {% endif %}
 
-                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
                       {% for option in order_product.option %}
                         {% if option.type == 'select' or option.type == 'radio' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
@@ -276,6 +275,9 @@
         </div>
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+            {% for extension in extensions %}
+              <div class="col mb-3">{{ extension }}</div>
+            {% endfor %}
             <div class="col mb-3">
               <div class="input-group">
                 <div class="form-control border rounded-start">
@@ -603,14 +605,12 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label>
-            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
           <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-            <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
           </div>
           <div id="option"></div>
           <div id="subscription"></div>
@@ -640,41 +640,33 @@
             </select>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="payment_firstname" value="{{ payment_firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="payment_firstname" value="{{ payment_firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
             <div id="error-payment-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="payment_lastname" value="{{ payment_lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="payment_lastname" value="{{ payment_lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
             <div id="error-payment-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
-            <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+            <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
-            <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+            <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
             <div id="error-payment-address-1" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
-            <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+            <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
-            <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+            <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
             <div id="error-payment-city" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
-            <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+            <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
             <div id="error-payment-postcode" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-            <select name="payment_country_id" id="input-payment-country" class="form-select">
+            <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="payment_country_id" id="input-payment-country" class="form-select">
               <option value="0">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == payment_country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -683,8 +675,7 @@
             <div id="error-payment-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-            <select name="payment_zone_id" id="input-payment-zone" class="form-select"></select>
+            <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="payment_zone_id" id="input-payment-zone" class="form-select"></select>
             <div id="error-payment-zone" class="invalid-feedback"></div>
           </div>
           {% for custom_field in custom_fields %}
@@ -692,8 +683,7 @@
 
               {% if custom_field.type == 'select' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <select name="payment_custom_field[{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="payment_custom_field[{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <option value="{{ custom_field_value.custom_field_value_id }}"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
@@ -790,8 +780,7 @@
       <div class="modal-body">
         <form id="form-shipping-address">
           <div class="mb-3">
-            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
-            <select name="shipping_address_id" id="input-shipping-address" class="form-select">
+            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address_id" id="input-shipping-address" class="form-select">
               <option value="0">{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}"{% if address.address_id == shipping_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -834,8 +823,7 @@
             <div id="error-shipping-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-            <select name="shipping_zone_id" id="input-shipping-zone" class="form-select"></select>
+            <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label> <select name="shipping_zone_id" id="input-shipping-zone" class="form-select"></select>
             <div id="error-shipping-zone" class="invalid-feedback"></div>
           </div>
           {% for custom_field in custom_fields %}
@@ -879,15 +867,13 @@
               {% endif %}
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -942,10 +928,7 @@
         <p>{{ text_shipping }}</p>
         <div id="shipping-methods"></div>
         <form id="form-shipping-method">
-          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/>
-          <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/>
-          <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
-          <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
+          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/> <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/> <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/> <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
         </form>
         <div class="text-end">
           <button type="submit" form="form-shipping-method" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
@@ -965,8 +948,7 @@
         <p>{{ text_payment }}</p>
         <div id="payment-methods"></div>
         <form id="form-payment-method">
-          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/>
-          <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
+          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/> <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
         </form>
         <div class="text-end">
           <button type="submit" form="form-payment-method" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
@@ -1169,7 +1151,7 @@ $('#form-customer').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=customer&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/customer&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-customer').serialize(),
         dataType: 'json',
@@ -1217,11 +1199,7 @@ $('#input-store, #input-language, #input-currency').on('change', function(e) {
 
     var element = this;
 
-    $('#input-store, #input-language, #input-currency').prop('disabled', true);
-
     $('#refresh').trigger('click');
-
-    $('#input-store, #input-language, #input-currency').prop('disabled', false);
 });
 
 // Product
@@ -1442,11 +1420,15 @@ $('#input-product').autocomplete({
     }
 });
 
+var products = [];
+var totals = [];
+var shipping_required = false;
+
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/cart.add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-product-add, #form-cart').serialize(),
         dataType: 'json',
@@ -1478,10 +1460,20 @@ $('#form-product-add').on('submit', function(e) {
             if (json['success']) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                template(json);
+                if (json['products']) {
+                    products = json['products'];
+                }
+
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
+
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
+                }
 
                 // Force refresh
-                $('#button-confirm').prop('disabled', true);
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1620,9 +1612,6 @@ $('#form-payment-address').on('submit', function(e) {
                 address += $('#input-payment-country option:selected').text();
 
                 $('#payment-address-value').html(address);
-
-                // Force refresh
-                $('#button-confirm').prop('disabled', true);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1736,7 +1725,7 @@ $('#form-shipping-address').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_address&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/shipping_address&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-cart, #form-shipping-address').serialize(),
         dataType: 'json',
@@ -1795,9 +1784,6 @@ $('#form-shipping-address').on('submit', function(e) {
                 address += $('#input-shipping-country option:selected').text();
 
                 $('#shipping-address-value').html(address);
-
-                // Force refresh
-                $('#button-confirm').prop('disabled', true);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1968,10 +1954,19 @@ $('#form-shipping-method').on('submit', function(e) {
 
                 $('#shipping-method-value').html($('#input-shipping-method-name').val());
 
-                template(json);
+                if (json['products']) {
+                    products = json['products'];
+                }
 
-                // Force refresh
-                $('#button-confirm').prop('disabled', true);
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
+
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
+                }
+
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2090,10 +2085,19 @@ $('#form-payment-method').on('submit', function(e) {
 
                 $('#payment-method-value').html($('#input-payment-method-name').val());
 
-                template(json);
+                if (json['products']) {
+                    products = json['products'];
+                }
 
-                // Force refresh
-                $('#button-confirm').prop('disabled', true);
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
+
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
+                }
+
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2138,6 +2142,18 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function(e)
 
                 if (action == 'remove') {
                     $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add|escape('js') }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
+                }
+
+                if (json['products']) {
+                    products = json['products'];
+                }
+
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
+
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
                 }
 
                 $('#button-refresh').trigger('click');
@@ -2296,42 +2312,50 @@ $('#form-comment').on('submit', function(e) {
 });
 
 // Refresh all products and totals
-$('#button-refresh').on('click', function() {
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.refresh&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
-        type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #collapse-order form').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
-            $('#button-refresh').button('loading');
-            $('#button-confirm').prop('disabled', true);
-        },
-        complete: function() {
-            $('#button-refresh').button('reset');
-            $('#button-confirm').prop('disabled', false);
-        },
-        success: function(json) {
-            console.log(json);
-
-            template(json);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 var order_product_row = {{ order_product_row }};
 
-function template(json) {
+$('#button-refresh').on('click', function() {
+    if (!products) {
+        $.ajax({
+            url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.refresh&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+            type: 'post',
+            data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #collapse-order form').serialize(),
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            beforeSend: function() {
+                $('#button-refresh').button('loading');
+                $('#button-confirm').prop('disabled', true);
+            },
+            complete: function() {
+                $('#button-refresh').button('reset');
+                $('#button-confirm').prop('disabled', false);
+            },
+            success: function(json) {
+                console.log(json);
+
+                if (json['products']) {
+                    products = json['products'];
+                }
+
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
+
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+
     html = '';
 
-    if (json['products']) {
-        var product = [];
-
-        for (i = 0; i < json['products'].length; i++) {
-            product = json['products'][i];
+    if (products) {
+        for (i in products) {
+            product = products[i];
 
             console.log(product);
 
@@ -2394,20 +2418,18 @@ function template(json) {
     // Totals
     html = '';
 
-    if (json['totals'].length) {
-        for (i in json['totals']) {
-            total = json['totals'][i];
+    for (i in totals) {
+        total = totals[i];
 
-            html += '<tr>';
-            html += '  <td class="text-end"><strong>' + total['title'] + '</strong></td>';
-            html += '  <td class="text-end" style="width: 1px;">' + total['text'] + '</td>';
-            html += '</tr>';
-        }
+        html += '<tr>';
+        html += '  <td class="text-end"><strong>' + total['title'] + '</strong></td>';
+        html += '  <td class="text-end" style="width: 1px;">' + total['text'] + '</td>';
+        html += '</tr>';
     }
 
     $('#order-total').html(html);
 
-    if (json['shipping_required']) {
+    if (shipping_required) {
         $('#shipping-address').removeClass('d-none');
         $('#shipping-method').removeClass('d-none');
         $('#button-shipping').prop('disabled', false);
@@ -2416,7 +2438,7 @@ function template(json) {
         $('#shipping-method').addClass('d-none');
         $('#button-shipping').prop('disabled', true);
     }
-}
+});
 
 // Checkout
 $('#button-confirm').on('click', function() {
@@ -2455,6 +2477,10 @@ $('#button-confirm').on('click', function() {
                 if (json['order_id']) {
                     $('#input-order-id').val(json['order_id']);
                 }
+
+
+
+
 
                 if (json['points']) {
                     $('#reward-value').html(json['points']);

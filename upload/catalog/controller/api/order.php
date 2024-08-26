@@ -322,6 +322,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$json['products'] = $this->load->controller('api/cart.getProducts');
+		$json['totals'] = $this->load->controller('api/cart.getTotals');
+		$json['shipping_required'] = $this->cart->hasShipping();
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

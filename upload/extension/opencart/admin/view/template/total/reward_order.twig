@@ -1,9 +1,8 @@
-
 <form id="form-reward">
   <div class="input-group form-floating">
     <input type="text" name="reward" value="{{ total_reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
     <label for="input-reward">{{ entry_reward }}</label>
-    <button type="submit" id="button-reward" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
+    <button type="submit" id="button-reward" data-bs-toogle="tooltip" title="{{ button_apply }}" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
   </div>
 </form>
 <script type="text/javascript"><!--
@@ -11,9 +10,9 @@ $('#form-reward').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=reward&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=extension/opencart/total/reward.api&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#collapse-order form, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method').serialize(),
+        data: $('#form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
         dataType: 'json',
         beforeSend: function() {
             $('#button-reward').button('loading');
@@ -31,7 +30,7 @@ $('#form-reward').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-refresh').trigger('click');
+                $('#button-confirm').prop('disabled', true);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

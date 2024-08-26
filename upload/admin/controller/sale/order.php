@@ -1045,6 +1045,23 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['commission_total'] = '';
 		}
 
+		// Extension Order Tabs can be called here.
+		$data['extensions'] = [];
+
+		$this->load->model('setting/extension');
+
+		$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+		foreach ($extensions as $extension) {
+			if ($this->config->get('total_' . $extension['code'] . '_status')) {
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/total/' . $extension['code'] . '.order');
+
+				if (!$output instanceof \Exception) {
+					$data['extensions'][] = $output;
+				}
+			}
+		}
+
 		// Comment
 		if (!empty($order_info)) {
 			$data['comment'] = nl2br($order_info['comment']);

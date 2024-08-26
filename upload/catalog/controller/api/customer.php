@@ -88,6 +88,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Log the customer in
+			$this->customer->login($this->request->post['email'], '', true);
+
 			$this->session->data['customer'] = [
 				'customer_id'       => $this->request->post['customer_id'],
 				'customer_group_id' => $this->request->post['customer_group_id'],

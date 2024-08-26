@@ -75,7 +75,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function order(): void {
+	public function order(): string {
 		$this->load->language('extension/opencart/total/coupon');
 
 		if (isset($this->request->get['order_id'])) {
@@ -100,6 +100,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/opencart/total/coupon_order', $data));
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('extension/opencart/total/coupon_order', $data);
 	}
 }

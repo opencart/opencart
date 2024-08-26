@@ -1084,7 +1084,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Description
+	 * Delete Product Descriptions
 	 *
 	 * @param int $product_id
 	 *
@@ -1095,7 +1095,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Product Descriptions By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -1565,7 +1565,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Discount
+	 * Add Discount
 	 *
 	 * @param int                  $product_id primary key of the product record to be fetched
 	 * @param array<string, mixed> $data
@@ -1577,7 +1577,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Discounts
+	 * Delete Product Discounts
 	 *
 	 * @param int $product_id primary key of the product record to be deleted
 	 *
@@ -1588,7 +1588,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Discounts By Customer ID
+	 * Delete Product Discounts By Customer ID
 	 *
 	 * @param int $customer_group_id primary key of the customer group record to be deleted
 	 *
@@ -1949,6 +1949,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id
 	 * @param array<string, mixed> $data
+	 * 
+	 * @return void
 	 */
 	public function addSubscription(int $product_id, array $data): void {
 		$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$data['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "'");
@@ -1959,7 +1961,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscriptions
+	 * Delete Product Subscriptions
 	 *
 	 * @param int $product_id
 	 *
@@ -1983,7 +1985,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscriptions By Subscription Plan ID
+	 * Delete Product Subscriptions By Subscription Plan ID
 	 *
 	 * @param int $subscription_plan_id
 	 *
@@ -2007,7 +2009,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Reports
+	 * Delete Product Reports
 	 *
 	 * @param int $product_id
 	 *

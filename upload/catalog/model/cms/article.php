@@ -117,6 +117,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $article_id
 	 * @param int $rating
+	 * 
+	 * @return void
 	 */
 	public function editRating(int $article_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `rating` = '" . (int)$rating . "' WHERE `article_id` = '" . (int)$article_id . "'");
@@ -215,6 +217,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int $article_id
 	 * @param int $article_comment_id
 	 * @param int $rating
+	 * 
+	 * @return void
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `rating` = '" . (int)$rating . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "'");
@@ -338,7 +342,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Ratings
+	 * Delete Article Ratings
 	 *
 	 * @param int $article_id
 	 * @param int $article_comment_id

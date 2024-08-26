@@ -7,7 +7,7 @@ namespace Opencart\Catalog\Model\Catalog;
  */
 class Product extends \Opencart\System\Engine\Model {
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $statement
 	 */
 	protected array $statement = [];
 

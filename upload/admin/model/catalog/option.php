@@ -216,6 +216,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $option_id
 	 * @param array<string, mixed> $data
+	 * 
+	 * @return int
 	 */
 	public function addValue(int $option_id, array $data): int {
 		if ($data['option_value_id']) {

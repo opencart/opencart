@@ -223,7 +223,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Products
+	 * Delete Order Products
 	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
@@ -329,7 +329,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscription
+	 * Delete Order Subscription
 	 *
 	 * @param int $order_id
 	 * @param int $order_product_id
@@ -448,7 +448,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Totals
+	 * Delete Order Totals
 	 *
 	 * @param int $order_id
 	 */

@@ -19,7 +19,7 @@ class Url {
 	 */
 	private string $url;
 	/**
-	 * @var array<int, object>
+	 * @var array<int, object> $rewrite
 	 */
 	private array $rewrite = [];
 

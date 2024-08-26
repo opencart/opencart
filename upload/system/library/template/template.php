@@ -8,7 +8,7 @@ namespace Opencart\System\Library\Template;
 class Template {
 	protected string $directory = '';
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $path
 	 */
 	protected array $path = [];
 

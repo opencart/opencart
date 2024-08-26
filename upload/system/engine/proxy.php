@@ -18,7 +18,7 @@ namespace Opencart\System\Engine;
  */
 class Proxy {
 	/**
-	 * @var array<string, object>
+	 * @var array<string, object> $data
 	 */
 	protected array $data = [];
 

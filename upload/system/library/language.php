@@ -22,15 +22,15 @@ class Language {
 	 */
 	protected string $directory;
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $path
 	 */
 	protected array $path = [];
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string> $data
 	 */
 	protected array $data = [];
 	/**
-	 * @var array<string, array<string, array<string, mixed>>>
+	 * @var array<string, array<string, array<string, mixed>>> $cache
 	 */
 	protected array $cache = [];
 

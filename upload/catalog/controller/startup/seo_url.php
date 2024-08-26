@@ -6,7 +6,10 @@ namespace Opencart\Catalog\Controller\Startup;
  * @package Opencart\Catalog\Controller\Startup
  */
 class SeoUrl extends \Opencart\System\Engine\Controller {
-	private $data = [];
+	/**
+	 * @var array<string, string> $data
+	 */
+	private array $data = [];
 
 	/**
 	 * @return null

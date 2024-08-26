@@ -2432,11 +2432,11 @@ $('#button-refresh').on('click', function() {
     if (shipping_required) {
         $('#shipping-address').removeClass('d-none');
         $('#shipping-method').removeClass('d-none');
-        $('#button-shipping').prop('disabled', false);
+        $('#button-shipping-method').prop('disabled', false);
     } else {
         $('#shipping-address').addClass('d-none');
         $('#shipping-method').addClass('d-none');
-        $('#button-shipping').prop('disabled', true);
+        $('#button-shipping-method').prop('disabled', true);
     }
 });
 
@@ -2478,9 +2478,17 @@ $('#button-confirm').on('click', function() {
                     $('#input-order-id').val(json['order_id']);
                 }
 
+                if (json['products']) {
+                    products = json['products'];
+                }
 
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
 
-
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
+                }
 
                 if (json['points']) {
                     $('#reward-value').html(json['points']);
@@ -2501,6 +2509,8 @@ $('#button-confirm').on('click', function() {
                     $('#button-commission-add').prop('disabled', true);
                     $('#button-commission-remove').prop('disabled', true);
                 }
+
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -7,6 +7,7 @@ use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\CommandInterface;
 use Closure;
 use GuzzleHttp\Promise\Promise;
+use function JmesPath\search;
 
 /**
  * Handles endpoint rule evaluation and endpoint resolution.
@@ -137,9 +138,14 @@ class EndpointV2Middleware
         $contextParams = $this->bindContextParams(
             $commandArgs, $operation->getContextParams()
         );
+        $operationContextParams = $this->bindOperationContextParams(
+            $commandArgs,
+            $operation->getOperationContextParams()
+        );
 
         return array_merge(
             $this->clientArgs,
+            $operationContextParams,
             $contextParams,
             $staticContextParams,
             $endpointCommandArgs
@@ -225,6 +231,33 @@ class EndpointV2Middleware
         foreach($contextParams as $name => $spec) {
             if (isset($commandArgs[$spec['shape']])) {
                 $scopedParams[$name] = $commandArgs[$spec['shape']];
+            }
+        }
+
+        return $scopedParams;
+    }
+
+    /**
+     * Binds context params to their corresponding values found in
+     * command arguments.
+     *
+     * @param array $commandArgs
+     * @param array $contextParams
+     *
+     * @return array
+     */
+    private function bindOperationContextParams(
+        array $commandArgs,
+        array $operationContextParams
+    ): array
+    {
+        $scopedParams = [];
+
+        foreach($operationContextParams as $name => $spec) {
+            $scopedValue = search($spec['path'], $commandArgs);
+
+            if ($scopedValue) {
+                $scopedParams[$name] = $scopedValue;
             }
         }
 

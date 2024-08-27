@@ -1453,7 +1453,7 @@ EOT;
             .  " or set the environment variable AWS_SUPPRESS_PHP_DEPRECATION_WARNING"
             .  " to true.\nMore information can be found at: "
             .   "https://aws.amazon.com/blogs/developer/announcing-the-end-of-support-for-php-runtimes-8-0-x-and-below-in-the-aws-sdk-for-php/\n",
-            E_USER_WARNING
+            E_USER_DEPRECATED
         );
     }
 }

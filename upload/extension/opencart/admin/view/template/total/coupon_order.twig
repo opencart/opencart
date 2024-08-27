@@ -30,7 +30,23 @@ $('#form-coupon').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-confirm').prop('disabled', true);
+                if (json['order_id']) {
+                    $('#input-order-id').val(json['order_id']);
+                }
+
+                if (json['products']) {
+                    products = json['products'];
+                }
+
+                if (json['totals']) {
+                    totals = json['totals'];
+                }
+
+                if (json['shipping_required']) {
+                    shipping_required = json['shipping_required'];
+                }
+
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

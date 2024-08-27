@@ -1184,8 +1184,6 @@ $('#form-customer').on('submit', function(e) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
-
-                $('#button-confirm').prop('disabled', true);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1195,11 +1193,7 @@ $('#form-customer').on('submit', function(e) {
 });
 
 $('#input-store, #input-language, #input-currency').on('change', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $('#refresh').trigger('click');
+    $('#button-refresh').trigger('click');
 });
 
 // Product
@@ -1461,15 +1455,7 @@ $('#form-product-add').on('submit', function(e) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (json['products']) {
-                    products = json['products'];
-                }
-
-                if (json['totals']) {
-                    totals = json['totals'];
-                }
-
-                if (json['shipping_required']) {
-                    shipping_required = json['shipping_required'];
+                    cart_render(json['products'], json['totals'], json['shipping_required']);
                 }
 
                 // Force refresh
@@ -1484,11 +1470,7 @@ $('#form-product-add').on('submit', function(e) {
 
 // Remove product
 $('#order-product').on('click', 'button', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $(element).parent().parent().remove();
+    $(this).parent().parent().remove();
 
     // Refresh products and totals
     $('#button-refresh').trigger('click');
@@ -1552,7 +1534,7 @@ $('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_address&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/payment_address&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-payment-address').serialize(),
         dataType: 'json',
@@ -1846,7 +1828,7 @@ $('#button-shipping-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/shipping_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-customer, #form-cart, #form-shipping-address').serialize(),
         dataType: 'json',
@@ -1866,9 +1848,9 @@ $('#button-shipping-methods').on('click', function() {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            if (json['shipping_methods']) {
-                html = '';
+            html = '';
 
+            if (json['shipping_methods']) {
                 for (i in json['shipping_methods']) {
                     html += '  <p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
@@ -1929,7 +1911,7 @@ $('#form-shipping-method').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/shipping_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method').serialize(),
         dataType: 'json',
@@ -1954,19 +1936,7 @@ $('#form-shipping-method').on('submit', function(e) {
 
                 $('#shipping-method-value').html($('#input-shipping-method-name').val());
 
-                if (json['products']) {
-                    products = json['products'];
-                }
-
-                if (json['totals']) {
-                    totals = json['totals'];
-                }
-
-                if (json['shipping_required']) {
-                    shipping_required = json['shipping_required'];
-                }
-
-                $('#button-refresh').trigger('click');
+                cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1982,7 +1952,7 @@ $('#button-payment-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/payment_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address').serialize(),
         dataType: 'json',
@@ -2000,9 +1970,9 @@ $('#button-payment-methods').on('click', function() {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            if (json['payment_methods']) {
-                var html = '';
+            var html = '';
 
+            if (json['payment_methods']) {
                 for (i in json['payment_methods']) {
                     html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
 
@@ -2060,7 +2030,7 @@ $('#form-payment-method').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=payment_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/payment_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method').serialize(),
         dataType: 'json',
@@ -2085,19 +2055,7 @@ $('#form-payment-method').on('submit', function(e) {
 
                 $('#payment-method-value').html($('#input-payment-method-name').val());
 
-                if (json['products']) {
-                    products = json['products'];
-                }
-
-                if (json['totals']) {
-                    totals = json['totals'];
-                }
-
-                if (json['shipping_required']) {
-                    shipping_required = json['shipping_required'];
-                }
-
-                $('#button-refresh').trigger('click');
+                cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2143,20 +2101,6 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function(e)
                 if (action == 'remove') {
                     $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add|escape('js') }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
                 }
-
-                if (json['products']) {
-                    products = json['products'];
-                }
-
-                if (json['totals']) {
-                    totals = json['totals'];
-                }
-
-                if (json['shipping_required']) {
-                    shipping_required = json['shipping_required'];
-                }
-
-                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2196,7 +2140,7 @@ $('#form-affiliate').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=affiliate&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/affiliate&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-affiliate').serialize(),
         dataType: 'json',
@@ -2280,7 +2224,7 @@ $('#form-comment').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.comment&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/order.comment&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-comment').serialize(),
         dataType: 'json',
@@ -2315,46 +2259,109 @@ $('#form-comment').on('submit', function(e) {
 var order_product_row = {{ order_product_row }};
 
 $('#button-refresh').on('click', function() {
-    if (!products) {
-        $.ajax({
-            url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart.refresh&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
-            type: 'post',
-            data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #collapse-order form').serialize(),
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
-                $('#button-refresh').button('loading');
-                $('#button-confirm').prop('disabled', true);
-            },
-            complete: function() {
-                $('#button-refresh').button('reset');
-                $('#button-confirm').prop('disabled', false);
-            },
-            success: function(json) {
-                console.log(json);
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/cart.refresh&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #collapse-order form').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-refresh').button('loading');
+            $('#button-confirm').prop('disabled', true);
+        },
+        complete: function() {
+            $('#button-refresh').button('reset');
+            $('#button-confirm').prop('disabled', false);
+        },
+        success: function(json) {
+            if (json['products']) {
+                cart_render(json['products'], json['totals'], json['shipping_required']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Checkout
+$('#button-confirm').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/order.confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #input-order-id').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                for (i in json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['error']['customer']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (json['order_id']) {
+                    $('#input-order-id').val(json['order_id']);
+                }
 
                 if (json['products']) {
-                    products = json['products'];
+                    cart_render(json['products'], json['totals'], json['shipping_required']);
                 }
 
-                if (json['totals']) {
-                    totals = json['totals'];
+                if (json['points']) {
+                    $('#reward-value').html(json['points']);
+                    $('#button-reward-add').prop('disabled', false);
+                    $('#button-reward-remove').prop('disabled', false);
+                } else {
+                    $('#reward-value').html(0);
+                    $('#button-reward-add').prop('disabled', true);
+                    $('#button-reward-remove').prop('disabled', true);
                 }
 
-                if (json['shipping_required']) {
-                    shipping_required = json['shipping_required'];
+                if (json['commission']) {
+                    $('#commission-value').html(json['commission']);
+                    $('#button-commission-add').prop('disabled', false);
+                    $('#button-commission-remove').prop('disabled', false);
+                } else {
+                    $('#commission-value').html('&nbsp;');
+                    $('#button-commission-add').prop('disabled', true);
+                    $('#button-commission-remove').prop('disabled', true);
                 }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $('#button-refresh').trigger('click');
             }
-        });
-    }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
+function cart_render(products, totals, shipping_required) {
     html = '';
 
-    if (products) {
+    if (products.length > 0) {
         for (i in products) {
+            console.log(i);
+
             product = products[i];
 
             console.log(product);
@@ -2438,86 +2445,7 @@ $('#button-refresh').on('click', function() {
         $('#shipping-method').addClass('d-none');
         $('#button-shipping-method').prop('disabled', true);
     }
-});
-
-// Checkout
-$('#button-confirm').on('click', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
-        type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #input-order-id').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                for (i in json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['error']['customer']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                if (json['order_id']) {
-                    $('#input-order-id').val(json['order_id']);
-                }
-
-                if (json['products']) {
-                    products = json['products'];
-                }
-
-                if (json['totals']) {
-                    totals = json['totals'];
-                }
-
-                if (json['shipping_required']) {
-                    shipping_required = json['shipping_required'];
-                }
-
-                if (json['points']) {
-                    $('#reward-value').html(json['points']);
-                    $('#button-reward-add').prop('disabled', false);
-                    $('#button-reward-remove').prop('disabled', false);
-                } else {
-                    $('#reward-value').html(0);
-                    $('#button-reward-add').prop('disabled', true);
-                    $('#button-reward-remove').prop('disabled', true);
-                }
-
-                if (json['commission']) {
-                    $('#commission-value').html(json['commission']);
-                    $('#button-commission-add').prop('disabled', false);
-                    $('#button-commission-remove').prop('disabled', false);
-                } else {
-                    $('#commission-value').html('&nbsp;');
-                    $('#button-commission-add').prop('disabled', true);
-                    $('#button-commission-remove').prop('disabled', true);
-                }
-
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
+}
 
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
@@ -2529,7 +2457,7 @@ $('#form-history').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=order.addHistory&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val() + '&order_id=' + $('#input-order-id').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/order.addHistory&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val() + '&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),

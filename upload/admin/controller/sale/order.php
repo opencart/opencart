@@ -1298,7 +1298,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->get = $request_data;
 
 			// 3. Add the request GET vars.
-			$store->request->get['route'] = 'api/' . $call;
+			$store->request->get['route'] = $call;
 
 			// 4. Add the request POST var
 			$store->request->post = $this->request->post;

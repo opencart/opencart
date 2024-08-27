@@ -105,12 +105,18 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function api(): void {
-		$this->load->language('api/coupon');
+		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];
 
-
-
+		if ($this->request->get['route'] == 'api/reward.api') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/payment_address');
+			$this->load->controller('api/shipping_address');
+			$this->load->controller('api/shipping_method.save');
+			$this->load->controller('api/payment_method.save');
+		}
 
 		if (isset($this->request->post['coupon'])) {
 			$coupon = (string)$this->request->post['coupon'];
@@ -122,20 +128,24 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_status');
 		}
 
-		if ($coupon) {
-			$this->load->model('marketing/coupon');
+		$this->load->model('marketing/coupon');
 
-			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
+		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-			if (!$coupon_info) {
-				$json['error'] = $this->language->get('error_coupon');
-			}
+		if (!$coupon_info) {
+			$json['error'] = $this->language->get('error_coupon');
 		}
 
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['coupon'] = $coupon;
+
+			if ($this->request->get['route'] == 'api/coupon.api') {
+				$json['products'] = $this->load->controller('api/cart.getProducts');
+				$json['totals'] = $this->load->controller('api/cart.getTotals');
+				$json['shipping_required'] = $this->cart->hasShipping();
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

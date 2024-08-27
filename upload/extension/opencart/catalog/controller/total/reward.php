@@ -99,9 +99,18 @@ class Reward extends \Opencart\System\Engine\Controller {
 	}
 
 	public function api(): void {
-		$this->load->language('api/reward');
+		$this->load->language('extension/opencart/total/reward');
 
 		$json = [];
+
+		if ($this->request->get['route'] == 'extension/opencart/total/reward.api') {
+			$this->load->controller('api/customer');
+			$this->load->controller('api/cart');
+			$this->load->controller('api/payment_address');
+			$this->load->controller('api/shipping_address');
+			$this->load->controller('api/shipping_method.save');
+			$this->load->controller('api/payment_method.save');
+		}
 
 		if (isset($this->request->post['reward'])) {
 			$reward = abs((int)$this->request->post['reward']);
@@ -133,6 +142,12 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['reward'] = $reward;
+
+			if ($this->request->get['route'] == 'extension/opencart/total/reward.api') {
+				$json['products'] = $this->load->controller('api/cart.getProducts');
+				$json['totals'] = $this->load->controller('api/cart.getTotals');
+				$json['shipping_required'] = $this->cart->hasShipping();
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

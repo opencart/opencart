@@ -21,6 +21,8 @@ $('#form-reward').on('submit', function(e) {
             $('#button-reward').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {

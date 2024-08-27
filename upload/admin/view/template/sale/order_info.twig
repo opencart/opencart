@@ -2269,9 +2269,7 @@ $('#button-refresh').on('click', function() {
             $('#button-confirm').prop('disabled', false);
         },
         success: function(json) {
-            if (json['products']) {
-                cart_render(json['products'], json['totals'], json['shipping_required']);
-            }
+            cart_render(json['products'], json['totals'], json['shipping_required']);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2317,10 +2315,6 @@ $('#button-confirm').on('click', function() {
                     $('#input-order-id').val(json['order_id']);
                 }
 
-                if (json['products']) {
-                    cart_render(json['products'], json['totals'], json['shipping_required']);
-                }
-
                 if (json['points']) {
                     $('#reward-value').html(json['points']);
                     $('#button-reward-add').prop('disabled', false);
@@ -2341,7 +2335,7 @@ $('#button-confirm').on('click', function() {
                     $('#button-commission-remove').prop('disabled', true);
                 }
 
-                $('#button-refresh').trigger('click');
+                cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2353,7 +2347,7 @@ $('#button-confirm').on('click', function() {
 function cart_render(products, totals, shipping_required) {
     html = '';
 
-    if (products.length > 0) {
+    if (products) {
         for (i in products) {
             console.log(i);
 

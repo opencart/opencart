@@ -16,7 +16,6 @@
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
           <div class="col mb-3">
             <div class="input-group">
               <div class="form-control rounded-start" style="min-height: 64px;">
@@ -32,7 +31,6 @@
               {% endif %}
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="input-group">
               <div id="customer" class="form-control rounded-start" style="min-height: 64px;">
@@ -48,7 +46,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="form-control p-0 rounded">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -57,7 +54,6 @@
               </div>
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="form-floating">
               <select name="store_id" id="input-store" class="form-select">
@@ -68,7 +64,6 @@
             </div>
             </form>
           </div>
-
           <div class="col mb-3">
             <div class="form-floating">
               <select name="language" id="input-language" class="form-select">
@@ -78,7 +73,6 @@
               </select> <label for="input-language">{{ entry_language }}</label>
             </div>
           </div>
-
           <div class="col">
             <div class="form-floating">
               <select name="currency" id="input-currency" class="form-select">
@@ -107,15 +101,13 @@
                 {% for order_product in order_products %}
                   <tr>
                     <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
-                      {% if order_product.option %}
-                        {% for option in order_product.option %}
-                          <br/>
-                          {% if option.type != 'file' %}
-                            <small> - {{ option.name }}: {{ option.value }}</small>
-                          {% else %}
-                            <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>{% endif %}
-                        {% endfor %}
-                      {% endif %}
+                      {% for option in order_product.option %}
+                        <br/>
+                        {% if option.type != 'file' %}
+                          <small> - {{ option.name }}: {{ option.value }}</small>
+                        {% else %}
+                          <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>{% endif %}
+                      {% endfor %}
                       {% if order_product.reward %}
                         <br/>
                         <small> - {{ text_points }}: {{ order_product.reward }}</small>
@@ -124,8 +116,8 @@
                         <br/>
                         <small> - {{ text_subscription }}: <a href="{{ order_product.subscription }}" target="_blank">{{ order_product.subscription_description }}</a></small>
                       {% endif %}
-
-                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
                       {% for option in order_product.option %}
                         {% if option.type == 'select' or option.type == 'radio' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
@@ -250,7 +242,6 @@
           </div>
         </div>
         <div class="row">
-
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
               <div class="form-control rounded-start" style="min-height: 64px;">
@@ -262,7 +253,6 @@
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div id="payment-method" class="col-md mb-3">
             <div class="input-group">
               <div class="form-control rounded-start" style="min-height: 64px;">
@@ -274,7 +264,6 @@
               <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
         </div>
 
         <div id="collapse-order" class="collapse">
@@ -299,7 +288,7 @@
             </div>
             <div class="col mb-3">
               <div class="input-group">
-                <div class="form-control rounded-start">
+                <div class="form-control rounded-start" style="min-height: 64px;">
                   <div class="lead"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate_id %}
@@ -477,8 +466,7 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
-              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+              <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
@@ -933,7 +921,12 @@
         <p>{{ text_shipping }}</p>
         <div id="shipping-methods"></div>
         <form id="form-shipping-method">
-          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/> <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/> <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/> <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
+          {% if shipping_method_code %}
+          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/>
+          <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/>
+          <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
+          <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
+          {% endif %}
         </form>
         <div class="text-end">
           <button type="submit" form="form-shipping-method" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
@@ -953,7 +946,10 @@
         <p>{{ text_payment }}</p>
         <div id="payment-methods"></div>
         <form id="form-payment-method">
-          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/> <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
+          {% if payment_method_code %}
+          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/>
+          <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
+          {% endif %}
         </form>
         <div class="text-end">
           <button type="submit" form="form-payment-method" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
@@ -2308,15 +2304,25 @@ $('#button-confirm').on('click', function() {
                 }
 
                 if (json['error']['customer']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
                     $('#customer').addClass('is-invalid');
                 }
 
+                if (json['error']['payment_address']) {
+                    $('#payment-address').addClass('is-invalid');
+                }
 
+                if (json['error']['shipping_address']) {
+                    $('#shipping-address').addClass('is-invalid');
+                }
 
+                if (json['error']['shipping_method']) {
+                    $('#shipping-method').addClass('is-invalid');
+                }
+
+                if (json['error']['payment_method']) {
+                    $('#payment-method').addClass('is-invalid');
+                }
             }
-
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 

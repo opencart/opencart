@@ -19,7 +19,7 @@
 
           <div class="col mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start">
+              <div class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_invoice }}</strong>
                   <br/>
                   <span id="invoice-value">{{ invoice_prefix }}{{ invoice_no }}</span>
@@ -35,7 +35,7 @@
 
           <div class="col mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start">
+              <div id="customer" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
@@ -50,7 +50,7 @@
           </div>
 
           <div class="col mb-3">
-            <div class="form-control p-0 border rounded">
+            <div class="form-control p-0 rounded">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                 <br/>
                 {{ date_added }}
@@ -164,7 +164,7 @@
         <div class="row">
           <div class="col-md mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start">
+              <div class="form-control rounded-start" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
                   <div id="payment-address-value">
@@ -207,7 +207,7 @@
           </div>
           <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
-              <div class="form-control rounded-start">
+              <div class="form-control rounded-start" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
                   <div id="shipping-address-value">
@@ -250,9 +250,10 @@
           </div>
         </div>
         <div class="row">
-          <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}">
+
+          <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
-              <div class="form-control rounded-start">
+              <div class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
                   <span id="shipping-method-value">{{ shipping_method_name }}</span>
@@ -261,9 +262,10 @@
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
+
           <div id="payment-method" class="col-md mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start">
+              <div class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_payment_method }}</strong>
                   <br/>
                   <span id="payment-method-value">{{ payment_method_name }}</span>
@@ -272,7 +274,9 @@
               <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
+
         </div>
+
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
             {% for extension in extensions %}
@@ -473,7 +477,8 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+              <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
@@ -1017,7 +1022,7 @@ $('#button-collapse').on('click', function() {
 
 $(document).on('click', '#button-invoice', function() {
     $.ajax({
-        url: 'index.php?route=sale/order.createInvoiceNo&user_token={{ user_token }}&order_id={{ order_id }}',
+        url: 'index.php?route=sale/order.createInvoiceNo&user_token={{ user_token }}&order_id=' + $('#input-order-id').val(),
         dataType: 'json',
         beforeSend: function() {
             $('#button-invoice').button('loading');
@@ -2277,14 +2282,13 @@ $('#button-refresh').on('click', function() {
     });
 });
 
-// Checkout
 $('#button-confirm').on('click', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=api/order.confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #input-order-id').serialize(),
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #form-comment, #collapse-order form, #input-order-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -2306,8 +2310,11 @@ $('#button-confirm').on('click', function() {
                 if (json['error']['customer']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-
+                    $('#customer').addClass('is-invalid');
                 }
+
+
+
             }
 
             if (json['success']) {

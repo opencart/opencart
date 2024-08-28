@@ -118,11 +118,11 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// 5. Validate payment Method
 		if (isset($this->request->post['payment_method'])) {
-			if (!isset($this->request->post['payment_method']['name'])) {
+			if (empty($this->request->post['payment_method']['name'])) {
 				$json['error'] = $this->language->get('error_name');
 			}
 
-			if (!isset($this->request->post['payment_method']['code'])) {
+			if (empty($this->request->post['payment_method']['code'])) {
 				$json['error'] = $this->language->get('error_code');
 			}
 		} else {
@@ -130,7 +130,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->request->post['payment_method'];
+			$this->session->data['payment_method'] = [
+				'name' => $this->request->post['shipping_method']['name'],
+				'code' => $this->request->post['shipping_method']['code']
+			];
 
 			$json['success'] = $this->language->get('text_success');
 		}

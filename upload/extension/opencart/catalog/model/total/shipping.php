@@ -25,7 +25,7 @@ class Shipping extends \Opencart\System\Engine\Model {
 				'sort_order' => (int)$this->config->get('total_shipping_sort_order')
 			];
 
-			if (isset($this->session->data['shipping_method']['tax_class_id'])) {
+			if (isset($this->session->data['shipping_method']) && isset($this->session->data['shipping_method']['tax_class_id'])) {
 				$tax_rates = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
 
 				foreach ($tax_rates as $tax_rate) {

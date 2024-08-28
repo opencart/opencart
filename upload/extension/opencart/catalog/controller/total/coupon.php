@@ -109,7 +109,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if ($this->request->get['route'] == 'api/reward.api') {
+		if ($this->request->get['route'] == 'extension/opencart/total/coupon.api') {
 			$this->load->controller('api/customer');
 			$this->load->controller('api/cart');
 			$this->load->controller('api/payment_address');
@@ -140,12 +140,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['coupon'] = $coupon;
+		}
 
-			if ($this->request->get['route'] == 'api/coupon.api') {
-				$json['products'] = $this->load->controller('api/cart.getProducts');
-				$json['totals'] = $this->load->controller('api/cart.getTotals');
-				$json['shipping_required'] = $this->cart->hasShipping();
-			}
+		if ($this->request->get['route'] == 'extension/opencart/total/coupon.api') {
+			$json['products'] = $this->load->controller('api/cart.getProducts');
+			$json['totals'] = $this->load->controller('api/cart.getTotals');
+			$json['shipping_required'] = $this->cart->hasShipping();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

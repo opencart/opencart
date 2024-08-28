@@ -20,6 +20,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$this->load->controller('api/payment_address');
 			$this->load->controller('api/shipping_address');
 			$this->load->controller('api/shipping_method.save');
+			$this->load->controller('api/extension');
 		}
 
 		// 1. Validate customer data exists
@@ -86,6 +87,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$this->load->controller('api/payment_address');
 			$this->load->controller('api/shipping_address');
 			$this->load->controller('api/shipping_method.save');
+			$this->load->controller('api/extension');
 		}
 
 		// 1. Validate customer data exists

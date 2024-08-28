@@ -19,7 +19,7 @@
 
           <div class="col mb-3">
             <div class="input-group">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_invoice }}</strong>
                   <br/>
                   <span id="invoice-value">{{ invoice_prefix }}{{ invoice_no }}</span>
@@ -35,7 +35,7 @@
 
           <div class="col mb-3">
             <div class="input-group">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
@@ -102,8 +102,8 @@
               </tr>
             </thead>
             <tbody id="order-product">
+              {% set order_product_row = 0 %}
               {% if order_products %}
-                {% set order_product_row = 0 %}
                 {% for order_product in order_products %}
                   <tr>
                     <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
@@ -164,7 +164,7 @@
         <div class="row">
           <div class="col-md mb-3">
             <div class="input-group">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
                   <div id="payment-address-value">
@@ -207,7 +207,7 @@
           </div>
           <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
                   <div id="shipping-address-value">
@@ -252,7 +252,7 @@
         <div class="row">
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
                   <span id="shipping-method-value">{{ shipping_method_name }}</span>
@@ -263,7 +263,7 @@
           </div>
           <div id="payment-method" class="col-md mb-3">
             <div class="input-group">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_payment_method }}</strong>
                   <br/>
                   <span id="payment-method-value">{{ payment_method_name }}</span>
@@ -280,7 +280,7 @@
             {% endfor %}
             <div class="col mb-3">
               <div class="input-group">
-                <div class="form-control border rounded-start">
+                <div class="form-control rounded-start">
                   <div class="lead p-0"><strong>{{ text_reward }}</strong>
                     <br/>
                     <div id="reward-value">{{ points }}</div>
@@ -295,7 +295,7 @@
             </div>
             <div class="col mb-3">
               <div class="input-group">
-                <div class="form-control border rounded-start">
+                <div class="form-control rounded-start">
                   <div class="lead"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate_id %}
@@ -310,7 +310,7 @@
             </div>
             <div class="col mb-3">
               <div class="input-group">
-                <div class="form-control border rounded-start">
+                <div class="form-control rounded-start">
                   <div class="lead"><strong>{{ text_commission }}</strong>
                     <br/>
                     {% if commission %}
@@ -333,7 +333,7 @@
         <div class="row">
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control border rounded-start">
+              <div class="form-control rounded-start">
                 <div class="lead"><strong>{{ text_comment }}</strong>
                   <br/>
                   {% if comment %}
@@ -2305,6 +2305,8 @@ $('#button-confirm').on('click', function() {
 
                 if (json['error']['customer']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+
                 }
             }
 

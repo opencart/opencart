@@ -155,7 +155,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Weight Class Descriptions
 	 *
 	 * @param int $weight_class_id
 	 *

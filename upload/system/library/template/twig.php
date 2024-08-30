@@ -68,7 +68,7 @@ class Twig {
 		 * FYI all the Twig lovers out there!
 		 * The Twig syntax is good, but the implementation and the available methods is a joke!
 		 *
-		 * All the Symfony developer has done is create a garbage frame work putting 3rd party scripts into DI containers.
+		 * All the Symfony developer has done is create a garbage framework putting 3rd party scripts into DI containers.
 		 * The Twig syntax he ripped off from Jinja and Django templates then did a garbage implementation!
 		 *
 		 * The fact that this system cache is just compiling php into more php code instead of html is a disgrace!

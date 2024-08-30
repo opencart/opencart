@@ -145,5 +145,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateMetricAttributionAsync(array $args = [])
  * @method \Aws\Result updateRecommender(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRecommenderAsync(array $args = [])
+ * @method \Aws\Result updateSolution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSolutionAsync(array $args = [])
  */
 class PersonalizeClient extends AwsClient {}

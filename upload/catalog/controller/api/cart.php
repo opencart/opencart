@@ -92,25 +92,21 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if ($this->request->get['route'] == 'api/cart.refresh') {
-			$this->load->controller('api/cart');
-			$this->load->controller('api/customer');
-			$this->load->controller('api/payment_address');
-			$this->load->controller('api/shipping_address');
-			$this->load->controller('api/shipping_method.save');
-			$this->load->controller('api/extension');
-		}
+		$this->load->controller('api/cart');
+		$this->load->controller('api/customer');
+		$this->load->controller('api/payment_address');
+		$this->load->controller('api/shipping_address');
+		$this->load->controller('api/shipping_method.save');
+		$this->load->controller('api/extension');
 
 		// Stock
 		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 			$json['error']['stock'] = $this->language->get('error_stock');
 		}
 
-		if ($this->request->get['route'] == 'api/cart.refresh') {
-			$json['products'] = $this->load->controller('api/cart.getProducts');
-			$json['totals'] = $this->load->controller('api/cart.getTotals');
-			$json['shipping_required'] = $this->cart->hasShipping();
-		}
+		$json['products'] = $this->load->controller('api/cart.getProducts');
+		$json['totals'] = $this->load->controller('api/cart.getTotals');
+		$json['shipping_required'] = $this->cart->hasShipping();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

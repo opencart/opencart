@@ -12,4 +12,5 @@ $_['error_shipping_method']  = 'Warning: Shipping method required!';
 $_['error_stock']            = 'Warning: Products marked with *** are not available in the desired quantity or not in stock!';
 $_['error_minimum']          = 'Warning: Minimum order amount for %s is %s!';
 $_['error_product']          = 'Warning: Products required!';
-$_['error_comment']          = 'Warning: Comment required!';
+$_['error_affiliate']        = 'Warning: Affiliate details required!';
+

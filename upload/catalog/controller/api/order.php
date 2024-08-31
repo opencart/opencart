@@ -23,6 +23,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method.save');
 		$this->load->controller('api/payment_method.save');
 		$this->load->controller('api/extension');
+		$this->load->controller('api/affiliate');
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
@@ -63,6 +64,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		// 6. Validate payment method
 		if (!isset($this->session->data['payment_method'])) {
 			$json['error']['payment_method'] = $this->language->get('error_payment_method');
+		}
+
+		// 7. Validate affiliate if set
+		if (isset($thid->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
+			$json['error']['affiliate'] = $this->language->get('error_affiliate');
 		}
 
 		if (!$json) {

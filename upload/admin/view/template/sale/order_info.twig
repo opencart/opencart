@@ -33,7 +33,7 @@
           </div>
           <div class="col mb-3">
             <div class="input-group">
-              <div id="customer" class="form-control rounded-start" style="min-height: 64px;">
+              <div id="input-customer-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
@@ -156,7 +156,7 @@
         <div class="row">
           <div class="col-md mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start" style="min-height: 128px;">
+              <div id="input-payment-address-info" class="form-control rounded-start" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
                   <div id="payment-address-value">
@@ -199,7 +199,7 @@
           </div>
           <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
-              <div class="form-control rounded-start" style="min-height: 128px;">
+              <div id="input-shipping-address-info" class="form-control rounded-start" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
                   <div id="shipping-address-value">
@@ -244,7 +244,7 @@
         <div class="row">
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
-              <div class="form-control rounded-start" style="min-height: 64px;">
+              <div id="input-shipping-method-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
                   <span id="shipping-method-value">{{ shipping_method_name }}</span>
@@ -255,7 +255,7 @@
           </div>
           <div id="payment-method" class="col-md mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start" style="min-height: 64px;">
+              <div id="input-payment-method-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_payment_method }}</strong>
                   <br/>
                   <span id="payment-method-value">{{ payment_method_name }}</span>
@@ -288,7 +288,7 @@
             </div>
             <div class="col mb-3">
               <div class="input-group">
-                <div class="form-control rounded-start" style="min-height: 64px;">
+                <div id="input-affiliate-info" class="form-control rounded-start" style="min-height: 64px;">
                   <div class="lead"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate_id %}
@@ -1847,17 +1847,17 @@ $('#button-shipping-methods').on('click', function() {
             html = '';
 
             if (json['shipping_methods']) {
+                var k = 0;
+
                 for (i in json['shipping_methods']) {
                     html += '  <p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
                     if (!json['shipping_methods'][i]['error']) {
                         for (j in json['shipping_methods'][i]['quote']) {
-                            var code = i + '-' + j.replaceAll('_', '-');
-
                             shipping_method[json['shipping_methods'][i]['quote'][j]['code']] = json['shipping_methods'][i]['quote'][j];
 
                             html += '<div class="form-check">';
-                            html += '  <input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
+                            html += '  <input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + k + '"';
 
                             if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method-code').val()) {
                                 html += ' checked';
@@ -1865,8 +1865,10 @@ $('#button-shipping-methods').on('click', function() {
 
                             html += '/>';
 
-                            html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
+                            html += '  <label for="input-shipping-method-' + k + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
                             html += '</div>';
+
+                            k++;
                         }
                     } else {
                         html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
@@ -1969,24 +1971,24 @@ $('#button-payment-methods').on('click', function() {
             var html = '';
 
             if (json['payment_methods']) {
+                var k = 0;
+
                 for (i in json['payment_methods']) {
                     html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
 
                     if (!json['payment_methods'][i]['error']) {
                         for (j in json['payment_methods'][i]['option']) {
-                            var code = i + '-' + j.replaceAll('_', '-');
-
                             payment_method[json['payment_methods'][i]['option'][j]['code']] = json['payment_methods'][i]['option'][j];
 
                             html += '<div class="form-check">';
-                            html += '  <input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + code + '"';
+                            html += '  <input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + k + '"';
 
                             if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-method-code').val()) {
                                 html += ' checked';
                             }
 
                             html += '/>';
-                            html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
+                            html += '  <label for="input-payment-method-' + k + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
                             html += '</div>';
                         }
                     } else {
@@ -2297,32 +2299,18 @@ $('#button-confirm').on('click', function() {
             console.log(json);
 
             $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
 
+            // Check for errors
             if (json['error']) {
-                for (i in json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
+                for (key in json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][key] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                if (json['error']['customer']) {
-                    $('#customer').addClass('is-invalid');
-                }
-
-                if (json['error']['payment_address']) {
-                    $('#payment-address').addClass('is-invalid');
-                }
-
-                if (json['error']['shipping_address']) {
-                    $('#shipping-address').addClass('is-invalid');
-                }
-
-                if (json['error']['shipping_method']) {
-                    $('#shipping-method').addClass('is-invalid');
-                }
-
-                if (json['error']['payment_method']) {
-                    $('#payment-method').addClass('is-invalid');
+                    $('#input-' + key.replaceAll('_', '-') + '-info').addClass('is-invalid');
                 }
             }
+
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 

@@ -6,18 +6,44 @@ namespace Opencart\System\Library\Cart;
  * @package Opencart\System\Library\Cart
  */
 class Curl {
+	/**
+	 * @var string $domain
+	 */
 	private string $domain = '';
+	/**
+	 * @var mixed $option
+	 */
 	private array $option = [];
 
+	/**
+	 * Constructor
+	 * 
+	 * @param string $url
+	 */
 	public function __construct(string $url) {
 		$this->domain = $url;
 	}
 
+	/**
+	 * Set Option
+	 * 
+	 * @param string $key
+	 * @param mixed  $data
+	 * 
+	 * @return void
+	 */
 	public function setOption(string $key, array $data = []) {
 		$this->option[$key] = $data;
 	}
 
-
+	/**
+	 * Send
+	 * 
+	 * @param string $route
+	 * @param mixed  $data
+	 * 
+	 * @return mixed
+	 */
 	public function send(string $route, $data = []) {
 		$time = time();
 

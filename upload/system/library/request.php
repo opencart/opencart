@@ -45,7 +45,15 @@ class Request {
 		$this->server = $this->clean($_SERVER);
 	}
 
-	public function get(string $key, string $type = ''): mixed {
+	/**
+	 * Get
+	 * 
+	 * @param string $key
+	 * @param string $type
+	 * 
+	 * @return mixed
+	 */
+	public function get(string $key, string $type = '') {
 		if (isset($this->get[$key])) {
 			$value = $this->get[$key];
 		} else {
@@ -73,7 +81,15 @@ class Request {
 		}
 	}
 
-	public function post(string $key, string $type = ''): mixed {
+	/**
+	 * Post
+	 * 
+	 * @param string $key
+	 * @param string $type
+	 * 
+	 * @return mixed
+	 */
+	public function post(string $key, string $type = '') {
 		if (isset($this->post[$key])) {
 			$value = $this->post[$key];
 		} else {

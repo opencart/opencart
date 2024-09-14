@@ -25,28 +25,28 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
-			$json['error'] = $this->language->get('error_customer');
+			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// 2. Validate cart has products
 		if (!$this->cart->hasProducts()) {
-			$json['error'] = $this->language->get('error_product');
+			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
 		// 3. Validate shipping address and method if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_shipping_address');
+				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
 			}
 
 			if (!isset($this->session->data['shipping_method'])) {
-				$json['error'] = $this->language->get('error_shipping_method');
+				$json['error']['shipping_method'] = $this->language->get('error_shipping_method');
 			}
 		}
 
 		// 4. Validate payment address if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_payment_address');
+			$json['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
 		if (!$json) {
@@ -61,9 +61,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
 
 			if ($payment_methods) {
-				$json['payment_methods'] = $this->session->data['payment_methods'] = $payment_methods;
+				$json['payment_methods'] = $payment_methods;
 			} else {
-				$json['error'] = $this->language->get('error_no_payment');
+				$json['error']['warning'] = $this->language->get('error_no_payment');
 			}
 		}
 
@@ -92,41 +92,41 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
-			$json['error'] = $this->language->get('error_customer');
+			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// 2. Validate cart has products
 		if (!$this->cart->hasProducts()) {
-			$json['error'] = $this->language->get('error_product');
+			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
 		// 3. Validate shipping address and method if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_shipping_address');
+				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
 			}
 
 			if (!isset($this->session->data['shipping_method'])) {
-				$json['error'] = $this->language->get('error_shipping_method');
+				$json['error']['shipping_method'] = $this->language->get('error_shipping_method');
 			}
 		}
 
 		// 4. Validate payment address if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_payment_address');
+			$json['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
 		// 5. Validate payment Method
 		if (isset($this->request->post['payment_method'])) {
 			if (empty($this->request->post['payment_method']['name'])) {
-				$json['error'] = $this->language->get('error_name');
+				$json['error']['warning'] = $this->language->get('error_name');
 			}
 
 			if (empty($this->request->post['payment_method']['code'])) {
-				$json['error'] = $this->language->get('error_code');
+				$json['error']['warning'] = $this->language->get('error_code');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_payment_method');
+			$json['error']['warning'] = $this->language->get('error_payment_method');
 		}
 
 		if (!$json) {

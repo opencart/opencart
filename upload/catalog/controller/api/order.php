@@ -21,8 +21,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method.save');
-		$this->load->controller('api/payment_method.save');
-		$this->load->controller('api/extension');
+		$this->load->controller('api/payment_method.save', );
 		$this->load->controller('api/affiliate');
 
 		// 1. Validate customer data exists
@@ -32,12 +31,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// 2. Validate cart has products.
 		if (!$this->cart->hasProducts()) {
-			$json['error']['product'] = $this->language->get('error_product');
+			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
 		// 3. Validate cart has products and has stock
 		if ((!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
-			$json['error']['stock'] = $this->language->get('error_stock');
+			$json['error']['warning'] = $this->language->get('error_stock');
 		}
 
 		// 4. Validate payment address if required
@@ -69,6 +68,21 @@ class Order extends \Opencart\System\Engine\Controller {
 		// 7. Validate affiliate if set
 		if (isset($thid->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
 			$json['error']['affiliate'] = $this->language->get('error_affiliate');
+		}
+
+		// 8. Validate extensions
+		$this->load->model('setting/extension');
+
+		$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+		foreach ($extensions as $extension) {
+			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
+
+			$output = json_decode($this->response->getOutput(), true);
+
+			if (isset($output['error'])) {
+				$json['error'][$extension['code']] = sprintf($this->language->get('error_affiliate'), $extension['code']);
+			}
 		}
 
 		if (!$json) {

@@ -1054,7 +1054,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($extensions as $extension) {
 			if ($this->config->get('total_' . $extension['code'] . '_status')) {
-				$output = $this->load->controller('extension/' . $extension['extension'] . '/total/' . $extension['code'] . '.order');
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
 				if (!$output instanceof \Exception) {
 					$data['extensions'][] = $output;

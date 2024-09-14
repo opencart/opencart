@@ -21,20 +21,20 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if ($this->cart->hasShipping()) {
 			// Add keys for missing post vars
 			$keys = [
-				'shipping_firstname',
-				'shipping_lastname',
-				'shipping_company',
-				'shipping_address_1',
-				'shipping_address_2',
-				'shipping_postcode',
-				'shipping_city',
-				'shipping_zone_id',
-				'shipping_country_id'
+				'shipping_firstname'  => '',
+				'shipping_lastname'   => '',
+				'shipping_company'    => '',
+				'shipping_address_1'  => '',
+				'shipping_address_2'  => '',
+				'shipping_postcode'   => '',
+				'shipping_city'       => '',
+				'shipping_zone_id'    => 0,
+				'shipping_country_id' => 0
 			];
 
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
+			foreach ($keys as $key => $value) {
+				if (!isset($this->request->post[$key]) || gettype($this->request->post[$key]) !== gettype($value)) {
+					$this->request->post[$key] = $value;
 				}
 			}
 
@@ -62,7 +62,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if (!$country_info || $this->request->post['shipping_country_id'] == '') {
+			if (!$country_info) {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 

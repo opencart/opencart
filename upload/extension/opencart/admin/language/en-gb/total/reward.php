@@ -8,7 +8,6 @@ $_['text_success']     = 'Success: You have modified reward points total!';
 $_['text_edit']        = 'Edit Reward Points Total';
 
 // Entry
-$_['entry_reward']     = 'Use Reward Points';
 $_['entry_status']     = 'Status';
 $_['entry_sort_order'] = 'Sort Order';
 

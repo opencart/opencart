@@ -23,16 +23,16 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
-			$json['error'] = $this->language->get('error_customer');
+			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// 2. Validate shipping if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_shipping_address');
+				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_shipping');
+			$json['error']['warning'] = $this->language->get('error_shipping');
 		}
 
 		if (!$json) {
@@ -41,9 +41,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
 			if ($shipping_methods) {
-				$json['shipping_methods'] = $this->session->data['shipping_methods'] = $shipping_methods;
+				$json['shipping_methods'] = $shipping_methods;
 			} else {
-				$json['error'] = $this->language->get('error_no_shipping');
+				$json['error']['warning'] = $this->language->get('error_no_shipping');
 			}
 		}
 
@@ -71,36 +71,36 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		if ($this->cart->hasShipping()) {
 			// 1. Validate customer data exists
 			if (!isset($this->session->data['customer'])) {
-				$json['error'] = $this->language->get('error_customer');
+				$json['error']['customer'] = $this->language->get('error_customer');
 			}
 
 			// 2. Validate shipping address
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_shipping_address');
+				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
 			}
 
 			// 3. Validate shipping method
 			if (isset($this->request->post['shipping_method'])) {
 				if (empty($this->request->post['shipping_method']['name'])) {
-					$json['error'] = $this->language->get('error_name');
+					$json['error']['warning'] = $this->language->get('error_name');
 				}
 
 				if (empty($this->request->post['shipping_method']['code'])) {
-					$json['error'] = $this->language->get('error_code');
+					$json['error']['warning'] = $this->language->get('error_code');
 				}
 
 				if (empty($this->request->post['shipping_method']['cost'])) {
-					$json['error'] = $this->language->get('error_cost');
+					$json['error']['warning'] = $this->language->get('error_cost');
 				}
 
 				if (!isset($this->request->post['shipping_method']['tax_class_id'])) {
-					$json['error'] = $this->language->get('error_tax_class');
+					$json['error']['warning'] = $this->language->get('error_tax_class');
 				}
 			} else {
-				$json['error'] = $this->language->get('error_shipping_method');
+				$json['error']['warning'] = $this->language->get('error_shipping_method');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_shipping');
+			$json['error']['warning'] = $this->language->get('error_shipping');
 		}
 
 		if (!$json) {

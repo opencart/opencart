@@ -72,12 +72,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
-		}
 
-		if ($this->request->get['route'] == 'api/cart') {
-			$json['products'] = $this->load->controller('api/cart.getProducts');
-			$json['totals'] = $this->load->controller('api/cart.getTotals');
-			$json['shipping_required'] = $this->cart->hasShipping();
+			if ($this->request->get['route'] == 'api/cart') {
+				$json['products'] = $this->load->controller('api/cart.getProducts');
+				$json['totals'] = $this->load->controller('api/cart.getTotals');
+				$json['shipping_required'] = $this->cart->hasShipping();
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -274,12 +274,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
 
 			$json['success'] = $this->language->get('text_success');
-		}
 
-		if ($this->request->get['route'] == 'api/cart.add') {
-			$json['products'] = $this->load->controller('api/cart.getProducts');
-			$json['totals'] = $this->load->controller('api/cart.getTotals');
-			$json['shipping_required'] = $this->cart->hasShipping();
+			if ($this->request->get['route'] == 'api/cart.add') {
+				$json['products'] = $this->load->controller('api/cart.getProducts');
+				$json['totals'] = $this->load->controller('api/cart.getTotals');
+				$json['shipping_required'] = $this->cart->hasShipping();
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

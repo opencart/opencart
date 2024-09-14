@@ -213,6 +213,11 @@ if (isset($request->get['route'])) {
 	$route = (string)$config->get('action_default');
 }
 
+// To block calls to controller methods we want to keep from being accessed directly
+if (str_contains($route, '._')) {
+	$action = new \Opencart\System\Engine\Action($config->get('action_error'));
+}
+
 if ($action) {
 	$route = $action->getId();
 }

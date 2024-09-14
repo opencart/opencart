@@ -299,7 +299,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					'reward'       => $product['reward']
 				];
 			}
-
+			$this->load->model('checkout/order');
 			if (!isset($this->session->data['order_id'])) {
 				$order_id = $this->model_checkout_order->addOrder($order_data);
 			} else {

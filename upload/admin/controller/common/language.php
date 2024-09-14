@@ -29,7 +29,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->cookie['language'])) {
 			$data['code'] = $this->request->cookie['language'];
 		} else {
-			$data['code'] = $this->config->get('config_language');
+			$data['code'] = $this->config->get('config_language_admin');
 		}
 
 		// Redirect

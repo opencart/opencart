@@ -37,6 +37,10 @@ class Document {
 	 * @var array<string, array<string, array<string, string>>>
 	 */
 	private array $scripts = [];
+	/**
+	 * @var array<string, string>
+	 */
+	private array $meta = [];
 
 	/**
 	 * setTitle
@@ -171,5 +175,25 @@ class Document {
 		} else {
 			return [];
 		}
+	}
+
+	/**
+	 * Add Meta
+	 *
+	 * @param string $meta
+	 *
+	 * @return void
+	 */
+	public function addMeta(string $meta) {
+		$this->meta[$meta] = $meta;
+	}
+	
+	/**
+	 * Get Meta
+  	 *
+	 * @return array<string, string>
+	 */
+	public function getMeta() {
+		return $this->meta;
 	}
 }

@@ -33,6 +33,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 					if ($seo_url_info) {
 						$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 
+						// If product_id is found, set the route to product/product
+                        if ($seo_url_info['key'] == 'product_id') {
+                            $this->request->get['route'] = 'product/product';
+                        }
+                        // If category_id is found, set the route to product/category
+                        if ($seo_url_info['key'] == 'category_id') {
+                            $this->request->get['route'] = 'product/category';
+                        }
+                        // If information_id is found, set the route to information/information
+                        if ($seo_url_info['key'] == 'information_id') {
+                            $this->request->get['route'] = 'information/information';
+                        }
+						
 						unset($parts[$key]);
 					}
 				}
@@ -98,12 +111,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$value = '';
 			}
 
-			if (!isset($this->data[$key])) {
-				$this->data[$key] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
+			if (!isset($this->data[$key][$value])) {
+				$this->data[$key][$value] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
 			}
 
-			if ($this->data[$key]) {
-				$paths[] = $this->data[$key];
+			if ($this->data[$key][$value]) {
+				$paths[] = $this->data[$key][$value];
 
 				unset($query[$key]);
 			}

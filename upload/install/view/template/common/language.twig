@@ -1,0 +1,8 @@
+<div class="float-end dropdown">
+  <button type="button" data-bs-toggle="dropdown" class="btn btn-light dropdown-toggle">{{ text_language }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+  <div class="dropdown-menu dropdown-menu-end">
+    {% for language in languages %}
+      <a href="{{ language.href }}" class="dropdown-item{% if language.code == code %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png"/> {{ language.text }}</a>
+    {% endfor %}
+  </div>
+</div>

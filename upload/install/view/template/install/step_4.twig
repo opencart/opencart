@@ -1,0 +1,57 @@
+{{ header }}
+<div id="content">
+	<div class="page-header">
+		<div class="container">
+			<h1>{{ heading_title }}</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}</div>
+		<div class="card">
+			<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_step_4 }}</div>
+			<div class="card-body p-4">
+				<div class="row mb-4">
+					<div class="col-6 text-center">
+						<a href="../"><img src="view/image/catalog.jpg" alt="OpenCart" title="OpenCart" class="img-thumbnail"/></a>
+						<br/>
+						<a href="../" class="btn btn-outline-secondary mt-3">{{ text_catalog }}</a>
+					</div>
+					<div class="col-6 text-center">
+						<a href="../admin/" class="mb-3"><img src="view/image/admin.jpg" alt="OpenCart" title="OpenCart" class="img-thumbnail"/></a>
+						<br/>
+						<a href="../admin/" class="btn btn-outline-secondary mt-3">{{ text_admin }}</a>
+					</div>
+				</div>
+				<div class="mb-4">{{ promotion }}</div>
+				<div class="m-4 text-center">
+          <a href="https://www.opencart.com/index.php?route=marketplace/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_blank" class="btn btn-outline-secondary">{{ text_extension }}</a>
+        </div>
+				<fieldset class="mb-5">
+					<legend><i class="fa-solid fa-envelope"></i> {{ text_mail }}</legend>
+					<div class="text-center">
+						<p class="pb-2">{{ text_mail_description }}</p>
+						<a href="http://newsletter.opencart.com/h/r/B660EBBE4980C85C" target="_blank" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> {{ button_mail }}</a>
+					</div>
+				</fieldset>
+				<div class="row mb-4">
+					<div class="col-4 text-center">
+						<h3><a href="https://www.facebook.com/opencart/" target="_blank" class="icon transition"><i class="fab fa-facebook"></i></a> {{ text_facebook }}</h3>
+						<p>{{ text_facebook_description }}</p>
+						<a href="https://www.facebook.com/opencart/" target="_blank">{{ text_facebook_visit }}</a>
+					</div>
+					<div class="col-4 text-center">
+						<h3><a href="https://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install" target="_blank" class="icon transition"><i class="fa-solid fa-comments"></i></a> {{ text_forum }}</h3>
+						<p>{{ text_forum_description }}</p>
+						<a href="https://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install" target="_blank">{{ text_forum_visit }}</a>
+					</div>
+					<div class="col-4 text-center">
+						<h3><a href="https://www.opencart.com/index.php?route=support/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" target="_blank" class="icon transition"><i class="fa-solid fa-user"></i></a> {{ text_commercial }}</h3>
+						<p>{{ text_commercial_description }}</p>
+						<a href="https://www.opencart.com/index.php?route=support/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" target="_blank">{{ text_commercial_visit }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

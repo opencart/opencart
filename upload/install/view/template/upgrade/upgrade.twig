@@ -1,0 +1,113 @@
+{{ header }}
+<div id="content">
+  <div class="page-header">
+    <div class="container">
+      <div class="float-right">{{ language }}</div>
+      <h1>{{ heading_title }}</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;{{ text_upgrade }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_server }}</legend>
+          <ol>
+            <li>{{ text_error }}</li>
+            <li>{{ text_clear }}</li>
+            <li>{{ text_refresh }}</li>
+            <li>{{ text_user }}</li>
+            <li>{{ text_setting }}</li>
+            <li>{{ text_store }}</li>
+          </ol>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_admin }}</legend>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_admin }}</label>
+            <div class="input-group">
+              <div class="input-group-text">{{ server }}</div>
+              <input type="text" name="admin" value="admin" id="input-admin" class="form-control"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_steps }}</legend>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_progress }}</label>
+            <div class="progress">
+              <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+            <div id="progress-text"></div>
+          </div>
+        </fieldset>
+        <div class="row">
+          <div class="col text-end"><button type="button" id="button-continue" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-continue').on('click', function() {
+    var element = this;
+
+    var step = 1;
+
+    $(element).prop('disabled', true);
+
+    $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
+    $('#progress-text').html('');
+
+    var next = 'index.php?route=upgrade/upgrade_1&admin=' + $('#input-admin').val();
+
+    var upgrade = function() {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+
+                    $(element).prop('disabled', false);
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html('<span class="text-success">' + json['text'] + '</span>');
+                }
+
+                if (json['success']) {
+                    $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+
+                    $(element).prop('disabled', false);
+                }
+
+                $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
+
+                step++;
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(upgrade);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).prop('disabled', false);
+            }
+        });
+    }
+
+    chain.attach(upgrade);
+});
+//--></script>
+{{ footer }}

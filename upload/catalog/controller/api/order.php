@@ -70,18 +70,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error']['affiliate'] = $this->language->get('error_affiliate');
 		}
 
-		// 8. Validate extensions
+		// 8. Validate coupons, rewards
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-
-			$output = json_decode($this->response->getOutput(), true);
-
-			if (isset($output['error'])) {
-				$json['error'][$extension['code']] = sprintf($this->language->get('error_affiliate'), $extension['code']);
+			if (!$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code'])) {
+				$json['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
 			}
 		}
 

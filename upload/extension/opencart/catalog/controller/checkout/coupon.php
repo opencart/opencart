@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Checkout;
 /**
  * Class Coupon
  *
- * @package Opencart\Catalog\Controller\Extension\Opencart\Total
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Checkout
  */
 class Coupon extends \Opencart\System\Engine\Controller {
 	/**
@@ -13,10 +13,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): string {
 		if ($this->config->get('total_coupon_status')) {
-			$this->load->language('extension/opencart/total/coupon');
+			$this->load->language('extension/opencart/checkout/coupon');
 
-			$data['save'] = $this->url->link('extension/opencart/total/coupon.save', 'language=' . $this->config->get('config_language'), true);
-			$data['remove'] = $this->url->link('extension/opencart/total/coupon.remove', 'language=' . $this->config->get('config_language'), true);
+			$data['save'] = $this->url->link('extension/opencart/checkout/coupon.save', 'language=' . $this->config->get('config_language'), true);
+			$data['remove'] = $this->url->link('extension/opencart/checkout/coupon.remove', 'language=' . $this->config->get('config_language'), true);
 			$data['list'] = $this->url->link('checkout/cart.list', 'language=' . $this->config->get('config_language'), true);
 
 			if (isset($this->session->data['coupon'])) {
@@ -25,7 +25,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 				$data['coupon'] = '';
 			}
 
-			return $this->load->view('extension/opencart/total/coupon', $data);
+			return $this->load->view('extension/opencart/checkout/coupon', $data);
 		}
 
 		return '';
@@ -37,7 +37,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('extension/opencart/total/coupon');
+		$this->load->language('extension/opencart/checkout/coupon');
 
 		$json = [];
 
@@ -78,7 +78,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove() {
-		$this->load->language('extension/opencart/total/coupon');
+		$this->load->language('extension/opencart/checkout/coupon');
 
 		$json = [];
 

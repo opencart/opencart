@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Checkout;
 /**
  * Class Reward
  *
- * @package Opencart\Catalog\Controller\Extension\Opencart\Total
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Checkout
  */
 class Reward extends \Opencart\System\Engine\Controller {
 	/**
@@ -24,13 +24,13 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($available && $points_total) {
-				$this->load->language('extension/opencart/total/reward');
+				$this->load->language('extension/opencart/checkout/reward');
 
 				$data['heading_title'] = sprintf($this->language->get('heading_title'), $available);
 
 				$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
 
-				$data['save'] = $this->url->link('extension/opencart/total/reward.save', 'language=' . $this->config->get('config_language'), true);
+				$data['save'] = $this->url->link('extension/opencart/checkout/reward.save', 'language=' . $this->config->get('config_language'), true);
 				$data['list'] = $this->url->link('checkout/cart.list', 'language=' . $this->config->get('config_language'), true);
 
 				if (isset($this->session->data['reward'])) {
@@ -39,7 +39,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 					$data['reward'] = '';
 				}
 
-				return $this->load->view('extension/opencart/total/reward', $data);
+				return $this->load->view('extension/opencart/checkout/reward', $data);
 			}
 		}
 
@@ -52,7 +52,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('extension/opencart/total/reward');
+		$this->load->language('extension/opencart/checkout/reward');
 
 		$json = [];
 

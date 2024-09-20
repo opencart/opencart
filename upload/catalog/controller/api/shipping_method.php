@@ -18,7 +18,14 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$this->load->controller('api/customer');
 			$this->load->controller('api/cart');
 			$this->load->controller('api/shipping_address');
-			$this->load->controller('api/extension');
+
+			$this->load->model('setting/extension');
+
+			$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+			foreach ($extensions as $extension) {
+				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
+			}
 		}
 
 		// 1. Validate customer data exists
@@ -65,7 +72,14 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$this->load->controller('api/customer');
 			$this->load->controller('api/cart');
 			$this->load->controller('api/shipping_address');
-			$this->load->controller('api/extension');
+
+			$this->load->model('setting/extension');
+
+			$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+			foreach ($extensions as $extension) {
+				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
+			}
 		}
 
 		if ($this->cart->hasShipping()) {

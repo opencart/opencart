@@ -23,6 +23,16 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$this->load->controller('api/shipping_address');
 			$this->load->controller('api/shipping_method.save');
 			$this->load->controller('api/payment_method.save');
+
+			$this->load->model('setting/extension');
+
+			$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+			foreach ($extensions as $extension) {
+				if ($extension['code'] != 'reward') {
+					$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
+				}
+			}
 		}
 
 		if (isset($this->request->post['reward'])) {
@@ -67,20 +77,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function confirm() {
-		if ($reward) {
-
-		}
-	}
-
-	public function validate($json) {
-
-
-
 	}
 }

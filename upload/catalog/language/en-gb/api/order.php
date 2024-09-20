@@ -13,4 +13,5 @@ $_['error_stock']            = 'Warning: Products marked with *** are not availa
 $_['error_minimum']          = 'Warning: Minimum order amount for %s is %s!';
 $_['error_product']          = 'Warning: Products required!';
 $_['error_affiliate']        = 'Warning: Affiliate details required!';
+$_['error_extension']        = 'Warning: Please check the %s form carefully for errors!';
 

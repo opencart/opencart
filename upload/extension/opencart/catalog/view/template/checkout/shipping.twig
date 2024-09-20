@@ -41,7 +41,7 @@
       e.preventDefault();
 
       $.ajax({
-          url: 'index.php?route=extension/opencart/total/shipping.quote&language={{ language }}',
+          url: 'index.php?route=extension/opencart/checkout/shipping.quote&language={{ language }}',
           type: 'post',
           data: $('#form-quote').serialize(),
           dataType: 'json',
@@ -131,7 +131,7 @@
       e.preventDefault();
 
       $.ajax({
-          url: 'index.php?route=extension/opencart/total/shipping.save&language={{ language }}',
+          url: 'index.php?route=extension/opencart/checkout/shipping.save&language={{ language }}',
           type: 'post',
           data: $('#form-shipping').serialize(),
           dataType: 'json',

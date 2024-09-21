@@ -34,7 +34,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			foreach ($keys as $key => $value) {
 				if (!isset($this->request->post[$key]) || gettype($this->request->post[$key]) !== gettype($value)) {
-					$this->request->post[$key] = $value;
+				//	$this->request->post[$key] = $value;
 				}
 			}
 

@@ -88,6 +88,10 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		return null;
 	}
+
+	/**
+	 * @return void
+	 */
 	public function permission(): void {
 		$this->language->load('error/permission');
 

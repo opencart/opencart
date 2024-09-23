@@ -1867,6 +1867,25 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Seo Urls
+	 *
+	 * @param int $product_id
+	 *
+	 * @return array<int, string>
+	 */
+	public function getSeoUrls(int $product_id): array {
+		$product_seo_url_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'product_id' AND `value` = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
+		}
+
+		return $product_seo_url_data;
+	}
+
+	/**
 	 * Get Layouts
 	 *
 	 * @param int $product_id

@@ -107,7 +107,8 @@ class Twig {
 				'autoescape'  => false,
 				'debug'       => true,
 				'auto_reload' => true,
-				'cache'       => DIR_CACHE . 'template/'
+				'cache'       => DIR_CACHE . 'template/',
+				'use_yield'   => true
 			];
 
 			$twig = new \Twig\Environment($loader, $config);

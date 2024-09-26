@@ -19,8 +19,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$this->load->controller('api/order');
-
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
 			$json['error']['customer'] = $this->language->get('error_customer');
@@ -28,12 +26,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// 2. Validate cart has products.
 		if (!$this->cart->hasProducts()) {
-			$json['error']['warning'] = $this->language->get('error_product');
+			$json['error']['product'] = $this->language->get('error_product');
 		}
 
 		// 3. Validate cart has products and has stock
 		if ((!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
-			$json['error']['warning'] = $this->language->get('error_stock');
+			$json['error']['product'] = $this->language->get('error_stock');
 		}
 
 		// 4. Validate payment address if required
@@ -68,9 +66,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// 8. Validate coupons, rewards
-		if (isset($this->session->data['error'])) {
-			foreach ($this->session->data['error'] as $key => $error) {
-				$json['error'][$key] = sprintf($this->language->get('error_extension'), $key);
+		$this->load->model('setting/extension');
+
+		$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+		foreach ($extensions as $extension) {
+			$class = 'controller_extension_' . $extension['extension'] . '_api_' . $extension['code'];
+
+			if (method_exists($class, 'validate') && !call_user_func([$this->{$class}, 'validate'])) {
+				$json['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
 			}
 		}
 
@@ -332,12 +336,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$json['products'] = $this->load->controller('api/cart.getProducts');
-		$json['totals'] = $this->load->controller('api/cart.getTotals');
-		$json['shipping_required'] = $this->cart->hasShipping();
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $json;
 	}
 
 	/**

@@ -9,10 +9,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): array {
 		$this->load->language('api/affiliate');
 
-		$json = [];
+		$output = [];
 
 		if (isset($this->request->post['affiliate_id'])) {
 			$affiliate_id = (int)$this->request->post['affiliate_id'];
@@ -26,7 +26,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($affiliate_id);
 
 			if (!$affiliate_info) {
-				$json['error'] = $this->language->get('error_affiliate');
+				$output['error'] = $this->language->get('error_affiliate');
 			}
 		}
 
@@ -47,17 +47,16 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!$subtotal) {
-				$json['error'] = $this->language->get('error_order');
+				$output['error'] = $this->language->get('error_order');
 			}
 		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
+		if (!$output) {
+			$output['success'] = $this->language->get('text_success');
 
 			$this->session->data['affiliate_id'] = $affiliate_id;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $output;
 	}
 }

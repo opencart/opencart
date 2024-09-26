@@ -11,14 +11,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): array {
 		$this->load->language('extension/opencart/api/coupon');
 
-		$json = [];
-
-		if ($this->request->get['route'] == 'extension/opencart/api/coupon') {
-			$this->load->controller('api/order');
-		}
+		$output = [];
 
 		if (!empty($this->request->post['coupon'])) {
 			$coupon = (string)$this->request->post['coupon'];
@@ -27,7 +23,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->config->get('total_coupon_status')) {
-			$json['error'] = $this->language->get('error_status');
+			$output['error'] = $this->language->get('error_status');
 		}
 
 		$this->load->model('marketing/coupon');
@@ -35,23 +31,24 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
 		if (!$coupon_info) {
-			$json['error'] = $this->language->get('error_coupon');
+			$output['error'] = $this->language->get('error_coupon');
 		}
 
 		// Set there only to show an errormessage if the extension is being called directly
-		if (!$json) {
+		if (!$output) {
 			$this->session->data['coupon'] = $coupon;
 
-			$json['success'] = $this->language->get('text_success');
+			$output['success'] = $this->language->get('text_success');
 		}
 
-		if ($this->request->get['route'] == 'extension/opencart/api/coupon') {
-			$json['products'] = $this->load->controller('api/cart.getProducts');
-			$json['totals'] = $this->load->controller('api/cart.getTotals');
-			$json['shipping_required'] = $this->cart->hasShipping();
+		return $output;
+	}
+
+	public function validate(): bool {
+		if (empty($this->request->post['coupon']) || (isset($this->session->data['coupon']) && $this->request->post['coupon'] == $this->session->data['coupon'])) {
+			return true;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return false;
 	}
 }

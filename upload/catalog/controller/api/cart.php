@@ -9,7 +9,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/cart');
 
-		$json = [];
+		$output = [];
 
 		if (isset($this->request->post['cart'])) {
 			$products = (array)$this->request->post['cart'];
@@ -51,7 +51,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_options as $product_option) {
 					if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-						$json['error']['product_' . $key]['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+						$output['error']['product_' . $key]['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 					}
 				}
 
@@ -59,23 +59,18 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
 
 				if ($subscriptions && !in_array($product['subscription_plan_id'], array_column($subscriptions, 'subscription_plan_id'))) {
-					$json['error']['product_' . $key]['subscription'] = $this->language->get('error_subscription');
+					$output['error']['product_' . $key]['subscription'] = $this->language->get('error_subscription');
 				}
 			} else {
-				$json['error']['product_' . $key]['product'] = $this->language->get('error_product');
+				$output['error']['product_' . $key]['product'] = $this->language->get('error_product');
 			}
 
-			if (!$json) {
+			if (!$output) {
 				$this->cart->add($product['product_id'], $quantity, $option, $subscription_plan_id);
 			}
 		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $output;
 	}
 
 	/**
@@ -88,9 +83,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	public function add(): array {
 		$this->load->language('api/cart');
 
-		$json = [];
-
-		$this->load->controller('api/order');
+		$output = [];
 
 		// Add any single products
 		if (isset($this->request->post['product_id'])) {
@@ -137,7 +130,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+					$output['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
 
@@ -145,55 +138,19 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
 
 			if ($subscriptions && !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id'))) {
-				$json['error']['subscription'] = $this->language->get('error_subscription');
+				$output['error']['subscription'] = $this->language->get('error_subscription');
 			}
 		} else {
-			$json['error']['warning'] = $this->language->get('error_product');
+			$output['error']['warning'] = $this->language->get('error_product');
 		}
 
-		if (!$json) {
+		if (!$output) {
 			$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
 
-			$json['success'] = $this->language->get('text_success');
+			$output['success'] = $this->language->get('text_success');
 		}
 
-		return $json;
-	}
-
-	/**
-	 * @return void
-	 */
-	public function refresh(): void {
-		$this->load->language('api/cart');
-
-		$json = [];
-
-		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
-		$this->load->controller('api/payment_address');
-		$this->load->controller('api/shipping_address');
-		$this->load->controller('api/shipping_method.save');
-		$this->load->controller('api/payment_method.save');
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-		}
-
-		// Stock
-		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-			$json['error']['stock'] = $this->language->get('error_stock');
-		}
-
-		$json['products'] = $this->load->controller('api/cart.getProducts');
-		$json['totals'] = $this->load->controller('api/cart.getTotals');
-		$json['shipping_required'] = $this->cart->hasShipping();
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $output;
 	}
 
 	/**
@@ -203,6 +160,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 */
 	public function getProducts(): array {
 		$product_data = [];
+
+		// Stock
+		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+			$json['error']['stock'] = $this->language->get('error_stock');
+		}
 
 		$this->load->model('checkout/cart');
 

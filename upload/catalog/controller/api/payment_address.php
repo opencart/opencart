@@ -7,12 +7,14 @@ namespace Opencart\catalog\controller\api;
  */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return void
+	 * Set payment address
+	 *
+	 * @return array
 	 */
-	public function index(): void {
+	public function index(): array {
 		$this->load->language('api/payment_address');
 
-		$json = [];
+		$output = [];
 
 		// Add keys for missing post vars
 		$keys = [
@@ -34,19 +36,19 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!oc_validate_length($this->request->post['payment_firstname'], 1, 32)) {
-			$json['error']['payment_firstname'] = $this->language->get('error_firstname');
+			$output['error']['payment_firstname'] = $this->language->get('error_firstname');
 		}
 
 		if (!oc_validate_length($this->request->post['payment_lastname'], 1, 32)) {
-			$json['error']['payment_lastname'] = $this->language->get('error_lastname');
+			$output['error']['payment_lastname'] = $this->language->get('error_lastname');
 		}
 
 		if (!oc_validate_length($this->request->post['payment_address_1'], 3, 128)) {
-			$json['error']['payment_address_1'] = $this->language->get('error_address_1');
+			$output['error']['payment_address_1'] = $this->language->get('error_address_1');
 		}
 
 		if (!oc_validate_length($this->request->post['payment_city'], 2, 128)) {
-			$json['error']['payment_city'] = $this->language->get('error_city');
+			$output['error']['payment_city'] = $this->language->get('error_city');
 		}
 
 		$this->load->model('localisation/country');
@@ -54,15 +56,15 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
 
 		if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['payment_postcode'], 2, 10)) {
-			$json['error']['payment_postcode'] = $this->language->get('error_postcode');
+			$output['error']['payment_postcode'] = $this->language->get('error_postcode');
 		}
 
 		if (!$country_info || $this->request->post['payment_country_id'] == '') {
-			$json['error']['payment_country'] = $this->language->get('error_country');
+			$output['error']['payment_country'] = $this->language->get('error_country');
 		}
 
 		if ($this->request->post['payment_zone_id'] == '') {
-			$json['error']['payment_zone'] = $this->language->get('error_zone');
+			$output['error']['payment_zone'] = $this->language->get('error_zone');
 		}
 
 		// Custom field validation
@@ -73,14 +75,14 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
 				if ($custom_field['required'] && empty($this->request->post['payment_custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$output['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['payment_custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					$output['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 		}
 
-		if (!$json) {
+		if (!$output) {
 			if ($country_info) {
 				$country = $country_info['name'];
 				$iso_code_2 = $country_info['iso_code_2'];
@@ -125,10 +127,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => $this->request->post['payment_custom_field'] ?? []
 			];
 
-			$json['success'] = $this->language->get('text_success');
+			$output['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $output;
 	}
 }

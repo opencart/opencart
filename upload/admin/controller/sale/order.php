@@ -1292,13 +1292,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			// 2. Remove the unneeded keys.
 			$request_data = $this->request->get;
 
-			unset($request_data['call']);
 			unset($request_data['user_token']);
 
+			// 3. Add the request GET vars.
 			$store->request->get = $request_data;
 
-			// 3. Add the request GET vars.
-			$store->request->get['route'] = $call;
+			$store->request->get['route'] = 'api/api';
 
 			// 4. Add the request POST var
 			$store->request->post = $this->request->post;

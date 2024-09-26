@@ -11,14 +11,10 @@ class Reward extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function index(): void {
+	public function index(): array {
 		$this->load->language('extension/opencart/api/reward');
 
-		$json = [];
-
-		if ($this->request->get['route'] == 'extension/opencart/api/reward') {
-			$this->load->controller('api/order');
-		}
+		$output = [];
 
 		if (isset($this->request->post['reward'])) {
 			$reward = abs((int)$this->request->post['reward']);
@@ -27,45 +23,41 @@ class Reward extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->config->get('total_reward_status')) {
-			$json['error'] = $this->language->get('error_status');
+			$output['error'] = $this->language->get('error_status');
 		}
 
-		if (!$json) {
-			$available = $this->customer->getRewardPoints();
+		$available = $this->customer->getRewardPoints();
 
-			$points_total = 0;
+		$points_total = 0;
 
-			foreach ($this->cart->getProducts() as $product) {
-				if ($product['points']) {
-					$points_total += $product['points'];
-				}
-			}
-
-			if ($reward > $available) {
-				$json['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
-			}
-
-			if ($reward > $points_total) {
-				$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+		foreach ($this->cart->getProducts() as $product) {
+			if ($product['points']) {
+				$points_total += $product['points'];
 			}
 		}
 
-		if (!$json) {
+		if ($reward > $available) {
+			$output['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
+		}
+
+		if ($reward > $points_total) {
+			$output['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+		}
+
+		if (!$output) {
 			$this->session->data['reward'] = $reward;
 
-			$json['success'] = $this->language->get('text_success');
-		} else {
-			// Store the errors to be shown on the confirm api call
-			$this->session->data['error']['coupon'] = $json['error'];
+			$output['success'] = $this->language->get('text_success');
 		}
 
-		if ($this->request->get['route'] == 'extension/opencart/api/reward') {
-			$json['products'] = $this->load->controller('api/cart.getProducts');
-			$json['totals'] = $this->load->controller('api/cart.getTotals');
-			$json['shipping_required'] = $this->cart->hasShipping();
+		return $output;
+	}
+
+	public function validate(): bool {
+		if (empty($this->request->post['reward']) || (isset($this->session->data['reward']) && $this->request->post['reward'] == $this->session->data['reward'])) {
+			return true;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return false;
 	}
 }

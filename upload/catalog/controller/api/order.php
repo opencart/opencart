@@ -6,6 +6,9 @@ namespace Opencart\catalog\controller\api;
  * @package Opencart\Catalog\Controller\Api
  */
 class Order extends \Opencart\System\Engine\Controller {
+	// Load the default forms
+
+
 	/**
 	 * Confirm
 	 *
@@ -16,13 +19,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
-		$this->load->controller('api/payment_address');
-		$this->load->controller('api/shipping_address');
-		$this->load->controller('api/shipping_method.save');
-		$this->load->controller('api/payment_method.save', );
-		$this->load->controller('api/affiliate');
+		$this->load->controller('api/order');
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
@@ -71,13 +68,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// 8. Validate coupons, rewards
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			if (!$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code'])) {
-				$json['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
+		if (isset($this->session->data['error'])) {
+			foreach ($this->session->data['error'] as $key => $error) {
+				$json['error'][$key] = sprintf($this->language->get('error_extension'), $key);
 			}
 		}
 

@@ -14,78 +14,70 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if ($this->request->get['route'] == 'api/shipping_address') {
-			$this->load->controller('api/cart');
+		// Add keys for missing post vars
+		$keys = [
+			'shipping_firstname'  => '',
+			'shipping_lastname'   => '',
+			'shipping_company'    => '',
+			'shipping_address_1'  => '',
+			'shipping_address_2'  => '',
+			'shipping_postcode'   => '',
+			'shipping_city'       => '',
+			'shipping_zone_id'    => 0,
+			'shipping_country_id' => 0
+		];
+
+		foreach ($keys as $key => $value) {
+			if (!isset($this->request->post[$key]) || gettype($this->request->post[$key]) !== gettype($value)) {
+			//	$this->request->post[$key] = $value;
+			}
 		}
 
-		if ($this->cart->hasShipping()) {
-			// Add keys for missing post vars
-			$keys = [
-				'shipping_firstname'  => '',
-				'shipping_lastname'   => '',
-				'shipping_company'    => '',
-				'shipping_address_1'  => '',
-				'shipping_address_2'  => '',
-				'shipping_postcode'   => '',
-				'shipping_city'       => '',
-				'shipping_zone_id'    => 0,
-				'shipping_country_id' => 0
-			];
+		if (!oc_validate_length($this->request->post['shipping_firstname'], 1, 32)) {
+			$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
+		}
 
-			foreach ($keys as $key => $value) {
-				if (!isset($this->request->post[$key]) || gettype($this->request->post[$key]) !== gettype($value)) {
-				//	$this->request->post[$key] = $value;
+		if (!oc_validate_length($this->request->post['shipping_lastname'], 1, 32)) {
+			$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
+		}
+
+		if (!oc_validate_length($this->request->post['shipping_address_1'], 3, 128)) {
+			$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
+		}
+
+		if (!oc_validate_length($this->request->post['shipping_city'], 2, 128)) {
+			$json['error']['shipping_city'] = $this->language->get('error_city');
+		}
+
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
+
+		if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['shipping_postcode'], 2, 10)) {
+			$json['error']['postcode'] = $this->language->get('error_postcode');
+		}
+
+		if (!$country_info) {
+			$json['error']['country'] = $this->language->get('error_country');
+		}
+
+		if ($this->request->post['shipping_zone_id'] == '') {
+			$json['error']['zone'] = $this->language->get('error_zone');
+		}
+
+		// Custom field validation
+		$this->load->model('account/custom_field');
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'address') {
+				if ($custom_field['required'] && empty($this->request->post['shipping_custom_field'][$custom_field['custom_field_id']])) {
+					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['shipping_custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
-
-			if (!oc_validate_length($this->request->post['shipping_firstname'], 1, 32)) {
-				$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
-			}
-
-			if (!oc_validate_length($this->request->post['shipping_lastname'], 1, 32)) {
-				$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
-			}
-
-			if (!oc_validate_length($this->request->post['shipping_address_1'], 3, 128)) {
-				$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
-			}
-
-			if (!oc_validate_length($this->request->post['shipping_city'], 2, 128)) {
-				$json['error']['shipping_city'] = $this->language->get('error_city');
-			}
-
-			$this->load->model('localisation/country');
-
-			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
-
-			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['shipping_postcode'], 2, 10)) {
-				$json['error']['postcode'] = $this->language->get('error_postcode');
-			}
-
-			if (!$country_info) {
-				$json['error']['country'] = $this->language->get('error_country');
-			}
-
-			if ($this->request->post['shipping_zone_id'] == '') {
-				$json['error']['zone'] = $this->language->get('error_zone');
-			}
-
-			// Custom field validation
-			$this->load->model('account/custom_field');
-
-			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
-
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'address') {
-					if ($custom_field['required'] && empty($this->request->post['shipping_custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['shipping_custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-					}
-				}
-			}
-		} else {
-			$json['error']['warning'] = $this->language->get('error_shipping');
 		}
 
 		if (!$json) {

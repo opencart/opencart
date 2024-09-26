@@ -9,26 +9,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): array {
 		$this->load->language('api/payment_method');
 
 		$json = [];
-
-		if ($this->request->get['route'] == 'api/payment_method') {
-			$this->load->controller('api/customer');
-			$this->load->controller('api/cart');
-			$this->load->controller('api/payment_address');
-			$this->load->controller('api/shipping_address');
-			$this->load->controller('api/shipping_method.save');
-
-			$this->load->model('setting/extension');
-
-			$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($extensions as $extension) {
-				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-			}
-		}
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
@@ -37,7 +21,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// 2. Validate cart has products
 		if (!$this->cart->hasProducts()) {
-			$json['error']['warning'] = $this->language->get('error_product');
+			$json['error']['cart'] = $this->language->get('error_product');
 		}
 
 		// 3. Validate shipping address and method if required
@@ -74,8 +58,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $json;
 	}
 
 	/**
@@ -83,25 +66,13 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function save(): void {
+	public function save(): array {
 		$this->load->language('api/payment_method');
 
 		$json = [];
 
 		if ($this->request->get['route'] == 'api/payment_method.save') {
-			$this->load->controller('api/customer');
-			$this->load->controller('api/cart');
-			$this->load->controller('api/payment_address');
-			$this->load->controller('api/shipping_address');
-			$this->load->controller('api/shipping_method.save');
-
-			$this->load->model('setting/extension');
-
-			$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($extensions as $extension) {
-				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-			}
+			$this->load->controller('api/order');
 		}
 
 		// 1. Validate customer data exists
@@ -152,13 +123,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		if ($this->request->get['route'] == 'api/payment_method.save') {
-			$json['products'] = $this->load->controller('api/cart.getProducts');
-			$json['totals'] = $this->load->controller('api/cart.getTotals');
-			$json['shipping_required'] = $this->cart->hasShipping();
-		}
+		$json['products'] = $this->load->controller('api/cart.getProducts');
+		$json['totals'] = $this->load->controller('api/cart.getTotals');
+		$json['shipping_required'] = $this->cart->hasShipping();
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $json;
 	}
 }

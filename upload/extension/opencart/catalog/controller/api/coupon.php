@@ -11,34 +11,13 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): bool {
+	public function index(): void {
 		$this->load->language('extension/opencart/api/coupon');
 
 		$json = [];
 
 		if ($this->request->get['route'] == 'extension/opencart/api/coupon') {
-			$controllers = [
-				'api/customer',
-				'api/cart',
-				'api/payment_address',
-				'api/shipping_address',
-				'api/shipping_method.save',
-				'api/payment_method.save',
-			];
-
-			foreach ($controllers as $controller) {
-				$this->load->controller($controller);
-			}
-
-			$this->load->model('setting/extension');
-
-			$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($extensions as $extension) {
-				if ($extension['code'] != 'coupon') {
-					$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-				}
-			}
+			$this->load->controller('api/order');
 		}
 
 		if (!empty($this->request->post['coupon'])) {
@@ -59,57 +38,20 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_coupon');
 		}
 
-		$status = true;
-
 		// Set there only to show an errormessage if the extension is being called directly
 		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-
 			$this->session->data['coupon'] = $coupon;
 
-			if ($this->request->get['route'] == 'extension/opencart/api/coupon') {
-				$json['products'] = $this->load->controller('api/cart.getProducts');
-				$json['totals'] = $this->load->controller('api/cart.getTotals');
-				$json['shipping_required'] = $this->cart->hasShipping();
-			}
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		if ($this->request->get['route'] == 'extension/opencart/api/coupon') {
+			$json['products'] = $this->load->controller('api/cart.getProducts');
+			$json['totals'] = $this->load->controller('api/cart.getTotals');
+			$json['shipping_required'] = $this->cart->hasShipping();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-
-
-
-		if ($this->request->get['route'] == 'extension/opencart/api/coupon' && !$coupon) {
-			$status = false;
-		}
-
-		return $status;
-	}
-
-	public function _test() {
-		$controllers = [
-			'api/customer',
-			'api/cart',
-			'api/payment_address',
-			'api/shipping_address',
-			'api/shipping_method.save',
-			'api/payment_method.save',
-		];
-
-		foreach ($controllers as $controller) {
-			$this->load->controller($controller);
-		}
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-		}
-
-		$json['products'] = $this->load->controller('api/cart.getProducts');
-		$json['totals'] = $this->load->controller('api/cart.getTotals');
-		$json['shipping_required'] = $this->cart->hasShipping();
 	}
 }

@@ -23,14 +23,11 @@ class Api extends \Opencart\System\Engine\Controller {
 			case 'customer':
 				$output = $this->setCustomer();
 				break;
+			case 'product_add':
+				$output = $this->addProduct();
+				break;
 			case 'payment_address':
 				$output = $this->setPaymentAddress();
-				break;
-			case 'payment_method':
-				$output = $this->setPaymentMethod();
-				break;
-			case 'payment_methods':
-				$output = $this->getPaymentMethods();
 				break;
 			case 'shipping_address':
 				$output = $this->setShippingAddress();
@@ -41,11 +38,11 @@ class Api extends \Opencart\System\Engine\Controller {
 			case 'shipping_methods':
 				$output = $this->getShippingMethods();
 				break;
-			case 'product_add':
-				$output = $this->addProduct();
+			case 'payment_method':
+				$output = $this->setPaymentMethod();
 				break;
-			case 'cart':
-				$output = $this->getCart();
+			case 'payment_methods':
+				$output = $this->getPaymentMethods();
 				break;
 			case 'extension':
 				$output = $this->extension();
@@ -64,8 +61,6 @@ class Api extends \Opencart\System\Engine\Controller {
 				break;
 		}
 
-		print_r($this->request->get);
-
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($output));
 	}
@@ -77,6 +72,15 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function setCustomer(): array {
 		return $this->load->controller('api/customer');
+	}
+
+	/**
+	 * Set payment address
+	 *
+	 * @return array
+	 */
+	protected function setPaymentAddress(): array {
+		return $this->load->controller('api/payment_address');
 	}
 
 	/**
@@ -101,19 +105,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-		}
-
-		$output = $this->load->controller('api/shipping_method');
-
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
-		$output['shipping_required'] = $this->cart->hasShipping();
+		$output = $this->load->controller('api/shipping_method.getShippingMethods');
 
 		return $output;
 	}
@@ -129,6 +121,8 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/payment_address');
 
+		$output = $this->load->controller('api/shipping_method');
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -137,8 +131,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
-		$output = $this->load->controller('api/shipping_method');
-
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
 		$output['shipping_required'] = $this->cart->hasShipping();
@@ -146,10 +138,11 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
-	protected function setPaymentAddress(): array {
-		return $this->load->controller('api/payment_address');
-	}
-
+	/**
+	 * Get payment methods
+	 *
+	 * @return array
+	 */
 	protected function getPaymentMethods(): array {
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
@@ -157,23 +150,16 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
 
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-		}
-
 		$output = $this->load->controller('api/payment_method.getPaymentMethods');
-
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
-		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
 	}
 
+	/**
+	 * Set payment method
+	 *
+	 * @return array
+	 */
 	protected function setPaymentMethod(): array {
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
@@ -181,6 +167,8 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
 
+		$output = $this->load->controller('api/payment_method');
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -189,8 +177,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
-		$output = $this->load->controller('api/payment_method');
-
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
 		$output['shipping_required'] = $this->cart->hasShipping();
@@ -198,13 +184,16 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Get cart
+	 *
+	 * @return array
+	 */
 	protected function getCart(): array {
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
-		$this->load->controller('api/shipping_method');
-		$this->load->controller('api/payment_method');
 
 		$this->load->model('setting/extension');
 
@@ -213,6 +202,9 @@ class Api extends \Opencart\System\Engine\Controller {
 		foreach ($extensions as $extension) {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
+
+		$this->load->controller('api/shipping_method');
+		$this->load->controller('api/payment_method');
 
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
@@ -221,11 +213,19 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Add product
+	 *
+	 * @return array
+	 */
 	protected function addProduct(): array {
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
+
+		$output = $this->controller_api_cart->addProduct();
+
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
@@ -236,8 +236,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		foreach ($extensions as $extension) {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
-
-		$output = $this->load->controller('api/cart.add');
 
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
@@ -260,13 +258,16 @@ class Api extends \Opencart\System\Engine\Controller {
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 		foreach ($extensions as $extension) {
-			//$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-			//$controllers[] = 'extension/' . $extension['extension'] . '/api/' . $extension['code'];
+			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
-			//if (isset($this->request->get['route']) && $this->request->get['route'] != '') {
-				//$this->load->controller($controller);
-			//}
+			if (isset($this->request->get['code']) && $this->request->get['code'] != $extension['code']) {
+				$this->load->controller($controller);
+			} else {
+
+			}
 		}
+
+		//getExtensionByCode
 
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
@@ -275,10 +276,20 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Set affiliate
+	 *
+	 * @return array
+	 */
 	protected function setAffiliate(): array {
 		return $this->load->controller('api/affiliate');
 	}
 
+	/**
+	 * Confirm Order
+	 *
+	 * @return array
+	 */
 	protected function confirm(): array {
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
@@ -306,6 +317,11 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Add Order history
+	 *
+	 * @return array
+	 */
 	protected function addHistory(): array {
 		return $this->load->controller('api/order.addHistory');
 	}

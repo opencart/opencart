@@ -11,8 +11,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		if (isset($this->request->post['cart'])) {
-			$products = (array)$this->request->post['cart'];
+		if (isset($this->request->post['product'])) {
+			$products = (array)$this->request->post['product'];
 		} else {
 			$products = [];
 		}
@@ -80,7 +80,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function add(): array {
+	public function addProduct(): array {
 		$this->load->language('api/cart');
 
 		$output = [];

@@ -37,7 +37,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($reward > $available) {
-			$output['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
+			$output['error'] = sprintf($this->language->get('error_points'), $reward);
 		}
 
 		if ($reward > $points_total) {
@@ -53,6 +53,11 @@ class Reward extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Validate
+	 *
+	 * @return bool
+	 */
 	public function validate(): bool {
 		if (empty($this->request->post['reward']) || (isset($this->session->data['reward']) && $this->request->post['reward'] == $this->session->data['reward'])) {
 			return true;

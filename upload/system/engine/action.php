@@ -74,15 +74,15 @@ class Action {
 			// Initialize the class
 			$controller = $registry->get('factory')->controller($this->route);
 
+			// If action cannot be executed, we return an action error object.
+			if ($controller instanceof \Exception) {
+				return new \Exception('Error: Could not call route ' . $this->route . '!');
+			}
+
 			// Store object
 			$registry->set($key, $controller);
 		} else {
 			$controller = $registry->get($key);
-		}
-
-		// If action cannot be executed, we return an action error object.
-		if ($controller instanceof \Exception) {
-			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}
 
 		$callable = [$controller, $this->method];

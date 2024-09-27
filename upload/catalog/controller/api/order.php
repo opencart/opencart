@@ -6,49 +6,46 @@ namespace Opencart\catalog\controller\api;
  * @package Opencart\Catalog\Controller\Api
  */
 class Order extends \Opencart\System\Engine\Controller {
-	// Load the default forms
-
-
 	/**
 	 * Confirm
 	 *
 	 * @return void
 	 */
-	public function confirm(): void {
+	public function confirm(): array {
 		$this->load->language('api/order');
 
-		$json = [];
+		$output = [];
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
-			$json['error']['customer'] = $this->language->get('error_customer');
+			$output['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// 2. Validate cart has products.
 		if (!$this->cart->hasProducts()) {
-			$json['error']['product'] = $this->language->get('error_product');
+			$output['error']['product'] = $this->language->get('error_product');
 		}
 
 		// 3. Validate cart has products and has stock
 		if ((!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
-			$json['error']['product'] = $this->language->get('error_stock');
+			$output['error']['product'] = $this->language->get('error_stock');
 		}
 
 		// 4. Validate payment address if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$json['error']['payment_address'] = $this->language->get('error_payment_address');
+			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
 		// 5. Validate shipping address and method if required
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
+				$output['error']['shipping_address'] = $this->language->get('error_shipping_address');
 			}
 
 			// Validate shipping method
 			if (!isset($this->session->data['shipping_method'])) {
-				$json['error']['shipping_method'] = $this->language->get('error_shipping_method');
+				$output['error']['shipping_method'] = $this->language->get('error_shipping_method');
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -57,12 +54,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// 6. Validate payment method
 		if (!isset($this->session->data['payment_method'])) {
-			$json['error']['payment_method'] = $this->language->get('error_payment_method');
+			$output['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 
 		// 7. Validate affiliate if set
 		if (isset($thid->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
-			$json['error']['affiliate'] = $this->language->get('error_affiliate');
+			$output['error']['affiliate'] = $this->language->get('error_affiliate');
 		}
 
 		// 8. Validate coupons, rewards
@@ -71,14 +68,20 @@ class Order extends \Opencart\System\Engine\Controller {
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 		foreach ($extensions as $extension) {
-			$class = 'controller_extension_' . $extension['extension'] . '_api_' . $extension['code'];
+			$key = 'controller_extension_' . $extension['extension'] . '_api_' . $extension['code'];
 
-			if (method_exists($class, 'validate') && !call_user_func([$this->{$class}, 'validate'])) {
-				$json['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
+			if ($this->registry->has($key)) {
+				$callable = [$this->{$key}, 'validate'];
+
+				if (is_callable($callable) && !call_user_func($callable)) {
+					$this->load->langauge('extension/' . $extension['extension'] . '/total/' . $extension['code']);
+
+					$output['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
+				}
 			}
 		}
 
-		if (!$json) {
+		if (!$output) {
 			$order_data = [];
 
 			// Store Details
@@ -316,7 +319,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$json['order_id'] = $order_id;
+			$output['order_id'] = $order_id;
 
 			// Set the order history
 			if (isset($this->request->post['order_status_id'])) {
@@ -327,16 +330,16 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->model_checkout_order->addHistory($order_id, $order_status_id);
 
-			$json['success'] = $this->language->get('text_success');
+			$output['success'] = $this->language->get('text_success');
 
-			$json['points'] = $points;
+			$output['points'] = $points;
 
 			if (isset($order_data['affiliate_id'])) {
-				$json['commission'] = $this->currency->format($order_data['commission'], $this->config->get('config_currency'));
+				$output['commission'] = $this->currency->format($order_data['commission'], $this->config->get('config_currency'));
 			}
 		}
 
-		return $json;
+		return $output;
 	}
 
 	/**
@@ -347,7 +350,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('api/sale/order');
 
-		$json = [];
+		$output = [];
 
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
@@ -369,10 +372,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$json['success'] = $this->language->get('text_success');
+		$output['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($output));
 	}
 
 	/**
@@ -380,10 +383,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function addHistory(): void {
+	public function addHistory(): array {
 		$this->load->language('api/order');
 
-		$json = [];
+		$output = [];
 
 		// Add keys for missing post vars
 		$keys = [
@@ -405,16 +408,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder((int)$this->request->post['order_id']);
 
 		if (!$order_info) {
-			$json['error'] = $this->language->get('error_order');
+			$output['error'] = $this->language->get('error_order');
 		}
 
-		if (!$json) {
+		if (!$output) {
 			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
 
-			$json['success'] = $this->language->get('text_success');
+			$output['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $output;
 	}
 }

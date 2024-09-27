@@ -1890,7 +1890,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($order_info) {
 			if (!$order_info['customer_id']) {
-				$json['error'] = $this->language->get('error_customer');
+				$json['error'] = $this->language->get('error_reward_guest');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_order');

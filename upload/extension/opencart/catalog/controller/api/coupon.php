@@ -11,7 +11,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): array {
+	protected function index(): array {
 		$this->load->language('extension/opencart/api/coupon');
 
 		$output = [];
@@ -44,6 +44,11 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Validate
+	 *
+	 * @return bool
+	 */
 	public function validate(): bool {
 		if (empty($this->request->post['coupon']) || (isset($this->session->data['coupon']) && $this->request->post['coupon'] == $this->session->data['coupon'])) {
 			return true;

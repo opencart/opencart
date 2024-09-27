@@ -122,4 +122,5 @@ $_['error_invoice_no']           = 'Warning: Invoice No. has already been create
 $_['error_order']                = 'Warning: Order does not exist!';
 $_['error_affiliate']            = 'Warning: Affiliate does not exist!';
 $_['error_reward_add']           = 'Warning: Reward points for this order has already been added!';
+$_['error_reward_guest']         = 'Warning: Guests can not use reward points!';
 $_['error_commission_add']       = 'Warning: Affiliate commission for this order has already been added!';

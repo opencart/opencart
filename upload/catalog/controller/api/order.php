@@ -224,8 +224,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				$points += $product['reward'];
 			}
 
-			if (isset($this->session->data['comment'])) {
-				$order_data['comment'] = $this->session->data['comment'];
+			if (isset($this->request->data['comment'])) {
+				$order_data['comment'] = (string)$this->request->data['comment'];
 			} else {
 				$order_data['comment'] = '';
 			}

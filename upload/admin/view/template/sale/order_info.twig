@@ -281,7 +281,7 @@
                 <div class="form-control rounded-start">
                   <div class="lead p-0"><strong>{{ text_reward }}</strong>
                     <br/>
-                    <div id="reward-value">{{ points }}</div>
+                    <div id="point-value">{{ points }}</div>
                   </div>
                 </div>
                 {% if not reward_total %}
@@ -2367,11 +2367,11 @@ $('#button-confirm').on('click', function() {
                 }
 
                 if (json['points']) {
-                    $('#reward-value').html(json['points']);
+                    $('#point-value').html(json['points']);
                     $('#button-reward-add').prop('disabled', false);
                     $('#button-reward-remove').prop('disabled', false);
                 } else {
-                    $('#reward-value').html(0);
+                    $('#point-value').html(0);
                     $('#button-reward-add').prop('disabled', true);
                     $('#button-reward-remove').prop('disabled', true);
                 }

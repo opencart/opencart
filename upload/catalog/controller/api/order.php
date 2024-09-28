@@ -68,16 +68,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 		foreach ($extensions as $extension) {
-			$key = 'controller_extension_' . $extension['extension'] . '_api_' . $extension['code'];
+			$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
-			if ($this->registry->has($key)) {
-				$callable = [$this->{$key}, 'validate'];
+			if (!$result instanceof \Exception && isset($result['error'])) {
+				$this->load->language('api/order');
 
-				if (is_callable($callable) && !call_user_func($callable)) {
-					$this->load->language('extension/' . $extension['extension'] . '/total/' . $extension['code']);
-
-					$output['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
-				}
+				$output['error'][$extension['code']] = sprintf($this->language->get('error_test'));
 			}
 		}
 

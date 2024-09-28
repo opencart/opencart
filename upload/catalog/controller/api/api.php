@@ -259,6 +259,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		$output = [];
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -266,18 +268,12 @@ class Api extends \Opencart\System\Engine\Controller {
 		foreach ($extensions as $extension) {
 			if ($extension['code'] != $code) {
 				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-			}
-		}
+			} else {
+				$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
-		$output = [];
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('total', $code);
-
-		if ($extension_info) {
-			$result = $this->load->controller('extension/' . $extension_info['extension'] . '/api/' . $extension_info['code']);
-
-			if (!$result instanceof \Exception) {
-				$output = $result;
+				if (!$result instanceof \Exception) {
+					$output = $result;
+				}
 			}
 		}
 
@@ -311,15 +307,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_method');
 		$this->load->controller('api/affiliate');
 
-		// Load any extensions of type 'total'
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-		}
-
+		// Let confirm order controller validate extensions
 		$output = $this->load->controller('api/order.confirm');
 
 		$output['products'] = $this->controller_api_cart->getProducts();

@@ -22,26 +22,42 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$reward = 0;
 		}
 
+		if (empty($this->request->post['reward']) && $this->request->get['call'] == 'confirm') {
+			return [];
+		}
+
+		// 1. Validate customer data exists
+		if (!isset($this->session->data['customer'])) {
+			$output['error'] = $this->language->get('error_customer');
+		}
+
+		// 2. Validate cart has products.
+		if (!$this->cart->hasProducts()) {
+			$output['error'] = $this->language->get('error_product');
+		}
+
 		if (!$this->config->get('total_reward_status')) {
 			$output['error'] = $this->language->get('error_status');
 		}
 
-		$available = $this->customer->getRewardPoints();
+		if (!$output) {
+			$available = $this->customer->getRewardPoints();
 
-		$points_total = 0;
+			$points_total = 0;
 
-		foreach ($this->cart->getProducts() as $product) {
-			if ($product['points']) {
-				$points_total += $product['points'];
+			foreach ($this->cart->getProducts() as $product) {
+				if ($product['points']) {
+					$points_total += $product['points'];
+				}
 			}
-		}
 
-		if ($reward > $available) {
-			$output['error'] = sprintf($this->language->get('error_points'), $reward);
-		}
+			if ($reward > $available) {
+				$output['error'] = sprintf($this->language->get('error_points'), $reward);
+			}
 
-		if ($reward > $points_total) {
-			$output['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+			if ($reward > $points_total) {
+				$output['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+			}
 		}
 
 		if (!$output) {
@@ -51,18 +67,5 @@ class Reward extends \Opencart\System\Engine\Controller {
 		}
 
 		return $output;
-	}
-
-	/**
-	 * Validate
-	 *
-	 * @return bool
-	 */
-	public function validate(): bool {
-		if (empty($this->request->post['reward']) || (isset($this->session->data['reward']) && $this->request->post['reward'] == $this->session->data['reward'])) {
-			return true;
-		}
-
-		return false;
 	}
 }

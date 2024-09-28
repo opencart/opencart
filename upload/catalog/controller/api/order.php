@@ -71,9 +71,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
 			if (!$result instanceof \Exception && isset($result['error'])) {
-				$this->load->language('api/order');
+				$this->load->language('extension/' . $extension['extension'] . '/api/' . $extension['code'], 'total');
 
-				$output['error'][$extension['code']] = sprintf($this->language->get('error_test'));
+				$output['error'][$extension['code']] = $this->language->get('total_error_confirm');
 			}
 		}
 

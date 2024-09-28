@@ -79,10 +79,12 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			'.png',
 			'.gif',
 			'.webp',
+			'.svg',
 			'.JPG',
 			'.JPEG',
 			'.PNG',
-			'.GIF'
+			'.GIF',
+			'.SVG'
 		];
 
 		$data['directories'] = [];
@@ -304,10 +306,12 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'png',
 						'gif',
 						'webp',
+						'svg',
 						'JPG',
 						'JPEG',
 						'PNG',
-						'GIF'
+						'GIF',
+						'SVG'
 					];
 
 					if (!in_array(substr($filename, strrpos($filename, '.') + 1), $allowed)) {
@@ -322,7 +326,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'image/png',
 						'image/x-png',
 						'image/gif',
-						'image/webp'
+						'image/webp',
+						'image/svg+xml'
 					];
 
 					if (!in_array($file['type'], $allowed)) {

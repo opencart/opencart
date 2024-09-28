@@ -253,21 +253,33 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_method');
 		$this->load->controller('api/affiliate');
 
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 		foreach ($extensions as $extension) {
-			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-
-			if (isset($this->request->get['code']) && $this->request->get['code'] != $extension['code']) {
-				$this->load->controller($controller);
-			} else {
-
+			if ($extension['code'] != $code) {
+				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 			}
 		}
 
-		//getExtensionByCode
+		$output = [];
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('total', $code);
+
+		if ($extension_info) {
+			$result = $this->load->controller('extension/' . $extension_info['extension'] . '/api/' . $extension_info['code']);
+
+			if (!$result instanceof \Exception) {
+				$output = $result;
+			}
+		}
 
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();

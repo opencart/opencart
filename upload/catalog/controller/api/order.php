@@ -74,7 +74,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$callable = [$this->{$key}, 'validate'];
 
 				if (is_callable($callable) && !call_user_func($callable)) {
-					$this->load->langauge('extension/' . $extension['extension'] . '/total/' . $extension['code']);
+					$this->load->language('extension/' . $extension['extension'] . '/total/' . $extension['code']);
 
 					$output['error'][$extension['code']] = sprintf($this->language->get('error_extension'), $extension['code']);
 				}

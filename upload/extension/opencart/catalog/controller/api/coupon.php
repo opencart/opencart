@@ -11,7 +11,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	protected function index(): array {
+	public function index(): array {
 		$this->load->language('extension/opencart/api/coupon');
 
 		$output = [];
@@ -25,6 +25,11 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if (!$this->config->get('total_coupon_status')) {
 			$output['error'] = $this->language->get('error_status');
 		}
+
+
+
+
+
 
 		$this->load->model('marketing/coupon');
 

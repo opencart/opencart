@@ -34,7 +34,7 @@ $('#form-reward').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=extension/opencart/api/reward&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=extension&code=reward&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
         data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
         dataType: 'json',
@@ -48,6 +48,8 @@ $('#form-reward').on('submit', function(e) {
             console.log(json);
 
             $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {
                 $('#form-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');

@@ -1715,7 +1715,7 @@ $('#input-option').autocomplete({
 
         if (item['type'] == 'select' || item['type'] == 'radio' || item['type'] == 'checkbox' || item['type'] == 'image') {
             html += '<div class="table-responsive">';
-            html += '  <table id="option-value-' + option_row + '" class="table table-bordered table-hover">';
+            html += '  <table class="table table-bordered table-hover">';
             html += '  	 <thead>';
             html += '      <tr>';
             html += '        <td class="text-start">{{ entry_option_value|escape('js') }}</td>';
@@ -1727,7 +1727,7 @@ $('#input-option').autocomplete({
             html += '        <td></td>';
             html += '      </tr>';
             html += '    </thead>';
-            html += '    <tbody></tbody>';
+            html += '    <tbody id="option-value-' + option_row + '"></tbody>';
             html += '    <tfoot>';
             html += '      <tr>';
             html += '        <td colspan="6"></td>';

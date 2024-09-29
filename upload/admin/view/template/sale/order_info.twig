@@ -1259,8 +1259,11 @@ $('#form-customer').on('submit', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
-            // Check for errors
-            if (json['error']) {
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
                     $('#form-customer').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
@@ -1533,7 +1536,11 @@ $('#form-product-add').on('submit', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
-            if (json['error']) {
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
                     $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
@@ -1639,8 +1646,11 @@ $('#form-payment-address').on('submit', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
-            // Check for errors
-            if (json['error']) {
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
                     $('#form-payment-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
@@ -1813,8 +1823,11 @@ $('#form-shipping-address').on('submit', function(e) {
             $('#form-shipping-address .is-invalid').removeClass('is-invalid');
             $('#form-shipping-address .invalid-feedback').removeClass('d-block');
 
-            // Check for errors
-            if (json['error']) {
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
                     $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }

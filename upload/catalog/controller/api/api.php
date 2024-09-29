@@ -12,6 +12,8 @@ class Api extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
+		$this->load->language('api/api');
+
 		if (isset($this->request->get['call'])) {
 			$call = $this->request->get['call'];
 		} else {
@@ -60,7 +62,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				$output = $this->addHistory();
 				break;
 			default:
-				$output = ['error' => 'dfdf']; //
+				$output = ['error' => $this->language->get('error_call')]; // JSON error message if call not found
 				break;
 		}
 

@@ -257,7 +257,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/affiliate');
 
 		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+			$code = (string)$this->request->get['code'];
 		} else {
 			$code = '';
 		}

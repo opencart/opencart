@@ -177,58 +177,38 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Session
-	 *
-	 * @param int    $api_id
-	 * @param string $session_id
-	 * @param string $ip
-	 *
-	 * @return int
-	 */
-	public function addSession(int $api_id, string $session_id, string $ip): int {
-		$api_ip_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
-
-		if (!$api_ip_query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
-		}
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` SET `api_id` = '" . (int)$api_id . "', `session_id` = '" . $this->db->escape($session_id) . "', `ip` = '" . $this->db->escape($ip) . "', `date_added` = NOW(), `date_modified` = NOW()");
-
-		return $this->db->getLastId();
-	}
-
-	/**
-	 * Get Sessions
+	 * Get Histories
 	 *
 	 * @param int $api_id
+	 * @param int $start
+	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
-	public function getSessions(int $api_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE `api_id` = '" . (int)$api_id . "'");
+	public function getHistories(int $api_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_history` WHERE `api_id` = '" . (int)$api_id . "' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
 
 	/**
-	 * Delete Session
+	 * Get Total Histories
 	 *
-	 * @param int $api_session_id
+	 * @param int $api_id
 	 *
-	 * @return void
+	 * @return int
 	 */
-	public function deleteSession(int $api_session_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE `api_session_id` = '" . (int)$api_session_id . "'");
-	}
+	public function getTotalHistories(int $api_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "api_history` WHERE `api_id` = '" . (int)$api_id . "'");
 
-	/**
-	 * Delete Session By Session ID
-	 *
-	 * @param string $session_id
-	 *
-	 * @return void
-	 */
-	public function deleteSessionsBySessionId(string $session_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE `session_id` = '" . $this->db->escape($session_id) . "'");
+		return (int)$query->row['total'];
 	}
 }

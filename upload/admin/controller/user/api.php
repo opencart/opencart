@@ -256,22 +256,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$data['api_ips'] = [];
 		}
 
-		// Session
-		$data['api_sessions'] = [];
-
-		if (!empty($api_info)) {
-			$results = $this->model_user_api->getSessions($this->request->get['api_id']);
-
-			foreach ($results as $result) {
-				$data['api_sessions'][] = [
-					'api_session_id' => $result['api_session_id'],
-					'session_id'     => $result['session_id'],
-					'ip'             => $result['ip'],
-					'date_added'     => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-					'date_modified'  => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
-				];
-			}
-		}
+		$data['history'] = $this->getHistory();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -359,28 +344,61 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete Session
+	 * History
 	 *
 	 * @return void
 	 */
-	public function deleteSession(): void {
+	public function history(): void {
 		$this->load->language('user/api');
 
-		$json = [];
+		$this->response->setOutput($this->getHistory());
+	}
 
-		if (!$this->user->hasPermission('modify', 'user/api')) {
-			$json['error'] = $this->language->get('error_permission');
+	/**
+	 * Get History
+	 *
+	 * @return string
+	 */
+	public function getHistory(): string {
+		if (isset($this->request->get['api_id'])) {
+			$api_id = (int)$this->request->get['api_id'];
+		} else {
+			$api_id = 0;
 		}
 
-		if (!$json) {
-			$this->load->model('user/api');
-
-			$this->model_user_api->deleteSession($this->request->get['api_session_id']);
-
-			$json['success'] = $this->language->get('text_success');
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'user/api.history') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$limit = 10;
+
+		$data['histories'] = [];
+
+		$this->load->model('user/api');
+
+		$results = $this->model_user_api->getHistories($api_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['histories'][] = [
+				'ip'         => $result['ip'],
+				'call'       => $result['call'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$history_total = $this->model_user_api->getTotalHistories($api_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $history_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('user/api.history', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $api_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
+
+		return $this->load->view('user/api_history', $data);
 	}
 }

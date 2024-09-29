@@ -16,14 +16,20 @@ class Api extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
-		if (substr($route, 0, 4) == 'api/') {
-			$status = true;
+		// Block direct access to other methods
+		if (substr($route, 0, 4) == 'api/' && $route != 'api/api') {
+			return new \Opencart\System\Engine\Action('startup/api.permission');
+		}
 
+		$status = true;
+
+		if ($route == 'api/api') {
 			$required = [
-				'route',
+				'call',
 				'username',
 				'store_id',
 				'language',
+				'currency',
 				'time',
 				'signature'
 			];
@@ -67,12 +73,13 @@ class Api extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($status) {
-				$string  = (string)$route . "\n";
+				$string = (string)$this->request->get['call'] . "\n";
 				$string .= $api_info['username'] . "\n";
 				$string .= (string)$this->request->server['HTTP_HOST'] . "\n";
 				$string .= (!empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/') . "\n";
 				$string .= (int)$this->request->get['store_id'] . "\n";
 				$string .= (string)$this->request->get['language'] . "\n";
+				$string .= (string)$this->request->get['currency'] . "\n";
 				$string .= md5(http_build_query($this->request->post)) . "\n";
 				$string .= $time . "\n";
 
@@ -80,10 +87,10 @@ class Api extends \Opencart\System\Engine\Controller {
 					$status = false;
 				}
 			}
+		}
 
-			if (!$status) {
-				return new \Opencart\System\Engine\Action('startup/api.permission');
-			}
+		if (!$status) {
+			return new \Opencart\System\Engine\Action('startup/api.permission');
 		}
 
 		return null;

@@ -21,7 +21,7 @@
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
-            <li class="nav-item"><a href="#tab-session" data-bs-toggle="tab" class="nav-link">{{ tab_session }}</a></li>
+            <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
@@ -79,37 +79,11 @@
                 </table>
               </div>
             </div>
-            <div id="tab-session" class="tab-pane">
-              <div class="table-responsive">
-                <table id="session" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td class="text-start">{{ column_token }}</td>
-                      <td class="text-start">{{ column_ip }}</td>
-                      <td class="text-start">{{ column_date_added }}</td>
-                      <td class="text-start">{{ column_date_modified }}</td>
-                      <td class="text-end">{{ column_action }}</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% if api_sessions %}
-                      {% for api_session in api_sessions %}
-                        <tr>
-                          <td class="text-start">{{ api_session.session_id }}</td>
-                          <td class="text-start">{{ api_session.ip }}</td>
-                          <td class="text-start">{{ api_session.date_added }}</td>
-                          <td class="text-start">{{ api_session.date_modified }}</td>
-                          <td class="text-end"><button type="button" value="{{ api_session.api_session_id }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
-                        </tr>
-                      {% endfor %}
-                    {% else %}
-                      <tr>
-                        <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                      </tr>
-                    {% endif %}
-                  </tbody>
-                </table>
-              </div>
+            <div id="tab-history" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_history }}</legend>
+                <div id="history">{{ history }}</div>
+              </fieldset>
             </div>
           </div>
           <input type="hidden" name="api_id" value="{{ api_id }}" id="input-api-id"/>
@@ -130,8 +104,7 @@ $('#button-generate').on('click', function() {
 
     $('#input-key').val(rand);
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var ip_row = {{ ip_row }};
 
 $('#button-ip').on('click', function() {
@@ -144,40 +117,11 @@ $('#button-ip').on('click', function() {
 
     ip_row++;
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#session button').on('click', function(e) {
+
+$('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=user/api.deleteSession&user_token={{ user_token }}&api_session_id=' + $(element).val(),
-        type: 'post',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $(element).parent().parent().remove();
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+    $('#history').load(this.href);
 });
 //--></script>
 {{ footer }}

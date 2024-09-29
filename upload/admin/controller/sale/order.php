@@ -1183,7 +1183,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * We create a hash from the data in a similar method to how amazon does things.
 	 *
-	 * $route    = 'api/order.save';
+	 * $call     = 'order.confirm';
 	 * $username = 'API username';
 	 * $key      = 'API Key';
 	 * $domain   = 'www.yourdomain.com';
@@ -1193,18 +1193,20 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * $time     = time();
 	 *
 	 * // Build hash string
-	 * $string  = $route . "\n";
+	 * $string  = $call . "\n";
 	 * $string .= $username . "\n";
 	 * $string .= $domain . "\n";
 	 * $string .= $path . "\n";
 	 * $string .= $store_id . "\n";
 	 * $string .= $language . "\n";
+	 * $string .= $currency . "\n";
 	 * $string .= json_encode($_POST) . "\n";
 	 * $string .= $time . "\n";
 	 *
 	 * $signature = base64_encode(hash_hmac('sha1', $string, $key, true));
 	 *
 	 * // Make remote call
+	 * $url  = '&call=' . $call;
 	 * $url  = '&username=' . urlencode($username);
 	 * $url .= '&store_id=' . $store_id;
 	 * $url .= '&language=' . $language;
@@ -1214,7 +1216,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * $curl = curl_init();
 	 *
-	 * curl_setopt($curl, CURLOPT_URL, 'https://' . $domain . $path . 'index.php?route=' . $route . $url);
+	 * curl_setopt($curl, CURLOPT_URL, 'https://' . $domain . $path . 'index.php?route=api/api' . $url);
 	 * curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	 * curl_setopt($curl, CURLOPT_HEADER, false);
 	 * curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

@@ -2315,7 +2315,7 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();
 
-    $('#comment-value').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br>'));
+    $('#comment-value').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 });
 
 // Refresh all products and totals

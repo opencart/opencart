@@ -255,10 +255,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'api_session',
+		'name'  => 'api_history',
 		'field' => [
 			[
-				'name'           => 'api_session_id',
+				'name'           => 'api_history_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
@@ -267,7 +267,7 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'session_id',
+				'name' => 'call',
 				'type' => 'varchar(32)'
 			],
 			[
@@ -277,14 +277,10 @@ function oc_db_schema() {
 			[
 				'name' => 'date_added',
 				'type' => 'datetime'
-			],
-			[
-				'name' => 'date_modified',
-				'type' => 'datetime'
 			]
 		],
 		'primary' => [
-			'api_session_id'
+			'api_history_id'
 		],
 		'foreign' => [
 			[

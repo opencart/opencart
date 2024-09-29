@@ -11,7 +11,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function confirm(): array {
+	public function index(): array {
 		$this->load->language('api/order');
 
 		$output = [];
@@ -224,8 +224,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				$points += $product['reward'];
 			}
 
-			if (isset($this->request->data['comment'])) {
-				$order_data['comment'] = (string)$this->request->data['comment'];
+			if (isset($this->request->post['comment'])) {
+				$order_data['comment'] = (string)$this->request->post['comment'];
 			} else {
 				$order_data['comment'] = '';
 			}

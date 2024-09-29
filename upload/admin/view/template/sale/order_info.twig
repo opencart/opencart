@@ -60,7 +60,8 @@
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
-              </select> <label for="input-store">{{ entry_store }}</label>
+              </select>
+              <label for="input-store">{{ entry_store }}</label>
             </div>
           </div>
           <div class="col mb-3">
@@ -69,7 +70,8 @@
                 {% for language in languages %}
                   <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                 {% endfor %}
-              </select> <label for="input-language">{{ entry_language }}</label>
+              </select>
+              <label for="input-language">{{ entry_language }}</label>
             </div>
           </div>
           <div class="col">
@@ -78,7 +80,8 @@
                 {% for currency in currencies %}
                   <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                 {% endfor %}
-              </select> <label for="input-currency">{{ entry_currency }}</label>
+              </select>
+              <label for="input-currency">{{ entry_currency }}</label>
             </div>
           </div>
         </div>

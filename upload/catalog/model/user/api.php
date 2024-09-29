@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Catalog\Model\Account;
+namespace Opencart\Catalog\Model\User;
 /**
  * Class Api
  *
- * @package Opencart\Catalog\Model\Account
+ * @package Opencart\Catalog\Model\User
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**
@@ -31,5 +31,16 @@ class Api extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Add History
+	 *
+	 * @param int $api_id
+	 * @param string $call
+	 * @param string $ip
+	 */
+	public function addHistory($api_id, $call, $ip) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_history` SET `api_id` = '" . (int)$api_id . "', `call` = '" . $this->db->escape($call) . "', `ip` = '" . $this->db->escape($ip) . "', `date_added` = NOW()");
 	}
 }

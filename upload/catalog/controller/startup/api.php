@@ -41,15 +41,15 @@ class Api extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($status) {
-				$this->load->model('account/api');
+				$this->load->model('user/api');
 
-				$api_info = $this->model_account_api->getApiByUsername((string)$this->request->get['username']);
+				$api_info = $this->model_user_api->getApiByUsername((string)$this->request->get['username']);
 
 				if ($api_info) {
 					// Check if IP is allowed
 					$ip_data = [];
 
-					$results = $this->model_account_api->getIps($api_info['api_id']);
+					$results = $this->model_user_api->getIps($api_info['api_id']);
 
 					foreach ($results as $result) {
 						$ip_data[] = trim($result['ip']);
@@ -89,7 +89,9 @@ class Api extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$status) {
+		if ($status) {
+			$this->model_user_api->addHistory($api_info['api_id'], $this->request->get['call'], oc_get_ip());
+		} else {
 			return new \Opencart\System\Engine\Action('startup/api.permission');
 		}
 

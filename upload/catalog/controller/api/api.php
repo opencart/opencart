@@ -23,6 +23,9 @@ class Api extends \Opencart\System\Engine\Controller {
 			case 'customer':
 				$output = $this->setCustomer();
 				break;
+			case 'cart':
+				$output = $this->getCart();
+				break;
 			case 'product_add':
 				$output = $this->addProduct();
 				break;
@@ -266,14 +269,10 @@ class Api extends \Opencart\System\Engine\Controller {
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
 		foreach ($extensions as $extension) {
-			if ($extension['code'] != $code) {
-				$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-			} else {
-				$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
+			$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
-				if (!$result instanceof \Exception) {
-					$output = $result;
-				}
+			if (!$result instanceof \Exception && $extension['code'] == $code) {
+				$output = $result;
 			}
 		}
 

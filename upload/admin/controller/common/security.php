@@ -220,7 +220,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_storage_root');
 			}
 
-			if (!str_starts_with($name, 'storage')) {
+			if (substr($name, 0, 7) != 'storage') {
 				$json['error'] = $this->language->get('error_storage_name');
 			}
 

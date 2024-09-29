@@ -66,13 +66,17 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->session->data['order_id'])) {
-			$this->load->model('checkout/order');
+			$order_id = $this->session->data['order_id'];
+		} else {
+			$order_id = 0;
+		}
 
-			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		$this->load->model('checkout/order');
 
-			if (!$order_info) {
-				unset($this->session->data['order_id']);
-			}
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if ($order_id && !$order_info) {
+			unset($this->session->data['order_id']);
 		}
 
 		// Generate order if payment method is set
@@ -299,22 +303,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					'reward'       => $product['reward']
 				];
 			}
-			$this->load->model('checkout/order');
-			if (!isset($this->session->data['order_id'])) {
-				$order_id = $this->model_checkout_order->addOrder($order_data);
-			} else {
-				$order_id = 0;
-			}
-
-			$this->load->model('checkout/order');
 
 			if (!$order_id) {
-				$order_id = $this->model_checkout_order->addOrder($order_data);
+				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			} elseif ($order_info && !$order_info['order_status_id']) {
 				$this->model_checkout_order->editOrder($order_id, $order_data);
 			}
-
-			$this->session->data['order_id'] = $order_id;
 		}
 
 		// Display prices

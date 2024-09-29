@@ -21,9 +21,9 @@ class Api extends \Opencart\System\Engine\Controller {
 			return new \Opencart\System\Engine\Action('startup/api.permission');
 		}
 
-		$status = true;
-
 		if ($route == 'api/api') {
+			$status = true;
+
 			$required = [
 				'call',
 				'username',
@@ -87,12 +87,12 @@ class Api extends \Opencart\System\Engine\Controller {
 					$status = false;
 				}
 			}
-		}
 
-		if ($status) {
-			$this->model_user_api->addHistory($api_info['api_id'], $this->request->get['call'], oc_get_ip());
-		} else {
-			return new \Opencart\System\Engine\Action('startup/api.permission');
+			if ($status) {
+				$this->model_user_api->addHistory($api_info['api_id'], $this->request->get['call'], oc_get_ip());
+			} else {
+				return new \Opencart\System\Engine\Action('startup/api.permission');
+			}
 		}
 
 		return null;

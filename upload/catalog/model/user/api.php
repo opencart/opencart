@@ -7,10 +7,9 @@ namespace Opencart\Catalog\Model\User;
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**
-	 * Login
+	 * Get Api By Username
 	 *
 	 * @param string $username
-	 * @param string $key
 	 *
 	 * @return array<string, mixed>
 	 */

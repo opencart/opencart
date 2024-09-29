@@ -1,7 +1,7 @@
 <?php
 // Configuration
 if (!is_file('config.php')) {
-	exit();
+	exit('CRON is unable to load configuration from file config.php');
 }
 
 // Config

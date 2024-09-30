@@ -223,7 +223,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['payment_method'] = $store->session->data['payment_method'];
 
 					// Shipping Details
-					if ($store->cart->hasShipping()) {
+					if ($shipping_address_info) {
 						$order_data['shipping_address_id'] = $shipping_address_info['address_id'];
 						$order_data['shipping_firstname'] = $shipping_address_info['firstname'];
 						$order_data['shipping_lastname'] = $shipping_address_info['lastname'];

@@ -37,7 +37,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 			$data['language'] = $this->config->get('config_language');
 
-			return $this->load->view('extension/opencart/total/shipping', $data);
+			return $this->load->view('extension/opencart/checkout/shipping', $data);
 		}
 
 		return '';

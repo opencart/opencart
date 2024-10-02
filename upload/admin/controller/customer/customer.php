@@ -533,7 +533,17 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!empty($customer_info)) {
 			$data['store_id'] = $customer_info['store_id'];
 		} else {
-			$data['store_id'] = [0];
+			$data['store_id'] = 0;
+		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (!empty($customer_info)) {
+			$data['language_id'] = $customer_info['language_id'];
+		} else {
+			$data['language_id'] = 0;
 		}
 
 		$this->load->model('customer/customer_group');

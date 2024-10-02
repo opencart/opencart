@@ -45,6 +45,18 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                  <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_language" id="input-language" class="form-select">
+                      {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
                 <div class="row mb-3">
                   <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
                   <div class="col-sm-10">

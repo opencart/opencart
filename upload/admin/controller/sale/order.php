@@ -1183,7 +1183,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * We create a hash from the data in a similar method to how amazon does things.
 	 *
-	 * $call     = 'order.confirm';
+	 * $call     = 'order';
 	 * $username = 'API username';
 	 * $key      = 'API Key';
 	 * $domain   = 'www.yourdomain.com';

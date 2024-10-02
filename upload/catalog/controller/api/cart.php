@@ -6,6 +6,8 @@ namespace Opencart\catalog\controller\api;
  * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Cart extends \Opencart\System\Engine\Controller {
+	private $error = [];
+
 	public function index() {
 		$this->load->language('api/cart');
 
@@ -195,6 +197,19 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$error = [];
+
+			if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+				$output['error']['product_' . $key]['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+			}
+
+			// Validate Subscription plan
+			$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
+
+			if ($subscriptions && !in_array($product['subscription_plan_id'], array_column($subscriptions, 'subscription_plan_id'))) {
+				$output['error']['product_' . $key]['subscription'] = $this->language->get('error_subscription');
+			}
+
 			$product_data[] = [
 				'cart_id'              => $product['cart_id'],
 				'product_id'           => $product['product_id'],
@@ -209,7 +224,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'reward'               => $product['reward'],
 				'price'                => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
 				'total'                => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
-				//'error'                => $product['error']
+				'error'                => $error
 			];
 		}
 

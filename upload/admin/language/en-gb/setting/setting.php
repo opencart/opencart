@@ -182,7 +182,7 @@ $_['entry_status']                        = 'Status';
 
 // Help
 $_['help_geocode']                        = 'Please enter your store location geocode manually.';
-$_['help_icon']                      = 'The icon should be a PNG that is 16px x 16px.';
+$_['help_icon']                           = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_open']                           = 'Fill in your store\'s opening times.';
 $_['help_comment']                        = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
 $_['help_location']                       = 'The different store locations you have that you want displayed on the contact us form.';
@@ -198,7 +198,7 @@ $_['help_review']                         = 'Enable/Disable new review entry and
 $_['help_review_purchased']               = 'Reviews are only allowed for products the customer has purchased.';
 $_['help_review_guest']                   = 'Allow guests to post reviews.';
 $_['help_article_description_length']     = 'In the list view, short article description character limit';
-$_['help_comment']                        = 'Enable/Disable new comment entry and display of existing comments.';
+$_['help_comment_status']                 = 'Enable/Disable new comment entry and display of existing comments.';
 $_['help_comment_guest']                  = 'Allow guests to post comments.';
 $_['help_comment_approve']                = 'Auto approve comments otherwise the first comment needs to be approved before they are added to a safe list.';
 $_['help_comment_interval']               = 'Number of minutes before some one can make another comment after already commenting. Use 0 to turn off flood protection.';

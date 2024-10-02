@@ -6,7 +6,7 @@ namespace Opencart\catalog\controller\api;
  * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Cart extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
 	public function index() {
 		$this->load->language('api/cart');

@@ -419,7 +419,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
 		$data['save'] = $this->url->link('user/user.save', 'user_token=' . $this->session->data['user_token']);

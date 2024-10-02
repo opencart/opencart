@@ -75,7 +75,7 @@ function oc_token(int $length = 32): string {
 // Pre PHP8 compatibility
 if (!function_exists('str_starts_with')) {
 	function str_starts_with(string $string, string $find): bool {
-		$substring = substr($string, strlen($find));
+		$substring = substr($string, 0, strlen($find));
 
 		if ($substring === $find) {
 			return true;

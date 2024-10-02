@@ -24,7 +24,8 @@ class Store extends \Opencart\System\Engine\Model {
 		$results = $this->model_design_layout->getRoutesByStoreId(0);
 
 		foreach ($results as $result) {
-			$this->model_design_layout->addRoute($result['layout_id'], $result + ['store_id' => $store_id]);
+			$result['store_id']=$store_id;
+			$this->model_design_layout->addRoute($result['layout_id'], $result);
 		}
 
 		// SEO URL

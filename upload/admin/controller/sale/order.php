@@ -344,6 +344,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_order->getOrders($filter_data);
 
 		foreach ($results as $result) {
+			if (isset($result['shipping_method']['name'])) {
+				$shipping_method = $result['shipping_method']['name'];
+			} else {
+				$shipping_method = '';
+			}
+
 			$data['orders'][] = [
 				'order_id'        => $result['order_id'],
 				'store_name'      => $result['store_name'],
@@ -352,7 +358,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'total'           => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'shipping_method' => $result['shipping_method'],
+				'shipping_method' => $shipping_method,
 				'view'            => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
 			];
 		}
@@ -905,7 +911,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (isset($order_info['payment_method'])) {
+		if (!empty($order_info['payment_method'])) {
 			$data['payment_method_name'] = $order_info['payment_method']['name'];
 			$data['payment_method_code'] = $order_info['payment_method']['code'];
 		} else {
@@ -915,6 +921,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Shipping Address
 		if (!empty($order_info)) {
+			$data['shipping_address_id'] = $order_info['shipping_address_id'];
 			$data['shipping_address_id'] = $order_info['shipping_address_id'];
 		} else {
 			$data['shipping_address_id'] = 0;
@@ -993,7 +1000,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping method
-		if (isset($order_info['shipping_method'])) {
+		if (!empty($order_info['shipping_method'])) {
 			$data['shipping_method_name'] = $order_info['shipping_method']['name'];
 			$data['shipping_method_code'] = $order_info['shipping_method']['code'];
 			$data['shipping_method_cost'] = $order_info['shipping_method']['cost'];

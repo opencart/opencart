@@ -12,9 +12,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/menu');
 
-		// Menu
 		$this->load->model('catalog/category');
-
 		$this->load->model('catalog/product');
 
 		$data['categories'] = [];

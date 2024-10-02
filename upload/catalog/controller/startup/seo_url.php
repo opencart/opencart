@@ -98,12 +98,14 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$value = '';
 			}
 
-			if (!isset($this->data[$key])) {
-				$this->data[$key] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
+			$index = $key . '=' . $value;
+
+			if (!isset($this->data[$index])) {
+				$this->data[$index] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
 			}
 
-			if ($this->data[$key]) {
-				$paths[] = $this->data[$key];
+			if ($this->data[$index]) {
+				$paths[] = $this->data[$index];
 
 				unset($query[$key]);
 			}

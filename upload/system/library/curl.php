@@ -6,40 +6,20 @@ namespace Opencart\System\Library\Cart;
  * @package Opencart\System\Library\Cart
  */
 class Curl {
-	private string $domain = '';
+	private string $url = '';
 	private array $option = [];
 
 	public function __construct(string $url) {
-		$this->domain = $url;
+		$this->url = $url;
 	}
 
 	public function setOption(string $key, array $data = []) {
 		$this->option[$key] = $data;
 	}
 
-
 	public function send(string $route, $data = []) {
-		$time = time();
-
-		// Build hash string
-		$string  = $route . "\n";
-		$string .= $this->username . "\n";
-		$string .= $this->domain . "\n";
-		$string .= $this->path . "\n";
-		$string .= $this->store_id . "\n";
-		$string .= $this->language . "\n";
-		$string .= md5(http_build_query($data)) . "\n";
-		$string .= $time . "\n";
-
-		$signature = base64_encode(hash_hmac('sha1', $string, $this->key, true));
-
 		// Make remote call
 		$url  = 'http://' . $this->domain . $this->path . 'index.php?route=' . $route;
-		$url .= '&username=' . urlencode($this->username);
-		$url .= '&store_id=' . $this->store_id;
-		$url .= '&language=' . $this->language;
-		$url .= '&time=' . $time;
-		$url .= '&signature=' . rawurlencode($signature);
 
 		$curl = curl_init();
 

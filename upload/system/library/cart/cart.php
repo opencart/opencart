@@ -312,18 +312,28 @@ class Cart {
 						];
 					}
 
+
+
+					$product_data = [
+						'name'   => $product_query->row['name'],
+						'model'  => $product_query->row['model'],
+						'price'  => $price,
+						'reward' => $reward * $cart['quantity'],
+					];
+
 					if ($cart['override']) {
-						$price = $cart['price'];
-					} else {
-						$price += $option_price;
+						$override = $cart['override'];
+
+						foreach ($override as $key => $value) {
+							$this->data[$cart['cart_id']][$key] = $value;
+						}
 					}
 
 					$this->data[$cart['cart_id']] = [
 						'cart_id'         => $cart['cart_id'],
 						'product_id'      => $product_query->row['product_id'],
 						'master_id'       => $product_query->row['master_id'],
-						'name'            => $product_query->row['name'],
-						'model'           => $product_query->row['model'],
+
 						'shipping'        => $product_query->row['shipping'],
 						'image'           => $product_query->row['image'],
 						'option'          => $option_data,
@@ -336,7 +346,7 @@ class Cart {
 						'stock'           => $stock,
 						'price'           => $price,
 						'total'           => $price * $cart['quantity'],
-						'reward'          => $reward * $cart['quantity'],
+
 						'points'          => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
 						'tax_class_id'    => $product_query->row['tax_class_id'],
 						'weight'          => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
@@ -367,11 +377,11 @@ class Cart {
 	 *
 	 * @return void
 	 */
-	public function add(int $product_id, int $quantity = 1, array $option = [], int $subscription_plan_id = 0, bool $override = false, float $price = 0): void {
+	public function add(int $product_id, int $quantity = 1, array $option = [], int $subscription_plan_id = 0, array $override = []): void {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cart` WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 
 		if (!$query->row['total']) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "cart` SET `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `session_id` = '" . $this->db->escape($this->session->getId()) . "', `product_id` = '" . (int)$product_id . "', `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', `quantity` = '" . (int)$quantity . "', `override` = '" . (bool)$override . "', `price` = '" . (float)($override ? $price : 0) . "', `date_added` = NOW()");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "cart` SET `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `session_id` = '" . $this->db->escape($this->session->getId()) . "', `product_id` = '" . (int)$product_id . "', `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', `quantity` = '" . (int)$quantity . "', `override` = '" . $this->db->escape(json_encode($override)) . "', `date_added` = NOW()");
 		} else {
 			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = (`quantity` + " . (int)$quantity . ") WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 		}

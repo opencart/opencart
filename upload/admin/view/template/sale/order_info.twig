@@ -120,7 +120,15 @@
                         <br/>
                         <small> - {{ text_subscription }}: <a href="{{ order_product.subscription }}" target="_blank">{{ order_product.subscription_description }}</a></small>
                       {% endif %}
+
                       <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][name]" value="{{ order_product.name }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][model]" value="{{ order_product.model }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][price]" value="{{ order_product.price }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][total]" value="{{ order_product.total }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][tax]" value="{{ order_product.tax }}"/>
+                      <input type="hidden" name="product[{{ order_product_row }}][reward]" value="{{ order_product.reward }}"/>
+
                       <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
                       {% for option in order_product.option %}
                         {% if option.type == 'select' or option.type == 'radio' %}
@@ -2441,7 +2449,7 @@ function cart_render(products, totals, shipping_required) {
         for (i in products) {
             product = products[i];
 
-            html += '<tr>';
+            html += '<tr' + (product['error'] ? ' class="table-danger"' : '') + '>';
             html += '  <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
 
             for (j = 0; j < product['option'].length; j++) {
@@ -2475,6 +2483,14 @@ function cart_render(products, totals, shipping_required) {
 
                 if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
                     html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '"/>';
+                }
+            }
+
+            for (j = 0; j < product['error'].length; j++) {
+                error = product['error'][j];
+
+                if (option['type'] == 'select' || option['type'] == 'radio') {
+                    html += error;
                 }
             }
 

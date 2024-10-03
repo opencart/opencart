@@ -922,7 +922,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Shipping Address
 		if (!empty($order_info)) {
 			$data['shipping_address_id'] = $order_info['shipping_address_id'];
-			$data['shipping_address_id'] = $order_info['shipping_address_id'];
 		} else {
 			$data['shipping_address_id'] = 0;
 		}

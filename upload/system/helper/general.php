@@ -90,3 +90,9 @@ if (!function_exists('str_ends_with')) {
 		return substr($string, -strlen($find)) === $find;
 	}
 }
+
+if (!function_exists('str_contains')) {
+	function str_contains(string $string, string $find): bool {
+		return $find === '' || strpos($string, $find) !== false;
+	}
+}

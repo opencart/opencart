@@ -298,32 +298,40 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_id` = '" . (int)$product_option['product_option_id'] . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `ov`.`sort_order`");
 
 			foreach ($product_option_value_query->rows as $product_option_value) {
-				$product_option_value_data[] = [
-					'product_option_value_id' => $product_option_value['product_option_value_id'],
-					'option_value_id'         => $product_option_value['option_value_id'],
-					'name'                    => $product_option_value['name'],
-					'image'                   => $product_option_value['image'],
-					'quantity'                => $product_option_value['quantity'],
-					'subtract'                => $product_option_value['subtract'],
-					'price'                   => $product_option_value['price'],
-					'price_prefix'            => $product_option_value['price_prefix'],
-					'weight'                  => $product_option_value['weight'],
-					'weight_prefix'           => $product_option_value['weight_prefix']
-				];
+				$product_option_value_data[] = $product_option_value;
 			}
 
-			$product_option_data[] = [
-				'product_option_id'    => $product_option['product_option_id'],
-				'product_option_value' => $product_option_value_data,
-				'option_id'            => $product_option['option_id'],
-				'name'                 => $product_option['name'],
-				'type'                 => $product_option['type'],
-				'value'                => $product_option['value'],
-				'required'             => $product_option['required']
-			];
+			$product_option_data[] = $product_option + ['product_option_value' => $product_option_value_data];
 		}
 
 		return $product_option_data;
+	}
+
+	/**
+	 * Get Option
+	 *
+	 * @param int $product_id
+	 * @param int $product_option_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getOption(int $product_id, int $product_option_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` WHERE `product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "'");
+
+		return $query->row;
+	}
+	/**
+	 * Get Option Value
+	 *
+	 * @param int $product_id
+	 * @param int $product_option_value_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getOptionValue(int $product_id, int $product_option_value_id): array {
+		$query = $this->db->query("SELECT `pov`.`option_value_id`, `ovd`.`name`, `pov`.`quantity`, `pov`.`subtract`, `pov`.`price`, `pov`.`price_prefix`, `pov`.`points`, `pov`.`points_prefix`, `pov`.`weight`, `pov`.`weight_prefix` FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
 	}
 
 	/**

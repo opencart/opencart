@@ -1118,14 +1118,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_description_data[$result['language_id']] = [
-				'name'             => $result['name'],
-				'description'      => $result['description'],
-				'meta_title'       => $result['meta_title'],
-				'meta_description' => $result['meta_description'],
-				'meta_keyword'     => $result['meta_keyword'],
-				'tag'              => $result['tag']
-			];
+			$product_description_data[$result['language_id']] = $result;
 		}
 
 		return $product_description_data;

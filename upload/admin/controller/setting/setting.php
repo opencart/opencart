@@ -240,6 +240,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_order_status_id'] = $this->config->get('config_order_status_id');
 		$data['config_processing_status'] = (array)$this->config->get('config_processing_status');
 		$data['config_complete_status'] = (array)$this->config->get('config_complete_status');
+		$data['config_void_status_id'] = $this->config->get('config_void_status_id');
 		$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
 
 		// Subscription

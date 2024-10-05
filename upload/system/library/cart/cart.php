@@ -312,20 +312,25 @@ class Cart {
 						];
 					}
 
-
-
-					$product_data = [
+					$default = [
 						'name'   => $product_query->row['name'],
 						'model'  => $product_query->row['model'],
 						'price'  => $price,
-						'reward' => $reward * $cart['quantity'],
+						'reward' => $reward
 					];
 
+					// Use with order editor and subscriptions
 					if ($cart['override']) {
-						$override = $cart['override'];
+						$override = json_decode($cart['override']);
+					} else {
+						$override = [];
+					}
 
-						foreach ($override as $key => $value) {
-							$this->data[$cart['cart_id']][$key] = $value;
+					foreach ($default as $key => $value) {
+						if (isset($override[$key])) {
+							${$key} = $override[$key];
+						} else {
+							${$key} = $value;
 						}
 					}
 
@@ -333,7 +338,8 @@ class Cart {
 						'cart_id'         => $cart['cart_id'],
 						'product_id'      => $product_query->row['product_id'],
 						'master_id'       => $product_query->row['master_id'],
-
+						'name'            => $name,
+						'model'           => $model,
 						'shipping'        => $product_query->row['shipping'],
 						'image'           => $product_query->row['image'],
 						'option'          => $option_data,
@@ -346,7 +352,7 @@ class Cart {
 						'stock'           => $stock,
 						'price'           => $price,
 						'total'           => $price * $cart['quantity'],
-
+						'reward'          => $reward * $cart['quantity'],
 						'points'          => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
 						'tax_class_id'    => $product_query->row['tax_class_id'],
 						'weight'          => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],

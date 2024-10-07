@@ -284,7 +284,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
 
 			if ($subscriptions && !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id'))) {
-				$json['error']['subscription_' . $key] = $this->language->get('error_subscription');
+				$json['error']['subscription'] = $this->language->get('error_subscription');
 			}
 		} else {
 			$json['error']['warning'] = $this->language->get('error_product');

@@ -27,7 +27,7 @@ function oc_get_ip(): string {
 /**
  * @param string $string
  *
- * @return string
+ * @return int
  */
 function oc_strlen(string $string): int {
 	return mb_strlen($string);

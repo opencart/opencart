@@ -9,7 +9,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(): array {
 		$this->load->language('extension/opencart/api/coupon');

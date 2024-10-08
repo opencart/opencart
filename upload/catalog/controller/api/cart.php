@@ -99,7 +99,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 *
 	 * Add any single product
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function addProduct(): array {
 		$this->load->language('api/cart');

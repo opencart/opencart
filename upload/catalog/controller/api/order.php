@@ -9,7 +9,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Confirm
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(): array {
 		$this->load->language('api/order');
@@ -377,7 +377,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add History
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function addHistory(): array {
 		$this->load->language('api/order');

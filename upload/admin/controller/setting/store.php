@@ -470,7 +470,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_icon'] = '';
 		}
-		
+
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
 		if ($data['config_icon'] && is_file(DIR_IMAGE . html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'))) {

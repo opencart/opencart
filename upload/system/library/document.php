@@ -184,13 +184,13 @@ class Document {
 	 *
 	 * @return void
 	 */
-	public function addMeta(string $meta) {
+	public function addMeta(string $meta): void {
 		$this->meta[$meta] = $meta;
 	}
-	
+
 	/**
 	 * Get Meta
-  	 *
+	 *
 	 * @return array<string, string>
 	 */
 	public function getMeta() {

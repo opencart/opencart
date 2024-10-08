@@ -35,11 +35,11 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int $api_id
+	 * @param int    $api_id
 	 * @param string $call
 	 * @param string $ip
 	 */
-	public function addHistory($api_id, $call, $ip) {
+	public function addHistory($api_id, $call, $ip): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_history` SET `api_id` = '" . (int)$api_id . "', `call` = '" . $this->db->escape($call) . "', `ip` = '" . $this->db->escape($ip) . "', `date_added` = NOW()");
 	}
 }

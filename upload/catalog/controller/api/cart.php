@@ -54,7 +54,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				foreach ($option as $product_option_id => $value) {
 					$product_option_info = $this->model_catalog_product->getOption($product['product_id'], $product_option_id);
 
-
 					print_r($value);
 
 					if ($product_option_info) {
@@ -270,8 +269,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'subscription_plan_id' => $product['subscription_plan_id'],
 				'subscription'         => $description,
 
-
-				'error'                => $product['error']
+				'error' => $product['error']
 			];
 		}
 

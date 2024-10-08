@@ -4,7 +4,7 @@ namespace Opencart\Catalog\Controller\Account;
  * Class Account
  *
  * @package Opencart\Catalog\Controller\Account
- */ 
+ */
 class Account extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
@@ -71,12 +71,12 @@ class Account extends \Opencart\System\Engine\Controller {
 				$data['tracking'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 			} else {
 				$data['tracking'] = '';
-			}  
+			}
 		} else {
-			$data['affiliate'] = '';  
-		} 
+			$data['affiliate'] = '';
+		}
 
-	    $data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');

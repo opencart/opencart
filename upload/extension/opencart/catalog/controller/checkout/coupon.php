@@ -77,7 +77,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('extension/opencart/checkout/coupon');
 
 		$json = [];

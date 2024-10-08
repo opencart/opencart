@@ -2020,6 +2020,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_order_status_id', '1', 0),
 (0, 'config', 'config_processing_status', '["5","1","2","12","3"]', 1),
 (0, 'config', 'config_complete_status', '["5","3"]', 1),
+(0, 'config', 'config_void_status_id', '16', 0),
 (0, 'config', 'config_fraud_status_id', '8', 0),
 (0, 'config', 'config_subscription_status_id', '1', 0),
 (0, 'config', 'config_subscription_active_status_id', '2', 0),

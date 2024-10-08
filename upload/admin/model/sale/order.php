@@ -49,8 +49,6 @@ class Order extends \Opencart\System\Engine\Model {
 				$shipping_iso_code_3 = '';
 			}
 
-			$this->load->model('localisation/zone');
-
 			$zone_info = $this->model_localisation_zone->getZone($order_query->row['shipping_zone_id']);
 
 			if ($zone_info) {

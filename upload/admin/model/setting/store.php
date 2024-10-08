@@ -20,7 +20,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Layout Route
 		$this->load->model('design/layout');
-
+-
 		$results = $this->model_design_layout->getRoutesByStoreId(0);
 
 		foreach ($results as $result) {

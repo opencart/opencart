@@ -799,8 +799,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				'subscription'             => $subscription,
 				'subscription_description' => $description,
 				'quantity'                 => $product['quantity'],
-				'price'                    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
-				'total'                    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
+				'price_text'               => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
+				'price'                    => $product['price'],
+				'total_text'               => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
+				'total'                    => $product['total'],
 				'reward'                   => $product['reward']
 			];
 		}
@@ -921,7 +923,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Shipping Address
 		if (!empty($order_info)) {
-			$data['shipping_address_id'] = $order_info['shipping_address_id'];
 			$data['shipping_address_id'] = $order_info['shipping_address_id'];
 		} else {
 			$data['shipping_address_id'] = 0;
@@ -1100,6 +1101,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['order_status_id'] = $this->config->get('config_order_status_id');
 		}
+
+		$data['complete_status'] = in_array($data['order_status_id'], $this->config->get('config_complete_status'));
+
 
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];

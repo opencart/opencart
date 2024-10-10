@@ -93,13 +93,15 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['customer'] = [
 				'customer_id'       => $this->request->post['customer_id'],
-				'customer_group_id' => $this->request->post['customer_group_id'],
+				'customer_group_id' => $customer_group_id,
 				'firstname'         => $this->request->post['firstname'],
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
 				'telephone'         => $this->request->post['telephone'],
 				'custom_field'      => $this->request->post['custom_field'] ?? []
 			];
+
+			$this->config->set('config_customer_group_id', $customer_group_id);
 
 			$output['success'] = $this->language->get('text_success');
 		}

@@ -474,15 +474,25 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = '';
 		}
 
+		if (!empty($customer_info)) {
+			$data['customer_group_id'] = $customer_info['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
+		}
+
 		// Subscription
 		$data['subscription_plans'] = [];
 
 		$this->load->model('catalog/subscription_plan');
+		$this->load->model('catalog/product');
 
 		$results = $this->model_catalog_subscription_plan->getSubscriptionPlans();
 
 		foreach ($results as $result) {
 			$description = '';
+
+			$product_info = $this->model_catalog_product->getSubscription($subscription_info['product_id'], $subscription_plan_id, $data['customer_group_id']);
+
 
 			if ($result['trial_status']) {
 				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
@@ -661,6 +671,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Product data
 		if (!empty($subscription_info)) {
 			$this->load->model('account/order');
+
 			$product_info = $this->model_account_order->getProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
 
@@ -789,9 +800,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
 
 		if ($subscription_info) {
-			$this->load->model('sale/subscription');
+			$filter_data = [
+				'filter_customer_id'         => $subscription_info['customer_id'],
+				'filter_customer_payment_id' => $this->request->post['customer_payment_id']
+			];
 
-			$payment_method_info = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $subscription_info['customer_id'], 'filter_customer_payment_id' => $this->request->post['customer_payment_id']]);
+			$payment_method_info = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 			if (!$payment_method_info) {
 				$json['error'] = $this->language->get('error_payment_method');

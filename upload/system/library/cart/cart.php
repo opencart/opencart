@@ -73,11 +73,13 @@ class Cart {
 			$cart_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "cart` WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
 			foreach ($cart_query->rows as $cart) {
-				$stock = true;
+				$stock_status = true;
 
 				$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p2s`.`product_id` = '" . (int)$cart['product_id'] . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `p`.`date_available` <= NOW() AND `p`.`status` = '1'");
 
 				if ($product_query->num_rows && ($cart['quantity'] > 0)) {
+					$stock = $product_query->row['quantity'];
+
 					$option_price = 0;
 					$option_points = 0;
 					$option_weight = 0;
@@ -128,7 +130,7 @@ class Cart {
 									}
 
 									if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $cart['quantity']))) {
-										$stock = false;
+										$stock_status = false;
 									}
 
 									$option_data[] = [
@@ -173,7 +175,7 @@ class Cart {
 										}
 
 										if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $cart['quantity']))) {
-											$stock = false;
+											$stock_status = false;
 										}
 
 										$option_data[] = [
@@ -251,7 +253,7 @@ class Cart {
 
 					// Stock
 					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $product_total)) {
-						$stock = false;
+						$stock_status = false;
 					}
 
 					// Minimum quantity
@@ -350,6 +352,7 @@ class Cart {
 						'minimum_status'  => $minimum,
 						'subtract'        => $product_query->row['subtract'],
 						'stock'           => $stock,
+						'stock_status'    => $stock_status,
 						'price'           => $price,
 						'total'           => $price * $cart['quantity'],
 						'reward'          => $reward * $cart['quantity'],

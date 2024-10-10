@@ -104,33 +104,33 @@
                 {% for order_product in order_products %}
                   <tr class="bg-danger">
                     <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
+                      <div id="error-product-{{ order_product_row }}" class="invalid-feedback"></div>
                       {% for option in order_product.option %}
                         <br/>
                         {% if option.type != 'file' %}
                           <small> - {{ option.name }}: {{ option.value }}</small>
                         {% else %}
                           <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                          <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         {% endif %}
                       {% endfor %}
+
                       {% if order_product.reward %}
                         <br/>
                         <small> - {{ text_points }}: {{ order_product.reward }}</small>
                       {% endif %}
+
                       {% if order_product.subscription %}
                         <br/>
                         <small> - {{ text_subscription }}: <a href="{{ order_product.subscription }}" target="_blank">{{ order_product.subscription_description }}</a></small>
+                        <div id="error-product-{{ order_product_row }}-subscription" class="invalid-feedback"></div>
                       {% endif %}
 
                       <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][name]" value="{{ order_product.name }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][model]" value="{{ order_product.model }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][price]" value="{{ order_product.price }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][total]" value="{{ order_product.total }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][tax]" value="{{ order_product.tax }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][reward]" value="{{ order_product.reward }}"/>
-
                       <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
+
                       {% for option in order_product.option %}
+
                         {% if option.type == 'select' or option.type == 'radio' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
                         {% endif %}
@@ -140,13 +140,15 @@
                         {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
                         {% endif %}
+
                       {% endfor %}
+
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
                     <td class="text-start">{{ order_product.model }}</td>
                     <td class="text-end">{{ order_product.quantity }}</td>
-                    <td class="text-end">{{ order_product.price }}</td>
-                    <td class="text-end">{{ order_product.total }}</td>
+                    <td class="text-end">{{ order_product.price_text }}</td>
+                    <td class="text-end">{{ order_product.total_text }}</td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set order_product_row = order_product_row + 1 %}
@@ -1390,14 +1392,13 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'checkbox') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label class="form-label">' + option['name'] + '</label>';
-
                     html += '  <div id="input-option-' + option['product_option_id'] + '" class="form-control">';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
 
                         html += '<div class="form-check">';
-                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/> ';
+                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/>';
                         html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">' + option_value['name'];
 
                         if (option_value['price']) {
@@ -1498,6 +1499,8 @@ $('#input-product').autocomplete({
         }
 
         if (item['subscription'] != '') {
+            subscription_data = item['subscription'];
+
             html = '<fieldset class="mb-0">';
             html += '  <legend>{{ entry_subscription|escape('js') }}</legend>';
             html += '  <div class="mb-3 required">';
@@ -1505,13 +1508,15 @@ $('#input-product').autocomplete({
             html += '      <option value="">{{ text_select|escape('js') }}</option>';
 
             for (i = 0; i < item['subscription'].length; i++) {
-                html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
+                if (item['subscription'][i]['customer_group_id'] == $('#input-customer-group').val()) {
+                    html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
+                }
             }
 
             html += '  </select>';
 
             for (i = 0; i < item['subscription'].length; i++) {
-                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '" class="form-text subscription d-none">' + item['subscription'][i]['description'] + '</div>';
+                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '-' + item['subscription'][i]['customer_group_id'] + '" class="form-text subscription-description d-none">' + item['subscription'][i]['description'] + '</div>';
             }
 
             html += '    <div id="error-subscription" class="invalid-feedback"></div>';
@@ -1523,6 +1528,31 @@ $('#input-product').autocomplete({
             $('#subscription').html('');
         }
     }
+});
+
+$('#form-product-add').on('change', '#input-subscription-plan', function(e) {
+    var element = this;
+
+    $('.subscription-description').addClass('d-none');
+
+    $('#subscription-description-' + $(element).val() + '-' + $('#input-customer-group').val()).removeClass('d-none');
+});
+
+$('#input-customer-group').on('change', function(e) {
+    if (subscription_data) {
+        html = '';
+
+        for (i = 0; i < subscription_data.length; i++) {
+            if (subscription_data[i]['customer_group_id'] == this.value) {
+                html += '<option value="' + subscription_data[i]['subscription_plan_id'] + '">' + subscription_data[i]['name'] + '</option>';
+            }
+        }
+
+        $('#input-subscription-plan').html(html);
+    }
+
+    // Change subscription description
+    $('#input-subscription-plan').trigger('click');
 });
 
 var products = [];
@@ -2346,9 +2376,6 @@ $('#form-comment').on('submit', function(e) {
     $('#comment-value').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 });
 
-// Refresh all products and totals
-var order_product_row = {{ order_product_row }};
-
 $('#button-refresh').on('click', function() {
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
@@ -2444,6 +2471,9 @@ $('#button-confirm').on('click', function() {
     });
 });
 
+// Refresh all products and totals
+var order_product_row = {{ order_product_row }};
+
 function cart_render(products, totals, shipping_required) {
     html = '';
 
@@ -2453,10 +2483,12 @@ function cart_render(products, totals, shipping_required) {
 
             html += '<tr' + (product['error'] ? ' class="table-danger"' : '') + '>';
             html += '  <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
+            html += '    <div id="error-product-' + order_product_row + '-" class="invalid-feedback"></div>';
 
             for (j = 0; j < product['option'].length; j++) {
                 html += '<br/>';
                 html += '  - <small>' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small>';
+                html += '    <div id="error-product-' + order_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
             }
 
             if (product['reward']) {
@@ -2467,21 +2499,18 @@ function cart_render(products, totals, shipping_required) {
             if (product['subscription']) {
                 html += '<br/>';
                 html += '  - <small>{{ text_subscription|escape('js') }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id=' + product['subscription_id'] + '" target="_blank">' + product['subscription'] + '</small>';
+
+                if (product['subscription']['error']) {
+                    html += '  - <small>{{ text_subscription|escape('js') }}: ' + product['subscription'] + '</small>';
+                    html += '    <div id="error-product-' + order_product_row + '-subscription" class="invalid-feedback"></div>';
+                }
             }
 
             html += '<input type="hidden" name="product[' + order_product_row + '][product_id]" value="' + product['product_id'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][name]" value="' + product['name'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][model]" value="' + product['model'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][price]" value="' + product['price'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][total]" value="' + product['total'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][tax]" value="' + product['tax'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][reward]" value="' + product['reward'] + '"/>';
             html += '<input type="hidden" name="product[' + order_product_row + '][quantity]" value="' + product['quantity'] + '"/>';
 
             for (j = 0; j < product['option'].length; j++) {
                 option = product['option'][j];
-
-                html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + '][name]" value="' + option['name'] + '"/>';
 
                 if (option['type'] == 'select' || option['type'] == 'radio') {
                     html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '"/>';
@@ -2496,24 +2525,7 @@ function cart_render(products, totals, shipping_required) {
                 }
             }
 
-            // 'product_option_id'       => $option['product_option_id'],
-            // 'product_option_value_id' => $option['product_option_value_id'],
-            // 'name'                    => $option['name'],
-            // 'value'                   => $upload_info['name'],
-            // 'type'                    => $option['type']
-
-           for (j = 0; j < product['error'].length; j++) {
-               error = product['error'][j];
-
-               html += error;
-            }
-
-
-
-
-
-            html += '  <input type="hidden" name="product[' + order_product_row + '][subscription][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
-
+            html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
             html += '  <td class="text-start">' + product['model'] + '</td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';

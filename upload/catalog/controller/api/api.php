@@ -122,7 +122,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function setShippingMethod(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/payment_address');
 
@@ -167,7 +173,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function setPaymentMethod(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
@@ -182,6 +194,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
+		$output['error'] = $this->controller_api_cart->getErrors();
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
 		$output['shipping_required'] = $this->cart->hasShipping();
@@ -196,7 +209,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function getCart(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
@@ -225,7 +244,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function addProduct(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
@@ -251,7 +276,13 @@ class Api extends \Opencart\System\Engine\Controller {
 
 	protected function extension(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
@@ -301,7 +332,14 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function confirm(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		// Validate cart has products and has stock.
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');

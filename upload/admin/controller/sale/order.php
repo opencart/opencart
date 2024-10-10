@@ -756,11 +756,11 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$description = '';
-
 			$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
+				$description = '';
+
 				if ($subscription_info['trial_status']) {
 					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
 					$trial_cycle = $subscription_info['trial_cycle'];
@@ -780,30 +780,35 @@ class Order extends \Opencart\System\Engine\Controller {
 				} else {
 					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
+
+				$subscription_info['description'] = $description;
 			}
 
 			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
-				$subscription = $this->url->link('sale/subscription.info', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
+				$subscription_plan_id = $subscription_info['subscription_plan_id'];
+				$subscription_edit = $this->url->link('sale/subscription.info', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
 			} else {
-				$subscription = '';
+				$subscription_plan_id = 0;
+				$subscription_edit = '';
 			}
 
 			$data['order_products'][] = [
-				'order_product_id'         => $product['order_product_id'],
-				'product_id'               => $product['product_id'],
-				'name'                     => $product['name'],
-				'model'                    => $product['model'],
-				'option'                   => $option_data,
-				'subscription'             => $subscription,
-				'subscription_description' => $description,
-				'quantity'                 => $product['quantity'],
-				'price_text'               => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
-				'price'                    => $product['price'],
-				'total_text'               => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
-				'total'                    => $product['total'],
-				'reward'                   => $product['reward']
+				'order_product_id'     => $product['order_product_id'],
+				'product_id'           => $product['product_id'],
+				'name'                 => $product['name'],
+				'model'                => $product['model'],
+				'option'               => $option_data,
+				'subscription'         => $subscription_info,
+				'subscription_plan_id' => $subscription_plan_id,
+				'subscription_edit'    => $subscription_edit,
+				'quantity'             => $product['quantity'],
+				'price_text'           => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
+				'price'                => $product['price'],
+				'total_text'           => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
+				'total'                => $product['total'],
+				'reward'               => $product['reward']
 			];
 		}
 

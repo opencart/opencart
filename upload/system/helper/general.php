@@ -27,7 +27,7 @@ function oc_get_ip(): string {
 /**
  * @param string $string
  *
- * @return string
+ * @return int
  */
 function oc_strlen(string $string): int {
 	return mb_strlen($string);
@@ -88,5 +88,11 @@ if (!function_exists('str_starts_with')) {
 if (!function_exists('str_ends_with')) {
 	function str_ends_with(string $string, string $find): bool {
 		return substr($string, -strlen($find)) === $find;
+	}
+}
+
+if (!function_exists('str_contains')) {
+	function str_contains(string $string, string $find): bool {
+		return $find === '' || strpos($string, $find) !== false;
 	}
 }

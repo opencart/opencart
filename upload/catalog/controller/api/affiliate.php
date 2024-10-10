@@ -7,7 +7,7 @@ namespace Opencart\catalog\controller\api;
  */
 class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return void
+	 * @return array
 	 */
 	public function index(): array {
 		$this->load->language('api/affiliate');

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'opencart/opencart',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '0770f8b2df1d89f631f5b6eab1ec0f63497be922',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
@@ -65,9 +65,9 @@
             'dev_requirement' => false,
         ),
         'opencart/opencart' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '0770f8b2df1d89f631f5b6eab1ec0f63497be922',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
@@ -137,9 +137,9 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v3.5.0',
-            'version' => '3.5.0.0',
-            'reference' => '0e0d29ce1f20deffb4ab1b016a7257c4f1e789a1',
+            'pretty_version' => 'v2.5.3',
+            'version' => '2.5.3.0',
+            'reference' => '80d075412b557d41002320b96a096ca65aa2c98d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
             'aliases' => array(),

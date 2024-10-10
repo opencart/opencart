@@ -123,7 +123,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 							$value = '';
 						}
 					}
-					
+
 					$product['option'][$key]['value'] = (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value);
 				}
 			}

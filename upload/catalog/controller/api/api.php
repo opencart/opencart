@@ -110,9 +110,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
-		$output = $this->load->controller('api/shipping_method.getShippingMethods');
-
-		return $output;
+		return $this->load->controller('api/shipping_method.getShippingMethods');
 	}
 
 	/**
@@ -161,9 +159,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
 
-		$output = $this->load->controller('api/payment_method.getPaymentMethods');
-
-		return $output;
+		return $this->load->controller('api/payment_method.getPaymentMethods');
 	}
 
 	/**

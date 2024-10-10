@@ -1109,7 +1109,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['complete_status'] = in_array($data['order_status_id'], $this->config->get('config_complete_status'));
 
-
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
 

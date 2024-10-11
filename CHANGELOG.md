@@ -77,7 +77,7 @@ https://github.com/opencart/opencart/releases/tag/3.0.3.3
 
 ## [3.0.3.2] (Release date: 09.04.2019)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.3
+https://github.com/opencart/opencart/releases/tag/3.0.3.2
 
 ## [3.0.3.1] (Release date: 07.01.2019)[UPGRADE.md](UPGRADE.md)
 

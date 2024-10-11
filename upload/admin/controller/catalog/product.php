@@ -1477,6 +1477,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function autocomplete(): void {
+		$this->load->language('catalog/product');
+
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
@@ -1555,9 +1557,33 @@ class Product extends \Opencart\System\Engine\Controller {
 				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
+					$description = '';
+
+					if ($subscription_plan_info['trial_status']) {
+						$trial_price = $this->currency->format($product_subscription['trial_price'], $this->config->get('config_currency'));
+						$trial_cycle = $subscription_plan_info['trial_cycle'];
+						$trial_frequency = $this->language->get('text_' . $subscription_plan_info['trial_frequency']);
+						$trial_duration = $subscription_plan_info['trial_duration'];
+
+						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					}
+
+					$price = $this->currency->format($product_subscription['price'], $this->config->get('config_currency'));
+					$cycle = $subscription_plan_info['cycle'];
+					$frequency = $this->language->get('text_' . $subscription_plan_info['frequency']);
+					$duration = $subscription_plan_info['duration'];
+
+					if ($subscription_plan_info['duration']) {
+						$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					} else {
+						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					}
+
 					$subscription_plan_data[] = [
 						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
-						'name'                 => $subscription_plan_info['name']
+						'customer_group_id'    => $product_subscription['customer_group_id'],
+						'name'                 => $subscription_plan_info['name'],
+						'description'          => $description
 					];
 				}
 			}

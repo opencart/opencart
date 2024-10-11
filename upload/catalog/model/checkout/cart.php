@@ -17,6 +17,13 @@ class Cart extends \Opencart\System\Engine\Model {
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$price_status = true;
+		} else {
+			$price_status = false;
+		}
+
 		// Products
 		$product_data = [];
 
@@ -65,9 +72,37 @@ class Cart extends \Opencart\System\Engine\Model {
 				];
 			}
 
+			if ($product['subscription']) {
+				$description = '';
+
+				if ($product['subscription']['trial_status']) {
+					$trial_price = $this->currency->format($this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$trial_cycle = $product['subscription']['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $product['subscription']['trial_frequency']);
+					$trial_duration = $product['subscription']['trial_duration'];
+
+					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
+
+				$price = $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$cycle = $product['subscription']['cycle'];
+				$frequency = $this->language->get('text_' . $product['subscription']['frequency']);
+				$duration = $product['subscription']['duration'];
+
+				if ($duration) {
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+				} else {
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+				}
+
+				$product['subscription']['description'] = $description;
+			}
+
 			$product_data[] = [
-				'image'  => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
-				'option' => $option_data
+				'image'      => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
+				'option'     => $option_data,
+				'price_text' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total_text' => $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
 			] + $product;
 		}
 

@@ -297,7 +297,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		return $query->row;
 	}
-	
+
 	/**
 	 * Get Totals
 	 *
@@ -314,7 +314,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals By Code
 	 *
-	 * @param int $order_id
+	 * @param int   $order_id
+	 * @param mixed $code
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

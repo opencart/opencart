@@ -13,7 +13,7 @@ class Curl {
 		$this->url = $url;
 	}
 
-	public function setOption(string $key, array $data = []) {
+	public function setOption(string $key, array $data = []): void {
 		$this->option[$key] = $data;
 	}
 

@@ -114,7 +114,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * @return bool
+	 * @return void
 	 */
 	public function save(): void {
 		$this->load->language('install/step_2');

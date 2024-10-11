@@ -1982,6 +1982,19 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription
+	 *
+	 * @param int $product_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getSubscription(int $product_id, int $subscription_plan_id, int $customer_group_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `customer_group_id` = '" . (int)$customer_group_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Subscriptions
 	 *
 	 * @param int $product_id

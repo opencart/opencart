@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Api;
  */
 class Coupon extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return void
+	 * @return string
 	 */
 	public function index(): string {
 		$this->load->language('extension/opencart/api/coupon');

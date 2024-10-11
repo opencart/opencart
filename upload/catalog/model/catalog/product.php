@@ -320,6 +320,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		return $query->row;
 	}
+
 	/**
 	 * Get Option Value
 	 *

@@ -190,7 +190,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
-		$output['error'] = $this->controller_api_cart->getErrors();
 		$output['products'] = $this->controller_api_cart->getProducts();
 		$output['totals'] = $this->controller_api_cart->getTotals();
 		$output['shipping_required'] = $this->cart->hasShipping();

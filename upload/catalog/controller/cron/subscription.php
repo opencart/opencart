@@ -266,20 +266,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					foreach ($products as $product) {
 						$order_data['products'][] = [
-							'product_id'   => $product['product_id'],
-							'master_id'    => $product['master_id'],
-							'name'         => $product['name'],
-							'model'        => $product['model'],
-							'option'       => $product['option'],
 							'subscription' => [],
-							'download'     => $product['download'],
-							'quantity'     => $product['quantity'],
-							'subtract'     => $product['subtract'],
-							'price'        => $product['price'],
-							'total'        => $product['total'],
-							'tax'          => $this->tax->getTax($price, $product['tax_class_id']),
-							'reward'       => $product['reward']
-						];
+							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
+						] + $product;
 					}
 
 					// Order Totals

@@ -18,8 +18,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('checkout/cart');
 
+		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			$price_status = true;
+		} else {
+			$price_status = false;
 		}
 
 		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($total, $this->session->data['currency']));
@@ -48,26 +53,27 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price_status = true;
-			} else {
-				$price_status = false;
+			$subscription = '';
+
+			if ($product['subscription']) {
+				if ($product['subscription']['trial_status']) {
+					$subscription .= sprintf($this->language->get('text_subscription_trial'), $price_status ?? $product['subscription']['trial_price_text'], $product['subscription']['trial_cycle'], $product['subscription']['trial_frequency'], $product['subscription']['trial_duration']);
+				}
+
+				if ($product['subscription']['duration']) {
+					$subscription .= sprintf($this->language->get('text_subscription_duration'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency'], $product['subscription']['duration']);
+				} else {
+					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency']);
+				}
 			}
 
 			$data['products'][] = [
-				'cart_id'      => $product['cart_id'],
-				'thumb'        => $product['image'],
-				'name'         => $product['name'],
-				'model'        => $product['model'],
-				'option'       => $product['option'],
-				'subscription' => $product['subscription'] ? $product['subscription']['description'] : '',
-				'quantity'     => $product['quantity'],
-				'price'        => $price_status ? $product['price_text'] : '',
-				'total'        => $price_status ? $product['total_text'] : '',
-				'reward'       => $product['reward'],
+				'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
+				'subscription' => $subscription,
+				'price'        => $price_status ?? $product['price_text'],
+				'total'        => $price_status ?? $product['total_text'],
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-			];
+			] + $product;
 		}
 
 		// Totals

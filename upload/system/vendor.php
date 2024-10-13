@@ -70,6 +70,12 @@ if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-php80/bootstrap.php')) {
 	require_once(DIR_STORAGE . 'vendor/symfony/polyfill-php80/bootstrap.php');
 }
 
+// symfony/polyfill-php81
+$autoloader->register('Symfony\Polyfill\Php81', DIR_STORAGE . 'vendor/symfony/polyfill-php81//', true);
+if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-php81/bootstrap.php')) {
+	require_once(DIR_STORAGE . 'vendor/symfony/polyfill-php81/bootstrap.php');
+}
+
 // twig/twig
 $autoloader->register('Twig', DIR_STORAGE . 'vendor/twig/twig/src/', true);
 if (is_file(DIR_STORAGE . 'vendor/twig/twig/src/Resources/core.php')) {

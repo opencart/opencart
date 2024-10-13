@@ -756,18 +756,18 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$subscription = '';
+
 			$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
-				$description = '';
-
 				if ($subscription_info['trial_status']) {
 					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
 					$trial_cycle = $subscription_info['trial_cycle'];
 					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 					$trial_duration = $subscription_info['trial_duration'];
 
-					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					$subscription .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
 				$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
@@ -776,21 +776,21 @@ class Order extends \Opencart\System\Engine\Controller {
 				$duration = $subscription_info['duration'];
 
 				if ($subscription_info['duration']) {
-					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					$subscription .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
 				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
 
-				$subscription_info['description'] = $description;
+				$subscription_plan_id = $subscription_info['subscription_plan_id'];
+			} else {
+				$subscription_plan_id = 0;
 			}
 
 			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
-				$subscription_plan_id = $subscription_info['subscription_plan_id'];
 				$subscription_edit = $this->url->link('sale/subscription.info', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
 			} else {
-				$subscription_plan_id = 0;
 				$subscription_edit = '';
 			}
 
@@ -800,7 +800,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'name'                 => $product['name'],
 				'model'                => $product['model'],
 				'option'               => $option_data,
-				'subscription'         => $subscription_info,
+				'subscription'         => $subscription,
 				'subscription_plan_id' => $subscription_plan_id,
 				'subscription_edit'    => $subscription_edit,
 				'quantity'             => $product['quantity'],

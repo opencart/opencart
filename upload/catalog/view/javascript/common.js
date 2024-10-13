@@ -269,7 +269,7 @@ $(document).on('submit', 'form', function (e) {
 
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<dirv class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></dirv>');
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (key in json['error']) {

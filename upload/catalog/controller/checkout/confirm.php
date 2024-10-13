@@ -252,56 +252,19 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$products = $this->cart->getProducts();
 
 			foreach ($products as $product) {
-				$option_data = [];
-
-				foreach ($product['option'] as $option) {
-					$option_data[] = [
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id'               => $option['option_id'],
-						'option_value_id'         => $option['option_value_id'],
-						'name'                    => $option['name'],
-						'value'                   => $option['value'],
-						'type'                    => $option['type']
-					];
-				}
-
 				$subscription_data = [];
 
 				if ($product['subscription']) {
 					$subscription_data = [
-						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-						'name'                 => $product['subscription']['name'],
-						'trial_price'          => $product['subscription']['trial_price'],
-						'trial_tax'            => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
-						'trial_frequency'      => $product['subscription']['trial_frequency'],
-						'trial_cycle'          => $product['subscription']['trial_cycle'],
-						'trial_duration'       => $product['subscription']['trial_duration'],
-						'trial_remaining'      => $product['subscription']['trial_remaining'],
-						'trial_status'         => $product['subscription']['trial_status'],
-						'price'                => $product['subscription']['price'],
-						'tax'                  => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id']),
-						'frequency'            => $product['subscription']['frequency'],
-						'cycle'                => $product['subscription']['cycle'],
-						'duration'             => $product['subscription']['duration']
-					];
+						'trial_tax' => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
+						'tax'       => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id'])
+					] + $product['subscription'];
 				}
 
 				$order_data['products'][] = [
-					'product_id'   => $product['product_id'],
-					'master_id'    => $product['master_id'],
-					'name'         => $product['name'],
-					'model'        => $product['model'],
-					'option'       => $option_data,
 					'subscription' => $subscription_data,
-					'download'     => $product['download'],
-					'quantity'     => $product['quantity'],
-					'subtract'     => $product['subtract'],
-					'price'        => $product['price'],
-					'total'        => $product['total'],
-					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'       => $product['reward']
-				];
+					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id'])
+				] + $product;
 			}
 
 			if (!$order_id) {
@@ -310,15 +273,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$this->model_checkout_order->editOrder($order_id, $order_data);
 			}
 		}
-
-		// Display prices
-		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$price_status = true;
-		} else {
-			$price_status = false;
-		}
-
-		$this->load->model('tool/upload');
 
 		$data['products'] = [];
 
@@ -332,19 +286,26 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$subscription = '';
+
+			if ($product['subscription']) {
+				if ($product['subscription']['trial_status']) {
+					$subscription .= sprintf($this->language->get('text_subscription_trial'), $price_status ?? $product['subscription']['trial_price_text'], $product['subscription']['trial_cycle'], $product['subscription']['trial_frequency_text'], $product['subscription']['trial_duration']);
+				}
+
+				if ($product['subscription']['duration']) {
+					$subscription .= sprintf($this->language->get('text_subscription_duration'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency_text'], $product['subscription']['duration']);
+				} else {
+					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency_text']);
+				}
+			}
+
 			$data['products'][] = [
-				'cart_id'      => $product['cart_id'],
-				'product_id'   => $product['product_id'],
-				'name'         => $product['name'],
-				'model'        => $product['model'],
-				'option'       => $product['option'],
-				'subscription' => $product['subscription'] ?  $product['subscription']['description'] : '',
-				'quantity'     => $product['quantity'],
-				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
-				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
-				'reward'       => $product['reward'],
+				'subscription' => $subscription,
+				'price'        => $price_status ?? $product['price_text'],
+				'total'        => $price_status ?? $product['total_text'],
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-			];
+			] + $product;
 		}
 
 		$data['totals'] = [];

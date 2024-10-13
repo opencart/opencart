@@ -173,53 +173,22 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Products
 			$order_data['products'] = [];
 
-			foreach ($this->cart->getProducts() as $product) {
-				$option_data = [];
+			$products = $this->cart->getProducts();
 
-				foreach ($product['option'] as $option) {
-					$option_data[] = [
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id'               => $option['option_id'],
-						'option_value_id'         => $option['option_value_id'],
-						'name'                    => $option['name'],
-						'value'                   => $option['value'],
-						'type'                    => $option['type']
-					];
-				}
-
+			foreach ($products as $product) {
 				$subscription_data = [];
 
 				if ($product['subscription']) {
 					$subscription_data = [
-						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-						'name'                 => $product['subscription']['name'],
-						'trial_frequency'      => $product['subscription']['trial_frequency'],
-						'trial_cycle'          => $product['subscription']['trial_cycle'],
-						'trial_duration'       => $product['subscription']['trial_duration'],
-						'trial_remaining'      => $product['subscription']['trial_remaining'],
-						'trial_status'         => $product['subscription']['trial_status'],
-						'frequency'            => $product['subscription']['frequency'],
-						'cycle'                => $product['subscription']['cycle'],
-						'duration'             => $product['subscription']['duration']
-					];
+						'trial_tax' => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
+						'tax'       => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id'])
+					] + $product['subscription'];
 				}
 
 				$order_data['products'][] = [
-					'product_id'   => $product['product_id'],
-					'master_id'    => $product['master_id'],
-					'name'         => $product['name'],
-					'model'        => $product['model'],
-					'option'       => $option_data,
 					'subscription' => $subscription_data,
-					'download'     => $product['download'],
-					'quantity'     => $product['quantity'],
-					'subtract'     => $product['subtract'],
-					'price'        => $product['price'],
-					'total'        => $product['total'],
-					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'       => $product['reward']
-				];
+					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id'])
+				] + $product;
 
 				$points += $product['reward'];
 			}

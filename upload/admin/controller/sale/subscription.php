@@ -491,7 +491,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$description = '';
 
-			$product_info = $this->model_catalog_product->getSubscription($subscription_info['product_id'], $subscription_plan_id, $data['customer_group_id']);
+			$product_info = $this->model_catalog_product->getSubscription($subscription_info['product_id'], $result['subscription_plan_id'], $data['customer_group_id']);
 
 
 			if ($result['trial_status']) {
@@ -670,12 +670,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Product data
 		if (!empty($subscription_info)) {
-			$this->load->model('account/order');
+			$this->load->model('sale/order');
 
-			$product_info = $this->model_account_order->getProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
+			$product_info = $this->model_sale_order->getProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
 
-		if (!empty($product_info['name'])) {
+		if (!empty($product_info)) {
 			$data['product_name'] = $product_info['name'];
 		} else {
 			$data['product_name'] = '';

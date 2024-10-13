@@ -245,6 +245,19 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Product
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getProduct(int $order_id, $order_product_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Products
 	 *
 	 * @param int $order_id

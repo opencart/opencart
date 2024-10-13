@@ -117,7 +117,7 @@
                       {% endfor %}
 
                       {% if order_product.subscription %}
-                        <small class="d-block"> - {{ text_subscription }}:{% if order_product.subscription_edit %}<a href="{{ order_product.subscription_edit }}" target="_blank">{{ order_product.subscription }}</a>{% else %}{{ order_product.subscription }}{% endif %}</small>
+                        <small class="d-block"> - {{ text_subscription }}: {% if order_product.subscription_edit %}<a href="{{ order_product.subscription_edit }}" target="_blank">{{ order_product.subscription }}</a>{% else %}{{ order_product.subscription }}{% endif %}</small>
                         <div id="error-product-{{ order_product_row }}-subscription" class="invalid-feedback"></div>
                       {% endif %}
 
@@ -2535,21 +2535,21 @@ function cart_render(products, totals, shipping_required) {
 
             for (j = 0; j < product['option'].length; j++) {
                 html += '<br/>';
-                html += '  - <small>' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small>';
-                html += '    <div id="error-product-' + order_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                html += ' - <small class="d-block">' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small>';
+                html += '   <div id="error-product-' + order_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
             }
 
             if (product['reward']) {
                 html += '<br/>';
-                html += '  - <small>{{ text_points|escape('js') }}: ' + product['reward'] + '</small>';
+                html += ' - <small>{{ text_points|escape('js') }}: ' + product['reward'] + '</small>';
             }
 
             if (product['subscription']) {
                 html += '<br/>';
-                html += '  - <small>{{ text_subscription|escape('js') }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id=' + product['subscription_id'] + '" target="_blank">' + product['subscription'] + '</a></small>';
+                html += '  - <small class="d-block">{{ text_subscription|escape('js') }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id=' + product['subscription_id'] + '" target="_blank">' + product['subscription'] + '</a></small>';
 
                 if (product['subscription']['error']) {
-                    html += '  - <small>{{ text_subscription|escape('js') }}: ' + product['subscription'] + '</small>';
+                    html += '  - <small class="d-block">{{ text_subscription|escape('js') }}: ' + product['subscription'] + '</small>';
                     html += '    <div id="error-product-' + order_product_row + '-subscription" class="invalid-feedback"></div>';
                 }
             }

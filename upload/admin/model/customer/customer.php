@@ -99,7 +99,8 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($query->num_rows) {
-			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+			$query->row['custom_field'] = json_decode($query->row['custom_field'], true);
+			return $query->row;
 		} else {
 			return [];
 		}
@@ -116,7 +117,8 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		if ($query->num_rows) {
-			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+			$query->row['custom_field'] = json_decode($query->row['custom_field'], true);
+			return $query->row;
 		} else {
 			return [];
 		}
@@ -202,7 +204,8 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$customer_data[] = $result + ['custom_field' => json_decode($result['custom_field'], true)];
+			$result['custom_field'] = json_decode($result['custom_field'], true);
+			$customer_data[] = $result;
 		}
 
 		return $customer_data;

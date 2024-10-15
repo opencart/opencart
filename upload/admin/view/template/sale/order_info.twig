@@ -2438,11 +2438,6 @@ $('#button-confirm').on('click', function() {
                     for (product_row in json['error']['product']) {
                         product = json['error']['product'][product_row];
 
-                        for (key in product) {
-                            console.log(key);
-                            console.log(product[key]);
-                            console.log('#error-product-' + product_row + '-' + key.replaceAll('_', '-'));
-
                             $('#error-product-' + product_row + '-' + key.replaceAll('_', '-')).html(product[key]).addClass('d-block');
                         }
                     }

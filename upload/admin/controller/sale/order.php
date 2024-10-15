@@ -643,6 +643,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['account_custom_field'] = [];
 		}
 
+		if (!empty($order_info)) {
+			$data['customer_edit'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
+		} else {
+			$data['customer_edit'] = '';
+		}
+
 		// Custom Fields
 		$data['custom_fields'] = [];
 

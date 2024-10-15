@@ -102,11 +102,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		if ($query->num_rows) {
-			$subscription_data = $query->row;
-
-			$subscription_data['option'] = ($query->row['option'] ? json_decode($query->row['option'], true) : '');
-			$subscription_data['payment_method'] = ($query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '');
-			$subscription_data['shipping_method'] = ($query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : '');
+			$subscription_data = [
+				'option'          => $query->row['option'] ? json_decode($query->row['option'], true) : '',
+				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '',
+				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : ''
+			] + $query->row;
 		}
 
 		return $subscription_data;

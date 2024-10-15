@@ -436,17 +436,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscription_id'] = '';
 		}
 
+		if (!empty($subscription_info)) {
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
+		} else {
+			$data['date_added'] = '';
+		}
+
 		// Order
 		if (!empty($subscription_info)) {
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
-		}
-
-		if (!empty($order_info)) {
-			$data['order'] = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $subscription_info['order_id']);
-		} else {
-			$data['order'] = '';
 		}
 
 		if (!empty($subscription_info)) {
@@ -455,11 +455,23 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['order_id'] = 0;
 		}
 
+		if (!empty($order_info)) {
+			$data['order_edit'] = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_info['order_id']);
+		} else {
+			$data['order_edit'] = '';
+		}
+
 		// Customer
 		if (!empty($subscription_info)) {
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($subscription_info['customer_id']);
+		}
+
+		if (!empty($customer_info)) {
+			$data['customer_id'] = $customer_info['customer_id'];
+		} else {
+			$data['customer_id'] = '';
 		}
 
 		if (!empty($customer_info)) {
@@ -475,12 +487,125 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($customer_info)) {
-			$data['customer_group_id'] = $customer_info['customer_group_id'];
+			$data['customer_edit'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_info['customer_id']);
 		} else {
-			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
+			$data['customer_edit'] = '';
 		}
 
+		if (!empty($customer_info)) {
+			$data['addresses'] = $this->model_customer_customer->getAddresses($customer_info['customer_id']);
+		} else {
+			$data['addresses'] = [];
+		}
+
+		 // Payment Address
+		if (!empty($subscription_info)) {
+			$address_info  = $this->model_customer_customer->getAddress($subscription_info['payment_address_id']);
+		} else {
+			$address_info = [];
+		}
+
+		if ($address_info) {
+			$data['payment_address_id'] = $address_info['address_id'];
+			$data['payment_firstname'] = $address_info['firstname'];
+			$data['payment_lastname'] = $address_info['lastname'];
+			$data['payment_company'] = $address_info['company'];
+			$data['payment_address_1'] = $address_info['address_1'];
+			$data['payment_address_2'] = $address_info['address_2'];
+			$data['payment_city'] = $address_info['city'];
+			$data['payment_postcode'] = $address_info['postcode'];
+			$data['payment_country_id'] = $address_info['country_id'];
+			$data['payment_country'] = $address_info['country'];
+			$data['payment_zone_id'] = $address_info['zone_id'];
+			$data['payment_zone'] = $address_info['zone'];
+			$data['payment_custom_field'] = $address_info['custom_field'];
+		} else {
+			$data['payment_address_id'] = 0;
+			$data['payment_firstname'] = '';
+			$data['payment_lastname'] = '';
+			$data['payment_company'] = '';
+			$data['payment_address_1'] = '';
+			$data['payment_address_2'] = '';
+			$data['payment_city'] = '';
+			$data['payment_postcode'] = '';
+			$data['payment_country_id'] = 0;
+			$data['payment_country'] = '';
+			$data['payment_zone_id'] = 0;
+			$data['payment_zone'] = '';
+			$data['payment_custom_field'] = [];
+		}
+
+		// Shipping Address
+		if (!empty($subscription_info)) {
+			$address_info  = $this->model_customer_customer->getAddress($subscription_info['shipping_address_id']);
+		} else {
+			$address_info = [];
+		}
+
+		if ($address_info) {
+			$data['shipping_address_id'] = $address_info['address_id'];
+			$data['shipping_firstname'] = $address_info['firstname'];
+			$data['shipping_lastname'] = $address_info['lastname'];
+			$data['shipping_company'] = $address_info['company'];
+			$data['shipping_address_1'] = $address_info['address_1'];
+			$data['shipping_address_2'] = $address_info['address_2'];
+			$data['shipping_city'] = $address_info['city'];
+			$data['shipping_postcode'] = $address_info['postcode'];
+			$data['shipping_country_id'] = $address_info['country_id'];
+			$data['shipping_country'] = $address_info['country'];
+			$data['shipping_zone_id'] = $address_info['zone_id'];
+			$data['shipping_zone'] = $address_info['zone'];
+			$data['shipping_custom_field'] = $address_info['custom_field'];
+		} else {
+			$data['shipping_address_id'] = 0;
+			$data['shipping_firstname'] = '';
+			$data['shipping_lastname'] = '';
+			$data['shipping_company'] = '';
+			$data['shipping_address_1'] = '';
+			$data['shipping_address_2'] = '';
+			$data['shipping_city'] = '';
+			$data['shipping_postcode'] = '';
+			$data['shipping_country_id'] = 0;
+			$data['shipping_country'] = '';
+			$data['shipping_zone_id'] = 0;
+			$data['shipping_zone'] = '';
+			$data['shipping_custom_field'] = [];
+		}
+
+		// Payment Method
+		if (!empty($order_info['payment_method'])) {
+			$data['payment_method_name'] = $order_info['payment_method']['name'];
+			$data['payment_method_code'] = $order_info['payment_method']['code'];
+		} else {
+			$data['payment_method_name'] = '';
+			$data['payment_method_code'] = '';
+		}
+
+		// Shipping method
+		if (!empty($order_info['shipping_method'])) {
+			$data['shipping_method_name'] = $order_info['shipping_method']['name'];
+			$data['shipping_method_code'] = $order_info['shipping_method']['code'];
+			$data['shipping_method_cost'] = $order_info['shipping_method']['cost'];
+			$data['shipping_method_tax_class_id'] = $order_info['shipping_method']['tax_class_id'];
+		} else {
+			$data['shipping_method_name'] = '';
+			$data['shipping_method_code'] = '';
+			$data['shipping_method_cost'] = '';
+			$data['shipping_method_tax_class_id'] = 0;
+		}
+
+		// Countries
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
 		// Subscription
+		if (!empty($customer_info)) {
+			$customer_group_id = $customer_info['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
 		$data['subscription_plans'] = [];
 
 		$this->load->model('catalog/subscription_plan');
@@ -489,36 +614,37 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_subscription_plan->getSubscriptionPlans();
 
 		foreach ($results as $result) {
-			$description = '';
+			$product_info = $this->model_catalog_product->getSubscription($subscription_info['product_id'], $result['subscription_plan_id'], $customer_group_id);
 
-			$product_info = $this->model_catalog_product->getSubscription($subscription_info['product_id'], $result['subscription_plan_id'], $data['customer_group_id']);
+			if ($product_info) {
+				$description = '';
 
+				if ($result['trial_status']) {
+					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+					$trial_cycle = $result['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
+					$trial_duration = $result['trial_duration'];
 
-			if ($result['trial_status']) {
-				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
-				$trial_cycle = $result['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
-				$trial_duration = $result['trial_duration'];
+					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
 
-				$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+				$cycle = $result['cycle'];
+				$frequency = $this->language->get('text_' . $result['frequency']);
+				$duration = $result['duration'];
+
+				if ($result['duration']) {
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+				} else {
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+				}
+
+				$data['subscription_plans'][] = [
+					'subscription_plan_id' => $result['subscription_plan_id'],
+					'name'                 => $result['name'],
+					'description'          => $description
+				];
 			}
-
-			$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
-			$cycle = $result['cycle'];
-			$frequency = $this->language->get('text_' . $result['frequency']);
-			$duration = $result['duration'];
-
-			if ($result['duration']) {
-				$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
-			} else {
-				$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
-			}
-
-			$data['subscription_plans'][] = [
-				'subscription_plan_id' => $result['subscription_plan_id'],
-				'name'                 => $result['name'],
-				'description'          => $description
-			];
 		}
 
 		if (!empty($subscription_info)) {
@@ -527,9 +653,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscription_plan_id'] = 0;
 		}
 
+		/*
 		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($data['subscription_plan_id']);
 
-		if (!empty($subscription_plan_info)) {
+		if (!$subscription_plan_info) {
 			$data['subscription_plan'] = '';
 
 			if ($subscription_plan_info['trial_status']) {
@@ -554,99 +681,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['subscription_plan'] = '';
 		}
+		*/
 
-		if (!empty($subscription_info)) {
-			$data['trial_price'] = $subscription_info['trial_price'];
-		} else {
-			$data['trial_price'] = 0;
-		}
 
-		$data['frequencies'] = [];
 
-		$data['frequencies'][] = [
-			'text'  => $this->language->get('text_day'),
-			'value' => 'day'
-		];
-
-		$data['frequencies'][] = [
-			'text'  => $this->language->get('text_week'),
-			'value' => 'week'
-		];
-
-		$data['frequencies'][] = [
-			'text'  => $this->language->get('text_semi_month'),
-			'value' => 'semi_month'
-		];
-
-		$data['frequencies'][] = [
-			'text'  => $this->language->get('text_month'),
-			'value' => 'month'
-		];
-
-		$data['frequencies'][] = [
-			'text'  => $this->language->get('text_year'),
-			'value' => 'year'
-		];
-
-		if (!empty($subscription_info)) {
-			$data['trial_frequency'] = $subscription_info['trial_frequency'];
-		} else {
-			$data['trial_frequency'] = '';
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_cycle'] = $subscription_info['trial_cycle'];
-		} else {
-			$data['trial_cycle'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_duration'] = $subscription_info['trial_duration'];
-		} else {
-			$data['trial_duration'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_remaining'] = $subscription_info['trial_remaining'];
-		} else {
-			$data['trial_remaining'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_status'] = $subscription_info['trial_status'];
-		} else {
-			$data['trial_status'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['price'] = $subscription_info['price'];
-		} else {
-			$data['price'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['frequency'] = $subscription_info['frequency'];
-		} else {
-			$data['frequency'] = '';
-		}
-
-		if (!empty($subscription_info)) {
-			$data['cycle'] = $subscription_info['cycle'];
-		} else {
-			$data['cycle'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['duration'] = $subscription_info['duration'];
-		} else {
-			$data['duration'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['remaining'] = $subscription_info['remaining'];
-		} else {
-			$data['remaining'] = 0;
-		}
 
 		// Date next
 		if (!empty($subscription_info)) {
@@ -655,20 +693,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['date_next'] = '';
 		}
 
-		// Payment method
 		if (!empty($subscription_info)) {
-			$data['payment_method'] = $subscription_info['payment_method']['name'];
+			$data['remaining'] = $subscription_info['remaining'];
 		} else {
-			$data['payment_method'] = '';
+			$data['remaining'] = 0;
 		}
 
-		if (!empty($order_info)) {
-			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-		} else {
-			$data['date_added'] = '';
-		}
-
-		// Product data
+		// Product
 		if (!empty($subscription_info)) {
 			$this->load->model('sale/order');
 
@@ -676,15 +707,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($product_info)) {
-			$data['product_name'] = $product_info['name'];
+			$data['product'] = $product_info['name'];
 		} else {
-			$data['product_name'] = '';
+			$data['product'] = '';
 		}
 
 		if (!empty($product_info)) {
-			$data['product'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_info['product_id']);
+			$data['quantity'] = $product_info['quantity'];
 		} else {
-			$data['product'] = '';
+			$data['quantity'] = '';
 		}
 
 		$data['options'] = [];
@@ -713,9 +744,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($product_info)) {
-			$data['quantity'] = $product_info['quantity'];
+			$data['product_edit'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_info['product_id']);
 		} else {
-			$data['quantity'] = '';
+			$data['product_edit'] = '';
 		}
 
 		$this->load->model('localisation/subscription_status');

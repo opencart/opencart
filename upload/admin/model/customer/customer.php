@@ -99,7 +99,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($query->num_rows) {
-			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
 		} else {
 			return [];
 		}
@@ -116,7 +116,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		if ($query->num_rows) {
-			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
 		} else {
 			return [];
 		}
@@ -394,26 +394,14 @@ class Customer extends \Opencart\System\Engine\Model {
 			}
 
 			return [
-				'address_id'     => $address_query->row['address_id'],
-				'customer_id'    => $address_query->row['customer_id'],
-				'firstname'      => $address_query->row['firstname'],
-				'lastname'       => $address_query->row['lastname'],
-				'company'        => $address_query->row['company'],
-				'address_1'      => $address_query->row['address_1'],
-				'address_2'      => $address_query->row['address_2'],
-				'postcode'       => $address_query->row['postcode'],
-				'city'           => $address_query->row['city'],
-				'zone_id'        => $address_query->row['zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
-				'country_id'     => $address_query->row['country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => json_decode($address_query->row['custom_field'], true),
-				'default'        => $address_query->row['default']
-			];
+				'custom_field'   => json_decode($address_query->row['custom_field'], true)
+			] + $address_query->row;
 		}
 
 		return [];
@@ -429,14 +417,54 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
 
-		$query = $this->db->query("SELECT `address_id` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$this->load->model('localisation/country');
+		$this->load->model('localisation/address_format');
+		$this->load->model('localisation/zone');
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		foreach ($query->rows as $result) {
-			$address_info = $this->getAddress($result['address_id']);
+			$country_info = $this->model_localisation_country->getCountry($result['country_id']);
 
-			if ($address_info) {
-				$address_data[] = $address_info;
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format_id = $country_info['address_format_id'];
+			} else {
+				$country = '';
+				$iso_code_2 = '';
+				$iso_code_3 = '';
+				$address_format_id = 0;
 			}
+
+			$address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
+
+			if ($address_format_info) {
+				$address_format = $address_format_info['address_format'];
+			} else {
+				$address_format = '';
+			}
+
+			$zone_info = $this->model_localisation_zone->getZone($result['zone_id']);
+
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
+			} else {
+				$zone = '';
+				$zone_code = '';
+			}
+
+			$address_data[] = [
+				'zone'           => $zone,
+				'zone_code'      => $zone_code,
+				'country'        => $country,
+				'iso_code_2'     => $iso_code_2,
+				'iso_code_3'     => $iso_code_3,
+				'address_format' => $address_format,
+				'custom_field'   => json_decode($result['custom_field'], true)
+			] + $result;
 		}
 
 		return $address_data;

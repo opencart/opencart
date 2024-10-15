@@ -13,7 +13,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): string {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
-			$this->load->language('extension/opencart/total/shipping');
+			$this->load->language('extension/opencart/checkout/shipping');
 
 			if (isset($this->session->data['shipping_address'])) {
 				$data['postcode'] = $this->session->data['shipping_address']['postcode'];
@@ -49,7 +49,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function quote(): void {
-		$this->load->language('extension/opencart/total/shipping');
+		$this->load->language('extension/opencart/checkout/shipping');
 
 		$json = [];
 
@@ -149,7 +149,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('extension/opencart/total/shipping');
+		$this->load->language('extension/opencart/checkout/shipping');
 
 		$json = [];
 

@@ -19,7 +19,6 @@
       <div class="card-body">
         <form id="form-subscription">
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -28,7 +27,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_order }}</strong>
@@ -37,20 +35,44 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_customer }}</strong>
                     <br/>
-                    <div id="customer-value"><a href="{{ customer_edit }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    {% if customer_id %}
+                      <div id="customer-value"><a href="{{ customer_edit }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    {% else %}
+                      <div id="customer-value"></div>
+                    {% endif %}
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
-
           </div>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td>{{ column_product }}</td>
+                <td>{{ column_quantity }}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="{{ product_edit }}" target="_blank">{{ product }}</a>
+                  {% if options %}
+                    {% for option in options %}
+                      <br/>
+                      <small> - {{ option.name }}: {{ option.value }}</small>
+                    {% endfor %}
+                  {% endif %}
+                </td>
+                <td>{{ quantity }}</td>
+              </tr>
+            </tbody>
+          </table>
 
           <div class="row row-cols-1">
             <div class="col-12">
@@ -59,7 +81,7 @@
                   <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
                     <br/>
                     {% for subscription_plan in subscription_plans %}
-                      {% if subscription_plan.subscription_plan_id != subscription_plan_id %}
+                      {% if subscription_plan.subscription_plan_id == subscription_plan_id %}
                         {{ subscription_plan.description }}
                       {% endif %}
                     {% endfor %}
@@ -71,14 +93,19 @@
           </div>
 
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+
             <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_date_next }}</strong>
-                  <br/>
-                  {{ date_next }}
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded">
+                  <div class="lead p-2"><strong>{{ text_date_next }}</strong>
+                    <br/>
+                    {{ date_next }}
+                  </div>
                 </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-date-next" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_remaining }}</strong>
@@ -87,8 +114,8 @@
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
 
           <div class="row">
 
@@ -225,32 +252,7 @@
             </div>
           </div>
 
-          <fieldset>
-            <legend>{{ text_product }}</legend>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td>{{ column_product }}</td>
-                  <td>{{ column_quantity }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><a href="{{ product_edit }}" target="_blank">{{ product }}</a>
-                    {% if options %}
-                      {% for option in options %}
-                        <br/>
-                        <small> - {{ option.name }}: {{ option.value }}</small>
-                      {% endfor %}
-                    {% endif %}
-                    <br/>
-                    <small> - {{ text_subscription }}: {{ description }}</small>
-                  </td>
-                  <td>{{ quantity }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </fieldset>
+
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
         </form>
       </div>
@@ -366,13 +368,28 @@
             {% endfor %}
             <div id="error-subscription-plan" class="invalid-feedback"></div>
           </div>
-          <fieldset>
-            <legend>{{ text_date_next }}</legend>
-            <div class="mb-3">
-              <input type="date" name="date_next" value="{{ date_next }}" placeholder="{{ entry_date_next }}" id="input-date-next" class="form-control"/>
-              <div id="error-date-next" class="invalid-feedback"></div>
-            </div>
-          </fieldset>
+          <div class="text-end">
+            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-date-next" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_date_next }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-date-next">
+          <div class="mb-3">
+            <input type="date" name="date_next" value="{{ date_next }}" placeholder="{{ entry_date_next }}" id="input-date-next" class="form-control"/>
+            <div id="error-date-next" class="invalid-feedback"></div>
+          </div>
           <div class="text-end">
             <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>

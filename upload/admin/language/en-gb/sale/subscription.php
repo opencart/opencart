@@ -11,10 +11,16 @@ $_['text_filter']                = 'Filter';
 $_['text_date_added']            = 'Date Added';
 $_['text_order']                 = 'Order ID';
 $_['text_customer']              = 'Customer';
-$_['text_subscription_plan']     = 'Subscription Plan';
-$_['text_product']               = 'Product Details';
+
+$_['text_product']               = 'Product';
 $_['text_quantity']              = 'Quantity';
 $_['text_subscription']          = 'Subscription';
+
+$_['text_subscription_plan']     = 'Subscription Plan';
+
+$_['text_date_next']             = 'Date Next';
+$_['text_remaining']             = 'Remaining';
+
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';
@@ -24,8 +30,9 @@ $_['text_week']                  = 'Week';
 $_['text_semi_month']            = 'Half-Month';
 $_['text_month']                 = 'Month';
 $_['text_year']                  = 'Year';
-$_['text_date_next']             = 'Date Next';
-$_['text_remaining']             = 'Remaining';
+
+
+
 $_['text_payment_address']       = 'Payment Address';
 $_['text_payment_method']        = 'Payment Method';
 $_['text_shipping_address']      = 'Shipping Address';

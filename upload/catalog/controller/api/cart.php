@@ -198,6 +198,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			$product_data[] = [
+
 				'subscription_plan_id' => $product['subscription'] ? $product['subscription']['subscription_plan_id'] : 0,
 				'subscription'         => $subscription,
 				'price_text'           => $product['price_text'],

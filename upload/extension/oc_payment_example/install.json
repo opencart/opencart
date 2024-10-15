@@ -1,0 +1,7 @@
+{
+  "name": "OpenCart Payment Example",
+  "description": "This extension is only here for so developers can see how to create a payment extension for OpenCart.",
+  "version": "1.0",
+  "author": "OpenCart Ltd",
+  "link": "https://www.opencart.com"
+}

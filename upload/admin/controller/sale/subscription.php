@@ -647,57 +647,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+
+		print_r($data['subscription_plans']);
+
+
 		if (!empty($subscription_info)) {
 			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
 		} else {
 			$data['subscription_plan_id'] = 0;
 		}
 
-		/*
-		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($data['subscription_plan_id']);
 
-		if (!$subscription_plan_info) {
-			$data['subscription_plan'] = '';
-
-			if ($subscription_plan_info['trial_status']) {
-				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
-				$trial_cycle = $subscription_plan_info['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $subscription_plan_info['trial_frequency']);
-				$trial_duration = $subscription_plan_info['trial_duration'];
-
-				$data['subscription_plan'] .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
-			}
-
-			$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
-			$cycle = $subscription_plan_info['cycle'];
-			$frequency = $this->language->get('text_' . $subscription_plan_info['frequency']);
-			$duration = $subscription_plan_info['duration'];
-
-			if ($subscription_plan_info['duration']) {
-				$data['subscription_plan'] .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
-			} else {
-				$data['subscription_plan'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
-			}
-		} else {
-			$data['subscription_plan'] = '';
-		}
-		*/
-
-
-
-
-		// Date next
-		if (!empty($subscription_info)) {
-			$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
-		} else {
-			$data['date_next'] = '';
-		}
-
-		if (!empty($subscription_info)) {
-			$data['remaining'] = $subscription_info['remaining'];
-		} else {
-			$data['remaining'] = 0;
-		}
 
 		// Product
 		if (!empty($subscription_info)) {
@@ -748,6 +708,31 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['product_edit'] = '';
 		}
+
+
+
+
+
+
+
+		// Date next
+		if (!empty($subscription_info)) {
+			$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
+		} else {
+			$data['date_next'] = '';
+		}
+
+		if (!empty($subscription_info)) {
+			$data['remaining'] = $subscription_info['remaining'];
+		} else {
+			$data['remaining'] = 0;
+		}
+
+
+
+
+
+
 
 		$this->load->model('localisation/subscription_status');
 

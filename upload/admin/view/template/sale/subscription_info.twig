@@ -58,7 +58,11 @@
                 <div class="form-control p-0 border rounded-start">
                   <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
                     <br/>
-                    {{ subscription_plan }}
+                    {% for subscription_plan in subscription_plans %}
+                      {% if subscription_plan.subscription_plan_id != subscription_plan_id %}
+                        {{ subscription_plan.description }}
+                      {% endif %}
+                    {% endfor %}
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-subscription-plan" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -219,7 +223,6 @@
                 <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
-
           </div>
 
           <fieldset>
@@ -248,8 +251,6 @@
               </tbody>
             </table>
           </fieldset>
-
-
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
         </form>
       </div>
@@ -282,15 +283,6 @@
                         <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                       {% endfor %}
                     </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_override }}</label>
-                  <div class="col-sm-10">
-                    <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="override" value="0"/> <input type="checkbox" name="override" value="1" id="input-override" class="form-check-input"/>
-                    </div>
-                    <div class="form-text">{{ help_override }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -339,7 +331,7 @@
         <form id="form-customer">
           <div class="mb-3">
             <div class="input-group">
-              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/><a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+              <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/><a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
@@ -347,8 +339,8 @@
           <div class="text-end">
             <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
+        </form>
       </div>
-      </form>
     </div>
   </div>
 </div>
@@ -407,6 +399,7 @@
               {% endfor %}
             </select>
           </div>
+          <input type="hidden" name="payment_firstname" value="{{ payment_firstname }}" id="input-payment-firstname"/> <input type="hidden" name="payment_lastname" value="{{ payment_lastname }}" id="input-payment-lastname"/> <input type="hidden" name="payment_company" value="{{ payment_company }}" id="input-payment-company"/> <input type="hidden" name="payment_address_1" value="{{ payment_address_1 }}" id="input-payment-address-1"/> <input type="hidden" name="payment_address_2" value="{{ payment_address_2 }}" id="input-payment-address-2"/> <input type="hidden" name="payment_city" value="{{ payment_city }}" id="input-payment-city"/> <input type="hidden" name="payment_postcode" value="{{ payment_postcode }}" id="input-payment-postcode"/> <input type="hidden" name="payment_country" value="{{ payment_country }}" id="input-payment-country"/> <input type="hidden" name="payment_zone" value="{{ payment_zone }}" id="input-payment-zone"/>
           <div class="text-end">
             <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
@@ -433,6 +426,7 @@
               {% endfor %}
             </select>
           </div>
+          <input type="hidden" name="shipping_firstname" value="{{ shipping_firstname }}" id="input-shipping-firstname"/> <input type="hidden" name="shipping_lastname" value="{{ shipping_lastname }}" id="input-shipping-lastname"/> <input type="hidden" name="shipping_company" value="{{ shipping_company }}" id="input-shipping-company"/> <input type="hidden" name="shipping_address_1" value="{{ shipping_address_1 }}" id="input-shipping-address-1"/> <input type="hidden" name="shipping_address_2" value="{{ shipping_address_2 }}" id="input-shipping-address-2"/> <input type="hidden" name="shipping_city" value="{{ shipping_city }}" id="input-shipping-city"/> <input type="hidden" name="shipping_postcode" value="{{ shipping_postcode }}" id="input-shipping-postcode"/> <input type="hidden" name="shipping_country" value="{{ shipping_country }}" id="input-shipping-country"/> <input type="hidden" name="shipping_zone" value="{{ shipping_zone }}" id="input-shipping-zone"/>
           <div class="text-end">
             <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
@@ -441,7 +435,6 @@
     </div>
   </div>
 </div>
-
 
 <div id="modal-shipping-method" class="modal">
   <div class="modal-dialog">
@@ -529,8 +522,6 @@ $('#input-customer').autocomplete({
         $('#input-customer-id').val(item['value']);
         $('#input-customer-group').val(item['customer_group_id']);
 
-        $('#input-customer-group').trigger('change');
-
         html = '<option value="0">{{ text_none|escape('js') }}</option>';
 
         for (i in item['address']) {
@@ -539,33 +530,38 @@ $('#input-customer').autocomplete({
 
         $('#input-payment-address').html(html);
         $('#input-shipping-address').html(html);
+
+        $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
     }
 });
 
-$('#form-customer').on('submit', function(e) {
-    e.preventDefault();
+$('#inut-payment-address').on('change', function(e) {
+    $('#input-payment-firstname').val(json['firstname']);
+    $('#input-payment-lastname').val(json['lastname']);
+    $('#input-payment-company').val(json['company']);
+    $('#input-payment-address-1').val(json['address_1']);
+    $('#input-payment-address-2').val(json['address_2']);
+    $('#input-payment-city').val(json['city']);
+    $('#input-payment-postcode').val(json['postcode']);
+    $('#input-payment-country').val(json['country_id']);
 
-    $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
-});
-
-$('#form-payment-address').on('submit', function(e) {
     var address = $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
 
     var company = $('#input-payment-company').val();
 
     if (company) {
-        address += $('#input-payment-company').val() + "<br/>";
+        address += $('#input-payment-company').val() + '<br/>';
     }
 
-    address += $('#input-payment-address-1').val() + "<br/>";
+    address += $('#input-payment-address-1').val() + '<br/>';
 
     var address_2 = $('#input-payment-address-2').val();
 
     if (address_2) {
-        address += $('#input-payment-address-2').val() + "<br/>";
+        address += $('#input-payment-address-2').val() + '<br/>';
     }
 
-    address += $('#input-payment-city').val() + "<br/>";
+    address += $('#input-payment-city').val() + '<br/>';
 
     var postcode = $('#input-payment-postcode').val();
 
@@ -578,8 +574,61 @@ $('#form-payment-address').on('submit', function(e) {
 
     $('#payment-address-value').html(address);
 
-}
+});
 
+// Shipping Address
+$('#input-shipping-address').on('change', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=customer/address.address&user_token={{ user_token }}&address_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            // Reset all fields
+            $('#form-shipping-address input[type=\'text\'], #form-shipping-address input[type=\'text\'], #form-shipping-address textarea').val('');
+            $('#form-shipping-address select option').not('#input-shipping-address').removeAttr('selected');
+            $('#form-shipping-address input[type=\'checkbox\'], #form-shipping-address input[type=\'radio\']').removeAttr('checked');
+
+            $('#input-shipping-firstname').val(json['firstname']);
+            $('#input-shipping-lastname').val(json['lastname']);
+            $('#input-shipping-company').val(json['company']);
+            $('#input-shipping-address-1').val(json['address_1']);
+            $('#input-shipping-address-2').val(json['address_2']);
+            $('#input-shipping-city').val(json['city']);
+            $('#input-shipping-postcode').val(json['postcode']);
+            $('#input-shipping-country').val(json['country_id']);
+
+            shipping_zone_id = json['zone_id'];
+
+            $('#input-shipping-country').trigger('change');
+
+            for (i in json['custom_field']) {
+                $('#input-shipping-custom-field-' + i).val(json['custom_field'][i]);
+
+                if (json['custom_field'][i] instanceof Array) {
+                    for (j = 0; j < json['custom_field'][i].length; j++) {
+                        $('#input-shipping-custom-field-value-' + json['custom_field'][i][j]).prop('checked', true);
+                    }
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
 $('#input-product').autocomplete({
     'source': function(request, response) {

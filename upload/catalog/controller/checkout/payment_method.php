@@ -26,6 +26,12 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['comment'] = '';
 		}
 
+		if (isset($this->session->data['agree'])) {
+			$data['agree'] = $this->session->data['agree'];
+		} else {
+			$data['agree'] = '';
+		}
+
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_checkout_id'));

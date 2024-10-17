@@ -60,7 +60,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					}
 
 					foreach ($coupon_category_data as $category_id) {
-						$product_total = $this->model_catalog_product->getTotalCategoriesByCategoryId($product['product_id'], $category_id);
+						$product_total = $this->model_catalog_product->getCategoriesByCategoryId($product['product_id'], $category_id);
 
 						if ($product_total) {
 							$product_data[] = $product['product_id'];

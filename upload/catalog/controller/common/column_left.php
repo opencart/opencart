@@ -22,33 +22,19 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 		if ($route == 'product/category' && isset($this->request->get['path'])) {
 			$this->load->model('catalog/category');
-
 			$path = explode('_', (string)$this->request->get['path']);
-
 			$layout_id = $this->model_catalog_category->getLayoutId((int)end($path));
-		}
-
-		if ($route == 'product/product' && isset($this->request->get['product_id'])) {
+		} elseif ($route == 'product/product' && isset($this->request->get['product_id'])) {
 			$this->load->model('catalog/product');
-
 			$layout_id = $this->model_catalog_product->getLayoutId((int)$this->request->get['product_id']);
-		}
-
-		if ($route == 'product/manufacturer.info' && isset($this->request->get['manufacturer_id'])) {
+		} elseif ($route == 'product/manufacturer.info' && isset($this->request->get['manufacturer_id'])) {
 			$this->load->model('catalog/manufacturer');
-
 			$layout_id = $this->model_catalog_manufacturer->getLayoutId((int)$this->request->get['manufacturer_id']);
-		}
-
-		if ($route == 'information/information' && isset($this->request->get['information_id'])) {
+		} elseif ($route == 'information/information' && isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
-
 			$layout_id = $this->model_catalog_information->getLayoutId((int)$this->request->get['information_id']);
-		}
-
-		if ($route == 'cms/blog.info' && isset($this->request->get['article_id'])) {
+		} elseif ($route == 'cms/blog.info' && isset($this->request->get['article_id'])) {
 			$this->load->model('cms/article');
-
 			$layout_id = $this->model_cms_article->getLayoutId((int)$this->request->get['article_id']);
 		}
 

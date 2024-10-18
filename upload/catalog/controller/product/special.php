@@ -118,17 +118,14 @@ class Special extends \Opencart\System\Engine\Controller {
 			}
 
 			$product_data = [
-				'product_id'  => $result['product_id'],
 				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
-				'name'        => $result['name'],
 				'description' => $description,
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-				'rating'      => $result['rating'],
 				'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
-			];
+			] + $result;
 
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);
 		}

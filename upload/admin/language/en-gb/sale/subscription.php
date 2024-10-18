@@ -11,7 +11,7 @@ $_['text_filter']                = 'Filter';
 $_['text_date_added']            = 'Date Added';
 $_['text_order']                 = 'Order ID';
 $_['text_customer']              = 'Customer';
-
+$_['text_product_add']           = 'Add Product';
 $_['text_product']               = 'Product';
 $_['text_quantity']              = 'Quantity';
 $_['text_subscription']          = 'Subscription';
@@ -57,12 +57,22 @@ $_['column_action']              = 'Action';
 $_['entry_subscription_id']      = 'Subscription ID';
 $_['entry_order_id']             = 'Order ID';
 $_['entry_customer']             = 'Customer';
+$_['entry_store']                = 'Store';
+$_['entry_language']             = 'Language';
+$_['entry_currency']             = 'Currency';
+
+
 $_['entry_date_next']            = 'Date Next';
 $_['entry_comment']              = 'Comment';
 $_['entry_notify']               = 'Notify Customer';
 $_['entry_date_from']            = 'Date From';
 $_['entry_date_to']              = 'Date To';
 $_['entry_subscription_status']  = 'Subscription Status';
+$_['entry_product']              = 'Choose Product';
+$_['entry_option']               = 'Choose Option(s)';
+$_['entry_quantity']             = 'Quantity';
+
+
 
 // Tab
 $_['tab_order']                  = 'Orders';

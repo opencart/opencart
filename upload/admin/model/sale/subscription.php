@@ -295,6 +295,19 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/*
+	 * Get Subscribed Products
+	 *
+	 * @param int $subscription_id
+	 *
+	 * @return array
+	 */
+	public function getProducts(int $subscription_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Add History
 	 *

@@ -6584,6 +6584,73 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'subscription_product',
+		'field' => [
+			[
+				'name'           => 'subscription_product_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'master_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'quantity',
+				'type' => 'int(4)'
+			]
+		],
+		'primary' => [
+			'subscription_product_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'subscription_id',
+				'table' => 'subscription',
+				'field' => 'subscription_id'
+			],
+			[
+				'key'   => 'order_id',
+				'table' => 'order',
+				'field' => 'order_id'
+			],
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'master_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'subscription_id',
+				'key'  => [
+					'subscription_id'
+				]
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'subscription_history',
 		'field' => [
 			[

@@ -15,6 +15,8 @@
     <div class="card mb-3">
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
+
+
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <div class="input-group">
@@ -54,13 +56,17 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <div class="form-floating">
               <select id="input-store" class="form-select">
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
-              </select> <label for="input-store">{{ entry_store }}</label>
+              </select>
+              <label for="input-store">{{ entry_store }}</label>
             </div>
           </div>
           <div class="col mb-3">
@@ -69,7 +75,8 @@
                 {% for language in languages %}
                   <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                 {% endfor %}
-              </select> <label for="input-language">{{ entry_language }}</label>
+              </select>
+              <label for="input-language">{{ entry_language }}</label>
             </div>
           </div>
           <div class="col">
@@ -78,397 +85,402 @@
                 {% for currency in currencies %}
                   <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                 {% endfor %}
-              </select> <label for="input-currency">{{ entry_currency }}</label>
+              </select>
+              <label for="input-currency">{{ entry_currency }}</label>
             </div>
           </div>
         </div>
 
-        <form id="form-cart">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td class="text-start">{{ column_product }}</td>
-                <td class="text-start">{{ column_model }}</td>
-                <td class="text-end">{{ column_quantity }}</td>
-                <td class="text-end">{{ column_price }}</td>
-                <td class="text-end">{{ column_total }}</td>
-                <td class="text-end" style="width: 1px;">{{ column_action }}</td>
-              </tr>
-            </thead>
-            <tbody id="order-product">
-              {% set order_product_row = 0 %}
-              {% if order_products %}
-                {% for order_product in order_products %}
-                  <tr class="bg-danger">
-                    <td class="text-start">
-                      <div><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a></div>
-                      <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback"></div>
 
-                      {% for option in order_product.option %}
-                        {% if option.type != 'file' %}
-                          <small class="d-block"> - {{ option.name }}: {{ option.value }}</small>
-                        {% else %}
-                          <small class="d-block"> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                        {% endif %}
-                        <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
-                      {% endfor %}
 
-                      {% if order_product.subscription %}
-                        <small class="d-block"> - {{ text_subscription }}: {% if order_product.subscription_edit %}<a href="{{ order_product.subscription_edit }}" target="_blank">{{ order_product.subscription }}</a>{% else %}{{ order_product.subscription }}{% endif %}</small>
-                        <div id="error-product-{{ order_product_row }}-subscription" class="invalid-feedback"></div>
-                      {% endif %}
-
-                      {% if order_product.reward %}
-                        <small class="d-block"> - {{ text_points }}: {{ order_product.reward }}</small>
-                      {% endif %}
-                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
-
-                      {% for option in order_product.option %}
-
-                        {% if option.type == 'select' or option.type == 'radio' %}
-                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
-                        {% endif %}
-
-                        {% if option.type == 'checkbox' %}
-                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
-                        {% endif %}
-
-                        {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
-                        {% endif %}
-
-                      {% endfor %}
-
-                      <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
-                    </td>
-                    <td class="text-start">{{ order_product.model }}</td>
-                    <td class="text-end">{{ order_product.quantity }}</td>
-                    <td class="text-end">{{ order_product.price_text }}</td>
-                    <td class="text-end">{{ order_product.total_text }}</td>
-                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
-                  </tr>
-                  {% set order_product_row = order_product_row + 1 %}
-                {% endfor %}
-              {% else %}
-                <tr>
-                  <td colspan="6" class="text-center">{{ text_no_results }}</td>
-                </tr>
-              {% endif %}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="5"></td>
-                <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-cart" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
-
-        <div class="row">
-          <div class="col-md mb-3">
-            <div class="input-group">
-              <div id="input-payment-address-info" class="form-control rounded-start" style="min-height: 128px;">
-                <div class="lead"><strong>{{ text_payment_address }}</strong>
-                  <br/>
-                  <div id="payment-address-value">
-                    {% if payment_firstname %}
-                      {{ payment_firstname }} {{ payment_lastname }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_company %}
-                      {{ payment_company }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_address_1 %}
-                      {{ payment_address_1 }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_address_2 %}
-                      {{ payment_address_2 }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_city %}
-                      {{ payment_city }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_postcode %}
-                      {{ payment_postcode }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_zone %}
-                      {{ payment_zone }}
-                      <br/>
-                    {% endif %}
-                    {% if payment_country %}
-                      {{ payment_country }}
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
-            </div>
-          </div>
-
-          <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
-            <div class="input-group">
-              <div id="input-shipping-address-info" class="form-control rounded-start" style="min-height: 128px;">
-                <div class="lead"><strong>{{ text_shipping_address }}</strong>
-                  <br/>
-                  <div id="shipping-address-value">
-                    {% if shipping_firstname %}
-                      {{ shipping_firstname }} {{ shipping_lastname }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_company %}
-                      {{ shipping_company }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_address_1 %}
-                      {{ shipping_address_1 }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_address_2 %}
-                      {{ shipping_address_2 }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_city %}
-                      {{ shipping_city }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_postcode %}
-                      {{ shipping_postcode }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_zone %}
-                      {{ shipping_zone }}
-                      <br/>
-                    {% endif %}
-                    {% if shipping_country %}
-                      {{ shipping_country }}
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
-            <div class="input-group">
-              <div id="input-shipping-method-info" class="form-control rounded-start" style="min-height: 64px;">
-                <div class="lead"><strong>{{ text_shipping_method }}</strong>
-                  <br/>
-                  <div id="shipping-method-value">{{ shipping_method_name }}</div>
-                </div>
-              </div>
-              <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
-            </div>
-          </div>
-
-          <div id="payment-method" class="col-md mb-3">
-            <div class="input-group">
-              <div id="input-payment-method-info" class="form-control rounded-start" style="min-height: 64px;">
-                <div class="lead"><strong>{{ text_payment_method }}</strong>
-                  <br/>
-                  <div id="payment-method-value">{{ payment_method_name }}</div>
-                </div>
-              </div>
-              <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div id="collapse-order" class="collapse">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-            {% for extension in extensions %}
-              <div class="col mb-3">{{ extension }}</div>
-            {% endfor %}
-
-            <div class="col mb-3">
-              <div class="input-group">
-                <div class="form-control rounded-start">
-                  <div class="lead p-0"><strong>{{ text_reward }}</strong>
-                    <br/>
-                    <div id="point-value">{{ points }}</div>
-                  </div>
-                </div>
-                {% if not reward_total %}
-                  <button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fa-solid fa-plus-circle"></i></button>
-                {% else %}
-                  <button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
-                {% endif %}
-              </div>
-            </div>
-
-            <div class="col mb-3">
-              <div class="input-group">
-                <div id="input-affiliate-info" class="form-control rounded-start" style="min-height: 64px;">
-                  <div class="lead"><strong>{{ text_affiliate }}</strong>
-                    <br/>
-                    {% if affiliate_id %}
-                      <div id="affiliate-value"><a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
-                    {% else %}
-                      <div id="affiliate-value">&nbsp;</div>
-                    {% endif %}
-                  </div>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col mb-3">
-              <div class="input-group">
-                <div class="form-control rounded-start">
-                  <div class="lead"><strong>{{ text_commission }}</strong>
-                    <br/>
-                    {% if commission %}
-                      <div id="commission-value">{{ commission }}</div>
-                    {% else %}
-                      <div id="commission-value">&nbsp;</div>
-                    {% endif %}
-                  </div>
-                </div>
-                {% if not commission_total %}
-                  <button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fa-solid fa-plus-circle"></i></button>
-                {% else %}
-                  <button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fa-solid fa-angle-down"></i></button>
-
-        <div class="row mb-3">
-          <div class="col">
-            <div class="input-group">
-              <div class="form-control rounded-start" style="min-height: 100px;">
-                <div class="lead"><strong>{{ text_comment }}</strong>
-                  <br/>
-                  <span id="comment-value">{{ comment }}</span>
-                </div>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
-            </div>
-          </div>
-        </div>
-
+      <form id="form-cart">
         <table class="table table-bordered">
-          <tbody id="order-total">
-            {% for order_total in order_totals %}
+          <thead>
+            <tr>
+              <td class="text-start">{{ column_product }}</td>
+              <td class="text-start">{{ column_model }}</td>
+              <td class="text-end">{{ column_quantity }}</td>
+              <td class="text-end">{{ column_price }}</td>
+              <td class="text-end">{{ column_total }}</td>
+              <td class="text-end" style="width: 1px;">{{ column_action }}</td>
+            </tr>
+          </thead>
+          <tbody id="order-product">
+            {% set order_product_row = 0 %}
+            {% if order_products %}
+              {% for order_product in order_products %}
+                <tr class="bg-danger">
+                  <td class="text-start">
+                    <div><a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a></div>
+                    <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback"></div>
+
+                    {% for option in order_product.option %}
+
+                      {% if option.type != 'file' %}
+                        <small class="d-block"> - {{ option.name }}: {{ option.value }}</small>
+                      {% else %}
+                        <small class="d-block"> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                      {% endif %}
+                      <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+
+                    {% endfor %}
+
+                    {% if order_product.subscription %}
+                      <small class="d-block"> - {{ text_subscription }}: {% if order_product.subscription_edit %}<a href="{{ order_product.subscription_edit }}" target="_blank">{{ order_product.subscription }}</a>{% else %}{{ order_product.subscription }}{% endif %}</small>
+                      <div id="error-product-{{ order_product_row }}-subscription" class="invalid-feedback"></div>
+                    {% endif %}
+
+                    {% if order_product.reward %}
+                      <small class="d-block"> - {{ text_points }}: {{ order_product.reward }}</small>
+                    {% endif %}
+                    <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
+
+                    {% for option in order_product.option %}
+
+                      {% if option.type == 'select' or option.type == 'radio' %}
+                        <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                      {% endif %}
+
+                      {% if option.type == 'checkbox' %}
+                        <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                      {% endif %}
+
+                      {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+                        <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+                      {% endif %}
+
+                    {% endfor %}
+
+                    <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
+                  </td>
+                  <td class="text-start">{{ order_product.model }}</td>
+                  <td class="text-end">{{ order_product.quantity }}</td>
+                  <td class="text-end">{{ order_product.price_text }}</td>
+                  <td class="text-end">{{ order_product.total_text }}</td>
+                  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                </tr>
+                {% set order_product_row = order_product_row + 1 %}
+              {% endfor %}
+            {% else %}
               <tr>
-                <td class="text-end"><strong>{{ order_total.title }}</strong></td>
-                <td class="text-end" style="width: 1px;">{{ order_total.text }}</td>
+                <td colspan="6" class="text-center">{{ text_no_results }}</td>
               </tr>
-            {% endfor %}
+            {% endif %}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5"></td>
+              <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+            </tr>
+          </tfoot>
         </table>
-        <div class="text-end">
-          <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fa-solid fa-rotate"></i></button>
-          <button type="button" id="button-confirm" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_confirm }}</button>
+      </form>
+
+      <div class="row">
+        <div class="col-md mb-3">
+          <div class="input-group">
+            <div id="input-payment-address-info" class="form-control rounded-start" style="min-height: 128px;">
+              <div class="lead"><strong>{{ text_payment_address }}</strong>
+                <br/>
+                <div id="payment-address-value">
+                  {% if payment_firstname %}
+                    {{ payment_firstname }} {{ payment_lastname }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_company %}
+                    {{ payment_company }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_address_1 %}
+                    {{ payment_address_1 }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_address_2 %}
+                    {{ payment_address_2 }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_city %}
+                    {{ payment_city }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_postcode %}
+                    {{ payment_postcode }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_zone %}
+                    {{ payment_zone }}
+                    <br/>
+                  {% endif %}
+                  {% if payment_country %}
+                    {{ payment_country }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+          </div>
+        </div>
+
+        <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
+          <div class="input-group">
+            <div id="input-shipping-address-info" class="form-control rounded-start" style="min-height: 128px;">
+              <div class="lead"><strong>{{ text_shipping_address }}</strong>
+                <br/>
+                <div id="shipping-address-value">
+                  {% if shipping_firstname %}
+                    {{ shipping_firstname }} {{ shipping_lastname }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_company %}
+                    {{ shipping_company }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_address_1 %}
+                    {{ shipping_address_1 }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_address_2 %}
+                    {{ shipping_address_2 }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_city %}
+                    {{ shipping_city }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_postcode %}
+                    {{ shipping_postcode }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_zone %}
+                    {{ shipping_zone }}
+                    <br/>
+                  {% endif %}
+                  {% if shipping_country %}
+                    {{ shipping_country }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card mb-3">
-      <div class="card-header"><i class="fa-solid fa-comment"></i> {{ text_history }}</div>
-      <div class="card-body">
-        <ul class="nav nav-tabs">
-          <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
-          <li class="nav-item"><a href="#tab-additional" data-bs-toggle="tab" class="nav-link">{{ tab_additional }}</a></li>
-          {% for tab in tabs %}
-            <li class="nav-item"><a href="#tab-{{ tab.code }}" data-bs-toggle="tab" class="nav-link">{{ tab.title }}</a></li>
-          {% endfor %}
-        </ul>
-        <div class="tab-content">
-          <div id="tab-history" class="tab-pane active">
-            <fieldset>
-              <legend>{{ text_history }}</legend>
-              <div id="history">{{ history }}</div>
-            </fieldset>
-            <form id="form-history">
-              <fieldset>
-                <legend>{{ text_history_add }}</legend>
-                <div class="row mb-3">
-                  <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
-                  <div class="col-sm-10">
-                    <select name="order_status_id" id="input-order-status" class="form-select">
-                      {% for order_status in order_statuses %}
-                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_override }}</label>
-                  <div class="col-sm-10">
-                    <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="override" value="0"/> <input type="checkbox" name="override" value="1" id="input-override" class="form-check-input"/>
-                    </div>
-                    <div class="form-text">{{ help_override }}</div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
-                  <div class="col-sm-10">
-                    <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
-                  <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
-                  </div>
-                </div>
-                <div class="text-end">
-                  <button type="submit" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
-                </div>
-              </fieldset>
-              <input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
-            </form>
+
+      <div class="row">
+        <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
+          <div class="input-group">
+            <div id="input-shipping-method-info" class="form-control rounded-start" style="min-height: 64px;">
+              <div class="lead"><strong>{{ text_shipping_method }}</strong>
+                <br/>
+                <div id="shipping-method-value">{{ shipping_method_name }}</div>
+              </div>
+            </div>
+            <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
           </div>
-          <div id="tab-additional" class="tab-pane">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <td colspan="2">{{ text_browser }}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ text_ip }}</td>
-                    <td>{{ ip }}</td>
-                  </tr>
-                  {% if forwarded_ip %}
-                    <tr>
-                      <td>{{ text_forwarded_ip }}</td>
-                      <td>{{ forwarded_ip }}</td>
-                    </tr>
-                  {% endif %}
-                  <tr>
-                    <td>{{ text_user_agent }}</td>
-                    <td>{{ user_agent }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ text_accept_language }}</td>
-                    <td>{{ accept_language }}</td>
-                  </tr>
-                </tbody>
-              </table>
+        </div>
+
+        <div id="payment-method" class="col-md mb-3">
+          <div class="input-group">
+            <div id="input-payment-method-info" class="form-control rounded-start" style="min-height: 64px;">
+              <div class="lead"><strong>{{ text_payment_method }}</strong>
+                <br/>
+                <div id="payment-method-value">{{ payment_method_name }}</div>
+              </div>
+            </div>
+            <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div id="collapse-order" class="collapse">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+          {% for extension in extensions %}
+            <div class="col mb-3">{{ extension }}</div>
+          {% endfor %}
+
+          <div class="col mb-3">
+            <div class="input-group">
+              <div class="form-control rounded-start">
+                <div class="lead p-0"><strong>{{ text_reward }}</strong>
+                  <br/>
+                  <div id="point-value">{{ points }}</div>
+                </div>
+              </div>
+              {% if not reward_total %}
+                <button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fa-solid fa-plus-circle"></i></button>
+              {% else %}
+                <button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+              {% endif %}
             </div>
           </div>
-          {% for tab in tabs %}
-            <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
-          {% endfor %}
+
+          <div class="col mb-3">
+            <div class="input-group">
+              <div id="input-affiliate-info" class="form-control rounded-start" style="min-height: 64px;">
+                <div class="lead"><strong>{{ text_affiliate }}</strong>
+                  <br/>
+                  {% if affiliate_id %}
+                    <div id="affiliate-value"><a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
+                  {% else %}
+                    <div id="affiliate-value">&nbsp;</div>
+                  {% endif %}
+                </div>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+            </div>
+          </div>
+
+          <div class="col mb-3">
+            <div class="input-group">
+              <div class="form-control rounded-start">
+                <div class="lead"><strong>{{ text_commission }}</strong>
+                  <br/>
+                  {% if commission %}
+                    <div id="commission-value">{{ commission }}</div>
+                  {% else %}
+                    <div id="commission-value">&nbsp;</div>
+                  {% endif %}
+                </div>
+              </div>
+              {% if not commission_total %}
+                <button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fa-solid fa-plus-circle"></i></button>
+              {% else %}
+                <button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+              {% endif %}
+            </div>
+          </div>
         </div>
+      </div>
+
+      <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fa-solid fa-angle-down"></i></button>
+
+      <div class="row mb-3">
+        <div class="col">
+          <div class="input-group">
+            <div class="form-control rounded-start" style="min-height: 100px;">
+              <div class="lead"><strong>{{ text_comment }}</strong>
+                <br/>
+                <span id="comment-value">{{ comment }}</span>
+              </div>
+            </div>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <tbody id="order-total">
+          {% for order_total in order_totals %}
+            <tr>
+              <td class="text-end"><strong>{{ order_total.title }}</strong></td>
+              <td class="text-end" style="width: 1px;">{{ order_total.text }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="text-end">
+        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fa-solid fa-rotate"></i></button>
+        <button type="button" id="button-confirm" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_confirm }}</button>
       </div>
     </div>
   </div>
+  <div class="card mb-3">
+    <div class="card-header"><i class="fa-solid fa-comment"></i> {{ text_history }}</div>
+    <div class="card-body">
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
+        <li class="nav-item"><a href="#tab-additional" data-bs-toggle="tab" class="nav-link">{{ tab_additional }}</a></li>
+        {% for tab in tabs %}
+          <li class="nav-item"><a href="#tab-{{ tab.code }}" data-bs-toggle="tab" class="nav-link">{{ tab.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <div class="tab-content">
+        <div id="tab-history" class="tab-pane active">
+          <fieldset>
+            <legend>{{ text_history }}</legend>
+            <div id="history">{{ history }}</div>
+          </fieldset>
+          <form id="form-history">
+            <fieldset>
+              <legend>{{ text_history_add }}</legend>
+              <div class="row mb-3">
+                <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
+                <div class="col-sm-10">
+                  <select name="order_status_id" id="input-order-status" class="form-select">
+                    {% for order_status in order_statuses %}
+                      <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_override }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="override" value="0"/> <input type="checkbox" name="override" value="1" id="input-override" class="form-check-input"/>
+                  </div>
+                  <div class="form-text">{{ help_override }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                <div class="col-sm-10">
+                  <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
+                </div>
+              </div>
+              <div class="text-end">
+                <button type="submit" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
+              </div>
+            </fieldset>
+            <input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
+          </form>
+        </div>
+        <div id="tab-additional" class="tab-pane">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td colspan="2">{{ text_browser }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ text_ip }}</td>
+                  <td>{{ ip }}</td>
+                </tr>
+                {% if forwarded_ip %}
+                  <tr>
+                    <td>{{ text_forwarded_ip }}</td>
+                    <td>{{ forwarded_ip }}</td>
+                  </tr>
+                {% endif %}
+                <tr>
+                  <td>{{ text_user_agent }}</td>
+                  <td>{{ user_agent }}</td>
+                </tr>
+                <tr>
+                  <td>{{ text_accept_language }}</td>
+                  <td>{{ accept_language }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% for tab in tabs %}
+          <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 <div id="modal-customer" class="modal">
@@ -618,7 +630,7 @@
   </div>
 </div>
 
-<div id="modal-cart" class="modal">
+<div id="modal-product" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -1679,7 +1691,7 @@ $('#form-payment-address').on('submit', function(e) {
                     address += postcode + '<br/>';
                 }
 
-                address += $('#input-payment-zone option:selected').text() + "<br/>";
+                address += $('#input-payment-zone option:selected').text() + '<br/>';
                 address += $('#input-payment-country option:selected').text();
 
                 $('#payment-address-value').html(address);
@@ -1853,10 +1865,10 @@ $('#form-shipping-address').on('submit', function(e) {
                 var postcode = $('#input-shipping-postcode').val();
 
                 if (postcode) {
-                    address += postcode + "<br/>";
+                    address += postcode + '<br/>';
                 }
 
-                address += $('#input-shipping-zone option:selected').text() + "<br/>";
+                address += $('#input-shipping-zone option:selected').text() + '<br/>';
                 address += $('#input-shipping-country option:selected').text();
 
                 $('#shipping-address-value').html(address);

@@ -338,10 +338,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				foreach ($discounts as $discount) {
-					$data['discounts'][] = [
-						'quantity' => $discount['quantity'],
-						'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
-					];
+					$data['discounts'][] = ['price' => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])] + $discount;
 				}
 			}
 
@@ -375,25 +372,13 @@ class Product extends \Opencart\System\Engine\Controller {
 							}
 
 							$product_option_value_data[] = [
-								'product_option_value_id' => $option_value['product_option_value_id'],
-								'option_value_id'         => $option_value['option_value_id'],
-								'name'                    => $option_value['name'],
-								'image'                   => $this->model_tool_image->resize($image, 50, 50),
-								'price'                   => $price,
-								'price_prefix'            => $option_value['price_prefix']
-							];
+								'image' => $this->model_tool_image->resize($image, 50, 50),
+								'price' => $price
+							] + $option_value;
 						}
 					}
 
-					$data['options'][] = [
-						'product_option_id'    => $option['product_option_id'],
-						'product_option_value' => $product_option_value_data,
-						'option_id'            => $option['option_id'],
-						'name'                 => $option['name'],
-						'type'                 => $option['type'],
-						'value'                => $option['value'],
-						'required'             => $option['required']
-					];
+					$data['options'][] = ['product_option_value' => $product_option_value_data] + $option;
 				}
 			}
 
@@ -442,56 +427,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($product_id);
 
-			$data['products'] = [];
-
-			$results = $this->model_catalog_product->getRelated($product_id);
-
-			foreach ($results as $result) {
-				$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
-
-				if (oc_strlen($description) > $this->config->get('config_product_description_length')) {
-					$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
-				}
-
-				if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $result['image'];
-				} else {
-					$image = 'placeholder.png';
-				}
-
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$price = false;
-				}
-
-				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$special = false;
-				}
-
-				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
-				} else {
-					$tax = false;
-				}
-
-				$product_data = [
-					'product_id'  => $result['product_id'],
-					'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
-					'name'        => $result['name'],
-					'description' => $description,
-					'price'       => $price,
-					'special'     => $special,
-					'tax'         => $tax,
-					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $result['rating'],
-					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'])
-				];
-
-				$data['products'][] = $this->load->controller('product/thumb', $product_data);
-			}
+			$data['related'] = $this->load->controller('product/related');
 
 			$data['tags'] = [];
 

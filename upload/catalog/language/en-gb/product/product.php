@@ -14,7 +14,6 @@ $_['text_minimum']               = 'This product has a minimum quantity of %s';
 $_['text_reviews']               = '%s reviews';
 $_['text_write']                 = 'Write a review';
 $_['text_login']                 = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
-$_['text_related']               = 'Related Products';
 $_['text_tags']                  = 'Tags:';
 $_['text_error']                 = 'Product not found!';
 $_['text_subscription']          = 'Subscription';

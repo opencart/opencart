@@ -684,14 +684,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = [
-				'store_id' => $result['store_id'],
-				'name'     => $result['name']
-			];
-		}
+		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
 
 		if (!empty($order_info)) {
 			$data['store_id'] = $order_info['store_id'];
@@ -739,24 +732,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			foreach ($options as $option) {
 				if ($option['type'] != 'file') {
-					$option_data[] = [
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'name'                    => $option['name'],
-						'value'                   => $option['value'],
-						'type'                    => $option['type']
-					];
+					$option_data[] = $option;
 				} else {
 					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 					if ($upload_info) {
-						$option_data[] = [
-							'product_option_id'       => $option['product_option_id'],
-							'product_option_value_id' => $option['product_option_value_id'],
-							'name'                    => $option['name'],
-							'value'                   => $upload_info['name'],
-							'type'                    => $option['type'],
-							'href'                    => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+						$option_data[] = $option + [
+							'value' => $upload_info['name'],
+							'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 						];
 					}
 				}
@@ -801,21 +784,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['order_products'][] = [
-				'order_product_id'     => $product['order_product_id'],
-				'product_id'           => $product['product_id'],
-				'name'                 => $product['name'],
-				'model'                => $product['model'],
 				'option'               => $option_data,
 				'subscription'         => $subscription,
 				'subscription_plan_id' => $subscription_plan_id,
 				'subscription_edit'    => $subscription_edit,
-				'quantity'             => $product['quantity'],
 				'price_text'           => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
-				'price'                => $product['price'],
 				'total_text'           => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
-				'total'                => $product['total'],
-				'reward'               => $product['reward']
-			];
+				'product_edit'         => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+			] + $product;
 		}
 
 		// Totals

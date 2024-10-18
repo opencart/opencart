@@ -18,6 +18,7 @@
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-subscription">
+
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
@@ -52,26 +53,117 @@
             </div>
           </div>
 
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+            <div class="col mb-3">
+              <div class="form-floating">
+                <select id="input-store" class="form-select">
+                  {% for store in stores %}
+                    <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
+                  {% endfor %}
+                </select> <label for="input-store">{{ entry_store }}</label>
+              </div>
+            </div>
+            <div class="col mb-3">
+              <div class="form-floating">
+                <select id="input-language" class="form-select">
+                  {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
+                  {% endfor %}
+                </select> <label for="input-language">{{ entry_language }}</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <select id="input-currency" class="form-select">
+                  {% for currency in currencies %}
+                    <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
+                  {% endfor %}
+                </select> <label for="input-currency">{{ entry_currency }}</label>
+              </div>
+            </div>
+          </div>
+
           <table class="table table-bordered">
             <thead>
               <tr>
                 <td>{{ column_product }}</td>
-                <td>{{ column_quantity }}</td>
+                <td class="text-end">{{ column_quantity }}</td>
+                <td class="text-end" style="width: 1px;">{{ column_action }}</td>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><a href="{{ product_edit }}" target="_blank">{{ product }}</a>
-                  {% if options %}
-                    {% for option in options %}
-                      <br/>
-                      <small> - {{ option.name }}: {{ option.value }}</small>
-                    {% endfor %}
-                  {% endif %}
-                </td>
-                <td>{{ quantity }}</td>
-              </tr>
+                {% set order_product_row = 0 %}
+                {% if subscription_products %}
+                  {% for subscription_product in subscription_products %}
+                    <tr class="bg-danger">
+                      <td class="text-start">
+                        <div><a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a></div>
+                        <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback"></div>
+
+                        {% for option in order_product.option %}
+
+                          {% if option.type != 'file' %}
+                            <small class="d-block"> - {{ option.name }}: {{ option.value }}</small>
+                          {% else %}
+                            <small class="d-block"> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                          {% endif %}
+                          <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+
+                        {% endfor %}
+
+                        {% if order_product.subscription %}
+                          <small class="d-block"> - {{ text_subscription }}: {% if order_product.subscription_edit %}<a href="{{ order_product.subscription_edit }}" target="_blank">{{ order_product.subscription }}</a>{% else %}{{ order_product.subscription }}{% endif %}</small>
+                          <div id="error-product-{{ order_product_row }}-subscription" class="invalid-feedback"></div>
+                        {% endif %}
+
+                        {% if order_product.reward %}
+                          <small class="d-block"> - {{ text_points }}: {{ order_product.reward }}</small>
+                        {% endif %}
+                        <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
+
+                        {% for option in order_product.option %}
+
+                          {% if option.type == 'select' or option.type == 'radio' %}
+                            <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                          {% endif %}
+
+                          {% if option.type == 'checkbox' %}
+                            <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                          {% endif %}
+
+                          {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+                            <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+                          {% endif %}
+
+                        {% endfor %}
+
+                        <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
+                      </td>
+                      <td class="text-start">{{ order_product.model }}</td>
+                      <td class="text-end">{{ order_product.quantity }}</td>
+                      <td class="text-end">{{ order_product.price_text }}</td>
+                      <td class="text-end">{{ order_product.total_text }}</td>
+                      <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    </tr>
+                    {% set order_product_row = order_product_row + 1 %}
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="6" class="text-center">{{ text_no_results }}</td>
+                  </tr>
+                {% endif %}
+
+
+              {% endfor %}
+              {% endif %}
+
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="5"></td>
+                <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+              </tr>
+            </tfoot>
           </table>
 
           <div class="row row-cols-1">
@@ -80,11 +172,13 @@
                 <div class="form-control p-0 border rounded-start">
                   <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
                     <br/>
+
                     {% for subscription_plan in subscription_plans %}
                       {% if subscription_plan.subscription_plan_id == subscription_plan_id %}
-                        {{ subscription_plan.description }}
+                        <div>{{ subscription_plan.description }}</div>
                       {% endif %}
                     {% endfor %}
+
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-subscription-plan" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -92,7 +186,7 @@
             </div>
           </div>
 
-          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+          <div class="row row-cols-2">
 
             <div class="col">
               <div class="input-group mb-3">
@@ -250,6 +344,7 @@
                 <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
+
           </div>
 
 
@@ -335,11 +430,38 @@
             <div class="input-group">
               <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/><a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
-            <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/> <input type="hidden" name="firstname" value="{{ firstname }}" id="input-firstname"/> <input type="hidden" name="lastname" value="{{ lastname }}" id="input-lastname"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
             <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-product" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_product_add }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-product">
+          <div class="mb-3">
+            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <ul id="autocomplete-product" class="dropdown-menu"></ul>
+            <input type="hidden" name="product_id" value="" id="input-product-id"/>
+          </div>
+          <div class="mb-3">
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+          </div>
+          <div id="option"></div>
+          <div class="text-end">
+            <button type="submit" id="button-product-add" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -360,7 +482,9 @@
             <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for subscription_plan in subscription_plans %}
-                <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                {% if subscription_plan.customer_group_id == customer_group_id %}
+                  <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                {% endif %}
               {% endfor %}
             </select>
             {% for subscription_plan in subscription_plans %}
@@ -537,6 +661,8 @@ $('#input-customer').autocomplete({
     'select': function(item) {
         $('#input-customer').val(item['label']);
         $('#input-customer-id').val(item['value']);
+        $('#input-firstname').val(item['firstname']);
+        $('#input-lastname').val(item['lastname']);
         $('#input-customer-group').val(item['customer_group_id']);
 
         html = '<option value="0">{{ text_none|escape('js') }}</option>';
@@ -552,45 +678,267 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('#inut-payment-address').on('change', function(e) {
-    $('#input-payment-firstname').val(json['firstname']);
-    $('#input-payment-lastname').val(json['lastname']);
-    $('#input-payment-company').val(json['company']);
-    $('#input-payment-address-1').val(json['address_1']);
-    $('#input-payment-address-2').val(json['address_2']);
-    $('#input-payment-city').val(json['city']);
-    $('#input-payment-postcode').val(json['postcode']);
-    $('#input-payment-country').val(json['country_id']);
+//$('#input-customer').();
 
-    var address = $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
 
-    var company = $('#input-payment-company').val();
+$('#input-product').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id'],
+                        model: item['model'],
+                        option: item['option']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-product-id').val(item['value']);
+        $('#input-product').val(item['label']);
+        $('#input-model').val(item['model']);
 
-    if (company) {
-        address += $('#input-payment-company').val() + '<br/>';
+        if (item['option'] != '') {
+            html = '<fieldset class="mb-0">';
+            html += '  <legend>{{ entry_option|escape('js') }}</legend>';
+
+            for (i = 0; i < item['option'].length; i++) {
+                option = item['option'][i];
+
+                if (option['type'] == 'select') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</option>';
+                    }
+
+                    html += '  </select>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'radio') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</option>';
+                    }
+
+                    html += '  </select>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'checkbox') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label class="form-label">' + option['name'] + '</label>';
+                    html += '  <div id="input-option-' + option['product_option_id'] + '" class="form-control">';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<div class="form-check">';
+                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/>';
+                        html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '  </label>';
+                        html += '</div>';
+                    }
+
+                    html += '  </div>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'image') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+
+                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</option>';
+                    }
+
+                    html += '  </select>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'text') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'textarea') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <textarea name="option[' + option['product_option_id'] + ']" rows="5" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'file') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label class="form-label">' + option['name'] + '</label>';
+                    html += '  <div>';
+                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-' + option['product_option_id'] + '" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size|escape('js') }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload|escape('js') }}</button>';
+                    html += '    <a href="" class="btn btn-light"><i class="fa-solid fa-download"></i></a>';
+                    html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
+                    html += '  </div>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'date') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <input type="date" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'time') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <input type="time" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'datetime') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
+                    html += '  <input type="datetime-local" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
+                    html += '</div>';
+                }
+            }
+
+            html += '</fieldset>';
+
+            $('#option').html(html);
+        } else {
+            $('#option').html('');
+        }
+    }
+});
+
+$('#form-product-add').on('change', '#input-subscription-plan', function(e) {
+    var element = this;
+
+    $('.subscription-description').addClass('d-none');
+
+    $('#subscription-description-' + $(element).val() + '-' + $('#input-customer-group').val()).removeClass('d-none');
+});
+
+$('#input-customer-group').on('change', function(e) {
+    if (subscription_data) {
+        html = '';
+
+        for (i = 0; i < subscription_data.length; i++) {
+            if (subscription_data[i]['customer_group_id'] == this.value) {
+                html += '<option value="' + subscription_data[i]['subscription_plan_id'] + '">' + subscription_data[i]['name'] + '</option>';
+            }
+        }
+
+        $('#input-subscription-plan').html(html);
     }
 
-    address += $('#input-payment-address-1').val() + '<br/>';
+    // Change subscription description
+    $('#input-subscription-plan').trigger('click');
+});
 
-    var address_2 = $('#input-payment-address-2').val();
 
-    if (address_2) {
-        address += $('#input-payment-address-2').val() + '<br/>';
-    }
+$('#input-payment-address').on('change', function(e) {
+    var element = this;
 
-    address += $('#input-payment-city').val() + '<br/>';
+    $.ajax({
+        url: 'index.php?route=customer/address.address&user_token={{ user_token }}&address_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
 
-    var postcode = $('#input-payment-postcode').val();
+            if (json['error']) {
+                $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
 
-    if (postcode) {
-        address += postcode + "<br/>";
-    }
+            var address = json['firstname'] + ' ' + json['lastname'] + '<br/>';
 
-    address += $('#input-payment-zone option:selected').text() + "<br/>";
-    address += $('#input-payment-country option:selected').text();
+            if (json['company']) {
+                address += json['company'] + '<br/>';
+            }
 
-    $('#payment-address-value').html(address);
+            address += json['address_1'] + '<br/>';
 
+            if (json['address_2']) {
+                address += json['address_2'] + '<br/>';
+            }
+
+            address += json['city'] + '<br/>';
+
+            if (json['postcode']) {
+                address += json['postcode'] + '<br/>';
+            }
+
+            address += json['zone'] + '<br/>';
+            address += json['country'];
+
+            $('#payment-address-value').html(address);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 // Shipping Address
@@ -613,63 +961,32 @@ $('#input-shipping-address').on('change', function() {
                 $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            // Reset all fields
-            $('#form-shipping-address input[type=\'text\'], #form-shipping-address input[type=\'text\'], #form-shipping-address textarea').val('');
-            $('#form-shipping-address select option').not('#input-shipping-address').removeAttr('selected');
-            $('#form-shipping-address input[type=\'checkbox\'], #form-shipping-address input[type=\'radio\']').removeAttr('checked');
+            var address = json['firstname'] + ' ' + json['lastname'] + '<br/>';
 
-            $('#input-shipping-firstname').val(json['firstname']);
-            $('#input-shipping-lastname').val(json['lastname']);
-            $('#input-shipping-company').val(json['company']);
-            $('#input-shipping-address-1').val(json['address_1']);
-            $('#input-shipping-address-2').val(json['address_2']);
-            $('#input-shipping-city').val(json['city']);
-            $('#input-shipping-postcode').val(json['postcode']);
-            $('#input-shipping-country').val(json['country_id']);
-
-            shipping_zone_id = json['zone_id'];
-
-            $('#input-shipping-country').trigger('change');
-
-            for (i in json['custom_field']) {
-                $('#input-shipping-custom-field-' + i).val(json['custom_field'][i]);
-
-                if (json['custom_field'][i] instanceof Array) {
-                    for (j = 0; j < json['custom_field'][i].length; j++) {
-                        $('#input-shipping-custom-field-value-' + json['custom_field'][i][j]).prop('checked', true);
-                    }
-                }
+            if (json['company']) {
+                address += json['company'] + '<br/>';
             }
+
+            address += json['address_1'] + '<br/>';
+
+            if (json['address_2']) {
+                address += json['address_2'] + '<br/>';
+            }
+
+            address += json['city'] + '<br/>';
+
+            if (json['postcode']) {
+                address += json['postcode'] + '<br/>';
+            }
+
+            address += json['zone'] + '<br/>';
+            address += json['country'];
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-
-$('#input-product').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id'],
-                        model: item['model']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('#input-product').val(item['label']);
-        $('#input-product-id').val(item['value']);
-        $('#input-model').val(item['model']);
-    }
-});
-
 
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();

@@ -1382,6 +1382,20 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Option
+	 *
+	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_option_id primary key of the option record to be fetched
+	 *
+	 * @return array
+	 */
+	public function getOption(int $product_id, int $product_option_id): array {
+		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "option_description` `od` WHERE `o`.`option_id` = `od`.`option_id` AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `name` FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `po`.`product_option_id` = '" . (int)$product_option_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Options
 	 *
 	 * @param int $product_id
@@ -1394,25 +1408,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$product_option_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `o`.`sort_order` ASC");
 
 		foreach ($product_option_query->rows as $product_option) {
-			$product_option_value_data = [];
-
-			$product_option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) WHERE `pov`.`product_option_id` = '" . (int)$product_option['product_option_id'] . "' ORDER BY `ov`.`sort_order` ASC");
-
-			foreach ($product_option_value_query->rows as $product_option_value) {
-				$product_option_value_data[] = [
-					'product_option_value_id' => $product_option_value['product_option_value_id'],
-					'option_value_id'         => $product_option_value['option_value_id'],
-					'quantity'                => $product_option_value['quantity'],
-					'subtract'                => $product_option_value['subtract'],
-					'price'                   => $product_option_value['price'],
-					'price_prefix'            => $product_option_value['price_prefix'],
-					'points'                  => $product_option_value['points'],
-					'points_prefix'           => $product_option_value['points_prefix'],
-					'weight'                  => $product_option_value['weight'],
-					'weight_prefix'           => $product_option_value['weight_prefix']
-				];
-			}
-
 			$value = $product_option['value'];
 
 			if ($product_option['type'] == 'date') {
@@ -1427,15 +1422,12 @@ class Product extends \Opencart\System\Engine\Model {
 				$value = date('Y-m-d H:i:s', strtotime($product_option['value']));
 			}
 
+			$product_option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) WHERE `pov`.`product_option_id` = '" . (int)$product_option['product_option_id'] . "' ORDER BY `ov`.`sort_order` ASC");
+
 			$product_option_data[] = [
-				'product_option_id'    => $product_option['product_option_id'],
-				'product_option_value' => $product_option_value_data,
-				'option_id'            => $product_option['option_id'],
-				'name'                 => $product_option['name'],
-				'type'                 => $product_option['type'],
-				'value'                => $value,
-				'required'             => $product_option['required']
-			];
+				'product_option_value' => $product_option_value_query->rows,
+				'value'                => $value
+			] + $product_option;
 		}
 
 		return $product_option_data;

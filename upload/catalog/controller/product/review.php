@@ -90,11 +90,10 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['reviews'][] = [
-				'author'     => $result['author'],
 				'text'       => nl2br($result['text']),
 				'rating'     => (int)$result['rating'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
+			] + $result;
 		}
 
 		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);

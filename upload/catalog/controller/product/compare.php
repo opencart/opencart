@@ -125,13 +125,10 @@ class Compare extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['products'][$product_id] = [
-					'product_id'   => $product_info['product_id'],
-					'name'         => $product_info['name'],
 					'description'  => $description,
 					'thumb'        => $image,
 					'price'        => $price,
 					'special'      => $special,
-					'model'        => $product_info['model'],
 					'manufacturer' => $manufacturer,
 					'availability' => $availability,
 					'minimum'      => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
@@ -144,7 +141,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 					'attribute'    => $attribute_data,
 					'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id),
 					'remove'       => $this->url->link('product/compare', 'language=' . $this->config->get('config_language') . '&remove=' . $product_id)
-				];
+				] + $product_info;
 
 				foreach ($attribute_groups as $attribute_group) {
 					$data['attribute_groups'][$attribute_group['attribute_group_id']]['name'] = $attribute_group['name'];

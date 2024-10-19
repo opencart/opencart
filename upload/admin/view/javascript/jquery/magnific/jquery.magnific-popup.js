@@ -64,7 +64,7 @@ var _mfpOn = function(name, f) {
 		var el = document.createElement('div');
 		el.className = 'mfp-'+className;
 		if(html) {
-			el.innerHTML = html;
+			el.textContent = html;
 		}
 		if(!raw) {
 			el = $(el);

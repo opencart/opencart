@@ -41,8 +41,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 			`shipping_address_id` = '" . (int)$data['shipping_address_id'] . "',
 			`shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "',
 			`product_id` = '" . (int)$data['product_id'] . "',
-			`option` = '" . $this->db->escape($data['option'] ? json_encode($data['option']) : '') . "',
-			`quantity` = '" . (int)$data['quantity'] . "',
 			`subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "',
 			`trial_price` = '" . (float)$data['trial_price'] . "',
 			`trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "',
@@ -319,7 +317,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 */
 	public function addProduct(int $subscription_id, array $data): void {
 		print_r($data);
-		
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_product` SET `subscription_id` = '" . (int)$subscription_id . "', `order_product_id` = '" . (int)$data['order_product_id'] . "', `order_id` = '" . (int)$data['order_id'] . "', `product_id` =  '" . (int)$data['product_id'] . "', `option` = '" . $this->db->escape($data['option'] ? json_encode($data['option']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `price` = '" . (float)$data['price'] . "'");
 	}
 

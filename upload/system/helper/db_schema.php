@@ -6618,11 +6618,15 @@ function oc_db_schema() {
 				'field' => 'subscription_id'
 			],
 			[
+				'key'   => 'order_product_id',
+				'table' => 'order_product',
+				'field' => 'order_product_id'
+			],
+			[
 				'key'   => 'order_id',
 				'table' => 'order',
 				'field' => 'order_id'
 			],
-
 			[
 				'key'   => 'product_id',
 				'table' => 'product',

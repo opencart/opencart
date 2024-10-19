@@ -14,7 +14,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/forgotten');
 
-		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
+		if ($this->user->isLogged() || !$this->config->get('config_forgotten_password')) {
 			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
@@ -52,7 +52,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Stop any undefined index messages.
-		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
+		if ($this->user->isLogged() || !$this->config->get('config_forgotten_password')) {
 			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
@@ -104,7 +104,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
+		if ($this->user->isLogged() || !$this->config->get('config_forgotten_password')) {
 			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
@@ -181,7 +181,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['reset_token']) || !isset($this->session->data['reset_token']) || ($this->session->data['reset_token'] != $this->request->get['reset_token'])) {
 			$this->session->data['error'] = $this->language->get('error_session');
 
-			$json['redirect'] = $this->url->link('account/forgotten', '', true);
+			$json['redirect'] = $this->url->link('common/forgotten', '', true);
 		}
 
 		$this->load->model('user/user');

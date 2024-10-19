@@ -443,6 +443,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		// Security
 		$data['config_user_2fa'] = $this->config->get('config_user_2fa');
+		$data['config_forgotten_password'] = $this->config->get('config_forgotten_password');
 		$data['config_shared'] = $this->config->get('config_shared');
 
 		// Uploads

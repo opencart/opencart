@@ -176,6 +176,7 @@ $_['entry_session_expire']                = 'Session Lifetime';
 $_['entry_session_samesite']              = 'Session Samesite Cookie';
 $_['entry_compression']                   = 'Output Compression Level';
 $_['entry_user_2fa']                      = 'Two-factor Security';
+$_['entry_forgotten_password']            = 'Allow Forgotten Password';
 $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
 $_['entry_error_filename']                = 'Error Log Filename';
@@ -252,6 +253,7 @@ $_['help_mail_alert_email']               = 'Any additional emails you want to r
 $_['help_session_expire']                 = 'Set the PHP Session lifetime in seconds (e.g. 3600 = 1 hour)';
 $_['help_session_samesite']               = 'Set the PHP Session samesite cookie';
 $_['help_user_2fa']                       = 'Two-factor security for admin users.';
+$_['help_forgotten_password']             = 'Allow forgotten password to be used for the admin. This will be disabled automatically if the system detects a hack attempt.';
 $_['help_shared']                         = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                         = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';
 $_['help_seo_url']                        = 'To use SEO URLs, apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.';

@@ -281,7 +281,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['username'], 3, 64)) {
+		if (!oc_validate_length($this->request->post['username'], 3, 20)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 

@@ -154,16 +154,14 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['comments'][] = [
-				'article_comment_id' => $result['article_comment_id'],
-				'comment'            => nl2br($result['comment']),
-				'author'             => $result['author'],
-				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'like'               => $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=1', true),
-				'dislike'            => $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=0', true),
-				'reply'              => $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'], true),
-				'reply_add'          => $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'], true),
-				'reply_total'        => $this->model_cms_article->getTotalComments($article_id, ['parent_id' => $result['article_comment_id']])
-			];
+				'comment'     => nl2br($result['comment']),
+				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'like'        => $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=1', true),
+				'dislike'     => $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'] . '&rate=0', true),
+				'reply'       => $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'], true),
+				'reply_add'   => $this->url->link('cms/comment.add', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $result['article_comment_id'] . '&comment_token=' . $this->session->data['comment_token'], true),
+				'reply_total' => $this->model_cms_article->getTotalComments($article_id, ['parent_id' => $result['article_comment_id']])
+			] + $result;
 		}
 
 		$comment_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
@@ -238,12 +236,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['replies'][] = [
-				'article_comment_id' => $result['article_comment_id'],
-				'parent_id'          => $result['parent_id'],
-				'comment'            => nl2br($result['comment']),
-				'author'             => $result['author'],
-				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
+				'comment'    => nl2br($result['comment']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			] + $result;
 		}
 
 		$reply_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);

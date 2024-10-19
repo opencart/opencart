@@ -122,13 +122,9 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['tax_rates'][] = [
-				'tax_rate_id' => $result['tax_rate_id'],
-				'name'        => $result['name'],
-				'rate'        => $result['rate'],
-				'type'        => ($result['type'] == 'F' ? $this->language->get('text_amount') : $this->language->get('text_percent')),
-				'geo_zone'    => $result['geo_zone'],
-				'edit'        => $this->url->link('localisation/tax_rate.form', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)
-			];
+				'type' => ($result['type'] == 'F' ? $this->language->get('text_amount') : $this->language->get('text_percent')),
+				'edit' => $this->url->link('localisation/tax_rate.form', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

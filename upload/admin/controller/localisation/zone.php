@@ -177,13 +177,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['zones'][] = [
-				'zone_id' => $result['zone_id'],
-				'country' => $result['country'],
-				'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : ''),
-				'code'    => $result['code'],
-				'status'  => $result['status'],
-				'edit'    => $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)
-			];
+				'name' => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : ''),
+				'edit' => $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

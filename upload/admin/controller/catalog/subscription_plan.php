@@ -122,13 +122,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
 
 		foreach ($results as $result) {
-			$data['subscription_plans'][] = [
-				'subscription_plan_id' => $result['subscription_plan_id'],
-				'name'                 => $result['name'],
-				'status'               => $result['status'],
-				'sort_order'           => $result['sort_order'],
-				'edit'                 => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)
-			];
+			$data['subscription_plans'][] = ['edit' => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)] + $result;
 		}
 
 		$url = '';

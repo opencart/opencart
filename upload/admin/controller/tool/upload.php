@@ -155,12 +155,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['uploads'][] = [
-				'upload_id'  => $result['upload_id'],
-				'name'       => $result['name'],
-				'code'       => $result['code'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'download'   => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
-			];
+			] + $result;
 		}
 
 		$url = '';

@@ -171,19 +171,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['extensions'][] = [
-				'extension_install_id' => $result['extension_install_id'],
-				'name'                 => $result['name'],
-				'description'          => $result['description'],
-				'code'                 => $result['code'],
-				'version'              => $result['version'],
-				'author'               => $result['author'],
-				'status'               => $result['status'],
-				'link'                 => $link,
-				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'install'              => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'uninstall'            => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
-				'delete'               => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
-			];
+				'link'       => $link,
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'install'    => $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
+				'uninstall'  => $this->url->link('marketplace/installer.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
+				'delete'     => $this->url->link('marketplace/installer.delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
+			] + $result;
 		}
 
 		$url = '';

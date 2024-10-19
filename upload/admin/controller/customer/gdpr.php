@@ -151,16 +151,13 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['gdprs'][] = [
-				'gdpr_id'    => $result['gdpr_id'],
-				'email'      => $result['email'],
 				'action'     => $this->language->get('text_' . $result['action']),
-				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'approve'    => $this->url->link('customer/gdpr.approve', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'], true),
 				'deny'       => $this->url->link('customer/gdpr.deny', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'], true),
 				'edit'       => $edit,
 				'delete'     => $this->url->link('customer/gdpr.delete', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'], true)
-			];
+			] + $result;
 		}
 
 		$url = '';

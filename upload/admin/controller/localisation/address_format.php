@@ -92,11 +92,10 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['address_formats'][] = [
-				'address_format_id' => $result['address_format_id'],
-				'name'              => $result['name'] . (($result['address_format_id'] == $this->config->get('config_address_format_id')) ? $this->language->get('text_default') : ''),
-				'address_format'    => nl2br($result['address_format']),
-				'edit'              => $this->url->link('localisation/address_format.form', 'user_token=' . $this->session->data['user_token'] . '&address_format_id=' . $result['address_format_id'] . $url)
-			];
+				'name'           => $result['name'] . (($result['address_format_id'] == $this->config->get('config_address_format_id')) ? $this->language->get('text_default') : ''),
+				'address_format' => nl2br($result['address_format']),
+				'edit'           => $this->url->link('localisation/address_format.form', 'user_token=' . $this->session->data['user_token'] . '&address_format_id=' . $result['address_format_id'] . $url)
+			] + $result;
 		}
 
 		$address_format_total = $this->model_localisation_address_format->getTotalAddressFormats($filter_data);

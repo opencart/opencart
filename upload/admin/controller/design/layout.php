@@ -121,11 +121,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$results = $this->model_design_layout->getLayouts($filter_data);
 
 		foreach ($results as $result) {
-			$data['layouts'][] = [
-				'layout_id' => $result['layout_id'],
-				'name'      => $result['name'],
-				'edit'      => $this->url->link('design/layout.form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
-			];
+			$data['layouts'][] = ['edit' => $this->url->link('design/layout.form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)] + $result;
 		}
 
 		$url = '';

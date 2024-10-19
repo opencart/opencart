@@ -126,19 +126,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['modifications'][] = [
-				'modification_id' => $result['modification_id'],
-				'name'            => $result['name'],
-				'code'            => $result['code'],
-				'description'     => $result['description'],
-				'author'          => $result['author'],
-				'version'         => $result['version'],
-				'xml'             => $result['xml'],
-				'status'          => $result['status'],
-				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'link'            => $result['link'],
-				'enable'          => $this->url->link('marketplace/modification.enable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id']),
-				'disable'         => $this->url->link('marketplace/modification.disable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id'])
-			];
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'enable'     => $this->url->link('marketplace/modification.enable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id']),
+				'disable'    => $this->url->link('marketplace/modification.disable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id'])
+			] + $result;
 		}
 
 		$url = '';

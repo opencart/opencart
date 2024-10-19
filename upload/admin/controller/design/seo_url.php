@@ -252,16 +252,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['seo_urls'][] = [
-				'seo_url_id' => $result['seo_url_id'],
-				'keyword'    => $result['keyword'],
-				'image'      => $image,
-				'language'   => $code,
-				'key'        => $result['key'],
-				'value'      => $result['value'],
-				'sort_order' => $result['sort_order'],
-				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
-				'edit'       => $this->url->link('design/seo_url.form', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url)
-			];
+				'image'    => $image,
+				'language' => $code,
+				'store'    => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
+				'edit'     => $this->url->link('design/seo_url.form', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

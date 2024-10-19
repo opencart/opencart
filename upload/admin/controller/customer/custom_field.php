@@ -157,14 +157,10 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['custom_fields'][] = [
-				'custom_field_id' => $result['custom_field_id'],
-				'name'            => $result['name'],
-				'location'        => $this->language->get('text_' . $result['location']),
-				'type'            => $type,
-				'status'          => $result['status'],
-				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('customer/custom_field.form', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
-			];
+				'location' => $this->language->get('text_' . $result['location']),
+				'type'     => $type,
+				'edit'     => $this->url->link('customer/custom_field.form', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

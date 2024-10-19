@@ -120,12 +120,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['weight_classes'][] = [
-				'weight_class_id' => $result['weight_class_id'],
-				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : ''),
-				'unit'            => $result['unit'],
-				'value'           => $result['value'],
-				'edit'            => $this->url->link('localisation/weight_class.form', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url)
-			];
+				'title' => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : ''),
+				'edit'  => $this->url->link('localisation/weight_class.form', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

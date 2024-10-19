@@ -121,11 +121,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_tax_class->getTaxClasses($filter_data);
 
 		foreach ($results as $result) {
-			$data['tax_classes'][] = [
-				'tax_class_id' => $result['tax_class_id'],
-				'title'        => $result['title'],
-				'edit'         => $this->url->link('localisation/tax_class.form', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)
-			];
+			$data['tax_classes'][] = ['edit' => $this->url->link('localisation/tax_class.form', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)] + $result;
 		}
 
 		$url = '';

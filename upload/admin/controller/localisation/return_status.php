@@ -122,10 +122,9 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['return_statuses'][] = [
-				'return_status_id' => $result['return_status_id'],
-				'name'             => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : ''),
-				'edit'             => $this->url->link('localisation/return_status.form', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . $url)
-			];
+				'name' => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : ''),
+				'edit' => $this->url->link('localisation/return_status.form', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

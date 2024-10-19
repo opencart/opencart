@@ -121,12 +121,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_filter_group->getFilterGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['filter_groups'][] = [
-				'filter_group_id' => $result['filter_group_id'],
-				'name'            => $result['name'],
-				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/filter_group.form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)
-			];
+			$data['filter_groups'][] = ['edit' => $this->url->link('catalog/filter_group.form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)] + $result;
 		}
 
 		$url = '';

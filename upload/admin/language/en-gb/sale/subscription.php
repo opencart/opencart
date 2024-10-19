@@ -12,15 +12,10 @@ $_['text_date_added']            = 'Date Added';
 $_['text_order']                 = 'Order ID';
 $_['text_customer']              = 'Customer';
 $_['text_product_add']           = 'Add Product';
-$_['text_product']               = 'Product';
-$_['text_quantity']              = 'Quantity';
 $_['text_subscription']          = 'Subscription';
-
 $_['text_subscription_plan']     = 'Subscription Plan';
-
 $_['text_date_next']             = 'Date Next';
 $_['text_remaining']             = 'Remaining';
-
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';
@@ -30,9 +25,6 @@ $_['text_week']                  = 'Week';
 $_['text_semi_month']            = 'Half-Month';
 $_['text_month']                 = 'Month';
 $_['text_year']                  = 'Year';
-
-
-
 $_['text_payment_address']       = 'Payment Address';
 $_['text_payment_method']        = 'Payment Method';
 $_['text_shipping_address']      = 'Shipping Address';
@@ -48,7 +40,8 @@ $_['column_comment']             = 'Comment';
 $_['column_notify']              = 'Customer Notified';
 $_['column_status']              = 'Status';
 $_['column_date_added']          = 'Date Added';
-$_['column_product']             = 'Product Details';
+$_['column_product']             = 'Product';
+$_['column_model']               = 'Model';
 $_['column_quantity']            = 'Quantity';
 $_['column_total']               = 'Total';
 $_['column_action']              = 'Action';
@@ -60,8 +53,6 @@ $_['entry_customer']             = 'Customer';
 $_['entry_store']                = 'Store';
 $_['entry_language']             = 'Language';
 $_['entry_currency']             = 'Currency';
-
-
 $_['entry_date_next']            = 'Date Next';
 $_['entry_comment']              = 'Comment';
 $_['entry_notify']               = 'Notify Customer';
@@ -71,8 +62,6 @@ $_['entry_subscription_status']  = 'Subscription Status';
 $_['entry_product']              = 'Choose Product';
 $_['entry_option']               = 'Choose Option(s)';
 $_['entry_quantity']             = 'Quantity';
-
-
 
 // Tab
 $_['tab_order']                  = 'Orders';

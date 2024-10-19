@@ -121,11 +121,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_return_reason->getReturnReasons($filter_data);
 
 		foreach ($results as $result) {
-			$data['return_reasons'][] = [
-				'return_reason_id' => $result['return_reason_id'],
-				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)
-			];
+			$data['return_reasons'][] = ['edit' => $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)] + $result;
 		}
 
 		$url = '';

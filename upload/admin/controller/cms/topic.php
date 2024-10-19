@@ -121,13 +121,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_topic->getTopics($filter_data);
 
 		foreach ($results as $result) {
-			$data['topics'][] = [
-				'topic_id'   => $result['topic_id'],
-				'name'       => $result['name'],
-				'status'     => $result['status'],
-				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)
-			];
+			$data['topics'][] = ['edit' => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)] + $result;
 		}
 
 		$url = '';

@@ -112,14 +112,10 @@ class Online extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['customers'][] = [
-				'customer_id' => $result['customer_id'],
-				'ip'          => $result['ip'],
-				'customer'    => $customer,
-				'url'         => $result['url'],
-				'referer'     => $result['referer'],
-				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
-			];
+				'customer'   => $customer,
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'edit'       => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+			] + $result;
 		}
 
 		$url = '';

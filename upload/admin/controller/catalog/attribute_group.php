@@ -120,12 +120,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['attribute_groups'][] = [
-				'attribute_group_id' => $result['attribute_group_id'],
-				'name'               => $result['name'],
-				'sort_order'         => $result['sort_order'],
-				'edit'               => $this->url->link('catalog/attribute_group.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url)
-			];
+			$data['attribute_groups'][] = ['edit' => $this->url->link('catalog/attribute_group.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url)] + $result;
 		}
 
 		$url = '';

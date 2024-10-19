@@ -134,15 +134,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['translations'][] = [
-				'translation_id' => $result['translation_id'],
-				'store'          => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
-				'route'          => $result['route'],
-				'image'          => $image,
-				'language'       => $code,
-				'key'            => $result['key'],
-				'value'          => $result['value'],
-				'edit'           => $this->url->link('design/translation.form', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
-			];
+				'store'    => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
+				'image'    => $image,
+				'language' => $code,
+				'edit'     => $this->url->link('design/translation.form', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
+			] + $result;
 		}
 
 		$url = '';

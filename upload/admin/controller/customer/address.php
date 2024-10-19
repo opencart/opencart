@@ -41,19 +41,9 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['addresses'][] = [
-				'firstname' => $result['firstname'],
-				'lastname'  => $result['lastname'],
-				'company'   => $result['company'],
-				'address_1' => $result['address_1'],
-				'address_2' => $result['address_2'],
-				'postcode'  => $result['postcode'],
-				'city'      => $result['city'],
-				'zone'      => $result['zone'],
-				'country'   => $result['country'],
-				'default'   => $result['default'],
-				'edit'      => $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&address_id=' . $result['address_id']),
-				'delete'    => $this->url->link('customer/address.delete', 'user_token=' . $this->session->data['user_token'] . '&address_id=' . $result['address_id'])
-			];
+				'edit'   => $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&address_id=' . $result['address_id']),
+				'delete' => $this->url->link('customer/address.delete', 'user_token=' . $this->session->data['user_token'] . '&address_id=' . $result['address_id'])
+			] + $result;
 		}
 
 		$data['address_add'] = $this->url->link('customer/address.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);

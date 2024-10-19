@@ -99,12 +99,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_store->getStores();
 
 		foreach ($results as $result) {
-			$data['stores'][] = [
-				'store_id' => $result['store_id'],
-				'name'     => $result['name'],
-				'url'      => $result['url'],
-				'edit'     => $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
-			];
+			$data['stores'][] = ['edit' => $this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])] + $result;
 		}
 
 		$store_total += $this->model_setting_store->getTotalStores();

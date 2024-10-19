@@ -140,11 +140,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_antispam->getAntispams($filter_data);
 
 		foreach ($results as $result) {
-			$data['antispams'][] = [
-				'antispam_id' => $result['antispam_id'],
-				'keyword'     => $result['keyword'],
-				'edit'        => $this->url->link('cms/antispam.form', 'user_token=' . $this->session->data['user_token'] . '&antispam_id=' . $result['antispam_id'] . $url)
-			];
+			$data['antispams'][] = ['edit' => $this->url->link('cms/antispam.form', 'user_token=' . $this->session->data['user_token'] . '&antispam_id=' . $result['antispam_id'] . $url)] + $result;
 		}
 
 		$url = '';

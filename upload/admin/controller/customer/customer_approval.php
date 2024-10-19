@@ -156,17 +156,12 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['customer_approvals'][] = [
-				'customer_approval_id' => $result['customer_approval_id'],
-				'customer_id'          => $result['customer_id'],
-				'customer'             => $result['customer'],
-				'email'                => $result['email'],
-				'customer_group'       => $result['customer_group'],
-				'type'                 => $this->language->get('text_' . $result['type']),
-				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'              => $this->url->link('customer/customer_approval.approve', 'user_token=' . $this->session->data['user_token'] . '&customer_approval_id=' . $result['customer_approval_id'], true),
-				'deny'                 => $this->url->link('customer/customer_approval.deny', 'user_token=' . $this->session->data['user_token'] . '&customer_approval_id=' . $result['customer_approval_id'], true),
-				'edit'                 => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
-			];
+				'type'       => $this->language->get('text_' . $result['type']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'approve'    => $this->url->link('customer/customer_approval.approve', 'user_token=' . $this->session->data['user_token'] . '&customer_approval_id=' . $result['customer_approval_id'], true),
+				'deny'       => $this->url->link('customer/customer_approval.deny', 'user_token=' . $this->session->data['user_token'] . '&customer_approval_id=' . $result['customer_approval_id'], true),
+				'edit'       => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
+			] + $result;
 		}
 
 		$url = '';

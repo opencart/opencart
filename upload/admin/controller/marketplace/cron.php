@@ -124,18 +124,13 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['crons'][] = [
-				'cron_id'       => $result['cron_id'],
-				'code'          => $result['code'],
-				'description'   => $result['description'],
 				'cycle'         => $this->language->get('text_' . $result['cycle']),
-				'action'        => $result['action'],
-				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
 				'run'           => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
 				'enable'        => $this->url->link('marketplace/cron.enable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
 				'disable'       => $this->url->link('marketplace/cron.disable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
-			];
+			] + $result;
 		}
 
 		$url = '';

@@ -121,11 +121,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_return_action->getReturnActions($filter_data);
 
 		foreach ($results as $result) {
-			$data['return_actions'][] = [
-				'return_action_id' => $result['return_action_id'],
-				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_action.form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)
-			];
+			$data['return_actions'][] = ['edit' => $this->url->link('localisation/return_action.form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)] + $result;
 		}
 
 		$url = '';

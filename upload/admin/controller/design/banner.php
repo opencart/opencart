@@ -121,12 +121,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$results = $this->model_design_banner->getBanners($filter_data);
 
 		foreach ($results as $result) {
-			$data['banners'][] = [
-				'banner_id' => $result['banner_id'],
-				'name'      => $result['name'],
-				'status'    => $result['status'],
-				'edit'      => $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)
-			];
+			$data['banners'][] = ['edit' => $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)] + $result;
 		}
 
 		$url = '';

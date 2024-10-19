@@ -223,16 +223,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		if ($page == 1 && isset($response_info['promotions'])) {
 			foreach ($response_info['promotions'] as $result) {
-				$data['promotions'][] = [
-					'name'         => $result['name'],
-					'description'  => $result['description'],
-					'image'        => $result['image'],
-					'license'      => $result['license'],
-					'price'        => $result['price'],
-					'rating'       => $result['rating'],
-					'rating_total' => $result['rating_total'],
-					'href'         => $this->url->link('marketplace/marketplace.info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)
-				];
+				$data['promotions'][] = ['href' => $this->url->link('marketplace/marketplace.info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)] + $result;
 			}
 		}
 
@@ -240,16 +231,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		if (isset($response_info['extensions'])) {
 			foreach ($response_info['extensions'] as $result) {
-				$data['extensions'][] = [
-					'name'         => $result['name'],
-					'description'  => $result['description'],
-					'image'        => $result['image'],
-					'license'      => $result['license'],
-					'price'        => $result['price'],
-					'rating'       => $result['rating'],
-					'rating_total' => $result['rating_total'],
-					'href'         => $this->url->link('marketplace/marketplace.info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)
-				];
+				$data['extensions'][] = ['href' => $this->url->link('marketplace/marketplace.info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)] + $result;
 			}
 		}
 

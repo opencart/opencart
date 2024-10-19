@@ -1,4 +1,4 @@
-<form id="form-order" method="post" enctype="application/x-www-form-urlencoded" data-load="{{ action }}">
+<form id="form-order" method="post" data-load="{{ action }}">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -18,8 +18,7 @@
         {% if orders %}
           {% for order in orders %}
             <tr>
-              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/>
-                <input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{{ else }}0{% endif %}"/></td>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/><input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{{ else }}0{% endif %}"/></td>
               <td class="text-end">{{ order.order_id }}</td>
               <td class="text-start">{{ order.store_name }}</td>
               <td class="text-start">{{ order.customer }}</td>

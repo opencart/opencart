@@ -121,11 +121,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$results = $this->model_user_user_group->getUserGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['user_groups'][] = [
-				'user_group_id' => $result['user_group_id'],
-				'name'          => $result['name'],
-				'edit'          => $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
-			];
+			$data['user_groups'][] = ['edit' => $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)] + $result;
 		}
 
 		$url = '';

@@ -121,12 +121,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
 		foreach ($results as $result) {
-			$data['manufacturers'][] = [
-				'manufacturer_id' => $result['manufacturer_id'],
-				'name'            => $result['name'],
-				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url)
-			];
+			$data['manufacturers'][] = ['edit' => $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url)] + $result;
 		}
 
 		$url = '';

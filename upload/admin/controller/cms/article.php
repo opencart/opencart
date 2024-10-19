@@ -122,14 +122,10 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['articles'][] = [
-				'article_id' => $result['article_id'],
-				'name'       => $result['name'],
-				'author'     => $result['author'],
 				'rating'     => (int)$result['rating'],
-				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id'] . $url)
-			];
+			] + $result;
 		}
 
 		$url = '';

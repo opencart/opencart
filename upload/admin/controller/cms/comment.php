@@ -167,19 +167,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['comments'][] = [
-				'article_comment_id' => $result['article_comment_id'],
-				'article'            => $article,
-				'article_edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
-				'author'             => $result['author'],
-				'customer_edit'      => $result['customer_id'] ? $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']) : '',
-				'comment'            => nl2br($result['comment']),
-				'rating'             => $result['rating'],
-				'status'             => $result['status'],
-				'date_added'         => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'approve'            => $approve,
-				'spam'               => $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),
-				'delete'             => $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url)
-			];
+				'article'       => $article,
+				'article_edit'  => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
+				'customer_edit' => $result['customer_id'] ? $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']) : '',
+				'comment'       => nl2br($result['comment']),
+				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'approve'       => $approve,
+				'spam'          => $this->url->link('cms/comment.spam', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),
+				'delete'        => $this->url->link('cms/comment.delete', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

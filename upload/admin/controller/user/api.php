@@ -122,13 +122,11 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['apis'][] = [
-				'api_id'        => $result['api_id'],
-				'username'      => $result['username'],
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('user/api.form', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
-			];
+			] + $result;
 		}
 
 		$url = '';

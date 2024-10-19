@@ -121,12 +121,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_location->getLocations($filter_data);
 
 		foreach ($results as $result) {
-			$data['locations'][] = [
-				'location_id' => $result['location_id'],
-				'name'        => $result['name'],
-				'address'     => $result['address'],
-				'edit'        => $this->url->link('localisation/location.form', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)
-			];
+			$data['locations'][] = ['edit' => $this->url->link('localisation/location.form', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)] + $result;
 		}
 
 		$url = '';

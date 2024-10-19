@@ -15,8 +15,6 @@
     <div class="card mb-3">
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
-
-
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <div class="input-group">
@@ -2440,7 +2438,7 @@ $('#button-confirm').on('click', function() {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (json['order_id']) {
-                    $('#input-order-id').val(json['order_id']);
+                    $('#order-id-value').val('' + json['order_id'] + '');
                 }
 
                 if (json['points']) {

@@ -122,10 +122,9 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['subscription_statuses'][] = [
-				'subscription_status_id' => $result['subscription_status_id'],
-				'name'                   => $result['name'] . (($result['subscription_status_id'] == $this->config->get('config_subscription_status_id')) ? $this->language->get('text_default') : ''),
-				'edit'                   => $this->url->link('localisation/subscription_status.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_status_id=' . $result['subscription_status_id'] . $url)
-			];
+				'name' => $result['name'] . (($result['subscription_status_id'] == $this->config->get('config_subscription_status_id')) ? $this->language->get('text_default') : ''),
+				'edit' => $this->url->link('localisation/subscription_status.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_status_id=' . $result['subscription_status_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

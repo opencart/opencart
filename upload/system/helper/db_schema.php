@@ -6396,10 +6396,6 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'order_product_id',
-				'type' => 'int(11)'
-			],
-			[
 				'name' => 'store_id',
 				'type' => 'int(11)'
 			],
@@ -6422,18 +6418,6 @@ function oc_db_schema() {
 			[
 				'name' => 'shipping_method',
 				'type' => 'text'
-			],
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'option',
-				'type' => 'text'
-			],
-			[
-				'name' => 'quantity',
-				'type' => 'int(4)'
 			],
 			[
 				'name' => 'subscription_plan_id',
@@ -6596,6 +6580,10 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
+				'name' => 'order_product_id',
+				'type' => 'int(11)'
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)'
 			],
@@ -6604,12 +6592,20 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'master_id',
-				'type' => 'int(11)'
+				'name' => 'option',
+				'type' => 'text'
 			],
 			[
 				'name' => 'quantity',
 				'type' => 'int(4)'
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)'
 			]
 		],
 		'primary' => [
@@ -6626,13 +6622,9 @@ function oc_db_schema() {
 				'table' => 'order',
 				'field' => 'order_id'
 			],
+
 			[
 				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'master_id',
 				'table' => 'product',
 				'field' => 'product_id'
 			]

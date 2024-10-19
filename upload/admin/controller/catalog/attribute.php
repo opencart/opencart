@@ -121,13 +121,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_attribute->getAttributes($filter_data);
 
 		foreach ($results as $result) {
-			$data['attributes'][] = [
-				'attribute_id'    => $result['attribute_id'],
-				'name'            => $result['name'],
-				'attribute_group' => $result['attribute_group'],
-				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/attribute.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)
-			];
+			$data['attributes'][] = ['edit' => $this->url->link('catalog/attribute.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)] + $result;
 		}
 
 		$url = '';

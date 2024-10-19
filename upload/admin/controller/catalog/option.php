@@ -121,12 +121,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_option->getOptions($filter_data);
 
 		foreach ($results as $result) {
-			$data['options'][] = [
-				'option_id'  => $result['option_id'],
-				'name'       => $result['name'],
-				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)
-			];
+			$data['options'][] = ['edit' => $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)] + $result;
 		}
 
 		$url = '';

@@ -121,11 +121,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_stock_status->getStockStatuses($filter_data);
 
 		foreach ($results as $result) {
-			$data['stock_statuses'][] = [
-				'stock_status_id' => $result['stock_status_id'],
-				'name'            => $result['name'],
-				'edit'            => $this->url->link('localisation/stock_status.form', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)
-			];
+			$data['stock_statuses'][] = ['edit' => $this->url->link('localisation/stock_status.form', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)] + $result;
 		}
 
 		$url = '';

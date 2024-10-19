@@ -122,13 +122,9 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['languages'][] = [
-				'language_id' => $result['language_id'],
-				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : ''),
-				'code'        => $result['code'],
-				'status'      => $result['status'],
-				'sort_order'  => $result['sort_order'],
-				'edit'        => $this->url->link('localisation/language.form', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
-			];
+				'name' => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : ''),
+				'edit' => $this->url->link('localisation/language.form', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

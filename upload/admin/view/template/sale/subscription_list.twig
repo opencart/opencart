@@ -3,6 +3,7 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" class="form-check-input"/></td>
           <td class="text-end"><a href="{{ sort_subscription }}"{% if sort == 's.subscription_id' %} class="{{ order|lower }}"{% endif %}>{{ column_subscription_id }}</a></td>
           <td class="text-end"><a href="{{ sort_order }}"{% if sort == 's.order_id' %} class="{{ order|lower }}"{% endif %}>{{ column_order_id }}</a></td>
           <td class="text-start"><a href="{{ sort_customer }}"{% if sort == 'customer' %} class="{{ order|lower }}"{% endif %}>{{ column_customer }}</a></td>
@@ -15,6 +16,7 @@
         {% if subscriptions %}
           {% for subscription in subscriptions %}
             <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ subscription.subscription_id }}" class="form-check-input"/></td>
               <td class="text-end">{{ subscription.subscription_id }}</td>
               <td class="text-end">{{ subscription.order_id }}</td>
               <td class="text-start">{{ subscription.customer }}</td>
@@ -25,7 +27,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

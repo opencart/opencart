@@ -121,15 +121,9 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['startups'][] = [
-				'startup_id'  => $result['startup_id'],
-				'code'        => $result['code'],
-				'description' => $result['description'],
-				'action'      => $result['action'],
-				'status'      => $result['status'],
-				'sort_order'  => $result['sort_order'],
-				'enable'      => $this->url->link('marketplace/startup.enable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id']),
-				'disable'     => $this->url->link('marketplace/startup.disable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id'])
-			];
+				'enable'  => $this->url->link('marketplace/startup.enable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id']),
+				'disable' => $this->url->link('marketplace/startup.disable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id'])
+			] + $result;
 		}
 
 		$url = '';

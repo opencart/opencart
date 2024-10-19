@@ -121,12 +121,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
 
 		foreach ($results as $result) {
-			$data['geo_zones'][] = [
-				'geo_zone_id' => $result['geo_zone_id'],
-				'name'        => $result['name'],
-				'description' => $result['description'],
-				'edit'        => $this->url->link('localisation/geo_zone.form', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url)
-			];
+			$data['geo_zones'][] = ['edit' => $this->url->link('localisation/geo_zone.form', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url)] + $result;
 		}
 
 		$url = '';

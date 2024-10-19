@@ -351,16 +351,13 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['orders'][] = [
-				'order_id'        => $result['order_id'],
-				'store_name'      => $result['store_name'],
-				'customer'        => $result['customer'],
 				'order_status'    => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
 				'total'           => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_method' => $shipping_method,
 				'view'            => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
-			];
+			] + $result;
 		}
 
 		$url = '';

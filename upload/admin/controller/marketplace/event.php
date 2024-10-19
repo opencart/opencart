@@ -121,16 +121,9 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['events'][] = [
-				'event_id'    => $result['event_id'],
-				'code'        => $result['code'],
-				'description' => $result['description'],
-				'trigger'     => $result['trigger'],
-				'action'      => $result['action'],
-				'status'      => $result['status'],
-				'sort_order'  => $result['sort_order'],
-				'enable'      => $this->url->link('marketplace/event.enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id']),
-				'disable'     => $this->url->link('marketplace/event.disable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'])
-			];
+				'enable'  => $this->url->link('marketplace/event.enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id']),
+				'disable' => $this->url->link('marketplace/event.disable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'])
+			] + $result;
 		}
 
 		$url = '';

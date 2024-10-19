@@ -211,14 +211,9 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['marketings'][] = [
-				'marketing_id' => $result['marketing_id'],
-				'name'         => $result['name'],
-				'code'         => $result['code'],
-				'clicks'       => $result['clicks'],
-				'orders'       => $result['orders'],
-				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'         => $this->url->link('marketing/marketing.form', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'] . $url)
-			];
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'edit'       => $this->url->link('marketing/marketing.form', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

@@ -70,7 +70,13 @@ class Subscription extends \Opencart\System\Engine\Model {
 			`date_modified` = NOW()
 		");
 
-		return $this->db->getLastId();
+		$subscription_id = $this->db->getLastId();
+
+		foreach ($data['subscription_product'] as $product) {
+			$this->model_sale_subscription->addProduct($subscription_id, $product);
+		}
+
+		return $subscription_id;
 	}
 
 	/**
@@ -137,57 +143,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 			`date_modified` = NOW()
 			WHERE `subscription_id` = '" . (int)$subscription_id . "'
 		");
-	}
 
-	/**
-	 * Delete Subscription By Order ID
-	 *
-	 * @param int $order_id
-	 *
-	 * @return void
-	 */
-	public function deleteSubscriptionByOrderId(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
-	}
+		$subscription_id = $this->db->getLastId();
 
-	/**
-	 * Get Subscription By Order Product ID
-	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
-		$subscription_data = [];
-
-		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
-
-		if ($query->num_rows) {
-			$subscription_data = $query->row;
-
-			$subscription_data['option'] = ($query->row['option'] ? json_decode($query->row['option'], true) : '');
-			$subscription_data['payment_method'] = ($query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '');
-			$subscription_data['shipping_method'] = ($query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : '');
+		foreach ($data['subscription_product'] as $product) {
+			$this->model_sale_subscription->addProduct($subscription_id, $product);
 		}
-
-		return $subscription_data;
-	}
-
-	/**
-	 * Add History
-	 *
-	 * @param int    $subscription_id
-	 * @param int    $subscription_status_id
-	 * @param string $comment
-	 * @param bool   $notify
-	 *
-	 * @return void
-	 */
-	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "', `date_added` = NOW()");
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
 	/**
@@ -226,6 +187,42 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `date_next` = '" . $this->db->escape($date_next) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
+
+	/**
+	 * Delete Subscription By Order ID
+	 *
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
+	public function deleteSubscriptionByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	/**
+	 * Get Subscription By Order Product ID
+	 *
+	 * @param int $order_id
+	 * @param int $order_product_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
+		$subscription_data = [];
+
+		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		if ($query->num_rows) {
+			$subscription_data = $query->row;
+
+			$subscription_data['option'] = ($query->row['option'] ? json_decode($query->row['option'], true) : '');
+			$subscription_data['payment_method'] = ($query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '');
+			$subscription_data['shipping_method'] = ($query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : '');
+		}
+
+		return $subscription_data;
+	}
+
 	/**
 	 * Get Subscriptions
 	 *
@@ -245,10 +242,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_order_id'])) {
 			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
-
 		if (!empty($data['filter_order_product_id'])) {
 			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
 		}
+
 
 		if (!empty($data['filter_customer'])) {
 			$implode[] = "CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) LIKE '" . $this->db->escape($data['filter_customer'] . '%') . "'";
@@ -310,5 +307,46 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	/**
+	 * Add Product
+	 *
+	 * @param int   $subscription_id
+	 * @param array $product
+	 *
+	 * @return void
+	 */
+	public function addProduct(int $subscription_id, array $data): void {
+		print_r($data);
+		
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_product` SET `subscription_id` = '" . (int)$subscription_id . "', `order_product_id` = '" . (int)$data['order_product_id'] . "', `order_id` = '" . (int)$data['order_id'] . "', `product_id` =  '" . (int)$data['product_id'] . "', `option` = '" . $this->db->escape($data['option'] ? json_encode($data['option']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `price` = '" . (float)$data['price'] . "'");
+	}
+
+	/**
+	 * Delete Product
+	 *
+	 * @param int $subscription_id
+	 *
+	 * @return void
+	 */
+	public function deleteProduct(int $subscription_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	/**
+	 * Add History
+	 *
+	 * @param int    $subscription_id
+	 * @param int    $subscription_status_id
+	 * @param string $comment
+	 * @param bool   $notify
+	 *
+	 * @return void
+	 */
+	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "', `date_added` = NOW()");
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 }

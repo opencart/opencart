@@ -603,7 +603,7 @@ class Order extends \Opencart\System\Engine\Model {
 						if ($subscription_info) {
 							$subscription_id = $subscription_info['subscription_id'];
 						} else {
-							$subscription_id = $this->model_checkout_subscription->addSubscription($order_subscription_info + $order_product + $order_info + ['option' => $option_data]);
+							$subscription_id = $this->model_checkout_subscription->addSubscription($order_subscription_info + ['subscription_product' => $order_product + ['option' => $option_data]] + $order_info);
 						}
 
 						// Add history and set active subscription

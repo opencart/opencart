@@ -612,7 +612,7 @@ if (!document.createElement('canvas').getContext) {
       this.textMeasureEl_.removeNode(true);
       this.textMeasureEl_ = null;
     }
-    this.element_.innerHTML = '';
+    this.element_.textContent = '';
   };
 
   contextPrototype.beginPath = function() {

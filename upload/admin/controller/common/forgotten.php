@@ -49,6 +49,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	public function confirm(): void {
 		$this->load->language('common/forgotten');
 
+		$this->load->model('user/user');
+
 		$json = [];
 
 		// Stop any undefined index messages.
@@ -64,12 +66,16 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('user/user');
+		if (!oc_validate_email($this->request->post['email'])) {
+			$json['error']['email'] = $this->language->get('error_email');
+		}
 
-		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
+		if (!$json) {
+			$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
-		if (!$user_info) {
-			$json['error'] = $this->language->get('error_email');
+			if (!$user_info) {
+				$json['error'] = $this->language->get('error_email');
+			}
 		}
 
 		if (!$json) {

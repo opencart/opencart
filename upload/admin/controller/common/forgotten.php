@@ -20,18 +20,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard')
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten')
-		];
-
 		$data['confirm'] = $this->url->link('common/forgotten.confirm');
 		$data['back'] = $this->url->link('common/login');
 
@@ -128,18 +116,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_reset'));
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard')
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten.reset')
-		];
-
 		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
 		$data['reset'] = $this->url->link('common/forgotten.password', 'email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
@@ -204,11 +180,11 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), 6, 40)) {
-				$json['error']['password'] = $this->language->get('error_password');
+				$json['error'] = $this->language->get('error_password');
 			}
 
 			if ($this->request->post['confirm'] != $this->request->post['password']) {
-				$json['error']['confirm'] = $this->language->get('error_confirm');
+				$json['error'] = $this->language->get('error_confirm');
 			}
 		}
 

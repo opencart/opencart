@@ -67,7 +67,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!oc_validate_email($this->request->post['email'])) {
-			$json['error']['email'] = $this->language->get('error_email');
+			$json['error'] = $this->language->get('error_email');
 		}
 
 		if (!$json) {

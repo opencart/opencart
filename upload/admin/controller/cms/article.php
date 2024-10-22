@@ -273,14 +273,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
+		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
 
 		if (isset($this->request->get['article_id'])) {
 			$data['article_store'] = $this->model_cms_article->getStores($this->request->get['article_id']);

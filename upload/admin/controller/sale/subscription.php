@@ -574,35 +574,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				$data['subscription_products'][] = [
 					'option'       => $option_data,
-					'price_text'   => $this->currency->format($result['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
-					'total_text'   => $this->currency->format($result['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
+					'price_text'   => $this->currency->format($result['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code']),
+					'total_text'   => $this->currency->format($result['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code']),
 					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
-				] + $product;
-			}
-		}
-
-		$data['options'] = [];
-
-		if (!empty($subscription_info)) {
-			$options = $subscription_info['option'];
-		} else {
-			$options = [];
-		}
-
-		foreach ($options as $product_option_id => $value) {
-			$option_info = $this->model_catalog_product->getOption($subscription_info['product_id'], $product_option_id);
-
-			if ($option_info['type'] != 'file') {
-				$data['options'][] = ['value' => $value] + $option_info;
-			} else {
-				$upload_info = $this->model_tool_upload->getUploadByCode($value);
-
-				if ($upload_info) {
-					$data['options'][] = [
-						'value' => $value,
-						'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-					] + $option_info;
-				}
+				] + $result;
 			}
 		}
 
@@ -616,12 +591,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['subscription_plans'] = [];
 
 		if (!empty($subscription_info)) {
-			$subscriptions = $this->model_sale_subscription->getProducts($subscription_info['product_id']);
+			$subscription_id = $subscription_info['subscription_id'];
 		} else {
-			$subscriptions = [];
+			$subscription_id = 0;
 		}
 
 		$this->load->model('catalog/subscription_plan');
+
+		$subscriptions = $this->model_sale_subscription->getProducts($subscription_id);
 
 		foreach ($subscriptions as $subscription) {
 			$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($subscription['subscription_plan_id']);

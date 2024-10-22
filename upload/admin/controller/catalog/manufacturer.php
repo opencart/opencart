@@ -230,14 +230,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
+		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
 
 		if (isset($this->request->get['manufacturer_id'])) {
 			$data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($this->request->get['manufacturer_id']);

@@ -521,14 +521,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
+		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
 
 		if (!empty($customer_info)) {
 			$data['store_id'] = $customer_info['store_id'];

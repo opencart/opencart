@@ -346,7 +346,6 @@
 
           </div>
 
-
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
         </form>
       </div>
@@ -866,6 +865,72 @@ $('#input-product').autocomplete({
     }
 });
 
+
+
+var products = [];
+var totals = [];
+var shipping_required = false;
+
+$('#form-product-add').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=product_add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-product-add, #form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-product-add').button('loading');
+        },
+        complete: function() {
+            $('#button-product-add').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['success']) {
+                $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                cart_render(json['products'], json['totals'], json['shipping_required']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Remove product
+$('#order-product').on('click', 'button', function(e) {
+    $(this).parent().parent().remove();
+
+    // Refresh products and totals
+    $('#button-refresh').trigger('click');
+});
+
+
+/*
+
 $('#form-product-add').on('change', '#input-subscription-plan', function(e) {
     var element = this;
 
@@ -890,7 +955,7 @@ $('#input-customer-group').on('change', function(e) {
     // Change subscription description
     $('#input-subscription-plan').trigger('click');
 });
-
+*/
 
 $('#input-payment-address').on('change', function(e) {
     var element = this;

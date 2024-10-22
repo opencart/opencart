@@ -6500,22 +6500,6 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'ip',
-				'type' => 'varchar(40)'
-			],
-			[
-				'name' => 'forwarded_ip',
-				'type' => 'varchar(40)'
-			],
-			[
-				'name' => 'user_agent',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'accept_language',
-				'type' => 'varchar(255)'
-			],
-			[
 				'name' => 'date_added',
 				'type' => 'datetime'
 			],

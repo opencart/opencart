@@ -598,7 +598,7 @@ class Order extends \Opencart\System\Engine\Model {
 						}
 
 						// Add subscription if one is not setup
-						$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
+						$subscription_info = $this->model_checkout_subscription->getSubscriptionProductByOrderProductId($order_id, $order_product['order_product_id']);
 
 						if ($subscription_info) {
 							$subscription_id = $subscription_info['subscription_id'];

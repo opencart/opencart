@@ -111,7 +111,7 @@
                     <td class="text-start">
                       <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
-                      <ul class="list-unstyled">
+                      <ul class="list-unstyled mb-0">
                         {% for option in order_product.option %}
                           {% if option.type != 'file' %}
                             <li>
@@ -2490,7 +2490,7 @@ function cart_render(products, totals, shipping_required) {
             html += '  <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
             html += '    <div id="error-product-' + order_product_row + '-product" class="invalid-feedback mt-0"></div>';
 
-            html += '<ul class="list-unstyled">';
+            html += '<ul class="list-unstyled mb-0">';
 
             for (j = 0; j < product['option'].length; j++) {
                 html += '<li>';

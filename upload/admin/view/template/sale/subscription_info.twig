@@ -98,46 +98,37 @@
               {% if subscription_products %}
 
                 {% for subscription_product in subscription_products %}
-                  <tr class="bg-danger">
+                  <tr>
                     <td class="text-start">
-                      <div><a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a></div>
-                      <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback"></div>
-
+                      <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
+                      <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
+                      <ul class="list-unstyled">
+                        {% for option in order_product.option %}
+                          {% if option.type != 'file' %}
+                            <li>
+                              <small> - {{ option.name }}: {{ option.value }}</small>
+                              <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                            </li>
+                          {% else %}
+                            <li>
+                              <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                              <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
                       {% for option in order_product.option %}
-
-                        {% if option.type != 'file' %}
-                          <small class="d-block"> - {{ option.name }}: {{ option.value }}</small>
-                        {% else %}
-                          <small class="d-block"> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                        {% endif %}
-                        <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
-
-                      {% endfor %}
-
-                      {% if order_product.subscription %}
-                        <small class="d-block"> - {{ text_subscription }}: {% if order_product.subscription_edit %}<a href="{{ order_product.subscription_edit }}" target="_blank">{{ order_product.subscription }}</a>{% else %}{{ order_product.subscription }}{% endif %}</small>
-                        <div id="error-product-{{ order_product_row }}-subscription" class="invalid-feedback"></div>
-                      {% endif %}
-
-                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/>
-                      <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
-
-                      {% for option in order_product.option %}
-
                         {% if option.type == 'select' or option.type == 'radio' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
                         {% endif %}
-
                         {% if option.type == 'checkbox' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
                         {% endif %}
-
                         {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                           <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
                         {% endif %}
-
                       {% endfor %}
-
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
                     <td class="text-start">{{ order_product.model }}</td>
@@ -153,7 +144,7 @@
 
               {% else %}
                 <tr>
-                <td colspan="4" class="text-center">{{ text_no_results }}</td>
+                  <td colspan="4" class="text-center">{{ text_no_results }}</td>
                 </tr>
               {% endif %}
             </tbody>
@@ -864,7 +855,6 @@ $('#input-product').autocomplete({
         }
     }
 });
-
 
 
 var products = [];

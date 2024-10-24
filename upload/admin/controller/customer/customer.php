@@ -608,7 +608,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($customer_info)) {
-			$data['account_custom_field'] = $customer_info['custom_field'];
+			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
 			$data['account_custom_field'] = [];
 		}

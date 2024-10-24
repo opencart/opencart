@@ -189,10 +189,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class_description` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$weight_class_data[$result['language_id']] = [
-				'title' => $result['title'],
-				'unit'  => $result['unit']
-			];
+			$weight_class_data[$result['language_id']] = $result;
 		}
 
 		return $weight_class_data;

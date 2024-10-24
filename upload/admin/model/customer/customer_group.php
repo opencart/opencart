@@ -171,10 +171,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
 		foreach ($query->rows as $result) {
-			$customer_group_data[$result['language_id']] = [
-				'name'        => $result['name'],
-				'description' => $result['description']
-			];
+			$customer_group_data[$result['language_id']] = $result;
 		}
 
 		return $customer_group_data;

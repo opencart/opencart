@@ -180,12 +180,7 @@ class Banner extends \Opencart\System\Engine\Model {
 		$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' ORDER BY `sort_order` ASC");
 
 		foreach ($banner_image_query->rows as $banner_image) {
-			$banner_image_data[$banner_image['language_id']][] = [
-				'title'      => $banner_image['title'],
-				'link'       => $banner_image['link'],
-				'image'      => $banner_image['image'],
-				'sort_order' => $banner_image['sort_order']
-			];
+			$banner_image_data[$banner_image['language_id']][] = $banner_image;
 		}
 
 		return $banner_image_data;

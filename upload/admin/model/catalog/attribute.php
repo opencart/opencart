@@ -236,7 +236,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
 		foreach ($query->rows as $result) {
-			$attribute_data[$result['language_id']] = ['name' => $result['name']];
+			$attribute_data[$result['language_id']] = $result;
 		}
 
 		return $attribute_data;

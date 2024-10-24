@@ -277,15 +277,7 @@ class Article extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
 
 		foreach ($query->rows as $result) {
-			$article_description_data[$result['language_id']] = [
-				'image'            => $result['image'],
-				'name'             => $result['name'],
-				'description'      => $result['description'],
-				'tag'              => $result['tag'],
-				'meta_title'       => $result['meta_title'],
-				'meta_description' => $result['meta_description'],
-				'meta_keyword'     => $result['meta_keyword']
-			];
+			$article_description_data[$result['language_id']] = $result;
 		}
 
 		return $article_description_data;

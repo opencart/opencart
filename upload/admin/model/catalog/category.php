@@ -509,13 +509,7 @@ class Category extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		foreach ($query->rows as $result) {
-			$category_description_data[$result['language_id']] = [
-				'name'             => $result['name'],
-				'meta_title'       => $result['meta_title'],
-				'meta_description' => $result['meta_description'],
-				'meta_keyword'     => $result['meta_keyword'],
-				'description'      => $result['description']
-			];
+			$category_description_data[$result['language_id']] = $result;
 		}
 
 		return $category_description_data;

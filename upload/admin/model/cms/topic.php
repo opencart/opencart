@@ -241,14 +241,7 @@ class Topic extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_description` WHERE `topic_id` = '" . (int)$topic_id . "'");
 
 		foreach ($query->rows as $result) {
-			$topic_description_data[$result['language_id']] = [
-				'image'            => $result['image'],
-				'name'             => $result['name'],
-				'description'      => $result['description'],
-				'meta_title'       => $result['meta_title'],
-				'meta_description' => $result['meta_description'],
-				'meta_keyword'     => $result['meta_keyword']
-			];
+			$topic_description_data[$result['language_id']] = $result;
 		}
 
 		return $topic_description_data;

@@ -157,7 +157,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$order_status_data[$result['language_id']] = ['name' => $result['name']];
+			$order_status_data[$result['language_id']] = $result;
 		}
 
 		return $order_status_data;

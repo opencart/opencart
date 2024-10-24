@@ -157,7 +157,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
 
 		foreach ($query->rows as $result) {
-			$return_action_data[$result['language_id']] = ['name' => $result['name']];
+			$return_action_data[$result['language_id']] = $result;
 		}
 
 		return $return_action_data;

@@ -178,7 +178,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group_description` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
 		foreach ($query->rows as $result) {
-			$filter_group_data[$result['language_id']] = ['name' => $result['name']];
+			$filter_group_data[$result['language_id']] = $result;
 		}
 
 		return $filter_group_data;

@@ -157,7 +157,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$return_status_data[$result['language_id']] = ['name' => $result['name']];
+			$return_status_data[$result['language_id']] = $result;
 		}
 
 		return $return_status_data;

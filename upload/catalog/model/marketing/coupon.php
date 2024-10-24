@@ -79,22 +79,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 		}
 
 		if ($status) {
-			return [
-				'coupon_id'     => $coupon_info['coupon_id'],
-				'code'          => $coupon_info['code'],
-				'name'          => $coupon_info['name'],
-				'type'          => $coupon_info['type'],
-				'discount'      => $coupon_info['discount'],
-				'shipping'      => $coupon_info['shipping'],
-				'total'         => $coupon_info['total'],
-				'product'       => $product_data,
-				'date_start'    => $coupon_info['date_start'],
-				'date_end'      => $coupon_info['date_end'],
-				'uses_total'    => $coupon_info['uses_total'],
-				'uses_customer' => $coupon_info['uses_customer'],
-				'status'        => $coupon_info['status'],
-				'date_added'    => $coupon_info['date_added']
-			];
+			return ['product' => $product_data] + $coupon_info;
 		} else {
 			return [];
 		}

@@ -166,7 +166,7 @@ class Download extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
 
 		foreach ($query->rows as $result) {
-			$download_description_data[$result['language_id']] = ['name' => $result['name']];
+			$download_description_data[$result['language_id']] = $result;
 		}
 
 		return $download_description_data;

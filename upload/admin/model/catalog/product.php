@@ -1304,13 +1304,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_attribute_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' AND `attribute_id` = '" . (int)$product_attribute['attribute_id'] . "'");
 
 			foreach ($product_attribute_description_query->rows as $product_attribute_description) {
-				$product_attribute_description_data[$product_attribute_description['language_id']] = ['text' => $product_attribute_description['text']];
+				$product_attribute_description_data[$product_attribute_description['language_id']] = $product_attribute_description;
 			}
 
-			$product_attribute_data[] = [
-				'attribute_id'                  => $product_attribute['attribute_id'],
-				'product_attribute_description' => $product_attribute_description_data
-			];
+			$product_attribute_data[] = ['product_attribute_description' => $product_attribute_description_data] + $product_attribute;
 		}
 
 		return $product_attribute_data;
@@ -1691,7 +1688,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_reward_data[$result['customer_group_id']] = ['points' => $result['points']];
+			$product_reward_data[$result['customer_group_id']] = $result;
 		}
 
 		return $product_reward_data;

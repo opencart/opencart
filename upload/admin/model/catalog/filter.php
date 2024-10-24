@@ -210,7 +210,7 @@ class Filter extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_description` WHERE `filter_id` = '" . (int)$filter_id . "'");
 
 		foreach ($query->rows as $result) {
-			$filter_data[$result['language_id']] = ['name' => $result['name']];
+			$filter_data[$result['language_id']] = $result;
 		}
 
 		return $filter_data;

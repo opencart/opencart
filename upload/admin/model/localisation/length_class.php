@@ -191,10 +191,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$length_class_data[$result['language_id']] = [
-				'title' => $result['title'],
-				'unit'  => $result['unit']
-			];
+			$length_class_data[$result['language_id']] = $result;
 		}
 
 		return $length_class_data;

@@ -44,7 +44,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				foreach ($option as $product_option_id => $value) {
 					$product_option_info = $this->model_catalog_product->getOption($product['product_id'], $product_option_id);
 
-					if ($product_option_info) {
+					if (!$product_option_info) {
 						$output['error']['product'][$key]['option_' . $product_option_id] = $this->language->get('error_option');
 					}
 				}
@@ -61,7 +61,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				// Validate subscription plan
 				$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
 
-				if ($subscriptions && in_array($product['subscription_plan_id'], array_column($subscriptions, 'subscription_plan_id'))) {
+				if ($subscriptions && !in_array($product['subscription_plan_id'], array_column($subscriptions, 'subscription_plan_id'))) {
 					$output['error']['product'][$key]['subscription'] = $this->language->get('error_subscription');
 				}
 			} else {

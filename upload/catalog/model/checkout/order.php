@@ -325,7 +325,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addSubscription(int $order_id, int $order_product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$data['trial_remaining'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "'");
 	}
 
 	/**
@@ -554,7 +554,7 @@ class Order extends \Opencart\System\Engine\Model {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['master_id'] . "' AND `subtract` = '1'");
 					}
 
-					$order_options = $this->getOptions($order_id, $order_product['order_product_id']);
+					$order_options = $this->model_checkout_order->getOptions($order_id, $order_product['order_product_id']);
 
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
@@ -585,7 +585,7 @@ class Order extends \Opencart\System\Engine\Model {
 						// Add options for subscription
 						$option_data = [];
 
-						$options = $this->getOptions($order_id, $order_product['order_product_id']);
+						$options = $this->model_checkout_order->getOptions($order_id, $order_product['order_product_id']);
 
 						foreach ($options as $option) {
 							if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
@@ -598,12 +598,18 @@ class Order extends \Opencart\System\Engine\Model {
 						}
 
 						// Add subscription if one is not setup
-						$subscription_info = $this->model_checkout_subscription->getSubscriptionProductByOrderProductId($order_id, $order_product['order_product_id']);
+						$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_product['order_product_id']);
 
 						if ($subscription_info) {
 							$subscription_id = $subscription_info['subscription_id'];
 						} else {
-							$subscription_id = $this->model_checkout_subscription->addSubscription($order_subscription_info + ['subscription_product' => $order_product + ['option' => $option_data]] + $order_info);
+							$subscription_product_data = [
+								'option'      => $option_data,
+								'trial_price' => $order_subscription_info['trial_price'],
+								'price'       => $order_subscription_info['price']
+	                        ] + $order_product;
+
+							$subscription_id = $this->model_checkout_subscription->addSubscription($order_info + $order_subscription_info + ['subscription_product' => [$subscription_product_data]]);
 						}
 
 						// Add history and set active subscription
@@ -649,7 +655,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 				foreach ($order_products as $order_product) {
 					// Subscription status set to suspend
-					$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
+					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_product['order_product_id']);
 
 					if ($subscription_info) {
 						// Add history and set suspended subscription

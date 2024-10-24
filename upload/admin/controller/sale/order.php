@@ -759,7 +759,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
-			//print_r($subscription_info);
+			print_r($subscription_info);
 
 			if ($subscription_info) {
 				$subscription_edit = $this->url->link('sale/subscription.info', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);

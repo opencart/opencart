@@ -4678,10 +4678,6 @@ function oc_db_schema() {
 				'type' => 'smallint(6)'
 			],
 			[
-				'name' => 'trial_remaining',
-				'type' => 'smallint(6)'
-			],
-			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(1)'
 			],

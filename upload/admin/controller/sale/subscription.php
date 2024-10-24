@@ -556,7 +556,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$option_data = [];
 
 				foreach ($result['option'] as $product_option_id => $value) {
-					$option_info = $this->model_catalog_product->getOption($subscription_info['product_id'], $product_option_id);
+					$option_info = $this->model_catalog_product->getOption($product_info['product_id'], $product_option_id);
 
 					if ($option_info['type'] != 'file') {
 						$data['options'][] = ['value' => $value] + $option_info;
@@ -574,8 +574,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				$data['subscription_products'][] = [
 					'option'       => $option_data,
-					'price_text'   => $this->currency->format($result['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code']),
-					'total_text'   => $this->currency->format($result['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code']),
+					'price_text'   => $this->currency->format($result['price'], $data['currency_code']),
+					'total_text'   => $this->currency->format($result['total'], $data['currency_code']),
 					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 				] + $result;
 			}

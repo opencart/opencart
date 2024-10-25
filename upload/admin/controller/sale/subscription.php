@@ -537,9 +537,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if (!empty($subscription_info)) {
 			$data['currency_id'] = $subscription_info['currency_id'];
-
-
-
 		} else {
 			$data['currency_id'] = $this->config->get('config_currency_id');
 			$currency = $this->config->get('config_currency');

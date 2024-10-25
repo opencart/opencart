@@ -81,11 +81,21 @@ class Address extends \Opencart\System\Engine\Model {
 				$country = $country_info['name'];
 				$iso_code_2 = $country_info['iso_code_2'];
 				$iso_code_3 = $country_info['iso_code_3'];
-				$address_format = $country_info['address_format'];
+				$address_format_id = $country_info['address_format_id'];
 			} else {
 				$country = '';
 				$iso_code_2 = '';
 				$iso_code_3 = '';
+				$address_format_id = '';
+			}
+
+			$this->load->model('localisation/address_format');
+
+			$address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
+
+			if ($address_format_info) {
+				$address_format = $address_format_info['address_format'];
+			} else {
 				$address_format = '';
 			}
 

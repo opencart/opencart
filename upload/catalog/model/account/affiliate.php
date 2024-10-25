@@ -60,7 +60,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($query->num_rows) {
-			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
 		} else {
 			return [];
 		}
@@ -77,7 +77,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($code) . "'");
 
 		if ($query->num_rows) {
-			return $query->row + ['custom_field' => json_decode($query->row['custom_field'], true)];
+			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
 		} else {
 			return [];
 		}

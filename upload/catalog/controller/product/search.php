@@ -149,16 +149,7 @@ class Search extends \Opencart\System\Engine\Controller {
 			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
 
 			foreach ($categories_2 as $category_2) {
-				$level_3_data = [];
-
-				$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
-
-				foreach ($categories_3 as $category_3) {
-					$level_3_data[] = [
-						'category_id' => $category_3['category_id'],
-						'name'        => $category_3['name'],
-					];
-				}
+				$level_3_data = $this->model_catalog_category->getCategories($category_2['category_id']);
 
 				$level_2_data[] = [
 					'category_id' => $category_2['category_id'],
@@ -167,11 +158,7 @@ class Search extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['categories'][] = [
-				'category_id' => $category_1['category_id'],
-				'name'        => $category_1['name'],
-				'children'    => $level_2_data
-			];
+			$data['categories'][] = ['children' => $level_2_data] + $category_1;
 		}
 
 		$data['products'] = [];

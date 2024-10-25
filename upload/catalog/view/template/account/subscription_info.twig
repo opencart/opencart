@@ -69,21 +69,60 @@
           </tbody>
         </table>
       {% endif %}
-      <table class="table table-bordered table-hover">
+      <table class="table table-bordered">
         <thead>
           <tr>
-            <td class="text-start w-50">{{ text_description }}</td>
-            <td class="text-start w-50">{{ text_quantity }}</td>
+            <td>{{ column_product }}</td>
+            <td>{{ column_model }}</td>
+            <td class="text-end">{{ column_quantity }}</td>
+            <td class="text-end">{{ column_trial_price }}</td>
+            <td class="text-end">{{ column_price }}</td>
           </tr>
         </thead>
         <tbody>
+      {% if products %}
+
+        {% for product in products %}
           <tr>
-            <td class="text-start"><a href="{{ product }}">{{ name }}</a>
-              <br/>{{ description }}</td>
-            <td class="text-start">{{ product_quantity }}</td>
+            <td class="text-start">
+              <a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
+              <ul class="list-unstyled">
+                {% for option in product.option %}
+                  {% if option.type != 'file' %}
+                    <li>
+                      <small> - {{ option.name }}: {{ option.value }}</small>
+                    </li>
+                  {% else %}
+                    <li>
+                      <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </td>
+            <td class="text-start">{{ product.model }}</td>
+            <td class="text-end">{{ product.quantity }}</td>
+
+            <td class="text-end">{{ product.trial_price }}</td>
+
+            <td class="text-end">{{ product.price }}</td>
           </tr>
-        </tbody>
+        {% endfor %}
+
+      {% else %}
+        <tr>
+          <td colspan="4" class="text-center">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+      </tbody>
       </table>
+
+
+
+
+      <div id="">{{ description }}</div>
+
+
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
       <h2>{{ text_order }}</h2>

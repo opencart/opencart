@@ -59,13 +59,10 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['returns'][] = [
-				'return_id'  => $result['return_id'],
-				'order_id'   => $result['order_id'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
-				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'href'       => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)
-			];
+			] + $result;
 		}
 
 		$return_total = $this->model_account_returns->getTotalReturns();
@@ -169,9 +166,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$data['histories'][] = [
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'status'     => $result['status'],
 					'comment'    => nl2br($result['comment'])
-				];
+				] + $result;
 			}
 
 			$data['continue'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . $url . '&customer_token=' . $this->session->data['customer_token']);

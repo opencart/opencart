@@ -14,33 +14,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 */
 	public function getSubscription(int $subscription_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` `s` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		if ($query->num_rows) {
 			return [
-				'option'          => $query->row['option'] ? json_decode($query->row['option'], true) : '',
-				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '',
-				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : ''
-			] + $query->row;
-		}
-
-		return [];
-	}
-
-	/**
-	 * Get Subscription By Order Product ID
-	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
-		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
-
-		if ($query->num_rows) {
-			return [
-				'option'          => $query->row['option'] ? json_decode($query->row['option'], true) : '',
 				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '',
 				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : ''
 			] + $query->row;
@@ -110,6 +87,38 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `payment_address_id` = '" . (int)$address_id . "'");
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+     * Get Subscription Products
+	 *
+	 * @param int $address_id
+	 *
+	 * @return int
+	 */
+	public function getProducts(int $subscription_id): array {
+		$subscription_product_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+		foreach ($query->rows as $result) {
+			$subscription_product_data[] = ['option' => $query->row['option'] ? json_decode($query->row['option'], true) : ''] + $result;
+		}
+
+		return $subscription_product_data;
+	}
+
+	/**
+	 * Get Total Products
+	 *
+	 * @param int $subscription_id
+	 *
+	 * @return int
+	 */
+	public function getTotalProducts(int $subscription_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+		return $query->row['total'];
 	}
 
 	/**

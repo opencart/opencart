@@ -128,17 +128,14 @@ class WishList extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['products'][] = [
-					'product_id' => $product_info['product_id'],
-					'thumb'      => $image,
-					'name'       => $product_info['name'],
-					'model'      => $product_info['model'],
-					'stock'      => $stock,
-					'price'      => $price,
-					'special'    => $special,
-					'minimum'    => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
-					'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']),
-					'remove'     => $this->url->link('account/wishlist.remove', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id'] . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''))
-				];
+					'thumb'   => $image,
+					'stock'   => $stock,
+					'price'   => $price,
+					'special' => $special,
+					'minimum' => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
+					'href'    => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']),
+					'remove'  => $this->url->link('account/wishlist.remove', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id'] . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''))
+				] + $product_info;
 			} else {
 				$this->model_account_wishlist->deleteWishlist($this->customer->getId(), $result['product_id']);
 			}

@@ -47,11 +47,10 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 			// Level 1
 			$data['categories'][] = [
-				'name'     => $category['name'],
 				'children' => $children_data,
 				'column'   => $column,
 				'href'     => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'])
-			];
+			] + $category;
 		}
 
 		return $this->load->view('common/menu', $data);

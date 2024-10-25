@@ -86,7 +86,7 @@ class Address extends \Opencart\System\Engine\Model {
 				$country = '';
 				$iso_code_2 = '';
 				$iso_code_3 = '';
-				$address_format_id = '';
+				$address_format_id = 0;
 			}
 
 			$this->load->model('localisation/address_format');

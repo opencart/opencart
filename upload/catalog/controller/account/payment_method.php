@@ -100,13 +100,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 					$payment_method_info = $this->{$key}->getStored();
 
 					if ($payment_method_info) {
-						$data['payment_methods'][] = [
-							'code'        => $payment_method_info['code'],
-							'name'        => $payment_method_info['name'],
-							'description' => $payment_method_info['description'],
-							'image'       => $payment_method_info['image'],
-							'delete'      => $this->url->link('account/payment_method.delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&code=' . $payment_method_info['code'])
-						];
+						$data['payment_methods'][] = ['delete' => $this->url->link('account/payment_method.delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&code=' . $payment_method_info['code'])] + $payment_method_info;
 					}
 				}
 			}

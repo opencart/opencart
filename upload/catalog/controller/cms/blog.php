@@ -229,16 +229,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 		$data['search'] = $filter_search;
 		$data['topic_id'] = $filter_topic_id;
 
-		$data['topics'] = [];
-
-		$results = $this->model_cms_topic->getTopics();
-
-		foreach ($results as $result) {
-			$data['topics'][] = [
-				'topic_id' => $result['topic_id'],
-				'name'     => $result['name']
-			];
-		}
+		$data['topics'] = $this->model_cms_topic->getTopics();
 
 		$url = '';
 

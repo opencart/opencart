@@ -165,10 +165,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
 			foreach ($totals as $result) {
-				$data['totals'][] = [
-					'title' => $result['title'],
-					'text'  => $price_status ? $this->currency->format($result['value'], $this->session->data['currency']) : ''
-				];
+				$data['totals'][] = ['text' => $price_status ? $this->currency->format($result['value'], $this->session->data['currency']) : ''] + $result;
 			}
 		}
 

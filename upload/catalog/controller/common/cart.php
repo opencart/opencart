@@ -17,6 +17,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$total = 0;
 
 		$this->load->model('checkout/cart');
+		$this->load->model('tool/image');
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -80,10 +81,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$data['totals'] = [];
 
 		foreach ($totals as $total) {
-			$data['totals'][] = [
-				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-			];
+			$data['totals'][] = ['text'  => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}
 
 		$data['list'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));

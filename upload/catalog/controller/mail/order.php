@@ -275,10 +275,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				$option_data[] = [
-					'name'  => $order_option['name'],
-					'value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)
-				];
+				$option_data[] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $order_option;
 			}
 
 			$description = '';
@@ -310,15 +307,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['products'][] = [
-				'name'         => $order_product['name'],
-				'model'        => $order_product['model'],
 				'option'       => $option_data,
 				'subscription' => $description,
-				'quantity'     => $order_product['quantity'],
 				'price'        => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'total'        => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'reward'       => $order_product['reward']
-			];
+				'total'        => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+			] + $order_product;
 		}
 
 		// Order Totals
@@ -327,10 +320,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_totals = $this->model_checkout_order->getTotals($order_info['order_id']);
 
 		foreach ($order_totals as $order_total) {
-			$data['totals'][] = [
-				'title' => $order_total['title'],
-				'text'  => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
-			];
+			$data['totals'][] = ['text' => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $order_total;
 		}
 
 		$this->load->model('setting/setting');
@@ -545,10 +535,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					$option_data[] = [
-						'name'  => $order_option['name'],
-						'value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)
-					];
+					$option_data[] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $order_option;
 				}
 
 				$description = '';
@@ -578,13 +565,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['products'][] = [
-					'name'         => $order_product['name'],
-					'model'        => $order_product['model'],
-					'quantity'     => $order_product['quantity'],
 					'option'       => $option_data,
 					'subscription' => $description,
 					'total'        => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? $order_product['tax'] * $order_product['quantity'] : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				];
+				] + $order_product;
 			}
 
 			$data['totals'] = [];
@@ -592,10 +576,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
 			foreach ($order_totals as $order_total) {
-				$data['totals'][] = [
-					'title' => $order_total['title'],
-					'value' => html_entity_decode($this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				];
+				$data['totals'][] = ['value' => html_entity_decode($this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')] + $order_total;
 			}
 
 			$data['comment'] = nl2br($order_info['comment']);

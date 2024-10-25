@@ -199,11 +199,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$product_data[] = [
 				'subscription_plan_id' => $product['subscription'] ? $product['subscription']['subscription_plan_id'] : 0,
-				'subscription'         => $subscription,
-				'price_text'           => $product['price_text'],
-				'price'                => $product['price'],
-				'total_text'           => $product['total_text'],
-				'total'                => $product['total']
+				'subscription'         => $subscription
 			] + $product;
 		}
 
@@ -222,10 +218,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$total_data = [];
 
 		foreach ($totals as $total) {
-			$total_data[] = [
-				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-			];
+			$total_data[] = ['text'  => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}
 
 		return $total_data;

@@ -59,15 +59,10 @@ class Contact extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['locations'][] = [
-					'location_id' => $location_info['location_id'],
-					'name'        => $location_info['name'],
-					'address'     => nl2br($location_info['address']),
-					'geocode'     => $location_info['geocode'],
-					'telephone'   => $location_info['telephone'],
-					'image'       => $image,
-					'open'        => nl2br($location_info['open']),
-					'comment'     => $location_info['comment']
-				];
+					'address' => nl2br($location_info['address']),
+					'image'   => $image,
+					'open'    => nl2br($location_info['open'])
+				] + $location_info;
 			}
 		}
 

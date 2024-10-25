@@ -410,11 +410,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
 
-				$data['subscription_plans'][] = [
-					'subscription_plan_id' => $result['subscription_plan_id'],
-					'name'                 => $result['name'],
-					'description'          => $description
-				];
+				$data['subscription_plans'][] = ['description' => $description] + $result;
 			}
 
 			if ($product_info['minimum']) {

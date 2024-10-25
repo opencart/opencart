@@ -538,12 +538,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!empty($subscription_info)) {
 			$data['currency_id'] = $subscription_info['currency_id'];
 		} else {
-			$data['currency_id'] = $this->config->get('config_currency_id');
-			$currency = $this->config->get('config_currency');
+			$data['currency_id'] = 0;
 		}
 
+		$currency_info = $this->model_localisation_currency->getCurrency($data['currency_id']);
 
-		$currency = $this->model_localisation_currency->getCurrency($subscription_info['currency_id']);
+		if ($currency_info) {
+			$currency = $currency_info['code'];
+		} else {
+			$currency = $this->config->get('config_currency');
+		}
 
 		// Products
 		$data['subscription_products'] = [];
@@ -578,17 +582,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				$data['subscription_products'][] = [
 					'option'       => $option_data,
-					'price_text'   => $this->currency->format($result['price'], $data['currency_code']),
-					'total_text'   => $this->currency->format($result['total'], $data['currency_code']),
-					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+					'price_text'   => $this->currency->format($result['price'], $currency),
+					'trial_price_text'   => $this->currency->format($result['trial_price'], $currency),
+					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
 				] + $result;
 			}
-		}
-
-		if (!empty($product_info)) {
-			$data['product_edit'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_info['product_id']);
-		} else {
-			$data['product_edit'] = '';
 		}
 
 		// Subscription

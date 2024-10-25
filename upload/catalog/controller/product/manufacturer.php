@@ -44,10 +44,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				$data['categories'][$key]['href'] = $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'));
 			}
 
-			$data['categories'][$key]['manufacturer'][] = [
-				'name' => $result['name'],
-				'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])
-			];
+			$data['categories'][$key]['manufacturer'][] = ['href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])] + $result;
 		}
 
 		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));

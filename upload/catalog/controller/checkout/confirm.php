@@ -311,10 +311,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$data['totals'] = [];
 
 		foreach ($totals as $total) {
-			$data['totals'][] = [
-				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-			];
+			$data['totals'][] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}
 
 		// Validate if payment method has been set.

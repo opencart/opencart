@@ -31,7 +31,8 @@ $_['text_cancelled']              = 'Recurring payment has been cancelled';
 
 // Column
 $_['column_subscription_id']      = 'Subscription ID';
-$_['column_product']              = 'Product';
+$_['column_product']              = 'No. of Products';
+$_['column_description']          = 'Subscription';
 $_['column_order_id']             = 'Order ID';
 $_['column_status']               = 'Status';
 $_['column_total']                = 'Total';

@@ -302,7 +302,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 */
 	public function getOption(int $product_id, int $product_option_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` WHERE `product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "' AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}

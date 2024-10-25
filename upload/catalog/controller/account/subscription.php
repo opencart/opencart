@@ -54,66 +54,57 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['subscriptions'] = [];
 
 		$this->load->model('account/subscription');
-		$this->load->model('account/order');
-		$this->load->model('catalog/product');
 		$this->load->model('localisation/currency');
 		$this->load->model('localisation/subscription_status');
 
 		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+			$currency_info = $this->model_localisation_currency->getCurrency($result['currency_id']);
 
-			if ($product_info) {
-				$currency_info = $this->model_localisation_currency->getCurrency($result['currency_id']);
-
-				if ($currency_info) {
-					$currency = $currency_info['code'];
-				} else {
-					$currency = $this->config->get('config_currency');
-				}
-
-				$description = '';
-
-				if ($result['trial_status']) {
-					$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $currency);
-					$trial_cycle = $result['trial_cycle'];
-					$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
-					$trial_duration = $result['trial_duration'];
-
-					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
-				}
-
-				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $currency);
-				$cycle = $result['cycle'];
-				$frequency = $this->language->get('text_' . $result['frequency']);
-				$duration = $result['duration'];
-
-				if ($duration) {
-					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
-				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
-				}
-
-				$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
-
-				if ($subscription_status_info) {
-					$subscription_status = $subscription_status_info['name'];
-				} else {
-					$subscription_status = '';
-				}
-
-				$data['subscriptions'][] = [
-					'subscription_id' => $result['subscription_id'],
-					'product_id'      => $result['product_id'],
-					'product_name'    => $product_info['name'],
-					'description'     => $description,
-					'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
-					'status'          => $subscription_status,
-					'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'view'            => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id'])
-				];
+			if ($currency_info) {
+				$currency = $currency_info['code'];
+			} else {
+				$currency = $this->config->get('config_currency');
 			}
+
+			$description = '';
+
+			if ($result['trial_status']) {
+				$trial_price = $this->currency->format($result['trial_price'], $currency);
+				$trial_cycle = $result['trial_cycle'];
+				$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
+				$trial_duration = $result['trial_duration'];
+
+				$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+			}
+
+			$price = $this->currency->format($result['price'], $currency);
+			$cycle = $result['cycle'];
+			$frequency = $this->language->get('text_' . $result['frequency']);
+			$duration = $result['duration'];
+
+			if ($duration) {
+				$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+			} else {
+				$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+			}
+
+			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
+
+			if ($subscription_status_info) {
+				$subscription_status = $subscription_status_info['name'];
+			} else {
+				$subscription_status = '';
+			}
+
+			$data['subscriptions'][] = [
+				'product_total' => $this->model_account_subscription->getTotalProducts($result['subscription_id']),
+				'description'   => $description,
+				'status'        => $subscription_status,
+				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'view'          => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id'])
+			] + $result;
 		}
 
 		$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
@@ -347,18 +338,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['payment_method'] = '';
 			}
 
-			$this->load->model('catalog/product');
-
-			$product_info = $this->model_catalog_product->getProduct($subscription_info['product_id']);
-
-			if ($product_info) {
-				$data['name'] = $product_info['name'];
-			} else {
-				$data['name'] = '';
-			}
-
-			$data['quantity'] = $subscription_info['quantity'];
-
 			$currency_info = $this->model_localisation_currency->getCurrency($subscription_info['currency_id']);
 
 			if ($currency_info) {
@@ -366,6 +345,49 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			} else {
 				$currency = $this->config->get('config_currency');
 			}
+
+			$data['products'] = [];
+
+			$this->load->model('catalog/product');
+
+			$results = $this->model_account_subscription->getProducts($subscription_id);
+
+			foreach ($results as $result) {
+				$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+
+				if ($product_info) {
+					$option_data = [];
+
+					foreach ($result['option'] as $product_option_id => $value) {
+						$option_info = $this->model_catalog_product->getOption($product_info['product_id'], $product_option_id);
+
+						if ($option_info) {
+							if ($option_info['type'] == 'file') {
+								$upload_info = $this->model_tool_upload->getUploadByCode($value);
+
+								if ($upload_info) {
+									$value = $upload_info['name'];
+								} else {
+									$value = '';
+								}
+							}
+
+							$data['options'][] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $option_info;
+						}
+					}
+
+					$data['products'][] = [
+						'option'      => $option_data,
+						'trial_price' => $this->currency->format($result['trial_price'], $currency),
+						'price'       => $this->currency->format($result['price'], $currency),
+						'product'     => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					] + $result + $product_info;
+				}
+			}
+
+
+			print_r($data['subscription_products']);
+
 
 			$this->load->model('localisation/subscription_status');
 
@@ -403,8 +425,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['history'] = $this->getHistory();
 			$data['order'] = $this->getOrder();
 
-			//$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
-			$data['product'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&product_id=' . $subscription_info['product_id']);
+			$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -460,10 +481,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
-				'status'     => $result['status'],
 				'comment'    => nl2br($result['comment']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
+			] + $result;
 		}
 
 		$subscription_total = $this->model_account_subscription->getTotalHistories($subscription_id);
@@ -519,12 +539,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
-				'order_id'   => $result['order_id'],
-				'status'     => $result['status'],
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'view'       => $this->url->link('sale/subscription.order', 'customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id'] . '&page={page}')
-			];
+			] + $result;
 		}
 
 		$order_total = $this->model_account_order->getTotalOrdersBySubscriptionId($subscription_id);

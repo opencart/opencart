@@ -28,17 +28,17 @@
         <div class="col">
           <table class="table table-bordered table-hover">
             {% if shipping_method %}
-            <tr>
-              <td><strong>{{ text_shipping_method }}</strong></td>
-              <td>{{ shipping_method }}</td>
-            </tr>
+              <tr>
+                <th>{{ text_shipping_method }}</th>
+                <td>{{ shipping_method }}</td>
+              </tr>
             {% endif %}
             <tr>
-              <td><strong>{{ text_payment_method }}</strong></td>
+              <td>{{ text_payment_method }}</td>
               <td>{{ payment_method }}</td>
             </tr>
             <tr>
-              <td><b>{{ text_date_added }}</b></td>
+              <td>{{ text_date_added }}</td>
               <td>{{ date_added }}</td>
             </tr>
           </table>
@@ -48,6 +48,7 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
+
               {% if payment_address %}
                 <td class="text-start align-top">{{ text_payment_address }}</td>
               {% endif %}
@@ -55,81 +56,77 @@
               {% if shipping_address %}
                 <td class="text-start align-top">{{ text_shipping_address }}</td>
               {% endif %}
+
             </tr>
           </thead>
           <tbody>
             <tr>
+
               {% if payment_address %}
                 <td class="text-start align-top">{{ payment_address }}</td>
               {% endif %}
 
               {% if shipping_address %}
                 <td class="text-start align-top">{{ shipping_address }}</td>
-              {% endif %}</tr>
+              {% endif %}
+
+            </tr>
           </tbody>
         </table>
       {% endif %}
       <table class="table table-bordered">
         <thead>
           <tr>
-            <td>{{ column_product }}</td>
-            <td>{{ column_model }}</td>
-            <td class="text-end">{{ column_quantity }}</td>
-            <td class="text-end">{{ column_trial_price }}</td>
-            <td class="text-end">{{ column_price }}</td>
+            <th>{{ column_product }}</th>
+            <th>{{ column_model }}</th>
+            <th class="text-end">{{ column_quantity }}</th>
+            <th class="text-end">{{ column_trial_price }}</th>
+            <th class="text-end">{{ column_price }}</th>
           </tr>
         </thead>
         <tbody>
-      {% if products %}
+          {% if products %}
 
-        {% for product in products %}
-          <tr>
-            <td class="text-start">
-              <a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
-              <ul class="list-unstyled">
-                {% for option in product.option %}
-                  {% if option.type != 'file' %}
-                    <li>
-                      <small> - {{ option.name }}: {{ option.value }}</small>
-                    </li>
-                  {% else %}
-                    <li>
-                      <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                    </li>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </td>
-            <td class="text-start">{{ product.model }}</td>
-            <td class="text-end">{{ product.quantity }}</td>
+            {% for product in products %}
+              <tr>
+                <td class="text-start">
+                  <a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
+                  <ul class="list-unstyled">
+                    {% for option in product.option %}
+                      <li>
+                        <small> - {{ option.name }}: {{ option.value }}</small>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </td>
+                <td class="text-start">{{ product.model }}</td>
+                <td class="text-end">{{ product.quantity }}</td>
+                <td class="text-end">{{ product.trial_price }}</td>
+                <td class="text-end">{{ product.price }}</td>
+              </tr>
+            {% endfor %}
 
-            <td class="text-end">{{ product.trial_price }}</td>
-
-            <td class="text-end">{{ product.price }}</td>
-          </tr>
-        {% endfor %}
-
-      {% else %}
-        <tr>
-          <td colspan="4" class="text-center">{{ text_no_results }}</td>
-        </tr>
-      {% endif %}
-      </tbody>
+          {% else %}
+            <tr>
+              <td colspan="5" class="text-center">{{ text_no_results }}</td>
+            </tr>
+          {% endif %}
+        </tbody>
       </table>
-
-
-
 
       <div id="">{{ description }}</div>
 
-
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
+
       <h2>{{ text_order }}</h2>
       <div id="order">{{ order }}</div>
+
       <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('#history').on('click', '.pagination a', function(e) {

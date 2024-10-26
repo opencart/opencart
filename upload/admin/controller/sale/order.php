@@ -719,10 +719,10 @@ class Order extends \Opencart\System\Engine\Controller {
 					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 					if ($upload_info) {
-						$option_data[] = $option + [
+						$option_data[] = [
 							'value' => $upload_info['name'],
 							'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-						];
+						] + $option;
 					}
 				}
 			}
@@ -1303,6 +1303,40 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('sale/order');
+
+			foreach ($selected as $order_id) {
+				$this->model_sale_order->deleteOrder($order_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Invoice
 	 *
 	 * @return void
@@ -1468,10 +1502,7 @@ class Order extends \Opencart\System\Engine\Controller {
 							}
 						}
 
-						$option_data[] = [
-							'name'  => $option['name'],
-							'value' => $value
-						];
+						$option_data[] = ['value' => $value] + $option;
 					}
 
 					// Subscription
@@ -1686,10 +1717,7 @@ class Order extends \Opencart\System\Engine\Controller {
 								}
 							}
 
-							$option_data[] = [
-								'name'  => $option['name'],
-								'value' => $value
-							];
+							$option_data[] = ['value' => $value] + $option;
 
 							$product_option_value_info = $this->model_catalog_product->getOptionValue($product['product_id'], $option['product_option_value_id']);
 
@@ -1703,19 +1731,10 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 
 						$product_data[] = [
-							'name'     => $product_info['name'],
-							'model'    => $product_info['model'],
 							'option'   => $option_data,
 							'quantity' => $product['quantity'],
-							'location' => $product_info['location'],
-							'sku'      => $product_info['sku'],
-							'upc'      => $product_info['upc'],
-							'ean'      => $product_info['ean'],
-							'jan'      => $product_info['jan'],
-							'isbn'     => $product_info['isbn'],
-							'mpn'      => $product_info['mpn'],
 							'weight'   => $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
-						];
+						] + $product_info;
 					}
 				}
 

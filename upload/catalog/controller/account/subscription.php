@@ -372,7 +372,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 								}
 							}
 
-							$data['options'][] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $option_info;
+							$option_data[] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $option_info;
 						}
 					}
 
@@ -384,10 +384,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					] + $result + $product_info;
 				}
 			}
-
-
-			print_r($data['subscription_products']);
-
 
 			$this->load->model('localisation/subscription_status');
 
@@ -423,7 +419,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			// Orders
 			$data['history'] = $this->getHistory();
-			$data['order'] = $this->getOrder();
 
 			$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
 

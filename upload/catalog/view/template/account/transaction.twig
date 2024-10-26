@@ -12,9 +12,9 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-start">{{ column_date_added }}</td>
-            <td class="text-start">{{ column_description }}</td>
-            <td class="text-end">{{ column_amount }}</td>
+            <th class="text-start">{{ column_date_added }}</th>
+            <th class="text-start">{{ column_description }}</th>
+            <th class="text-end">{{ column_amount }}</th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
             {% endfor %}
           {% else %}
             <tr>
-              <td class="text-center" colspan="5">{{ text_no_results }}</td>
+              <td class="text-center" colspan="3">{{ text_no_results }}</td>
             </tr>
           {% endif %}
         </tbody>

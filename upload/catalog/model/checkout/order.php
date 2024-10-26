@@ -687,7 +687,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function deleteHistory(int $order_id): void {
+	public function deleteHistories(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

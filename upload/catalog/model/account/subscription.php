@@ -90,6 +90,24 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription By Order Product ID
+	 *
+	 * @param int $order_id
+	 * @param int $order_product_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getProductByOrderProductId(int $order_id, int $order_product_id): array {
+		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		if ($query->num_rows) {
+			return ['option' => $query->row['option'] ? json_decode($query->row['option'], true) : ''] + $query->row;
+		}
+
+		return [];
+	}
+
+	/**
      * Get Subscription Products
 	 *
 	 * @param int $address_id

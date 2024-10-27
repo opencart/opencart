@@ -3,11 +3,11 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-          <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
-          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
-          <td class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
-          <td class="text-end">{{ column_action }}</td>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></th>
+          <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -15,14 +15,14 @@
           {% for language in languages %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ language.language_id }}" class="form-check-input"/></td>
-              <td class="text-start">{{ language.name }}
+              <td>{{ language.name }}
                 <br/>
                 {% if language.status %}
                   <small class="text-success">{{ text_enabled }}</small>
                 {% else %}
                   <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}</td>
-              <td class="text-start">{{ language.code }}</td>
+              <td>{{ language.code }}</td>
               <td class="text-end">{{ language.sort_order }}</td>
               <td class="text-end"><a href="{{ language.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>

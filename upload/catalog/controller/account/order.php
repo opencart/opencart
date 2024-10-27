@@ -129,8 +129,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->document->setTitle($heading_title);
 
-			$data['heading_title'] = $heading_title;
-
 			$url = '';
 
 			if (isset($this->request->get['page'])) {
@@ -300,7 +298,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$option_data[] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $option;
 				}
 
-				$description = '';
+				$subscription_plan = '';
 
 				$order_subscription_info = $this->model_account_order->getSubscription($order_id, $product['order_product_id']);
 
@@ -311,7 +309,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						$trial_frequency = $this->language->get('text_' . $order_subscription_info['trial_frequency']);
 						$trial_duration = $order_subscription_info['trial_duration'];
 
-						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
 					$price = $this->currency->format($order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
@@ -320,9 +318,9 @@ class Order extends \Opencart\System\Engine\Controller {
 					$duration = $order_subscription_info['duration'];
 
 					if ($order_subscription_info['duration']) {
-						$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
 					} else {
-						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 					}
 				}
 
@@ -343,14 +341,11 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['products'][] = [
-					'option'                   => $option_data,
-					'subscription_description' => $description,
-					'subscription'             => $description,
-					'price'                    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'                    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-
-
-
+					'option'            => $option_data,
+					'subscription_plan' => $subscription_plan,
+					'subscription'      => $subscription,
+					'price'             => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'             => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'href'              => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
 					'reorder'           => $reorder,
 					'return'            => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])

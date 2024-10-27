@@ -86,10 +86,10 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <td>{{ column_product }}</td>
-                <td>{{ column_model }}</td>
-                <td class="text-end">{{ column_quantity }}</td>
-                <td class="text-end" style="width: 1px;">{{ column_action }}</td>
+                <th>{{ column_product }}</th>
+                <th>{{ column_model }}</th>
+                <th class="text-end">{{ column_quantity }}</th>
+                <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
             <tbody>
@@ -99,7 +99,7 @@
 
                 {% for subscription_product in subscription_products %}
                   <tr>
-                    <td class="text-start">
+                    <td>
                       <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled">
@@ -131,7 +131,7 @@
                       {% endfor %}
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
-                    <td class="text-start">{{ order_product.model }}</td>
+                    <td>{{ order_product.model }}</td>
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price_text }}</td>
                     <td class="text-end">{{ order_product.total_text }}</td>

@@ -11,15 +11,15 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-start" colspan="2">{{ text_return_detail }}</td>
+            <td colspan="2">{{ text_return_detail }}</td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-start" style="width: 50%;"><b>{{ text_return_id }}</b> #{{ return_id }}
+            <td style="width: 50%;"><b>{{ text_return_id }}</b> #{{ return_id }}
               <br/>
               <b>{{ text_date_added }}</b> {{ date_added }}</td>
-            <td class="text-start" style="width: 50%;"><b>{{ text_orders_id }}</b> #{{ order_id }}
+            <td style="width: 50%;"><b>{{ text_orders_id }}</b> #{{ order_id }}
               <br/>
               <b>{{ text_date_ordered }}</b> {{ date_ordered }}</td>
           </tr>
@@ -30,15 +30,15 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start" style="width: 33.3%;">{{ column_product }}</td>
-              <td class="text-start" style="width: 33.3%;">{{ column_model }}</td>
+              <td style="width: 33.3%;">{{ column_product }}</td>
+              <td style="width: 33.3%;">{{ column_model }}</td>
               <td class="text-end" style="width: 33.3%;">{{ column_quantity }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-start">{{ product }}</td>
-              <td class="text-start">{{ model }}</td>
+              <td>{{ product }}</td>
+              <td>{{ model }}</td>
               <td class="text-end">{{ quantity }}</td>
             </tr>
           </tbody>
@@ -49,16 +49,16 @@
         <table class="list table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-start" style="width: 33.3%;">{{ column_reason }}</th>
-              <th class="text-start" style="width: 33.3%;">{{ column_opened }}</th>
-              <th class="text-start" style="width: 33.3%;">{{ column_action }}</th>
+              <th style="width: 33.3%;">{{ column_reason }}</th>
+              <th style="width: 33.3%;">{{ column_opened }}</th>
+              <th style="width: 33.3%;">{{ column_action }}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-start">{{ reason }}</td>
-              <td class="text-start">{{ opened }}</td>
-              <td class="text-start">{{ action }}</td>
+              <td>{{ reason }}</td>
+              <td>{{ opened }}</td>
+              <td>{{ action }}</td>
             </tr>
           </tbody>
         </table>
@@ -68,12 +68,12 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <td class="text-start">{{ text_comment }}</td>
+                <td>{{ text_comment }}</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="text-start">{{ comment }}</td>
+                <td>{{ comment }}</td>
               </tr>
             </tbody>
           </table>
@@ -84,18 +84,18 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-start" style="width: 33.3%;">{{ column_date_added }}</th>
-              <th class="text-start" style="width: 33.3%;">{{ column_status }}</th>
-              <th class="text-start" style="width: 33.3%;">{{ column_comment }}</th>
+              <th style="width: 33.3%;">{{ column_date_added }}</th>
+              <th style="width: 33.3%;">{{ column_status }}</th>
+              <th style="width: 33.3%;">{{ column_comment }}</th>
             </tr>
           </thead>
           <tbody>
             {% if histories %}
               {% for history in histories %}
                 <tr>
-                  <td class="text-start">{{ history.date_added }}</td>
-                  <td class="text-start">{{ history.status }}</td>
-                  <td class="text-start">{{ history.comment }}</td>
+                  <td>{{ history.date_added }}</td>
+                  <td>{{ history.status }}</td>
+                  <td>{{ history.comment }}</td>
                 </tr>
               {% endfor %}
             {% else %}

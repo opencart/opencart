@@ -4,8 +4,8 @@
       <thead>
         <tr>
           <th class="text-center">{{ column_image }}</th>
-          <th class="text-start">{{ column_name }}</th>
-          <th class="text-start">{{ column_model }}</th>
+          <th>{{ column_name }}</th>
+          <th>{{ column_model }}</th>
           <th class="text-end">{{ column_stock }}</th>
           <th class="text-end">{{ column_price }}</th>
           <th class="text-end">{{ column_action }}</th>
@@ -15,8 +15,8 @@
         {% for product in products %}
           <tr>
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}"/></a>{% endif %}</td>
-            <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a></td>
-            <td class="text-start">{{ product.model }}</td>
+            <td><a href="{{ product.href }}">{{ product.name }}</a></td>
+            <td>{{ product.model }}</td>
             <td class="text-end">{{ product.stock }}</td>
             <td class="text-end">
               {% if product.price %}

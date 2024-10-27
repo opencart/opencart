@@ -117,15 +117,15 @@
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-start">{{ entry_store }}</td>
-                      <td class="text-start">{{ entry_keyword }}</td>
+                      <th>{{ entry_store }}</th>
+                      <th>{{ entry_keyword }}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for store in stores %}
                       <tr>
-                        <td class="text-start">{{ store.name }}</td>
-                        <td class="text-start">
+                        <td>{{ store.name }}</td>
+                        <td>
                           {% for language in languages %}
                             <div class="input-group">
                               <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>

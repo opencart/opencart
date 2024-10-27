@@ -9,11 +9,21 @@
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-      <h1>{{ heading_title }}</h1>
 
-      <div class="form-control mb-3" style="min-height: 64px;">
-        <div class="lead"><strong>{{ text_invoice_no }}</strong>
-          <div>{% if invoice_no %} {{ invoice_no }} {% else %}{{ text_tbc }}{% endif %}</div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <div class="lead"><strong>{{ text_invoice_no }}</strong>
+              <div>{% if invoice_no %}{{ invoice_no }} {% else %}{{ text_tbc }}{% endif %}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <div class="lead"><strong>{{ text_order_id }}</strong>
+              <div>{{ order_id }}</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -21,7 +31,7 @@
         <div class="row">
 
           {% if payment_address %}
-            <div class="col-md mb-3">
+            <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <div>{{ payment_address }}</div>
@@ -54,6 +64,7 @@
             </div>
           </div>
         {% endif %}
+
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <div class="lead"><strong>{{ text_payment_method }}</strong>
@@ -62,12 +73,13 @@
           </div>
         </div>
       </div>
+
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-start">{{ column_name }}</th>
-              <th class="text-start">{{ column_model }}</th>
+              <th>{{ column_name }}</th>
+              <th>{{ column_model }}</th>
               <th class="text-end">{{ column_quantity }}</th>
               <th class="text-end">{{ column_price }}</th>
               <th class="text-end">{{ column_total }}</th>
@@ -77,7 +89,7 @@
           <tbody>
             {% for product in products %}
               <tr>
-                <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
+                <td><a href="{{ product.href }}">{{ product.name }}</a>
                   <ul class="list-unstyled">
                     {% for option in product.option %}
                       <li>
@@ -96,7 +108,7 @@
                     {% endif %}
                   </ul>
                 </td>
-                <td class="text-start">{{ product.model }}</td>
+                <td>{{ product.model }}</td>
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
@@ -128,32 +140,20 @@
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <div class="lead">
-              <strong>{{ text_shipping_method }}</strong>
-              <div>{{ shipping_method }}</div>
+              <strong>{{ text_comment }}</strong>
+              <div>{{ comment }}</div>
             </div>
           </div>
         </div>
 
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th class="text-start">{{ text_comment }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-start">{{ comment }}</td>
-            </tr>
-          </tbody>
-        </table>
       {% endif %}
+
+      <h2>{{ text_history }}</h2>
+
 
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
       <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-
-      <h2>{{ text_history }}</h2>
-
 
 
       {{ content_bottom }}

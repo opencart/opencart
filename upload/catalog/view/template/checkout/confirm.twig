@@ -2,14 +2,14 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th class="text-start">{{ column_name }}</th>
+        <th>{{ column_name }}</th>
         <th class="text-end">{{ column_total }}</th>
       </tr>
     </thead>
     <tbody>
       {% for product in products %}
         <tr>
-          <td class="text-start">{{ product.quantity }}x <a href="{{ product.href }}">{{ product.name }}</a>
+          <td>{{ product.quantity }}x <a href="{{ product.href }}">{{ product.name }}</a>
             {% for option in product.option %}
               <br/>
               <small> - {{ option.name }}: {{ option.value }}</small>

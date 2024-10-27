@@ -2,16 +2,16 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <td class="text-start">{{ column_date_added }}</td>
-        <td class="text-start">{{ column_comment }}</td>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_comment }}</th>
       </tr>
     </thead>
     <tbody>
       {% if histories %}
         {% for history in histories %}
           <tr>
-            <td class="text-start">{{ history.date_added }}</td>
-            <td class="text-start">{{ history.comment }}</td>
+            <td>{{ history.date_added }}</td>
+            <td>{{ history.comment }}</td>
           </tr>
         {% endfor %}
       {% else %}

@@ -4,6 +4,7 @@ $_['heading_title']              = 'Orders';
 
 // Text
 $_['text_account']               = 'Account';
+$_['text_order_id']              = 'Order ID';
 $_['text_order']                 = 'Order #%s';
 $_['text_invoice_no']            = 'Invoice No.';
 $_['text_tbc']                   = 'TBC';

@@ -68,10 +68,10 @@
             <table id="option-value" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-start required">{{ entry_option_value }}</td>
-                  <td class="text-center">{{ entry_image }}</td>
-                  <td class="text-end">{{ entry_sort_order }}</td>
-                  <td></td>
+                  <th class="required">{{ entry_option_value }}</th>
+                  <th class="text-center">{{ entry_image }}</th>
+                  <th class="text-end">{{ entry_sort_order }}</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -130,7 +130,7 @@ var option_value_row = {{ option_value_row }};
 
 function addOptionValue() {
     html = '<tr id="option-value-row-' + option_value_row + '">';
-    html += '  <td class="text-start"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
+    html += '  <td><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
   {% for language in languages %}
     html += '    <div class="input-group">';
     html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';

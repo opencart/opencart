@@ -3,10 +3,10 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-          <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
-          <td class="text-start"><a href="{{ sort_address }}"{% if sort == 'address' %} class="{{ order|lower }}"{% endif %}>{{ column_address }}</a></td>
-          <td class="text-end">{{ column_action }}</td>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th><a href="{{ sort_address }}"{% if sort == 'address' %} class="{{ order|lower }}"{% endif %}>{{ column_address }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -14,8 +14,8 @@
           {% for location in locations %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ location.location_id }}" class="form-check-input"/></td>
-              <td class="text-start">{{ location.name }}</td>
-              <td class="text-start">{{ location.address }}</td>
+              <td>{{ location.name }}</td>
+              <td>{{ location.address }}</td>
               <td class="text-end"><a href="{{ location.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}

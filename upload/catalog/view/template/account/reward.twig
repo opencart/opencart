@@ -13,8 +13,8 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-start">{{ column_date_added }}</th>
-              <th class="text-start">{{ column_description }}</th>
+              <th>{{ column_date_added }}</th>
+              <th>{{ column_description }}</th>
               <th class="text-end">{{ column_points }}</th>
             </tr>
           </thead>
@@ -22,8 +22,8 @@
             {% if rewards %}
               {% for reward in rewards %}
                 <tr>
-                  <td class="text-start">{{ reward.date_added }}</td>
-                  <td class="text-start">{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
+                  <td>{{ reward.date_added }}</td>
+                  <td>{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
                       {{ reward.description }}
                     {% endif %}</td>
                   <td class="text-end">{{ reward.points }}</td>

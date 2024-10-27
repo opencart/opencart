@@ -47,24 +47,22 @@
                 <table id="image-{{ language.language_id }}" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-start required">{{ entry_title }}</td>
-                      <td class="text-start">{{ entry_link }}</td>
-                      <td class="text-center">{{ entry_image }}</td>
-                      <td class="text-end">{{ entry_sort_order }}</td>
-                      <td></td>
+                      <th class="required">{{ entry_title }}</th>
+                      <th>{{ entry_link }}</th>
+                      <th class="text-center">{{ entry_image }}</th>
+                      <th class="text-end">{{ entry_sort_order }}</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {% if banner_images[language.language_id] %}
                       {% for banner_image in banner_images[language.language_id] %}
-
                         <tr id="image-row-{{ image_row }}">
-
-                          <td class="text-start">
+                          <td>
                             <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>
-                            <div id="error-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div></td>
-
-                          <td class="text-start" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/></td>
+                            <div id="error-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div>
+                          </td>
+                          <td style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/></td>
                           <td class="text-center">
                             <div class="border rounded d-block" style="max-width: 300px;">
                               <img src="{{ banner_image.thumb }}" alt="" title="" id="thumb-image-{{ language.language_id }}-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
@@ -104,11 +102,11 @@ $('button[id^=\'button-banner\']').on('click', function() {
     var element = this;
 
     html = '<tr id="image-row-' + image_row + '">';
-    html += '  <td class="text-start">';
+    html += '  <td>';
     html += '    <input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title|escape('js') }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/>';
     html += '    <div id="error-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="invalid-feedback"></div>';
     html += '  </td>';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link|escape('js') }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link" class="form-control"/></td>';
+    html += '  <td><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link|escape('js') }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link" class="form-control"/></td>';
     html += '  <td class="text-center">';
     html += '    <div class="border rounded d-block" style="max-width: 300px;">';
     html += '      <img src="{{ placeholder|escape('js') }}" alt="" title="" id="thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" data-oc-placeholder="{{ placeholder|escape('js') }}" class="img-fluid"/>';

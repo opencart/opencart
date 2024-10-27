@@ -2,16 +2,16 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <td class="text-start">{{ column_name }}</td>
-        <td class="text-end">{{ column_value }}</td>
-        <td class="text-end">{{ column_action }}</td>
+        <th>{{ column_name }}</th>
+        <th class="text-end">{{ column_value }}</th>
+        <th class="text-end">{{ column_action }}</th>
       </tr>
     </thead>
     <tbody>
       {% if statistics %}
         {% for statistic in statistics %}
           <tr>
-            <td class="text-start">{{ statistic.name }}</td>
+            <td>{{ statistic.name }}</td>
             <td class="text-end">{{ statistic.value }}</td>
             <td class="text-end"><a href="{{ statistic.href }}" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></a></td>
           </tr>

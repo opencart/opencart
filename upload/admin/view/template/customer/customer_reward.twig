@@ -2,17 +2,17 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-start">{{ column_date_added }}</td>
-        <td class="text-start">{{ column_description }}</td>
-        <td class="text-end">{{ column_points }}</td>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_description }}</th>
+        <th class="text-end">{{ column_points }}</th>
       </tr>
     </thead>
     <tbody>
       {% if rewards %}
         {% for reward in rewards %}
           <tr>
-            <td class="text-start">{{ reward.date_added }}</td>
-            <td class="text-start">{{ reward.description }}</td>
+            <td>{{ reward.date_added }}</td>
+            <td>{{ reward.description }}</td>
             <td class="text-end">{{ reward.points }}</td>
           </tr>
         {% endfor %}

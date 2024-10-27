@@ -1,20 +1,20 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <td class="text-start">{{ column_date_added }}</td>
-      <td class="text-start">{{ column_comment }}</td>
-      <td class="text-start">{{ column_status }}</td>
-      <td class="text-start">{{ column_notify }}</td>
+      <th>{{ column_date_added }}</th>
+      <th>{{ column_comment }}</th>
+      <th>{{ column_status }}</th>
+      <th>{{ column_notify }}</th>
     </tr>
   </thead>
   <tbody>
     {% if histories %}
       {% for history in histories %}
         <tr>
-          <td class="text-start">{{ history.date_added }}</td>
-          <td class="text-start">{{ history.comment }}</td>
-          <td class="text-start">{{ history.status }}</td>
-          <td class="text-start">{{ history.notify }}</td>
+          <td>{{ history.date_added }}</td>
+          <td>{{ history.comment }}</td>
+          <td>{{ history.status }}</td>
+          <td>{{ history.notify }}</td>
         </tr>
       {% endfor %}
     {% else %}

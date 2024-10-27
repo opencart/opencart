@@ -3,12 +3,12 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-          <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
-          <td class="text-start"><a href="{{ sort_email }}"{% if sort == 'c.email' %} class="{{ order|lower }}"{% endif %}>{{ column_email }}</a></td>
-          <td class="text-start"><a href="{{ sort_customer_group }}"{% if sort == 'customer_group' %} class="{{ order|lower }}"{% endif %}>{{ column_customer_group }}</a></td>
-          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'c.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
-          <td class="text-end">{{ column_action }}</td>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th><a href="{{ sort_email }}"{% if sort == 'c.email' %} class="{{ order|lower }}"{% endif %}>{{ column_email }}</a></th>
+          <th><a href="{{ sort_customer_group }}"{% if sort == 'customer_group' %} class="{{ order|lower }}"{% endif %}>{{ column_customer_group }}</a></th>
+          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'c.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -16,16 +16,16 @@
           {% for customer in customers %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" class="form-check-input"/></td>
-              <td class="text-start">{{ customer.name }}
+              <td>{{ customer.name }}
                 <br/>
                 {% if customer.status %}
                   <small class="text-success">{{ text_enabled }}</small>
                 {% else %}
                   <small class="text-danger">{{ text_disabled }}</small>
                 {% endif %}</td>
-              <td class="text-start">{{ customer.email }}</td>
-              <td class="text-start">{{ customer.customer_group }}</td>
-              <td class="text-start d-none d-lg-table-cell">{{ customer.date_added }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.customer_group }}</td>
+              <td class="d-none d-lg-table-cell">{{ customer.date_added }}</td>
               <td class="text-end">
                 <div class="btn-group dropdown">
                   <a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>

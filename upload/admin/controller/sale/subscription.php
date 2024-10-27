@@ -581,10 +581,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['subscription_products'][] = [
-					'option'       => $option_data,
-					'price_text'   => $this->currency->format($result['price'], $currency),
-					'trial_price_text'   => $this->currency->format($result['trial_price'], $currency),
-					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
+					'option'           => $option_data,
+					'price_text'       => $this->currency->format($result['price'], $currency),
+					'trial_price_text' => $this->currency->format($result['trial_price'], $currency),
+					'product_edit'     => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
 				] + $result;
 			}
 		}

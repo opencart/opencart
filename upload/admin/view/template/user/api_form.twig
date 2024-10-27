@@ -56,15 +56,15 @@
                 <table id="ip" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-start">{{ entry_ip }}</td>
-                      <td class="text-end"></td>
+                      <th>{{ entry_ip }}</th>
+                      <th class="text-end"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {% set ip_row = 0 %}
                     {% for api_ip in api_ips %}
                       <tr id="ip-row-{{ ip_row }}">
-                        <td class="text-start"><input type="text" name="api_ip[]" value="{{ api_ip }}" placeholder="{{ entry_ip }}" class="form-control"/></td>
+                        <td><input type="text" name="api_ip[]" value="{{ api_ip }}" placeholder="{{ entry_ip }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#ip-row-{{ ip_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set ip_row = ip_row + 1 %}

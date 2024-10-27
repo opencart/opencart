@@ -2,20 +2,20 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-start">{{ column_ip }}</td>
-        <td class="text-start">{{ column_store }}</td>
-        <td class="text-start">{{ column_country }}</td>
-        <td class="text-start">{{ column_date_added }}</td>
+        <th>{{ column_ip }}</th>
+        <th>{{ column_store }}</th>
+        <th>{{ column_country }}</th>
+        <th>{{ column_date_added }}</th>
       </tr>
     </thead>
     <tbody>
       {% if reports %}
         {% for report in reports %}
           <tr>
-            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
-            <td class="text-start">{{ report.store }}</td>
-            <td class="text-start">{{ report.country }}</td>
-            <td class="text-start">{{ report.date_added }}</td>
+            <td><a href="https://whatismyipaddress.com/ip/{{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
+            <td>{{ report.store }}</td>
+            <td>{{ report.country }}</td>
+            <td>{{ report.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}

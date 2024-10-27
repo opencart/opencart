@@ -95,12 +95,12 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <td class="text-start">{{ column_product }}</td>
-                <td class="text-start">{{ column_model }}</td>
-                <td class="text-end">{{ column_quantity }}</td>
-                <td class="text-end">{{ column_price }}</td>
-                <td class="text-end">{{ column_total }}</td>
-                <td class="text-end" style="width: 1px;">{{ column_action }}</td>
+                <th>{{ column_product }}</th>
+                <th>{{ column_model }}</th>
+                <th class="text-end">{{ column_quantity }}</th>
+                <th class="text-end">{{ column_price }}</th>
+                <th class="text-end">{{ column_total }}</th>
+                <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
             <tbody id="order-product">
@@ -108,7 +108,7 @@
               {% if order_products %}
                 {% for order_product in order_products %}
                   <tr class="bg-danger">
-                    <td class="text-start">
+                    <td>
                       <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled mb-0">
@@ -151,7 +151,7 @@
                       {% endfor %}
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
-                    <td class="text-start">{{ order_product.model }}</td>
+                    <td>{{ order_product.model }}</td>
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price_text }}</td>
                     <td class="text-end">{{ order_product.total_text }}</td>
@@ -446,7 +446,7 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <td colspan="2">{{ text_browser }}</td>
+                    <th colspan="2">{{ text_browser }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2361,6 +2361,8 @@ $('#button-refresh').on('click', function() {
 $('#button-confirm').on('click', function() {
     var element = this;
 
+    console.log($('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize());
+
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
@@ -2393,14 +2395,23 @@ $('#button-confirm').on('click', function() {
                 }
 
                 if (json['error']['product']) {
-                    for (product_row in json['error']['product']) {
-                        product = json['error']['product'][product_row];
+                    if (typeof json['error']['product'] == 'string') {
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                        for (key in product) {
-                            $('#error-product-' + product_row + '-' + key.replaceAll('_', '-')).html(product[key]).addClass('d-block');
+                        $('#input-product-info').addClass('is-invalid');
+                    }
+
+
+
+
+                    if (typeof json['error']['product'] == 'object') {
+                        for (product_row in json['error']['product']) {
+                            product = json['error']['product'][product_row];
+
+                            for (key in product) {
+                                $('#error-product-' + product_row + '-' + key.replaceAll('_', '-')).html(product[key]).addClass('d-block');
+                            }
                         }
-
-                        console.log('#error-product-' + product_row + '-' + key.replaceAll('_', '-'));
                     }
                 }
 
@@ -2487,7 +2498,7 @@ function cart_render(products, totals, shipping_required) {
             product = products[i];
 
             html += '<tr>';
-            html += '  <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
+            html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
             html += '    <div id="error-product-' + order_product_row + '-product" class="invalid-feedback mt-0"></div>';
 
             html += '<ul class="list-unstyled mb-0">';
@@ -2535,7 +2546,7 @@ function cart_render(products, totals, shipping_required) {
 
             html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
-            html += '  <td class="text-start">' + product['model'] + '</td>';
+            html += '  <td>' + product['model'] + '</td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';
             html += '  <td class="text-end">' + product['price_text'] + '</td>';
             html += '  <td class="text-end">' + product['total_text'] + '</td>';

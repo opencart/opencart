@@ -2,18 +2,18 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-start">{{ column_ip }}</td>
-        <td class="text-start">{{ column_user_agent }}</td>
-        <td class="text-start">{{ column_date_added }}</td>
+        <th>{{ column_ip }}</th>
+        <th>{{ column_user_agent }}</th>
+        <th>{{ column_date_added }}</th>
       </tr>
     </thead>
     <tbody>
       {% if logins %}
         {% for login in logins %}
           <tr>
-            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ login.ip }}" target="_blank">{{ login.ip }}</a></td>
-            <td class="text-start">{{ login.user_agent }}</td>
-            <td class="text-start">{{ login.date_added }}</td>
+            <td><a href="https://whatismyipaddress.com/ip/{{ login.ip }}" target="_blank">{{ login.ip }}</a></td>
+            <td>{{ login.user_agent }}</td>
+            <td>{{ login.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}

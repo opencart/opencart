@@ -2,10 +2,10 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-end">{{ column_order_id }}</td>
-        <td class="text-start">{{ column_status }}</td>
-        <td class="text-end">{{ column_total }}</td>
-        <td class="text-start">{{ column_date_added }}</td>
+        <th class="text-end">{{ column_order_id }}</th>
+        <th>{{ column_status }}</th>
+        <th class="text-end">{{ column_total }}</th>
+        <th>{{ column_date_added }}</th>
       </tr>
     </thead>
     <tbody>
@@ -13,9 +13,9 @@
         {% for order in orders %}
           <tr>
             <td class="text-end"><a href="{{ order.view }}" target="_blank">{{ order.order_id }}</a></td>
-            <td class="text-start">{{ order.status }}</td>
+            <td>{{ order.status }}</td>
             <td class="text-end">{{ order.total }}</td>
-            <td class="text-start">{{ order.date_added }}</td>
+            <td>{{ order.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}

@@ -14,9 +14,9 @@
             <thead>
               <tr>
                 <th class="text-end"><strong>{{ column_order_id }}</strong></th>
-                <th class="text-start"><strong>{{ column_name }}</strong></th>
-                <th class="text-start"><strong>{{ column_size }}</strong></th>
-                <th class="text-start"><strong>{{ column_date_added }}</strong></th>
+                <th><strong>{{ column_name }}</strong></th>
+                <th><strong>{{ column_size }}</strong></th>
+                <th><strong>{{ column_date_added }}</strong></th>
                 <th></th>
               </tr>
             </thead>
@@ -24,9 +24,9 @@
               {% for download in downloads %}
                 <tr>
                   <td class="text-end">{{ download.order_id }}</td>
-                  <td class="text-start">{{ download.name }}</td>
-                  <td class="text-start">{{ download.size }}</td>
-                  <td class="text-start">{{ download.date_added }}</td>
+                  <td>{{ download.name }}</td>
+                  <td>{{ download.size }}</td>
+                  <td>{{ download.date_added }}</td>
                   <td><a href="{{ download.href }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-down"></i></a></td>
                 </tr>
               {% endfor %}

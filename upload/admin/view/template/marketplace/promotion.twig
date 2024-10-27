@@ -9,14 +9,14 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-start">{{ column_name }}</td>
-            <td class="text-end">{{ column_action }}</td>
+            <th>{{ column_name }}</th>
+            <th class="text-end">{{ column_action }}</th>
           </tr>
         </thead>
         <tbody>
           {% for extension in extensions %}
             <tr>
-              <td class="text-start"><a href="{{ extension.href }}">{{ extension.name }}</a></td>
+              <td><a href="{{ extension.href }}">{{ extension.name }}</a></td>
               <td class="text-end">
                 <div class="dropdown">
                   <div class="btn-group">

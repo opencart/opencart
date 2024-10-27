@@ -17,9 +17,9 @@
               <tr>
                 <th class="text-end">{{ column_subscription_id }}</th>
                 <th class="text-end">{{ column_product }}</th>
-                <th class="text-start">{{ column_description }}</th>
-                <th class="text-start">{{ column_status }}</th>
-                <th class="text-start">{{ column_date_added }}</th>
+                <th>{{ column_description }}</th>
+                <th>{{ column_status }}</th>
+                <th>{{ column_date_added }}</th>
                 <th class="text-end"></th>
               </tr>
             </thead>
@@ -28,9 +28,9 @@
                 <tr>
                   <td class="text-end">#{{ subscription.subscription_id }}</td>
                   <td class="text-end">{{ subscription.product_total }}</td>
-                  <td class="text-start">{{ subscription.description }}</td>
-                  <td class="text-start">{{ subscription.status }}</td>
-                  <td class="text-start">{{ subscription.date_added }}</td>
+                  <td>{{ subscription.description }}</td>
+                  <td>{{ subscription.status }}</td>
+                  <td>{{ subscription.date_added }}</td>
                   <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
                 </tr>
               {% endfor %}

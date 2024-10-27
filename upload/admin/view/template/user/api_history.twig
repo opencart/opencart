@@ -2,18 +2,18 @@
   <table id="history" class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-start">{{ column_ip }}</td>
-        <td class="text-start">{{ column_call }}</td>
-        <td class="text-start">{{ column_date_added }}</td>
+        <th>{{ column_ip }}</th>
+        <th>{{ column_call }}</th>
+        <th>{{ column_date_added }}</th>
       </tr>
     </thead>
     <tbody>
       {% if histories %}
         {% for history in histories %}
           <tr>
-            <td class="text-start">{{ history.ip }}</td>
-            <td class="text-start">{{ history.call }}</td>
-            <td class="text-start">{{ history.date_added }}</td>
+            <td>{{ history.ip }}</td>
+            <td>{{ history.call }}</td>
+            <td>{{ history.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}

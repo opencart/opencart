@@ -12,6 +12,7 @@ $_['text_shipping_address']       = 'Shipping Address';
 $_['text_shipping_method']        = 'Shipping Method';
 $_['text_payment_address']        = 'Payment Address';
 $_['text_payment_method']         = 'Payment Method';
+$_['text_subscription_plan']      = 'Subscription Plan';
 $_['text_subscription_trial']     = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration']  = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']    = '%s every %d %s(s) until canceled';
@@ -20,11 +21,17 @@ $_['text_week']                   = 'week';
 $_['text_semi_month']             = 'half-month';
 $_['text_month']                  = 'month';
 $_['text_year']                   = 'year';
-$_['text_date_added']             = 'Date Added';
+
+
 $_['text_status']                 = 'Subscription Status';
 $_['text_description']            = 'Description';
 $_['text_quantity']               = 'Quantity';
+
+$_['text_history']                = 'Subscription History History';
 $_['text_order']                  = 'Order History';
+
+
+
 $_['text_no_results']             = 'No subscriptions found!';
 $_['text_error']                  = 'The recurring order you requested could not be found!';
 $_['text_cancelled']              = 'Recurring payment has been cancelled';

@@ -727,7 +727,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$subscription = '';
+			$subscription_plan = '';
 
 			$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
@@ -738,7 +738,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 					$trial_duration = $subscription_info['trial_duration'];
 
-					$subscription .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
 				$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
@@ -747,9 +747,9 @@ class Order extends \Opencart\System\Engine\Controller {
 				$duration = $subscription_info['duration'];
 
 				if ($subscription_info['duration']) {
-					$subscription .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
 				} else {
-					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
 
 				$subscription_plan_id = $subscription_info['subscription_plan_id'];
@@ -767,7 +767,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['order_products'][] = [
 				'option'               => $option_data,
-				'subscription'         => $subscription,
+				'subscription_plan'    => $subscription_plan,
 				'subscription_plan_id' => $subscription_plan_id,
 				'subscription_edit'    => $subscription_edit,
 				'price_text'           => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),

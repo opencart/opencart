@@ -2,24 +2,24 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
-        <td class="text-start"><a href="{{ sort_version }}"{% if sort == 'version' %} class="{{ order|lower }}"{% endif %}>{{ column_version }}</a></td>
-        <td class="text-start"><a href="{{ sort_date_added }}"{% if sort == 'date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
-        <td class="text-end" style="min-width: 105px;">{{ column_action }}</td>
+        <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+        <th><a href="{{ sort_version }}"{% if sort == 'version' %} class="{{ order|lower }}"{% endif %}>{{ column_version }}</a></th>
+        <th><a href="{{ sort_date_added }}"{% if sort == 'date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
+        <th class="text-end" style="min-width: 105px;">{{ column_action }}</th>
       </tr>
     </thead>
     <tbody>
       {% if extensions %}
         {% for extension in extensions %}
           <tr>
-            <td class="text-start">
+            <td>
               {% if extension.link %}
                 <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
               {% else %}
                 {{ extension.name }}
               {% endif %}</td>
-            <td class="text-start align-text-top">{{ extension.version }}</td>
-            <td class="text-start align-text-top">{{ extension.date_added }}</td>
+            <td class="align-text-top">{{ extension.version }}</td>
+            <td class="align-text-top">{{ extension.date_added }}</td>
             <td class="text-end align-text-top text-nowrap">
               <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
               {% if not extension.status %}

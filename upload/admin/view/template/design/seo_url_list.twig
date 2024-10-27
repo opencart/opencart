@@ -3,14 +3,14 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-          <td class="text-start"><a href="{{ sort_keyword }}"{% if sort == 'keyword' %} class="{{ order|lower }}"{% endif %}>{{ column_keyword }}</a></td>
-          <td class="text-start"><a href="{{ sort_key }}"{% if sort == 'key' %} class="{{ order|lower }}"{% endif %}>{{ column_key }}</a></td>
-          <td class="text-start"><a href="{{ sort_value }}"{% if sort == 'value' %} class="{{ order|lower }}"{% endif %}>{{ column_value }}</a></td>
-          <td class="text-start"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
-          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_store }}"{% if sort == 'store' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></td>
-          <td class="text-center d-none d-lg-table-cell"><a href="{{ sort_language }}"{% if sort == 'language' %} class="{{ order|lower }}"{% endif %}>{{ column_language }}</a></td>
-          <td class="text-end">{{ column_action }}</td>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_keyword }}"{% if sort == 'keyword' %} class="{{ order|lower }}"{% endif %}>{{ column_keyword }}</a></th>
+          <th><a href="{{ sort_key }}"{% if sort == 'key' %} class="{{ order|lower }}"{% endif %}>{{ column_key }}</a></th>
+          <th><a href="{{ sort_value }}"{% if sort == 'value' %} class="{{ order|lower }}"{% endif %}>{{ column_value }}</a></th>
+          <th><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
+          <th class="d-none d-lg-table-cell"><a href="{{ sort_store }}"{% if sort == 'store' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></th>
+          <th class="text-center d-none d-lg-table-cell"><a href="{{ sort_language }}"{% if sort == 'language' %} class="{{ order|lower }}"{% endif %}>{{ column_language }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -18,11 +18,11 @@
           {% for seo_url in seo_urls %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" class="form-check-input"/></td>
-              <td class="text-start">{{ seo_url.keyword }}</td>
-              <td class="text-start">{{ seo_url.key }}</td>
-              <td class="text-start">{{ seo_url.value }}</td>
-              <td class="text-start">{{ seo_url.sort_order }}</td>
-              <td class="text-start d-none d-lg-table-cell">{{ seo_url.store }}</td>
+              <td>{{ seo_url.keyword }}</td>
+              <td>{{ seo_url.key }}</td>
+              <td>{{ seo_url.value }}</td>
+              <td>{{ seo_url.sort_order }}</td>
+              <td class="d-none d-lg-table-cell">{{ seo_url.store }}</td>
               <td class="text-center d-none d-lg-table-cell"><img src="{{ seo_url.image }}" alt="{{ seo_url.language }}" title="{{ seo_url.language }}"></td>
               <td class="text-end"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>

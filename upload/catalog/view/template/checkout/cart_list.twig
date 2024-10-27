@@ -21,9 +21,9 @@
       <thead>
         <tr>
           <th class="text-center">{{ column_image }}</th>
-          <th class="text-start">{{ column_name }}</th>
-          <th class="text-start">{{ column_model }}</th>
-          <th class="text-start">{{ column_quantity }}</th>
+          <th>{{ column_name }}</th>
+          <th>{{ column_model }}</th>
+          <th>{{ column_quantity }}</th>
           <th class="text-end">{{ column_price }}</th>
           <th class="text-end">{{ column_total }}</th>
         </tr>
@@ -50,8 +50,8 @@
               {% endif %}
 
             </td>
-            <td class="text-start">{{ product.model }}</td>
-            <td class="text-start">
+            <td>{{ product.model }}</td>
+            <td>
               <form method="post" data-oc-target="#shopping-cart">
                 <div class="input-group">
                   <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>

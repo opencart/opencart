@@ -2,22 +2,22 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <td class="text-start">{{ column_payment_method }}</td>
-        <td class="text-start">{{ column_image }}</td>
-        <td class="text-start">{{ column_type }}</td>
-        <td class="text-start">{{ column_status }}</td>
-        <td class="text-start">{{ column_date_expire }}</td>
-        <td class="text-end">{{ column_action }}</td>
+        <th>{{ column_payment_method }}</th>
+        <th>{{ column_image }}</th>
+        <th>{{ column_type }}</th>
+        <th>{{ column_status }}</th>
+        <th>{{ column_date_expire }}</th>
+        <th class="text-end">{{ column_action }}</th>
       </tr>
     </thead>
     <tbody>
       {% if payment_methods %}
         {% for payment_method in payment_methods %}
           <tr>
-            <td class="text-start">{{ payment_method.name }}</td>
-            <td class="text-start">{% if payment_method.image %}<img src="{{ payment_method.image }}" alt=""/>{% endif %}</td>
-            <td class="text-start">{{ payment_method.type }}</td>
-            <td class="text-start">{{ payment_method.date_expire }}</td>
+            <td>{{ payment_method.name }}</td>
+            <td>{% if payment_method.image %}<img src="{{ payment_method.image }}" alt=""/>{% endif %}</td>
+            <td>{{ payment_method.type }}</td>
+            <td>{{ payment_method.date_expire }}</td>
             <td class="text-end"><button type="button" value="{{ payment_method.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
           </tr>
         {% endfor %}

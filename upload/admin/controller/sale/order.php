@@ -782,10 +782,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$totals = $this->model_sale_order->getTotals($order_id);
 
 		foreach ($totals as $total) {
-			$data['order_totals'][] = [
-				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value'], $data['currency_code'], $currency_value)
-			];
+			$data['order_totals'][] = ['text' => $this->currency->format($total['value'], $data['currency_code'], $currency_value)] + $total;
 		}
 
 		// Addresses
@@ -1053,10 +1050,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$totals = $this->model_sale_order->getTotals($order_id);
 
 			foreach ($totals as $total) {
-				$data['order_totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
-				];
+				$data['order_totals'][] = ['text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $total;
 			}
 		}
 
@@ -1548,10 +1542,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$totals = $this->model_sale_order->getTotals($order_id);
 
 				foreach ($totals as $total) {
-					$total_data[] = [
-						'title' => $total['title'],
-						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
-					];
+					$total_data[] = ['text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $total;
 				}
 
 				$data['orders'][] = [

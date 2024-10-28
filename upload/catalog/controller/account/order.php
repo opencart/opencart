@@ -324,13 +324,13 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				//$subscription_info = $this->model_account_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
+				$subscription_info = $this->model_account_subscription->getProductByOrderProductId($order_id, $product['order_product_id']);
 
-				//if ($subscription_info) {
-				//	$subscription = $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
-				//} else {
+				if ($subscription_info) {
+					$subscription = $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
+				} else {
 					$subscription = '';
-				//}
+				}
 
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 

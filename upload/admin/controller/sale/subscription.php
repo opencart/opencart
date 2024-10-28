@@ -566,16 +566,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				foreach ($result['option'] as $product_option_id => $value) {
 					$option_info = $this->model_catalog_product->getOption($product_info['product_id'], $product_option_id);
 
-					if ($option_info['type'] != 'file') {
-						$data['options'][] = ['value' => $value] + $option_info;
-					} else {
-						$upload_info = $this->model_tool_upload->getUploadByCode($value);
+					if ($option_info) {
+						if ($option_info['type'] != 'file') {
+							$data['options'][] = ['value' => $value] + $option_info;
+						} else {
+							$upload_info = $this->model_tool_upload->getUploadByCode($value);
 
-						if ($upload_info) {
-							$data['options'][] = [
-								'value' => $value,
-								'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-							] + $option_info;
+							if ($upload_info) {
+								$data['options'][] = [
+									'value' => $value,
+									'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+								] + $option_info;
+							}
 						}
 					}
 				}
@@ -593,9 +595,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['subscription_plans'] = [];
 
 		if (!empty($subscription_info)) {
-			$subscription_id = $subscription_info['subscription_id'];
+			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
 		} else {
-			$subscription_id = 0;
+			$data['subscription_plan_id'] = 0;
 		}
 
 		$this->load->model('catalog/subscription_plan');
@@ -603,7 +605,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscriptions = $this->model_sale_subscription->getProducts($subscription_id);
 
 		foreach ($subscriptions as $subscription) {
-			$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($subscription['subscription_plan_id']);
+			$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($data['subscription_plan_id']);
 
 			if ($subscription_plan_info) {
 				$description = '';
@@ -635,11 +637,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!empty($subscription_info)) {
-			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
-		} else {
-			$data['subscription_plan_id'] = 0;
-		}
 
 
 		// Date next

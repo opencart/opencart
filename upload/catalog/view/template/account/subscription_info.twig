@@ -13,18 +13,20 @@
       <div class="row">
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
-            <div class="lead"><strong>{{ text_subscription_id }}</strong>
-              <div>#{{ subscription_id }}</div>
-            </div>
+            <strong class="lead">{{ text_subscription_id }}</strong>
+            <br/>
+            #{{ subscription_id }}
           </div>
         </div>
-        <div class="col mb-3">
-          <div class="form-control" style="min-height: 64px;">
-            <div class="lead"><strong>{{ text_order_id }}</strong>
-              <div>{{ order_id }}</div>
+        {% if order_id %}
+          <div class="col mb-3">
+            <div class="form-control" style="min-height: 64px;">
+              <strong class="lead">{{ text_order_id }}</strong>
+              <br/>
+              {{ order_id }}
             </div>
           </div>
-        </div>
+        {% endif %}
       </div>
 
       {% if payment_address or shipping_address %}
@@ -33,9 +35,9 @@
           {% if payment_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
-                <div class="lead"><strong>{{ text_payment_address }}</strong>
-                  <div>{{ payment_address }}</div>
-                </div>
+                <strong class="lead">{{ text_payment_address }}</strong>
+                <br/>
+                {{ payment_address }}
               </div>
             </div>
           {% endif %}
@@ -43,9 +45,9 @@
           {% if shipping_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
-                <div class="lead"><strong>{{ text_shipping_address }}</strong>
-                  <div>{{ shipping_address }}</div>
-                </div>
+                <strong class="lead">{{ text_shipping_address }}</strong>
+                <br/>
+                {{ shipping_address }}
               </div>
             </div>
           {% endif %}
@@ -57,19 +59,18 @@
         {% if shipping_method %}
           <div class="col mb-3">
             <div class="form-control" style="min-height: 64px;">
-              <div class="lead">
-                <strong>{{ text_shipping_method }}</strong>
-                <div>{{ shipping_method }}</div>
-              </div>
+              <strong class="lead">{{ text_shipping_method }}</strong>
+              <br/>
+              {{ shipping_method }}
             </div>
           </div>
         {% endif %}
 
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
-            <div class="lead"><strong>{{ text_payment_method }}</strong>
-              <div>{{ payment_method }}</div>
-            </div>
+            <strong class="lead">{{ text_payment_method }}</strong>
+            <br/>
+            {{ payment_method }}
           </div>
         </div>
       </div>
@@ -90,7 +91,7 @@
             {% for product in products %}
               <tr>
                 <td><a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
-                  <ul class="list-unstyled">
+                  <ul class="list-unstyled mb-0">
                     {% for option in product.option %}
                       <li>
                         <small> - {{ option.name }}: {{ option.value }}</small>
@@ -113,14 +114,11 @@
         </tbody>
       </table>
 
-      <div class="form-control" style="min-height: 64px;">
-        {{ text_subscription_plan }}
+      <div class="form-control mb-3" style="min-height: 64px;">
+        <strong class="lead">{{ text_subscription_plan }}</strong>
+        <br/>
         {{ description }}
       </div>
-
-
-
-
 
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>

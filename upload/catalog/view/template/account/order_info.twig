@@ -11,20 +11,23 @@
       {{ content_top }}
 
       <div class="row">
+
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
-            <div class="lead"><strong>{{ text_invoice_no }}</strong>
-              <div>{% if invoice_no %}{{ invoice_no }} {% else %}{{ text_tbc }}{% endif %}</div>
-            </div>
+            <strong class="lead">{{ text_invoice_no }}</strong>
+            <br/>
+            {% if invoice_no %}{{ invoice_no }} {% else %}{{ text_tbc }}{% endif %}
           </div>
         </div>
+
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
-            <div class="lead"><strong>{{ text_order_id }}</strong>
-              <div>{{ order_id }}</div>
-            </div>
+            <strong class="lead">{{ text_order_id }}</strong>
+            <br/>
+            {{ order_id }}
           </div>
         </div>
+
       </div>
 
       {% if payment_address or shipping_address %}
@@ -33,9 +36,9 @@
           {% if payment_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
-                <div class="lead"><strong>{{ text_payment_address }}</strong>
-                  <div>{{ payment_address }}</div>
-                </div>
+                <strong class="lead">{{ text_payment_address }}</strong>
+                <br/>
+                {{ payment_address }}
               </div>
             </div>
           {% endif %}
@@ -43,9 +46,9 @@
           {% if shipping_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
-                <div class="lead"><strong>{{ text_shipping_address }}</strong>
-                  <div>{{ shipping_address }}</div>
-                </div>
+                <strong class="lead">{{ text_shipping_address }}</strong>
+                <br/>
+                {{ shipping_address }}
               </div>
             </div>
           {% endif %}
@@ -54,24 +57,25 @@
       {% endif %}
 
       <div class="row">
+
         {% if shipping_method %}
           <div class="col mb-3">
             <div class="form-control" style="min-height: 64px;">
-              <div class="lead">
-                <strong>{{ text_shipping_method }}</strong>
-                <div>{{ shipping_method }}</div>
-              </div>
+              <strong class="lead">{{ text_shipping_method }}</strong>
+              <br/>
+              {{ shipping_method }}
             </div>
           </div>
         {% endif %}
 
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
-            <div class="lead"><strong>{{ text_payment_method }}</strong>
-              <div>{{ payment_method }}</div>
-            </div>
+            <strong class="lead">{{ text_payment_method }}</strong>
+            <br/>
+            {{ payment_method }}
           </div>
         </div>
+
       </div>
 
       <div class="table-responsive">
@@ -83,50 +87,45 @@
               <th class="text-end">{{ column_quantity }}</th>
               <th class="text-end">{{ column_price }}</th>
               <th class="text-end">{{ column_total }}</th>
-              <th class="text-end" style="width: 1px;">{{ column_action }}</th>
             </tr>
           </thead>
           <tbody>
             {% for product in products %}
               <tr>
                 <td><a href="{{ product.href }}">{{ product.name }}</a>
-                  <ul class="list-unstyled">
+                  <ul class="list-unstyled mb-0">
                     {% for option in product.option %}
                       <li>
                         <small> - {{ option.name }}: {{ option.value }}</small>
                       </li>
                     {% endfor %}
+
                     {% if product.subscription %}
                       <li>
-                        <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_description }}</a></small>{% else %}{{ product.subscription_description }}{% endif %}
+                        <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
                       </li>
                     {% endif %}
+
                     {% if product.reward %}
                       <li>
                         <small> - {{ text_points }}: {{ product.reward }}</small>
                       </li>
                     {% endif %}
+
                   </ul>
                 </td>
                 <td>{{ product.model }}</td>
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
-                <td class="text-end text-nowrap">
-                  {% if product.reorder %}
-                    <a href="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></a>
-                  {% endif %}
-                  <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a>
-                </td>
               </tr>
             {% endfor %}
 
             {% for total in totals %}
               <tr>
                 <td colspan="3"></td>
-                <td class="text-end"><b>{{ total.title }}</b></td>
+                <td class="text-end"><strong>{{ total.title }}</strong></td>
                 <td class="text-end">{{ total.text }}</td>
-                <td></td>
               </tr>
             {% endfor %}
 
@@ -136,25 +135,55 @@
       </div>
 
       {% if comment %}
-
-        <div class="col mb-3">
-          <div class="form-control" style="min-height: 64px;">
-            <div class="lead">
-              <strong>{{ text_comment }}</strong>
-              <div>{{ comment }}</div>
-            </div>
-          </div>
+        <div class="form-control mb-3" style="min-height: 64px;">
+          <strong class="lead">{{ text_comment }}</strong>
+          <br/>
+          {{ comment }}
         </div>
-
       {% endif %}
 
-      <h2>{{ text_history }}</h2>
+      <h2>Options</h2>
 
+      <div class="mb-3">
+
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            I wish to return a product
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+          <label class="form-check-label" for="flexRadioDefault2">
+            I wish to reorder products
+          </label>
+        </div>
+
+
+        <select name="customer_group_id" id="input-customer-group" class="form-select mb-3">
+          {% for product in products %}
+            <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ product.name }}</option>
+          {% endfor %}
+        </select>
+
+
+
+
+          <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i> I wish to return a product</a>
+
+          <a href="{{ product.reorder }}" class="btn btn-danger">I wish to reorder products</a>
+
+
+
+
+      </div>
 
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
-      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
 
+      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
 
       {{ content_bottom }}
     </div>

@@ -14,14 +14,15 @@
               <br/>
               <small> - {{ option.name }}: {{ option.value }}</small>
             {% endfor %}
+            {% if product.subscription %}
+              <br/>
+              <small> - {{ text_subscription }} {{ product.subscription }}</small>
+            {% endif %}
             {% if product.reward %}
               <br/>
               <small> - {{ text_points }}: {{ product.reward }}</small>
             {% endif %}
-            {% if product.subscription %}
-              <br/>
-              <small> - {{ text_subscription }} {{ product.subscription }}</small>
-            {% endif %}</td>
+          </td>
           <td class="text-end">{{ product.total }}</td>
         </tr>
       {% endfor %}

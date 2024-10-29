@@ -428,7 +428,7 @@ var chain = new Chain();
                 if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
                     this.timer = setTimeout(function (object) {
                         object.removeClass('show');
-                    }, 50, $dropdown);
+                    }, 150, $dropdown);
                 }
             });
 

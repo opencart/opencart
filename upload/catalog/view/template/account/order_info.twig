@@ -77,16 +77,15 @@
         </div>
 
       </div>
-
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>{{ column_name }}</th>
-              <th>{{ column_model }}</th>
+              <th>{{ column_product }}</th>
               <th class="text-end">{{ column_quantity }}</th>
               <th class="text-end">{{ column_price }}</th>
               <th class="text-end">{{ column_total }}</th>
+              <th class="text-end">{{ column_action }}</th>
             </tr>
           </thead>
           <tbody>
@@ -94,46 +93,44 @@
               <tr>
                 <td><a href="{{ product.href }}">{{ product.name }}</a>
                   <ul class="list-unstyled mb-0">
+                    <li>
+                      <small> - {{ text_model }}: {{ product.model }}</small>
+                    </li>
                     {% for option in product.option %}
                       <li>
                         <small> - {{ option.name }}: {{ option.value }}</small>
                       </li>
                     {% endfor %}
-
                     {% if product.subscription %}
                       <li>
                         <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
                       </li>
                     {% endif %}
-
                     {% if product.reward %}
                       <li>
                         <small> - {{ text_points }}: {{ product.reward }}</small>
                       </li>
                     {% endif %}
-
                   </ul>
                 </td>
-                <td>{{ product.model }}</td>
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
+                <td class="text-end"><button type="button" value="{{ product.reorder }}" data-bs-toggle="" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button> <a href="{{ product.return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
               </tr>
             {% endfor %}
 
             {% for total in totals %}
               <tr>
-                <td colspan="3"></td>
+                <td colspan="2"></td>
                 <td class="text-end"><strong>{{ total.title }}</strong></td>
                 <td class="text-end">{{ total.text }}</td>
+                <td></td>
               </tr>
             {% endfor %}
-
           </tbody>
-
         </table>
       </div>
-
       {% if comment %}
         <div class="form-control mb-3" style="min-height: 64px;">
           <strong class="lead">{{ text_comment }}</strong>
@@ -141,56 +138,78 @@
           {{ comment }}
         </div>
       {% endif %}
-
-      <h2>Options</h2>
-
-      <div class="mb-3">
-
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-          <label class="form-check-label" for="flexRadioDefault1">
-            I wish to return a product
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-          <label class="form-check-label" for="flexRadioDefault2">
-            I wish to reorder products
-          </label>
-        </div>
-
-
-        <select name="customer_group_id" id="input-customer-group" class="form-select mb-3">
-          {% for product in products %}
-            <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ product.name }}</option>
-          {% endfor %}
-        </select>
-
-
-
-
-          <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i> I wish to return a product</a>
-
-          <a href="{{ product.reorder }}" class="btn btn-danger">I wish to reorder products</a>
-
-
-
-
-      </div>
-
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
-
       <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-
       {{ content_bottom }}
     </div>
     {{ column_right }}
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#form-reorder').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/register.save&language={{ language }}',
+            type: 'post',
+            dataType: 'json',
+            data: $('#form-register').serialize(),
+            contentType: 'application/x-www-form-urlencoded',
+            beforeSend: function() {
+                $('#button-register').button('loading');
+            },
+            complete: function() {
+                $('#button-register').button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+
+                $('#form-register').find('.is-invalid').removeClass('is-invalid');
+                $('#form-register').find('.invalid-feedback').removeClass('d-block');
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    if (json['error']['warning']) {
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    for (key in json['error']) {
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    }
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    if ($('#input-register').prop('checked')) {
+                        $('input[name=\'account\']').prop('disabled', true);
+                        $('#input-customer-group').prop('disabled', true);
+                        $('#input-password').prop('disabled', true);
+                        $('#input-captcha').prop('disabled', true);
+                        $('#input-register-agree').prop('disabled', true);
+                    }
+
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
+
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 

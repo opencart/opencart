@@ -2,7 +2,7 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th>{{ column_name }}</th>
+        <th>{{ column_product }}</th>
         <th class="text-end">{{ column_total }}</th>
       </tr>
     </thead>
@@ -10,18 +10,30 @@
       {% for product in products %}
         <tr>
           <td>{{ product.quantity }}x <a href="{{ product.href }}">{{ product.name }}</a>
-            {% for option in product.option %}
-              <br/>
-              <small> - {{ option.name }}: {{ option.value }}</small>
-            {% endfor %}
-            {% if product.subscription %}
-              <br/>
-              <small> - {{ text_subscription }} {{ product.subscription }}</small>
-            {% endif %}
-            {% if product.reward %}
-              <br/>
-              <small> - {{ text_points }}: {{ product.reward }}</small>
-            {% endif %}
+
+            <ul class="list-unstyled mb-0">
+              <li>
+                <small> - {{ text_model }}: {{ product.model }}</small>
+              </li>
+              {% for option in product.option %}
+                <li>
+                  <small> - {{ option.name }}: {{ option.value }}</small>
+                </li>
+              {% endfor %}
+
+              {% if product.subscription %}
+                <li>
+                  <small> - {{ text_subscription }}: {{ product.subscription }}</small>
+                </li>
+              {% endif %}
+
+              {% if product.reward %}
+                <li>
+                  <small> - {{ text_points }}: {{ product.reward }}</small>
+                </li>
+              {% endif %}
+            </ul>
+
           </td>
           <td class="text-end">{{ product.total }}</td>
         </tr>

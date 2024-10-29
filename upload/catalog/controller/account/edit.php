@@ -159,7 +159,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 			// Update customer in db
 			$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 
 			// Update customer session details
 			$this->session->data['customer'] = [
@@ -176,8 +176,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
-
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

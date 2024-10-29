@@ -449,6 +449,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function reorder(): void {
 		$this->load->language('account/order');
 
+		$json = [];
+
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
@@ -462,9 +464,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
-			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
+			$this->session->data['redirect'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->load->model('account/order');
@@ -475,49 +477,56 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_product_info = $this->model_account_order->getProduct($order_id, $order_product_id);
 
 			if ($order_product_info) {
-				$this->load->model('catalog/product');
-
 				$product_info = $this->model_catalog_product->getProduct($order_product_info['product_id']);
 
-				if ($product_info) {
-					$option_data = [];
-
-					$order_options = $this->model_account_order->getOptions($order_id, $order_product_id);
-
-					foreach ($order_options as $order_option) {
-						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
-							$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
-						} elseif ($order_option['type'] == 'checkbox') {
-							$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
-						} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
-							$option_data[$order_option['product_option_id']] = $order_option['value'];
-						} elseif ($order_option['type'] == 'file') {
-							$option_data[$order_option['product_option_id']] = $order_option['value'];
-						}
-					}
-
-					$subscription_info = $this->model_account_order->getSubscription($order_id, $order_product_id);
-
-					if ($subscription_info) {
-						$subscription_plan_id = $subscription_info['subscription_plan_id'];
-					} else {
-						$subscription_plan_id = 0;
-					}
-
-					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data, $subscription_plan_id);
-
-					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
-
-					unset($this->session->data['shipping_method']);
-					unset($this->session->data['shipping_methods']);
-					unset($this->session->data['payment_method']);
-					unset($this->session->data['payment_methods']);
-				} else {
-					$this->session->data['error'] = sprintf($this->language->get('error_reorder'), $order_product_info['name']);
+				if (!$product_info) {
+					$json['error'] = $this->language->get('error_product');
 				}
+			} else {
+				$json['error'] = $this->language->get('error_product');
 			}
+		} else {
+			$json['error'] = $this->language->get('error_order');
 		}
 
-		$this->response->redirect($this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id, true));
+		if (!$json) {
+			$this->load->model('catalog/product');
+
+			$option_data = [];
+
+			$order_options = $this->model_account_order->getOptions($order_id, $order_product_id);
+
+			foreach ($order_options as $order_option) {
+				if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
+					$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
+				} elseif ($order_option['type'] == 'checkbox') {
+					$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
+				} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
+					$option_data[$order_option['product_option_id']] = $order_option['value'];
+				} elseif ($order_option['type'] == 'file') {
+					$option_data[$order_option['product_option_id']] = $order_option['value'];
+				}
+			}
+
+			$subscription_info = $this->model_account_order->getSubscription($order_id, $order_product_id);
+
+			if ($subscription_info) {
+				$subscription_plan_id = $subscription_info['subscription_plan_id'];
+			} else {
+				$subscription_plan_id = 0;
+			}
+
+			$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data, $subscription_plan_id);
+
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

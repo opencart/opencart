@@ -6,22 +6,31 @@
         <table class="table table-striped mb-2">
           {% for product in products %}
             <tr>
-              <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
+              <td class="text-center w-25">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
               <td><a href="{{ product.href }}">{{ product.name }}</a>
-                {% if product.option %}
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <small> - {{ text_model }}: {{ product.model }}</small>
+                  </li>
                   {% for option in product.option %}
-                    <br/>
-                    <small> - {{ option.name }}: {{ option.value }}</small>
+                    <li>
+                      <small> - {{ option.name }}: {{ option.value }}</small>
+                    </li>
                   {% endfor %}
-                {% endif %}
-                {% if product.subscription %}
-                  <br/>
-                  <small> - {{ text_subscription }}: {{ product.subscription }}</small>
-                {% endif %}
-                {% if product.reward %}
-                  <br/>
-                  <small> - {{ text_points }}: {{ product.reward }}</small>
-                {% endif %}</td>
+
+                  {% if product.subscription %}
+                    <li>
+                      <small> - {{ text_subscription }}: {{ product.subscription }}</small>
+                    </li>
+                  {% endif %}
+
+                  {% if product.reward %}
+                    <li>
+                      <small> - {{ text_points }}: {{ product.reward }}</small>
+                    </li>
+                  {% endif %}
+                </ul>
+              </td>
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
               <td class="text-end">

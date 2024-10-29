@@ -92,9 +92,7 @@ class Password extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

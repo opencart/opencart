@@ -158,6 +158,8 @@ $(document).ready(function() {
 
 // Forms
 $(document).on('submit', 'form', function (e) {
+    e.preventDefault();
+
     var element = this;
 
     if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
@@ -512,9 +514,9 @@ var chain = new Chain();
     };
 }(jQuery);
 
+// Button
 $(document).ready(function() {
     +function($) {
-        // Button
         $.fn.button = function(state) {
             return this.each(function() {
                 var element = this;

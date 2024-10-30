@@ -116,7 +116,26 @@
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
-                <td class="text-end"><button type="button" value="{{ product.reorder }}" data-bs-toggle="" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button> <a href="{{ product.return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
+                <td class="text-end text-nowrap">
+                  <form>
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+                    <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
+                    {% for option in product.option %}
+                      {% if option.type == 'select' or option.type == 'radio' %}
+                        <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                      {% endif %}
+                      {% if option.type == 'checkbox' %}
+                        <input type="hidden" name="option[{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                      {% endif %}
+                      {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+                        <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.value }}"/>
+                      {% endif %}
+                    {% endfor %}
+                    <input type="hidden" name="subscription_plan_id" value="{{ product.subscription_plan_id }}"/>
+                    <button type="submit" value="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button>
+                    <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a>
+                  </form>
+                </td>
               </tr>
             {% endfor %}
 
@@ -147,66 +166,51 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#form-reorder').on('submit', function(e) {
+$('form').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
 
-    chain.attach(function() {
-        return $.ajax({
-            url: 'index.php?route=checkout/register.save&language={{ language }}',
-            type: 'post',
-            dataType: 'json',
-            data: $('#form-register').serialize(),
-            contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
-                $('#button-register').button('loading');
-            },
-            complete: function() {
-                $('#button-register').button('reset');
-            },
-            success: function(json) {
-                console.log(json);
+    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
+        var button = e.originalEvent.submitter;
+    } else {
+        var button = '';
+    }
 
-                $('#form-register').find('.is-invalid').removeClass('is-invalid');
-                $('#form-register').find('.invalid-feedback').removeClass('d-block');
+    $.ajax({
+        url: 'index.php?route=checkout/cart.add&language={{ language }}',
+        type: 'post',
+        data: $(element).serialize(),
+        dataType: 'json',
+        cache: false,
+        processData: false,
+        beforeSend: function() {
+            $(button).button('loading');
+        },
+        complete: function() {
+            $(button).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-                if (json['redirect']) {
-                    location = json['redirect'];
+            $('#form-product').find('.invalid-feedback').removeClass('d-block');
+
+            if (json['error']) {
+                for (key in json['error']) {
+                   // $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][key] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
-
-                if (json['error']) {
-                    if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-
-                    for (key in json['error']) {
-                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                    }
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    if ($('#input-register').prop('checked')) {
-                        $('input[name=\'account\']').prop('disabled', true);
-                        $('#input-customer-group').prop('disabled', true);
-                        $('#input-password').prop('disabled', true);
-                        $('#input-captcha').prop('disabled', true);
-                        $('#input-register-agree').prop('disabled', true);
-                    }
-
-                    $('#input-shipping-method').val('');
-                    $('#input-payment-method').val('');
-
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
-        });
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
     });
 });
 

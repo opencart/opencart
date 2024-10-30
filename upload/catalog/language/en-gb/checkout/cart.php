@@ -24,7 +24,7 @@ $_['text_next_choice']           = 'Choose if you have a discount code or reward
 
 // Column
 $_['column_image']               = 'Image';
-$_['column_name']                = 'Product Name';
+$_['column_name']                = 'Product';
 $_['column_quantity']            = 'Quantity';
 $_['column_price']               = 'Unit Price';
 $_['column_total']               = 'Total';

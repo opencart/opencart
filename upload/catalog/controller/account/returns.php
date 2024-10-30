@@ -140,7 +140,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $this->request->get['return_id'] . $url)
+				'href' => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $return_id . $url)
 			];
 
 			$data['return_id'] = $return_info['return_id'];
@@ -161,7 +161,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$data['histories'] = [];
 
-			$results = $this->model_account_returns->getHistories($this->request->get['return_id']);
+			$results = $this->model_account_returns->getHistories($return_id);
 
 			foreach ($results as $result) {
 				$data['histories'][] = [

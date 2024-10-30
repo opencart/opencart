@@ -316,7 +316,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
-						$json['error']['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
+						$json['error']['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalOptionValuesByOptionValueId($product_option_value['option_value_id']));
 					}
 				}
 			}

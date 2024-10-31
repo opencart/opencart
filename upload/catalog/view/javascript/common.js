@@ -41,16 +41,17 @@ $(document).ready(function() {
         $('.tooltip').remove();
     });
 
-    var oc_alert = function() {
-        window.setTimeout(function() {
-            $('.alert-dismissible').fadeTo(3000, 0, function() {
+    var alert_timer = null;
+
+    $('#alert').observe(function() {
+        clearTimeout(alert_timer);
+
+        alert_timer = window.setTimeout(function() {
+            $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
                 $(this).remove();
             });
         }, 3000);
-    }
-
-    $(document).on('click', 'button', oc_alert);
-    $(document).on('click', 'change', oc_alert);
+    });
 });
 
 $(document).ready(function() {

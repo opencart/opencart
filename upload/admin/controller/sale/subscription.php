@@ -637,8 +637,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-
 		// Date next
 		if (!empty($subscription_info)) {
 			$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
@@ -651,8 +649,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['remaining'] = 0;
 		}
-
-
 
 		// Payment Address
 		if (!empty($subscription_info)) {

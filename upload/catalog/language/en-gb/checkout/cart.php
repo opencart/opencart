@@ -34,4 +34,4 @@ $_['error_stock']                = 'Products marked with *** are not available i
 $_['error_minimum']              = 'Minimum order amount is %s!';
 $_['error_required']             = '%s required!';
 $_['error_product']              = 'Warning: Product could not be found!';
-$_['error_subscription']         = 'Please select a subscription plan!';
+$_['error_subscription']         = 'Subscription Plan is not valid!';

@@ -380,7 +380,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						'option'      => $option_data,
 						'trial_price' => $this->currency->format($result['trial_price'], $currency),
 						'price'       => $this->currency->format($result['price'], $currency),
-						'product'     => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+						'view'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 					] + $result + $product_info;
 				}
 			}
@@ -417,10 +417,36 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 			}
 
+			// Date next
+			if (!empty($subscription_info)) {
+				$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
+			} else {
+				$data['date_next'] = '';
+			}
+
+			if (!empty($subscription_info)) {
+				$data['remaining'] = $subscription_info['remaining'];
+			} else {
+				$data['remaining'] = 0;
+			}
+
 			// Orders
 			$data['history'] = $this->getHistory();
+			$data['order'] = $this->getOrders();
 
-			$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
+			if ($subscription_info['order_id']) {
+				$data['order_link'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
+			} else {
+				$data['order_link'] = '';
+			}
+
+			$url = '';
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$data['continue'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -503,7 +529,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	public function order(): void {
 		$this->load->language('account/subscription');
 
-		$this->response->setOutput($this->getOrder());
+		$this->response->setOutput($this->getOrders());
 	}
 
 	/**
@@ -511,7 +537,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function getOrder(): string {
+	public function getOrders(): string {
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {

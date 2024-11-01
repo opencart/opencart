@@ -13,4 +13,4 @@ $_['error_option']       = 'Option could not be found!';
 
 
 $_['error_required']     = '%s required!';
-$_['error_subscription'] = 'Please select a subscription plan!';
+$_['error_subscription'] = 'Subscription Plan is not valid!';

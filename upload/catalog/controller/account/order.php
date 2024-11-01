@@ -303,8 +303,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_subscription_info = $this->model_account_order->getSubscription($order_id, $product['order_product_id']);
 
 				if ($order_subscription_info) {
-					$subscription_plan_id = $order_subscription_info['subscription_plan_id'];
-
 					if ($order_subscription_info['trial_status']) {
 						$trial_price = $this->currency->format($order_subscription_info['trial_price'] + ($this->config->get('config_tax') ? $order_subscription_info['trial_tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
 						$trial_cycle = $order_subscription_info['trial_cycle'];
@@ -324,6 +322,8 @@ class Order extends \Opencart\System\Engine\Controller {
 					} else {
 						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 					}
+
+					$subscription_plan_id = $order_subscription_info['subscription_plan_id'];
 				} else {
 					$subscription_plan_id = 0;
 				}
@@ -343,7 +343,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'subscription'         => $subscription,
 					'price'                => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'                => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href'                 => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+					'view'                 => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
 					'return'               => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
 				] + $product;
 			}

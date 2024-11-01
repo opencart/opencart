@@ -9,17 +9,14 @@
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-
       <div class="row">
-
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <strong class="lead">{{ text_invoice_no }}</strong>
             <br/>
-            {% if invoice_no %}{{ invoice_no }} {% else %}{{ text_tbc }}{% endif %}
+            {% if invoice_no %}{{ invoice_no }}{% else %}{{ text_tbc }}{% endif %}
           </div>
         </div>
-
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <strong class="lead">{{ text_order_id }}</strong>
@@ -27,12 +24,10 @@
             {{ order_id }}
           </div>
         </div>
-
       </div>
 
       {% if payment_address or shipping_address %}
         <div class="row">
-
           {% if payment_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
@@ -42,7 +37,6 @@
               </div>
             </div>
           {% endif %}
-
           {% if shipping_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
@@ -52,12 +46,10 @@
               </div>
             </div>
           {% endif %}
-
         </div>
       {% endif %}
 
       <div class="row">
-
         {% if shipping_method %}
           <div class="col mb-3">
             <div class="form-control" style="min-height: 64px;">
@@ -67,7 +59,6 @@
             </div>
           </div>
         {% endif %}
-
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <strong class="lead">{{ text_payment_method }}</strong>
@@ -75,8 +66,8 @@
             {{ payment_method }}
           </div>
         </div>
-
       </div>
+
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -89,37 +80,36 @@
             </tr>
           </thead>
           <tbody>
+            {% set product_row = 0 %}
             {% for product in products %}
-              <tr>
-                <td><a href="{{ product.href }}">{{ product.name }}</a>
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <small> - {{ text_model }}: {{ product.model }}</small>
-                    </li>
-                    {% for option in product.option %}
+              <tr id="product-row-{{ product_row }}">
+                <td>
+                  <form id="form-product-{{ product_row }}">
+                    <a href="{{ product.view }}">{{ product.name }}</a>
+                    <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
+                    <ul class="list-unstyled mb-0">
                       <li>
-                        <small> - {{ option.name }}: {{ option.value }}</small>
+                        <small> - {{ text_model }}: {{ product.model }}</small>
                       </li>
-                    {% endfor %}
-                    {% if product.subscription %}
-                      <li>
-                        <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
-                      </li>
-                    {% endif %}
-                    {% if product.reward %}
-                      <li>
-                        <small> - {{ text_points }}: {{ product.reward }}</small>
-                      </li>
-                    {% endif %}
-                  </ul>
-                </td>
-                <td class="text-end">{{ product.quantity }}</td>
-                <td class="text-end">{{ product.price }}</td>
-                <td class="text-end">{{ product.total }}</td>
-                <td class="text-end text-nowrap">
-                  <form>
-                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-                    <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
+                      {% for option in product.option %}
+                        <li>
+                          <small> - {{ option.name }}: {{ option.value }}</small>
+                          <div id="error-{{ product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                        </li>
+                      {% endfor %}
+                      {% if product.subscription %}
+                        <li>
+                          <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
+                          <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
+                        </li>
+                      {% endif %}
+                      {% if product.reward %}
+                        <li>
+                          <small> - {{ text_points }}: {{ product.reward }}</small>
+                        </li>
+                      {% endif %}
+                    </ul>
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
                     {% for option in product.option %}
                       {% if option.type == 'select' or option.type == 'radio' %}
                         <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
@@ -132,13 +122,15 @@
                       {% endif %}
                     {% endfor %}
                     <input type="hidden" name="subscription_plan_id" value="{{ product.subscription_plan_id }}"/>
-                    <button type="submit" value="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button>
-                    <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a>
                   </form>
                 </td>
+                <td class="text-end">{{ product.quantity }}</td>
+                <td class="text-end">{{ product.price }}</td>
+                <td class="text-end">{{ product.total }}</td>
+                <td class="text-end text-nowrap" style="width: 1px;"><button type="submit" form="form-product-{{ product_row }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button> <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
               </tr>
+              {% set order_product_row = order_product_row + 1 %}
             {% endfor %}
-
             {% for total in totals %}
               <tr>
                 <td colspan="2"></td>
@@ -166,6 +158,8 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+var product_row = 0;
+
 $('form').on('submit', function(e) {
     e.preventDefault();
 
@@ -193,12 +187,21 @@ $('form').on('submit', function(e) {
         success: function(json) {
             console.log(json);
 
-            $('#form-product').find('.invalid-feedback').removeClass('d-block');
+            $('form').find('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_reorder}} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                product_row = $(element).attr('id').substr(13);
+
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                  delete json['error']['warning'];
+                }
+
                 for (key in json['error']) {
-                   // $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][key] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#error-' + product_row + '-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 

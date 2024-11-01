@@ -24,7 +24,7 @@
             <div class="form-control" style="min-height: 64px;">
               <strong class="lead">{{ text_order_id }}</strong>
               <br/>
-              {{ order_id }}
+              <a href="{{ order_link }}" target="_blank">{{ order_id }}</a>
             </div>
           </div>
         {% endif %}
@@ -81,7 +81,6 @@
         <thead>
           <tr>
             <th>{{ column_product }}</th>
-            <th>{{ column_model }}</th>
             <th class="text-end">{{ column_quantity }}</th>
             <th class="text-end">{{ column_trial_price }}</th>
             <th class="text-end">{{ column_price }}</th>
@@ -94,6 +93,9 @@
               <tr>
                 <td><a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
                   <ul class="list-unstyled mb-0">
+                    <li>
+                      <small> - {{ text_model }}: {{ product.model }}</small>
+                    </li>
                     {% for option in product.option %}
                       <li>
                         <small> - {{ option.name }}: {{ option.value }}</small>
@@ -101,7 +103,6 @@
                     {% endfor %}
                   </ul>
                 </td>
-                <td>{{ product.model }}</td>
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.trial_price }}</td>
                 <td class="text-end">{{ product.price }}</td>
@@ -120,6 +121,25 @@
         <strong class="lead">{{ text_subscription_plan }}</strong>
         <br/>
         {{ description }}
+      </div>
+
+      <div class="row row-cols-2">
+        <div class="col mb-3">
+          <div class="form-control">
+            <div class="lead"><strong>{{ text_date_next }}</strong>
+              <br/>
+              {{ date_next }}
+            </div>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control">
+            <div class="lead"><strong>{{ text_remaining }}</strong>
+              <br/>
+              {{ remaining }}
+            </div>
+          </div>
+        </div>
       </div>
 
       <h2>{{ text_history }}</h2>

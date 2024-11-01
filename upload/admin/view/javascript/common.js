@@ -95,12 +95,8 @@ $(document).ready(function () {
     });
 
     // Alert Fade
-    var alert_timer = null;
-
     $('#alert').observe(function() {
-        clearTimeout(alert_timer);
-
-        alert_timer = window.setTimeout(function() {
+        window.setTimeout(function() {
             $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
                 $(this).remove();
             });
@@ -509,6 +505,19 @@ var chain = new Chain();
             }
         });
     }
+}(jQuery);
+
+// Observe
++function($) {
+    $.fn.observe = function(callback) {
+        observer = new MutationObserver(callback);
+
+        observer.observe($(this)[0], {
+            characterData: false,
+            childList: true,
+            attributes: false
+        });
+    };
 }(jQuery);
 
 // Button

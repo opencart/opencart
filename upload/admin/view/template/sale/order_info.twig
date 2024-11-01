@@ -107,7 +107,7 @@
               {% set order_product_row = 0 %}
               {% if order_products %}
                 {% for order_product in order_products %}
-                  <tr class="bg-danger">
+                  <tr>
                     <td>
                       <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>

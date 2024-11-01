@@ -7,16 +7,6 @@ namespace Opencart\Catalog\Controller\Event;
  */
 class Debug extends \Opencart\System\Engine\Controller {
 	/**
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args): void {
-		//echo $route;
-	}
-
-	/**
 	 * Before
 	 *
 	 * @param string            $route
@@ -26,11 +16,7 @@ class Debug extends \Opencart\System\Engine\Controller {
 	 */
 	public function before(string &$route, array &$args): void {
 		// add the route you want to test
-		/*
-		if ($route == 'common/home') {
-			$this->session->data['debug'][$route] = microtime(true);
-		}
-		*/
+		$this->session->data['debug'][$route] = microtime(true);
 	}
 
 	/**
@@ -44,17 +30,15 @@ class Debug extends \Opencart\System\Engine\Controller {
 	 */
 	public function after(string &$route, array &$args, &$output): void {
 		// add the route you want to test
-		/*
-		if ($route == 'common/home') {
-			if (isset($this->session->data['debug'][$route])) {
-				$log_data = [
-					'route' => $route,
-					'time'  => microtime(true) - $this->session->data['debug'][$route]
-				];
+		if (isset($this->session->data['debug'][$route])) {
+			$log_data = [
+				'route' => $route,
+				'time'  => microtime(true) - $this->session->data['debug'][$route]
+			];
 
-				$this->log->write($log_data);
-			}
+			$this->log->write($log_data);
+
+			unset($this->session->data['debug']);
 		}
-		*/
 	}
 }

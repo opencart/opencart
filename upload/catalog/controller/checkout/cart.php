@@ -262,10 +262,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			// Validate subscription products
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
-print_r($subscriptions);
-			if ($subscriptions && !$subscription_plan_id) {
-				$json['error']['subscription'] = $this->language->get('error_subscription');
-			} elseif (!in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id'))) {
+
+			if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
 				$json['error']['subscription'] = $this->language->get('error_subscription');
 			}
 		} else {

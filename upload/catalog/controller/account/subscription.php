@@ -385,16 +385,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$this->load->model('localisation/subscription_status');
-
-			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_info['subscription_status_id']);
-
-			if ($subscription_status_info) {
-				$data['subscription_status'] = $subscription_status_info['name'];
-			} else {
-				$data['subscription_status'] = '';
-			}
-
 			$data['description'] = '';
 
 			if ($subscription_info['trial_status']) {
@@ -423,6 +413,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['date_next'] = '';
 			}
+
+			$data['duration'] = $subscription_info['duration'];
 
 			if (!empty($subscription_info)) {
 				$data['remaining'] = $subscription_info['remaining'];
@@ -461,6 +453,20 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		return null;
+	}
+
+	/**
+     * Cancel
+	 *
+	 * @return void
+	 */
+	public function cancel(): void {
+		$this->load->language('account/subscription');
+
+		$json = [];
+
+
+
 	}
 
 	/**

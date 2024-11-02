@@ -121,7 +121,9 @@
         <br/>
         {{ description }}
       </div>
-      <div class="row row-cols-2">
+
+      <div class="row">
+
         <div class="col mb-3">
           <div class="form-control">
             <strong class="lead">{{ text_date_next }}</strong>
@@ -129,38 +131,54 @@
             {{ date_next }}
           </div>
         </div>
-        <div class="col mb-3">
+
+        {% if duration %}
+          <div class="col mb-3">
+            <div class="form-control">
+              <strong class="lead">{{ text_remaining }}</strong>
+              <br/>
+              {{ remaining }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="row mb-3">
+
+        <div class="col">
           <div class="form-control">
-            <strong class="lead">{{ text_remaining }}</strong>
+            <strong class="lead">Subscrition Options</strong>
             <br/>
-            {{ remaining }}
+            <button type="button" id="button-cancel" class="btn btn-warning">Cancel my subscription</button>
           </div>
         </div>
       </div>
 
-      <h2>{{ text_history }}</h2>
-      <div id="history">{{ history }}</div>
+        <h2>{{ text_history }}</h2>
+        <div id="history">{{ history }}</div>
 
-      <h2>{{ text_order }}</h2>
-      <div id="order">{{ order }}</div>
+        <h2>{{ text_order }}</h2>
+        <div id="order">{{ order }}</div>
 
-      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      {{ content_bottom }}
+        <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        {{ content_bottom }}
+      </div>
+      {{ column_right }}
     </div>
-    {{ column_right }}
   </div>
-</div>
-<script type="text/javascript"><!--
-$('#history').on('click', '.pagination a', function(e) {
-    e.preventDefault();
+  <script type="text/javascript"><!--
 
-    $('#history').load(this.href);
-});
 
-$('#order').on('click', '.pagination a', function(e) {
-    e.preventDefault();
+  $('#history').on('click', '.pagination a', function(e) {
+      e.preventDefault();
 
-    $('#order').load(this.href);
-});
-//--></script>
-{{ footer }}
+      $('#history').load(this.href);
+  });
+
+  $('#order').on('click', '.pagination a', function(e) {
+      e.preventDefault();
+
+      $('#order').load(this.href);
+  });
+  //--></script>
+  {{ footer }}

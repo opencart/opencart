@@ -127,7 +127,12 @@
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
-                <td class="text-end text-nowrap" style="width: 1px;"><button type="submit" form="form-product-{{ product_row }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button> <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
+                <td class="text-end text-nowrap" style="width: 1px;">
+                  <div class="d-grid">
+                    <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
+                    <a href="{{ product.return }}" class="btn btn-danger">{{ button_return }}</a>
+                  </div>
+                </td>
               </tr>
               {% set order_product_row = order_product_row + 1 %}
             {% endfor %}
@@ -190,14 +195,14 @@ $('form').on('submit', function(e) {
             $('form').find('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_reorder}} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_reorder }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 product_row = $(element).attr('id').substr(13);
 
                 if (json['error']['warning']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                  delete json['error']['warning'];
+                    delete json['error']['warning'];
                 }
 
                 for (key in json['error']) {

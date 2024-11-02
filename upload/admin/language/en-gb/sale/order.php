@@ -12,6 +12,7 @@ $_['text_store']                 = 'Store';
 $_['text_date_added']            = 'Date Added';
 $_['text_customer']              = 'Customer';
 $_['text_product_add']           = 'Add Product';
+$_['text_model'] 			     = 'Model';
 $_['text_reward']                = 'Reward Points';
 $_['text_points']                = 'Points';
 $_['text_reward_add']            = 'Success: Reward points added!';

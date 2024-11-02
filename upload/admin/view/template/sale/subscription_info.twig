@@ -112,6 +112,9 @@
                       <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled">
+                        <li>
+                          <small> - {{ text_model }}: {{ product.model }}</small>
+                        </li>
                         {% for option in order_product.option %}
                           {% if option.type != 'file' %}
                             <li>

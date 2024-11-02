@@ -12,6 +12,7 @@ $_['text_date_added']            = 'Date Added';
 $_['text_order']                 = 'Order ID';
 $_['text_customer']              = 'Customer';
 $_['text_product_add']           = 'Add Product';
+$_['text_model'] 			     = 'Model';
 $_['text_subscription']          = 'Subscription';
 $_['text_subscription_plan']     = 'Subscription Plan';
 $_['text_date_next']             = 'Date Next';
@@ -44,7 +45,6 @@ $_['column_product']             = 'Product';
 $_['column_model']               = 'Model';
 $_['column_quantity']            = 'Quantity';
 $_['column_total']               = 'Total';
-$_['column_action']              = 'Action';
 
 // Entry
 $_['entry_subscription_id']      = 'Subscription ID';

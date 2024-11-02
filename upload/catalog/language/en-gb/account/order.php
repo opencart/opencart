@@ -25,7 +25,7 @@ $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_date_next']             = 'Date Next';
 $_['text_remaining']             = 'Remaining';
-$_['text_comment']               = 'Order Comments';
+$_['text_comment']               = 'Note';
 $_['text_history']               = 'Order History';
 $_['text_success']               = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
 $_['text_no_results']            = 'You have not made any previous orders!';

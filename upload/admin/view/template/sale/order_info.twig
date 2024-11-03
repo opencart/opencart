@@ -96,7 +96,6 @@
             <thead>
               <tr>
                 <th>{{ column_product }}</th>
-                <th>{{ column_model }}</th>
                 <th class="text-end">{{ column_quantity }}</th>
                 <th class="text-end">{{ column_price }}</th>
                 <th class="text-end">{{ column_total }}</th>
@@ -113,7 +112,7 @@
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled mb-0">
                         <li>
-                          <small> - {{ text_model }}: {{ product.model }}</small>
+                          <small> - {{ text_model }}: {{ order_product.model }}</small>
                         </li>
                         {% for option in order_product.option %}
                           {% if option.type != 'file' %}
@@ -155,7 +154,6 @@
                       {% endfor %}
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
-                    <td>{{ order_product.model }}</td>
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price_text }}</td>
                     <td class="text-end">{{ order_product.total_text }}</td>
@@ -165,13 +163,13 @@
                 {% endfor %}
               {% else %}
                 <tr>
-                  <td colspan="6" class="text-center">{{ text_no_results }}</td>
+                  <td colspan="5" class="text-center">{{ text_no_results }}</td>
                 </tr>
               {% endif %}
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="5"></td>
+                <td colspan="4"></td>
                 <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
               </tr>
             </tfoot>
@@ -2552,7 +2550,6 @@ function cart_render(products, totals, shipping_required) {
 
             html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
-            html += '  <td>' + product['model'] + '</td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';
             html += '  <td class="text-end">' + product['price_text'] + '</td>';
             html += '  <td class="text-end">' + product['total_text'] + '</td>';

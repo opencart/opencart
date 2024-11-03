@@ -388,6 +388,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 							if ($date_next) {
 								$this->load->model('checkout/subscription');
+
 								$this->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
 							}
 

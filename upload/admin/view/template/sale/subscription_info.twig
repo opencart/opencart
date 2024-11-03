@@ -96,26 +96,23 @@
             <thead>
               <tr>
                 <th>{{ column_product }}</th>
-                <th>{{ column_model }}</th>
                 <th class="text-end">{{ column_quantity }}</th>
                 <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
             <tbody>
               {% set order_product_row = 0 %}
-
               {% if subscription_products %}
-
                 {% for subscription_product in subscription_products %}
                   <tr>
                     <td>
-                      <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
+                      <a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled">
                         <li>
-                          <small> - {{ text_model }}: {{ product.model }}</small>
+                          <small> - {{ text_model }}: {{ subscription_product.model }}</small>
                         </li>
-                        {% for option in order_product.option %}
+                        {% for option in subscription_product.option %}
                           {% if option.type != 'file' %}
                             <li>
                               <small> - {{ option.name }}: {{ option.value }}</small>
@@ -129,6 +126,8 @@
                           {% endif %}
                         {% endfor %}
                       </ul>
+
+
                       <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
                       {% for option in order_product.option %}
                         {% if option.type == 'select' or option.type == 'radio' %}
@@ -143,10 +142,8 @@
                       {% endfor %}
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
-                    <td>{{ order_product.model }}</td>
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price_text }}</td>
-                    <td class="text-end">{{ order_product.total_text }}</td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
 

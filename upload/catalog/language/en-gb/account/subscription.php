@@ -21,14 +21,12 @@ $_['text_week']                  = 'week';
 $_['text_semi_month']            = 'half-month';
 $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
-$_['text_description']           = 'Description';
 $_['text_quantity']              = 'Quantity';
 $_['text_date_next']             = 'Date Next';
 $_['text_remaining']             = 'Remaining';
 $_['text_history']               = 'Subscription History';
 $_['text_order']                 = 'Order History';
-$_['text_no_results']            = 'No subscriptions found!';
-$_['text_no_orders']             = 'No orders found!';
+$_['text_no_subscription']       = 'No subscriptions found!';
 
 // Column
 $_['column_subscription_id']     = 'Subscription ID';
@@ -44,5 +42,10 @@ $_['column_total']               = 'Total';
 $_['column_comment']             = 'Comment';
 $_['column_date_added']          = 'Date Added';
 
+// Button
+$_['button_cancel']              = 'Cancel Subscription';
+
 // Error
+$_['error_subscription']         = 'Subscription could not be found!';
+$_['error_duration']             = 'Subscription can not be canceled until %s more orders!';
 $_['error_cancel']               = 'Could not cancel subscription';

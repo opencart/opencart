@@ -53,11 +53,15 @@ class Subscription extends \Opencart\System\Engine\Model {
 			`frequency` = '" . $this->db->escape($data['frequency']) . "',
 			`cycle` = '" . (int)$data['cycle'] . "',
 			`duration` = '" . (int)$data['duration'] . "',
-			`remaining` = '" . (int)$trial_remaining . "',
+			`remaining` = '" . (int)$remaining . "',
 			`date_next` = '" . $this->db->escape($date_next) . "',
 			`comment` = '" . $this->db->escape($data['comment']) . "',
 			`affiliate_id` = '" . (int)$data['affiliate_id'] . "',
-			`marketing_id` = '" . (int)$data['marketing_id'] . "', `tracking` = '" . $this->db->escape($data['tracking']) . "', `language_id` = '" . (int)$data['language_id'] . "', `currency_id` = '" . (int)$data['currency_id'] . "', `date_added` = NOW(), `date_modified` = NOW()
+			`marketing_id` = '" . (int)$data['marketing_id'] . "', 
+			`tracking` = '" . $this->db->escape($data['tracking']) . "', 
+			`language_id` = '" . (int)$data['language_id'] . "',
+			`currency_id` = '" . (int)$data['currency_id'] . "', 
+			`date_added` = NOW(), `date_modified` = NOW()
 		");
 
 		$subscription_id = $this->db->getLastId();
@@ -144,6 +148,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		$this->deleteProducts($subscription_id);
+		$this->deleteHistories($subscription_id);
 	}
 
 	/**
@@ -459,6 +464,17 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "', `date_added` = NOW()");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	/**
+	 * Delete Histories
+	 *
+	 * @param int $subscription_id
+	 *
+	 * @return void
+	 */
+	public function deleteHistories(int $subscription_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
 	/**

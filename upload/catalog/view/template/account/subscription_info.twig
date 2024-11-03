@@ -111,7 +111,7 @@
 
           {% else %}
             <tr>
-              <td colspan="5" class="text-center">{{ text_no_results }}</td>
+              <td colspan="4" class="text-center">{{ text_no_results }}</td>
             </tr>
           {% endif %}
         </tbody>
@@ -121,19 +121,16 @@
         <br/>
         {{ description }}
       </div>
-
-      <div class="row">
-
-        <div class="col mb-3">
+      <div class="row mb-3">
+        <div class="col">
           <div class="form-control">
             <strong class="lead">{{ text_date_next }}</strong>
             <br/>
             {{ date_next }}
           </div>
         </div>
-
-        {% if duration %}
-          <div class="col mb-3">
+        {% if trial_duration or duration %}
+          <div class="col">
             <div class="form-control">
               <strong class="lead">{{ text_remaining }}</strong>
               <br/>
@@ -142,43 +139,66 @@
           </div>
         {% endif %}
       </div>
-
-      <div class="row mb-3">
-
-        <div class="col">
-          <div class="form-control">
-            <strong class="lead">Subscrition Options</strong>
-            <br/>
-            <button type="button" id="button-cancel" class="btn btn-warning">Cancel my subscription</button>
-          </div>
-        </div>
+      <div class="text-end mb-3">
+        <button type="button" id="button-cancel" class="btn btn-danger">{{ button_cancel }}</button>
       </div>
 
-        <h2>{{ text_history }}</h2>
-        <div id="history">{{ history }}</div>
+      <h2>{{ text_history }}</h2>
+      <div id="history">{{ history }}</div>
 
-        <h2>{{ text_order }}</h2>
-        <div id="order">{{ order }}</div>
+      <h2>{{ text_order }}</h2>
+      <div id="order">{{ order }}</div>
 
-        <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-        {{ content_bottom }}
-      </div>
-      {{ column_right }}
+      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}
     </div>
+    {{ column_right }}
   </div>
-  <script type="text/javascript"><!--
+</div>
+<script type="text/javascript"><!--
+$('#button-cancel').on('click', function(e) {
+    e.preventDefault();
 
+    var element = this;
 
-  $('#history').on('click', '.pagination a', function(e) {
-      e.preventDefault();
+    $.ajax({
+        url: 'index.php?route=account/subscription.cancel&language={{ language }}&customer_token={{ customer_token }}&subscription_id={{ subscription_id }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-      $('#history').load(this.href);
-  });
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
 
-  $('#order').on('click', '.pagination a', function(e) {
-      e.preventDefault();
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-      $('#order').load(this.href);
-  });
-  //--></script>
-  {{ footer }}
+                $('#history').load('index.php?route=account/subscription.history&language={{ language }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#order').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#order').load(this.href);
+});
+//--></script>
+{{ footer }}

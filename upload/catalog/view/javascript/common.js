@@ -22,6 +22,19 @@ function getURLVar(key) {
     }
 }
 
+// Observe
++function($) {
+    $.fn.observe = function(callback) {
+        observer = new MutationObserver(callback);
+
+        observer.observe($(this)[0], {
+            characterData: false,
+            childList: true,
+            attributes: false
+        });
+    };
+}(jQuery);
+
 $(document).ready(function() {
     // Tooltip
     var oc_tooltip = function() {
@@ -48,109 +61,31 @@ $(document).ready(function() {
             });
         }, 3000);
     });
+
+
+
 });
 
+// Button
 $(document).ready(function() {
-    // Currency
-    $('#form-currency .dropdown-item').on('click', function(e) {
-        e.preventDefault();
+    +function($) {
+        $.fn.button = function(state) {
+            return this.each(function() {
+                var element = this;
 
-        $('#form-currency input[name=\'code\']').val($(this).attr('href'));
+                if (state == 'loading') {
+                    this.html = $(element).html();
+                    this.state = $(element).prop('disabled');
 
-        $('#form-currency').submit();
-    });
-
-    // Menu
-    $('#menu .dropdown-menu').each(function() {
-        var menu = $('#menu').offset();
-        var dropdown = $(this).parent().offset();
-
-        var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
-
-        if (i > 0) {
-            $(this).css('margin-left', '-' + (i + 10) + 'px');
-        }
-    });
-
-    // Product List
-    $('#button-list').on('click', function() {
-        var element = this;
-
-        $('#product-list').attr('class', 'row row-cols-1 product-list');
-
-        $('#button-grid').removeClass('active');
-        $('#button-list').addClass('active');
-
-        localStorage.setItem('display', 'list');
-    });
-
-    // Product Grid
-    $('#button-grid').on('click', function() {
-        var element = this;
-
-        // What a shame bootstrap does not take into account dynamically loaded columns
-        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
-
-        $('#button-list').removeClass('active');
-        $('#button-grid').addClass('active');
-
-        localStorage.setItem('display', 'grid');
-    });
-
-    // Local Storage
-    if (localStorage.getItem('display') == 'list') {
-        $('#product-list').attr('class', 'row row-cols-1 product-list');
-        $('#button-list').addClass('active');
-    } else {
-        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
-        $('#button-grid').addClass('active');
-    }
-
-    /* Agree to Terms */
-    $('body').on('click', '.modal-link', function(e) {
-        e.preventDefault();
-
-        var element = this;
-
-        $('#modal-information').remove();
-
-        $.ajax({
-            url: $(element).attr('href'),
-            dataType: 'html',
-            success: function(html) {
-                $('body').append(html);
-
-                $('#modal-information').modal('show');
-            }
-        });
-    });
-
-    // Cookie Policy
-    $('#cookie button').on('click', function() {
-        var element = this;
-
-        $.ajax({
-            url: $(this).val(),
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function() {
-                $(element).button('loading');
-            },
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                if (json['success']) {
-                    $('#cookie').fadeOut(400, function() {
-                        $('#cookie').remove();
-                    });
+                    $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
                 }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
+
+                if (state == 'reset') {
+                    $(element).prop('disabled', this.state).width('').html(this.html);
+                }
+            });
+        };
+    }(jQuery);
 });
 
 // Forms
@@ -498,39 +433,105 @@ var chain = new Chain();
     }
 }(jQuery);
 
-// Observe
-+function($) {
-    $.fn.observe = function(callback) {
-        observer = new MutationObserver(callback);
-
-        observer.observe($(this)[0], {
-            characterData: false,
-            childList: true,
-            attributes: false
-        });
-    };
-}(jQuery);
-
-// Button
 $(document).ready(function() {
-    +function($) {
-        $.fn.button = function(state) {
-            return this.each(function() {
-                var element = this;
+    // Currency
+    $('#form-currency .dropdown-item').on('click', function(e) {
+        e.preventDefault();
 
-                if (state == 'loading') {
-                    this.html = $(element).html();
-                    this.state = $(element).prop('disabled');
+        $('#form-currency input[name=\'code\']').val($(this).attr('href'));
 
-                    $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
+        $('#form-currency').submit();
+    });
+
+    // Menu
+    $('#menu .dropdown-menu').each(function() {
+        var menu = $('#menu').offset();
+        var dropdown = $(this).parent().offset();
+
+        var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
+
+        if (i > 0) {
+            $(this).css('margin-left', '-' + (i + 10) + 'px');
+        }
+    });
+
+    // Product List
+    $('#button-list').on('click', function() {
+        var element = this;
+
+        $('#product-list').attr('class', 'row row-cols-1 product-list');
+
+        $('#button-grid').removeClass('active');
+        $('#button-list').addClass('active');
+
+        localStorage.setItem('display', 'list');
+    });
+
+    // Product Grid
+    $('#button-grid').on('click', function() {
+        var element = this;
+
+        // What a shame bootstrap does not take into account dynamically loaded columns
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
+
+        $('#button-list').removeClass('active');
+        $('#button-grid').addClass('active');
+
+        localStorage.setItem('display', 'grid');
+    });
+
+    // Local Storage
+    if (localStorage.getItem('display') == 'list') {
+        $('#product-list').attr('class', 'row row-cols-1 product-list');
+        $('#button-list').addClass('active');
+    } else {
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
+        $('#button-grid').addClass('active');
+    }
+
+    /* Agree to Terms */
+    $('body').on('click', '.modal-link', function(e) {
+        e.preventDefault();
+
+        var element = this;
+
+        $('#modal-information').remove();
+
+        $.ajax({
+            url: $(element).attr('href'),
+            dataType: 'html',
+            success: function(html) {
+                $('body').append(html);
+
+                $('#modal-information').modal('show');
+            }
+        });
+    });
+
+    // Cookie Policy
+    $('#cookie button').on('click', function() {
+        var element = this;
+
+        $.ajax({
+            url: $(this).val(),
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                if (json['success']) {
+                    $('#cookie').fadeOut(400, function() {
+                        $('#cookie').remove();
+                    });
                 }
-
-                if (state == 'reset') {
-                    $(element).prop('disabled', this.state).width('').html(this.html);
-                }
-            });
-        };
-    }(jQuery);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });
-
-

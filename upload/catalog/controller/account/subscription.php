@@ -192,28 +192,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscription_id'] = $subscription_info['subscription_id'];
 			$data['order_id'] = $subscription_info['order_id'];
 
-			$this->load->model('localisation/subscription_status');
-
-			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_info['subscription_status_id']);
-
-			if ($subscription_status_info) {
-				$data['subscription_status'] = $subscription_status_info['name'];
-			} else {
-				$data['subscription_status'] = '';
-			}
-
-			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
-
 			// Payment Address
-			if ($subscription_info['payment_address_id']) {
-				$payment_address_id = $subscription_info['payment_address_id'];
-			} else {
-				$payment_address_id = 0;
-			}
-
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $payment_address_id);
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $subscription_info['payment_address_id']);
 
 			if ($address_info) {
 				if ($address_info['address_format']) {
@@ -266,15 +248,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			// Shipping Address
-			if ($subscription_info['shipping_address_id']) {
-				$shipping_address_id = $subscription_info['shipping_address_id'];
-			} else {
-				$shipping_address_id = 0;
-			}
-
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $shipping_address_id);
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $subscription_info['shipping_address_id']);
 
 			if ($address_info) {
 				if ($address_info['address_format']) {
@@ -407,20 +383,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 			}
 
-			// Date next
-			if (!empty($subscription_info)) {
-				$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
-			} else {
-				$data['date_next'] = '';
-			}
-
+			$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
 			$data['duration'] = $subscription_info['duration'];
-
-			if (!empty($subscription_info)) {
-				$data['remaining'] = $subscription_info['remaining'];
-			} else {
-				$data['remaining'] = 0;
-			}
+			$data['trial_duration'] = $subscription_info['trial_duration'];
+			$data['remaining'] = $subscription_info['trial_remaining'] + $subscription_info['remaining'];
 
 			// Orders
 			$data['history'] = $this->getHistory();
@@ -439,7 +405,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['continue'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url);
+			
+			$data['language'] = $this->config->get('config_language');
 
+			$data['customer_token'] = $this->session->data['customer_token'];
+			
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -456,7 +426,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-     * Cancel
+     * Cancel Subscription
 	 *
 	 * @return void
 	 */
@@ -465,8 +435,40 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
+		} else {
+			$subscription_id = 0;
+		}
 
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language'));
 
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
+			$this->load->model('account/subscription');
+
+			$subscription_info = $this->model_account_subscription->getSubscription($subscription_id);
+
+			if (!$subscription_info) {
+				$json['error'] = $this->language->get('error_subscription');
+			} elseif ($subscription_info['trial_remaining']) {
+				$json['error'] = sprintf($this->language->get('error_duration'), $subscription_info['trial_remaining'] + $subscription_info['remaining']);
+			} elseif ($subscription_info['remaining']) {
+				$json['error'] = sprintf($this->language->get('error_duration'), $subscription_info['remaining']);
+			}
+		}
+
+		if (!$json) {
+			$this->model_account_subscription->addHistory($subscription_id, $this->config->get('config_subscription_status_cancel'));
+			
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

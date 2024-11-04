@@ -452,17 +452,25 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$subscription_info = $this->model_account_subscription->getSubscription($subscription_id);
 
-			if (!$subscription_info) {
+			if ($subscription_info) {
+				if ($subscription_info['trial_remaining']) {
+					$json['error'] = sprintf($this->language->get('error_duration'), $subscription_info['trial_remaining'] + $subscription_info['remaining']);
+				} elseif ($subscription_info['remaining']) {
+					$json['error'] = sprintf($this->language->get('error_duration'), $subscription_info['remaining']);
+				}
+
+				if ($subscription_info['subscription_status_id'] == $this->config->get('config_subscription_canceled_status_id')) {
+					$json['error'] = $this->language->get('error_canceled');
+				}
+			} else {
 				$json['error'] = $this->language->get('error_subscription');
-			} elseif ($subscription_info['trial_remaining']) {
-				$json['error'] = sprintf($this->language->get('error_duration'), $subscription_info['trial_remaining'] + $subscription_info['remaining']);
-			} elseif ($subscription_info['remaining']) {
-				$json['error'] = sprintf($this->language->get('error_duration'), $subscription_info['remaining']);
 			}
 		}
 
 		if (!$json) {
-			$this->model_account_subscription->addHistory($subscription_id, $this->config->get('config_subscription_status_cancel'));
+			$this->load->model('checkout/subscription');
+
+			$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_canceled_status_id'));
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -501,6 +509,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		$limit = 10;
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			return '';
+		}
 
 		$data['histories'] = [];
 
@@ -556,6 +568,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
+		}
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			return '';
 		}
 
 		$limit = 10;

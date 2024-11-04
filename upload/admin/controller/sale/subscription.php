@@ -236,6 +236,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['subscriptions'] = [];
 
 		$filter_data = [

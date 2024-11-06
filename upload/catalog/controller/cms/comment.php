@@ -48,7 +48,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$data['list'] = $this->controller_cms_comment->getList();
+		$data['list'] = $this->load->controller('cms/comment.getList');
 
 		$data['sorts'] = [];
 
@@ -103,7 +103,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('cms/comment');
 
-		$this->response->setOutput($this->controller_cms_comment->getList());
+		$this->response->setOutput($this->load->controller('cms/comment.getList'));
 	}
 
 	/**
@@ -191,7 +191,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function reply(): void {
 		$this->load->language('cms/comment');
 
-		$this->response->setOutput($this->controller_cms_comment->getReplies());
+		$this->response->setOutput($this->load->controller('cms/comment.getReplies'));
 	}
 
 	/**

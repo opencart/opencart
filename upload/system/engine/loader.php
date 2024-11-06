@@ -75,20 +75,15 @@ class Loader {
 		// Trigger the pre events
 		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
-		// Keep the original trigger
-		$action = new \Opencart\System\Engine\Action($route);
+		if (strrpos($route, '.') !== false) {
+			$output = $this->execute('controller/' . $route, $args);
+		} else {
+			$output = $this->execute('controller/' . $route . '.index', $args);
+		}
 
-		while ($action) {
-			// Execute action
-			$output = $action->execute($this->registry, $args);
-
-			// Make action a non-object so it's not infinitely looping
-			$action = '';
-
-			// Action object returned then we keep the loop going
-			if ($output instanceof \Opencart\System\Engine\Action) {
-				$action = $output;
-			}
+		// If action cannot be executed, we return an action error object.
+		if (!$output instanceof \Exception) {
+			return $output;
 		}
 
 		// Trigger the post events
@@ -108,67 +103,29 @@ class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		// Create a new key to store the model object
+		// Create a new key to store the model obj
 		$key = 'model_' . str_replace('/', '_', $route);
 
 		if (!$this->registry->has($key)) {
-			// Converting a route path to a class name
-			$class = 'Opencart\\' . $this->config->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+			// Initialize the class
+			$object = $this->factory->model($route);
 
-			if (class_exists($class)) {
+			if (!$object instanceof \Exception) {
+				// Store original object
+				$this->registry->set('fallback_' . $key, $object);
+
 				$proxy = new \Opencart\System\Engine\Proxy();
 
-				foreach (get_class_methods($class) as $method) {
-					$reflection = new \ReflectionMethod($class, $method);
-
-					if ((substr($method, 0, 2) != '__') && $reflection->isPublic()) {
-						// https://wiki.php.net/rfc/variadics
-						$proxy->{$method} = function(&...$args) use ($route, $method) {
-							$route = $route . '/' . $method;
-
-							$trigger = $route;
-
-							// Trigger the pre events
-							$this->event->trigger('model/' . $trigger . '/before', [&$route, &$args]);
-
-							// Find last `/` so we can remove and find the method
-							$pos = strrpos($route, '/');
-
-							$class = substr($route, 0, $pos);
-							$method = substr($route, $pos + 1);
-
-							// Create a new key to store the model object
-							$key = 'callback_' . str_replace('/', '_', $class);
-
-							if (!$this->registry->has($key)) {
-								// Initialize the class
-								$model = $this->factory->model($class);
-
-								// Store object
-								$this->registry->set($key, $model);
-							} else {
-								$model = $this->registry->get($key);
-							}
-
-							$callable = [$model, $method];
-
-							if (is_callable($callable)) {
-								$output = $callable(...$args);
-							} else {
-								throw new \Exception('Error: Could not call model/' . $route . '!');
-							}
-
-							// Trigger the post events
-							$this->event->trigger('model/' . $trigger . '/after', [&$route, &$args, &$output]);
-
-							return $output;
-						};
+				foreach (get_class_methods($object) as $method) {
+					if (substr($method, 0, 2) != '__') {
+						$proxy->{$method} = $this->callback($route . '.' . $method);
 					}
 				}
 
+				// Store proxy object
 				$this->registry->set($key, $proxy);
 			} else {
-				throw new \Exception('Error: Could not load model ' . $class . '!');
+				throw new \Exception('Error: Could not load model ' . $route . '!');
 			}
 		}
 	}
@@ -308,6 +265,61 @@ class Loader {
 			include_once($file);
 		} else {
 			throw new \Exception('Error: Could not load helper ' . $route . '!');
+		}
+	}
+
+	public function callback($route): callable {
+		return function(&...$args) use ($route) {
+			$trigger = $route;
+
+			// Trigger the pre events
+			$this->event->trigger('model/' . $trigger . '/before', [&$route, &$args]);
+
+			// Find last `/` so we can remove and find the method
+			$output = $this->execute('model/' . $route, $args);
+
+			// If action cannot be executed, we return an action error object.
+			if ($output instanceof \Exception) {
+				throw $output;
+			}
+
+			// Trigger the post events
+			$this->event->trigger('model/' . $trigger . '/after', [&$route, &$args, &$output]);
+
+			return $output;
+		};
+	}
+
+	public function execute(string $route, array $args = []): mixed {
+		// Separate the type, route and method to call
+		preg_match('/(?P<type>^\w+)\/(?P<route>(.+))\.(?P<method>\w+)/', $route, $match);
+
+		$type = $match['type'];
+		$route = $match['route'];
+		$method = $match['method'];
+
+		// Create a new key to store the model object
+		$key = 'fallback_' . $type . '_' . str_replace('/', '_', $route);
+
+		// Stop any magical methods being called
+		if (substr($method, 0, 2) == '__') {
+			return new \Exception('Error: Calls to magic methods are not allowed!');
+		}
+
+		if (!$this->registry->has($key)) {
+			$object = call_user_func_array([$this->factory, $type], [$route]);
+
+			$this->registry->set($key, $object);
+		} else {
+			$object = $this->registry->get($key);
+		}
+
+		$callable = [$object, $method];
+
+		if (is_callable($callable)) {
+			return $callable(...$args);
+		} else {
+			return new \Exception('Error: Could not call ' . $type . ' ' . $route . '!');
 		}
 	}
 }

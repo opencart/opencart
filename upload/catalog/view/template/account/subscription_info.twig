@@ -10,7 +10,6 @@
     <div id="content" class="col">
       {{ content_top }}
       <div class="row">
-
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <strong class="lead">{{ text_subscription_id }}</strong>
@@ -18,7 +17,6 @@
             #{{ subscription_id }}
           </div>
         </div>
-
         {% if order_id %}
           <div class="col mb-3">
             <div class="form-control" style="min-height: 64px;">
@@ -28,12 +26,9 @@
             </div>
           </div>
         {% endif %}
-
       </div>
-
       {% if payment_address or shipping_address %}
         <div class="row">
-
           {% if payment_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
@@ -43,7 +38,6 @@
               </div>
             </div>
           {% endif %}
-
           {% if shipping_address %}
             <div class="col mb-3">
               <div class="form-control" style="min-height: 128px;">
@@ -53,10 +47,8 @@
               </div>
             </div>
           {% endif %}
-
         </div>
       {% endif %}
-
       <div class="row">
         {% if shipping_method %}
           <div class="col mb-3">
@@ -67,7 +59,6 @@
             </div>
           </div>
         {% endif %}
-
         <div class="col mb-3">
           <div class="form-control" style="min-height: 64px;">
             <strong class="lead">{{ text_payment_method }}</strong>
@@ -76,7 +67,6 @@
           </div>
         </div>
       </div>
-
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -108,7 +98,6 @@
                 <td class="text-end">{{ product.price }}</td>
               </tr>
             {% endfor %}
-
           {% else %}
             <tr>
               <td colspan="4" class="text-center">{{ text_no_results }}</td>
@@ -142,13 +131,10 @@
       <div class="text-end mb-3">
         <button type="button" id="button-cancel" class="btn btn-danger">{{ button_cancel }}</button>
       </div>
-
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
-
       <h2>{{ text_order }}</h2>
       <div id="order">{{ order }}</div>
-
       <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {{ content_bottom }}
     </div>

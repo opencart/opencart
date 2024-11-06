@@ -13,7 +13,6 @@ $registry->set('autoloader', $autoloader);
 
 // Config
 $config = new \Opencart\System\Engine\Config();
-
 $config->addPath(DIR_CONFIG);
 // Load the default config
 $config->load('default');

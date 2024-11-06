@@ -72,12 +72,10 @@ class Loader {
 
 		$trigger = $route;
 
-		echo 'controller/' . $route . (!str_contains($route, '.') ? '.index' : '') . '<br>';
-
 		// Trigger the pre events
 		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
-		$output = $this->execute('controller/' . $route . (!str_contains($route, '.') ? '.index' : ''), $args);
+		$output = $this->execute('controller/' . (!str_contains($route, '.') ? $route . '.index' : $route), $args);
 
 		// If action cannot be executed, we return an action error object.
 		if ($output instanceof \Exception) {

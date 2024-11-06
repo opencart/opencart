@@ -14,7 +14,7 @@ namespace Opencart\System\Engine;
  *
  * @package Opencart\System\Engine
  */
-class Action {		
+class Action {
 	/**
 	 * @var string
 	 */
@@ -51,6 +51,6 @@ class Action {
 	 * @return mixed
 	 */
 	public function execute(\Opencart\System\Engine\Registry $registry, array &$args = []) {
-		return $registry->load->execute('controller/' . $this->route , $args);
+		return $registry->load->execute('controller/' . $this->route, $args);
 	}
 }

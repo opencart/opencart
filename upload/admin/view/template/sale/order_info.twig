@@ -640,7 +640,8 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label>
+            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
@@ -1235,7 +1236,7 @@ $('#form-customer').on('submit', function(e) {
             $('.invalid-feedback').removeClass('d-block');
 
             if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-customer').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (typeof json['error'] == 'object') {
@@ -1278,7 +1279,6 @@ $('#input-product').autocomplete({
                     return {
                         label: item['name'],
                         value: item['product_id'],
-                        model: item['model'],
                         option: item['option'],
                         subscription: item['subscription'],
                         price: item['price']
@@ -1540,7 +1540,7 @@ $('#form-product-add').on('submit', function(e) {
             $('.invalid-feedback').removeClass('d-block');
 
             if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (typeof json['error'] == 'object') {

@@ -66,6 +66,8 @@ class Api extends \Opencart\System\Engine\Controller {
 				break;
 		}
 
+		$output = ['error' => $this->language->get('error_call')]; // JSON error message if call not found
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($output));
 	}
@@ -140,8 +142,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
@@ -190,8 +192,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
@@ -225,8 +227,8 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
@@ -249,7 +251,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
-		$output = $this->controller_api_cart->addProduct();
+		$output = $this->load->controller('api/cart.addProduct');
 
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
@@ -262,8 +264,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 		}
 
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
@@ -304,8 +306,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
@@ -344,8 +346,8 @@ class Api extends \Opencart\System\Engine\Controller {
 		// Let confirm order controller validate extensions
 		$output = $this->load->controller('api/order');
 
-		$output['products'] = $this->controller_api_cart->getProducts();
-		$output['totals'] = $this->controller_api_cart->getTotals();
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;

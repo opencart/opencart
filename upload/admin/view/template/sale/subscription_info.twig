@@ -47,7 +47,6 @@
             </div>
 
 
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -66,8 +65,7 @@
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                   {% endfor %}
-                </select>
-                <label for="input-store">{{ entry_store }}</label>
+                </select> <label for="input-store">{{ entry_store }}</label>
               </div>
             </div>
             <div class="col mb-3">
@@ -76,8 +74,7 @@
                   {% for language in languages %}
                     <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                   {% endfor %}
-                </select>
-                <label for="input-language">{{ entry_language }}</label>
+                </select> <label for="input-language">{{ entry_language }}</label>
               </div>
             </div>
             <div class="col">
@@ -86,8 +83,7 @@
                   {% for currency in currencies %}
                     <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                   {% endfor %}
-                </select>
-                <label for="input-currency">{{ entry_currency }}</label>
+                </select> <label for="input-currency">{{ entry_currency }}</label>
               </div>
             </div>
           </div>
@@ -97,6 +93,7 @@
               <tr>
                 <th>{{ column_product }}</th>
                 <th class="text-end">{{ column_quantity }}</th>
+                <th class="text-end">{{ column_price }}</th>
                 <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
@@ -105,8 +102,7 @@
               {% if subscription_products %}
                 {% for subscription_product in subscription_products %}
                   <tr>
-                    <td>
-                      <a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
+                    <td><a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled">
                         <li>
@@ -127,7 +123,6 @@
                         {% endfor %}
                       </ul>
 
-
                       <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
                       {% for option in order_product.option %}
                         {% if option.type == 'select' or option.type == 'radio' %}
@@ -143,7 +138,7 @@
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
                     <td class="text-end">{{ order_product.quantity }}</td>
-                    <td class="text-end">{{ order_product.price_text }}</td>
+                    <td class="text-end">{{ order_product.price }}</td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
 
@@ -448,7 +443,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-product">
+        <form id="form-product-add">
           <div class="mb-3">
             <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
@@ -676,9 +671,6 @@ $('#input-customer').autocomplete({
     }
 });
 
-//$('#input-customer').();
-
-
 $('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -689,8 +681,8 @@ $('#input-product').autocomplete({
                     return {
                         label: item['name'],
                         value: item['product_id'],
-                        model: item['model'],
-                        option: item['option']
+                        option: item['option'],
+                        subscription: item['subscription']
                     }
                 }));
             }
@@ -699,7 +691,6 @@ $('#input-product').autocomplete({
     'select': function(item) {
         $('#input-product-id').val(item['value']);
         $('#input-product').val(item['label']);
-        $('#input-model').val(item['model']);
 
         if (item['option'] != '') {
             html = '<fieldset class="mb-0">';

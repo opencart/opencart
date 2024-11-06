@@ -613,7 +613,7 @@ class Order extends \Opencart\System\Engine\Model {
 						}
 
 						// Add history and set active subscription
-						$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_active_id'));
+						$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_active_status_id'));
 					}
 				}
 			}

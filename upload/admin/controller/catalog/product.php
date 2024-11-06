@@ -148,7 +148,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['copy'] = $this->url->link('catalog/product.copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->controller_catalog_product->getList();
+		$data['list'] = $this->load->controller('catalog/product.getList');
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
@@ -195,7 +195,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/product');
 
-		$this->response->setOutput($this->controller_catalog_product->getList());
+		$this->response->setOutput($this->load->controller('catalog/product.getList'));
 	}
 
 	/**

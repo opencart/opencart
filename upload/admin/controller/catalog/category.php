@@ -66,7 +66,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/category.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->controller_catalog_category->getList();
+		$data['list'] = $this->load->controller('catalog/category.getList');
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_status'] = $filter_status;
@@ -88,7 +88,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/category');
 
-		$this->response->setOutput($this->controller_catalog_category->getList());
+		$this->response->setOutput($this->load->controller('catalog/category.getList'));
 	}
 
 	/**

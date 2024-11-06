@@ -37,7 +37,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('design/theme.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->controller_design_theme->getList();
+		$data['list'] = $this->load->controller('design/theme.getList');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -56,7 +56,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('design/theme');
 
-		$this->response->setOutput($this->controller_design_theme->getList());
+		$this->response->setOutput($this->load->controller('design/theme.getList'));
 	}
 
 	/**

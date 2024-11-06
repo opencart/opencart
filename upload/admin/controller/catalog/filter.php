@@ -47,7 +47,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['list'] = $this->controller_catalog_filter->getList();
+		$data['list'] = $this->load->controller('catalog/filter.getList');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -64,7 +64,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/filter');
 
-		$this->response->setOutput($this->controller_catalog_filter->getList());
+		$this->response->setOutput($this->load->controller('catalog/filter.getList'));
 	}
 
 	/**

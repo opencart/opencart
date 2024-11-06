@@ -47,7 +47,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['list'] = $this->controller_catalog_filter_group->getList();
+		$data['list'] = $this->load->controller('catalog/filter_group.getList');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -64,7 +64,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/filter_group');
 
-		$this->response->setOutput($this->controller_catalog_filter_group->getList());
+		$this->response->setOutput($this->load->controller('catalog/filter_group.getList'));
 	}
 
 	/**

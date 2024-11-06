@@ -72,6 +72,8 @@ class Loader {
 
 		$trigger = $route;
 
+		echo 'controller/' . $route . (!str_contains($route, '.') ? '.index' : '') . '<br>';
+
 		// Trigger the pre events
 		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 

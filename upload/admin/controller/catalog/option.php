@@ -45,7 +45,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/option.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->controller_catalog_option->getList();
+		$data['list'] = $this->load->controller('catalog/option.getList');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -64,7 +64,7 @@ class Option extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('catalog/option');
 
-		$this->response->setOutput($this->controller_catalog_option->getList());
+		$this->response->setOutput($this->load->controller('catalog/option.getList'));
 	}
 
 	/**

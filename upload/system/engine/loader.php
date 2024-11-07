@@ -75,7 +75,7 @@ class Loader {
 		// Trigger the pre events
 		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
-		$output = $this->execute('controller/' . (!str_contains($route, '.') ? $route . '.index' : $route), $args);
+		$output = $this->execute('controller/' . $route . (!str_contains($route, '.') ? '.index' : ''), $args);
 
 		// If action cannot be executed, we return an action error object.
 		if ($output instanceof \Exception) {
@@ -264,6 +264,13 @@ class Loader {
 		}
 	}
 
+	/**
+	 * Callback
+	 *
+	 * @param string $route
+	 *
+	 * @return callable
+	 */
 	public function callback($route): callable {
 		return function(&...$args) use ($route) {
 			$trigger = $route;
@@ -286,6 +293,14 @@ class Loader {
 		};
 	}
 
+	/**
+	 * Execute
+	 *
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return mixed
+	 */
 	public function execute(string $route, array $args = []): mixed {
 		// Separate the type, route and method to call
 		preg_match('/(?P<type>^\w+)\/(?P<route>(.+))\.(?P<method>\w+)/', $route, $match);

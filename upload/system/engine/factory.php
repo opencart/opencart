@@ -66,7 +66,7 @@ class Factory {
 		if (class_exists($class)) {
 			return new $class($this->registry);
 		} else {
-			throw new \Exception('Error: Could not load model ' . $route . '!');
+			return new \Exception('Error: Could not load model ' . $route . '!');
 		}
 	}
 
@@ -89,7 +89,7 @@ class Factory {
 		if (class_exists($class)) {
 			return new $class(...$args);
 		} else {
-			throw new \Exception('Error: Could not load library ' . $route . '!');
+			return new \Exception('Error: Could not load library ' . $route . '!');
 		}
 	}
 }

@@ -405,19 +405,26 @@ div.required .col-form-label:before, div.required .form-label:before {
   }
 }
 
+/* container */
+#container {
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  margin-bottom: 300px;
+}
+
 /* content */
 #content {
-  border: 1px solid #000000;
   padding-bottom: 300px;
 }
 
 /* footer */
 footer {
   border: 1px solid #000000;
-  position: relative;
-  bottom: 300px;
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  min-height: 100%;
+  height: auto;
   padding-top: 30px;
   background-color: #303030;
   border-top: 1px solid #ddd;

@@ -123,12 +123,7 @@ class Api extends \Opencart\System\Engine\Controller {
 	protected function setShippingMethod(): array {
 		$this->load->controller('api/customer');
 
-		$output = $this->load->controller('api/cart');
-
-		if (isset($output['error'])) {
-			return $output;
-		}
-
+		$this->load->controller('api/cart');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/payment_address');
 
@@ -172,12 +167,7 @@ class Api extends \Opencart\System\Engine\Controller {
 	protected function setPaymentMethod(): array {
 		$this->load->controller('api/customer');
 
-		$output = $this->load->controller('api/cart');
-
-		if (isset($output['error'])) {
-			return $output;
-		}
-
+		$this->load->controller('api/cart');
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
@@ -199,6 +189,57 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+
+	protected function extension(): array {
+		$this->load->controller('api/customer');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
+		$this->load->controller('api/payment_address');
+		$this->load->controller('api/shipping_address');
+		$this->load->controller('api/shipping_method');
+		$this->load->controller('api/payment_method');
+		$this->load->controller('api/affiliate');
+
+		if (isset($this->request->get['code'])) {
+			$code = (string)$this->request->get['code'];
+		} else {
+			$code = '';
+		}
+
+		$output = [];
+
+		$this->load->model('setting/extension');
+
+		$extensions = $this->model_setting_extension->getExtensionsByType('total');
+
+		foreach ($extensions as $extension) {
+			$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
+
+			if (!$result instanceof \Exception && $extension['code'] == $code) {
+				$output = $result;
+			}
+		}
+
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['totals'] = $this->load->controller('api/cart.getTotals');
+		$output['shipping_required'] = $this->cart->hasShipping();
+
+		return $output;
+	}
+
+	/**
+	 * Set affiliate
+	 *
+	 * @return array
+	 */
+	protected function setAffiliate(): array {
+		return $this->load->controller('api/affiliate');
+	}
 	/**
 	 * Get cart
 	 *
@@ -207,6 +248,7 @@ class Api extends \Opencart\System\Engine\Controller {
 	protected function getCart(): array {
 		$this->load->controller('api/customer');
 
+		// If any errors at the cart level such as products dont exist then we want to return the error
 		$output = $this->load->controller('api/cart');
 
 		if (isset($output['error'])) {
@@ -269,57 +311,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
-	}
-
-	protected function extension(): array {
-		$this->load->controller('api/customer');
-
-		$output = $this->load->controller('api/cart');
-
-		if (isset($output['error'])) {
-			return $output;
-		}
-
-		$this->load->controller('api/payment_address');
-		$this->load->controller('api/shipping_address');
-		$this->load->controller('api/shipping_method');
-		$this->load->controller('api/payment_method');
-		$this->load->controller('api/affiliate');
-
-		if (isset($this->request->get['code'])) {
-			$code = (string)$this->request->get['code'];
-		} else {
-			$code = '';
-		}
-
-		$output = [];
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($extensions as $extension) {
-			$result = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
-
-			if (!$result instanceof \Exception && $extension['code'] == $code) {
-				$output = $result;
-			}
-		}
-
-		$output['products'] = $this->load->controller('api/cart.getProducts');
-		$output['totals'] = $this->load->controller('api/cart.getTotals');
-		$output['shipping_required'] = $this->cart->hasShipping();
-
-		return $output;
-	}
-
-	/**
-	 * Set affiliate
-	 *
-	 * @return array
-	 */
-	protected function setAffiliate(): array {
-		return $this->load->controller('api/affiliate');
 	}
 
 	/**

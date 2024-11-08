@@ -51,6 +51,7 @@ $_['text_order_id']              = 'Order ID';
 $_['text_website']               = 'Web Site';
 $_['text_invoice']               = 'Invoice';
 $_['text_invoice_no']            = 'Invoice No.';
+$_['text_tbc']                   = 'TBC';
 $_['text_store_address']         = 'Store Address';
 $_['text_store_telephone']       = 'Store Telephone';
 $_['text_store_email']           = 'Store E-Mail';

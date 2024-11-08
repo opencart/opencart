@@ -240,14 +240,14 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event`");
 
 			foreach ($query->rows as $result) {
-				//if (!str_contains($result['trigger'], '.')) {
+				if (!str_contains($result['trigger'], '.')) {
 					$parts = explode('/', $result['trigger']);
 
 					$string_1 = implode('/', array_slice($parts, 0, -2));
 					$string_2 = implode('/', array_slice($parts, -2));
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = '" . $this->db->escape($string_1 . '.' . $string_2) . "' WHERE `event_id` = '" . (int)$result['event_id'] . "'");
-				//}
+				}
 			}
 
 			// Alter events table

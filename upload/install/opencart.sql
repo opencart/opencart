@@ -549,7 +549,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (212, 'Tonga', 'TO', 'TON', 1, 0, 1),
 (213, 'Trinidad and Tobago', 'TT', 'TTO', 1, 0, 1),
 (214, 'Tunisia', 'TN', 'TUN', 1, 0, 1),
-(215, 'Turkey', 'TR', 'TUR', 1, 0, 1),
+(215, 'Türkiye', 'TR', 'TUR', 1, 0, 1),
 (216, 'Turkmenistan', 'TM', 'TKM', 1, 0, 1),
 (217, 'Turks and Caicos Islands', 'TC', 'TCA', 1, 0, 1),
 (218, 'Tuvalu', 'TV', 'TUV', 1, 0, 1),

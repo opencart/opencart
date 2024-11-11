@@ -64,7 +64,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	protected function getList(): string {
+	public function getList(): string {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {

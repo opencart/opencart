@@ -94,7 +94,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	protected function getList(): string {
+	public function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = (string)$this->request->get['filter_name'];
 		} else {

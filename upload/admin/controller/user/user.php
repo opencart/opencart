@@ -143,7 +143,7 @@ class User extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	protected function getList(): string {
+	public function getList(): string {
 		if (isset($this->request->get['filter_username'])) {
 			$filter_username = $this->request->get['filter_username'];
 		} else {

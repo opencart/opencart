@@ -143,7 +143,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	protected function getList(): string {
+	public function getList(): string {
 		if (isset($this->request->get['filter_subscription_id'])) {
 			$filter_subscription_id = (int)$this->request->get['filter_subscription_id'];
 		} else {

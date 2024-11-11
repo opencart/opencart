@@ -2180,6 +2180,269 @@ $('#form-payment-method').on('submit', function(e) {
     });
 });
 
+$('#form-comment').on('submit', function(e) {
+    e.preventDefault();
+
+    $('#comment-value').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+});
+
+$('#button-refresh').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-refresh').button('loading');
+        },
+        complete: function() {
+            $('#button-refresh').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            cart_render(json['products'], json['totals'], json['shipping_required']);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#button-confirm').on('click', function() {
+    var element = this;
+
+    console.log($('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize());
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            // Check for errors
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['customer']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-customer-info').addClass('is-invalid');
+                }
+
+                if (json['error']['product']) {
+                    if (typeof json['error']['product'] == 'string') {
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#input-product-info').addClass('is-invalid');
+                    }
+
+                    if (typeof json['error']['product'] == 'object') {
+                        for (product_row in json['error']['product']) {
+                            product = json['error']['product'][product_row];
+
+                            for (key in product) {
+                                $('#error-product-' + product_row + '-' + key.replaceAll('_', '-')).html(product[key]).addClass('d-block');
+                            }
+                        }
+                    }
+                }
+
+                if (json['error']['payment_address']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-payment-address-info').addClass('is-invalid');
+                }
+
+                if (json['error']['shipping_address']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-shipping-address-info').addClass('is-invalid');
+                }
+
+                if (json['error']['shipping_method']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-shipping-method-info').addClass('is-invalid');
+                }
+
+                if (json['error']['payment_method']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-payment-method-info').addClass('is-invalid');
+                }
+
+                if (json['error']['extension']) {
+                    //product = json['error']['extension'];
+
+                    //for (key in product) {
+                    //$('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][key] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    //  $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid');
+                    // }
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (json['order_id']) {
+                    $('#order-id-value').val(json['order_id']);
+                }
+
+                if (json['points']) {
+                    $('#point-value').html(json['points']);
+                    $('#button-reward-add').prop('disabled', false);
+                    $('#button-reward-remove').prop('disabled', false);
+                } else {
+                    $('#point-value').html(0);
+                    $('#button-reward-add').prop('disabled', true);
+                    $('#button-reward-remove').prop('disabled', true);
+                }
+
+                if (json['commission']) {
+                    $('#commission-value').html(json['commission']);
+                    $('#button-commission-add').prop('disabled', false);
+                    $('#button-commission-remove').prop('disabled', false);
+                } else {
+                    $('#commission-value').html('&nbsp;');
+                    $('#button-commission-add').prop('disabled', true);
+                    $('#button-commission-remove').prop('disabled', true);
+                }
+
+                cart_render(json['products'], json['totals'], json['shipping_required']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Refresh all products and totals
+var order_product_row = {{ order_product_row }};
+
+function cart_render(products, totals, shipping_required) {
+    html = '';
+
+    if (products) {
+        for (i in products) {
+            product = products[i];
+
+            html += '<tr>';
+            html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
+            html += '    <div id="error-product-' + order_product_row + '-product" class="invalid-feedback mt-0"></div>';
+
+            html += '<ul class="list-unstyled mb-0">';
+
+            html += '<li>';
+            html += '  <small> - {{ text_model|escape('js') }}: ' + product['model'] + '</small>';
+            html += '</li>';
+
+            for (j = 0; j < product['option'].length; j++) {
+                html += '<li>';
+                html += '  <small> - ' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small>';
+                html += '  <div id="error-product-' + order_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback mt-0"></div>';
+                html += '</li>';
+            }
+
+            if (product['subscription']) {
+                html += '<li>';
+                html += '  <small> - {{ text_subscription|escape('js') }}: ' + product['subscription'] + '</small>';
+                html += '  <div id="error-product-' + order_product_row + '-subscription" class="invalid-feedback mt-0"></div>';
+                html += '</li>';
+            }
+
+            if (product['reward']) {
+                html += '<li>';
+                html += '  <small> - {{ text_points|escape('js') }}: ' + product['reward'] + '</small>';
+                html += '</li>';
+            }
+
+            html += '</ul>';
+
+            html += '<input type="hidden" name="product[' + order_product_row + '][product_id]" value="' + product['product_id'] + '"/>';
+            html += '<input type="hidden" name="product[' + order_product_row + '][quantity]" value="' + product['quantity'] + '"/>';
+
+            for (j = 0; j < product['option'].length; j++) {
+                option = product['option'][j];
+
+                if (option['type'] == 'select' || option['type'] == 'radio') {
+                    html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '"/>';
+                }
+
+                if (option['type'] == 'checkbox') {
+                    html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '"/>';
+                }
+
+                if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+                    html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '"/>';
+                }
+            }
+
+            html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
+            html += '  </td>';
+            html += '  <td class="text-end">' + product['quantity'] + '</td>';
+            html += '  <td class="text-end">' + product['price_text'] + '</td>';
+            html += '  <td class="text-end">' + product['total_text'] + '</td>';
+            html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            order_product_row++;
+        }
+    } else {
+        html += '<tr>';
+        html += '  <td colspan="6" class="text-center">{{ text_no_results|escape('js') }}</td>';
+        html += '</tr>';
+    }
+
+    $('#order-product').html(html);
+
+    // Totals
+    html = '';
+
+    for (i in totals) {
+        total = totals[i];
+
+        html += '<tr>';
+        html += '  <td class="text-end"><strong>' + total['title'] + '</strong></td>';
+        html += '  <td class="text-end" style="width: 1px;">' + total['text'] + '</td>';
+        html += '</tr>';
+    }
+
+    $('#order-total').html(html);
+
+    if (shipping_required) {
+        $('#shipping-address').removeClass('d-none');
+        $('#shipping-method').removeClass('d-none');
+        $('#button-shipping-method').prop('disabled', false);
+    } else {
+        $('#shipping-address').addClass('d-none');
+        $('#shipping-method').addClass('d-none');
+        $('#button-shipping-method').prop('disabled', true);
+    }
+}
+
 // Reward
 $(document).on('click', '#button-reward-add, #button-reward-remove', function(e) {
     var element = this;
@@ -2333,265 +2596,6 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
         }
     });
 });
-
-$('#form-comment').on('submit', function(e) {
-    e.preventDefault();
-
-    $('#comment-value').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br/>'));
-});
-
-$('#button-refresh').on('click', function() {
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
-        type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
-            $('#button-refresh').button('loading');
-        },
-        complete: function() {
-            $('#button-refresh').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            cart_render(json['products'], json['totals'], json['shipping_required']);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#button-confirm').on('click', function() {
-    var element = this;
-
-    console.log($('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize());
-
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
-        type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').removeClass('d-block');
-
-            // Check for errors
-            if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (typeof json['error'] == 'object') {
-                if (json['error']['customer']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-customer-info').addClass('is-invalid');
-                }
-
-                if (json['error']['product']) {
-                    if (typeof json['error']['product'] == 'string') {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                        $('#input-product-info').addClass('is-invalid');
-                    }
-
-                    if (typeof json['error']['product'] == 'object') {
-                        for (product_row in json['error']['product']) {
-                            product = json['error']['product'][product_row];
-
-                            for (key in product) {
-                                $('#error-product-' + product_row + '-' + key.replaceAll('_', '-')).html(product[key]).addClass('d-block');
-                            }
-                        }
-                    }
-                }
-
-                if (json['error']['payment_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-address-info').addClass('is-invalid');
-                }
-
-                if (json['error']['shipping_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-address-info').addClass('is-invalid');
-                }
-
-                if (json['error']['shipping_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-method-info').addClass('is-invalid');
-                }
-
-                if (json['error']['payment_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-method-info').addClass('is-invalid');
-                }
-
-                if (json['error']['extension']) {
-                    //product = json['error']['extension'];
-
-                    //for (key in product) {
-                    //$('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][key] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    //  $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid');
-                    // }
-                }
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                if (json['order_id']) {
-                    $('#order-id-value').val('' + json['order_id'] + '');
-                }
-
-                if (json['points']) {
-                    $('#point-value').html(json['points']);
-                    $('#button-reward-add').prop('disabled', false);
-                    $('#button-reward-remove').prop('disabled', false);
-                } else {
-                    $('#point-value').html(0);
-                    $('#button-reward-add').prop('disabled', true);
-                    $('#button-reward-remove').prop('disabled', true);
-                }
-
-                if (json['commission']) {
-                    $('#commission-value').html(json['commission']);
-                    $('#button-commission-add').prop('disabled', false);
-                    $('#button-commission-remove').prop('disabled', false);
-                } else {
-                    $('#commission-value').html('&nbsp;');
-                    $('#button-commission-add').prop('disabled', true);
-                    $('#button-commission-remove').prop('disabled', true);
-                }
-
-                cart_render(json['products'], json['totals'], json['shipping_required']);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-// Refresh all products and totals
-var order_product_row = {{ order_product_row }};
-
-function cart_render(products, totals, shipping_required) {
-    html = '';
-
-    if (products) {
-        for (i in products) {
-            product = products[i];
-
-            html += '<tr>';
-            html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
-            html += '    <div id="error-product-' + order_product_row + '-product" class="invalid-feedback mt-0"></div>';
-
-            html += '<ul class="list-unstyled mb-0">';
-
-            html += '<li>';
-            html += '  <small> - {{ text_model|escape('js') }}: ' + product['model'] + '</small>';
-            html += '</li>';
-
-            for (j = 0; j < product['option'].length; j++) {
-                html += '<li>';
-                html += '  <small> - ' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small>';
-                html += '  <div id="error-product-' + order_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback mt-0"></div>';
-                html += '</li>';
-            }
-
-            if (product['subscription']) {
-                html += '<li>';
-                html += '  <small> - {{ text_subscription|escape('js') }}: ' + product['subscription'] + '</small>';
-                html += '  <div id="error-product-' + order_product_row + '-subscription" class="invalid-feedback mt-0"></div>';
-                html += '</li>';
-            }
-
-            if (product['reward']) {
-                html += '<li>';
-                html += '  <small> - {{ text_points|escape('js') }}: ' + product['reward'] + '</small>';
-                html += '</li>';
-            }
-
-            html += '</ul>';
-
-            html += '<input type="hidden" name="product[' + order_product_row + '][product_id]" value="' + product['product_id'] + '"/>';
-            html += '<input type="hidden" name="product[' + order_product_row + '][quantity]" value="' + product['quantity'] + '"/>';
-
-            for (j = 0; j < product['option'].length; j++) {
-                option = product['option'][j];
-
-                if (option['type'] == 'select' || option['type'] == 'radio') {
-                    html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '"/>';
-                }
-
-                if (option['type'] == 'checkbox') {
-                    html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '"/>';
-                }
-
-                if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
-                    html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '"/>';
-                }
-            }
-
-            html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
-            html += '  </td>';
-            html += '  <td class="text-end">' + product['quantity'] + '</td>';
-            html += '  <td class="text-end">' + product['price_text'] + '</td>';
-            html += '  <td class="text-end">' + product['total_text'] + '</td>';
-            html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
-            html += '</tr>';
-
-            order_product_row++;
-        }
-    } else {
-        html += '<tr>';
-        html += '  <td colspan="6" class="text-center">{{ text_no_results|escape('js') }}</td>';
-        html += '</tr>';
-    }
-
-    $('#order-product').html(html);
-
-    // Totals
-    html = '';
-
-    for (i in totals) {
-        total = totals[i];
-
-        html += '<tr>';
-        html += '  <td class="text-end"><strong>' + total['title'] + '</strong></td>';
-        html += '  <td class="text-end" style="width: 1px;">' + total['text'] + '</td>';
-        html += '</tr>';
-    }
-
-    $('#order-total').html(html);
-
-    if (shipping_required) {
-        $('#shipping-address').removeClass('d-none');
-        $('#shipping-method').removeClass('d-none');
-        $('#button-shipping-method').prop('disabled', false);
-    } else {
-        $('#shipping-address').addClass('d-none');
-        $('#shipping-method').addClass('d-none');
-        $('#button-shipping-method').prop('disabled', true);
-    }
-}
 
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();

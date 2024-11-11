@@ -85,6 +85,11 @@ class Loader {
 			$method = 'index';
 		}
 
+		echo $controller . "\n";
+		echo $method . "\n";
+
+
+
 		// Stop any magical methods being called
 		if (substr($method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
@@ -105,6 +110,9 @@ class Loader {
 			// If action cannot be executed, we return an error object.
 			return new \Exception('Error: Could not load controller ' . $controller . '!');
 		}
+
+		print_r(get_class($object));
+
 
 		$callable = [$object, $method];
 

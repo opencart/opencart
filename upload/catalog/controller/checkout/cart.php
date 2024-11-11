@@ -145,7 +145,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$data['products'][] = [
 				'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
 				'subscription' => $subscription,
-				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'stock'        => $product['stock_status'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 				'minimum'      => !$product['minimum_status'] ? sprintf($this->language->get('error_minimum'), $product['minimum']) : 0,
 				'price'        => $price_status ?? $product['price_text'],
 				'total'        => $price_status ?? $product['total_text'],

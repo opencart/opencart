@@ -55,6 +55,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$product_options = $this->model_catalog_product->getOptions($product['product_id']);
 
 				foreach ($product_options as $product_option) {
+
+					if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $cart['quantity']))) {
+						$stock_status = false;
+					}
+
+
 					if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
 						$error['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 					}
@@ -65,6 +71,26 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
 					$error['subscription'] = $this->language->get('error_subscription');
+				}
+
+				// Stock
+				if (!$product_info['stock_status'] <  && !$this->config->get('config_stock_checkout')) {
+					$error['product'] = $this->language->get('error_stock');
+				}
+
+				if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $product_total)) {
+					$stock_status = false;
+				}
+
+				if ($product_info['minimum'] > $product_total) {
+					$minimum = false;
+				} else {
+					$minimum = true;
+				}
+
+
+				if (!$product_info['minimum']) {
+					$error['product'] = sprintf($this->language->get('error_minimum'), $product['minimum']);
 				}
 			} else {
 				$error['product'] = $this->language->get('error_product');
@@ -178,20 +204,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 */
 	public function getProducts(): array {
 		// We fetch any products that have an error
-
-		// Stock
-		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-			$output['error']['stock'] = $this->language->get('error_stock');
-		}
-
 		$product_data = [];
 
 		$this->load->model('checkout/cart');
 
 		$products = $this->model_checkout_cart->getProducts();
-
-		//'stock' => $product['stock'] ? $this->language->get('error_stock') : '',
-		//'minimum' => $product['minimum'] ? $this->language->get('error_minimum') : ''
 
 		foreach ($products as $product) {
 			$subscription = '';

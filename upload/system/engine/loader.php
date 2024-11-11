@@ -85,11 +85,6 @@ class Loader {
 			$method = 'index';
 		}
 
-		echo $controller . "\n";
-		echo $method . "\n";
-
-
-
 		// Stop any magical methods being called
 		if (substr($method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');

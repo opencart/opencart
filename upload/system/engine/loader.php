@@ -106,9 +106,6 @@ class Loader {
 			return new \Exception('Error: Could not load controller ' . $controller . '!');
 		}
 
-		print_r(get_class($object));
-
-
 		$callable = [$object, $method];
 
 		if (is_callable($callable)) {

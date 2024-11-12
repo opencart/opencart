@@ -122,7 +122,6 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function setShippingMethod(): array {
 		$this->load->controller('api/customer');
-
 		$this->load->controller('api/cart');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/payment_address');

@@ -46,7 +46,20 @@ class Cart extends \Opencart\System\Engine\Controller {
 				foreach ($option as $product_option_id => $value) {
 					$product_option_info = $this->model_catalog_product->getOption($product['product_id'], $product_option_id);
 
-					if (!$product_option_info) {
+					if ($product_option_info) {
+						if ($product_option['type'] == 'select' || $product_option['type'] == 'radio') {
+							$product_option_value_info = $this->model_catalog_product->getOptionValue($product_option_id, $option[$product_option['product_option_id']]);
+
+						} elseif ($product_option['type'] == 'checkbox' && is_array($value)) {
+
+						}
+
+
+						if (!$product_option_value_info) {
+							$error['option_' . $product_option['product_option_id']] = $this->language->get('error_option');
+						}
+
+					} else {
 						$error['option_' . $product_option_id] = $this->language->get('error_option');
 					}
 				}
@@ -55,12 +68,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$product_options = $this->model_catalog_product->getOptions($product['product_id']);
 
 				foreach ($product_options as $product_option) {
-
-					if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $cart['quantity']))) {
-						$stock_status = false;
-					}
-
-
 					if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
 						$error['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 					}
@@ -72,26 +79,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
 					$error['subscription'] = $this->language->get('error_subscription');
 				}
-
-				// Stock
-				if (!$product_info['stock_status'] <  && !$this->config->get('config_stock_checkout')) {
-					$error['product'] = $this->language->get('error_stock');
-				}
-
-				if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $product_total)) {
-					$stock_status = false;
-				}
-
-				if ($product_info['minimum'] > $product_total) {
-					$minimum = false;
-				} else {
-					$minimum = true;
-				}
-
-
-				if (!$product_info['minimum']) {
-					$error['product'] = sprintf($this->language->get('error_minimum'), $product['minimum']);
-				}
 			} else {
 				$error['product'] = $this->language->get('error_product');
 			}
@@ -101,15 +88,23 @@ class Cart extends \Opencart\System\Engine\Controller {
 					'option'               => $option,
 					'subscription_plan_id' => $subscription_plan_id
 				] + $product;
+
+				$this->cart->add($product['product_id'], (int)$product['quantity'], $option, $subscription_plan_id);
 			} else {
 				$output['error']['product'][$key] = $error;
 			}
 		}
 
-		if (!$output) {
+		if (!$error) {
+			$products = $this->cart->getProducts();
+
 			foreach ($products as $product) {
-				$this->cart->add($product['product_id'], (int)$product['quantity'], array_filter((array)$product['option']), (int)$product['subscription_plan_id']);
+
 			}
+		}
+
+		if (!$output) {
+
 
 			$output['success'] = $this->language->get('text_success');
 		}
@@ -176,7 +171,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
 					$output['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
+
+
 			}
+
+			print_r($product_options);
+
 
 			// Validate subscription plan
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
@@ -184,6 +184,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 			if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
 				$output['error']['subscription'] = $this->language->get('error_subscription');
 			}
+
+
+
+
 		} else {
 			$output['error']['warning'] = $this->language->get('error_product');
 		}
@@ -203,6 +207,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function getProducts(): array {
+		$this->load->language('api/cart');
+
 		// We fetch any products that have an error
 		$product_data = [];
 
@@ -246,7 +252,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$total_data = [];
 
 		foreach ($totals as $total) {
-			$total_data[] = ['text'  => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
+			$total_data[] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}
 
 		return $total_data;

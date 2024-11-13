@@ -208,6 +208,21 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Stock
+			$product_total = 0;
+
+			$products = $this->cart->getProducts();
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product_info['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
+				$output['error']['warning'] = $this->language->get('error_stock');
+			}
+
 			// Validate subscription plan
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
 

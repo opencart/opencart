@@ -1716,10 +1716,14 @@ $('#input-payment-country').on('change', function() {
         beforeSend: function() {
             $(element).prop('disabled', true);
             $('#button-payment-address').prop('disabled', true);
+            $('#button-confirm').prop('disabled', true);
+            $('#button-refresh').prop('disabled', true);
         },
         complete: function() {
             $(element).prop('disabled', false);
             $('#button-payment-address').prop('disabled', false);
+            $('#button-confirm').prop('disabled', false);
+            $('#button-refresh').prop('disabled', false);
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {
@@ -1895,10 +1899,14 @@ $('#input-shipping-country').on('change', function() {
         beforeSend: function() {
             $(element).prop('disabled', true);
             $('#button-shipping-address').prop('disabled', true);
+            $('#button-confirm').prop('disabled', true);
+            $('#button-refresh').prop('disabled', true);
         },
         complete: function() {
             $(element).prop('disabled', false);
             $('#button-shipping-address').prop('disabled', false);
+            $('#button-confirm').prop('disabled', false);
+            $('#button-refresh').prop('disabled', false);
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {

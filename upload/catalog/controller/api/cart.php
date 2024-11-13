@@ -60,10 +60,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 								if (!$product_option_value_info) {
 									$error['option_' . $product_option_id] = $this->language->get('error_option');
 								} elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $product['quantity'])))) {
-									$error['option_' . $product_option_id] = $this->language->get('error_stock');
+									$error['option_' . $product_option_id] = $this->language->get('error_option_stock');
 								}
-
-								$error['option_' . $product_option_id] = $this->language->get('error_stock');
 							}
 						}
 					} else {
@@ -93,9 +91,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$error['product'] = $this->language->get('error_stock');
 				}
 
-				// Minimum quantity && $this->request->get['call'] == ''
-				if ($product_info['minimum'] > $product_total) {
-					$error['minimum'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
+				// Minimum quantity
+				if ($this->request->get['call'] == 'order' && ($product_info['minimum'] > $product_total)) {
+					$error['product'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
 				}
 
 				// Validate subscription plan
@@ -116,8 +114,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
-
-
 			$output['success'] = $this->language->get('text_success');
 		}
 
@@ -194,7 +190,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 							if (!$product_option_value_info) {
 								$error['option_' . $product_option_id] = $this->language->get('error_option');
 							} elseif ($product_option_value_info['subtract'] && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $quantity))) {
-								$error['option_' . $product_option_id] = $this->language->get('error_stock');
+								$error['option_' . $product_option_id] = $this->language->get('error_option_stock');
 							}
 						}
 					}
@@ -211,10 +207,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$output['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
-
-			print_r($product_options);
-
-
 
 			// Validate subscription plan
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);

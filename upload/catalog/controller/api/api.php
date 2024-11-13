@@ -17,7 +17,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['call'])) {
 			$call = $this->request->get['call'];
 		} else {
-			$call = [];
+			$call = '';
 		}
 
 		// Allowed calls

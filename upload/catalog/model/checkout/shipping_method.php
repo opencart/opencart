@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Checkout;
  *
  * @package Opencart\Catalog\Model\Checkout
  */
-class ShippingMethod extends \Opencart\System\Engine\Controller {
+class ShippingMethod extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *

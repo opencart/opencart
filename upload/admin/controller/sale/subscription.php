@@ -689,6 +689,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
+		// Countries
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		$this->load->model('localisation/zone');
+
+		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
+
 		// Shipping Address
 		if (!empty($subscription_info)) {
 			$address_info  = $this->model_customer_customer->getAddress($subscription_info['shipping_address_id']);
@@ -726,6 +735,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['shipping_custom_field'] = [];
 		}
 
+		if ($data['payment_country_id'] == $data['shipping_country_id']) {
+			$data['shipping_zones'] = $data['payment_zones'];
+		} else {
+			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
+		}
+
 		// Payment Method
 		if (!empty($order_info['payment_method'])) {
 			$data['payment_method_name'] = $order_info['payment_method']['name'];
@@ -747,11 +762,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['shipping_method_cost'] = 0.00;
 			$data['shipping_method_tax_class_id'] = 0;
 		}
-
-		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Subscription Status
 		$this->load->model('localisation/subscription_status');

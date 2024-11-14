@@ -188,14 +188,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 							$product_option_value_info = $this->model_catalog_product->getOptionValue($product_id, $product_option_value_id);
 
 							if (!$product_option_value_info) {
-								$error['option_' . $product_option_id] = $this->language->get('error_option');
+								$output['error']['option_' . $product_option_id] = $this->language->get('error_option');
 							} elseif ($product_option_value_info['subtract'] && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $quantity))) {
-								$error['option_' . $product_option_id] = $this->language->get('error_option_stock');
+								$output['error']['option_' . $product_option_id] = $this->language->get('error_option_stock');
 							}
 						}
 					}
 				} else {
-					$error['option_' . $product_option_id] = $this->language->get('error_option');
+					$output['error']['option_' . $product_option_id] = $this->language->get('error_option');
 				}
 			}
 

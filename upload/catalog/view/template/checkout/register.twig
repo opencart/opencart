@@ -150,25 +150,31 @@
       <legend>{{ text_payment_address }}</legend>
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col mb-3">
-          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+          <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
+          <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
+          <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
           <div id="error-payment-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+          <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
+          <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
           <div id="error-payment-city" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
+          <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="payment_country_id" id="input-payment-country" class="form-select">
+          <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
+          <select name="payment_country_id" id="input-payment-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == payment_country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -178,7 +184,12 @@
         </div>
         <div class="col mb-3 required">
           <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="payment_zone_id" id="input-payment-zone" class="form-select" data-oc-value="{{ payment_zone_id }}"></select>
+          <select name="payment_zone_id" id="input-payment-zone" class="form-select" data-oc-value="{{ payment_zone_id }}">
+            <option value="">{{ text_select }}</option>
+            {% for zone in payment_zones %}
+              <option value="{{ zone.zone_id }}"{% if zone.zone_id == payment_zone_id %} selected{% endif %}>{{ zone.name }}</option>
+            {% endfor %}
+          </select>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
         {% for custom_field in custom_fields %}
@@ -332,7 +343,12 @@
       </div>
       <div class="col mb-3 required">
         <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-        <select name="shipping_zone_id" id="input-shipping-zone" class="form-select" data-oc-value="{{ shipping_zone_id }}"></select>
+        <select name="shipping_zone_id" id="input-shipping-zone" class="form-select" data-oc-value="{{ shipping_zone_id }}">
+          <option value="">{{ text_select }}</option>
+          {% for zone in shipping_zones %}
+            <option value="{{ zone.zone_id }}"{% if zone.zone_id == shipping_zone_id %} selected{% endif %}>{{ zone.name }}</option>
+          {% endfor %}
+        </select>
         <div id="error-shipping-zone" class="invalid-feedback"></div>
       </div>
       {% for custom_field in custom_fields %}
@@ -639,6 +655,4 @@ $('select[name$=\'_country_id\']').on('change', function() {
         });
     });
 });
-
-$('select[name$=\'_country_id\']').trigger('change');
 //--></script>

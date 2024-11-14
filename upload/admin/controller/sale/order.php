@@ -860,6 +860,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_country'] = '';
 		}
 
+		$this->load->model('localisation/zone');
+
+		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
+
 		if (!empty($order_info)) {
 			$data['payment_zone_id'] = $order_info['payment_zone_id'];
 		} else {
@@ -958,6 +962,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_zone'] = $order_info['shipping_zone'];
 		} else {
 			$data['shipping_zone'] = '';
+		}
+
+		$this->load->model('localisation/zone');
+
+		if ($data['payment_country_id'] == $data['shipping_country_id']) {
+			$data['shipping_zones'] = $data['payment_zones'];
+		} else {
+			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
 		if (!empty($order_info)) {

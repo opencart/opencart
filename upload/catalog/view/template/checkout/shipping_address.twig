@@ -66,10 +66,14 @@
           </select>
           <div id="error-shipping-country" class="invalid-feedback"></div>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
+          <select name="zone_id" id="input-shipping-zone" class="form-select">
+            <option value="">{{ text_select }}</option>
+            {% for zone in zones %}
+              <option value="{{ zone.zone_id }}">{{ zone.name }}</option>
+            {% endfor %}
+          </select>
           <div id="error-shipping-zone" class="invalid-feedback"></div>
         </div>
 
@@ -368,6 +372,4 @@ $('#input-shipping-country').on('change', function() {
         });
     });
 });
-
-$('#input-shipping-country').trigger('change');
 //--></script>

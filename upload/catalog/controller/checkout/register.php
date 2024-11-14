@@ -86,9 +86,17 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_postcode'] = '';
 			$data['payment_city'] = '';
 			$data['payment_country_id'] = $this->config->get('config_country_id');
-			$data['payment_zone_id'] = '';
+			$data['payment_zone_id'] = 0;
 			$data['payment_custom_field'] = [];
 		}
+
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		$this->load->model('localisation/zone');
+
+		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
 
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
@@ -125,15 +133,19 @@ class Register extends \Opencart\System\Engine\Controller {
 			if (isset($this->session->data['shipping_address']['zone_id'])) {
 				$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
 			} else {
-				$data['shipping_zone_id'] = '';
+				$data['shipping_zone_id'] = 0;
 			}
 
 			$data['shipping_custom_field'] = [];
 		}
 
-		$this->load->model('localisation/country');
+		$this->load->model('localisation/zone');
 
-		$data['countries'] = $this->model_localisation_country->getCountries();
+		if ($data['payment_country_id'] == $data['shipping_country_id']) {
+			$data['shipping_zones'] = $data['payment_zones'];
+		} else {
+			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
+		}
 
 		// Custom Fields
 		$this->load->model('account/custom_field');
@@ -619,11 +631,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					// Create customer token
 					$this->session->data['customer_token'] = oc_token(26);
 
-					$json['success'] = $this->language->get('text_add_success');
+					$json['success'] = $this->language->get('text_success_add');
 				} elseif ($this->customer->isLogged()) {
-					$json['success'] = $this->language->get('text_edit_success');
+					$json['success'] = $this->language->get('text_success_edit');
 				} else {
-					$json['success'] = $this->language->get('text_guest_success');
+					$json['success'] = $this->language->get('text_success_guest');
 				}
 			} else {
 				// If account needs approval we redirect to the account success / requires approval page.

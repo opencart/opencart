@@ -61,18 +61,23 @@
           <select name="country_id" id="input-payment-country" class="form-select">
             <option value="0">{{ text_select }}</option>
             {% for country in countries %}
-              <option value="{{ country.country_id }}">{{ country.name }}</option>
+              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
             {% endfor %}
           </select>
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
           <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-payment-zone" class="form-select"></select>
+          <select name="zone_id" id="input-payment-zone" class="form-select">
+            <option value="">{{ text_select }}</option>
+            {% for zone in zones %}
+              <option value="{{ zone.zone_id }}">{{ zone.name }}</option>
+            {% endfor %}
+          </select>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
-        {% for custom_field in custom_fields %}
 
+        {% for custom_field in custom_fields %}
           {% if custom_field.type == 'select' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>

@@ -61,9 +61,6 @@ $(document).ready(function() {
             });
         }, 3000);
     });
-
-
-
 });
 
 // Button
@@ -506,6 +503,10 @@ $(document).ready(function() {
                 $('#modal-information').modal('show');
             }
         });
+    });
+
+    $(document).on('click', '[data-oc-toggle=\'\']', function() {
+
     });
 
     // Cookie Policy

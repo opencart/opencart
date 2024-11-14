@@ -29,9 +29,15 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = 0;
 		}
 
+		$data['country_id'] = (int)$this->config->get('config_country_id');
+
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		$this->load->model('localisation/zone');
+
+		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
 
 		// Custom Fields
 		$data['custom_fields'] = [];

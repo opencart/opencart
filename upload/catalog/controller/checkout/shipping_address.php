@@ -30,10 +30,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = 0;
 		}
 
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (isset($this->session->data['shipping_address'])) {
 			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
 			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
@@ -43,6 +39,14 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['country_id'] = (int)$this->config->get('config_country_id');
 			$data['zone_id'] = '';
 		}
+
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		$this->load->model('localisation/zone');
+
+		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
 
 		// Custom Fields
 		$data['custom_fields'] = [];

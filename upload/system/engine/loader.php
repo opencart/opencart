@@ -145,6 +145,9 @@ class Loader {
 		if ($object instanceof \Opencart\System\Engine\Model) {
 			$this->registry->set('fallback_' . $key, $object);
 		} else {
+			echo $route;
+print_r($object);
+
 			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
 

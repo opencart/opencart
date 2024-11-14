@@ -797,50 +797,32 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Payment Address
 		if (!empty($order_info)) {
 			$data['payment_address_id'] = $order_info['payment_address_id'];
+			$data['payment_firstname'] = $order_info['payment_firstname'];
+			$data['payment_lastname'] = $order_info['payment_lastname'];
+			$data['payment_company'] = $order_info['payment_company'];
+			$data['payment_address_1'] = $order_info['payment_address_1'];
+			$data['payment_address_2'] = $order_info['payment_address_2'];
+			$data['payment_city'] = $order_info['payment_city'];
+			$data['payment_postcode'] = $order_info['payment_postcode'];
+			$data['payment_country_id'] = $order_info['payment_country_id'];
+			$data['payment_country'] = $order_info['payment_country'];
+			$data['payment_zone_id'] = $order_info['payment_zone_id'];
+			$data['payment_zone'] = $order_info['payment_zone'];
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
 		} else {
 			$data['payment_address_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_firstname'] = $order_info['payment_firstname'];
-		} else {
 			$data['payment_firstname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_lastname'] = $order_info['payment_lastname'];
-		} else {
 			$data['payment_lastname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_company'] = $order_info['payment_company'];
-		} else {
 			$data['payment_company'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_address_1'] = $order_info['payment_address_1'];
-		} else {
 			$data['payment_address_1'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_address_2'] = $order_info['payment_address_2'];
-		} else {
 			$data['payment_address_2'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_city'] = $order_info['payment_city'];
-		} else {
 			$data['payment_city'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_postcode'] = $order_info['payment_postcode'];
-		} else {
 			$data['payment_postcode'] = '';
+			$data['payment_country_id'] = 0;
+			$data['payment_country'] = '';
+			$data['payment_zone_id'] = 0;
+			$data['payment_zone'] = '';
+			$data['payment_custom_field'] = [];
 		}
 
 		// Countries
@@ -848,39 +830,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		if (!empty($order_info)) {
-			$data['payment_country_id'] = $order_info['payment_country_id'];
-		} else {
-			$data['payment_country_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_country'] = $order_info['payment_country'];
-		} else {
-			$data['payment_country'] = '';
-		}
-
 		$this->load->model('localisation/zone');
 
 		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
-
-		if (!empty($order_info)) {
-			$data['payment_zone_id'] = $order_info['payment_zone_id'];
-		} else {
-			$data['payment_zone_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_zone'] = $order_info['payment_zone'];
-		} else {
-			$data['payment_zone'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['payment_custom_field'] = $order_info['payment_custom_field'];
-		} else {
-			$data['payment_custom_field'] = [];
-		}
 
 		// Payment Method
 		if (!empty($order_info['payment_method'])) {
@@ -894,88 +846,38 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Shipping Address
 		if (!empty($order_info)) {
 			$data['shipping_address_id'] = $order_info['shipping_address_id'];
+			$data['shipping_firstname'] = $order_info['shipping_firstname'];
+			$data['shipping_lastname'] = $order_info['shipping_lastname'];
+			$data['shipping_company'] = $order_info['shipping_company'];
+			$data['shipping_address_1'] = $order_info['shipping_address_1'];
+			$data['shipping_address_2'] = $order_info['shipping_address_2'];
+			$data['shipping_city'] = $order_info['shipping_city'];
+			$data['shipping_postcode'] = $order_info['shipping_postcode'];
+			$data['shipping_country_id'] = $order_info['shipping_country_id'];
+			$data['shipping_country'] = $order_info['shipping_country'];
+			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
+			$data['shipping_zone'] = $order_info['shipping_zone'];
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
 		} else {
 			$data['shipping_address_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_firstname'] = $order_info['shipping_firstname'];
-		} else {
 			$data['shipping_firstname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_lastname'] = $order_info['shipping_lastname'];
-		} else {
 			$data['shipping_lastname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_company'] = $order_info['shipping_company'];
-		} else {
 			$data['shipping_company'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_address_1'] = $order_info['shipping_address_1'];
-		} else {
 			$data['shipping_address_1'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_address_2'] = $order_info['shipping_address_2'];
-		} else {
 			$data['shipping_address_2'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_city'] = $order_info['shipping_city'];
-		} else {
 			$data['shipping_city'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_postcode'] = $order_info['shipping_postcode'];
-		} else {
 			$data['shipping_postcode'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_country_id'] = $order_info['shipping_country_id'];
-		} else {
 			$data['shipping_country_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_country'] = $order_info['shipping_country'];
-		} else {
 			$data['shipping_country'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
-		} else {
 			$data['shipping_zone_id'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_zone'] = $order_info['shipping_zone'];
-		} else {
 			$data['shipping_zone'] = '';
+			$data['shipping_custom_field'] = [];
 		}
-
-		$this->load->model('localisation/zone');
 
 		if ($data['payment_country_id'] == $data['shipping_country_id']) {
 			$data['shipping_zones'] = $data['payment_zones'];
 		} else {
 			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
-		}
-
-		if (!empty($order_info)) {
-			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
-		} else {
-			$data['shipping_custom_field'] = [];
 		}
 
 		// Shipping method
@@ -1147,10 +1049,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		// Histories
 		$data['history'] = $this->getHistory();
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

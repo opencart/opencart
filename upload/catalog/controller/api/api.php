@@ -96,7 +96,11 @@ class Api extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	protected function setShippingAddress(): array {
-		$this->load->controller('api/cart');
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
 
 		return $this->load->controller('api/shipping_address');
 	}
@@ -108,7 +112,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function getShippingMethods(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
@@ -122,7 +132,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function setShippingMethod(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/payment_address');
 
@@ -150,7 +166,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function getPaymentMethods(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
@@ -165,7 +187,13 @@ class Api extends \Opencart\System\Engine\Controller {
 	 */
 	protected function setPaymentMethod(): array {
 		$this->load->controller('api/customer');
-		$this->load->controller('api/cart');
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');

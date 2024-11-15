@@ -4,6 +4,7 @@ $_['text_success']       = 'Success: You have modified your shopping cart!';
 $_['text_subscription']  = 'Subscription';
 
 // Error
+$_['error_warning']      = 'Warning: Please check the cart carefully for errors!';
 $_['error_product']      = 'Warning: Product could not be found!';
 $_['error_stock']        = 'Product not available in the desired quantity or not in stock!';
 $_['error_minimum']      = 'Minimum order amount for %s is %s!';

@@ -20,8 +20,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($products as $key => $product) {
-			$error = [];
-
 			$product_info = $this->model_catalog_product->getProduct((int)$product['product_id']);
 
 			if ($product_info) {
@@ -58,14 +56,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 								$product_option_value_info = $this->model_catalog_product->getOptionValue($product['product_id'], $product_option_value_id);
 
 								if (!$product_option_value_info) {
-									$error['option_' . $product_option_id] = $this->language->get('error_option');
+									$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option');
 								} elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $product['quantity'])))) {
-									$error['option_' . $product_option_id] = $this->language->get('error_option_stock');
+									$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option_stock');
 								}
 							}
 						}
 					} else {
-						$error['option_' . $product_option_id] = $this->language->get('error_option');
+						$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option');
 					}
 				}
 
@@ -74,7 +72,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_options as $product_option) {
 					if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-						$error['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+						$output['error']['product_' . $key . '_option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 					}
 				}
 
@@ -87,34 +85,34 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				// Stock
-				if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
-					$error['product'] = $this->language->get('error_stock');
-				}
+				//if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
+					$output['error']['product_' . $key . '_product'] = $this->language->get('error_stock');
+				//}
 
 				// Minimum quantity
 				if ($this->request->get['call'] == 'order' && ($product_info['minimum'] > $product_total)) {
-					$error['product'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
+					$output['error']['product_' . $key . '_product'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
 				}
 
 				// Validate subscription plan
 				$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
 
 				if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
-					$error['subscription'] = $this->language->get('error_subscription');
+					$output['error']['product_' . $key . '_subscription'] = $this->language->get('error_subscription');
 				}
 			} else {
-				$error['product'] = $this->language->get('error_product');
-			}
-
-			if (!$error) {
-				$this->cart->add($product['product_id'], (int)$product['quantity'], $option, $subscription_plan_id);
-			} else {
-				$output['error']['product'][$key] = $error;
+				$output['error']['product_' . $key . '_product'] = $this->language->get('error_product');
 			}
 		}
 
 		if (!$output) {
+			foreach ($products as $product) {
+				$this->cart->add($product['product_id'], (int)$product['quantity'], array_filter((array)$product['option']), $product['subscription_plan_id']);
+			}
+
 			$output['success'] = $this->language->get('text_success');
+		} else {
+			$output['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		return $output;

@@ -698,6 +698,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
 
+		// Payment Method
+		if (!empty($order_info['payment_method'])) {
+			$data['payment_method_name'] = $order_info['payment_method']['name'];
+			$data['payment_method_code'] = $order_info['payment_method']['code'];
+		} else {
+			$data['payment_method_name'] = '';
+			$data['payment_method_code'] = '';
+		}
+
 		// Shipping Address
 		if (!empty($subscription_info)) {
 			$address_info  = $this->model_customer_customer->getAddress($subscription_info['shipping_address_id']);
@@ -741,15 +750,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
-		// Payment Method
-		if (!empty($order_info['payment_method'])) {
-			$data['payment_method_name'] = $order_info['payment_method']['name'];
-			$data['payment_method_code'] = $order_info['payment_method']['code'];
-		} else {
-			$data['payment_method_name'] = '';
-			$data['payment_method_code'] = '';
-		}
-
 		// Shipping method
 		if (!empty($order_info['shipping_method'])) {
 			$data['shipping_method_name'] = $order_info['shipping_method']['name'];
@@ -776,12 +776,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['history'] = $this->getHistory();
 		$data['orders'] = $this->getOrder();
+		$data['log'] = $this->getLog();
 
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
 
 		// Extension Order Tabs can be called here.
-		/*
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info)) {
@@ -801,7 +801,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
-		*/
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1127,5 +1127,66 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
 
 		return $this->load->view('sale/subscription_order', $data);
+	}
+
+
+	/**
+	 * History
+	 *
+	 * @return void
+	 */
+	public function log(): void {
+		$this->load->language('sale/subscription');
+
+		$this->response->setOutput($this->getLog());
+	}
+
+	/**
+	 * Get Logs
+	 *
+	 * @return string
+	 */
+	public function getLog(): string {
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
+		} else {
+			$subscription_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'sale/subscription.log') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['logs'] = [];
+
+		$this->load->model('sale/subscription');
+
+		$results = $this->model_sale_subscription->getLogs($subscription_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['logs'][] = [
+				'status'     => $result['status'],
+				'code'       => $result['code'],
+				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$subscription_total = $this->model_sale_subscription->getTotalLogs($subscription_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $subscription_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('sale/subscription.log', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));
+
+		return $this->load->view('sale/subscription_log', $data);
 	}
 }

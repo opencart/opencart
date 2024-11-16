@@ -85,9 +85,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				// Stock
-				//if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
+				if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
 					$output['error']['product_' . $key . '_product'] = $this->language->get('error_stock');
-				//}
+				}
 
 				// Minimum quantity
 				if ($this->request->get['call'] == 'order' && ($product_info['minimum'] > $product_total)) {

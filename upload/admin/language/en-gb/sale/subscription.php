@@ -45,6 +45,8 @@ $_['column_product']             = 'Product';
 $_['column_model']               = 'Model';
 $_['column_quantity']            = 'Quantity';
 $_['column_total']               = 'Total';
+$_['column_code']                = 'Code';
+$_['column_action']              = 'Action';
 
 // Entry
 $_['entry_subscription_id']      = 'Subscription ID';

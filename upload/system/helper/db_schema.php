@@ -6677,6 +6677,50 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'subscription_log',
+		'field' => [
+			[
+				'name'           => 'subscription_log_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(128)'
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)'
+			],
+			[
+				'name'    => 'notify',
+				'type'    => 'tinyint(1)'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'subscription_log_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'subscription_id',
+				'table' => 'subscription',
+				'field' => 'subscription_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'subscription_plan',
 		'field' => [
 			[

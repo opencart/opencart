@@ -21,18 +21,20 @@
 
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
 
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_order }}</strong>
-                  <br/>
-                  <a href="{{ order_edit }}" target="_blank">{{ order_id }}</a>
+            {% if order_id %}
+              <div class="col mb-3">
+                <div class="form-control p-0 border rounded" style="min-height: 64px;">
+                  <div class="lead p-2"><strong>{{ text_order }}</strong>
+                    <br/>
+                    <a href="{{ order_edit }}" target="_blank">{{ order_id }}</a>
+                  </div>
                 </div>
               </div>
-            </div>
+            {% endif %}
 
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
+            <div class="col mb-3">
+              <div class="input-group">
+                <div class="form-control border rounded-start" style="min-height: 64px;">
                   <div class="lead"><strong>{{ text_customer }}</strong>
                     <br/>
                     {% if customer_id %}
@@ -45,17 +47,14 @@
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
-
-
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
+            <div class="col mb-3">
+              <div class="form-control p-0 border rounded" style="min-height: 64px;">
                 <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                   <br/>
                   {{ date_added }}
                 </div>
               </div>
             </div>
-
           </div>
 
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
@@ -65,7 +64,8 @@
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                   {% endfor %}
-                </select> <label for="input-store">{{ entry_store }}</label>
+                </select>
+                <label for="input-store">{{ entry_store }}</label>
               </div>
             </div>
             <div class="col mb-3">
@@ -74,7 +74,8 @@
                   {% for language in languages %}
                     <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                   {% endfor %}
-                </select> <label for="input-language">{{ entry_language }}</label>
+                </select>
+                <label for="input-language">{{ entry_language }}</label>
               </div>
             </div>
             <div class="col">
@@ -83,7 +84,8 @@
                   {% for currency in currencies %}
                     <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                   {% endfor %}
-                </select> <label for="input-currency">{{ entry_currency }}</label>
+                </select>
+                <label for="input-currency">{{ entry_currency }}</label>
               </div>
             </div>
           </div>
@@ -136,6 +138,7 @@
                         {% endif %}
                       {% endfor %}
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
+
                     </td>
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price }}</td>
@@ -163,7 +166,7 @@
           <div class="row row-cols-1">
             <div class="col-12">
               <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
+                <div class="form-control p-0 border rounded-start" style="min-height: 64px;">
                   <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
                     <br/>
 
@@ -184,7 +187,7 @@
 
             <div class="col">
               <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded">
+                <div class="form-control p-0 border rounded" style="min-height: 64px;">
                   <div class="lead p-2"><strong>{{ text_date_next }}</strong>
                     <br/>
                     {{ date_next }}
@@ -195,7 +198,7 @@
             </div>
 
             <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
+              <div class="form-control p-0 border rounded mb-3" style="min-height: 64px;">
                 <div class="lead p-2"><strong>{{ text_remaining }}</strong>
                   <br/>
                   {{ remaining }}
@@ -209,7 +212,7 @@
 
             <div class="col-md">
               <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
+                <div class="form-control border rounded-start" style="min-height: 128px;">
                   <div class="lead"><strong>{{ text_payment_address }}</strong>
                     <br/>
                     <div id="payment-address-value">
@@ -259,7 +262,7 @@
 
             <div id="shipping-address" class="col">
               <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
+                <div class="form-control border rounded-start" style="min-height: 128px;">
                   <div class="lead"><strong>{{ text_shipping_address }}</strong>
                     <br/>
                     <div id="shipping-address-value">
@@ -304,34 +307,27 @@
           </div>
 
           <div class="row">
-
-            <div id="shipping-method" class="col-md">
+            <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}">
               <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
+                <div class="form-control border rounded-start" style="min-height: 64px;">
                   <div class="lead"><strong>{{ text_shipping_method }}</strong>
                     <br/>
-                    {% if shipping_method %}
-                      <span id="shipping-method-value">{{ shipping_method }}</span>
-                    {% else %}
-                      <span id="shipping-method-value"></span>
-                    {% endif %}
+                    <span id="shipping-method-value"></span>
                   </div>
                 </div>
+                <input type="hidden" name="shipping_name" value="{{ shipping_code }}" id="input-shipping-name"/>
                 <input type="hidden" name="shipping_code" value="{{ shipping_code }}" id="input-shipping-code"/>
+
                 <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
 
             <div id="payment-method" class="col-md">
               <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
+                <div class="form-control border rounded-start" style="min-height: 64px;">
                   <div class="lead"><strong>{{ text_payment_method }}</strong>
                     <br/>
-                    {% if payment_method %}
-                      <span id="payment-method-value">{{ payment_method }}</span>
-                    {% else %}
-                      <span id="payment-method-value"></span>
-                    {% endif %}
+                    <span id="payment-method-value"></span>
                   </div>
                 </div>
                 <input type="hidden" name="payment_code" value="{{ payment_code }}" id="input-payment-code"/>
@@ -352,6 +348,7 @@
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
           <li class="nav-item"><a href="#tab-order" data-bs-toggle="tab" class="nav-link">{{ tab_order }}</a></li>
+          <li class="nav-item"><a href="#tab-log" data-bs-toggle="tab" class="nav-link">{{ tab_log }}</a></li>
           {% for tab in tabs %}
             <li class="nav-item"><a href="#tab-{{ tab.code }}" data-bs-toggle="tab" class="nav-link">{{ tab.title }}</a></li>
           {% endfor %}
@@ -401,6 +398,12 @@
               <div id="order">{{ orders }}</div>
             </fieldset>
           </div>
+          <div id="tab-log" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_log }}</legend>
+              <div id="log">{{ log }}</div>
+            </fieldset>
+          </div>
           {% for tab in tabs %}
             <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
           {% endfor %}
@@ -445,14 +448,12 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label>
-            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
           <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-            <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
           </div>
           <div id="option"></div>
           <div class="text-end">
@@ -535,7 +536,15 @@
               {% endfor %}
             </select>
           </div>
-          <input type="hidden" name="payment_firstname" value="{{ payment_firstname }}" id="input-payment-firstname"/> <input type="hidden" name="payment_lastname" value="{{ payment_lastname }}" id="input-payment-lastname"/> <input type="hidden" name="payment_company" value="{{ payment_company }}" id="input-payment-company"/> <input type="hidden" name="payment_address_1" value="{{ payment_address_1 }}" id="input-payment-address-1"/> <input type="hidden" name="payment_address_2" value="{{ payment_address_2 }}" id="input-payment-address-2"/> <input type="hidden" name="payment_city" value="{{ payment_city }}" id="input-payment-city"/> <input type="hidden" name="payment_postcode" value="{{ payment_postcode }}" id="input-payment-postcode"/> <input type="hidden" name="payment_country" value="{{ payment_country }}" id="input-payment-country"/> <input type="hidden" name="payment_zone" value="{{ payment_zone }}" id="input-payment-zone"/>
+          <input type="hidden" name="payment_firstname" value="{{ payment_firstname }}" id="input-payment-firstname"/>
+          <input type="hidden" name="payment_lastname" value="{{ payment_lastname }}" id="input-payment-lastname"/>
+          <input type="hidden" name="payment_company" value="{{ payment_company }}" id="input-payment-company"/>
+          <input type="hidden" name="payment_address_1" value="{{ payment_address_1 }}" id="input-payment-address-1"/>
+          <input type="hidden" name="payment_address_2" value="{{ payment_address_2 }}" id="input-payment-address-2"/>
+          <input type="hidden" name="payment_city" value="{{ payment_city }}" id="input-payment-city"/>
+          <input type="hidden" name="payment_postcode" value="{{ payment_postcode }}" id="input-payment-postcode"/>
+          <input type="hidden" name="payment_country" value="{{ payment_country }}" id="input-payment-country"/>
+          <input type="hidden" name="payment_zone" value="{{ payment_zone }}" id="input-payment-zone"/>
           <div class="text-end">
             <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
@@ -858,11 +867,6 @@ $('#input-product').autocomplete({
     }
 });
 
-
-var products = [];
-var totals = [];
-var shipping_required = false;
-
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
@@ -886,7 +890,7 @@ $('#form-product-add').on('submit', function(e) {
             $('.invalid-feedback').removeClass('d-block');
 
             if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (typeof json['error'] == 'object') {
@@ -921,34 +925,6 @@ $('#order-product').on('click', 'button', function(e) {
 });
 
 
-/*
-
-$('#form-product-add').on('change', '#input-subscription-plan', function(e) {
-    var element = this;
-
-    $('.subscription-description').addClass('d-none');
-
-    $('#subscription-description-' + $(element).val() + '-' + $('#input-customer-group').val()).removeClass('d-none');
-});
-
-$('#input-customer-group').on('change', function(e) {
-    if (subscription_data) {
-        html = '';
-
-        for (i = 0; i < subscription_data.length; i++) {
-            if (subscription_data[i]['customer_group_id'] == this.value) {
-                html += '<option value="' + subscription_data[i]['subscription_plan_id'] + '">' + subscription_data[i]['name'] + '</option>';
-            }
-        }
-
-        $('#input-subscription-plan').html(html);
-    }
-
-    // Change subscription description
-    $('#input-subscription-plan').trigger('click');
-});
-*/
-
 $('#input-payment-address').on('change', function(e) {
     var element = this;
 
@@ -965,7 +941,7 @@ $('#input-payment-address').on('change', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-payment-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             var address = json['firstname'] + ' ' + json['lastname'] + '<br/>';
@@ -1037,6 +1013,8 @@ $('#input-shipping-address').on('change', function() {
 
             address += json['zone'] + '<br/>';
             address += json['country'];
+
+            $('#shipping-address-value').html(address);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1090,6 +1068,12 @@ $('#order').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#order').load(this.href);
+});
+
+$('#log').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#log').load(this.href);
 });
 //--></script>
 {{ footer }}

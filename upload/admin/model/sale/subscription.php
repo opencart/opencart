@@ -149,6 +149,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		$this->deleteProducts($subscription_id);
 		$this->deleteHistories($subscription_id);
+		$this->deleteLogs($subscription_id);
 	}
 
 	/**
@@ -522,6 +523,53 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalHistoriesBySubscriptionStatusId(int $subscription_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Delete Logs
+	 *
+	 * @param int $subscription_id
+	 *
+	 * @return void
+	 */
+	public function deleteLogs(int $subscription_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_log` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	/**
+	 * Get Logs
+	 *
+	 * @param int $subscription_id
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getLogs(int $subscription_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_log` WHERE `subscription_id` = '" . (int)$subscription_id . "' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Total Logs
+	 *
+	 * @param int $subscription_id
+	 *
+	 * @return int
+	 */
+	public function getTotalLogs(int $subscription_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_log` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		return (int)$query->row['total'];
 	}

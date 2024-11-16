@@ -1473,8 +1473,6 @@ $('#input-product').autocomplete({
         }
 
         if (item['subscription'] != '') {
-            subscription_data = item['subscription'];
-
             html = '<fieldset class="mb-0">';
             html += '  <legend>{{ entry_subscription|escape('js') }}</legend>';
             html += '  <div class="mb-3 required">';
@@ -1490,31 +1488,26 @@ $('#input-product').autocomplete({
             html += '  </select>';
 
             for (i = 0; i < item['subscription'].length; i++) {
-                html += '<datalist id="subscription-plan-' + i + '">';
-                html += '  <option value="">{{ text_select|escape('js') }}</option>';
-
-                    for (j = 0; j < item['subscription'].length; j++) {
-                        if () {
-                            html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
-                        }
-                    }
-                }
-
-
-            }
-
-            html += '      <option value="Chocolate"></option>';
-            html += '      <option value="Coconut"></option>';
-            html += '      <option value="Mint"></option>';
-            html += '      <option value="Strawberry"></option>';
-            html += '      <option value="Vanilla"></option>';
-            html += '  </datalist>';
-
-            for (i = 0; i < item['subscription'].length; i++) {
                 html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '-' + item['subscription'][i]['customer_group_id'] + '" class="form-text subscription-description d-none">' + item['subscription'][i]['description'] + '</div>';
             }
 
             html += '    <div id="error-subscription" class="invalid-feedback"></div>';
+
+            elements = $('#input-customer-group option');
+
+            for (i = 0; i < elements.length; i++) {
+                html += '<datalist id="subscription-plan-' + $(elements[i]).val() + '">';
+                html += '  <option value="">{{ text_select|escape('js') }}</option>';
+
+                for (j = 0; j < item['subscription'].length; j++) {
+                    if (item['subscription'][j]['customer_group_id'] == $(elements[i]).val()) {
+                        html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
+                    }
+                }
+
+                html += '  </datalist>';
+            }
+
             html += '  </div>';
             html += '</fieldset>';
 
@@ -1534,25 +1527,11 @@ $('#form-product-add').on('change', '#input-subscription-plan', function(e) {
 });
 
 $('#input-customer-group').on('change', function(e) {
-    if (subscription_data) {
-        html = '';
-
-        for (i = 0; i < subscription_data.length; i++) {
-            if (subscription_data[i]['customer_group_id'] == this.value) {
-                html += '<option value="' + subscription_data[i]['subscription_plan_id'] + '">' + subscription_data[i]['name'] + '</option>';
-            }
-        }
-
-        $('#input-subscription-plan').html(html);
-    }
+    $('#input-subscription-plan').html($('#subscription-plan-' + this.value).html());
 
     // Change subscription description
     $('#input-subscription-plan').trigger('click');
 });
-
-var products = [];
-var totals = [];
-var shipping_required = false;
 
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
@@ -2391,16 +2370,6 @@ $('#button-confirm').on('click', function() {
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                }
-
-                if (json['error']['extension']) {
-                    //product = json['error']['extension'];
-
-                    //for (key in product) {
-                    //$('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'][key] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    //  $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid');
-                    // }
                 }
             }
 

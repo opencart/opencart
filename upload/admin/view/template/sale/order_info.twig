@@ -1008,10 +1008,10 @@
             <input type="hidden" name="shipping_method_cost" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
             <input type="hidden" name="shipping_method_tax_class_id" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
           {% endif %}
+          <div class="text-end">
+            <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+          </div>
         </form>
-        <div class="text-end">
-          <button type="submit" form="form-shipping-method" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
-        </div>
       </div>
     </div>
   </div>
@@ -1032,10 +1032,10 @@
             <input type="hidden" name="payment_method_name" value="{{ payment_method_name }}" id="input-payment-method-name"/>
             <input type="hidden" name="payment_method_code" value="{{ payment_method_code }}" id="input-payment-method-code"/>
           {% endif %}
+          <div class="text-end">
+            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
         </form>
-        <div class="text-end">
-          <button type="submit" form="form-payment-method" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
-        </div>
       </div>
     </div>
   </div>
@@ -1719,7 +1719,7 @@ $('#form-payment-address').on('submit', function(e) {
     });
 });
 
-var payment_zone_id = '{{ payment_zone_id }}';
+var payment_zone_id = {{ payment_zone_id }};
 
 $('#input-payment-country').on('change', function() {
     var element = this;
@@ -1900,7 +1900,7 @@ $('#form-shipping-address').on('submit', function(e) {
     });
 });
 
-var shipping_zone_id = '{{ shipping_zone_id }}';
+var shipping_zone_id = {{ shipping_zone_id }};
 
 $('#input-shipping-country').on('change', function() {
     var element = this;

@@ -529,24 +529,16 @@
       <div class="modal-body">
         <form id="form-payment-address">
           <div class="mb-3">
-            <select name="payment_address_id" id="input-payment-address" class="form-select">
+            <select id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
+            <input type="hidden" name="payment_address_id" value="{{ payment_address_id }}" id="input-payment-address-id">
           </div>
-          <input type="hidden" name="payment_firstname" value="{{ payment_firstname }}" id="input-payment-firstname"/>
-          <input type="hidden" name="payment_lastname" value="{{ payment_lastname }}" id="input-payment-lastname"/>
-          <input type="hidden" name="payment_company" value="{{ payment_company }}" id="input-payment-company"/>
-          <input type="hidden" name="payment_address_1" value="{{ payment_address_1 }}" id="input-payment-address-1"/>
-          <input type="hidden" name="payment_address_2" value="{{ payment_address_2 }}" id="input-payment-address-2"/>
-          <input type="hidden" name="payment_city" value="{{ payment_city }}" id="input-payment-city"/>
-          <input type="hidden" name="payment_postcode" value="{{ payment_postcode }}" id="input-payment-postcode"/>
-          <input type="hidden" name="payment_country" value="{{ payment_country }}" id="input-payment-country"/>
-          <input type="hidden" name="payment_zone" value="{{ payment_zone }}" id="input-payment-zone"/>
           <div class="text-end">
-            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -564,16 +556,16 @@
       <div class="modal-body">
         <form id="form-shipping-address">
           <div class="mb-3">
-            <select name="shipping_address_id" id="input-shipping-address" class="form-select">
+            <select id="input-shipping-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == shipping_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
-          <input type="hidden" name="shipping_firstname" value="{{ shipping_firstname }}" id="input-shipping-firstname"/> <input type="hidden" name="shipping_lastname" value="{{ shipping_lastname }}" id="input-shipping-lastname"/> <input type="hidden" name="shipping_company" value="{{ shipping_company }}" id="input-shipping-company"/> <input type="hidden" name="shipping_address_1" value="{{ shipping_address_1 }}" id="input-shipping-address-1"/> <input type="hidden" name="shipping_address_2" value="{{ shipping_address_2 }}" id="input-shipping-address-2"/> <input type="hidden" name="shipping_city" value="{{ shipping_city }}" id="input-shipping-city"/> <input type="hidden" name="shipping_postcode" value="{{ shipping_postcode }}" id="input-shipping-postcode"/> <input type="hidden" name="shipping_country" value="{{ shipping_country }}" id="input-shipping-country"/> <input type="hidden" name="shipping_zone" value="{{ shipping_zone }}" id="input-shipping-zone"/>
+          <input type="hidden" name="shipping_address_id" value="{{ shipping_address_id }}" id="input-shipping-address-id">
           <div class="text-end">
-            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -600,7 +592,7 @@
           {% endif %}
         </form>
         <div class="text-end">
-          <button type="submit" form="form-shipping-method" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+          <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
         </div>
       </div>
     </div>
@@ -622,10 +614,10 @@
             <input type="hidden" name="payment_method_name" value="{{ payment_method_name }}" id="input-payment-method-name"/>
             <input type="hidden" name="payment_method_code" value="{{ payment_method_code }}" id="input-payment-method-code"/>
           {% endif %}
+          <div class="text-end">
+            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
         </form>
-        <div class="text-end">
-          <button type="submit" form="form-payment-method" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
-        </div>
       </div>
     </div>
   </div>
@@ -924,7 +916,6 @@ $('#order-product').on('click', 'button', function(e) {
     $('#button-refresh').trigger('click');
 });
 
-
 $('#input-payment-address').on('change', function(e) {
     var element = this;
 
@@ -944,33 +935,49 @@ $('#input-payment-address').on('change', function(e) {
                 $('#form-payment-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            var address = json['firstname'] + ' ' + json['lastname'] + '<br/>';
-
-            if (json['company']) {
-                address += json['company'] + '<br/>';
+            if (json['address_id']) {
+                var payment_address = json;
             }
-
-            address += json['address_1'] + '<br/>';
-
-            if (json['address_2']) {
-                address += json['address_2'] + '<br/>';
-            }
-
-            address += json['city'] + '<br/>';
-
-            if (json['postcode']) {
-                address += json['postcode'] + '<br/>';
-            }
-
-            address += json['zone'] + '<br/>';
-            address += json['country'];
-
-            $('#payment-address-value').html(address);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+$('#form-payment-address').on('submit', function(e) {
+    e.preventDefault();
+
+    if (payment_address) {
+        var address = payment_address['firstname'] + ' ' + payment_address['lastname'] + '<br/>';
+
+        if (payment_address['company']) {
+            address += payment_address['company'] + '<br/>';
+        }
+
+        address += json['address_1'] + '<br/>';
+
+        if (payment_address['address_2']) {
+            address += payment_address['address_2'] + '<br/>';
+        }
+
+        address += payment_address['city'] + '<br/>';
+
+        if (payment_address['postcode']) {
+            address += payment_address['postcode'] + '<br/>';
+        }
+
+        address += payment_address['zone'] + '<br/>';
+        address += payment_address['country'];
+
+        $('#payment-address-value').html(address);
+        $('#input-payment-address-id').val(payment_address['address_id']);
+    } else {
+        $('#payment-address-value').html('');
+        $('#input-payment-address-id').val(0);
+    }
+
+    $('#modal-payment-address').modal('hide');
 });
 
 // Shipping Address
@@ -993,34 +1000,213 @@ $('#input-shipping-address').on('change', function() {
                 $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            var address = json['firstname'] + ' ' + json['lastname'] + '<br/>';
-
-            if (json['company']) {
-                address += json['company'] + '<br/>';
+            if (json['address_id']) {
+                var shipping_address = json;
             }
-
-            address += json['address_1'] + '<br/>';
-
-            if (json['address_2']) {
-                address += json['address_2'] + '<br/>';
-            }
-
-            address += json['city'] + '<br/>';
-
-            if (json['postcode']) {
-                address += json['postcode'] + '<br/>';
-            }
-
-            address += json['zone'] + '<br/>';
-            address += json['country'];
-
-            $('#shipping-address-value').html(address);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
+
+$('#form-shipping-address').on('submit', function(e) {
+    e.preventDefault();
+
+    if (shipping_address) {
+        var address = shipping_address['firstname'] + ' ' + shipping_address['lastname'] + '<br/>';
+
+        if (shipping_address['company']) {
+            address += shipping_address['company'] + '<br/>';
+        }
+
+        address += shipping_address['address_1'] + '<br/>';
+
+        if (shipping_address['address_2']) {
+            address += shipping_address['address_2'] + '<br/>';
+        }
+
+        address += shipping_address['city'] + '<br/>';
+
+        if (shipping_address['postcode']) {
+            address += shipping_address['postcode'] + '<br/>';
+        }
+
+        address += shipping_address['zone'] + '<br/>';
+        address += shipping_address['country'];
+
+        $('#shipping-address-value').html(address);
+        $('#input-shipping-address-id').val(shipping_address['address_id']);
+    } else {
+        $('#shipping-address-value').html('');
+        $('#input-shipping-address-id').val(0);
+    }
+
+    $('#modal-shipping-address').modal('hide');
+});
+
+// Shipping Method
+var shipping_method = [];
+
+$('#button-shipping-methods').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_methods&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            html = '';
+
+            if (json['shipping_methods']) {
+                var k = 0;
+
+                for (i in json['shipping_methods']) {
+                    html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
+
+                    if (!json['shipping_methods'][i]['error']) {
+                        for (j in json['shipping_methods'][i]['quote']) {
+                            shipping_method[json['shipping_methods'][i]['quote'][j]['code']] = json['shipping_methods'][i]['quote'][j];
+
+                            html += '<div class="form-check">';
+                            html += '  <input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + k + '"';
+
+                            if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method-code').val()) {
+                                html += ' checked';
+                            }
+
+                            html += '/>';
+
+                            html += '  <label for="input-shipping-method-' + k + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
+                            html += '</div>';
+
+                            k++;
+                        }
+                    } else {
+                        html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
+                    }
+                }
+
+                $('#shipping-methods').html(html);
+
+                $('#modal-shipping-method').modal('show');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-shipping-method').on('change', 'input[name=\'choose_shipping\']', function() {
+    var element = this;
+
+    var html = '';
+
+    var code = $(element).val();
+
+    if (shipping_method[code]) {
+        html += '<input type="hidden" name="shipping_method_name" value="' + shipping_method[code]['name'] + '" id="input-shipping-method-name"/>';
+        html += '<input type="hidden" name="shipping_method_code" value="' + shipping_method[code]['code'] + '" id="input-shipping-method-code"/>';
+        html += '<input type="hidden" name="shipping_method_cost" value="' + shipping_method[code]['cost'] + '" id="input-shipping-method-cost"/>';
+        html += '<input type="hidden" name="shipping_method_tax_class_id" value="' + shipping_method[code]['tax_class_id'] + '" id="input-shipping-method-tax-class"/>';
+    }
+
+    $('#form-shipping-method').html(html);
+});
+
+$('#form-shipping-method').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        type: 'post',
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-shipping-method').button('loading');
+        },
+        complete: function() {
+            $('#button-shipping-method').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            if (typeof json['error'] == 'string') {
+                $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['success']) {
+                $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#shipping-method-value').html($('#input-shipping-method-name').val());
+
+                cart_render(json['products'], json['totals'], json['shipping_required']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
 
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();

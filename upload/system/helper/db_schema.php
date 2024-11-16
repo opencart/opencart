@@ -6693,6 +6693,10 @@ function oc_db_schema() {
 				'type' => 'varchar(128)'
 			],
 			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)'
 			],

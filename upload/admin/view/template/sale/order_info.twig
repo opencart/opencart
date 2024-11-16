@@ -1028,10 +1028,8 @@
         <p>{{ text_payment }}</p>
         <div id="payment-methods"></div>
         <form id="form-payment-method">
-          {% if payment_method_code %}
-            <input type="hidden" name="payment_method_name" value="{{ payment_method_name }}" id="input-payment-method-name"/>
-            <input type="hidden" name="payment_method_code" value="{{ payment_method_code }}" id="input-payment-method-code"/>
-          {% endif %}
+          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/>
+          <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
           <div class="text-end">
             <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
           </div>
@@ -2041,10 +2039,10 @@ $('#modal-shipping-method').on('change', 'input[name=\'choose_shipping\']', func
     var code = $(element).val();
 
     if (shipping_method[code]) {
-        html += '<input type="hidden" name="shipping_method_name" value="' + shipping_method[code]['name'] + '" id="input-shipping-method-name"/>';
-        html += '<input type="hidden" name="shipping_method_code" value="' + shipping_method[code]['code'] + '" id="input-shipping-method-code"/>';
-        html += '<input type="hidden" name="shipping_method_cost" value="' + shipping_method[code]['cost'] + '" id="input-shipping-method-cost"/>';
-        html += '<input type="hidden" name="shipping_method_tax_class_id" value="' + shipping_method[code]['tax_class_id'] + '" id="input-shipping-method-tax-class"/>';
+        $('#input-shipping-method-name').val(shipping_method[code]['name']);
+        $('#input-shipping-method-code').val(shipping_method[code]['code']);
+        $('#input-shipping-method-cost').val(shipping_method[code]['cost']);
+        $('#input-shipping-method-tax-class').val(shipping_method[code]['tax_class_id']);
     }
 
     $('#form-shipping-method').html(html);
@@ -2188,8 +2186,8 @@ $('#modal-payment-method').on('change', 'input[name=\'choose_payment\']', functi
     var code = $(element).val();
 
     if (payment_method[code]) {
-        html += '<input type="hidden" name="payment_method_name" value="' + payment_method[code]['name'] + '" id="input-payment-method-name"/>';
-        html += '<input type="hidden" name="payment_method_code" value="' + payment_method[code]['code'] + '" id="input-payment-method-code"/>';
+        $('#input-payment-method-name').val(payment_method[code]['name'])
+        $('#input-payment-method-code').val(payment_method[code]['code'])
     }
 
     $('#form-payment-method').html(html);

@@ -584,16 +584,14 @@
         <p>{{ text_shipping }}</p>
         <div id="shipping-methods"></div>
         <form id="form-shipping-method">
-          {% if shipping_method_code %}
-            <input type="hidden" name="shipping_method_name" value="{{ shipping_method_name }}" id="input-shipping-method-name"/>
-            <input type="hidden" name="shipping_method_code" value="{{ shipping_method_code }}" id="input-shipping-method-code"/>
-            <input type="hidden" name="shipping_method_cost" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
-            <input type="hidden" name="shipping_method_tax_class_id" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
-          {% endif %}
+          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/>
+          <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/>
+          <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
+          <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
+          <div class="text-end">
+            <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+          </div>
         </form>
-        <div class="text-end">
-          <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
-        </div>
       </div>
     </div>
   </div>
@@ -610,10 +608,8 @@
         <p>{{ text_payment }}</p>
         <div id="payment-methods"></div>
         <form id="form-payment-method">
-          {% if payment_method_code %}
-            <input type="hidden" name="payment_method_name" value="{{ payment_method_name }}" id="input-payment-method-name"/>
-            <input type="hidden" name="payment_method_code" value="{{ payment_method_code }}" id="input-payment-method-code"/>
-          {% endif %}
+          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/>
+          <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
           <div class="text-end">
             <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
           </div>

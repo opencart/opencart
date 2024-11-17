@@ -196,8 +196,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 			$this->load->model('account/activity');
 
 			$activity_data = [
-				'customer_id' => $args[0],
-				'name'        => $args[1]['firstname'] . ' ' . $args[1]['lastname']
+				'customer_id' => $this->customer->getId(),
+				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
 			];
 
 			$this->model_account_activity->addActivity('affiliate_add', $activity_data);

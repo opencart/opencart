@@ -30,19 +30,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// 3. Validate shipping method
-			if (empty($this->request->post['shipping_method_name'])) {
+			if (empty($this->request->post['shipping_method']['name'])) {
 				$output['error'] = $this->language->get('error_name');
 			}
 
-			if (empty($this->request->post['shipping_method_code'])) {
+			if (empty($this->request->post['shipping_method']['code'])) {
 				$output['error'] = $this->language->get('error_code');
 			}
 
-			if (empty($this->request->post['shipping_method_cost'])) {
+			if (empty($this->request->post['shipping_method']['cost'])) {
 				$output['error'] = $this->language->get('error_cost');
 			}
 
-			if (!isset($this->request->post['shipping_method_tax_class_id'])) {
+			if (!isset($this->request->post['shipping_method']['tax_class_id'])) {
 				$output['error'] = $this->language->get('error_tax_class');
 			}
 		} else {
@@ -51,11 +51,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$output) {
 			$this->session->data['shipping_method'] = [
-				'name'         => $this->request->post['shipping_method_name'],
-				'code'         => $this->request->post['shipping_method_code'],
-				'cost'         => (float)$this->request->post['shipping_method_cost'],
-				'tax_class_id' => (int)$this->request->post['shipping_method_tax_class_id'],
-				'text'         => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method_cost'], (int)$this->request->post['shipping_method_tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				'name'         => $this->request->post['shipping_method']['name'],
+				'code'         => $this->request->post['shipping_method']['code'],
+				'cost'         => (float)$this->request->post['shipping_method']['cost'],
+				'tax_class_id' => (int)$this->request->post['shipping_method']['tax_class_id'],
+				'text'         => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method']['cost'], (int)['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 			];
 
 			$output['success'] = $this->language->get('text_success');
@@ -73,20 +73,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('api/shipping_method');
 
 		$output = [];
-
-		// Add keys for missing post vars
-		$keys = [
-			'shipping_method_name',
-			'shipping_method_code',
-			'shipping_method_cost',
-			'shipping_method_tax_class_id'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {

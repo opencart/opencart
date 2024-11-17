@@ -2032,11 +2032,7 @@ $('#button-shipping-methods').on('click', function() {
 });
 
 $('#modal-shipping-method').on('change', 'input[name=\'choose_shipping\']', function() {
-    var element = this;
-
-    var html = '';
-
-    var code = $(element).val();
+    var code = $(this).val();
 
     if (shipping_method[code]) {
         $('#input-shipping-method-name').val(shipping_method[code]['name']);
@@ -2044,8 +2040,6 @@ $('#modal-shipping-method').on('change', 'input[name=\'choose_shipping\']', func
         $('#input-shipping-method-cost').val(shipping_method[code]['cost']);
         $('#input-shipping-method-tax-class').val(shipping_method[code]['tax_class_id']);
     }
-
-    $('#form-shipping-method').html(html);
 });
 
 $('#form-shipping-method').on('submit', function(e) {
@@ -2179,18 +2173,12 @@ $('#button-payment-methods').on('click', function() {
 });
 
 $('#modal-payment-method').on('change', 'input[name=\'choose_payment\']', function() {
-    var element = this;
-
-    var html = '';
-
-    var code = $(element).val();
+    var code = $(this).val();
 
     if (payment_method[code]) {
-        $('#input-payment-method-name').val(payment_method[code]['name'])
-        $('#input-payment-method-code').val(payment_method[code]['code'])
+        $('#input-payment-method-name').val(payment_method[code]['name']);
+        $('#input-payment-method-code').val(payment_method[code]['code']);
     }
-
-    $('#form-payment-method').html(html);
 });
 
 $('#form-payment-method').on('submit', function(e) {

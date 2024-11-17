@@ -18,18 +18,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		// Add keys for missing post vars
-		$keys = [
-			'payment_method_name',
-			'payment_method_code'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
-
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
 			$output['error'] = $this->language->get('error_customer');
@@ -57,18 +45,18 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// 5. Validate payment Method
-		if (empty($this->request->post['payment_method_name'])) {
+		if (empty($this->request->post['payment_method']['name'])) {
 			$output['error'] = $this->language->get('error_name');
 		}
 
-		if (empty($this->request->post['payment_method_code'])) {
+		if (empty($this->request->post['payment_method']['code'])) {
 			$output['error'] = $this->language->get('error_code');
 		}
 
 		if (!$output) {
 			$this->session->data['payment_method'] = [
-				'name' => $this->request->post['payment_method_name'],
-				'code' => $this->request->post['payment_method_code']
+				'name' => $this->request->post['payment_method']['name'],
+				'code' => $this->request->post['payment_method']['code']
 			];
 
 			$output['success'] = $this->language->get('text_success');

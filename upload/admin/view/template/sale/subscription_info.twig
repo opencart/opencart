@@ -95,17 +95,17 @@
               <tr>
                 <th>{{ column_product }}</th>
                 <th class="text-end">{{ column_quantity }}</th>
-                <th class="text-end">{{ column_price }}</th>
+                <th class="text-end">{{ column_total }}</th>
                 <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
-            <tbody>
-              {% set order_product_row = 0 %}
+            <tbody id="subscription-product">
+              {% set subscription_product_row = 0 %}
               {% if subscription_products %}
                 {% for subscription_product in subscription_products %}
                   <tr>
                     <td><a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
-                      <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
+                      <div id="error-product-{{ subscription_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled">
                         <li>
                           <small> - {{ text_model }}: {{ subscription_product.model }}</small>
@@ -114,41 +114,37 @@
                           {% if option.type != 'file' %}
                             <li>
                               <small> - {{ option.name }}: {{ option.value }}</small>
-                              <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                              <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
                             </li>
                           {% else %}
                             <li>
                               <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                              <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                              <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
                             </li>
                           {% endif %}
                         {% endfor %}
                       </ul>
-
-                      <input type="hidden" name="product[{{ order_product_row }}][product_id]" value="{{ order_product.product_id }}"/> <input type="hidden" name="product[{{ order_product_row }}][quantity]" value="{{ order_product.quantity }}"/>
-                      {% for option in order_product.option %}
+                      <input type="hidden" name="product[{{ subscription_product_row }}][product_id]" value="{{ subscription_product.product_id }}"/>
+                      <input type="hidden" name="product[{{ subscription_product_row }}][quantity]" value="{{ subscription_product.quantity }}"/>
+                      {% for option in subscription_product.option %}
                         {% if option.type == 'select' or option.type == 'radio' %}
-                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                          <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
                         {% endif %}
                         {% if option.type == 'checkbox' %}
-                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                          <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
                         {% endif %}
                         {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-                          <input type="hidden" name="product[{{ order_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+                          <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
                         {% endif %}
                       {% endfor %}
-                      <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
-
+                      <input type="hidden" name="product[{{ subscription_product_row }}][subscription_plan_id]" value="{{ subscription_plan_id }}"/>
                     </td>
-                    <td class="text-end">{{ order_product.quantity }}</td>
-                    <td class="text-end">{{ order_product.price }}</td>
+                    <td class="text-end">{{ subscription_product.quantity }}</td>
+                    <td class="text-end">{{ subscription_product.price }}</td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
-
-                  {% set order_product_row = order_product_row + 1 %}
-
+                  {% set subscription_product_row = subscription_product_row + 1 %}
                 {% endfor %}
-
               {% else %}
                 <tr>
                   <td colspan="4" class="text-center">{{ text_no_results }}</td>
@@ -169,13 +165,11 @@
                 <div class="form-control p-0 border rounded-start" style="min-height: 64px;">
                   <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
                     <br/>
-
                     {% for subscription_plan in subscription_plans %}
                       {% if subscription_plan.subscription_plan_id == subscription_plan_id %}
-                        <div>{{ subscription_plan.description }}</div>
+                        <div id="subscription-plan-value">{{ subscription_plan.description }}</div>
                       {% endif %}
                     {% endfor %}
-
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-subscription-plan" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -210,17 +204,14 @@
 
           <div class="row">
 
-            <div class="col-md">
-              <div class="input-group mb-3">
+            <div class="col mb-3">
+              <div class="input-group">
                 <div class="form-control border rounded-start" style="min-height: 128px;">
                   <div class="lead"><strong>{{ text_payment_address }}</strong>
                     <br/>
                     <div id="payment-address-value">
-                      {% if payment_firstname %}
-                        {{ payment_firstname }} {{ payment_lastname }}
-                        <br/>
-                      {% endif %}
-
+                      {{ payment_firstname }} {{ payment_lastname }}
+                      <br/>
                       {% if payment_company %}
                         {{ payment_company }}
                         <br/>
@@ -260,16 +251,14 @@
               </div>
             </div>
 
-            <div id="shipping-address" class="col">
-              <div class="input-group mb-3">
+            <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
+              <div class="input-group">
                 <div class="form-control border rounded-start" style="min-height: 128px;">
                   <div class="lead"><strong>{{ text_shipping_address }}</strong>
                     <br/>
                     <div id="shipping-address-value">
-                      {% if shipping_firstname %}
-                        {{ shipping_firstname }} {{ shipping_lastname }}
-                        <br/>
-                      {% endif %}
+                      {{ shipping_firstname }} {{ shipping_lastname }}
+                      <br/>
                       {% if shipping_company %}
                         {{ shipping_company }}
                         <br/>
@@ -430,7 +419,7 @@
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
-            <button type="button" data-bs-dismiss="modal" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -448,12 +437,14 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label>
+            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
           <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
+            <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
           </div>
           <div id="option"></div>
           <div class="text-end">
@@ -538,7 +529,7 @@
             <input type="hidden" name="payment_address_id" value="{{ payment_address_id }}" id="input-payment-address-id">
           </div>
           <div class="text-end">
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -565,7 +556,7 @@
           </div>
           <input type="hidden" name="shipping_address_id" value="{{ shipping_address_id }}" id="input-shipping-address-id">
           <div class="text-end">
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -655,7 +646,11 @@ $('#input-customer').autocomplete({
         $('#input-customer').val(item['label']);
 
         if (item) {
-            var customer = item;
+            customer = item;
+
+            console.log(customer);
+        } else {
+            customer = [];
         }
     }
 });
@@ -663,16 +658,18 @@ $('#input-customer').autocomplete({
 $('#form-customer').on('submit', function(e) {
     e.preventDefault();
 
+    console.log(customer);
+
     if (customer) {
-        $('#input-customer-id').val(item['value']);
-        $('#input-firstname').val(item['firstname']);
-        $('#input-lastname').val(item['lastname']);
-        $('#input-customer-group').val(item['customer_group_id']);
+        $('#input-customer-id').val(customer['value']);
+        $('#input-firstname').val(customer['firstname']);
+        $('#input-lastname').val(customer['lastname']);
+        $('#input-customer-group').val(customer['customer_group_id']);
 
         html = '<option value="0">{{ text_none|escape('js') }}</option>';
 
-        for (i in item['address']) {
-            html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + (item['address'][i]['company'] ? item['address'][i]['company'] + ', ' : '') + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
+        for (i in customer['address']) {
+            html += '<option value="' + customer['address'][i]['address_id'] + '">' + customer['address'][i]['firstname'] + ' ' + customer['address'][i]['lastname'] + ', ' + (customer['address'][i]['company'] ? customer['address'][i]['company'] + ', ' : '') + customer['address'][i]['address_1'] + ', ' + customer['address'][i]['city'] + ', ' + customer['address'][i]['country'] + '</option>';
         }
 
         $('#input-payment-address').html(html);
@@ -683,7 +680,7 @@ $('#form-customer').on('submit', function(e) {
         $('#input-customer-id').val('');
         $('#input-firstname').val('');
         $('#input-lastname').val('');
-        $('#input-customer-group').val(item['customer_group_id']);
+        $('#input-customer-group').val({{ customer_group_id }});
 
         html = '<option value="0">{{ text_none|escape('js') }}</option>';
 
@@ -881,6 +878,8 @@ $('#input-product').autocomplete({
     }
 });
 
+var subscription_product_row = {{ subscription_product_row }};
+
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
@@ -921,71 +920,68 @@ $('#form-product-add').on('submit', function(e) {
             if (json['success']) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                html  = '<tr>';
-                html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
-                html += '    <div id="error-product-' + order_product_row + '-product" class="invalid-feedback mt-0"></div>';
+                html = '<tr>';
 
-                html += '<ul class="list-unstyled mb-0">';
+                if (json['products']) {
+                    for (i in json['products']) {
+                        product = json['products'][i];
 
-                html += '<li>';
-                html += '  <small> - {{ text_model|escape('js') }}: ' + product['model'] + '</small>';
-                html += '</li>';
+                        html += '<tr>';
+                        html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>';
+                        html += '    <div id="error-product-' + subscription_product_row + '-product" class="invalid-feedback mt-0"></div>';
 
-                for (j = 0; j < product['option'].length; j++) {
-                    option = product['option'][j];
+                        html += '<ul class="list-unstyled mb-0">';
 
-                    html += '<li>';
-                    html += '  <small> - ' + option['name'] + ': ' + option['value'] + '</small>';
-                    html += '  <div id="error-product-' + order_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback mt-0"></div>';
-                    html += '</li>';
-                }
+                        html += '<li>';
+                        html += '  <small> - {{ text_model|escape('js') }}: ' + product['model'] + '</small>';
+                        html += '</li>';
 
-                if (product['subscription']) {
-                    html += '<li>';
-                    html += '  <small> - {{ text_subscription|escape('js') }}: ' + product['subscription'] + '</small>';
-                    html += '  <div id="error-product-' + order_product_row + '-subscription" class="invalid-feedback mt-0"></div>';
-                    html += '</li>';
-                }
+                        for (j = 0; j < product['option'].length; j++) {
+                            option = product['option'][j];
 
-                if (product['reward']) {
-                    html += '<li>';
-                    html += '  <small> - {{ text_points|escape('js') }}: ' + product['reward'] + '</small>';
-                    html += '</li>';
-                }
+                            html += '<li>';
+                            html += '  <small> - ' + option['name'] + ': ' + option['value'] + '</small>';
+                            html += '  <div id="error-product-' + subscription_product_row + '-option-' + option['product_option_id'] + '" class="invalid-feedback mt-0"></div>';
+                            html += '</li>';
+                        }
 
-                html += '</ul>';
+                        html += '</ul>';
 
-                html += '<input type="hidden" name="product[' + order_product_row + '][product_id]" value="' + product['product_id'] + '"/>';
-                html += '<input type="hidden" name="product[' + order_product_row + '][quantity]" value="' + product['quantity'] + '"/>';
+                        html += '<input type="hidden" name="product[' + subscription_product_row + '][product_id]" value="' + product['product_id'] + '"/>';
+                        html += '<input type="hidden" name="product[' + subscription_product_row + '][quantity]" value="' + product['quantity'] + '"/>';
 
-                for (j = 0; j < product['option'].length; j++) {
-                    option = product['option'][j];
+                        for (j = 0; j < product['option'].length; j++) {
+                            option = product['option'][j];
 
-                    if (option['type'] == 'select' || option['type'] == 'radio') {
-                        html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '"/>';
+                            if (option['type'] == 'select' || option['type'] == 'radio') {
+                                html += '<input type="hidden" name="product[' + subscription_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '"/>';
+                            }
+
+                            if (option['type'] == 'checkbox') {
+                                html += '<input type="hidden" name="product[' + subscription_product_row + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '"/>';
+                            }
+
+                            if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+                                html += '<input type="hidden" name="product[' + subscription_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '"/>';
+                            }
+                        }
+
+                        html += '    <input type="hidden" name="product[' + subscription_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
+                        html += '  </td>';
+                        html += '  <td class="text-end">' + product['quantity'] + '</td>';
+                        html += '  <td class="text-end">' + product['total_text'] + '</td>';
+                        html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+                        html += '</tr>';
+
+                        $('#subscription-product').html(html);
+
+                        subscription_product_row++;
                     }
-
-                    if (option['type'] == 'checkbox') {
-                        html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '"/>';
-                    }
-
-                    if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
-                        html += '<input type="hidden" name="product[' + order_product_row + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '"/>';
-                    }
+                } else {
+                    html += '<tr>';
+                    html += '  <td colspan="5" class="text-center">{{ text_no_results|escape('js') }}</td>';
+                    html += '</tr>';
                 }
-
-                html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
-                html += '  </td>';
-                html += '  <td class="text-end">' + product['quantity'] + '</td>';
-                html += '  <td class="text-end">' + product['price_text'] + '</td>';
-                html += '  <td class="text-end">' + product['total_text'] + '</td>';
-                html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
-                html += '</tr>';
-
-                order_product_row++;
-
-
-                $('#order-product').html(html);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -995,7 +991,7 @@ $('#form-product-add').on('submit', function(e) {
 });
 
 // Remove product
-$('#order-product').on('click', 'button', function(e) {
+$('#subscription-product').on('click', 'button', function(e) {
     $(this).parent().parent().remove();
 });
 
@@ -1010,9 +1006,11 @@ $('#input-payment-address').on('change', function(e) {
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
+            $('#button-payment-address').prop('disabled', true);
         },
         complete: function() {
             $(element).prop('disabled', false);
+            $('#button-payment-address').prop('disabled', false);
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1043,7 +1041,7 @@ $('#form-payment-address').on('submit', function(e) {
             address += payment_address['company'] + '<br/>';
         }
 
-        address += json['address_1'] + '<br/>';
+        address += payment_address['address_1'] + '<br/>';
 
         if (payment_address['address_2']) {
             address += payment_address['address_2'] + '<br/>';
@@ -1079,9 +1077,11 @@ $('#input-shipping-address').on('change', function() {
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
+            $('#button-shipping-address').button('loading');
         },
         complete: function() {
             $(element).prop('disabled', false);
+            $('#button-shipping-address').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1146,7 +1146,7 @@ $('#button-shipping-methods').on('click', function() {
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=shipping_methods&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {

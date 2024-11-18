@@ -186,10 +186,8 @@
                 <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
                   <div id="payment-address-value">
-                    {% if payment_firstname %}
-                      {{ payment_firstname }} {{ payment_lastname }}
-                      <br/>
-                    {% endif %}
+                    {{ payment_firstname }} {{ payment_lastname }}
+                    <br/>
                     {% if payment_company %}
                       {{ payment_company }}
                       <br/>
@@ -230,10 +228,8 @@
                 <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
                   <div id="shipping-address-value">
-                    {% if shipping_firstname %}
-                      {{ shipping_firstname }} {{ shipping_lastname }}
-                      <br/>
-                    {% endif %}
+                    {{ shipping_firstname }} {{ shipping_lastname }}
+                    <br/>
                     {% if shipping_company %}
                       {{ shipping_company }}
                       <br/>

@@ -84,7 +84,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->model_account_customer->editCode($this->request->post['email'], oc_token(40));
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_confirm');
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}

@@ -672,7 +672,7 @@
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address_id" id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.postcode }}, {{ address.zone }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -836,7 +836,7 @@
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address_id" id="input-shipping-address" class="form-select">
               <option value="0">{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}"{% if address.address_id == shipping_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == shipping_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.postcode }}, {{ address.zone }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -930,14 +930,16 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -957,21 +959,24 @@
 
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="date" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="time" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="datetime-local" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -1482,10 +1487,10 @@ $('#input-product').autocomplete({
             html += '  </select>';
 
             for (i = 0; i < item['subscription'].length; i++) {
-                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '-' + item['subscription'][i]['customer_group_id'] + '" class="form-text subscription-description d-none">' + item['subscription'][i]['description'] + '</div>';
+                html += '<div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '-' + item['subscription'][i]['customer_group_id'] + '" class="form-text subscription-description d-none">' + item['subscription'][i]['description'] + '</div>';
             }
 
-            html += '    <div id="error-subscription" class="invalid-feedback"></div>';
+            html += '<div id="error-subscription" class="invalid-feedback"></div>';
 
             elements = $('#input-customer-group option');
 
@@ -1499,7 +1504,7 @@ $('#input-product').autocomplete({
                     }
                 }
 
-                html += '  </datalist>';
+                html += '</datalist>';
             }
 
             html += '  </div>';

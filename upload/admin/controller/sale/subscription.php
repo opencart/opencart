@@ -551,6 +551,41 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$currency = $this->config->get('config_currency');
 		}
 
+		// Subscription Plan
+		$this->load->model('catalog/subscription_plan');
+
+		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
+
+		if (!empty($subscription_info)) {
+			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
+		} else {
+			$data['subscription_plan_id'] = 0;
+		}
+
+		$data['description'] = '';
+
+		if (!empty($subscription_info)) {
+			if ($subscription_info['trial_status']) {
+				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+				$trial_cycle = $subscription_info['trial_cycle'];
+				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+				$trial_duration = $subscription_info['trial_duration'];
+
+				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+			}
+
+			$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+			$cycle = $subscription_info['cycle'];
+			$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+			$duration = $subscription_info['duration'];
+
+			if ($subscription_info['duration']) {
+				$data['description'] .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+			} else {
+				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+			}
+		}
+
 		// Products
 		$data['subscription_products'] = [];
 
@@ -593,57 +628,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Subscription
-		$data['subscription_plans'] = [];
-
-		if (!empty($subscription_info)) {
-			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
-		} else {
-			$data['subscription_plan_id'] = 0;
-		}
-
-		$this->load->model('catalog/subscription_plan');
-
-		$subscriptions = $this->model_sale_subscription->getProducts($subscription_id);
-
-		foreach ($subscriptions as $subscription) {
-			$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($data['subscription_plan_id']);
-
-			if ($subscription_plan_info) {
-				$description = '';
-
-				if ($subscription_plan_info['trial_status']) {
-					$trial_price = $this->currency->format($subscription['trial_price'], $this->config->get('config_currency'));
-					$trial_cycle = $subscription_plan_info['trial_cycle'];
-					$trial_frequency = $this->language->get('text_' . $subscription_plan_info['trial_frequency']);
-					$trial_duration = $subscription_plan_info['trial_duration'];
-
-					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
-				}
-
-				$price = $this->currency->format($subscription['price'], $this->config->get('config_currency'));
-				$cycle = $subscription_plan_info['cycle'];
-				$frequency = $this->language->get('text_' . $subscription_plan_info['frequency']);
-				$duration = $subscription_plan_info['duration'];
-
-				if ($subscription_plan_info['duration']) {
-					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
-				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
-				}
-
-				$data['subscription_plans'][] = [
-					'name'        => $subscription_plan_info['name'],
-					'description' => $description
-				] + $subscription;
-			}
-		}
-
 		// Date next
 		if (!empty($subscription_info)) {
-			$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
+			$data['date_next'] = $subscription_info['date_next'];
 		} else {
 			$data['date_next'] = '';
+		}
+
+		if (!empty($subscription_info)) {
+			$data['text_date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
+		} else {
+			$data['text_date_next'] = '';
 		}
 
 		if (!empty($subscription_info)) {

@@ -130,7 +130,7 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->response->addheader('Expires: 0');
 		$this->response->addheader('Content-Description: File Transfer');
 		$this->response->addheader('Content-Type: application/octet-stream');
-		$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
+		$this->response->addheader('Content-Disposition: attachment; filename="' . str_replace(' ', '_', $this->config->get('config_name')) . '_' . date('Y-m-d_H-i-s', time()) . '_' . basename($filename) . '"');
 		$this->response->addheader('Content-Transfer-Encoding: binary');
 
 		$this->response->setOutput(file_get_contents($file, true, null));

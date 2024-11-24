@@ -94,7 +94,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['lastname'] = $this->session->data['customer']['lastname'];
 			$order_data['email'] = $this->session->data['customer']['email'];
 			$order_data['telephone'] = $this->session->data['customer']['telephone'];
-			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
+			$order_data['custom_field'] = $this->session->data['customer']['custom_field'] ?? [];
 
 			// Payment Details
 			if (isset($this->session->data['payment_address'])) {

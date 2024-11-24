@@ -438,7 +438,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!empty($subscription_info)) {
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 		} else {
-			$data['date_added'] = '';
+			$data['date_added'] = date($this->language->get('date_format_short'));
 		}
 
 		// Order
@@ -636,9 +636,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($subscription_info)) {
-			$data['text_date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
+			$data['date_next_text'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
 		} else {
-			$data['text_date_next'] = '';
+			$data['date_next_text'] = '';
 		}
 
 		if (!empty($subscription_info)) {

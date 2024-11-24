@@ -142,4 +142,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		return $output;
 	}
+
+	public function setAddress(): array {
+
+	}
 }

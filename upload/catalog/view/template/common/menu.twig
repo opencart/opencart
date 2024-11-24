@@ -2,8 +2,11 @@
   <div class="container">
     <nav id="menu" class="navbar navbar-expand-lg navbar-light bg-primary">
       <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#narbar-menu"><i class="fa-solid fa-bars"></i></button>
-      <div class="collapse navbar-collapse" id="narbar-menu">
+
+      <button class="navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"><i class="fa-solid fa-bars"></i></button>
+
+      <div id="navbar-menu" class="collapse navbar-collapse">
+
         <ul class="nav navbar-nav">
           {% for category in categories %}
             {% if category.children %}
@@ -18,7 +21,9 @@
                       </ul>
                     {% endfor %}
                   </div>
-                  <a href="{{ category.href }}" class="see-all">{{ text_all }} {{ category.name }}</a>
+                  <ul class="list-unstyled">
+                    <li><a href="{{ category.href }}">{{ text_all }} {{ category.name }}</a></li>
+                  </ul>
                 </div>
               </li>
             {% else %}

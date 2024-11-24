@@ -46,6 +46,7 @@ $_['column_model']               = 'Model';
 $_['column_quantity']            = 'Quantity';
 $_['column_total']               = 'Total';
 $_['column_code']                = 'Code';
+$_['column_description']         = 'Description';
 $_['column_action']              = 'Action';
 
 // Entry

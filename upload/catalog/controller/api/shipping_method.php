@@ -55,7 +55,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				'code'         => $this->request->post['shipping_method']['code'],
 				'cost'         => (float)$this->request->post['shipping_method']['cost'],
 				'tax_class_id' => (int)$this->request->post['shipping_method']['tax_class_id'],
-				'text'         => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method']['cost'], (int)['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				'text'         => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method']['cost'], (int)$this->request->post['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 			];
 
 			$output['success'] = $this->language->get('text_success');

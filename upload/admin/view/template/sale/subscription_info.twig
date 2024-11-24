@@ -4,7 +4,8 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="submit" form="form-subscription" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -66,8 +67,7 @@
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                   {% endfor %}
-                </select>
-                <label for="input-store">{{ entry_store }}</label>
+                </select> <label for="input-store">{{ entry_store }}</label>
               </div>
             </div>
 
@@ -77,8 +77,7 @@
                   {% for language in languages %}
                     <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                   {% endfor %}
-                </select>
-                <label for="input-language">{{ entry_language }}</label>
+                </select> <label for="input-language">{{ entry_language }}</label>
               </div>
             </div>
 
@@ -88,8 +87,7 @@
                   {% for currency in currencies %}
                     <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                   {% endfor %}
-                </select>
-                <label for="input-currency">{{ entry_currency }}</label>
+                </select> <label for="input-currency">{{ entry_currency }}</label>
               </div>
             </div>
           </div>
@@ -107,75 +105,75 @@
               </div>
             </div>
           </div>
-
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>{{ column_product }}</th>
-                <th class="text-end">{{ column_quantity }}</th>
-                <th class="text-end">{{ column_total }}</th>
-                <th class="text-end" style="width: 1px;">{{ column_action }}</th>
-              </tr>
-            </thead>
-            <tbody id="subscription-product">
-              {% set subscription_product_row = 0 %}
-              {% if subscription_products %}
-                {% for subscription_product in subscription_products %}
-                  <tr>
-                    <td><a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
-                      <div id="error-product-{{ subscription_product_row }}-product" class="invalid-feedback mt-0"></div>
-                      <ul class="list-unstyled">
-                        <li>
-                          <small> - {{ text_model }}: {{ subscription_product.model }}</small>
-                        </li>
+          <form id="form-cart">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>{{ column_product }}</th>
+                  <th class="text-end">{{ column_quantity }}</th>
+                  <th class="text-end">{{ column_total }}</th>
+                  <th class="text-end" style="width: 1px;">{{ column_action }}</th>
+                </tr>
+              </thead>
+              <tbody id="subscription-product">
+                {% set subscription_product_row = 0 %}
+                {% if subscription_products %}
+                  {% for subscription_product in subscription_products %}
+                    <tr>
+                      <td><a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
+                        <div id="error-product-{{ subscription_product_row }}-product" class="invalid-feedback mt-0"></div>
+                        <ul class="list-unstyled">
+                          <li>
+                            <small> - {{ text_model }}: {{ subscription_product.model }}</small>
+                          </li>
+                          {% for option in subscription_product.option %}
+                            {% if option.type != 'file' %}
+                              <li>
+                                <small> - {{ option.name }}: {{ option.value }}</small>
+                                <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                              </li>
+                            {% else %}
+                              <li>
+                                <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                                <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                        <input type="hidden" name="product[{{ subscription_product_row }}][product_id]" value="{{ subscription_product.product_id }}"/> <input type="hidden" name="product[{{ subscription_product_row }}][quantity]" value="{{ subscription_product.quantity }}"/>
                         {% for option in subscription_product.option %}
-                          {% if option.type != 'file' %}
-                            <li>
-                              <small> - {{ option.name }}: {{ option.value }}</small>
-                              <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
-                            </li>
-                          {% else %}
-                            <li>
-                              <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                              <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
-                            </li>
+                          {% if option.type == 'select' or option.type == 'radio' %}
+                            <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                          {% endif %}
+                          {% if option.type == 'checkbox' %}
+                            <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                          {% endif %}
+                          {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+                            <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
                           {% endif %}
                         {% endfor %}
-                      </ul>
-                      <input type="hidden" name="product[{{ subscription_product_row }}][product_id]" value="{{ subscription_product.product_id }}"/> <input type="hidden" name="product[{{ subscription_product_row }}][quantity]" value="{{ subscription_product.quantity }}"/>
-                      {% for option in subscription_product.option %}
-                        {% if option.type == 'select' or option.type == 'radio' %}
-                          <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
-                        {% endif %}
-                        {% if option.type == 'checkbox' %}
-                          <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
-                        {% endif %}
-                        {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-                          <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
-                        {% endif %}
-                      {% endfor %}
-                      <input type="hidden" name="product[{{ subscription_product_row }}][subscription_plan_id]" value="{{ subscription_plan_id }}"/>
-                    </td>
-                    <td class="text-end">{{ subscription_product.quantity }}</td>
-                    <td class="text-end">{{ subscription_product.price }}</td>
-                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <input type="hidden" name="product[{{ subscription_product_row }}][subscription_plan_id]" value="{{ subscription_plan_id }}"/>
+                      </td>
+                      <td class="text-end">{{ subscription_product.quantity }}</td>
+                      <td class="text-end">{{ subscription_product.price }}</td>
+                      <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    </tr>
+                    {% set subscription_product_row = subscription_product_row + 1 %}
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="4" class="text-center">{{ text_no_results }}</td>
                   </tr>
-                  {% set subscription_product_row = subscription_product_row + 1 %}
-                {% endfor %}
-              {% else %}
+                {% endif %}
+              </tbody>
+              <tfoot>
                 <tr>
-                  <td colspan="4" class="text-center">{{ text_no_results }}</td>
+                  <td colspan="3"></td>
+                  <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                 </tr>
-              {% endif %}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3"></td>
-                <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
-              </tr>
-            </tfoot>
-          </table>
-
+              </tfoot>
+            </table>
+          </form>
           <div class="row row-cols-2">
 
             <div class="col">
@@ -183,7 +181,7 @@
                 <div class="form-control p-0 border rounded" style="min-height: 64px;">
                   <div class="lead p-2"><strong>{{ text_date_next }}</strong>
                     <br/>
-                    {{ text_date_next }}
+                    {{ date_next_text }}
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-date-next" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -215,27 +213,22 @@
                         {{ payment_company }}
                         <br/>
                       {% endif %}
-
                       {% if payment_address_1 %}
                         {{ payment_address_1 }}
                         <br/>
                       {% endif %}
-
                       {% if payment_address_2 %}
                         {{ payment_address_2 }}
                         <br/>
                       {% endif %}
-
                       {% if payment_city %}
                         {{ payment_city }}
                         <br/>
                       {% endif %}
-
                       {% if payment_postcode %}
                         {{ payment_postcode }}
                         <br/>
                       {% endif %}
-
                       {% if payment_zone %}
                         {{ payment_zone }}
                         <br/>
@@ -418,14 +411,7 @@
             <div id="address">
               {% for address in addresses %}
                 <div id="address-{{ address.address_id }}">
-                  <input type="hidden" name="firstname" value="{{ address.firstname }}" id="input-firstname-{{ address.address_id }}"/>
-                  <input type="hidden" name="lastname" value="{{ address.lastname }}" id="input-lastname-{{ address.address_id }}"/>
-                  <input type="hidden" name="company" value="{{ address.company }}" id="input-company-{{ address.address_id }}"/>
-                  <input type="hidden" name="address_1" value="{{ address.address_1 }}" id="input-address-1-{{ address.address_id }}"/>
-                  <input type="hidden" name="address_2" value="{{ address.address_2 }}" id="input-address-2-{{ address.address_id }}"/>
-                  <input type="hidden" name="city" value="{{ address.city }}" id="input-city-{{ address.address_id }}"/>
-                  <input type="hidden" name="postcode" value="{{ address.postcode }}" id="input-city-{{ address.address_id }}"/>
-                  <input type="hidden" name="zone" value="{{ address.zone }}" id="input-zone-{{ address.address_id }}"/>
+                  <input type="hidden" name="firstname" value="{{ address.firstname }}" id="input-firstname-{{ address.address_id }}"/> <input type="hidden" name="lastname" value="{{ address.lastname }}" id="input-lastname-{{ address.address_id }}"/> <input type="hidden" name="company" value="{{ address.company }}" id="input-company-{{ address.address_id }}"/> <input type="hidden" name="address_1" value="{{ address.address_1 }}" id="input-address-1-{{ address.address_id }}"/> <input type="hidden" name="address_2" value="{{ address.address_2 }}" id="input-address-2-{{ address.address_id }}"/> <input type="hidden" name="city" value="{{ address.city }}" id="input-city-{{ address.address_id }}"/> <input type="hidden" name="postcode" value="{{ address.postcode }}" id="input-city-{{ address.address_id }}"/> <input type="hidden" name="zone" value="{{ address.zone }}" id="input-zone-{{ address.address_id }}"/>
                   <input type="hidden" name="country" value="{{ address.country }}" id="input-country-{{ address.address_id }}"/>
                 </div>
               {% endfor %}
@@ -481,14 +467,12 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label>
-            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
           <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-            <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
           </div>
           <div id="option"></div>
           <div class="text-end">
@@ -532,122 +516,13 @@
       <div class="modal-body">
         <form id="form-payment-address">
           <div class="mb-3">
-
             <select id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
-
             <input type="hidden" name="payment_address_id" value="{{ payment_address_id }}" id="input-payment-address-id">
-            <input type="hidden" name="payment_firstname" value="{{ payment_firstname }}" id="input-payment-firstname"/>
-            <input type="hidden" name="payment_lastname" value="{{ payment_lastname }}" id="input-payment-lastname"/>
-            <input type="hidden" name="payment_company" value="{{ payment_company }}" id="input-payment-company"/>
-            <input type="hidden" name="payment_address_1" value="{{ payment_address_1 }}" id="input-payment-address-1"/>
-            <input type="hidden" name="payment_address_2" value="{{ payment_address_2 }}" id="input-payment-address-2"/>
-            <input type="hidden" name="payment_city" value="{{ payment_city }}" id="input-payment-city"/>
-            <input type="text" name="payment_postcode" value="{{ payment_postcode }}" id="input-payment-postcode"/>
-            <input type="hidden" name="payment_country_id" value="{{ payment_country_id }}" id="input-payment-country">
-            <input type="hidden" name="payment_zone_id" value="{{ payment_zone_id }}" id="input-payment-country">
-
-            {% for custom_field in custom_fields %}
-              {% if custom_field.location == 'address' %}
-
-                {% if custom_field.type == 'select' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="payment_custom_field[{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
-                      <option value="">{{ text_select }}</option>
-                      {% for custom_field_value in custom_field.custom_field_value %}
-                        <option value="{{ custom_field_value.custom_field_value_id }}"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
-                      {% endfor %}
-                    </select>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'radio' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label class="form-label">{{ custom_field.name }}</label>
-                    <div id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
-                      {% for custom_field_value in custom_field.custom_field_value %}
-                        <div class="form-check">
-                          <input type="radio" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'checkbox' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label class="form-label">{{ custom_field.name }}</label>
-                    <div id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
-                      {% for custom_field_value in custom_field.custom_field_value %}
-                        <div class="form-check">
-                          <input type="checkbox" name="payment_custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'text' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'textarea' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="payment_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'file' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label class="form-label">{{ custom_field.name }}</label>
-                    <div class="input-group">
-                      <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-                      <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
-                      <button type="button" data-oc-toggle="download" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}"{% if not payment_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
-                      <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}"{% if not payment_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
-                    </div>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'date' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'time' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-                {% if custom_field.type == 'datetime' %}
-                  <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                    <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                    <input type="datetime-local" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
-                    <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
-                  </div>
-                {% endif %}
-
-              {% endif %}
-            {% endfor %}
-
-
-
           </div>
           <div class="text-end">
             <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
@@ -676,8 +551,6 @@
             </select>
           </div>
           <input type="hidden" name="shipping_address_id" value="{{ shipping_address_id }}" id="input-shipping-address-id">
-
-
           <div class="text-end">
             <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
@@ -698,10 +571,7 @@
         <p>{{ text_shipping }}</p>
         <div id="shipping-methods"></div>
         <form id="form-shipping-method">
-          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/>
-          <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/>
-          <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
-          <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
+          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/> <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/> <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/> <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
           <div class="text-end">
             <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
@@ -722,8 +592,7 @@
         <p>{{ text_payment }}</p>
         <div id="payment-methods"></div>
         <form id="form-payment-method">
-          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/>
-          <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
+          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/> <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
           <div class="text-end">
             <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
           </div>
@@ -1556,11 +1425,6 @@ $('#form-date-next').on('submit', function(e) {
 
     $('#modal-subscription-plan').modal('show');
 });
-
-
-
-
-
 
 
 $('#history').on('click', '.pagination a', function(e) {

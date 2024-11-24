@@ -27,13 +27,9 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2, cs2pr
 
-      - name: Lint
+      - name: Lint PHP Files
         run: |
-          error=0
-          for file in $(find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*'); do
-            php -l -n $file | grep -v "No syntax errors detected" && error=1
-          done
-          if [ $error -eq 1 ]; then
+          if find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*' -exec php -l -n {} + | grep -q "Errors parsing"; then
             echo "Syntax errors were found."
             exit 1
           else
@@ -50,13 +46,13 @@ jobs:
           key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ matrix.php }}-
 
-      - name: Check dependencies
+      - name: Install Dependencies
         run: composer install
 
-      - name: PHPStan
+      - name: Run PHPStan
         run: php tools/phpstan.phar analyze --no-progress
 
-      - name: Code style
+      - name: Check Code Style
         if: matrix.php == '8.3'
         run: |
           php tools/php-cs-fixer.phar fix --dry-run --diff --ansi || true

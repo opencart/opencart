@@ -1348,11 +1348,21 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addOption(int $product_id, array $data): int {
-		if (isset($data['product_option_value'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$data['option_id'] . "', `required` = '" . (int)$data['required'] . "'");
+		if ($data['product_option_id']) {
+			$sql = "INSERT INTO `" . DB_PREFIX . "product_option` SET `product_option_id` = '" . (int)$data['product_option_id'] . "', `product_id` = '" . (int)$product_id . "'";
 		} else {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$data['option_id'] . "', `value` = '" . $this->db->escape($data['value']) . "', `required` = '" . (int)$data['required'] . "'");
+			$sql = "INSERT INTO `" . DB_PREFIX . "product_option` SET `product_id` = '" . (int)$product_id . "'";
 		}
+
+		$sql .= ", `option_id` = '" . (int)$data['option_id'] . "'";
+		
+		if (!isset($data['product_option_value'])) {
+			$sql .= ", `value` = '" . $this->db->escape($data['value']) . "'";
+		}
+
+		$sql .= ", `required` = '" . (int)$data['required'] . "'";
+
+		$this->db->query($sql);
 
 		$product_option_id = $this->db->getLastId();
 

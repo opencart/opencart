@@ -144,6 +144,30 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	public function setAddress(): array {
+		$this->load->language('api/payment_address');
 
+		$output = [];
+
+		if (!isset($this->request->post['payment_address_id'])) {
+			$address_id = (int)$this->request->post['payment_address_id'];
+		} else {
+			$address_id = 0;
+		}
+
+		$this->load->model('account/address');
+
+		$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);
+
+		if (!$address_info) {
+			$output['error'] = $this->language->get('error_address');
+		}
+
+		if (!$output) {
+			$this->session->data['payment_address'] = $address_info;
+
+			$output['success'] = $this->language->get('text_success');
+		}
+
+		return $output;
 	}
 }

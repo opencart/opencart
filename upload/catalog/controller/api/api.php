@@ -350,7 +350,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_method');
 		$this->load->controller('api/affiliate');
 
-		// Let confirm order controller validate extensions
 		$output = $this->load->controller('api/order');
 
 		$output['products'] = $this->load->controller('api/cart.getProducts');

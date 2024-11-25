@@ -807,6 +807,155 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Call
+	 *
+	 * Method to call the storefront API and return a response.
+	 *
+	 * @Example
+	 *
+	 * We create a hash from the data in a similar method to how amazon does things.
+	 *
+	 * $call     = 'order';
+	 * $username = 'API username';
+	 * $key      = 'API Key';
+	 * $domain   = 'www.yourdomain.com';
+	 * $path     = '/';
+	 * $store_id = 0;
+	 * $language = 'en-gb';
+	 * $time     = time();
+	 *
+	 * // Build hash string
+	 * $string  = $call . "\n";
+	 * $string .= $username . "\n";
+	 * $string .= $domain . "\n";
+	 * $string .= $path . "\n";
+	 * $string .= $store_id . "\n";
+	 * $string .= $language . "\n";
+	 * $string .= $currency . "\n";
+	 * $string .= json_encode($_POST) . "\n";
+	 * $string .= $time . "\n";
+	 *
+	 * $signature = base64_encode(hash_hmac('sha1', $string, $key, true));
+	 *
+	 * // Make remote call
+	 * $url  = '&call=' . $call;
+	 * $url  = '&username=' . urlencode($username);
+	 * $url .= '&store_id=' . $store_id;
+	 * $url .= '&language=' . $language;
+	 * $url .= '&currency=' . $currency;
+	 * $url .= '&time=' . $time;
+	 * $url .= '&signature=' . rawurlencode($signature);
+	 *
+	 * $curl = curl_init();
+	 *
+	 * curl_setopt($curl, CURLOPT_URL, 'https://' . $domain . $path . 'index.php?route=api/api' . $url);
+	 * curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	 * curl_setopt($curl, CURLOPT_HEADER, false);
+	 * curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+	 * curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+	 * curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+	 * curl_setopt($curl, CURLOPT_POST, 1);
+	 * curl_setopt($curl, CURLOPT_POSTFIELDS, $_POST);
+	 *
+	 * $response = curl_exec($curl);
+	 *
+	 * $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	 *
+	 * curl_close($curl);
+	 *
+	 * if ($status == 200) {
+	 *      $response_info = json_decode($response, true);
+	 * } else {
+	 *      $response_info = [];
+	 * }
+	 *
+	 * @return void
+	 */
+	public function call(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['call'])) {
+			$call = (string)$this->request->get['call'];
+		} else {
+			$call = '';
+		}
+
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (isset($this->request->get['language'])) {
+			$language = (string)$this->request->get['language'];
+		} else {
+			$language = (string)$this->config->get('config_language');
+		}
+
+		if (isset($this->request->get['currency'])) {
+			$currency = (string)$this->request->get['currency'];
+		} else {
+			$currency = (string)$this->config->get('config_currency');
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('user/api');
+
+		$api_info = $this->model_user_api->getApi((int)$this->config->get('config_api_id'));
+
+		if (!$api_info) {
+			$json['error'] = $this->language->get('error_api');
+		}
+
+		if (!$json) {
+			// 1. Create a store instance using loader class to call controllers, models, views, libraries.
+			$this->load->model('setting/store');
+
+			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
+
+			// Set the store ID.
+			$store->config->set('config_store_id', $store_id);
+
+			$store->session->data['currency'] = $currency;
+
+			// 2. Remove the unneeded keys.
+			$request_data = $this->request->get;
+
+			unset($request_data['user_token']);
+
+			// 3. Add the request GET vars.
+			$store->request->get = $request_data;
+
+			$store->request->get['route'] = 'api/subscription';
+
+			// 4. Add the request POST var
+			$store->request->post = $this->request->post;
+
+			// 5. Call the required API controller.
+			$store->load->controller($store->request->get['route']);
+
+			// 6. Call the required API controller and get the output.
+			$output = $store->response->getOutput();
+
+			// 7. Clean up data by clearing cart.
+			$store->cart->clear();
+
+			// 8. Deleting the current session so we are not creating infinite sessions.
+			$store->session->destroy();
+		} else {
+			$output = json_encode($json);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($output);
+	}
+
+	/**
 	 * Save
 	 *
 	 * @return void
@@ -1126,7 +1275,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 
 	/**
-	 * History
+	 * Logs
 	 *
 	 * @return void
 	 */

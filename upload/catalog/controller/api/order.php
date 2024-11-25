@@ -308,42 +308,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('api/sale/order');
-
-		$output = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (isset($this->request->get['order_id'])) {
-			$selected[] = (int)$this->request->get['order_id'];
-		}
-
-		$this->load->model('checkout/order');
-
-		foreach ($selected as $order_id) {
-			$order_info = $this->model_checkout_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->model_checkout_order->deleteOrder($order_id);
-			}
-		}
-
-		$output['success'] = $this->language->get('text_success');
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($output));
-	}
-
-	/**
 	 * Add History
 	 *
 	 * @return array

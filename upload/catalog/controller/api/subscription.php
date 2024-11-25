@@ -46,6 +46,11 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($output));
 	}
 
+	/**
+	 * Set Customer
+	 *
+	 * @return array
+	 */
 	protected function setCustomer(): array {
 		$this->load->language('api/customer');
 
@@ -79,7 +84,7 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set payment address
+	 * Set Payment Address
 	 *
 	 * @return array
 	 */

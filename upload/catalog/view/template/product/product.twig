@@ -92,7 +92,8 @@
 
                     {% if option.type == 'select' %}
                       <div class="mb-3{% if option.required %} required{% endif %}">
-                        <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
+                        <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+                        <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
                           <option value="">{{ text_select }}</option>
                           {% for option_value in option.product_option_value %}
                             <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}

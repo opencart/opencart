@@ -1156,7 +1156,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('user/api');
@@ -1164,7 +1164,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$api_info = $this->model_user_api->getApi((int)$this->config->get('config_api_id'));
 
 		if (!$api_info) {
-			$json['error']['warning'] = $this->language->get('error_api');
+			$json['error'] = $this->language->get('error_api');
 		}
 
 		if (!$json) {
@@ -1186,7 +1186,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// 3. Add the request GET vars.
 			$store->request->get = $request_data;
 
-			$store->request->get['route'] = 'api/api';
+			$store->request->get['route'] = 'api/order';
 
 			// 4. Add the request POST var
 			$store->request->post = $this->request->post;

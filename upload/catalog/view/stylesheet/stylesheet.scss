@@ -12,36 +12,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #444;
 }
 
-/* Override the bootstrap defaults */
-h1 {
-  font-size: 33px;
-}
-
-h2 {
-  font-size: 27px;
-}
-
-h3 {
-  font-size: 21px;
-}
-
-h4 {
-  font-size: 15px;
-}
-
-h6 {
-  font-size: 10.2px;
-}
-
-a {
-  color: #23a1d1;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
 /* Chrome border line */
 button:focus {
   outline: none !important;
@@ -57,10 +27,6 @@ legend {
 label {
   font-size: 12px;
   font-weight: normal;
-}
-
-.list-unstyled a {
-  text-decoration: none;
 }
 
 .nav-tabs {
@@ -172,7 +138,6 @@ div.required .col-form-label:before, div.required .form-label:before {
   .btn-link {
     color: #888;
     text-shadow: 0 1px 0 #FFF;
-    text-decoration: none;
 
     &:hover {
       color: #444;
@@ -182,7 +147,6 @@ div.required .col-form-label:before, div.required .form-label:before {
 
 #top a {
   font-size: 1.1em;
-  text-decoration: none;
 }
 
 
@@ -245,13 +209,10 @@ div.required .col-form-label:before, div.required .form-label:before {
 
 /* menu */
 #menu {
-  background-color: #229ac8;
-  background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-  background-repeat: repeat-x;
-  border: 1px solid #1f90bb;
-  border-color: #1f90bb #1f90bb #145e7a;
+  background-color: var(--bs-btn-bg);
+  border: 1px solid var(--bs-btn-border-color);
+  border-radius: var(--bs-border-radius);
   min-height: 40px;
-  border-radius: 4px;
 
   &.navbar {
     padding: 0 1rem;
@@ -267,6 +228,7 @@ div.required .col-form-label:before, div.required .form-label:before {
 
   .dropdown-inner {
     display: table;
+    border-bottom: 1px solid #ddd;
 
     ul {
       display: table-cell;
@@ -304,7 +266,6 @@ div.required .col-form-label:before, div.required .form-label:before {
 
     &:hover,
     &:focus {
-      text-decoration: none;
       color: #ffffff;
       background-color: #229ac8;
       background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
@@ -485,9 +446,6 @@ footer {
       height: 26px;
       border-right: 1px solid #DDD;
       border-bottom: 1px solid #DDD;
-      -webkit-transform: rotate(-45deg);
-      -moz-transform: rotate(-45deg);
-      -o-transform: rotate(-45deg);
       transform: rotate(-45deg);
     }
 

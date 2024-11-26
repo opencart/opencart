@@ -742,7 +742,10 @@
 
                     <fieldset id="option-row-{{ option_row }}">
                       <legend>{{ product_option.name }}</legend>
-                      <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
 
                       <div class="row align-items-center">
                         <div class="col-11">
@@ -815,7 +818,8 @@
                                   {% for product_option_value in product_option.product_option_value %}
                                     <tr id="option-value-row-{{ option_value_row }}">
                                       <td>{{ product_option_value.name }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
                                       <td class="text-end">{{ product_option_value.quantity }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}"/></td>
                                       <td>{% if product_option_value.subtract %}
                                           {{ text_yes }}
@@ -824,11 +828,14 @@
                                         {% endif %}
                                         <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="{{ product_option_value.subtract }}"/></td>
                                       <td class="text-end">{{ product_option_value.price_prefix }}{{ product_option_value.price }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
                                       <td class="text-end">{{ product_option_value.points_prefix }}{{ product_option_value.points }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
                                       <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
                                       <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                                     </tr>
                                     {% set option_value_row = option_value_row + 1 %}

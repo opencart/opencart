@@ -20,21 +20,33 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($products as $key => $product) {
-			$product_info = $this->model_catalog_product->getProduct((int)$product['product_id']);
+			if (isset($product['product_id'])) {
+				$product_id = (int)$product['product_id'];
+			} else {
+				$product_id = 0;
+			}
+
+			if (isset($product['quantity'])) {
+				$quantity = (int)$product['quantity'];
+			} else {
+				$quantity = 0;
+			}
+
+			if (isset($product['option'])) {
+				$option = array_filter((array)$product['option']);
+			} else {
+				$option = [];
+			}
+
+			if (isset($product['subscription_plan_id'])) {
+				$subscription_plan_id = (int)$product['subscription_plan_id'];
+			} else {
+				$subscription_plan_id = 0;
+			}
+
+			$product_info = $this->model_catalog_product->getProduct($product_id);
 
 			if ($product_info) {
-				if (isset($product['option'])) {
-					$option = array_filter((array)$product['option']);
-				} else {
-					$option = [];
-				}
-
-				if (isset($product['subscription_plan_id'])) {
-					$subscription_plan_id = (int)$product['subscription_plan_id'];
-				} else {
-					$subscription_plan_id = 0;
-				}
-
 				// Merge variant code with options
 				foreach ($product_info['variant'] as $option_id => $value) {
 					$option[$option_id] = $value;
@@ -42,7 +54,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				// Validate that have been sent are part of the product
 				foreach ($option as $product_option_id => $value) {
-					$product_option_info = $this->model_catalog_product->getOption($product['product_id'], $product_option_id);
+					$product_option_info = $this->model_catalog_product->getOption($product_id, $product_option_id);
 
 					if ($product_option_info) {
 						if ($product_option_info['type'] == 'select' || $product_option_info['type'] == 'radio' || $product_option_info['type'] == 'checkbox') {
@@ -53,7 +65,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 							}
 
 							foreach ($product_option_values as $product_option_value_id) {
-								$product_option_value_info = $this->model_catalog_product->getOptionValue($product['product_id'], $product_option_value_id);
+								$product_option_value_info = $this->model_catalog_product->getOptionValue($product_id, $product_option_value_id);
 
 								if (!$product_option_value_info) {
 									$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option');
@@ -68,7 +80,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				// Validate required options
-				$product_options = $this->model_catalog_product->getOptions($product['product_id']);
+				$product_options = $this->model_catalog_product->getOptions($product_id);
 
 				foreach ($product_options as $product_option) {
 					if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
@@ -103,13 +115,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 			} else {
 				$output['error']['product_' . $key . '_product'] = $this->language->get('error_product');
 			}
+
+			if (!$output) {
+				$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
+			}
 		}
 
 		if (!$output) {
-			foreach ($products as $product) {
-				$this->cart->add($product['product_id'], (int)$product['quantity'], array_filter((array)$product['option']), $product['subscription_plan_id']);
-			}
-
 			$output['success'] = $this->language->get('text_success');
 		} else {
 			$output['error']['warning'] = $this->language->get('error_warning');
@@ -187,6 +199,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 							if (!$product_option_value_info) {
 								$output['error']['option_' . $product_option_id] = $this->language->get('error_option');
+
+								echo $product_option_id;
+
 							} elseif ($product_option_value_info['subtract'] && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $quantity))) {
 								$output['error']['option_' . $product_option_id] = $this->language->get('error_option_stock');
 							}

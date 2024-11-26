@@ -311,8 +311,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/cart.addProduct');
 
-		//$this->load->controller('api/shipping_method');
-		//$this->load->controller('api/payment_method');
+		$this->load->controller('api/shipping_method');
+		$this->load->controller('api/payment_method');
 
 		$this->load->model('setting/extension');
 

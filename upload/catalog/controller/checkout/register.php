@@ -547,7 +547,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						$country = $shipping_country_info['name'];
 						$iso_code_2 = $shipping_country_info['iso_code_2'];
 						$iso_code_3 = $shipping_country_info['iso_code_3'];
-						$address_format_id = $shipping_country_info['address_format'];
+						$address_format_id = $shipping_country_info['address_format_id'];
 					} else {
 						$country = '';
 						$iso_code_2 = '';

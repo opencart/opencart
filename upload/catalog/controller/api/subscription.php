@@ -1,18 +1,20 @@
 <?php
-namespace Opencart\catalog\controller\api;
+namespace Opencart\Catalog\Controller\Api;
 /**
- * Class Api
+ * Class Subscription
+ *
+ * Subscription API
  *
  * @package Opencart\Catalog\Controller\Api
  */
-class Api extends \Opencart\System\Engine\Controller {
+class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('api/api');
+		$this->load->language('api/subscription');
 
 		if (isset($this->request->get['call'])) {
 			$call = $this->request->get['call'];
@@ -272,6 +274,39 @@ class Api extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	protected function addHistory(): array {
-		return $this->load->controller('api/subscription.addHistory');
+		$this->load->language('api/order');
+
+		$output = [];
+
+		// Add keys for missing post vars
+		$keys = [
+			'order_id',
+			'order_status_id',
+			'comment',
+			'notify',
+			'override'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder((int)$this->request->post['order_id']);
+
+		if (!$order_info) {
+			$output['error'] = $this->language->get('error_order');
+		}
+
+		if (!$output) {
+			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
+
+			$output['success'] = $this->language->get('text_success');
+		}
+
+		return $output;
 	}
 }

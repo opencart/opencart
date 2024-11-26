@@ -1026,11 +1026,6 @@ function oc_db_schema() {
 				'default' => 0
 			],
 			[
-				'name'    => 'api_id',
-				'type'    => 'int(11)',
-				'default' => 0
-			],
-			[
 				'name'    => 'customer_id',
 				'type'    => 'int(11)',
 				'default' => 0
@@ -1077,11 +1072,6 @@ function oc_db_schema() {
 				'key'   => 'store_id',
 				'table' => 'store',
 				'field' => 'store_id'
-			],
-			[
-				'key'   => 'api_id',
-				'table' => 'api',
-				'field' => 'api_id'
 			],
 			[
 				'key'   => 'customer_id',

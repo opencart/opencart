@@ -872,7 +872,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function call(): void {
-		$this->load->language('sale/order');
+		$this->load->language('sale/subscription');
 
 		$json = [];
 

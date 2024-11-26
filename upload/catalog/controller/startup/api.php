@@ -30,6 +30,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$status = true;
 
 			$required = [
+				'route',
 				'call',
 				'username',
 				'store_id',
@@ -78,7 +79,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($status) {
-				$string  = (string)$this->request->get['call'] . "\n";
+				$string  = (string)$this->request->get['route'] . "\n";
+				$string .= (string)$this->request->get['call'] . "\n";
 				$string .= $api_info['username'] . "\n";
 				$string .= (string)$this->request->server['HTTP_HOST'] . "\n";
 				$string .= (!empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/') . "\n";

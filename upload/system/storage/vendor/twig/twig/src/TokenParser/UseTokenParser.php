@@ -44,26 +44,26 @@ final class UseTokenParser extends AbstractTokenParser
         $targets = [];
         if ($stream->nextIf('with')) {
             while (true) {
-                $name = $stream->expect(/* Token::NAME_TYPE */ 5)->getValue();
+                $name = $stream->expect(Token::NAME_TYPE)->getValue();
 
                 $alias = $name;
                 if ($stream->nextIf('as')) {
-                    $alias = $stream->expect(/* Token::NAME_TYPE */ 5)->getValue();
+                    $alias = $stream->expect(Token::NAME_TYPE)->getValue();
                 }
 
                 $targets[$name] = new ConstantExpression($alias, -1);
 
-                if (!$stream->nextIf(/* Token::PUNCTUATION_TYPE */ 9, ',')) {
+                if (!$stream->nextIf(Token::PUNCTUATION_TYPE, ',')) {
                     break;
                 }
             }
         }
 
-        $stream->expect(/* Token::BLOCK_END_TYPE */ 3);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         $this->parser->addTrait(new Node(['template' => $template, 'targets' => new Node($targets)]));
 
-        return new Node();
+        return new Node([], [], $token->getLine());
     }
 
     public function getTag(): string

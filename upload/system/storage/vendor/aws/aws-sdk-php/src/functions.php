@@ -603,3 +603,23 @@ function strip_fips_pseudo_regions($region)
     return str_replace(['fips-', '-fips'], ['', ''], $region);
 }
 
+/**
+ * Checks if an array is associative
+ *
+ * @param array $array
+ *
+ * @return bool
+ */
+function is_associative(array $array): bool
+{
+    if (empty($array)) {
+        return false;
+    }
+
+    if (function_exists('array_is_list')) {
+        return !array_is_list($array);
+    }
+
+    return array_keys($array) !== range(0, count($array) - 1);
+}
+

@@ -1,0 +1,8 @@
+--TEST--
+Twig does not confuse strings with integers in getAttribute()
+--TEMPLATE--
+{{ mapping['2e2'] }}
+--DATA--
+return ['mapping' => ['2e2' => 'works']]
+--EXPECT--
+works

@@ -1,5 +1,36 @@
+# 3.12.0 (2024-08-29)
+
+ * Deprecate the fact that the `extends` and `use` tags are always allowed in a sandboxed template.
+   This behavior will change in 4.0 where these tags will need to be explicitly allowed like any other tag.
+ * Deprecate the "tag" constructor argument of the "Twig\Node\Node" class as the tag is now automatically set by the Parser when needed
+ * Fix precedence of two-word tests when the first word is a valid test
+ * Deprecate the `spaceless` filter
+ * Deprecate some internal methods from `Parser`: `getBlockStack()`, `hasBlock()`, `getBlock()`, `hasMacro()`, `hasTraits()`, `getParent()`
+ * Deprecate passing `null` to `Twig\Parser::setParent()`
+ * Update `Node::__toString()` to include the node tag if set
+ * Add support for integers in methods of `Twig\Node\Node` that take a Node name
+ * Deprecate not passing a `BodyNode` instance as the body of a `ModuleNode` or `MacroNode` constructor
+ * Deprecate returning "null" from "TokenParserInterface::parse()".
+ * Deprecate `OptimizerNodeVisitor::OPTIMIZE_TEXT_NODES`
+ * Fix performance regression when `use_yield` is `false` (which is the default)
+ * Improve compatibility when `use_yield` is `false` (as extensions still using `echo` will work as is)
+ * Accept colons (`:`) in addition to equals (`=`) to separate argument names and values in named arguments
+ * Add the `html_cva` function (in the HTML extra package)
+ * Add support for named arguments to the `block` and `attribute` functions
+ * Throw a SyntaxError exception at compile time when a Twig callable has not the minimum number of required arguments
+ * Add a `CallableArgumentsExtractor` class
+ * Deprecate passing a name to `FunctionExpression`, `FilterExpression`, and `TestExpression`;
+   pass a `TwigFunction`, `TwigFilter`, or `TestFilter` instead
+ * Deprecate all Twig callable attributes on `FunctionExpression`, `FilterExpression`, and `TestExpression`
+ * Deprecate the `filter` node of `FilterExpression`
+ * Add the notion of Twig callables (functions, filters, and tests)
+ * Bump minimum PHP version to 8.0
+ * Fix integration tests when a test has more than one data/expect section and deprecations
+ * Add the `enum_cases` function
+
 # 3.11.0 (2024-08-08)
 
+ * Deprecate `OptimizerNodeVisitor::OPTIMIZE_RAW_FILTER`
  * Add `Twig\Cache\ChainCache` and `Twig\Cache\ReadOnlyFilesystemCache`
  * Add the possibility to deprecate attributes and nodes on `Node`
  * Add the possibility to add a package and a version to the `deprecated` tag

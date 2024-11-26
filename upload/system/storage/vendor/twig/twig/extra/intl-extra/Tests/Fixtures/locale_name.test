@@ -1,0 +1,20 @@
+--TEST--
+"locale_name" filter
+--TEMPLATE--
+{{ 'UNKNOWN'|locale_name }}
+{{ null|locale_name }}
+{{ 'de'|locale_name }}
+{{ 'fr'|locale_name }}
+{{ 'de'|locale_name('fr') }}
+{{ 'fr'|locale_name('fr_FR') }}
+{{ 'fr_CA'|locale_name('fr_FR') }}
+--DATA--
+return [];
+--EXPECT--
+UNKNOWN
+
+German
+French
+allemand
+français
+français (Canada)

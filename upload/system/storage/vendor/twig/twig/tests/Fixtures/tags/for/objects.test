@@ -1,0 +1,45 @@
+--TEST--
+"for" tag iterates over iterable objects
+--TEMPLATE--
+{% for item in items %}
+  * {{ item }}
+  * {{ loop.index }}/{{ loop.index0 }}
+  * {{ loop.first }}
+
+{% endfor %}
+
+{% for key, value in items %}
+  * {{ key }}/{{ value }}
+{% endfor %}
+
+{% for key in items|keys %}
+  * {{ key }}
+{% endfor %}
+--DATA--
+class ItemsIterator implements \Iterator
+{
+  protected $values = ['foo' => 'bar', 'bar' => 'foo'];
+  #[\ReturnTypeWillChange]
+  public function current() { return current($this->values); }
+  #[\ReturnTypeWillChange]
+  public function key() { return key($this->values); }
+  public function next(): void { next($this->values); }
+  public function rewind(): void { reset($this->values); }
+  public function valid(): bool { return false !== current($this->values); }
+}
+return ['items' => new ItemsIterator()]
+--EXPECT--
+  * bar
+  * 1/0
+  * 1
+
+  * foo
+  * 2/1
+  * 
+
+
+  * foo/bar
+  * bar/foo
+
+  * foo
+  * bar

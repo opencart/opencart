@@ -289,6 +289,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * Add Product
 	 *
 	 * @param int   $subscription_id
+	 * @param array $data
 	 * @param array $product
 	 *
 	 * @return void

@@ -332,7 +332,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
+		$data['stores'] += $this->model_setting_store->getStores();
 
 		if (isset($this->request->get['category_id'])) {
 			$data['category_store'] = $this->model_catalog_category->getStores($this->request->get['category_id']);

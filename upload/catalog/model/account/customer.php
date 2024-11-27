@@ -185,7 +185,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT `customer_id`, `firstname`, `lastname`, `email` FROM `" . DB_PREFIX . "customer` WHERE `code` = '" . $this->db->escape($code) . "' AND `code` != ''");
 
 		if ($query->num_rows) {
-			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row ;
+			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
 		} else {
 			return [];
 		}

@@ -108,8 +108,9 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-     * Get Subscription Products
+	 * Get Subscription Products
 	 *
+	 * @param int $subscription_id
 	 * @param int $address_id
 	 *
 	 * @return int

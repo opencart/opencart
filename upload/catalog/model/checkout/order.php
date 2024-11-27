@@ -607,7 +607,7 @@ class Order extends \Opencart\System\Engine\Model {
 								'option'      => $option_data,
 								'trial_price' => $order_subscription_info['trial_price'],
 								'price'       => $order_subscription_info['price']
-	                        ] + $order_product;
+							] + $order_product;
 
 							$subscription_id = $this->model_checkout_subscription->addSubscription($order_info + $order_subscription_info + ['subscription_product' => [$subscription_product_data]]);
 						}

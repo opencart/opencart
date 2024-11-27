@@ -9,6 +9,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order
 	 *
+	 * @param int $order_id
 	 * @param int $return_id
 	 *
 	 * @return void
@@ -351,6 +352,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
+
 	/**
 	 * Get Total Orders By Store ID
 	 *
@@ -441,7 +443,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Product
 	 *
-	 * @param int $order_id
+	 * @param int   $order_id
+	 * @param mixed $order_product_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

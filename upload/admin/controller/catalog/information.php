@@ -237,7 +237,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
+		$data['stores'] += $this->model_setting_store->getStores();
 
 		if (isset($this->request->get['information_id'])) {
 			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);

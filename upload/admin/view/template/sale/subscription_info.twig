@@ -18,7 +18,6 @@
     <div class="card mb-3">
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-subscription">
 
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
 
@@ -116,12 +115,14 @@
                 </tr>
               </thead>
               <tbody id="subscription-product">
+
                 {% set subscription_product_row = 0 %}
                 {% if subscription_products %}
                   {% for subscription_product in subscription_products %}
                     <tr>
                       <td><a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
                         <div id="error-product-{{ subscription_product_row }}-product" class="invalid-feedback mt-0"></div>
+
                         <ul class="list-unstyled">
                           <li>
                             <small> - {{ text_model }}: {{ subscription_product.model }}</small>
@@ -140,26 +141,37 @@
                             {% endif %}
                           {% endfor %}
                         </ul>
-                        <input type="hidden" name="product[{{ subscription_product_row }}][product_id]" value="{{ subscription_product.product_id }}"/> <input type="hidden" name="product[{{ subscription_product_row }}][quantity]" value="{{ subscription_product.quantity }}"/>
+
+                        <input type="hidden" name="product[{{ subscription_product_row }}][product_id]" value="{{ subscription_product.product_id }}"/>
+                        <input type="hidden" name="product[{{ subscription_product_row }}][quantity]" value="{{ subscription_product.quantity }}"/>
+
                         {% for option in subscription_product.option %}
+
                           {% if option.type == 'select' or option.type == 'radio' %}
                             <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
                           {% endif %}
+
                           {% if option.type == 'checkbox' %}
                             <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
                           {% endif %}
+
                           {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                             <input type="hidden" name="product[{{ subscription_product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
                           {% endif %}
+
                         {% endfor %}
+
                         <input type="hidden" name="product[{{ subscription_product_row }}][subscription_plan_id]" value="{{ subscription_plan_id }}"/>
+
                       </td>
                       <td class="text-end">{{ subscription_product.quantity }}</td>
                       <td class="text-end">{{ subscription_product.price }}</td>
                       <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                     </tr>
                     {% set subscription_product_row = subscription_product_row + 1 %}
+
                   {% endfor %}
+
                 {% else %}
                   <tr>
                     <td colspan="4" class="text-center">{{ text_no_results }}</td>
@@ -318,7 +330,7 @@
           </div>
 
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
-        </form>
+
       </div>
     </div>
 
@@ -467,12 +479,14 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label>
+            <input type="text" value="" id="input-product" placeholder="{{ entry_product }}" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
           <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
+            <input type="text" name="quantity" value="1" id="input-quantity" placeholder="{{ entry_quantity }}" class="form-control"/>
           </div>
           <div id="option"></div>
           <div class="text-end">
@@ -914,6 +928,10 @@ var subscription_product_row = {{ subscription_product_row }};
 
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
+
+    console.log($('#form-cart').html());
+    console.log($('#form-cart').serialize());
+    //console.log($('#form-product-add, #form-subscription-plan, #form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method').serialize());
 
     $.ajax({
         url: 'index.php?route=sale/subscription.call&user_token={{ user_token }}&call=product_add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),

@@ -102,7 +102,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				// Minimum quantity
-				if ($this->request->get['call'] == 'order' && ($product_info['minimum'] > $product_total)) {
+				if ($this->request->get['call'] == 'confirm' && ($product_info['minimum'] > $product_total)) {
 					$output['error']['product_' . $key . '_product'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
 				}
 

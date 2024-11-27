@@ -54,7 +54,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	protected function setCustomer(): array {
-		$this->load->language('api/customer');
+		$this->load->language('api/order');
 
 		$output = [];
 
@@ -91,7 +91,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	protected function setPaymentAddress(): array {
-		$this->load->language('api/payment_address');
+		$this->load->language('api/order');
 
 		$output = [];
 
@@ -106,7 +106,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);
 
 		if (!$address_info) {
-			$output['error'] = $this->language->get('error_address');
+			$output['error'] = $this->language->get('error_payment_address');
 		}
 
 		if (!$output) {
@@ -124,7 +124,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	protected function setShippingAddress(): array {
-		$this->load->language('api/shipping_address');
+		$this->load->language('api/order');
 
 		$output = [];
 
@@ -139,7 +139,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);
 
 		if (!$address_info) {
-			$output['error'] = $this->language->get('error_address');
+			$output['error'] = $this->language->get('error_shipping_address');
 		}
 
 		if (!$output) {
@@ -256,7 +256,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (isset($output['error'])) {
 			return $output;
 		}
-
+		
 		$this->setPaymentAddress();
 		$this->setShippingAddress();
 
@@ -264,6 +264,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$output['products'] = $this->load->controller('api/cart.getProducts');
 		$output['shipping_required'] = $this->cart->hasShipping();
+
+		//print_r($this->request->post);
 
 		return $output;
 	}

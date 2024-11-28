@@ -518,15 +518,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				if ($product['subscription']) {
 					$subscription_data = [
-							'trial_tax' => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
-							'tax'       => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id'])
-						] + $product['subscription'];
+						'trial_tax' => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
+						'tax'       => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id'])
+					] + $product['subscription'];
 				}
 
 				$order_data['products'][] = [
-						'subscription' => $subscription_data,
-						'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id'])
-					] + $product;
+					'subscription' => $subscription_data,
+					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id'])
+				] + $product;
 
 				$points += $product['reward'];
 			}

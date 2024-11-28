@@ -10,11 +10,9 @@ $_['text_edit']                  = 'Subscription (#%s)';
 $_['text_filter']                = 'Filter';
 $_['text_date_added']            = 'Date Added';
 $_['text_order']                 = 'Order ID';
-$_['text_customer']              = 'Customer';
 $_['text_product_add']           = 'Add Product';
 $_['text_model'] 			     = 'Model';
 $_['text_subscription']          = 'Subscription';
-$_['text_subscription_plan']     = 'Subscription Plan';
 $_['text_date_next']             = 'Date Next';
 $_['text_remaining']             = 'Remaining';
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
@@ -26,12 +24,11 @@ $_['text_week']                  = 'Week';
 $_['text_semi_month']            = 'Half-Month';
 $_['text_month']                 = 'Month';
 $_['text_year']                  = 'Year';
-$_['text_payment_address']       = 'Payment Address';
 $_['text_payment_method']        = 'Payment Method';
-$_['text_shipping_address']      = 'Shipping Address';
 $_['text_shipping_method']       = 'Shipping Method';
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
+$_['text_log']                   = 'Logs';
 
 // Column
 $_['column_subscription_id']     = 'Subscription ID';
@@ -56,6 +53,7 @@ $_['entry_customer']             = 'Customer';
 $_['entry_store']                = 'Store';
 $_['entry_language']             = 'Language';
 $_['entry_currency']             = 'Currency';
+$_['entry_subscription_plan']    = 'Subscription Plan';
 $_['entry_date_next']            = 'Date Next';
 $_['entry_comment']              = 'Comment';
 $_['entry_notify']               = 'Notify Customer';
@@ -65,6 +63,8 @@ $_['entry_subscription_status']  = 'Subscription Status';
 $_['entry_product']              = 'Choose Product';
 $_['entry_option']               = 'Choose Option(s)';
 $_['entry_quantity']             = 'Quantity';
+$_['entry_payment_address']      = 'Payment Address';
+$_['entry_shipping_address']     = 'Shipping Address';
 
 // Tab
 $_['tab_order']                  = 'Orders';

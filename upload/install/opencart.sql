@@ -2306,7 +2306,7 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 INSERT INTO `oc_subscription_plan` (`subscription_plan_id`, `trial_frequency`, `trial_duration`, `trial_cycle`, `trial_status`, `frequency`, `duration`, `cycle`, `status`, `sort_order`) VALUES
 (1, 'day', 10, 1, 1, 'day', 0, 1, 1, 0),
 (2, 'week', 11, 2, 1, 'month', 10, 1, 1, 0),
-(3, 'day', 0, 1, 0, 'day', 0, 1, 1, 0);
+(3, 'month', 0, 1, 0, 'day', 0, 1, 1, 0);
 
 -----------------------------------------------------------
 
@@ -2315,9 +2315,9 @@ INSERT INTO `oc_subscription_plan` (`subscription_plan_id`, `trial_frequency`, `
 --
 
 INSERT INTO `oc_subscription_plan_description` (`subscription_plan_id`, `language_id`, `name`) VALUES
-(1, 1, 'Subscription Plan 1'),
-(2, 1, 'Subscription Plan 2'),
-(3, 1, 'Subscription Plan 3');
+(1, 1, 'Daily'),
+(2, 1, 'Weekly'),
+(3, 1, 'Monthly');
 
 -----------------------------------------------------------
 

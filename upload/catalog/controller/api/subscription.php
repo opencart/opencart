@@ -36,6 +36,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			case 'payment_methods':
 				$output = $this->getPaymentMethods();
 				break;
+			case 'payment_methods':
+				$output = $this->getPaymentMethods();
+				break;
+			case 'confirm':
+				$output = $this->confirm();
+				break;
 			case 'history_add':
 				$output = $this->addHistory();
 				break;
@@ -59,8 +65,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$output = [];
 
 		// Customer
-		if ($this->request->post['customer_id']) {
-			$customer_id = $this->request->post['customer_id'];
+		if (isset($this->request->post['customer_id'])) {
+			$customer_id = (int)$this->request->post['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -95,7 +101,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		if (!isset($this->request->post['payment_address_id'])) {
+		if (isset($this->request->post['payment_address_id'])) {
 			$address_id = (int)$this->request->post['payment_address_id'];
 		} else {
 			$address_id = 0;
@@ -128,7 +134,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		if (!isset($this->request->post['shipping_address_id'])) {
+		if (isset($this->request->post['shipping_address_id'])) {
 			$address_id = (int)$this->request->post['shipping_address_id'];
 		} else {
 			$address_id = 0;
@@ -265,28 +271,147 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$output['products'] = $this->load->controller('api/cart.getProducts');
 		$output['shipping_required'] = $this->cart->hasShipping();
 
-		//print_r($this->request->post);
+		return $output;
+	}
+
+	/**
+	 * Confirm
+	 *
+	 * @return array
+	 */
+	protected function confirm() {
+		$this->load->language('api/order');
+
+		$output = [];
+
+		$output = $this->load->controller('api/cart');
+
+		if (isset($output['error'])) {
+			return $output;
+		}
+
+		$this->load->language('sale/subscription');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Customer
+		$this->load->model('customer/customer');
+
+		$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
+
+		if (!$customer_info) {
+			$json['error']['customer'] = $this->language->get('error_customer');
+		}
+
+		// Store
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
+
+		if (!$store_info) {
+			$json['error']['store'] = $this->language->get('error_store');
+		}
+
+		// Product
+		$this->load->model('catalog/product');
+
+		$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
+
+		if (!$product_info) {
+			$json['error']['product'] = $this->language->get('error_product');
+		}
+
+		// Subscription Plan
+		$this->load->model('catalog/subscription_plan');
+
+		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($this->request->post['subscription_plan_id']);
+
+		if (!$subscription_plan_info) {
+			$json['error']['subscription_plan'] = $this->language->get('error_subscription_plan');
+		}
+
+		// Payment Address
+		$address_info = $this->model_customer_customer->getAddress($this->request->post['payment_address_id']);
+
+		if ($this->config->get('config_checkout_payment_address') && !$address_info) {
+			$json['error']['payment_address'] = $this->language->get('error_payment_address');
+		}
+
+		// Shipping Address
+		$address_info = $this->model_customer_customer->getAddress($this->request->post['shipping_address_id']);
+
+		if (!$address_info) {
+			$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
+		}
+
+
+		// 5. Validate payment Method
+		if (empty($this->request->post['payment_method_name'])) {
+			$json['error'] = $this->language->get('error_name');
+		}
+
+		if (empty($this->request->post['payment_method_code'])) {
+			$json['error'] = $this->language->get('error_code');
+		}
+
+		/*
+		$this->session->data['payment_method'] = [
+			'name' => $this->request->post['payment_method_name'],
+			'code' => $this->request->post['payment_method_code']
+		];
+		*/
+
+		$this->load->model('sale/subscription');
+
+		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
+
+		if ($subscription_info) {
+			$filter_data = [
+				'filter_customer_id'         => $subscription_info['customer_id'],
+				'filter_customer_payment_id' => $this->request->post['customer_payment_id']
+			];
+
+			$payment_method_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+
+			if (!$payment_method_info) {
+				$json['error'] = $this->language->get('error_payment_method');
+			}
+		} else {
+			$json['error'] = $this->language->get('error_subscription');
+		}
+
+		if (!$json) {
+			$this->model_sale_subscription->editSubscription($subscription_id, $this->request->post['subscription_plan_id']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 
 		return $output;
 	}
 
 	/**
-	 * Add Order history
+	 * Add order history
 	 *
 	 * @return array
 	 */
 	protected function addHistory(): array {
-		$this->load->language('api/order');
+		$this->load->language('api/subscription');
 
 		$output = [];
 
 		// Add keys for missing post vars
 		$keys = [
-			'order_id',
-			'order_status_id',
+			'subscription_id',
+			'subscription_status_id',
 			'comment',
-			'notify',
-			'override'
+			'notify'
 		];
 
 		foreach ($keys as $key) {
@@ -295,16 +420,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('checkout/order');
+		$this->load->model('checkout/subscription');
 
-		$order_info = $this->model_checkout_order->getOrder((int)$this->request->post['order_id']);
+		$subscription_info = $this->model_checkout_subscription->getSubscription((int)$this->request->post['subscription_id']);
 
-		if (!$order_info) {
-			$output['error'] = $this->language->get('error_order');
+		if (!$subscription_info) {
+			$output['error'] = $this->language->get('error_subscription');
 		}
 
 		if (!$output) {
-			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
+			$this->model_checkout_order->addHistory((int)$this->request->post['subscription_id'], (int)$this->request->post['subscription_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify']);
 
 			$output['success'] = $this->language->get('text_success');
 		}

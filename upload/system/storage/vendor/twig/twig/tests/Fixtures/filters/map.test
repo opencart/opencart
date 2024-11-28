@@ -1,0 +1,52 @@
+--TEST--
+"map" filter
+--TEMPLATE--
+{% set offset = 3 %}
+
+{% for k, v in [1, 2]|map((item) => item + 2 ) -%}
+    {{ k }} = {{ v }}
+{% endfor %}
+
+{% for k, v in {a: 1, b: 2}|map((item) => item ~ "*" ) -%}
+    {{ k }} = {{ v }}
+{% endfor %}
+
+{% for k, v in {a: 1, b: 2}|map((item, k) => item ~ "*" ~ k ) -%}
+    {{ k }} = {{ v }}
+{% endfor %}
+
+{% for k, v in [1, 2]|map(item => item + 2 ) -%}
+    {{ k }} = {{ v }}
+{% endfor %}
+
+{% for k, v in it|map(item => item + 2 ) -%}
+    {{ k }} = {{ v }}
+{% endfor %}
+
+{% macro local_lower(string) %}
+    {{- string|lower }}
+{% endmacro %}
+{{ ['A']|map(val => _self.local_lower(val))|join }}
+
+{%- from _self import local_lower as renamed_lower %}
+{{ ['A']|map(val => renamed_lower(val))|join }}
+--DATA--
+return ['it' => new \ArrayIterator([1, 2])]
+--EXPECT--
+0 = 3
+1 = 4
+
+a = 1*
+b = 2*
+
+a = 1*a
+b = 2*b
+
+0 = 3
+1 = 4
+
+0 = 3
+1 = 4
+
+a
+a

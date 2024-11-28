@@ -92,7 +92,7 @@ class Parser
             }
 
             if (!$e->getTemplateLine()) {
-                $e->setTemplateLine($this->stream->getCurrent()->getLine());
+                $e->setTemplateLine($this->getCurrentToken()->getLine());
             }
 
             throw $e;
@@ -121,23 +121,23 @@ class Parser
         $rv = [];
         while (!$this->stream->isEOF()) {
             switch ($this->getCurrentToken()->getType()) {
-                case /* Token::TEXT_TYPE */ 0:
+                case Token::TEXT_TYPE:
                     $token = $this->stream->next();
                     $rv[] = new TextNode($token->getValue(), $token->getLine());
                     break;
 
-                case /* Token::VAR_START_TYPE */ 2:
+                case Token::VAR_START_TYPE:
                     $token = $this->stream->next();
                     $expr = $this->expressionParser->parseExpression();
-                    $this->stream->expect(/* Token::VAR_END_TYPE */ 4);
+                    $this->stream->expect(Token::VAR_END_TYPE);
                     $rv[] = new PrintNode($expr, $token->getLine());
                     break;
 
-                case /* Token::BLOCK_START_TYPE */ 1:
+                case Token::BLOCK_START_TYPE:
                     $this->stream->next();
                     $token = $this->getCurrentToken();
 
-                    if (/* Token::NAME_TYPE */ 5 !== $token->getType()) {
+                    if (Token::NAME_TYPE !== $token->getType()) {
                         throw new SyntaxError('A block must start with a tag name.', $token->getLine(), $this->stream->getSourceContext());
                     }
 
@@ -157,7 +157,7 @@ class Parser
                         if (null !== $test) {
                             $e = new SyntaxError(\sprintf('Unexpected "%s" tag', $token->getValue()), $token->getLine(), $this->stream->getSourceContext());
 
-                            $callable = (new ReflectionCallable($test))->getCallable();
+                            $callable = (new ReflectionCallable(new TwigTest('decision', $test)))->getCallable();
                             if (\is_array($callable) && $callable[0] instanceof TokenParserInterface) {
                                 $e->appendMessage(\sprintf(' (expecting closing tag for the "%s" tag defined near line %s).', $callable[0]->getTag(), $lineno));
                             }
@@ -173,13 +173,16 @@ class Parser
 
                     $subparser->setParser($this);
                     $node = $subparser->parse($token);
-                    if (null !== $node) {
+                    if (!$node) {
+                        trigger_deprecation('twig/twig', '3.12', 'Returning "null" from "%s" is deprecated and forbidden by "TokenParserInterface".', $subparser::class);
+                    } else {
+                        $node->setNodeTag($subparser->getTag());
                         $rv[] = $node;
                     }
                     break;
 
                 default:
-                    throw new SyntaxError('Lexer or parser ended up in unsupported state.', $this->getCurrentToken()->getLine(), $this->stream->getSourceContext());
+                    throw new SyntaxError('The lexer or the parser ended up in an unsupported state.', $this->getCurrentToken()->getLine(), $this->stream->getSourceContext());
             }
         }
 
@@ -192,6 +195,8 @@ class Parser
 
     public function getBlockStack(): array
     {
+        trigger_deprecation('twig/twig', '3.12', 'Method "%s()" is deprecated.', __METHOD__);
+
         return $this->blockStack;
     }
 
@@ -212,21 +217,31 @@ class Parser
 
     public function hasBlock(string $name): bool
     {
+        trigger_deprecation('twig/twig', '3.12', 'Method "%s()" is deprecated.', __METHOD__);
+
         return isset($this->blocks[$name]);
     }
 
     public function getBlock(string $name): Node
     {
+        trigger_deprecation('twig/twig', '3.12', 'Method "%s()" is deprecated.', __METHOD__);
+
         return $this->blocks[$name];
     }
 
     public function setBlock(string $name, BlockNode $value): void
     {
+        if (isset($this->blocks[$name])) {
+            throw new SyntaxError(\sprintf("The block '%s' has already been defined line %d.", $name, $this->blocks[$name]->getTemplateLine()), $this->getCurrentToken()->getLine(), $this->blocks[$name]->getSourceContext());
+        }
+
         $this->blocks[$name] = new BodyNode([$value], [], $value->getTemplateLine());
     }
 
     public function hasMacro(string $name): bool
     {
+        trigger_deprecation('twig/twig', '3.12', 'Method "%s()" is deprecated.', __METHOD__);
+
         return isset($this->macros[$name]);
     }
 
@@ -242,6 +257,8 @@ class Parser
 
     public function hasTraits(): bool
     {
+        trigger_deprecation('twig/twig', '3.12', 'Method "%s()" is deprecated.', __METHOD__);
+
         return \count($this->traits) > 0;
     }
 
@@ -285,11 +302,26 @@ class Parser
 
     public function getParent(): ?Node
     {
+        trigger_deprecation('twig/twig', '3.12', 'Method "%s()" is deprecated.', __METHOD__);
+
         return $this->parent;
+    }
+
+    public function hasInheritance()
+    {
+        return $this->parent || 0 < \count($this->traits);
     }
 
     public function setParent(?Node $parent): void
     {
+        if (null === $parent) {
+            trigger_deprecation('twig/twig', '3.12', 'Passing "null" to "%s()" is deprecated.', __METHOD__);
+        }
+
+        if (null !== $this->parent) {
+            throw new SyntaxError('Multiple extends tags are forbidden.', $parent->getTemplateLine(), $parent->getSourceContext());
+        }
+
         $this->parent = $parent;
     }
 

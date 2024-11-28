@@ -1,0 +1,40 @@
+{
+    "name": "twig/extra-bundle",
+    "type": "symfony-bundle",
+    "description": "A Symfony bundle for extra Twig extensions",
+    "keywords": ["twig", "extra", "bundle"],
+    "homepage": "https://twig.symfony.com",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com",
+            "homepage": "http://fabien.potencier.org",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.2",
+        "symfony/framework-bundle": "^5.4|^6.4|^7.0",
+        "symfony/twig-bundle": "^5.4|^6.4|^7.0",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "league/commonmark": "^1.0|^2.0",
+        "symfony/phpunit-bridge": "^6.4|^7.0",
+        "twig/cache-extra": "^3.0",
+        "twig/cssinliner-extra": "^3.0",
+        "twig/html-extra": "^3.0",
+        "twig/inky-extra": "^3.0",
+        "twig/intl-extra": "^3.0",
+        "twig/markdown-extra": "^3.0",
+        "twig/string-extra": "^3.0"
+    },
+    "autoload": {
+        "psr-4" : { "Twig\\Extra\\TwigExtraBundle\\" : "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}

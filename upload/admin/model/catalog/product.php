@@ -1355,7 +1355,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		$sql .= ", `option_id` = '" . (int)$data['option_id'] . "'";
-		
+
 		if (!isset($data['product_option_value'])) {
 			$sql .= ", `value` = '" . $this->db->escape($data['value']) . "'";
 		}
@@ -1391,7 +1391,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id        primary key of the product record to be fetched
 	 * @param int $product_option_id primary key of the option record to be fetched
 	 *
 	 * @return array
@@ -1992,6 +1992,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Get Subscription
 	 *
 	 * @param int $product_id
+	 * @param int $subscription_plan_id
+	 * @param int $customer_group_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

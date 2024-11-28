@@ -6691,8 +6691,8 @@ function oc_db_schema() {
 				'type' => 'tinyint(1)'
 			],
 			[
-				'name'    => 'notify',
-				'type'    => 'tinyint(1)'
+				'name' => 'notify',
+				'type' => 'tinyint(1)'
 			],
 			[
 				'name' => 'date_added',

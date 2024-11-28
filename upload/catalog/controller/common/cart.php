@@ -81,7 +81,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$data['totals'] = [];
 
 		foreach ($totals as $total) {
-			$data['totals'][] = ['text'  => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
+			$data['totals'][] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}
 
 		$data['list'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));

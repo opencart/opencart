@@ -121,7 +121,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_filter->getFilters($filter_data);
 
 		foreach ($results as $result) {
-			$data['filters'][] = ['edit'         => $this->url->link('catalog/filter.form', 'user_token=' . $this->session->data['user_token'] . '&filter_id=' . $result['filter_id'] . $url)] + $result;
+			$data['filters'][] = ['edit' => $this->url->link('catalog/filter.form', 'user_token=' . $this->session->data['user_token'] . '&filter_id=' . $result['filter_id'] . $url)] + $result;
 		}
 
 		$url = '';

@@ -1098,7 +1098,6 @@ function oc_db_schema() {
 			[
 				'name' => 'cart_id',
 				'key'  => [
-					'api_id',
 					'customer_id',
 					'session_id',
 					'product_id',

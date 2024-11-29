@@ -108,7 +108,7 @@
                   <tr>
                     <td><a href="{{ subscription_product.product_edit }}" target="_blank">{{ subscription_product.name }}</a>
                       <div id="error-product-{{ subscription_product_row }}-product" class="invalid-feedback mt-0"></div>
-                      <ul class="list-unstyled">
+                      <ul class="list-unstyled mb-0">
                         <li>
                           <small> - {{ text_model }}: {{ subscription_product.model }}</small>
                         </li>
@@ -994,7 +994,8 @@ $('#button-refresh').on('click', function() {
             }
 
             if (json['success']) {
-                cart_render(json['products'], json['totals'], json['shipping_required']);
+
+               //cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1009,7 +1010,7 @@ $('#button-confirm').on('click', function() {
     $.ajax({
         url: 'index.php?route=sale/subscription.call&user_token={{ user_token }}&call=confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-payment-address, #form-shipping-method, #form-payment-method, #form-comment, #input-subscription-id').serialize(),
+        data: $('#form-customer, #form-subscription-plan, #form-cart, #form-shipping-address, #form-payment-address, #form-shipping-method, #form-payment-method, #form-comment, #input-subscription-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -1093,10 +1094,7 @@ $('#button-confirm').on('click', function() {
                 }
 
 
-
-
-
-                cart_render(json['products'], json['totals'], json['shipping_required']);
+                //cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1104,13 +1102,6 @@ $('#button-confirm').on('click', function() {
         }
     });
 });
-
-
-
-
-
-
-
 
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();

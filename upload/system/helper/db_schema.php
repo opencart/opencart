@@ -6466,18 +6466,6 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'affiliate_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'marketing_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'tracking',
-				'type' => 'varchar(64)'
-			],
-			[
 				'name' => 'language_id',
 				'type' => 'int(11)'
 			],

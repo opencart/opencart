@@ -71,7 +71,5 @@ $_['tab_order']                  = 'Orders';
 
 // Error
 $_['error_permission']           = 'Warning: You do not have permission to modify subscriptions!';
-$_['error_status']               = 'Error: The subscription status does not match with the store status!';
-$_['error_subscription_plan']    = 'Warning: Subscription plan does not exist!';
 $_['error_subscription_status']  = 'Warning: Subscription status needs to be selected!';
 $_['error_payment_method']       = 'Warning: Payment method does not exist!';

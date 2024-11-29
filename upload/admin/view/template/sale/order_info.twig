@@ -1543,8 +1543,6 @@ $('#input-customer-group').on('change', function(e) {
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
-    console.log($('#form-product-add, #form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize());
-
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=product_add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',

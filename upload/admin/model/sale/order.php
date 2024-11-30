@@ -700,7 +700,7 @@ class Order extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order_history` `oh` ORDER BY `oh`.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `oh`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order_history` `oh` ORDER BY `oh`.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

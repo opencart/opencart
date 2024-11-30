@@ -1080,10 +1080,9 @@ $('#button-confirm').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                if (json['order_id']) {
-                    $('#order-id-value').val(json['order_id']);
+                if (json['subscription_id']) {
+                    $('#input-subscription-id').val(json['subscription_id']);
                 }
-
 
                 //cart_render(json['products'], json['totals'], json['shipping_required']);
             }

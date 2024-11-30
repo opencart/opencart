@@ -598,7 +598,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Date next
 		if (!empty($subscription_info)) {
-			$data['date_next'] = $subscription_info['date_next'];
+			$data['date_next'] = date('Y-m-d', strtotime($subscription_info['date_next']));
 		} else {
 			$data['date_next'] = '';
 		}

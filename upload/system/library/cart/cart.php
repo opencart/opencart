@@ -275,32 +275,8 @@ class Cart {
 						$subscription_data = ['remaining' => $subscription_query->row['duration']] + $subscription_query->row;
 					}
 
-					$default = [
-						'name'   => $product_query->row['name'],
-						'model'  => $product_query->row['model'],
-						'price'  => $price,
-						'reward' => $reward
-					];
-
-					// Use with order editor and subscriptions
-					if ($cart['override']) {
-						$override = json_decode($cart['override']);
-					} else {
-						$override = [];
-					}
-
-					foreach ($default as $key => $value) {
-						if (isset($override[$key])) {
-							${$key} = $override[$key];
-						} else {
-							${$key} = $value;
-						}
-					}
-
 					$this->data[$cart['cart_id']] = [
 						'cart_id'        => $cart['cart_id'],
-						'name'           => $name,
-						'model'          => $model,
 						'option'         => $option_data,
 						'subscription'   => $subscription_data,
 						'download'       => $download_data,
@@ -314,6 +290,17 @@ class Cart {
 						'points'         => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
 						'weight'         => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
 					] + $product_query->row;
+
+					// Use with order editor and subscriptions
+					if ($cart['override']) {
+						$override = json_decode($cart['override']);
+					} else {
+						$override = [];
+					}
+
+					foreach ($override as $key => $value) {
+						$this->data[$cart['cart_id']][$key] = $value;
+					}
 				} else {
 					$this->remove($cart['cart_id']);
 				}

@@ -605,12 +605,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($subscription_info)) {
-			$data['date_next_text'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
-		} else {
-			$data['date_next_text'] = '';
-		}
-
-		if (!empty($subscription_info)) {
 			$data['remaining'] = $subscription_info['remaining'];
 		} else {
 			$data['remaining'] = 0;
@@ -663,9 +657,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
 
 		// Payment Method
-		if (!empty($order_info['payment_method'])) {
-			$data['payment_method_name'] = $order_info['payment_method']['name'];
-			$data['payment_method_code'] = $order_info['payment_method']['code'];
+		if (!empty($subscription_info['payment_method'])) {
+			$data['payment_method_name'] = $subscription_info['payment_method']['name'];
+			$data['payment_method_code'] = $subscription_info['payment_method']['code'];
 		} else {
 			$data['payment_method_name'] = '';
 			$data['payment_method_code'] = '';
@@ -715,16 +709,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping method
-		if (!empty($order_info['shipping_method'])) {
-			$data['shipping_method_name'] = $order_info['shipping_method']['name'];
-			$data['shipping_method_code'] = $order_info['shipping_method']['code'];
-			$data['shipping_method_cost'] = $order_info['shipping_method']['cost'];
-			$data['shipping_method_tax_class_id'] = $order_info['shipping_method']['tax_class_id'];
+		if (!empty($subscription_info['shipping_method'])) {
+			$data['shipping_method_name'] = $subscription_info['shipping_method']['name'];
+			$data['shipping_method_code'] = $subscription_info['shipping_method']['code'];
+			$data['shipping_method_cost'] = $subscription_info['shipping_method']['cost'];
+			$data['shipping_method_tax_class_id'] = $subscription_info['shipping_method']['tax_class_id'];
 		} else {
 			$data['shipping_method_name'] = '';
 			$data['shipping_method_code'] = '';
 			$data['shipping_method_cost'] = 0.00;
 			$data['shipping_method_tax_class_id'] = 0;
+		}
+
+		if (!empty($subscription_info)) {
+			$data['comment'] = nl2br($subscription_info['comment']);
+		} else {
+			$data['comment'] = '';
 		}
 
 		// Subscription Status

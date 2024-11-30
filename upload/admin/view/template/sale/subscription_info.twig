@@ -160,7 +160,6 @@
             </tfoot>
           </table>
         </form>
-
         <div class="row row-cols-2">
           <div class="col">
             <form id="form-subscription-plan" class="form-floating">
@@ -178,7 +177,6 @@
             </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col mb-3">
             <form id="form-payment-address" class="form-floating">
@@ -203,35 +201,30 @@
             </form>
           </div>
         </div>
-
         <div class="row">
-
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
               <div class="form-control border rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
-                  <span id="shipping-method-value"></span>
+                  <span id="shipping-method-value">{{ shipping_method_name }}</span>
                 </div>
               </div>
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div id="payment-method" class="col-md mb-3">
             <div class="input-group">
               <div class="form-control border rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_payment_method }}</strong>
                   <br/>
-                  <span id="payment-method-value"></span>
+                  <span id="payment-method-value">{{ payment_method_name }}</span>
                 </div>
               </div>
               <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
         </div>
-
         <div class="row mb-3">
           <div class="col">
             <form id="form-comment" class="form-floating">
@@ -240,16 +233,13 @@
             </form>
           </div>
         </div>
-
         <div class="text-end">
           <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fa-solid fa-rotate"></i></button>
           <button type="button" id="button-confirm" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_confirm }}</button>
         </div>
         <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
       </div>
-
     </div>
-
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_history }}</div>
       <div class="card-body">
@@ -284,14 +274,15 @@
                   <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
+                      <input type="hidden" name="notify" value="0"/>
+                      <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
                   </div>
                 </div>
                 <div class="text-end">

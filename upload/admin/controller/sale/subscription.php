@@ -423,7 +423,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['back'] = $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['customer_add'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token']);
 
 		$this->load->model('sale/subscription');
 
@@ -583,17 +582,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 						if ($upload_info) {
-							$option_data[] = ['href' => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])] + $option;
+							$option_data[] = $option + ['href' => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])];
 						}
 					}
 				}
 
-				$data['subscription_products'][] = $product_info + [
-					'option'           => $option_data,
-					'price_text'       => $this->currency->format($result['price'], $currency),
-					'trial_price_text' => $this->currency->format($result['trial_price'], $currency),
-					'product_edit'     => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
-				] + $result;
+				$data['subscription_products'][] = [
+					'option'       => $option_data,
+					'trial_price'  => $this->currency->format($result['trial_price'], $currency),
+					'price'        => $this->currency->format($result['price'], $currency),
+					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
+				] + $result + $product_info;
 			}
 		}
 

@@ -20,7 +20,7 @@
               <td class="text-end">{{ subscription.subscription_id }}</td>
               <td class="text-end">{% if subscription.order_id %}<a href="{{ subscription.order }}" target="_blank">{{ subscription.order_id }}</a>{% endif %}</td>
               <td>{{ subscription.customer }}</td>
-              <td>{{ subscription.status }}</td>
+              <td>{{ subscription.subscription_status }}</td>
               <td class="d-none d-lg-table-cell">{{ subscription.date_added }}</td>
               <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a></td>
             </tr>

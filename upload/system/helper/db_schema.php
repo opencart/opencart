@@ -5163,8 +5163,8 @@ function oc_db_schema() {
 			],
 			[
 				'name'    => 'type',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
+				'type'    => 'char(1)',
+				'default' => 'P'
 			],
 			[
 				'name'    => 'special',

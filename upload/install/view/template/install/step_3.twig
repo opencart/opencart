@@ -124,7 +124,7 @@
             <div class="col-md-8">
               <div class="row">
                 <div class="col"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
-                <div class="col text-end"><button type="submit" class="btn btn-primary">{{ button_continue }}</button></div>
+                <div class="col text-end"><button type="submit" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
               </div>
             </div>
           </div>
@@ -177,7 +177,6 @@ $('#form-step-3').on('submit', function(e) {
                 if (json['error']['warning']) {
                     $('#form-step-3').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
-
 
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');

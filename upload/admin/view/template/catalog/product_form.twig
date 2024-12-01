@@ -29,7 +29,6 @@
             <li class="nav-item"><a href="#tab-option" data-bs-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
             <li class="nav-item"><a href="#tab-subscription" data-bs-toggle="tab" class="nav-link">{{ tab_subscription }}</a></li>
             <li class="nav-item"><a href="#tab-discount" data-bs-toggle="tab" class="nav-link">{{ tab_discount }}</a></li>
-            <li class="nav-item"><a href="#tab-special" data-bs-toggle="tab" class="nav-link">{{ tab_special }}</a></li>
             <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
             <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
             <li class="nav-item"><a href="#tab-seo" data-bs-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
@@ -384,8 +383,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[date_available]" value="1" id="input-variant-date-available" data-oc-toggle="switch" data-oc-target="#input-date-available" class="form-check-input"{% if override.date_available %} checked{% endif %}/>
-                            <label for="input-variant-date-available" class="form-check-label"></label>
+                            <input type="checkbox" name="override[date_available]" value="1" id="input-variant-date-available" data-oc-toggle="switch" data-oc-target="#input-date-available" class="form-check-input"{% if override.date_available %} checked{% endif %}/> <label for="input-variant-date-available" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -707,9 +705,9 @@
                       <tr id="attribute-row-{{ attribute_row }}">
                         <td>
 
-                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
-                          <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
-                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul></td>
+                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/> <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
+                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
+                        </td>
 
                         <td>{% for language in languages %}
                             <div class="input-group mb-12">
@@ -742,17 +740,13 @@
 
                     <fieldset id="option-row-{{ option_row }}">
                       <legend>{{ product_option.name }}</legend>
-                      <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/>
-                      <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/>
-                      <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/>
-                      <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
 
                       <div class="row align-items-center">
                         <div class="col-11">
 
                           <div class="mb-3">
-                            <label for="input-required-{{ option_row }}" class="form-label">{{ entry_required }}</label>
-                            <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
+                            <label for="input-required-{{ option_row }}" class="form-label">{{ entry_required }}</label> <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
                               <option value="1"{% if product_option.required %} selected{% endif %}>{{ text_enabled }}</option>
                               <option value="0"{% if not product_option.required %} selected{% endif %}>{{ text_disabled }}</option>
                             </select>
@@ -760,43 +754,37 @@
 
                           {% if product_option.type == 'text' %}
                             <div class="mb-3">
-                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
-                              <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label> <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
                             </div>
                           {% endif %}
 
                           {% if product_option.type == 'textarea' %}
                             <div class="mb-3">
-                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
-                              <textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label> <textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
                             </div>
                           {% endif %}
 
                           {% if product_option.type == 'file' %}
                             <div class="mb-3 d-none">
-                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
-                              <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label> <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
                             </div>
                           {% endif %}
 
                           {% if product_option.type == 'date' %}
                             <div class="mb-3">
-                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
-                              <input type="date" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label> <input type="date" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
                             </div>
                           {% endif %}
 
                           {% if product_option.type == 'time' %}
                             <div class="mb-3">
-                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
-                              <input type="time" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label> <input type="time" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
                             </div>
                           {% endif %}
 
                           {% if product_option.type == 'datetime' %}
                             <div class="mb-3">
-                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label>
-                              <input type="datetime-local" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
+                              <label for="input-option-{{ option_row }}" class="form-label">{{ entry_option_value }}</label> <input type="datetime-local" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
                             </div>
                           {% endif %}
 
@@ -818,8 +806,7 @@
                                   {% for product_option_value in product_option.product_option_value %}
                                     <tr id="option-value-row-{{ option_value_row }}">
                                       <td>{{ product_option_value.name }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
                                       <td class="text-end">{{ product_option_value.quantity }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}"/></td>
                                       <td>{% if product_option_value.subtract %}
                                           {{ text_yes }}
@@ -828,14 +815,11 @@
                                         {% endif %}
                                         <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="{{ product_option_value.subtract }}"/></td>
                                       <td class="text-end">{{ product_option_value.price_prefix }}{{ product_option_value.price }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
                                       <td class="text-end">{{ product_option_value.points_prefix }}{{ product_option_value.points }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
                                       <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
                                       <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                                     </tr>
                                     {% set option_value_row = option_value_row + 1 %}
@@ -885,7 +869,6 @@
                   <fieldset>
                     <legend class="float-none">{{ option.name }}</legend>
 
-
                     {% if option.type == 'select' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -910,7 +893,6 @@
                         </div>
                       </div>
                     {% endif %}
-
 
                     {% if option.type == 'radio' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
@@ -940,7 +922,6 @@
                       </div>
                     {% endif %}
 
-
                     {% if option.type == 'checkbox' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -968,7 +949,6 @@
                       </div>
                     {% endif %}
 
-
                     {% if option.type == 'text' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -986,7 +966,6 @@
                       </div>
                     {% endif %}
 
-
                     {% if option.type == 'textarea' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1003,7 +982,6 @@
                         </div>
                       </div>
                     {% endif %}
-
 
                     {% if option.type == 'file' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
@@ -1025,7 +1003,6 @@
                       </div>
                     {% endif %}
 
-
                     {% if option.type == 'date' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1043,7 +1020,6 @@
                       </div>
                     {% endif %}
 
-
                     {% if option.type == 'time' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1060,7 +1036,6 @@
                         </div>
                       </div>
                     {% endif %}
-
 
                     {% if option.type == 'datetime' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
@@ -1080,14 +1055,7 @@
                     {% endif %}
                   </fieldset>
                 {% endfor %}
-
-
               </div>
-
-
-
-
-
             {% endif %}
 
             <div id="tab-subscription" class="tab-pane">
@@ -1137,7 +1105,6 @@
                 </table>
               </div>
             </div>
-
             <div id="tab-discount" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-discount" class="table table-bordered table-hover">
@@ -1147,6 +1114,8 @@
                       <th class="text-end">{{ entry_quantity }}</th>
                       <th class="text-end">{{ entry_priority }}</th>
                       <th class="text-end">{{ entry_price }}</th>
+                      <th class="text-end">{{ entry_type }}</th>
+                      <th class="text-end">{{ entry_special }}</th>
                       <th>{{ entry_date_start }}</th>
                       <th>{{ entry_date_end }}</th>
                       <th class="text-end">{% if master_id %}
@@ -1168,6 +1137,11 @@
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+                        <td><select name="product_discount[{{ discount_row }}][type]" class="form-select">
+                            <option value="F">{{ text_fixed }}</option>
+                            <option value="P">{{ text_percentage }}</option>
+                          </select></td>
+                        <td><div class="form-check form-switch form-switch-lg"><input type="hidden" name="product_discount[{{ discount_row }}][special]" value="0"/><input type="checkbox" name="product_discount[{{ discount_row }}][special]" value="1" class="form-check-input"/></div></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1177,59 +1151,13 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="6"></td>
+                      <td colspan="8"></td>
                       <td class="text-end"><button type="button" id="button-discount" data-bs-toggle="tooltip" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
             </div>
-
-            <div id="tab-special" class="tab-pane">
-              <div class="table-responsive">
-                <table id="product-special" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>{{ entry_customer_group }}</th>
-                      <th class="text-end">{{ entry_priority }}</th>
-                      <th class="text-end">{{ entry_price }}</th>
-                      <th>{{ entry_date_start }}</th>
-                      <th>{{ entry_date_end }}</th>
-                      <th class="text-center">{% if master_id %}
-                          <div class="form-check form-switch">
-                            <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" data-oc-toggle="switch" data-oc-target="#product-special" class="form-check-input"{% if override.product_special %} checked{% endif %}/> <label for="input-variant-special" class="form-check-label"></label>
-                          </div>
-                        {% endif %}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% set special_row = 0 %}
-                    {% for product_special in product_specials %}
-                      <tr id="special-row-{{ special_row }}">
-                        <td><select name="product_special[{{ special_row }}][customer_group_id]" class="form-select">
-                            {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_special.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
-                            {% endfor %}
-                          </select></td>
-                        <td class="text-end"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-                        <td class="text-end"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
-                        <td><input type="date" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
-                        <td><input type="date" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
-                        <td class="text-end"><button type="button" onclick="$('#special-row-{{ special_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
-                      </tr>
-                      {% set special_row = special_row + 1 %}
-                    {% endfor %}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="5"></td>
-                      <td class="text-end"><button type="button" id="button-special" data-bs-toggle="tooltip" title="{{ button_special_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-
             <div id="tab-image" class="tab-pane">
               <fieldset>
                 <legend>{{ text_image }}</legend>
@@ -1930,6 +1858,15 @@ $('#button-discount').on('click', function() {
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price|escape('js') }}" class="form-control"/></td>';
+    html += '  <td><select name="product_discount[' + discount_row + '][type]" class="form-select">';
+    html += '    <option value="N">{{ text_fixed }}</option>';
+    html += '    <option value="F">{{ text_fixed }}</option>';
+    html += '    <option value="P">{{ text_percentage }}</option>';
+    html += '  </select></td>';
+    html += '  <td><div class="form-check form-switch form-switch-lg">';
+    html += '    <input type="hidden" name="product_discount[' + discount_row + '][special]" value="0"/>';
+    html += '    <input type="checkbox" name="product_discount[' + discount_row + '][special]" value="1" class="form-check-input"/>';
+    html += '  </div></td>';
     html += '  <td><input type="date" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start|escape('js') }}" class="form-control"/></td>';
     html += '  <td><input type="date" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + discount_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
@@ -1938,27 +1875,6 @@ $('#button-discount').on('click', function() {
     $('#product-discount tbody').append(html);
 
     discount_row++;
-});
-
-var special_row = {{ special_row }};
-
-$('#button-special').on('click', function() {
-    html = '<tr id="special-row-' + special_row + '">';
-    html += '  <td><select name="product_special[' + special_row + '][customer_group_id]" class="form-select">';
-  {% for customer_group in customer_groups %}
-    html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
-  {% endfor %}
-    html += '  </select><input type="hidden" name="product_special[' + special_row + '][product_special_id]" value=""/></td>';
-    html += '  <td class="text-end"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority|escape('js') }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price|escape('js') }}" class="form-control"/></td>';
-    html += '  <td><input type="date" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start|escape('js') }}" class="form-control"/></td>';
-    html += '  <td><input type="date" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end|escape('js') }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#special-row-' + special_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
-    html += '</tr>';
-
-    $('#product-special tbody').append(html);
-
-    special_row++;
 });
 
 var image_row = {{ image_row }};

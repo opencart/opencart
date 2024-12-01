@@ -348,9 +348,9 @@ class Product extends \Opencart\System\Engine\Controller {
 				$image = 'no_image.png';
 			}
 
-			$special = false;
+			$special = '';
 
-			$product_specials = $this->model_catalog_product->getSpecials($result['product_id']);
+			$product_specials = $this->model_catalog_product->getDiscounts($result['product_id']);
 
 			foreach ($product_specials as $product_special) {
 				if (($product_special['date_start'] == '0000-00-00' || strtotime($product_special['date_start']) < time()) && ($product_special['date_end'] == '0000-00-00' || strtotime($product_special['date_end']) > time())) {
@@ -865,10 +865,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
 			if ($category_info) {
-				$data['product_categories'][] = [
-					'category_id' => $category_info['category_id'],
-					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name'])
-				];
+				$data['product_categories'][] = ['name' => ($category_info['path'] ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name'])] + $category_info;
 			}
 		}
 
@@ -887,10 +884,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$filter_info = $this->model_catalog_filter->getFilter($filter_id);
 
 			if ($filter_info) {
-				$data['product_filters'][] = [
-					'filter_id' => $filter_info['filter_id'],
-					'name'      => $filter_info['group'] . ' &gt; ' . $filter_info['name']
-				];
+				$data['product_filters'][] = ['name' => $filter_info['group'] . ' &gt; ' . $filter_info['name']] + $filter_info;
 			}
 		}
 
@@ -927,10 +921,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$download_info = $this->model_catalog_download->getDownload($download_id);
 
 			if ($download_info) {
-				$data['product_downloads'][] = [
-					'download_id' => $download_info['download_id'],
-					'name'        => $download_info['name']
-				];
+				$data['product_downloads'][] = $download_info;
 			}
 		}
 
@@ -947,10 +938,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$related_info = $this->model_catalog_product->getProduct($related_id);
 
 			if ($related_info) {
-				$data['product_relateds'][] = [
-					'product_id' => $related_info['product_id'],
-					'name'       => $related_info['name']
-				];
+				$data['product_relateds'][] = $related_info;
 			}
 		}
 
@@ -969,11 +957,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($product_attribute['attribute_id']);
 
 			if ($attribute_info) {
-				$data['product_attributes'][] = [
-					'attribute_id'                  => $product_attribute['attribute_id'],
-					'name'                          => $attribute_info['name'],
-					'product_attribute_description' => $product_attribute['product_attribute_description']
-				];
+				$data['product_attributes'][] = ['name' => $attribute_info['name']] + $product_attribute;
 			}
 		}
 
@@ -1001,31 +985,18 @@ class Product extends \Opencart\System\Engine\Controller {
 
 					if ($option_value_info) {
 						$product_option_value_data[] = [
-							'product_option_value_id' => $product_option_value['product_option_value_id'],
-							'option_value_id'         => $product_option_value['option_value_id'],
-							'name'                    => $option_value_info['name'],
-							'quantity'                => $product_option_value['quantity'],
-							'subtract'                => $product_option_value['subtract'],
-							'price'                   => $product_option_value['price'],
-							'price_prefix'            => $product_option_value['price_prefix'],
-							'points'                  => round($product_option_value['points']),
-							'points_prefix'           => $product_option_value['points_prefix'],
-							'weight'                  => round($product_option_value['weight']),
-							'weight_prefix'           => $product_option_value['weight_prefix']
-						];
+							'name'   => $option_value_info['name'],
+							'points' => round($product_option_value['points']),
+							'weight' => round($product_option_value['weight']),
+						] + $product_option_value;
 					}
 				}
 			}
 
 			$data['product_options'][] = [
-				'product_option_id'    => $product_option['product_option_id'],
 				'product_option_value' => $product_option_value_data,
-				'option_id'            => $product_option['option_id'],
-				'name'                 => $product_option['name'],
-				'type'                 => $product_option['type'],
 				'value'                => $product_option['value'] ?? '',
-				'required'             => $product_option['required']
-			];
+			] + $product_option;
 		}
 
 		$data['option_values'] = [];
@@ -1065,26 +1036,20 @@ class Product extends \Opencart\System\Engine\Controller {
 
 					if ($option_value_info) {
 						$product_option_value_data[] = [
-							'product_option_value_id' => $product_option_value['product_option_value_id'],
-							'option_value_id'         => $product_option_value['option_value_id'],
-							'name'                    => $option_value_info['name'],
-							'price'                   => (float)$product_option_value['price'] ? $product_option_value['price'] : false,
-							'price_prefix'            => $product_option_value['price_prefix']
-						];
+							'name'  => $option_value_info['name'],
+							'price' => (float)$product_option_value['price'] ? $product_option_value['price'] : false,
+						] + $product_option_value;
 					}
 				}
 
 				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
 
 				$data['options'][] = [
-					'product_option_id'    => $product_option['product_option_id'],
 					'product_option_value' => $product_option_value_data,
-					'option_id'            => $product_option['option_id'],
 					'name'                 => $option_info['name'],
 					'type'                 => $option_info['type'],
-					'value'                => $data['variant'][$product_option['product_option_id']] ?? $product_option['value'],
-					'required'             => $product_option['required']
-				];
+					'value'                => $data['variant'][$product_option['product_option_id']] ?? $product_option['value']
+				] + $product_option;
 			}
 		}
 
@@ -1110,32 +1075,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($product_discounts as $product_discount) {
 			$data['product_discounts'][] = [
-				'customer_group_id' => $product_discount['customer_group_id'],
-				'quantity'          => $product_discount['quantity'],
-				'priority'          => $product_discount['priority'],
-				'price'             => $product_discount['price'],
 				'date_start'        => ($product_discount['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
 				'date_end'          => ($product_discount['date_end'] != '0000-00-00' ? $product_discount['date_end'] : '')
-			];
-		}
-
-		// Special
-		if ($product_id) {
-			$product_specials = $this->model_catalog_product->getSpecials($product_id);
-		} else {
-			$product_specials = [];
-		}
-
-		$data['product_specials'] = [];
-
-		foreach ($product_specials as $product_special) {
-			$data['product_specials'][] = [
-				'customer_group_id' => $product_special['customer_group_id'],
-				'priority'          => $product_special['priority'],
-				'price'             => $product_special['price'],
-				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_special['date_start'] : ''),
-				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_special['date_end'] : '')
-			];
+			] + $product_discount;
 		}
 
 		// Image
@@ -1174,10 +1116,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['product_images'][] = [
-				'image'      => $image,
-				'thumb'      => $this->model_tool_image->resize($thumb, (int)$this->config->get('config_image_default_width'), (int)$this->config->get('config_image_default_height')),
-				'sort_order' => $product_image['sort_order']
-			];
+				'image' => $image,
+				'thumb' => $this->model_tool_image->resize($thumb, (int)$this->config->get('config_image_default_width'), (int)$this->config->get('config_image_default_height')),
+			] + $product_image;
 		}
 
 		// Points

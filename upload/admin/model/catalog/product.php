@@ -98,13 +98,6 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Specials
-		if (isset($data['product_special'])) {
-			foreach ($data['product_special'] as $product_special) {
-				$this->model_catalog_product->addSpecial($product_id, $product_special);
-			}
-		}
-
 		// Images
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $product_image) {
@@ -253,15 +246,6 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Specials
-		$this->model_catalog_product->deleteSpecials($product_id);
-
-		if (isset($data['product_special'])) {
-			foreach ($data['product_special'] as $product_special) {
-				$this->model_catalog_product->addSpecial($product_id, $product_special);
-			}
-		}
-
 		// Images
 		$this->model_catalog_product->deleteImages($product_id);
 
@@ -336,7 +320,6 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($product_id);
 			$product_data['product_related'] = $this->model_catalog_product->getRelated($product_id);
 			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
-			$product_data['product_special'] = $this->model_catalog_product->getSpecials($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
 
 			$this->model_catalog_product->addProduct($product_data);
@@ -365,7 +348,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteRelated($product_id);
 		$this->model_catalog_product->deleteReports($product_id);
 		$this->model_catalog_product->deleteRewards($product_id);
-		$this->model_catalog_product->deleteSpecials($product_id);
 		$this->model_catalog_product->deleteStores($product_id);
 		$this->model_catalog_product->deleteSubscriptions($product_id);
 
@@ -490,11 +472,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 			// SEO
 			// product_seo table is not overwritten because that needs to have unique seo keywords for every product
-
-			// Specials
-			if (!isset($override['product_special'])) {
-				$product_data['product_special'] = $this->model_catalog_product->getSpecials($master_id);
-			}
 
 			// Stores
 			if (!isset($override['product_store'])) {
@@ -628,11 +605,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 			// SEO
 			// product_seo table is not overwritten because that needs to have unique seo keywords for every product
-
-			// Specials
-			if (!isset($override['product_special'])) {
-				$product_data['product_special'] = $this->model_catalog_product->getSpecials($master_id);
-			}
 
 			// Stores
 			if (!isset($override['product_store'])) {
@@ -771,11 +743,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 			// SEO
 			$product_data['product_seo_url'] = $this->model_catalog_product->getSeoUrls($product['product_id']);
-
-			// Specials
-			if (isset($override['product_special'])) {
-				$product_data['product_special'] = $this->model_catalog_product->getSpecials($product['product_id']);
-			}
 
 			// Stores
 			if (isset($override['product_store'])) {
@@ -1607,53 +1574,6 @@ class Product extends \Opencart\System\Engine\Model {
 	 */
 	public function getDiscounts(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `quantity`, `priority`, `price`");
-
-		return $query->rows;
-	}
-
-	/**
-	 * Add Special
-	 *
-	 * @param int                  $product_id primary key of the product record to be fetched
-	 * @param array<string, mixed> $data
-	 *
-	 * @return void
-	 */
-	public function addSpecial(int $product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_special` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
-	}
-
-	/**
-	 * Delete Specials
-	 *
-	 * @param int $product_id primary key of the product record to be fetched
-	 *
-	 * @return void
-	 */
-	public function deleteSpecials(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$product_id . "'");
-	}
-
-	/**
-	 * Delete Specials By Customer Group ID
-	 *
-	 * @param int $customer_group_id primary key of the customer group record to be fetched
-	 *
-	 * @return void
-	 */
-	public function deleteSpecialsByCustomerGroupId(int $customer_group_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_special` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-	}
-
-	/**
-	 * Get Specials
-	 *
-	 * @param int $product_id
-	 *
-	 * @return array<int, array<string, mixed>>
-	 */
-	public function getSpecials(int $product_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `priority`, `price`");
 
 		return $query->rows;
 	}

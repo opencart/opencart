@@ -136,11 +136,8 @@ class Cart {
 									$option_data[] = [
 										'product_option_id'       => $product_option_id,
 										'product_option_value_id' => $value,
-										'option_id'               => $option_query->row['option_id'],
-										'name'                    => $option_query->row['name'],
-										'type'                    => $option_query->row['type'],
 										'value'                   => $option_value_query->row['name']
-									] + $option_value_query->row;
+									] + $option_query->row + $option_value_query->row;
 								}
 							} elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
 								foreach ($value as $product_option_value_id) {
@@ -172,11 +169,8 @@ class Cart {
 										$option_data[] = [
 											'product_option_id'       => $product_option_id,
 											'product_option_value_id' => $product_option_value_id,
-											'option_id'               => $option_query->row['option_id'],
-											'name'                    => $option_query->row['name'],
-											'type'                    => $option_query->row['type'],
 											'value'                   => $option_value_query->row['name']
-										] + $option_value_query->row;
+										] + $option_query->row + $option_value_query->row;
 									}
 								}
 							} elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
@@ -185,7 +179,7 @@ class Cart {
 									'product_option_value_id' => 0,
 									'option_value_id'         => 0,
 									'value'                   => $value,
-									'quantity'                => 0,
+	 								'quantity'                => 0,
 									'subtract'                => 0,
 									'price'                   => 0,
 									'price_prefix'            => '',
@@ -198,30 +192,9 @@ class Cart {
 						}
 					}
 
-					$price = $product_query->row['price'];
+					$price = $product_query->row['price'] + $option_price;
 
-					// Product Discounts
-					$discount_quantity = 0;
-
-					foreach ($cart_query->rows as $cart_2) {
-						if ($cart_2['product_id'] == $cart['product_id']) {
-							$discount_quantity += $cart_2['quantity'];
-						}
-					}
-
-					$product_discount_query = $this->db->query("SELECT `price` FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$discount_quantity . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
-
-					if ($product_discount_query->num_rows) {
-						$price = $product_discount_query->row['price'];
-					}
-
-					// Product Specials
-					$product_special_query = $this->db->query("SELECT `price` FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `priority` ASC, `price` ASC LIMIT 1");
-
-					if ($product_special_query->num_rows) {
-						$price = $product_special_query->row['price'];
-					}
-
+					// Get total products of the same product but with different options
 					$product_total = 0;
 
 					foreach ($cart_query->rows as $cart_2) {
@@ -230,12 +203,23 @@ class Cart {
 						}
 					}
 
+					// Product Discounts
+					$product_discount_query = $this->db->query("SELECT `price` FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$product_total . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
+
+					if ($product_discount_query->num_rows) {
+						if ($product_discount_query->row['type'] == 'F') {
+							$price = $price - $product_discount_query->row['price'];
+						} elseif ($product_discount_query->row['type'] == 'P') {
+							$price = $price - ($price * ($product_discount_query->row['price'] / 100));
+						}
+					}
+
 					// Stock
 					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $product_total)) {
 						$stock_status = false;
 					}
 
-					// Minimum quantity
+					// Minimum Quantity
 					if ($product_query->row['minimum'] > $product_total) {
 						$minimum = false;
 					} else {
@@ -265,6 +249,15 @@ class Cart {
 					$subscription_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` `ps` LEFT JOIN `" . DB_PREFIX . "subscription_plan` `sp` ON (`ps`.`subscription_plan_id` = `sp`.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `ps`.`product_id` = '" . (int)$cart['product_id'] . "' AND `ps`.`subscription_plan_id` = '" . (int)$cart['subscription_plan_id'] . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `sp`.`status` = '1'");
 
 					if ($subscription_query->num_rows) {
+						if ($subscription_query->row['type'] == 'F') {
+							$price = $price - $subscription_query->row['price'];
+						} elseif ($subscription_query->row['type'] == 'S') {
+							$subscription_query->row['duration']
+
+							Cycle
+
+						}
+
 						// Set the new price if is subscription product
 						$price = $subscription_query->row['price'];
 
@@ -275,6 +268,7 @@ class Cart {
 						$subscription_data = ['remaining' => $subscription_query->row['duration']] + $subscription_query->row;
 					}
 
+
 					$this->data[$cart['cart_id']] = [
 						'cart_id'        => $cart['cart_id'],
 						'option'         => $option_data,
@@ -284,8 +278,8 @@ class Cart {
 						'minimum_status' => $minimum,
 						'stock'          => $stock,
 						'stock_status'   => $stock_status,
-						'price'          => $price,
-						'total'          => $price * $cart['quantity'],
+						'price'          => ($price + $option_price),
+						'total'          => ($price + $option_price) * $cart['quantity'],
 						'reward'         => $reward * $cart['quantity'],
 						'points'         => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
 						'weight'         => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],

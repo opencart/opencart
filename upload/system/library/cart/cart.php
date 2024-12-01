@@ -252,9 +252,9 @@ class Cart {
 						if ($subscription_query->row['type'] == 'F') {
 							$price = $price - $subscription_query->row['price'];
 						} elseif ($subscription_query->row['type'] == 'S') {
-							$subscription_query->row['duration']
+							//$subscription_query->row['duration']
 
-							Cycle
+
 
 						}
 

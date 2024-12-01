@@ -58,7 +58,6 @@
               </tr>
             </thead>
             <tbody>
-            
             {% if searches %}
             {% for search in searches %}
             <tr>
@@ -66,7 +65,7 @@
               <td class="text-left">{{ search.products }}</td>
               <td class="text-left">{{ search.category }}</td>
               <td class="text-left">{{ search.customer }}</td>
-              <td class="text-left">{{ search.ip }}</td>
+              <td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ search.ip }}" target="_blank">{{ search.ip }}</a></td>
               <td class="text-left">{{ search.date_added }}</td>
             </tr>
             {% endfor %}

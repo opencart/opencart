@@ -449,7 +449,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
 
                 this.timer = setTimeout(function(object) {
                     object.source($(object).val(), $.proxy(object.response, object));
-                }, 50, this);
+                }, 150, this);
             }
 
             // Response

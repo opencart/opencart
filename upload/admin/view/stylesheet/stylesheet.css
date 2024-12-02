@@ -228,16 +228,6 @@ a {
     padding-top: 60px;
 }
 
-#column-left::-webkit-scrollbar {
-    width: 10px;
-    background-color: rgba(200, 200, 200, 0);
-}
-
-#column-left::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(128, 139, 156, 0.2);
-}
-
 #content {
     padding-bottom: 40px;
 }

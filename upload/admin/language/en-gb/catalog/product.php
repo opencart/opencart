@@ -28,10 +28,9 @@ $_['text_file']                  = 'File';
 $_['text_date']                  = 'Date';
 $_['text_datetime']              = 'Date &amp; Time';
 $_['text_time']                  = 'Time';
-
 $_['text_fixed']                 = 'Fixed Amount';
+$_['text_subtract']              = 'Subtract';
 $_['text_percentage']            = 'Percentage';
-
 $_['text_image']                 = 'Image';
 $_['text_image_additional']      = 'Additional Images';
 $_['text_reward']                = 'Buy Points';

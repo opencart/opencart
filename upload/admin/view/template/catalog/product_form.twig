@@ -1859,8 +1859,8 @@ $('#button-discount').on('click', function() {
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price|escape('js') }}" class="form-control"/></td>';
     html += '  <td><select name="product_discount[' + discount_row + '][type]" class="form-select">';
-    html += '    <option value="N">{{ text_fixed }}</option>';
     html += '    <option value="F">{{ text_fixed }}</option>';
+    html += '    <option value="S">{{ text_subtract }}</option>';
     html += '    <option value="P">{{ text_percentage }}</option>';
     html += '  </select></td>';
     html += '  <td><div class="form-check form-switch form-switch-lg">';

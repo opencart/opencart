@@ -29,7 +29,9 @@ class Footer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_information->getInformations();
 
 		foreach ($results as $result) {
-			$data['informations'][] = ['href' => $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $result['information_id'])] + $result;
+			if ($result['bottom']) {
+				$data['informations'][] = ['href' => $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $result['information_id'])] + $result;
+			}
 		}
 
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));

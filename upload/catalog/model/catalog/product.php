@@ -246,6 +246,20 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Categories By Category ID
+	 *
+	 * @param int $product_id
+	 * @param int $category_id
+	 *
+	 * @return int
+	 */
+	public function getTotalCategoriesByCategoryId(int $product_id, int $category_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
+
+		return $query->row['total'];
+	}
+
+	/**
 	 * Get Attributes
 	 *
 	 * @param int $product_id

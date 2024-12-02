@@ -279,10 +279,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	protected function confirm() {
-		$this->load->language('api/order');
-
-		$output = [];
+	protected function confirm(): array {
+		$this->setCustomer();
 
 		$output = $this->load->controller('api/cart');
 
@@ -290,39 +288,19 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			return $output;
 		}
 
+		$output = [];
+
+		$this->setPaymentAddress();
+		$this->setShippingAddress();
+
+		$this->load->controller('api/shipping_method');
+		$this->load->controller('api/payment_method');
+
 		$this->load->language('sale/subscription');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		// Customer
-		$this->load->model('customer/customer');
-
-		$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
-
-		if (!$customer_info) {
-			$json['error']['customer'] = $this->language->get('error_customer');
-		}
-
-		// Store
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
-
-		if (!$store_info) {
-			$json['error']['store'] = $this->language->get('error_store');
-		}
-
-		// Product
-		$this->load->model('catalog/product');
-
-		$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
-
-		if (!$product_info) {
-			$json['error']['product'] = $this->language->get('error_product');
+		// 1. Validate customer data exists
+		if (!isset($this->session->data['customer'])) {
+			$output['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// Subscription Plan
@@ -331,67 +309,81 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($this->request->post['subscription_plan_id']);
 
 		if (!$subscription_plan_info) {
-			$json['error']['subscription_plan'] = $this->language->get('error_subscription_plan');
+			$output['error']['subscription_plan'] = $this->language->get('error_subscription_plan');
 		}
 
-		// Payment Address
-		$address_info = $this->model_customer_customer->getAddress($this->request->post['payment_address_id']);
-
-		if ($this->config->get('config_checkout_payment_address') && !$address_info) {
-			$json['error']['payment_address'] = $this->language->get('error_payment_address');
+		// 2. Validate cart has products.
+		if (!$this->cart->hasProducts()) {
+			$output['error']['product'] = $this->language->get('error_product');
 		}
 
-		// Shipping Address
-		$address_info = $this->model_customer_customer->getAddress($this->request->post['shipping_address_id']);
-
-		if (!$address_info) {
-			$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
+		// 3. Validate cart has products and has stock
+		if ((!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
+			$output['error']['product'] = $this->language->get('error_stock');
 		}
 
-
-		// 5. Validate payment Method
-		if (empty($this->request->post['payment_method_name'])) {
-			$json['error'] = $this->language->get('error_name');
+		// 4. Validate payment address if required
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
-		if (empty($this->request->post['payment_method_code'])) {
-			$json['error'] = $this->language->get('error_code');
-		}
+		// 5. Validate shipping address and method if required
+		if ($this->cart->hasShipping()) {
+			// Shipping Address
+			if (!isset($this->session->data['shipping_address'])) {
+				$output['error']['shipping_address'] = $this->language->get('error_shipping_address');
+			}
 
-		/*
-		$this->session->data['payment_method'] = [
-			'name' => $this->request->post['payment_method_name'],
-			'code' => $this->request->post['payment_method_code']
-		];
-		*/
-
-		$this->load->model('sale/subscription');
-
-		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
-
-		if ($subscription_info) {
-			$filter_data = [
-				'filter_customer_id'         => $subscription_info['customer_id'],
-				'filter_customer_payment_id' => $this->request->post['customer_payment_id']
-			];
-
-			$payment_method_info = $this->model_sale_subscription->getSubscriptions($filter_data);
-
-			if (!$payment_method_info) {
-				$json['error'] = $this->language->get('error_payment_method');
+			// Validate shipping method
+			if (!isset($this->session->data['shipping_method'])) {
+				$output['error']['shipping_method'] = $this->language->get('error_shipping_method');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_subscription');
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
 		}
 
-		if (!$json) {
-			$this->model_sale_subscription->editSubscription($subscription_id, $this->request->post['subscription_plan_id']);
-
-			$json['success'] = $this->language->get('text_success');
+		// 6. Validate payment method
+		if (!isset($this->session->data['payment_method'])) {
+			$output['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		if (!$output) {
+			$subscription_product_data = [];
+
+			$products = $this->cart->getSubscriptions();
+
+			foreach ($products as $product) {
+				$subscription_product_data[] = [
+					'order_product_id' => 0,
+					'order_id'         => 0,
+					'trial_price'      => $product['subscription']['trial_price'] * $product['quantity'],
+					'price'            => $product['subscription']['price'] * $product['quantity'],
+				] + $product + $product['subscription'];
+			}
+
+			$subscription_data = $subscription_plan_info + [
+				'subscription_product' => $subscription_product_data,
+				'trial_price'          => array_sum(array_column($subscription_product_data, 'trial_price')),
+			    'price'                => array_sum(array_column($subscription_product_data, 'price')),
+				'store_id'             => $this->config->get('config_store_id'),
+				'language_id'          => $this->config->get('config_language_id'),
+				'currency_id'          => $this->currency->getId($this->session->data['currency'])
+			];
+
+			$this->load->model('checkout/subscription');
+
+			if (!$this->request->post['subscription_id']) {
+				$output['subscription_id'] = $this->model_checkout_subscription->addSubscription($this->request->post + $subscription_data);
+			} else {
+				$this->model_checkout_subscription->editSubscription((int)$this->request->post['subscription_id'], $this->request->post + $subscription_data);
+			}
+
+			$output['success'] = $this->language->get('text_success');
+		}
+
+		$output['products'] = $this->load->controller('api/cart.getProducts');
+		$output['shipping_required'] = $this->cart->hasShipping();
 
 		return $output;
 	}

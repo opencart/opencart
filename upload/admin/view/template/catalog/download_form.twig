@@ -85,11 +85,20 @@ $('#button-upload').on('click', function() {
 
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
 
-    $('#form-upload input[name=\'file\']').trigger('click');
+    var $fileInput = $('#form-upload input[name=\'file\']');
 
-    $('#form-upload input[name=\'file\']').on('change', function() {
-        if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
+    $fileInput.trigger('click');
+
+    // If the file is canceled before being selected
+    $fileInput[0].addEventListener('cancel', function(e) {
+        $('#form-upload').remove();
+    });
+
+    $fileInput.on('change', function() {
+        if (this.files[0].size > {{ config_file_max_size }}) {
             $(this).val('');
+
+            $('#form-upload').remove();
 
             alert('{{ error_upload_size }}');
         }
@@ -100,7 +109,7 @@ $('#button-upload').on('click', function() {
     }
 
     var timer = setInterval(function() {
-        if ($('#form-upload input[name=\'file\']').val() !== '') {
+        if ($fileInput.val() !== '') {
             clearInterval(timer);
 
             $.ajax({
@@ -129,10 +138,14 @@ $('#button-upload').on('click', function() {
                         $('#input-mask').val(json['mask']);
 
                         $('#button-download').prop('disabled', false);
+
+                        $('#form-upload').remove();
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                    $('#form-upload').remove();
                 }
             });
         }

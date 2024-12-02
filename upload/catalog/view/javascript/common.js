@@ -385,7 +385,7 @@ var chain = new Chain();
 
                 this.timer = setTimeout(function(object) {
                     object.source($(object).val(), $.proxy(object.response, object));
-                }, 50, this);
+                }, 150, this);
             }
 
             // Response

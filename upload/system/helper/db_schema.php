@@ -1098,7 +1098,6 @@ function oc_db_schema() {
 			[
 				'name' => 'cart_id',
 				'key'  => [
-					'api_id',
 					'customer_id',
 					'session_id',
 					'product_id',
@@ -5163,6 +5162,16 @@ function oc_db_schema() {
 				'default' => '0.0000'
 			],
 			[
+				'name'    => 'type',
+				'type'    => 'char(1)',
+				'default' => 'P'
+			],
+			[
+				'name'    => 'special',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
 				'name' => 'date_start',
 				'type' => 'date'
 			],
@@ -5580,69 +5589,6 @@ function oc_db_schema() {
 				'key'   => 'customer_group_id',
 				'table' => 'customer_group',
 				'field' => 'customer_group_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_general_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'product_special',
-		'field' => [
-			[
-				'name'           => 'product_special_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'customer_group_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name'    => 'priority',
-				'type'    => 'int(5)',
-				'default' => '1'
-			],
-			[
-				'name'    => 'price',
-				'type'    => 'decimal(15,4)',
-				'default' => '0.0000'
-			],
-			[
-				'name' => 'date_start',
-				'type' => 'date'
-			],
-			[
-				'name' => 'date_end',
-				'type' => 'date'
-			]
-		],
-		'primary' => [
-			'product_special_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'customer_group_id',
-				'table' => 'customer_group',
-				'field' => 'customer_group_id'
-			]
-		],
-		'index' => [
-			[
-				'name' => 'product_id',
-				'key'  => [
-					'product_id'
-				]
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -6464,18 +6410,6 @@ function oc_db_schema() {
 			[
 				'name' => 'subscription_status_id',
 				'type' => 'int(11)'
-			],
-			[
-				'name' => 'affiliate_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'marketing_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'tracking',
-				'type' => 'varchar(64)'
 			],
 			[
 				'name' => 'language_id',

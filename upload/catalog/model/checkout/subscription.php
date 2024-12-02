@@ -24,11 +24,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *   'shipping_address_id'  => $order_info['shipping_address_id'],
 	 *   'shipping_method'      => $order_info['shipping_method'],
 	 *   'subscription_plan_id' => $order_subscription_info['subscription_plan_id'],
-	 *   'trial_price'          => $order_subscription_info['trial_price'],
-	 *   'trial_frequency'      => $order_subscription_info['trial_frequency'],
-	 *   'trial_cycle'          => $order_subscription_info['trial_cycle'],
-	 *   'trial_duration'       => $order_subscription_info['trial_duration'],
-	 *   'trial_status'         => $order_subscription_info['trial_status'],
 	 *   'price'                => $order_subscription_info['price'],
 	 *   'frequency'            => $order_subscription_info['frequency'],
 	 *   'cycle'                => $order_subscription_info['cycle'],
@@ -46,24 +41,13 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * $subscription_id = $this->model_checkout_subscription->addSubscription($subscription_data);
 	 */
 	public function addSubscription(array $data): int {
-		if ($data['trial_status'] && $data['trial_duration']) {
-			$trial_remaining = $data['trial_duration'] - 1;
-			$remaining = $data['duration'];
-		} elseif ($data['duration']) {
-			$trial_remaining = 0;
+		if ($data['duration']) {
 			$remaining = $data['duration'] - 1;
 		} else {
-			$trial_remaining = 0;
 			$remaining = 0;
 		}
 
-		if ($data['trial_status'] && $data['trial_duration']) {
-			$date_next = date('Y-m-d', strtotime('+' . $data['trial_cycle'] . ' ' . $data['trial_frequency']));
-		} else {
-			$date_next = date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']));
-		}
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$trial_remaining . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape($date_next) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language_id` = '" . (int)$data['language_id'] . "', `currency_id` = '" . (int)$data['currency_id'] . "', `date_added` = NOW(), `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape(date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']))) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language_id` = '" . (int)$data['language_id'] . "', `currency_id` = '" . (int)$data['currency_id'] . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$subscription_id = $this->db->getLastId();
 
@@ -115,24 +99,13 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * $this->model_checkout_subscription->addSubscription($subscription_id, $subscription_data);
 	 */
 	public function editSubscription(int $subscription_id, array $data): void {
-		if ($data['trial_status'] && $data['trial_duration']) {
-			$trial_remaining = $data['trial_duration'] - 1;
-			$remaining = $data['duration'];
-		} elseif ($data['duration']) {
-			$trial_remaining = 0;
+		if ($data['duration']) {
 			$remaining = $data['duration'] - 1;
 		} else {
-			$trial_remaining = 0;
 			$remaining = 0;
 		}
 
-		if ($data['trial_status'] && $data['trial_duration']) {
-			$date_next = date('Y-m-d', strtotime('+' . $data['trial_cycle'] . ' ' . $data['trial_frequency']));
-		} else {
-			$date_next = date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']));
-		}
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$trial_remaining . "',`trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape($date_next) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language_id` = '" . (int)$data['language_id'] . "', `currency_id` = '" . (int)$data['currency_id'] . "', `date_modified` = NOW() WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape(date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']))) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language_id` = '" . (int)$data['language_id'] . "', `currency_id` = '" . (int)$data['currency_id'] . "', `date_modified` = NOW() WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		$this->deleteProducts($subscription_id);
 
@@ -163,18 +136,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 */
 	public function editRemaining(int $subscription_id, int $remaining): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `remaining` = '" . (int)$remaining . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
-	}
-
-	/**
-	 * Edit Trial Remaining
-	 *
-	 * @param int $subscription_id
-	 * @param int $trial_remaining
-	 *
-	 * @return void
-	 */
-	public function editTrialRemaining(int $subscription_id, int $trial_remaining): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `trial_remaining` = '" . (int)$trial_remaining . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
 	/**
@@ -294,7 +255,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addProduct(int $subscription_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_product` SET `subscription_id` = '" . (int)$subscription_id . "', `order_product_id` = '" . (int)$data['order_product_id'] . "', `order_id` = '" . (int)$data['order_id'] . "', `product_id` =  '" . (int)$data['product_id'] . "', `option` = '" . $this->db->escape($data['option'] ? json_encode($data['option']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `price` = '" . (float)$data['price'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_product` SET `subscription_id` = '" . (int)$subscription_id . "', `order_product_id` = '" . (int)$data['order_product_id'] . "', `order_id` = '" . (int)$data['order_id'] . "', `product_id` =  '" . (int)$data['product_id'] . "', `option` = '" . $this->db->escape($data['option'] ? json_encode($data['option']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `price` = '" . (float)$data['price'] . "'");
 	}
 
 	/**

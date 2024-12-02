@@ -303,15 +303,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_subscription_info = $this->model_account_order->getSubscription($order_id, $product['order_product_id']);
 
 				if ($order_subscription_info) {
-					if ($order_subscription_info['trial_status']) {
-						$trial_price = $this->currency->format($order_subscription_info['trial_price'] + ($this->config->get('config_tax') ? $order_subscription_info['trial_tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
-						$trial_cycle = $order_subscription_info['trial_cycle'];
-						$trial_frequency = $this->language->get('text_' . $order_subscription_info['trial_frequency']);
-						$trial_duration = $order_subscription_info['trial_duration'];
-
-						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
-					}
-
 					$price = $this->currency->format($order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
 					$cycle = $order_subscription_info['cycle'];
 					$frequency = $this->language->get('text_' . $order_subscription_info['frequency']);

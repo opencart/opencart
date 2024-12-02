@@ -325,7 +325,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addSubscription(int $order_id, int $order_product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "'");
 	}
 
 	/**
@@ -604,9 +604,8 @@ class Order extends \Opencart\System\Engine\Model {
 							$subscription_id = $subscription_info['subscription_id'];
 						} else {
 							$subscription_product_data = [
-								'option'      => $option_data,
-								'trial_price' => $order_subscription_info['trial_price'],
-								'price'       => $order_subscription_info['price']
+								'option' => $option_data,
+								'price'  => $order_subscription_info['price']
 	                        ] + $order_product;
 
 							$subscription_id = $this->model_checkout_subscription->addSubscription($order_info + $order_subscription_info + ['subscription_product' => [$subscription_product_data]]);

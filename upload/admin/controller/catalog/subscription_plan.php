@@ -254,30 +254,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!empty($subscription_info)) {
-			$data['trial_frequency'] = $subscription_info['trial_frequency'];
-		} else {
-			$data['trial_frequency'] = '';
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_duration'] = $subscription_info['trial_duration'];
-		} else {
-			$data['trial_duration'] = '0';
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_cycle'] = $subscription_info['trial_cycle'];
-		} else {
-			$data['trial_cycle'] = '1';
-		}
-
-		if (!empty($subscription_info)) {
-			$data['trial_status'] = $subscription_info['trial_status'];
-		} else {
-			$data['trial_status'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
 			$data['frequency'] = $subscription_info['frequency'];
 		} else {
 			$data['frequency'] = '';
@@ -334,10 +310,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			if (!oc_validate_length($value['name'], 3, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
-		}
-
-		if ($this->request->post['trial_duration'] && (int)$this->request->post['trial_duration'] < 1) {
-			$json['error']['trial_duration'] = $this->language->get('error_trial_duration');
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

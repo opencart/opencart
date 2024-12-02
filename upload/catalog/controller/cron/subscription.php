@@ -37,7 +37,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$order_info = $this->model_checkout_order->getOrder($result['order_id']);
 
-			if (($result['trial_status'] && $result['trial_remaining']) || ($result['duration'] && $result['remaining'])) {
+			if ($result['duration'] && $result['remaining']) {
 				$error = '';
 
 				// 1. Language
@@ -47,6 +47,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				if (!$language_info) {
 					$error = $this->language->get('error_language');
+				}
 				}
 
 				// 2. Currency
@@ -84,13 +85,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$product_info = $this->model_catalog_product->getProduct($result['product_id']);
 
 					if ($product_info) {
-						$price = $result['price'];
-
-						if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
-							$price = $result['trial_price'];
-						}
-
-						$store->cart->add($result['product_id'], $result['quantity'], $result['option'], $result['subscription_plan_id'], true, ['price' => $price]);
+						$store->cart->add($result['product_id'], $result['quantity'], $result['option'], $result['subscription_plan_id'], true, ['price' =>  $result['price']]);
 					} else {
 						$error = $this->language->get('error_product');
 					}
@@ -267,7 +262,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					foreach ($products as $product) {
 						$order_data['products'][] = [
 							'subscription' => [],
-							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
+							'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id'])
 						] + $product;
 					}
 
@@ -370,12 +365,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							$remaining = 0;
 							$date_next = '';
 
-							if ($result['trial_status'] && $result['trial_remaining'] > 1) {
-								$remaining = $result['trial_remaining'] - 1;
-								$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
-
-								$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $remaining);
-							} elseif ($result['duration'] && $result['remaining']) {
+							if ($result['duration'] && $result['remaining']) {
 								$remaining = $result['remaining'] - 1;
 								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
 

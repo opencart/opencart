@@ -254,37 +254,13 @@ class Cart {
 					$subscription_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` `ps` LEFT JOIN `" . DB_PREFIX . "subscription_plan` `sp` ON (`ps`.`subscription_plan_id` = `sp`.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `ps`.`product_id` = '" . (int)$cart['product_id'] . "' AND `ps`.`subscription_plan_id` = '" . (int)$cart['subscription_plan_id'] . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `sp`.`status` = '1'");
 
 					if ($subscription_query->num_rows) {
-						if ($subscription_query->row['type'] == 'F') {
-
-							//if ($subscription_query->row['trial_status']) {
-							$subscription_query->row['duration'] /
-							//}
-
-							//if ($subscription_query->row['duration']) {
-
-							//}
-
-							$price = $price;
-
-						} elseif ($subscription_query->row['type'] == 'S') {
-
-							if ($subscription_query->row['duration']) {
-								$price / $subscription_query->row['duration'];
-							}
-
-							$price = $price - ($price * ($product_discount_query->row['price'] / 100));
-						}
-
-						// Set the new price if is subscription product
-						$price = $subscription_query->row['price'];
-
-						if ($subscription_query->row['trial_status']) {
-							$price = $subscription_query->row['trial_price'];
+						// Set the new price if subscription product
+						if ($subscription_query->row['duration']) {
+							 $price = $price / $subscription_query->row['duration'];
 						}
 
 						$subscription_data = ['remaining' => $subscription_query->row['duration']] + $subscription_query->row;
 					}
-
 
 					$this->data[$cart['cart_id']] = [
 						'cart_id'        => $cart['cart_id'],
@@ -295,8 +271,8 @@ class Cart {
 						'minimum_status' => $minimum,
 						'stock'          => $stock,
 						'stock_status'   => $stock_status,
-						'price'          => ($price + $option_price),
-						'total'          => ($price + $option_price) * $cart['quantity'],
+						'price'          => $price,
+						'total'          => $price * $cart['quantity'],
 						'reward'         => $reward * $cart['quantity'],
 						'points'         => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
 						'weight'         => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],

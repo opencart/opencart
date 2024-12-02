@@ -72,7 +72,6 @@
           <tr>
             <th>{{ column_product }}</th>
             <th class="text-end">{{ column_quantity }}</th>
-            <th class="text-end">{{ column_trial_price }}</th>
             <th class="text-end">{{ column_price }}</th>
           </tr>
         </thead>
@@ -94,7 +93,6 @@
                   </ul>
                 </td>
                 <td class="text-end">{{ product.quantity }}</td>
-                <td class="text-end">{{ product.trial_price }}</td>
                 <td class="text-end">{{ product.price }}</td>
               </tr>
             {% endfor %}
@@ -118,15 +116,18 @@
             {{ date_next }}
           </div>
         </div>
-        {% if trial_duration or duration %}
+
           <div class="col">
             <div class="form-control">
               <strong class="lead">{{ text_remaining }}</strong>
               <br/>
+              {% if duration %}
               {{ remaining }}
+              {% else %}
+              {{ text_cancel }}
+              {% endif %}
             </div>
           </div>
-        {% endif %}
       </div>
       <div class="text-end mb-3">
         <button type="button" id="button-cancel" class="btn btn-danger">{{ button_cancel }}</button>

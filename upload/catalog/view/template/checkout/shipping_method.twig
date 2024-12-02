@@ -46,12 +46,12 @@ $('#button-shipping-methods').on('click', function() {
                     html += '        <form id="form-shipping-method">';
                     html += '          <p>{{ text_shipping|escape('js') }}</p>';
 
+                    var first = true;
+
                     for (i in json['shipping_methods']) {
                         html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
                         if (!json['shipping_methods'][i]['error']) {
-                            var first = true;
-
                             for (j in json['shipping_methods'][i]['quote']) {
                                 html += '<div class="form-check">';
 

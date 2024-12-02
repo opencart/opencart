@@ -55,13 +55,12 @@ $('#button-payment-methods').on('click', function() {
                     html += '        <form id="form-payment-method">';
                     html += '          <p>{{ text_payment|escape('js') }}</p>';
 
+                    var first = true;
+
                     for (i in json['payment_methods']) {
                         html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
 
                         if (!json['payment_methods'][i]['error']) {
-
-                            var first = true;
-
                             for (j in json['payment_methods'][i]['option']) {
                                 html += '<div class="form-check">';
 

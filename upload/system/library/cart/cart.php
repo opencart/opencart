@@ -208,9 +208,14 @@ class Cart {
 
 					if ($product_discount_query->num_rows) {
 						if ($product_discount_query->row['type'] == 'F') {
-							$price = $price - $product_discount_query->row['price'];
+							// Fixed Price
+							$price = $product_discount_query->row['price'] + $option_price;
 						} elseif ($product_discount_query->row['type'] == 'P') {
+							// Percentage
 							$price = $price - ($price * ($product_discount_query->row['price'] / 100));
+						} elseif ($product_discount_query->row['type'] == 'S') {
+							// Subtract
+							$price = $price - $product_discount_query->row['price'];
 						}
 					}
 
@@ -250,12 +255,24 @@ class Cart {
 
 					if ($subscription_query->num_rows) {
 						if ($subscription_query->row['type'] == 'F') {
-							$price = $price - $subscription_query->row['price'];
+
+							//if ($subscription_query->row['trial_status']) {
+							$subscription_query->row['duration'] /
+							//}
+
+							//if ($subscription_query->row['duration']) {
+
+							//}
+
+							$price = $price;
+
 						} elseif ($subscription_query->row['type'] == 'S') {
-							//$subscription_query->row['duration']
 
+							if ($subscription_query->row['duration']) {
+								$price / $subscription_query->row['duration'];
+							}
 
-
+							$price = $price - ($price * ($product_discount_query->row['price'] / 100));
 						}
 
 						// Set the new price if is subscription product

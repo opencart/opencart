@@ -1136,7 +1136,12 @@
                             <option value="F">{{ text_fixed }}</option>
                             <option value="P">{{ text_percentage }}</option>
                           </select></td>
-                        <td><div class="form-check form-switch form-switch-lg"><input type="hidden" name="product_discount[{{ discount_row }}][special]" value="0"/><input type="checkbox" name="product_discount[{{ discount_row }}][special]" value="1" class="form-check-input"/></div></td>
+                        <td><div class="form-check form-switch form-switch-lg">
+                            <input type="hidden" name="product_discount[{{ discount_row }}][special]" value="0"/>
+                            <input type="checkbox" name="product_discount[{{ discount_row }}][special]" value="1" class="form-check-input"{% if product_discount.special %} checked{% endif %}/></div>
+
+
+                        </td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1850,7 +1855,7 @@ $('#button-discount').on('click', function() {
     html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
     html += '  </select><input type="hidden" name="product_discount[' + discount_row + '][product_discount_id]" value=""/></td>';
-    html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="1" placeholder="{{ entry_quantity|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price|escape('js') }}" class="form-control"/></td>';
     html += '  <td><select name="product_discount[' + discount_row + '][type]" class="form-select">';

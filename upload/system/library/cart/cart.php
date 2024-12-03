@@ -204,7 +204,7 @@ class Cart {
 					}
 
 					// Product Discounts
-					$product_discount_query = $this->db->query("SELECT `price` FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$product_total . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
+					$product_discount_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$product_total . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
 
 					if ($product_discount_query->num_rows) {
 						if ($product_discount_query->row['type'] == 'F') {
@@ -254,12 +254,14 @@ class Cart {
 					$subscription_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` `ps` LEFT JOIN `" . DB_PREFIX . "subscription_plan` `sp` ON (`ps`.`subscription_plan_id` = `sp`.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `ps`.`product_id` = '" . (int)$cart['product_id'] . "' AND `ps`.`subscription_plan_id` = '" . (int)$cart['subscription_plan_id'] . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `sp`.`status` = '1'");
 
 					if ($subscription_query->num_rows) {
+						$duration = $subscription_query->row['duration'];
+
 						// Set the new price if subscription product
-						if ($subscription_query->row['duration']) {
-							 $price = $price / $subscription_query->row['duration'];
+						if ($duration) {
+							$price = $price / $duration;
 						}
 
-						$subscription_data = ['remaining' => $subscription_query->row['duration']] + $subscription_query->row;
+						$subscription_data = ['remaining' => $duration] + $subscription_query->row;
 					}
 
 					$this->data[$cart['cart_id']] = [

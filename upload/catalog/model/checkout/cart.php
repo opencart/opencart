@@ -61,7 +61,7 @@ class Cart extends \Opencart\System\Engine\Model {
 			if ($product['subscription']) {
 				$subscription_data = [
 					'frequency_text' => $this->language->get('text_' . $product['subscription']['frequency']),
-					'price_text'     => $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+					'price_text'     => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 				] + $product['subscription'];
 			}
 

@@ -20,7 +20,8 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->registry = $registry;
 
 		// Storing some sub queries so that we are not typing them out multiple times.
-		$this->statement['discount'] = "(SELECT `pd2`.`price` FROM `" . DB_PREFIX . "product_discount` `pd2` WHERE `pd2`.`product_id` = `p`.`product_id` AND `pd2`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'AND `pd2`.`quantity` = '1' AND ((`pd2`.`date_start` = '0000-00-00' OR `pd2`.`date_start` < NOW()) AND (`pd2`.`date_end` = '0000-00-00' OR `pd2`.`date_end` > NOW())) ORDER BY `pd2`.`priority` ASC, `pd2`.`price` ASC LIMIT 1) AS `discount`";
+		$this->statement['discount'] = "(SELECT `pd2`.`price` FROM `" . DB_PREFIX . "product_discount` `pd2` WHERE `pd2`.`product_id` = `p`.`product_id` AND `pd2`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `pd2`.`quantity` = '1' AND `pd2`.`special` = '0' AND ((`pd2`.`date_start` = '0000-00-00' OR `pd2`.`date_start` < NOW()) AND (`pd2`.`date_end` = '0000-00-00' OR `pd2`.`date_end` > NOW())) ORDER BY `pd2`.`priority` ASC, `pd2`.`price` ASC LIMIT 1) AS `discount`";
+		$this->statement['special'] = "(SELECT `ps`.`price` FROM `" . DB_PREFIX . "product_discount` `ps` WHERE `ps`.`product_id` = `p`.`product_id` AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `ps`.`quantity` = '1' AND `ps`.`special` = '1' AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW())) ORDER BY `ps`.`priority` ASC, `ps`.`price` ASC LIMIT 1) AS `special`";
 		$this->statement['reward'] = "(SELECT `pr`.`points` FROM `" . DB_PREFIX . "product_reward` `pr` WHERE `pr`.`product_id` = `p`.`product_id` AND `pr`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "') AS `reward`";
 		$this->statement['review'] = "(SELECT COUNT(*) FROM `" . DB_PREFIX . "review` `r` WHERE `r`.`product_id` = `p`.`product_id` AND `r`.`status` = '1' GROUP BY `r`.`product_id`) AS `reviews`";
 	}
@@ -33,13 +34,14 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 */
 	public function getProduct(int $product_id): array {
-		$query = $this->db->query("SELECT DISTINCT *, `pd`.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p2s`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT DISTINCT *, `pd`.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p2s`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		if ($query->num_rows) {
 			$product_data = $query->row;
 
 			$product_data['variant'] = (array)json_decode($query->row['variant'], true);
 			$product_data['override'] = (array)json_decode($query->row['override'], true);
+			$product_data['price'] = (float)($query->row['discount'] ?: $query->row['price']);
 			$product_data['rating'] = (int)$query->row['rating'];
 			$product_data['reviews'] = (int)$query->row['reviews'] ? $query->row['reviews'] : 0;
 
@@ -57,7 +59,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getProducts(array $data = []): array {
-		$sql = "SELECT DISTINCT *, `pd`.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'];
+		$sql = "SELECT DISTINCT *, `pd`.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'];
 
 		if (!empty($data['filter_category_id'])) {
 			$sql .= " FROM `" . DB_PREFIX . "category_to_store` `c2s`";
@@ -175,7 +177,7 @@ class Product extends \Opencart\System\Engine\Model {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
 				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
 			} elseif ($data['sort'] == 'p.price') {
-				$sql .= " ORDER BY (CASE WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
+				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` CASE WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
 				$sql .= " ORDER BY " . $data['sort'];
 			}
@@ -417,7 +419,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRelated(int $product_id): array {
-		$sql = "SELECT DISTINCT *, `pd`.`name` AS `name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_related` `pr` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `pr`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "') LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pr`.`related_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pr`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT DISTINCT *, `pd`.`name` AS `name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_related` `pr` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `pr`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "') LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pr`.`related_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pr`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$key = md5($sql);
 
@@ -547,6 +549,84 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Specials
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function getSpecials(array $data = []): array {
+		$sql = "SELECT DISTINCT *, `pd`.`name`, `p`.`image`, `p`.`price`, `ps`.price as special, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_discount` `ps` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`ps`.`product_id` = `p2s`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `p`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `ps`.`quantity` = '1' AND `ps`.`special` = '1' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW())) GROUP BY `ps`.`product_id`";
+
+		$sort_data = [
+			'pd.name',
+			'p.model',
+			'p.price',
+			'rating',
+			'p.sort_order'
+		];
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
+				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+			} elseif ($data['sort'] == 'p.price') {
+				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
+			} else {
+				$sql .= " ORDER BY " . $data['sort'];
+			}
+		} else {
+			$sql .= " ORDER BY `p`.`sort_order`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC, LCASE(`pd`.`name`) DESC";
+		} else {
+			$sql .= " ASC, LCASE(`pd`.`name`) ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$key = md5($sql);
+
+		$product_data = $this->cache->get('product.' . $key);
+
+		if (!$product_data) {
+			$query = $this->db->query($sql);
+
+			$product_data = $query->rows;
+
+			$this->cache->set('product.' . $key, $product_data);
+		}
+
+		return (array)$product_data;
+	}
+
+	/**
+	 * Get Total Specials
+	 *
+	 * @return int
+	 */
+	public function getTotalSpecials(): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT `ps`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product_discount` `ps` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `ps`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW()))) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())");
+
+		if (isset($query->row['total'])) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 
 	/**

@@ -383,12 +383,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			// Subscriptions
-			if ($product_info['special']) {
-				$subscription_price = $product_info['special'];
-			} else {
-				$subscription_price = $product_info['price'];
-			}
-
 			$data['subscription_plans'] = [];
 
 			$results = $this->model_catalog_product->getSubscriptions($product_id);
@@ -398,9 +392,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					if ($result['duration']) {
-						$price = $subscription_price / $result['duration'];
+						$price = ($product_info['special'] ? $product_info['special'] : $product_info['price']) / $result['duration'];
 					} else {
-						$price = $subscription_price;
+						$price = ($product_info['special'] ? $product_info['special'] : $product_info['price']);
 					}
 
 					$price = $this->currency->format($this->tax->calculate($price, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);

@@ -354,8 +354,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
-		foreach ($query->rows as $subscription_product) {
-			$subscription_product_data[] = ['option' => $subscription_product['option'] ? json_decode($subscription_product['option'], true) : ''] + $subscription_product;
+		foreach ($query->rows as $result) {
+			$subscription_product_data[] = ['option' => $result['option'] ? json_decode($result['option'], true) : []] + $result;
 		}
 
 		return $subscription_product_data;

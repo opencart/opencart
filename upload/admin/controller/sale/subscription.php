@@ -575,17 +575,75 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if ($product_info) {
 				$option_data = [];
 
-				foreach ($result['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$option_data[] = $option;
-					} else {
-						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+				foreach ($result['option'] as $product_option_id => $value) {
+					$option_info = $this->model_catalog_product->getOption($result['product_id'], $product_option_id);
 
-						if ($upload_info) {
-							$option_data[] = $option + ['href' => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])];
+					if ($option_info) {
+
+						if ($option_info['type'] == 'select' || $option_info['type'] == 'radio') {
+							$option_value_info = $this->model_catalog_product->getOptionValue($result['product_id'], $value);
+
+							if ($option_value_info) {
+								$option_data[] = [
+									'product_option_id' => $product_option_id,
+									'name'              => $option_info['name'],
+									'value'             => $option_value_info['name'],
+									'price'             => $option_value_info['price'],
+									'price_prefix'      => $option_value_info['price_prefix']
+								];
+							}
+						} elseif ($option_info['type'] == 'checkbox' && is_array($value)) {
+							foreach ($value as $product_option_value_id) {
+								$option_value_info = $this->model_catalog_product->getOptionValue($result['product_id'], $product_option_value_id);
+
+								if ($option_value_info) {
+									$option_data[] = [
+										'name'         => $option_info['name'],
+										'value'        => $option_value_info['name'],
+										'price'        => $option_value_info['price'],
+										'price_prefix' => $option_value_info['price_prefix']
+									];
+								}
+							}
+
+							print_r($option_info);
+							print_r($option_value_info);
+
+						} elseif ($option_info['type'] == 'text' || $option_info['type'] == 'textarea' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
+
+
+							if ($option_info['type'] != 'file') {
+								$option_data[] = [
+									'name'  => $option_info['name'],
+									'value' => $value
+									] + $option_info;
+							}
+
+
+						} elseif ($option_info['type'] == 'file') {
+							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+							if ($upload_info) {
+								$value = $upload_info['name'];
+							} else {
+								$value = '';
+							}
+
+
+
+							$upload_info = $this->model_tool_upload->getUploadByCode($option_info['value']);
+
+							if ($upload_info) {
+								$option_data[] = [
+										'value' => $value,
+										'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+									] + $option_info;
+							}
 						}
 					}
 				}
+
+				print_r($option_data);
 
 				$data['subscription_products'][] = [
 					'option'       => $option_data,

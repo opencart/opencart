@@ -156,6 +156,10 @@ class Loader {
 			}
 		}
 
+		foreach (get_class_vars($class) as $name => $value) {
+			$proxy->{$name} = $value;
+		}
+
 		// Store proxy object
 		$this->registry->set($key, $proxy);
 	}

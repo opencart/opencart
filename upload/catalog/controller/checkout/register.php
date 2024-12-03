@@ -225,7 +225,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		// Force account requires subscript or is a downloadable product.
-		if ($this->cart->hasDownload() || $this->cart->hasSubscription()) {
+		if ($this->cart->hasDownload() || $this->cart->hasSubscription() || !$this->config->get('config_checkout_guest')) {
 			$this->request->post['account'] = 1;
 		}
 

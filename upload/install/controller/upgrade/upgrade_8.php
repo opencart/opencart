@@ -216,6 +216,111 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$remove[] = [
+				'table' => 'order_subscription',
+				'field' => 'trial_price'
+			];
+
+			$remove[] = [
+				'table' => 'order_subscription',
+				'field' => 'trial_frequency'
+			];
+
+			$remove[] = [
+				'table' => 'order_subscription',
+				'field' => 'trial_cycle'
+			];
+
+			$remove[] = [
+				'table' => 'order_subscription',
+				'field' => 'trial_duration'
+			];
+
+			$remove[] = [
+				'table' => 'order_subscription',
+				'field' => 'trial_remaining'
+			];
+
+			$remove[] = [
+				'table' => 'order_subscription',
+				'field' => 'trial_status'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'trial_price'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'trial_frequency'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'trial_cycle'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'trial_duration'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'trial_remaining'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'trial_status'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_product',
+				'field' => 'trial_price'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_price'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_frequency'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_cycle'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_duration'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_remaining'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_status'
+			];
+
+			$remove[] = [
+				'table' => 'product_subscription',
+				'field' => 'trial_price'
+			];
+
+			$remove[] = [
+				'table' => 'product_subscription',
+				'field' => 'price'
+			];
+
+			$remove[] = [
 				'table' => 'user',
 				'field' => 'salt'
 			];

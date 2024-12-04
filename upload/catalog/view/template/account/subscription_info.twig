@@ -72,6 +72,7 @@
           <tr>
             <th>{{ column_product }}</th>
             <th class="text-end">{{ column_quantity }}</th>
+            <th class="text-end">{{ column_trial_price }}</th>
             <th class="text-end">{{ column_price }}</th>
           </tr>
         </thead>
@@ -93,6 +94,7 @@
                   </ul>
                 </td>
                 <td class="text-end">{{ product.quantity }}</td>
+                <td class="text-end">{{ product.trial_price }}</td>
                 <td class="text-end">{{ product.price }}</td>
               </tr>
             {% endfor %}

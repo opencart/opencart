@@ -285,6 +285,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 
 			if ($subscription_info) {
+				if ($subscription_info['trial_status']) {
+					$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
+					$trial_cycle = $subscription_info['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+					$trial_duration = $subscription_info['trial_duration'];
+
+					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
+
 				$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
 				$cycle = $subscription_info['cycle'];
 				$frequency = $this->language->get('text_' . $subscription_info['frequency']);
@@ -534,6 +543,15 @@ class Order extends \Opencart\System\Engine\Controller {
 				$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 
 				if ($subscription_info) {
+					if ($subscription_info['trial_status']) {
+						$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $this->session->data['currency']);
+						$trial_cycle = $subscription_info['trial_cycle'];
+						$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+						$trial_duration = $subscription_info['trial_duration'];
+
+						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					}
+
 					$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0), $this->session->data['currency']);
 					$cycle = $subscription_info['cycle'];
 					$frequency = $this->language->get('text_' . $subscription_info['frequency']);

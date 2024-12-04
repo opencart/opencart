@@ -4647,6 +4647,30 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
+			],
+			[
+				'name' => 'trial_tax',
+				'type' => 'decimal(15,4)'
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')'
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'smallint(6)'
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'smallint(6)'
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(1)'
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(10,4)'
 			],
@@ -5408,6 +5432,14 @@ function oc_db_schema() {
 			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)'
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)'
 			]
 		],
 		'primary' => [
@@ -6324,6 +6356,30 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')'
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'smallint(6)'
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'smallint(6)'
+			],
+			[
+				'name' => 'trial_remaining',
+				'type' => 'smallint(6)'
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(1)'
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(10,4)'
 			],
@@ -6446,6 +6502,10 @@ function oc_db_schema() {
 			[
 				'name' => 'quantity',
 				'type' => 'int(4)'
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
 			],
 			[
 				'name' => 'price',
@@ -6595,6 +6655,22 @@ function oc_db_schema() {
 				'name'           => 'subscription_plan_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')'
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'int(10)'
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'int(10)'
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(4)'
 			],
 			[
 				'name' => 'frequency',

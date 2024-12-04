@@ -732,15 +732,23 @@ class Order extends \Opencart\System\Engine\Controller {
 			$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
+				if ($subscription_info['trial_status']) {
+					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+					$trial_cycle = $subscription_info['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+					$trial_duration = $subscription_info['trial_duration'];
+
+					$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
 				$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
 				$cycle = $subscription_info['cycle'];
 				$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 				$duration = $subscription_info['duration'];
 
 				if ($subscription_info['duration']) {
-					$subscription_plan = sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
 				} else {
-					$subscription_plan = sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
 
 				$subscription_plan_id = $subscription_info['subscription_plan_id'];
@@ -1410,6 +1418,14 @@ class Order extends \Opencart\System\Engine\Controller {
 					$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
 					if ($subscription_info) {
+						if ($subscription_info['trial_status']) {
+							$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+							$trial_cycle = $subscription_info['trial_cycle'];
+							$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+							$trial_duration = $subscription_info['trial_duration'];
+
+							$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+						}
 						$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
 						$cycle = $subscription_info['cycle'];
 						$frequency = $this->language->get('text_' . $subscription_info['frequency']);

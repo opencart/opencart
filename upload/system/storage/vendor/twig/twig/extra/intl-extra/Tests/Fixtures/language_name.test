@@ -1,0 +1,20 @@
+--TEST--
+"language_name" filter
+--TEMPLATE--
+{{ 'UNKNOWN'|language_name }}
+{{ null|language_name }}
+{{ 'de'|language_name }}
+{{ 'fr'|language_name }}
+{{ 'de'|language_name('fr') }}
+{{ 'fr'|language_name('fr_FR') }}
+{{ 'fr_CA'|language_name('fr_FR') }}
+--DATA--
+return [];
+--EXPECT--
+UNKNOWN
+
+German
+French
+allemand
+français
+français canadien

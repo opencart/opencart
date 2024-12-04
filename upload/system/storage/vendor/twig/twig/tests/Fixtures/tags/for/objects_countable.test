@@ -1,0 +1,49 @@
+--TEST--
+"for" tag iterates over iterable and countable objects
+--TEMPLATE--
+{% for item in items %}
+  * {{ item }}
+  * {{ loop.index }}/{{ loop.index0 }}
+  * {{ loop.revindex }}/{{ loop.revindex0 }}
+  * {{ loop.first }}/{{ loop.last }}/{{ loop.length }}
+
+{% endfor %}
+
+{% for key, value in items %}
+  * {{ key }}/{{ value }}
+{% endfor %}
+
+{% for key in items|keys %}
+  * {{ key }}
+{% endfor %}
+--DATA--
+class ItemsIteratorCountable implements \Iterator, \Countable
+{
+  protected $values = ['foo' => 'bar', 'bar' => 'foo'];
+  #[\ReturnTypeWillChange]
+  public function current() { return current($this->values); }
+  #[\ReturnTypeWillChange]
+  public function key() { return key($this->values); }
+  public function next(): void { next($this->values); }
+  public function rewind(): void { reset($this->values); }
+  public function valid(): bool { return false !== current($this->values); }
+  public function count(): int { return count($this->values); }
+}
+return ['items' => new ItemsIteratorCountable()]
+--EXPECT--
+  * bar
+  * 1/0
+  * 2/1
+  * 1//2
+
+  * foo
+  * 2/1
+  * 1/0
+  * /1/2
+
+
+  * foo/bar
+  * bar/foo
+
+  * foo
+  * bar

@@ -1139,6 +1139,7 @@
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td><select name="product_discount[{{ discount_row }}][type]" class="form-select">
                             <option value="F">{{ text_fixed }}</option>
+                            <option value="S">{{ text_subtract }}</option>
                             <option value="P">{{ text_percentage }}</option>
                           </select></td>
                         <td><div class="form-check form-switch form-switch-lg">

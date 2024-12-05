@@ -255,7 +255,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$subscription_data = [];
 
 				if ($product['subscription']) {
-					$subscription_data = ['tax' => $this->tax->getTax($product['price'], $product['tax_class_id'])] + $product['subscription'];
+					$subscription_data = [
+						'trial_tax' => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
+						'tax'       => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id'])
+					] + $product['subscription'];
 				}
 
 				$order_data['products'][] = [
@@ -292,7 +295,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$subscription = '';
 
-			if ($product['subscription'] && $price_status) {
+			if ($product['subscription']) {
+				if ($product['subscription']['trial_status']) {
+					$subscription .= sprintf($this->language->get('text_subscription_trial'), $price_status ?? $product['subscription']['trial_price_text'], $product['subscription']['trial_cycle'], $product['subscription']['trial_frequency_text'], $product['subscription']['trial_duration']);
+				}
+
 				if ($product['subscription']['duration']) {
 					$subscription .= sprintf($this->language->get('text_subscription_duration'),  $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency_text'], $product['subscription']['duration']);
 				} else {

@@ -27,6 +27,17 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Product Quantity
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return int
+	 */
+	public function editQuantity(int $product_id, int $quantity): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = '" . (int)$quantity . "' WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	/**
 	 * Get Product
 	 *
 	 * @param int $product_id
@@ -219,6 +230,121 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Products
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @return int
+	 */
+	public function getTotalProducts(array $data = []): int {
+		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total`";
+
+		if (!empty($data['filter_category_id'])) {
+			$sql .= " FROM `" . DB_PREFIX . "category_to_store` `c2s`";
+
+			if (!empty($data['filter_sub_category'])) {
+				$sql .= " LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cp`.`category_id` = `c2s`.`category_id` AND `c2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "') LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`category_id` = `cp`.`category_id`)";
+			} else {
+				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`category_id` = `c2s`.`category_id`)";
+			}
+
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id`)";
+
+			if (!empty($data['filter_filter'])) {
+				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`pf`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pf`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
+			} else {
+				$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW() AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
+			}
+		} else {
+			$sql .= " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p`.`date_available` <= NOW())";
+		}
+
+		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_sub_category'])) {
+				$sql .= " AND `cp`.`path_id` = '" . (int)$data['filter_category_id'] . "'";
+			} else {
+				$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
+			}
+
+			if (!empty($data['filter_filter'])) {
+				$implode = [];
+
+				$filters = explode(',', $data['filter_filter']);
+
+				foreach ($filters as $filter_id) {
+					$implode[] = (int)$filter_id;
+				}
+
+				$sql .= " AND `pf`.`filter_id` IN (" . implode(',', $implode) . ")";
+			}
+		}
+
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
+			$sql .= " AND (";
+
+			if (!empty($data['filter_search'])) {
+				$implode = [];
+
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = array_filter($words);
+
+				foreach ($words as $word) {
+					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
+
+				if ($implode) {
+					$sql .= " (" . implode(" OR ", $implode) . ")";
+				}
+
+				if (!empty($data['filter_description'])) {
+					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+				}
+			}
+
+			if (!empty($data['filter_search']) && !empty($data['filter_tag'])) {
+				$sql .= " OR ";
+			}
+
+			if (!empty($data['filter_tag'])) {
+				$implode = [];
+
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = array_filter($words);
+
+				foreach ($words as $word) {
+					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
+
+				if ($implode) {
+					$sql .= " (" . implode(" OR ", $implode) . ")";
+				}
+			}
+
+			if (!empty($data['filter_search'])) {
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+			}
+
+			$sql .= ")";
+		}
+
+		if (!empty($data['filter_manufacturer_id'])) {
+			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Get Categories
 	 *
 	 * @param int $product_id
@@ -281,6 +407,34 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Option Quantity
+	 *
+	 * @param int $product_id
+	 * @param int $product_option_id
+	 * @param int $product_option_value_id
+	 * @param int $quantity
+	 *
+	 * @return void
+	 */
+	public function editOptionQuantity(int $product_id, int $product_option_id, int $product_option_value_id, int $quantity): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = '" . (int)$quantity . "' WHERE `product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "' AND `product_option_value_id` = '" . (int)$product_option_value_id . "'");
+    }
+
+	/**
+	 * Get Option
+	 *
+	 * @param int $product_id
+	 * @param int $product_option_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getOption(int $product_id, int $product_option_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "' AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
+	}
+
+    /**
 	 * Get Options
 	 *
 	 * @param int $product_id
@@ -297,20 +451,6 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return $product_option_data;
-	}
-
-	/**
-	 * Get Option
-	 *
-	 * @param int $product_id
-	 * @param int $product_option_id
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function getOption(int $product_id, int $product_option_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "' AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return $query->row;
 	}
 
 	/**
@@ -434,121 +574,6 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return (array)$product_data;
-	}
-
-	/**
-	 * Get Total Products
-	 *
-	 * @param array<string, mixed> $data
-	 *
-	 * @return int
-	 */
-	public function getTotalProducts(array $data = []): int {
-		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total`";
-
-		if (!empty($data['filter_category_id'])) {
-			$sql .= " FROM `" . DB_PREFIX . "category_to_store` `c2s`";
-
-			if (!empty($data['filter_sub_category'])) {
-				$sql .= " LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cp`.`category_id` = `c2s`.`category_id` AND `c2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "') LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`category_id` = `cp`.`category_id`)";
-			} else {
-				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`category_id` = `c2s`.`category_id`)";
-			}
-
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id`)";
-
-			if (!empty($data['filter_filter'])) {
-				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`pf`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pf`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
-			} else {
-				$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW() AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
-			}
-		} else {
-			$sql .= " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p`.`date_available` <= NOW())";
-		}
-
-		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
-		if (!empty($data['filter_category_id'])) {
-			if (!empty($data['filter_sub_category'])) {
-				$sql .= " AND `cp`.`path_id` = '" . (int)$data['filter_category_id'] . "'";
-			} else {
-				$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
-			}
-
-			if (!empty($data['filter_filter'])) {
-				$implode = [];
-
-				$filters = explode(',', $data['filter_filter']);
-
-				foreach ($filters as $filter_id) {
-					$implode[] = (int)$filter_id;
-				}
-
-				$sql .= " AND `pf`.`filter_id` IN (" . implode(',', $implode) . ")";
-			}
-		}
-
-		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
-			$sql .= " AND (";
-
-			if (!empty($data['filter_search'])) {
-				$implode = [];
-
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
-				$words = array_filter($words);
-
-				foreach ($words as $word) {
-					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
-				}
-
-				if ($implode) {
-					$sql .= " (" . implode(" OR ", $implode) . ")";
-				}
-
-				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
-				}
-			}
-
-			if (!empty($data['filter_search']) && !empty($data['filter_tag'])) {
-				$sql .= " OR ";
-			}
-
-			if (!empty($data['filter_tag'])) {
-				$implode = [];
-
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
-				$words = array_filter($words);
-
-				foreach ($words as $word) {
-					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
-				}
-
-				if ($implode) {
-					$sql .= " (" . implode(" OR ", $implode) . ")";
-				}
-			}
-
-			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-			}
-
-			$sql .= ")";
-		}
-
-		if (!empty($data['filter_manufacturer_id'])) {
-			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
 	}
 
 	/**

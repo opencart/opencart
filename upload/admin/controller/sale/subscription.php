@@ -567,89 +567,34 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/upload');
 
-		$results = $this->model_sale_subscription->getProducts($subscription_id);
+		$products = $this->model_sale_subscription->getProducts($subscription_id);
 
-		foreach ($results as $result) {
-			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+		foreach ($products as $product) {
+			$option_data = [];
 
-			if ($product_info) {
-				$option_data = [];
+			$options = $this->model_sale_subscription->getOptions($product['subscription_id'], $product['subscription_product_id']);
 
-				foreach ($result['option'] as $product_option_id => $value) {
-					$option_info = $this->model_catalog_product->getOption($result['product_id'], $product_option_id);
+			foreach ($options as $option) {
+				if ($option['type'] != 'file') {
+					$option_data[] = $option;
+				} else {
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
-					if ($option_info) {
-
-						if ($option_info['type'] == 'select' || $option_info['type'] == 'radio') {
-							$option_value_info = $this->model_catalog_product->getOptionValue($result['product_id'], $value);
-
-							if ($option_value_info) {
-								$option_data[] = [
-									'product_option_id' => $product_option_id,
-									'name'              => $option_info['name'],
-									'value'             => $option_value_info['name'],
-									'price'             => $option_value_info['price'],
-									'price_prefix'      => $option_value_info['price_prefix']
-								];
-							}
-						} elseif ($option_info['type'] == 'checkbox' && is_array($value)) {
-							foreach ($value as $product_option_value_id) {
-								$option_value_info = $this->model_catalog_product->getOptionValue($result['product_id'], $product_option_value_id);
-
-								if ($option_value_info) {
-									$option_data[] = [
-										'name'         => $option_info['name'],
-										'value'        => $option_value_info['name'],
-										'price'        => $option_value_info['price'],
-										'price_prefix' => $option_value_info['price_prefix']
-									];
-								}
-							}
-
-							print_r($option_info);
-							print_r($option_value_info);
-
-						} elseif ($option_info['type'] == 'text' || $option_info['type'] == 'textarea' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
-
-
-							if ($option_info['type'] != 'file') {
-								$option_data[] = [
-									'name'  => $option_info['name'],
-									'value' => $value
-									] + $option_info;
-							}
-
-
-						} elseif ($option_info['type'] == 'file') {
-							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-
-							if ($upload_info) {
-								$value = $upload_info['name'];
-							} else {
-								$value = '';
-							}
-
-
-
-							$upload_info = $this->model_tool_upload->getUploadByCode($option_info['value']);
-
-							if ($upload_info) {
-								$option_data[] = [
-										'value' => $value,
-										'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-									] + $option_info;
-							}
-						}
+					if ($upload_info) {
+						$option_data[] = [
+							'filename' => $upload_info['mask'],
+							'href'     => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+						] + $option;
 					}
 				}
-
-				print_r($option_data);
-
-				$data['subscription_products'][] = [
-					'option'       => $option_data,
-					'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
-				] + $result + $product_info;
 			}
+
+			$data['subscription_products'][] = [
+				'option'       => $option_data,
+				'trial_price'  => $this->currency->format($product['trial_price'] * $product['quantity'], $currency),
+				'price'        => $this->currency->format($product['price'] * $product['quantity'], $currency),
+				'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+			] + $product;
 		}
 
 		// Date next

@@ -357,6 +357,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$subscription_product_data[] = [
 					'order_product_id' => 0,
 					'order_id'         => 0,
+					'trial_price'      => $product['subscription']['trial_price'] * $product['quantity'],
 					'price'            => $product['subscription']['price'] * $product['quantity'],
 				] + $product + $product['subscription'];
 			}
@@ -364,6 +365,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$subscription_data = $subscription_plan_info + [
 				'subscription_product' => $subscription_product_data,
 			    'price'                => array_sum(array_column($subscription_product_data, 'price')),
+				'trial_price'          => array_sum(array_column($subscription_product_data, 'trial_price')),
 				'store_id'             => $this->config->get('config_store_id'),
 				'language_id'          => $this->config->get('config_language_id'),
 				'currency_id'          => $this->currency->getId($this->session->data['currency'])

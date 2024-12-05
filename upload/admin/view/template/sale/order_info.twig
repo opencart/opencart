@@ -126,7 +126,7 @@
                             </li>
                           {% else %}
                             <li>
-                              <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+                              <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.filename }}</a></small>
                               <div id="error-product-{{ order_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
                             </li>
                           {% endif %}
@@ -158,8 +158,8 @@
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
                     <td class="text-end">{{ order_product.quantity }}</td>
-                    <td class="text-end">{{ order_product.price_text }}</td>
-                    <td class="text-end">{{ order_product.total_text }}</td>
+                    <td class="text-end">{{ order_product.price }}</td>
+                    <td class="text-end">{{ order_product.total }}</td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set order_product_row = order_product_row + 1 %}
@@ -2470,8 +2470,8 @@ function cart_render(products, totals, shipping_required) {
             html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';
-            html += '  <td class="text-end">' + product['price_text'] + '</td>';
-            html += '  <td class="text-end">' + product['total_text'] + '</td>';
+            html += '  <td class="text-end">' + product['price'] + '</td>';
+            html += '  <td class="text-end">' + product['total'] + '</td>';
             html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
             html += '</tr>';
 

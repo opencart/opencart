@@ -329,42 +329,38 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$results = $this->model_account_subscription->getProducts($subscription_id);
 
 			foreach ($results as $result) {
-				$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+				$option_data = [];
 
-				if ($product_info) {
-					$option_data = [];
+				$options = $this->model_account_subscription->getOptions($result['product_id'], $result['subscription_product_id']);
 
-					foreach ($result['option'] as $product_option_id => $value) {
-						$option_info = $this->model_catalog_product->getOption($product_info['product_id'], $product_option_id);
+				foreach ($options as $option) {
+					if ($option['type'] != 'file') {
+						$value = $option['value'];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
-						if ($option_info) {
-							if ($option_info['type'] == 'file') {
-								$upload_info = $this->model_tool_upload->getUploadByCode($value);
-
-								if ($upload_info) {
-									$value = $upload_info['name'];
-								} else {
-									$value = '';
-								}
-							}
-
-							$option_data[] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $option_info;
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
 						}
 					}
 
-					$data['products'][] = [
-						'option'      => $option_data,
-						'trial_price' => $this->currency->format($result['trial_price'], $currency),
-						'price'       => $this->currency->format($result['price'], $currency),
-						'view'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
-					] + $result + $product_info;
+					$option_data[] = ['value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)] + $option;
 				}
+
+				$data['products'][] = [
+					'option'      => $option_data,
+					'trial_price' => $this->currency->format($result['trial_price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0), $currency),
+					'price'       => $this->currency->format($result['price'] + ($this->config->get('config_tax') ? $result['tax'] : 0), $currency),
+					'view'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+				] + $result;
 			}
 
 			$data['description'] = '';
 
 			if ($subscription_info['trial_status']) {
-				$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $currency);
+				$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $currency);
 				$trial_cycle = $subscription_info['trial_cycle'];
 				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 				$trial_duration = $subscription_info['trial_duration'];
@@ -372,7 +368,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 			}
 
-			$price = $this->currency->format($this->tax->calculate($subscription_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $currency);
+			$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0), $currency);
 			$cycle = $subscription_info['cycle'];
 			$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 			$duration = $subscription_info['duration'];

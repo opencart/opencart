@@ -100,11 +100,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function getProductByOrderProductId(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
-		if ($query->num_rows) {
-			return ['option' => $query->row['option'] ? json_decode($query->row['option'], true) : ''] + $query->row;
-		}
-
-		return [];
+		return $query->row;
 	}
 
 	/**
@@ -115,15 +111,9 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function getProducts(int $subscription_id): array {
-		$subscription_product_data = [];
-
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
-		foreach ($query->rows as $result) {
-			$subscription_product_data[] = ['option' => $query->row['option'] ? json_decode($query->row['option'], true) : ''] + $result;
-		}
-
-		return $subscription_product_data;
+		return $query->rows;
 	}
 
 	/**
@@ -136,7 +126,21 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function getTotalProducts(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Options
+	 *
+	 * @param int $subscription_id
+	 * @param int $subscription_product_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getOptions(int $subscription_id, int $subscription_product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_option` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `subscription_product_id` = '" . (int)$subscription_product_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

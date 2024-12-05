@@ -51,12 +51,11 @@
               </tr>
             </thead>
             <tbody>
-            
             {% if activities %}
             {% for activity in activities %}
             <tr>
               <td class="text-left">{{ activity.comment }}</td>
-              <td class="text-left">{{ activity.ip }}</td>
+              <td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ activity.ip }}" target="_blank">{{ activity.ip }}</a></td>
               <td class="text-left">{{ activity.date_added }}</td>
             </tr>
             {% endfor %}

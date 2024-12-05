@@ -450,7 +450,7 @@ class ControllerProductProduct extends Controller {
 				foreach ($tags as $tag) {
 					$data['tags'][] = array(
 						'tag'  => trim($tag),
-						'href' => $this->url->link('product/search', 'tag=' . trim($tag))
+						'href' => $this->url->link('product/search', 'tag=' . rawurlencode(html_entity_decode(trim($tag), ENT_QUOTES, 'UTF-8')))
 					);
 				}
 			}

@@ -87,7 +87,7 @@ class ControllerProductSearch extends Controller {
 		}
 
 		if (isset($this->request->get['tag'])) {
-			$url .= '&tag=' . urlencode(html_entity_decode($this->request->get['tag'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&tag=' . urlencode(html_entity_decode(trim($this->request->get['tag']), ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['description'])) {

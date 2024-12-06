@@ -383,8 +383,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[date_available]" value="1" id="input-variant-date-available" data-oc-toggle="switch" data-oc-target="#input-date-available" class="form-check-input"{% if override.date_available %} checked{% endif %}/> 
-			    <label for="input-variant-date-available" class="form-check-label"></label>
+                            <input type="checkbox" name="override[date_available]" value="1" id="input-variant-date-available" data-oc-toggle="switch" data-oc-target="#input-date-available" class="form-check-input"{% if override.date_available %} checked{% endif %}/> <label for="input-variant-date-available" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -705,8 +704,7 @@
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
                         <td>
-                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/> 
-			  <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
+                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/> <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
                           <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
                         </td>
 
@@ -1138,15 +1136,14 @@
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td><select name="product_discount[{{ discount_row }}][type]" class="form-select">
-                            <option value="F">{{ text_fixed }}</option>
-                            <option value="P">{{ text_percentage }}</option>
+                            <option value="F"{% if product_discount.type == 'F' %} selected{% endif %}>{{ text_fixed }}</option>
+                            <option value="S"{% if product_discount.type == 'S' %} selected{% endif %}>{{ text_subtract }}</option>
+                            <option value="P"{% if product_discount.type == 'P' %} selected{% endif %}>{{ text_percentage }}</option>
                           </select></td>
                         <td><div class="form-check form-switch form-switch-lg">
                             <input type="hidden" name="product_discount[{{ discount_row }}][special]" value="0"/>
-                            <input type="checkbox" name="product_discount[{{ discount_row }}][special]" value="1" class="form-check-input"{% if product_discount.special %} checked{% endif %}/></div>
-
-
-                        </td>
+                            <input type="checkbox" name="product_discount[{{ discount_row }}][special]" value="1" class="form-check-input"{% if product_discount.special %} checked{% endif %}/>
+                          </div></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>

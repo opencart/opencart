@@ -345,61 +345,12 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param array<string, mixed> $data
+	 * @param int $order_id
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array
 	 */
-	public function getSubscriptions(array $data): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription`";
-
-		$implode = [];
-
-		if (!empty($data['filter_date_next'])) {
-			$implode[] = "DATE(`date_next`) <= DATE('" . $this->db->escape($data['filter_date_next']) . "')";
-		}
-
-		if (!empty($data['filter_subscription_status_id'])) {
-			$implode[] = "`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$sort_data = [
-			'pd.name',
-			'p.model',
-			'p.price',
-			'p.quantity',
-			'p.status',
-			'p.sort_order'
-		];
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY `o`.`order_id`";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$query = $this->db->query($sql);
+	public function getSubscriptions(int $order_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
@@ -557,38 +508,52 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 
 				// Add subscription
-				$subscription_data = [];
+				$subscriptions = [];
 
 				$this->load->model('checkout/subscription');
 
 				foreach ($order_products as $order_product) {
-					// Subscription
 					$order_subscription_info = $this->model_checkout_order->getSubscription($order_id, $order_product['order_product_id']);
 
 					if ($order_subscription_info) {
-						// Add subscription if one is not setup
-						$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_product['order_product_id']);
 
-						if ($subscription_info) {
-							$subscription_id = $subscription_info['subscription_id'];
-						} else {
-							$subscription_product_data = [
-								'option'      => $this->model_checkout_order->getOptions($order_id, $order_product['order_product_id']),
-								'trial_price' => $order_subscription_info['trial_price'],
-								'price'       => $order_subscription_info['price']
-	                        ] + $order_product;
 
-							$subscription_id = $this->model_checkout_subscription->addSubscription($order_info + $order_subscription_info + ['subscription_product' => [$subscription_product_data]]);
-						}
+						$subscriptions[$order_subscription_info['subscription_plan_id']][] = [] + $order_info + $order_subscription_info;
+
+
+					}
+				}
+
+
+				print_r($subscriptions);
+
+
+				foreach ($subscriptions as $subscription_plan_id => $subscription) {
+
+
+
+					// Add subscription if one is not setup
+					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $subscription['order_product_id']);
+
+					if ($subscription_info) {
+						$subscription_id = $subscription_info['subscription_id'];
+					} else {
+						$subscription_product_data = [
+							'option'      => $this->model_checkout_order->getOptions($order_id, $order_product['order_product_id']),
+							'trial_price' => $subscription['trial_price'],
+							'price'       => $subscription['price']
+						] + $subscription;
+
+						$subscription_id = $this->model_checkout_subscription->addSubscription($order_info + $order_subscription_info + ['subscription_product' => [$subscription_product_data]]);
 
 						// Add history and set active subscription
 						$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_active_status_id'));
 					}
 				}
-
-
-
 			}
+
+
+
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon and reward history
 			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status')) && !in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {

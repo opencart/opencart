@@ -109,7 +109,8 @@
                         </li>
                       {% endif %}
                     </ul>
-                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+                    <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
                     {% for option in product.option %}
                       {% if option.type == 'select' or option.type == 'radio' %}
                         <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>

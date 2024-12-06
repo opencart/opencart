@@ -1,0 +1,8 @@
+--TEST--
+"parent" tag
+--TEMPLATE--
+{% block content %}
+    {{ parent() }}
+{% endblock %}
+--EXCEPTION--
+Twig\Error\SyntaxError: Calling the "parent" function on a template that does not call "extends" or "use" is forbidden in "index.twig" at line 3.

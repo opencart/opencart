@@ -1,0 +1,14 @@
+--TEST--
+"currency_symbol" filter
+--TEMPLATE--
+{{ 'UNKNOWN'|currency_symbol }}
+{{ null|currency_symbol }}
+{{ 'EUR'|currency_symbol }}
+{{ 'JPY'|currency_symbol }}
+--DATA--
+return [];
+--EXPECT--
+UNKNOWN
+
+€
+¥

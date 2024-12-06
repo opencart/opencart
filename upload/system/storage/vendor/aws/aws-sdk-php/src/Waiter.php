@@ -256,6 +256,12 @@ class Waiter implements PromisorInterface
      */
     private function matchesError($result, array $acceptor)
     {
+        // If expected is true then the $result should be an instance of
+        // AwsException, otherwise it should not.
+        if (isset($acceptor['expected']) && is_bool($acceptor['expected'])) {
+            return $acceptor['expected'] === ($result instanceof AwsException);
+        }
+
         if ($result instanceof AwsException) {
             return $result->isConnectionError()
                 || $result->getAwsErrorCode() == $acceptor['expected'];

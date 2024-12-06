@@ -24,9 +24,9 @@ use Twig\Node\Expression\ConstantExpression;
 #[YieldReady]
 class DeprecatedNode extends Node
 {
-    public function __construct(AbstractExpression $expr, int $lineno, ?string $tag = null)
+    public function __construct(AbstractExpression $expr, int $lineno)
     {
-        parent::__construct(['expr' => $expr], [], $lineno, $tag);
+        parent::__construct(['expr' => $expr], [], $lineno);
     }
 
     public function compile(Compiler $compiler): void
@@ -65,7 +65,7 @@ class DeprecatedNode extends Node
         }
 
         $compiler
-            ->raw(".")
+            ->raw('.')
             ->string(\sprintf(' in "%s" at line %d.', $this->getTemplateName(), $this->getTemplateLine()))
             ->raw(");\n")
         ;

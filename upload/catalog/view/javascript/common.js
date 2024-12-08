@@ -87,8 +87,6 @@ $(document).ready(function() {
 
 // Forms
 $(document).on('submit', 'form', function (e) {
-    e.preventDefault();
-
     var element = this;
 
     if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {

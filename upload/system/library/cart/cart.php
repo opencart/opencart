@@ -134,10 +134,10 @@ class Cart {
 									}
 
 									$option_data[] = [
-											'product_option_id'       => $product_option_id,
-											'product_option_value_id' => $value,
-											'value'                   => $option_value_query->row['name']
-										] + $option_query->row + $option_value_query->row;
+										'product_option_id'       => $product_option_id,
+										'product_option_value_id' => $value,
+										'value'                   => $option_value_query->row['name']
+									] + $option_query->row + $option_value_query->row;
 								}
 							} elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
 								foreach ($value as $product_option_value_id) {
@@ -175,19 +175,19 @@ class Cart {
 								}
 							} elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
 								$option_data[] = [
-										'product_option_id'       => $product_option_id,
-										'product_option_value_id' => 0,
-										'option_value_id'         => 0,
-										'value'                   => $value,
-										'quantity'                => 0,
-										'subtract'                => 0,
-										'price'                   => 0,
-										'price_prefix'            => '',
-										'points'                  => 0,
-										'points_prefix'           => '',
-										'weight'                  => 0,
-										'weight_prefix'           => ''
-									] + $option_query->row;
+									'product_option_id'       => $product_option_id,
+									'product_option_value_id' => 0,
+									'option_value_id'         => 0,
+									'value'                   => $value,
+									'quantity'                => 0,
+									'subtract'                => 0,
+									'price'                   => 0,
+									'price_prefix'            => '',
+									'points'                  => 0,
+									'points_prefix'           => '',
+									'weight'                  => 0,
+									'weight_prefix'           => ''
+								] + $option_query->row;
 							}
 						}
 					}
@@ -265,20 +265,20 @@ class Cart {
 					}
 
 					$this->data[$cart['cart_id']] = [
-							'cart_id'        => $cart['cart_id'],
-							'option'         => $option_data,
-							'subscription'   => $subscription_data,
-							'download'       => $download_data,
-							'quantity'       => $cart['quantity'],
-							'minimum_status' => $minimum,
-							'stock'          => $stock,
-							'stock_status'   => $stock_status,
-							'price'          => $price,
-							'total'          => $price * $cart['quantity'],
-							'reward'         => $reward * $cart['quantity'],
-							'points'         => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
-							'weight'         => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
-						] + $product_query->row;
+						'cart_id'        => $cart['cart_id'],
+						'option'         => $option_data,
+						'subscription'   => $subscription_data,
+						'download'       => $download_data,
+						'quantity'       => $cart['quantity'],
+						'minimum_status' => $minimum,
+						'stock'          => $stock,
+						'stock_status'   => $stock_status,
+						'price'          => $price,
+						'total'          => $price * $cart['quantity'],
+						'reward'         => $reward * $cart['quantity'],
+						'points'         => $product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0,
+						'weight'         => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
+					] + $product_query->row;
 
 					// Use with order editor and subscriptions
 					if ($cart['override']) {

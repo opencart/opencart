@@ -1,0 +1,158 @@
+name: "CI"
+
+on:
+    pull_request:
+    push:
+        branches:
+            - '3.x'
+
+env:
+    SYMFONY_PHPUNIT_DISABLE_RESULT_CACHE: 1
+
+permissions:
+  contents: read
+
+jobs:
+    tests:
+        name: "PHP ${{ matrix.php-version }}"
+
+        runs-on: 'ubuntu-latest'
+
+        strategy:
+            matrix:
+                php-version:
+                    - '8.0'
+                    - '8.1'
+                    - '8.2'
+                    - '8.3'
+                    - '8.4'
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v4
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@v2
+              with:
+                  coverage: "none"
+                  php-version: ${{ matrix.php-version }}
+                  ini-values: memory_limit=-1
+
+            - name: "Add PHPUnit matcher"
+              run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            - run: composer install
+
+            - name: "Switch use_yield to true on PHP ${{ matrix.php-version }}"
+              if: "matrix.php-version == '8.2'"
+              run: |
+                  sed -i -e "s/'use_yield' => false/'use_yield' => true/" src/Environment.php
+
+            - name: "Install PHPUnit"
+              run: vendor/bin/simple-phpunit install
+
+            - name: "PHPUnit version"
+              run: vendor/bin/simple-phpunit --version
+
+            - name: "Run tests"
+              run: vendor/bin/simple-phpunit
+
+    extension-tests:
+        needs:
+            - 'tests'
+
+        name: "${{ matrix.extension }} PHP ${{ matrix.php-version }}"
+
+        runs-on: 'ubuntu-latest'
+
+        continue-on-error: true
+
+        strategy:
+            matrix:
+                php-version:
+                    - '8.0'
+                    - '8.1'
+                    - '8.2'
+                    - '8.3'
+                    - '8.4'
+                extension:
+                    - 'cache-extra'
+                    - 'cssinliner-extra'
+                    - 'html-extra'
+                    - 'inky-extra'
+                    - 'intl-extra'
+                    - 'markdown-extra'
+                    - 'string-extra'
+                    - 'twig-extra-bundle'
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v4
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@v2
+              with:
+                  coverage: "none"
+                  php-version: ${{ matrix.php-version }}
+                  ini-values: memory_limit=-1
+
+            - name: "Add PHPUnit matcher"
+              run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            - name: "Composer install Twig"
+              run: composer install
+
+            - name: "Install PHPUnit"
+              run: vendor/bin/simple-phpunit install
+
+            - name: "PHPUnit version"
+              run: vendor/bin/simple-phpunit --version
+
+            - name: "Prevent installing symfony/translation-contract 3.0"
+              if: "matrix.extension == 'twig-extra-bundle'"
+              working-directory: extra/${{ matrix.extension }}
+              run: "composer require --no-update 'symfony/translation-contracts:^1.1|^2.0'"
+
+            - name: "Composer install ${{ matrix.extension }}"
+              working-directory: extra/${{ matrix.extension }}
+              run: composer install
+
+            - name: "Switch use_yield to true"
+              if: "matrix.php-version == '8.2'"
+              run: |
+                  sed -i -e "s/'use_yield' => false/'use_yield' => true/" extra/${{ matrix.extension }}/vendor/twig/twig/src/Environment.php
+
+            - name: "Run tests for ${{ matrix.extension }}"
+              working-directory: extra/${{ matrix.extension }}
+              run: ../../vendor/bin/simple-phpunit
+
+    integration-tests:
+        needs:
+            - 'tests'
+
+        name: "Integration tests with PHP ${{ matrix.php-version }}"
+
+        runs-on: 'ubuntu-latest'
+
+        continue-on-error: true
+
+        strategy:
+            matrix:
+                php-version:
+                    - '8.2'
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v4
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@v2
+              with:
+                  coverage: "none"
+                  extensions: "gd, pdo_sqlite, uuid"
+                  php-version: ${{ matrix.php-version }}
+                  ini-values: memory_limit=-1
+                  tools: composer:v2
+
+            - run: bash ./tests/drupal_test.sh
+              shell: "bash"

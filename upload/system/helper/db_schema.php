@@ -6699,7 +6699,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'order_option_id'
+			'subscription_option_id'
 		],
 		'foreign' => [
 			[

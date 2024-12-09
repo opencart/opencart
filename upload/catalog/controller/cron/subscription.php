@@ -267,9 +267,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				foreach ($products as $product) {
 					$order_data['products'][] = [
-							'subscription' => [],
-							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
-						] + $product;
+						'subscription' => [],
+						'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
+					] + $product;
 				}
 
 				// Order Totals
@@ -378,5 +378,4 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 	}
-
 }

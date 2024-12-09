@@ -350,7 +350,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array
 	 */
 	public function getSubscriptions(int $order_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT *, os.price, `os`.`tax` FROM `" . DB_PREFIX . "order_subscription` `os` LEFT JOIN `" . DB_PREFIX . "order_product` `op` ON(`os`.`order_product_id` = `op`.`order_product_id`) WHERE `os`.`order_id` = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
@@ -456,6 +456,9 @@ class Order extends \Opencart\System\Engine\Model {
 			// Products
 			$order_products = $this->model_checkout_order->getProducts($order_id);
 
+			// Subscriptions
+			$order_subscriptions = $this->model_checkout_order->getSubscriptions($order_id);
+
 			// Totals
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
@@ -508,52 +511,47 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 
 				// Add subscription
-				$subscriptions = [];
-
 				$this->load->model('checkout/subscription');
 
-				foreach ($order_products as $order_product) {
-					$order_subscription_info = $this->model_checkout_order->getSubscription($order_id, $order_product['order_product_id']);
+				foreach ($order_subscriptions as $key => $order_subscription) {
+					$subscription_product_data = [];
 
-					if ($order_subscription_info) {
+					foreach ($order_subscriptions as $subscription) {
+						if ($subscription['subscription_plan_id'] == $order_subscription['subscription_plan_id']) {
+							$subscription_product_data[] = [
+								'option'      => $this->model_checkout_order->getOptions($order_id, $order_subscription['order_product_id']),
+								'trial_price' => $order_subscription['trial_price'],
+								'trial_tax'   => $order_subscription['trial_tax'],
+								'price'       => $order_subscription['price'],
+								'tax'         => $order_subscription['tax']
+							] + $order_subscription;
 
-
-						$subscriptions[$order_subscription_info['subscription_plan_id']][] = [] + $order_info + $order_subscription_info;
-
-
+							unset($order_subscriptions[$key]);
+						}
 					}
-				}
 
+					$subscription_data = [
+						'trial_price'          => array_sum(array_column($subscription_product_data, 'trial_price')),
+						'trial_tax'            => array_sum(array_column($subscription_product_data, 'trial_tax')),
+						'price'                => array_sum(array_column($subscription_product_data, 'price')),
+						'tax'                  => array_sum(array_column($subscription_product_data, 'tax')),
+						'subscription_product' => $subscription_product_data
+					] + $order_info + $order_subscription;
 
-				print_r($subscriptions);
+					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_subscription['order_product_id']);
 
-
-				foreach ($subscriptions as $subscription_plan_id => $subscription) {
-
-
-
-					// Add subscription if one is not setup
-					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $subscription['order_product_id']);
-
-					if ($subscription_info) {
-						$subscription_id = $subscription_info['subscription_id'];
+					if (!$subscription_info) {
+						$subscription_id = $this->model_checkout_subscription->addSubscription($subscription_data);
 					} else {
-						$subscription_product_data = [
-							'option'      => $this->model_checkout_order->getOptions($order_id, $order_product['order_product_id']),
-							'trial_price' => $subscription['trial_price'],
-							'price'       => $subscription['price']
-						] + $subscription;
+						$this->model_checkout_subscription->editSubscription($subscription_info['subscription_id'], $subscription_data);
 
-						$subscription_id = $this->model_checkout_subscription->addSubscription($order_info + $order_subscription_info + ['subscription_product' => [$subscription_product_data]]);
-
-						// Add history and set active subscription
-						$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_active_status_id'));
+						$subscription_id = $subscription_info['subscription_id'];
 					}
+
+					// Add history and set active subscription
+					$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_active_status_id'));
 				}
 			}
-
-
-
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon and reward history
 			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status')) && !in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {

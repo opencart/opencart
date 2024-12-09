@@ -132,7 +132,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n";
 
 			if (defined('DB_SSL_KEY')) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
@@ -316,7 +316,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n";
 
 			if (defined('DB_SSL_KEY')) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
@@ -331,9 +331,9 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			}
 
 			if (defined('DB_SSL_CA')) {
-				$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n\n";
 			} else {
-				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
+				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n\n";
 			}
 
 			$output .= '// OpenCart API' . "\n";

@@ -176,7 +176,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
 			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
 
 			if (!empty($this->request->post['db_ssl_key'])) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($this->request->post['db_ssl_key']) . '\');' . "\n";
@@ -250,9 +250,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			}
 
 			if ((isset($this->request->post['db_ssl_ca']) && $this->request->post['db_ssl_ca'] !== '')) {
-				$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($this->request->post['db_ssl_ca']) . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($this->request->post['db_ssl_ca']) . '\');' . "\n\n";
 			} else {
-				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
+				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n\n";
 			}
 
 			$output .= '// OpenCart API' . "\n";

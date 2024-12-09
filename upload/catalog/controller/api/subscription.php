@@ -358,14 +358,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'order_product_id' => 0,
 					'order_id'         => 0,
 					'trial_price'      => $product['subscription']['trial_price'] * $product['quantity'],
+					'trial_tax'        => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
 					'price'            => $product['subscription']['price'] * $product['quantity'],
+					'tax'              => $this->tax->getTax($product['subscription']['price'] * $product['quantity'], $product['tax_class_id'])
 				] + $product + $product['subscription'];
 			}
 
 			$subscription_data = $subscription_plan_info + [
 				'subscription_product' => $subscription_product_data,
-			    'price'                => array_sum(array_column($subscription_product_data, 'price')),
 				'trial_price'          => array_sum(array_column($subscription_product_data, 'trial_price')),
+				'trial_tax'            => array_sum(array_column($subscription_product_data, 'trial_tax')),
+				'price'                => array_sum(array_column($subscription_product_data, 'price')),
+				'tax'                  => array_sum(array_column($subscription_product_data, 'tax')),
 				'store_id'             => $this->config->get('config_store_id'),
 				'language_id'          => $this->config->get('config_language_id'),
 				'currency_id'          => $this->currency->getId($this->session->data['currency'])

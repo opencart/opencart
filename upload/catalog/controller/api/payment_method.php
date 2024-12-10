@@ -45,12 +45,17 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// 5. Validate payment Method
-		if (empty($this->request->post['payment_method']['name'])) {
-			$output['error'] = $this->language->get('error_name');
-		}
+		$keys = [
+			'name',
+			'code'
+		];
 
-		if (empty($this->request->post['payment_method']['code'])) {
-			$output['error'] = $this->language->get('error_code');
+		foreach ($keys as $key) {
+			if (!isset($this->request->post['payment_method'][$key])) {
+				$output['error'] = $this->language->get('error_payment_method');
+
+				break;
+			}
 		}
 
 		if (!$output) {

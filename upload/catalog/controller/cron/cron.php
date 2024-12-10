@@ -16,6 +16,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_setting_cron->getCrons();
 
+		$this->load->controller('cron/subscription', 3, 'subscription', 1, '', '');
+
 		foreach ($results as $result) {
 			if ($result['status'] && (strtotime('+1 ' . $result['cycle'], strtotime($result['date_modified'])) < ($time + 10))) {
 				$this->load->controller($result['action'], $result['cron_id'], $result['code'], $result['cycle'], $result['date_added'], $result['date_modified']);

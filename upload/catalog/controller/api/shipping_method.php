@@ -30,20 +30,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// 3. Validate shipping method
-			if (empty($this->request->post['shipping_method']['name'])) {
-				$output['error'] = $this->language->get('error_name');
-			}
+			$keys = [
+				'name',
+				'code',
+				'cost',
+				'tax_class_id'
+			];
 
-			if (empty($this->request->post['shipping_method']['code'])) {
-				$output['error'] = $this->language->get('error_code');
-			}
+			foreach ($keys as $key) {
+				if (!isset($this->request->post['shipping_method'][$key])) {
+					$output['error'] = $this->language->get('error_shipping_method');
 
-			if (empty($this->request->post['shipping_method']['cost'])) {
-				$output['error'] = $this->language->get('error_cost');
-			}
-
-			if (!isset($this->request->post['shipping_method']['tax_class_id'])) {
-				$output['error'] = $this->language->get('error_tax_class');
+					break;
+				}
 			}
 		} else {
 			$output['error'] = $this->language->get('error_shipping');

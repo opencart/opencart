@@ -260,9 +260,9 @@ class Article extends \Opencart\System\Engine\Model {
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY `a`.`" . $data['sort'] . "`";
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY `a`.`date_added`";
+			$sql .= " ORDER BY `date_added`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

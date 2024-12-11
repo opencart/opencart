@@ -13,7 +13,7 @@
         {% for log in logs %}
           <tr>
             <td>{{ log.date_added }}</td>
-            <td>{{ log.status }}</td>
+            <td>{% if log.status %}{{ text_enabled }}{% else %}{{ text_disabled }}{% endif %}</td>
             <td>{{ log.code }}</td>
             <td>{{ log.description }}</td>
           </tr>

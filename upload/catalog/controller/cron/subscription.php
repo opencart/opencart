@@ -416,6 +416,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 
 
+
+				// 6. Call the required API controller and get the output.
+				$output = $store->response->getOutput();
+
+				// 7. Clean up data by clearing cart.
+				$store->cart->clear();
+
+				// 8. Deleting the current session so we are not creating infinite sessions.
+				$store->session->destroy();
+
+
+
 			}
 
 	//	}

@@ -102,6 +102,9 @@ class Store extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Factory
+		$registry->set('factory', new \Opencart\System\Engine\Factory($registry));
+
 		// Loader
 		$loader = new \Opencart\System\Engine\Loader($registry);
 		$registry->set('load', $loader);
@@ -128,40 +131,26 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Session
 		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
+		$session->start();
 		$registry->set('session', $session);
-
-		// Start session
-		$session->start($session_id);
 
 		// Template
 		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
 		$template->addPath(DIR_TEMPLATE);
 		$registry->set('template', $template);
 
+		// Adding language var to the GET variable so there is a default language
+		if ($language) {
+			$request->get['language'] = $language;
+		} else {
+			$request->get['language'] = $config->get('language_code');
+		}
+
 		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguageByCode($language);
-
-		if ($language_info) {
-			$config->set('config_language_id', $language_info['language_id']);
-			$config->set('config_language', $language_info['code']);
-		} else {
-			$config->set('config_language_id', $this->config->get('config_language_id'));
-			$config->set('config_language', $this->config->get('config_language'));
-		}
-
-		$language = new \Opencart\System\Library\Language($this->config->get('config_language'));
-		$registry->set('language', $language);
-
-		if (!$language_info['extension']) {
-			$language->addPath(DIR_LANGUAGE);
-		} else {
-			$language->addPath(DIR_EXTENSION . $language_info['extension'] . '/catalog/language/');
-		}
-
-		// Load default language file
+		$language = new \Opencart\System\Library\Language($request->get['language']);
+		$language->addPath(DIR_APPLICATION . 'language/');
 		$language->load('default');
+		$registry->set('language', $language);
 
 		// Url
 		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));

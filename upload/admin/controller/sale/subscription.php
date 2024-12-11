@@ -1167,10 +1167,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_subscription->getLogs($subscription_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['logs'][] = [
-				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			] + $result;
+			$data['logs'][] = ['date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
 		}
 
 		$subscription_total = $this->model_sale_subscription->getTotalLogs($subscription_id);

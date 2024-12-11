@@ -56,8 +56,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					if (!$store_info) {
 						$status = false;
 
-						echo '$store_info';
-
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'store', $this->language->get('error_store'));
 					}
 				}
@@ -68,8 +66,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if (!$language_info) {
 					$status = false;
 
-					echo '$language_info';
-
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'language', $this->language->get('error_language'));
 				}
 
@@ -79,8 +75,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if (!$currency_info) {
 					$status = false;
 
-					echo '$currency_info';
-
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'currency', $this->language->get('error_currency'));
 				}
 
@@ -89,8 +83,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				if (!$customer_info || !$this->customer->login($customer_info['email'], '', true)) {
 					$status = false;
-
-					echo '$customer_info';
 
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'customer', $this->language->get('error_customer'));
 				}
@@ -102,9 +94,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					if (!$payment_address_info) {
 						$status = false;
 
-						echo '$payment_address_info';
-
-						$this->model_checkout_subscription->addLog($result['subscription_id'], 'payment_address', $this->language->get('error_payment_address'));
+						$this->model_chekout_subscription->addLog($result['subscription_id'], 'payment_address', $this->language->get('error_payment_address'));
 					}
 				} else {
 					$payment_address_info = [];
@@ -116,8 +106,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					if (!$shipping_address_info) {
 						$status = false;
-
-						echo '$shipping_address_info';
 
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'shipping_address', $this->language->get('error_shipping_address'));
 					}
@@ -143,8 +131,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					if ($error) {
 						$status = false;
 
-						echo '$shipping_method';
-
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'shipping_method', $error);
 					}
 				}
@@ -168,17 +154,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				if ($error) {
 					$status = false;
 
-					echo '$payment_method';
-
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'payment_method', $this->language->get('error_payment_method'));
 				}
-
-			echo '$payment_method';
-
-
-				$this->model_checkout_subscription->addLog($result['subscription_id'], 'payment_method', $this->language->get('error_payment_method'));
-
-
 
 				// Validate Products
 				$products = $this->model_checkout_subscription->getProducts($result['subscription_id']);
@@ -192,22 +169,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						foreach ($options as $option) {
 							$option_info = $this->model_checkout_subscription->getOption($result['subscription_id'], $product['subscription_product_id'], $option['product_option_id']);
 
-
-							print_r($option_info);
-							print_r($option_info);
-
 							if ($option['required'] && (!$option_info || !$option_info['value'])) {
 								$status = false;
-
-								echo '$option_info';
 
 								$this->model_checkout_subscription->addLog($result['subscription_id'], 'option', $this->language->get('error_option'));
 							}
 						}
 					} else {
 						$status = false;
-
-						echo '$product_info';
 
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'product', $this->language->get('error_product'));
 					}

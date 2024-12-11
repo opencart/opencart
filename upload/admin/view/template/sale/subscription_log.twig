@@ -9,13 +9,13 @@
       </tr>
     </thead>
     <tbody>
-      {% if histories %}
-        {% for history in histories %}
+      {% if logs %}
+        {% for logs in log %}
           <tr>
-            <td>{{ history.date_added }}</td>
-            <td>{{ history.status }}</td>
-            <td>{{ history.code }}</td>
-            <td>{{ history.description }}</td>
+            <td>{{ log.date_added }}</td>
+            <td>{{ log.status }}</td>
+            <td>{{ log.code }}</td>
+            <td>{{ log.description }}</td>
           </tr>
         {% endfor %}
       {% else %}

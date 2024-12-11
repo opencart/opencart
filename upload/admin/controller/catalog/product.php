@@ -1079,8 +1079,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($product_discounts as $product_discount) {
 			$data['product_discounts'][] = [
-				'date_start'        => ($product_discount['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
-				'date_end'          => ($product_discount['date_end'] != '0000-00-00' ? $product_discount['date_end'] : '')
+				'date_start' => ($product_discount['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
+				'date_end'   => ($product_discount['date_end'] != '0000-00-00' ? $product_discount['date_end'] : '')
 			] + $product_discount;
 		}
 

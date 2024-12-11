@@ -62,8 +62,8 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
-				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}
 

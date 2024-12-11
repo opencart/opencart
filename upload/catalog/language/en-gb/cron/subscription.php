@@ -3,6 +3,7 @@
 $_['text_success']           = 'Success: The subscription has been renewed successfully!';
 
 // Error
+$_['error_store'] 		     = 'Warning: Store not found!';
 $_['error_language']         = 'Warning: Payment method extension could not be found!';
 $_['error_customer']         = 'Warning: Payment method extension could not be found!';
 $_['error_product']          = 'Warning: Payment method extension could not be found!';

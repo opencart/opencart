@@ -380,6 +380,22 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Option
+	 *
+	 * @param int $subscription_id
+	 * @param int $subscription_product_id
+	 * @param int $product_option_id
+	 *
+	 * @return array<string, mixed>
+	 */
+
+	public function getOption(int $subscription_id, int $subscription_product_id, int $product_option_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_option` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `subscription_product_id` = '" . (int)$subscription_product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Options
 	 *
 	 * @param int $order_id
@@ -420,7 +436,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function addLog(int $subscription_id, string $code, string $description, bool $status = false, bool $notify = false): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_log` SET `subscription_id` = '" . (int)$subscription_id . "', `code` = '" . $this->db->escape($code) . "', `description` = '" . $this->db->escape($description) . "', `status` = '" . (int)$status . "', `notify` = '" . (int)$notify . "', `date_added` = NOW()");
+	public function addLog(int $subscription_id, string $code, string $description, bool $status = false): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_log` SET `subscription_id` = '" . (int)$subscription_id . "', `code` = '" . $this->db->escape($code) . "', `description` = '" . $this->db->escape($description) . "', `status` = '" . (int)$status . "', `date_added` = NOW()");
 	}
 }

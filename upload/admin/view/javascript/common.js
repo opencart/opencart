@@ -141,10 +141,9 @@ $(document).on('submit', 'form', function(e) {
         var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
 
         console.log(e);
-        console.log('element ' + element);
+        console.log(element);
         console.log('action ' + action);
         console.log('button ' + button);
-        console.log('formaction ' + formaction);
         console.log('method ' + method);
         console.log('enctype ' + enctype);
         console.log($(element).serialize());

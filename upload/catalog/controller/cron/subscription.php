@@ -53,9 +53,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				// Validate language
 				$language_info = $this->model_localisation_language->getLanguage($result['language_id']);
 
-				if ($language_info) {
-					$language = $language_info['code'];
-				} else {
+				if (!$language_info) {
 					$status = false;
 
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'language', $this->language->get('error_language'));
@@ -64,36 +62,26 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				// Validate currency
 				$currency_info = $this->model_localisation_currency->getCurrency($result['currency_id']);
 
-				if ($currency_info) {
-					$currency = $currency_info['code'];
-				} else {
+				if (!$currency_info) {
 					$status = false;
 
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'currency', $this->language->get('error_currency'));
 				}
 
-				// Create new instance of a store
-				$store = $this->model_setting_store->createStoreInstance($result['store_id'], $language_info['code'], $currency_info['code']);
-
 				// Validate customer
 				$customer_info = $this->model_account_customer->getCustomer($result['customer_id']);
 
-				if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
-					// Add customer details into session
-					$store->session->data['customer'] = $customer_info;
-				} else {
+				if (!$customer_info || !$this->customer->login($customer_info['email'], '', true)) {
 					$status = false;
 
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'customer', $this->language->get('error_customer'), 0);
 				}
 
 				// Validate payment address
-				if ($this->config->get('config_checkout_payment_address')) {
+				if ($result['payment_address_id']) {
 					$payment_address_info = $this->model_account_address->getAddress($result['customer_id'], $result['payment_address_id']);
 
-					if ($payment_address_info) {
-						$store->session->data['payment_address'] = $payment_address_info;
-					} else {
+					if (!$payment_address_info) {
 						$status = false;
 
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'payment_address', $this->language->get('error_payment_address'), 0);
@@ -102,13 +90,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$payment_address_info = [];
 				}
 
-				if ($store->cart->hasShipping()) {
+				if ($result['shipping_address_id']) {
 					// Validate shipping address
 					$shipping_address_info = $this->model_account_address->getAddress($result['customer_id'], $result['shipping_address_id']);
 
-					if ($shipping_address_info) {
-						$store->session->data['shipping_address'] = $shipping_address_info;
-					} else {
+					if (!$shipping_address_info) {
 						$status = false;
 
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'shipping_address', $this->language->get('error_shipping_address'), 0);
@@ -132,9 +118,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					if (!$error) {
-						$store->session->data['shipping_method'] = $result['shipping_method'];
-					} else {
+					if ($error) {
 						$status = false;
 
 						$this->model_checkout_subscription->addLog($result['subscription_id'], 'shipping_method', $error, 0);
@@ -157,45 +141,60 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!$error) {
-					$store->session->data['payment_method'] = $result['payment_method'];
-				} else {
+				if ($error) {
 					$status = false;
 
 					$this->model_checkout_subscription->addLog($result['subscription_id'], 'payment_method', $this->language->get('error_payment_method'), 0);
 				}
 
-				// 4. Add product
-				$products = $this->model_checkout_subscription->getProducts();
+				// Validate Products
+				$products = $this->model_checkout_subscription->getProducts($result['subscription_id']);
 
 				foreach ($products as $product) {
 					$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 					if ($product_info) {
-						$price = $result['price'];
+						$options = $this->model_checkout_subscription->getOptions($product['product_id'], $product['order_product_id']);
 
-						if ($result['trial_status']) {
-							$price = $result['trial_price'];
+						foreach ($options as $option) {
+							$option_info = $this->model_catalog_product->getOption($product['product_id'], $product['product_option_id']);
+
+							if (!$option_info) {
+								$status = false;
+
+								$this->model_checkout_subscription->addLog($result['subscription_id'], 'option', $this->language->get('error_option'), 0);
+							}
 						}
-
-						$option_data = [];
-
-						$options = $this->model_checkout_subscription->getOptions($product['product_id'], );
-
-
-
-						$store->cart->add($result['product_id'], $result['quantity'], $result['option'], $result['subscription_plan_id'], true, ['price' => $price]);
-
-
 					} else {
-						$error = $this->language->get('error_product');
+						$status = false;
+
+						$this->model_checkout_subscription->addLog($result['subscription_id'], 'product', $this->language->get('error_product'), 0);
 					}
 				}
 
 				print_r($error);
 
 				if ($status) {
+					// Create new instance of a store
+					$store = $this->model_setting_store->createStoreInstance($result['store_id'], $language_info['code'], $currency_info['code']);
 
+					// Add customer details into session
+					$store->session->data['customer'] = $customer_info;
+					$store->session->data['shipping_address'] = $shipping_address_info;
+					$store->session->data['payment_address'] = $payment_address_info;
+
+					foreach ($products as $product) {
+						$price = $product['price'];
+
+						if ($result['trial_status']) {
+							$price = $result['trial_price'];
+						}
+
+						$store->cart->add($result['product_id'], $result['quantity'], $result['option'], $result['subscription_plan_id'], true, ['price' => $price]);
+					}
+
+					$store->session->data['shipping_method'] = $result['shipping_method'];
+					$store->session->data['payment_method'] = $result['payment_method'];
 
 					// Subscription
 					$order_data = [];

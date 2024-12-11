@@ -88,28 +88,14 @@ $(document).ready(function() {
 // Forms
 $(document).on('submit', 'form', function (e) {
     var element = this;
+    var button = (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) ? e.originalEvent.submitter : '';
 
-    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
-        var button = e.originalEvent.submitter;
-    } else {
-        var button = '';
-    }
+    var form = e.target;
+    var action = $(button).attr('formaction') || $(form).attr('action');
+    var method = $(button).attr('formmethod') || $(form).attr('method') || 'post';
+    var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
 
-    var status = false;
-
-    var ajax = $(element).attr('data-oc-toggle');
-
-    if (ajax == 'ajax') {
-        status = true;
-    }
-
-    var ajax = $(button).attr('data-oc-toggle');
-
-    if (ajax == 'ajax') {
-        status = true;
-    }
-
-    if (status) {
+    if ($(element).attr('data-oc-toggle') == 'ajax' || $(button).attr('data-oc-toggle') == 'ajax') {
         e.preventDefault();
 
         // Form attributes

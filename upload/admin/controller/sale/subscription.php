@@ -512,7 +512,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = $result;
+		}
 
 		if (!empty($subscription_info)) {
 			$data['store_id'] = $subscription_info['store_id'];

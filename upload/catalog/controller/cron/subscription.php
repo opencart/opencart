@@ -292,9 +292,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				foreach ($products as $product) {
 					$order_data['products'][] = [
-						'subscription' => [],
-						'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
-					] + $product;
+							'subscription' => [],
+							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
+						] + $product;
 				}
 
 				// Order Totals
@@ -321,13 +321,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$order_data['tracking'] = '';
 
 				// Language
-				$order_data['language_id'] = $language_info['language_id'];
-				$order_data['language_code'] = $language_info['code'];
+				$order_data['language_id'] = $this->config->get('config_language_id');
+				$order_data['language_code'] = $this->config->get('config_language');
 
 				// Currency
-				$order_data['currency_id'] = $currency_info['currency_id'];
-				$order_data['currency_code'] = $currency_info['code'];
-				$order_data['currency_value'] = $currency_info['value'];
+				$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+				$order_data['currency_code'] = $this->session->data['currency'];
+				$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
 
 				$this->load->model('checkout/order');
 
@@ -348,76 +348,100 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
 				// Validate if payment extension installed
-				$this->load->model('setting/extension');
-
-				$extension_info = $this->model_setting_extension->getExtensionByCode('payment',  $store->session->data['payment_method']['code']);
-
-				// Load payment method used by the subscription
-				$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
-
-				$key = 'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code'];
-
-				if (isset($this->{$key}->charge)) {
-					// Process payment
-					$response_info = $this->{$key}->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $order_data['payment_method']['code']);
-
-					if (isset($response_info['order_status_id'])) {
-						$order_status_id = $response_info['order_status_id'];
-					} else {
-						$order_status_id = 0;
-					}
-
-					if ($response_info['message']) {
-						$message = $response_info['message'];
-					} else {
-						$message = '';
-					}
-
-					$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id, $message, false);
-					$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id);
-
-
-					// If payment order status is active or processing
-					if (!in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
-						$remaining = 0;
-						$date_next = '';
-
-						if ($result['trial_status'] && $result['trial_remaining'] > 1) {
-							$remaining = $result['trial_remaining'] - 1;
-							$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
-
-							$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $remaining);
-						} elseif ($result['duration'] && $result['remaining']) {
-							$remaining = $result['remaining'] - 1;
-							$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
-
-							// If duration make sure there is remaining
-							$this->model_account_subscription->editRemaining($result['subscription_id'], $remaining);
-						} elseif (!$result['duration']) {
-							// If duration is unlimited
-							$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
-						}
-
-						if ($date_next) {
-							$this->load->model('checkout/subscription');
-
-							$this->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
-						}
-
-						$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
-					} else {
-						// If payment failed change subscription history to failed
-						$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message);
-					}
-
-
-
+				if (isset($this->session->data['payment_method'])) {
+					$code = oc_substr($this->session->data['payment_method']['code'], 0, strpos($this->session->data['payment_method']['code'], '.'));
 				} else {
-					// Add subscription history failed if no charge method
-					$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_method'));
+					$code = '';
 				}
 
+				$this->load->model('setting/extension');
 
+				$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
+
+				if ($extension_info) {
+
+
+					// Load payment method used by the subscription
+					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
+
+					$key = 'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code'];
+
+					echo '$key';
+
+
+					if (isset($this->{$key}->charge)) {
+
+						echo '$this->{$key}->charge';
+
+
+						// Process payment
+						$response_info = $this->{$key}->charge($this->customer->getId(), $this->session->data['order_id'], $total, $order_data['payment_method']['code']);
+
+						if (isset($response_info['order_status_id'])) {
+							$order_status_id = $response_info['order_status_id'];
+						} else {
+							$order_status_id = 0;
+						}
+
+						if ($response_info['message']) {
+							$message = $response_info['message'];
+						} else {
+							$message = '';
+						}
+
+						$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id, $message, false);
+						$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id);
+
+						// If payment order status is active or processing
+						if (!in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
+							$remaining = 0;
+							$date_next = '';
+
+							if ($result['trial_status'] && $result['trial_remaining'] > 1) {
+								$remaining = $result['trial_remaining'] - 1;
+								$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
+
+								$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $remaining);
+							} elseif ($result['duration'] && $result['remaining']) {
+								$remaining = $result['remaining'] - 1;
+								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
+
+								// If duration make sure there is remaining
+								$this->model_account_subscription->editRemaining($result['subscription_id'], $remaining);
+							} elseif (!$result['duration']) {
+								// If duration is unlimited
+								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
+							}
+
+							if ($date_next) {
+								$this->load->model('checkout/subscription');
+
+								$this->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
+							}
+
+							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
+
+
+						} else {
+
+							echo '';
+
+
+							// If payment failed change subscription history to failed
+							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message);
+						}
+
+
+					} else {
+
+
+						// Add subscription history failed if no charge method
+						$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_method'));
+					}
+
+				} else {
+
+				}
 
 			} else {
 				// Errors
@@ -428,7 +452,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$this->model_checkout_subscription->addLog($result['subscription_id'], $key, $value);
 				}
 			}
-
 
 			// 7. Clean up data by clearing cart.
 			$store->cart->clear();

@@ -153,6 +153,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_location' => 'address',
+			'filter_status'   => '1',
 			'sort'            => 'cf.sort_order',
 			'order'           => 'ASC'
 		];

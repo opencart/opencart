@@ -159,12 +159,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$products = $this->model_checkout_subscription->getProducts($result['subscription_id']);
 
 			foreach ($products as $product) {
-				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+				$product_info = $store->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {
 					$option_data = [];
 
-					$options = $this->model_catalog_product->getOptions($product['product_id'], $product['order_product_id']);
+					$options = $store->model_catalog_product->getOptions($product['product_id'], $product['order_product_id']);
 
 					foreach ($options as $option) {
 						if ($option['required']) {
@@ -195,12 +195,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$order_data = [];
 
 				$order_data['subscription_id'] = $result['subscription_id'];
-				$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
+				$order_data['invoice_prefix'] = $store->config->get('config_invoice_prefix');
 
 				// Store Details
-				$order_data['store_id'] = $this->config->get('config_store_id');
-				$order_data['store_name'] = $this->config->get('config_name');
-				$order_data['store_url'] = $this->config->get('config_url');
+				$order_data['store_id'] = $store->config->get('config_store_id');
+				$order_data['store_name'] = $store->config->get('config_name');
+				$order_data['store_url'] = $store->config->get('config_url');
 
 				// Customer Details
 				$order_data['customer_id'] = $customer_info['customer_id'];
@@ -292,9 +292,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				foreach ($products as $product) {
 					$order_data['products'][] = [
-							'subscription' => [],
-							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
-						] + $product;
+						'subscription' => [],
+						'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
+					] + $product;
 				}
 
 				// Order Totals
@@ -321,13 +321,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$order_data['tracking'] = '';
 
 				// Language
-				$order_data['language_id'] = $this->config->get('config_language_id');
-				$order_data['language_code'] = $this->config->get('config_language');
+				$order_data['language_id'] = $store->config->get('config_language_id');
+				$order_data['language_code'] = $store->config->get('config_language');
 
 				// Currency
-				$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
-				$order_data['currency_code'] = $this->session->data['currency'];
-				$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
+				$order_data['currency_id'] = $store->currency->getId($store->session->data['currency']);
+				$order_data['currency_code'] = $store->session->data['currency'];
+				$order_data['currency_value'] = $store->currency->getValue($store->session->data['currency']);
 
 				$this->load->model('checkout/order');
 
@@ -359,8 +359,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 
 				if ($extension_info) {
-
-
 					// Load payment method used by the subscription
 					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 
@@ -369,13 +367,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					echo '$key';
 
 
-					if (isset($this->{$key}->charge)) {
+					if (isset($store->{$key}->charge)) {
 
 						echo '$this->{$key}->charge';
 
 
 						// Process payment
-						$response_info = $this->{$key}->charge($this->customer->getId(), $this->session->data['order_id'], $total, $order_data['payment_method']['code']);
+						$response_info = $this->{$key}->charge($this->customer->getId(), $store->session->data['order_id'], $total, $order_data['payment_method']['code']);
 
 						if (isset($response_info['order_status_id'])) {
 							$order_status_id = $response_info['order_status_id'];
@@ -389,8 +387,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							$message = '';
 						}
 
-						$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id, $message, false);
-						$this->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id);
+						$store->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id, $message, false);
+						$store->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id);
 
 						// If payment order status is active or processing
 						if (!in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
@@ -414,12 +412,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							}
 
 							if ($date_next) {
-								$this->load->model('checkout/subscription');
+								$store->load->model('checkout/subscription');
 
-								$this->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
+								$store->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
 							}
 
-							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
+							$store->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
 
 
 						} else {

@@ -392,9 +392,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					if ($result['duration']) {
-						$price = ($product_info['special'] ? $product_info['special'] : $product_info['price']) / $result['duration'];
+						$price = ($product_info['special'] ?: $product_info['price']) / $result['duration'];
 					} else {
-						$price = ($product_info['special'] ? $product_info['special'] : $product_info['price']);
+						$price = ($product_info['special'] ?: $product_info['price']);
 					}
 
 					$price = $this->currency->format($this->tax->calculate($price, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);

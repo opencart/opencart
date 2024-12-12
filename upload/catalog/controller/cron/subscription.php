@@ -310,7 +310,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'total'  => $total
 				];
 
-				$order_data = $order_data + $total_data;
+				$order_data += $total_data;
 
 				// Comment
 				$order_data['comment'] = $result['comment'];
@@ -366,11 +366,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					echo '$key';
 
-
 					if (isset($store->{$key}->charge)) {
 
 						echo '$this->{$key}->charge';
-
 
 						// Process payment
 						$response_info = $this->{$key}->charge($this->customer->getId(), $store->session->data['order_id'], $total, $order_data['payment_method']['code']);
@@ -419,19 +417,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 							$store->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
 
-
 						} else {
 
 							echo '';
-
 
 							// If payment failed change subscription history to failed
 							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message);
 						}
 
-
 					} else {
-
 
 						// Add subscription history failed if no charge method
 						$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_method'));

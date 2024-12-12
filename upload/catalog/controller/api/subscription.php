@@ -262,7 +262,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (isset($output['error'])) {
 			return $output;
 		}
-		
+
 		$this->setPaymentAddress();
 		$this->setShippingAddress();
 

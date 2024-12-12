@@ -6420,12 +6420,12 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'language_id',
-				'type' => 'int(11)'
+				'name' => 'language',
+				'type' => 'varchar(5)'
 			],
 			[
-				'name' => 'currency_id',
-				'type' => 'int(11)'
+				'name' => 'currency',
+				'type' => 'varchar(3)'
 			],
 			[
 				'name' => 'date_added',

@@ -535,7 +535,9 @@ class Order extends \Opencart\System\Engine\Model {
 						'trial_tax'            => array_sum(array_column($subscription_product_data, 'trial_tax')),
 						'price'                => array_sum(array_column($subscription_product_data, 'price')),
 						'tax'                  => array_sum(array_column($subscription_product_data, 'tax')),
-						'subscription_product' => $subscription_product_data
+						'subscription_product' => $subscription_product_data,
+						'language'             => $order_info['language_code'],
+						'currency'             => $order_info['currency_code']
 					] + $order_info + $order_subscription;
 
 					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_subscription['order_product_id']);

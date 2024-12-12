@@ -298,8 +298,10 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function copyProduct(int $product_id): void {
+	public function copyProduct(int $product_id): int {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
+
+		$new_product_id = 0;
 
 		if ($product_info) {
 			$product_data = $product_info;
@@ -322,8 +324,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
 
-			$this->model_catalog_product->addProduct($product_data);
+			$new_product_id = $this->model_catalog_product->addProduct($product_data);
 		}
+
+		return $new_product_id;
 	}
 
 	/**
@@ -1322,7 +1326,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		$sql .= ", `option_id` = '" . (int)$data['option_id'] . "'";
-		
+
 		if (!isset($data['product_option_value'])) {
 			$sql .= ", `value` = '" . $this->db->escape($data['value']) . "'";
 		}
@@ -1358,7 +1362,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id        primary key of the product record to be fetched
 	 * @param int $product_option_id primary key of the option record to be fetched
 	 *
 	 * @return array
@@ -1912,6 +1916,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Get Subscription
 	 *
 	 * @param int $product_id
+	 * @param int $subscription_plan_id
+	 * @param int $customer_group_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

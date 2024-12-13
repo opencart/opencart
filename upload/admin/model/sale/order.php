@@ -10,7 +10,6 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Delete Order
 	 *
 	 * @param int $order_id
-	 * @param int $return_id
 	 *
 	 * @return void
 	 */
@@ -315,7 +314,6 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Orders By Language ID
-	 * Get Total Orders By Language ID
 	 *
 	 * @param int $language_id
 	 *
@@ -429,7 +427,6 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Delete Products
 	 *
 	 * @param int $order_id
-	 * @param int $order_product_id
 	 *
 	 * @return void
 	 */
@@ -444,11 +441,11 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Get Product
 	 *
 	 * @param int   $order_id
-	 * @param mixed $order_product_id
+	 * @param int $order_product_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
-	public function getProduct(int $order_id, $order_product_id): array {
+	public function getProduct(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->row;
@@ -462,7 +459,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getProducts(int $order_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY order_product_id ASC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `order_product_id` ASC");
 
 		return $query->rows;
 	}
@@ -484,7 +481,6 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Delete Options
 	 *
 	 * @param int $order_id
-	 * @param int $order_product_id
 	 *
 	 * @return void
 	 */
@@ -510,7 +506,6 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Delete Subscription
 	 *
 	 * @param int $order_id
-	 * @param int $order_product_id
 	 *
 	 * @return void
 	 */
@@ -563,7 +558,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getTotalsByCode(int $order_id, $code): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' AND code = '" . $this->db->escape($code) . "' ORDER BY `sort_order`");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' AND `code` = '" . $this->db->escape($code) . "' ORDER BY `sort_order`");
 
 		return $query->rows;
 	}

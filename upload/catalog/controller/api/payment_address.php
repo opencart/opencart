@@ -7,9 +7,9 @@ namespace Opencart\catalog\controller\api;
  */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	/**
-	 * Set payment address
+	 * Index
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('api/payment_address');
@@ -143,6 +143,11 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Set Address
+	 * 
+	 * @return array<string, mixed>
+	 */
 	public function setAddress(): array {
 		$this->load->language('api/payment_address');
 

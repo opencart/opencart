@@ -296,12 +296,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $product_id
 	 *
-	 * @return void
+	 * @return int
 	 */
 	public function copyProduct(int $product_id): int {
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-
 		$new_product_id = 0;
+
+		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
 			$product_data = $product_info;
@@ -1055,7 +1055,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $product_id
 	 *
@@ -1298,7 +1298,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Products By Attribute ID
+	 * Get Total Attributes By Attribute ID
 	 *
 	 * @param int $attribute_id
 	 *
@@ -1365,7 +1365,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id        primary key of the product record to be fetched
 	 * @param int $product_option_id primary key of the option record to be fetched
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getOption(int $product_id, int $product_option_id): array {
 		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "option_description` `od` WHERE `o`.`option_id` = `od`.`option_id` AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `name` FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `po`.`product_option_id` = '" . (int)$product_option_id . "'");
@@ -1694,7 +1694,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -1706,7 +1706,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return void
 	 */
@@ -1728,7 +1728,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return array<int, int>
 	 */
@@ -1747,7 +1747,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 * @param int $store_id
 	 * @param int $layout_id
 	 *
@@ -1760,7 +1760,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return void
 	 */
@@ -1793,7 +1793,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return array<int, string>
 	 */
@@ -1812,7 +1812,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return array<int, int>
 	 */
@@ -1829,7 +1829,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Products By Layout ID
+	 * Get Total Layouts By Layout ID
 	 *
 	 * @param int $layout_id
 	 *
@@ -1871,7 +1871,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Related
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return array<int, int>
 	 */
@@ -1890,7 +1890,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription
 	 *
-	 * @param int                  $product_id
+	 * @param int                  $product_id primary key of the product record to be fetched
 	 * @param array<string, mixed> $data
 	 */
 	public function addSubscription(int $product_id, array $data): void {
@@ -1904,7 +1904,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return void
 	 */
@@ -1915,11 +1915,11 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 * @param int $subscription_plan_id
 	 * @param int $customer_group_id
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<string, mixed>
 	 */
 	public function getSubscription(int $product_id, int $subscription_plan_id, int $customer_group_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `customer_group_id` = '" . (int)$customer_group_id . "'");
@@ -1930,7 +1930,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1967,7 +1967,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return void
 	 */
@@ -1978,7 +1978,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -2001,7 +2001,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return int
 	 */

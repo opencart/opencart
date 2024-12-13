@@ -9,9 +9,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Set shipping method
-	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('api/shipping_method');
@@ -64,9 +62,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get shipping methods
+	 * Get Shipping Methods
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getShippingMethods(): array {
 		$this->load->language('api/shipping_method');

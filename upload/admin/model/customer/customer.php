@@ -60,7 +60,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customers
+	 * Delete Customer
 	 *
 	 * @param int $customer_id
 	 *
@@ -327,7 +327,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Address
+	 * Delete Addresses
 	 *
 	 * @param int $customer_id
 	 * @param int $address_id
@@ -484,7 +484,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Address By Country ID
+	 * Get Total Addresses By Country ID
 	 *
 	 * @param int $country_id
 	 *

@@ -1120,7 +1120,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		return $this->load->view('sale/subscription_order', $data);
 	}
 
-
 	/**
 	 * Logs
 	 *

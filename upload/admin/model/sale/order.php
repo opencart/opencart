@@ -441,7 +441,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Get Product
 	 *
 	 * @param int   $order_id
-	 * @param int $order_product_id
+	 * @param int   $order_product_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

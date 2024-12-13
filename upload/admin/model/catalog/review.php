@@ -98,7 +98,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rating
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record to be fetched
 	 *
 	 * @return int
 	 */

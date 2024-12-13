@@ -650,7 +650,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Add Order history
+	 * Add History
 	 *
 	 * @return array
 	 */

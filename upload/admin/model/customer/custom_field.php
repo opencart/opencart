@@ -195,7 +195,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
@@ -219,7 +219,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $custom_field_id
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -251,7 +251,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Group
 	 *
-	 * @param int                  $custom_field_id
+	 * @param int                  $custom_field_id primary key of the custom field record to be fetched
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -263,7 +263,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Groups
 	 *
-	 * @param int $custom_field_id
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return void
 	 */
@@ -274,7 +274,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Groups
 	 *
-	 * @param int $custom_field_id
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -287,7 +287,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Value
 	 *
-	 * @param int                  $custom_field_id
+	 * @param int                  $custom_field_id primary key of the custom field record to be fetched
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -337,7 +337,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Values
 	 *
-	 * @param int $custom_field_id
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -357,7 +357,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * Add Value Description
 	 *
 	 * @param int                  $custom_field_value_id
-	 * @param int                  $custom_field_id
+	 * @param int                  $custom_field_id primary key of the custom field record to be fetched
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $custom_field_value_description
 	 *
@@ -392,7 +392,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Value Descriptions
 	 *
-	 * @param int $custom_field_id
+	 * @param int $custom_field_id primary key of the custom field record to be fetched
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -393,9 +393,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Add order history
+	 * Add History
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function addHistory(): array {
 		$this->load->language('api/subscription');

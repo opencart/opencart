@@ -127,7 +127,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Startyps
+	 * Get Total Startups
 	 *
 	 * @return int
 	 */

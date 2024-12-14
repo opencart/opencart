@@ -29,17 +29,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'limit' => 10
 		];
 
+		$this->load->model('checkout/subscription');
+
 		$this->load->model('setting/store');
 		$this->load->model('localisation/language');
 		$this->load->model('localisation/currency');
 
-		$this->load->model('checkout/subscription');
 		$this->load->model('checkout/order');
 
 		$this->load->model('account/customer');
 		$this->load->model('account/address');
-
-		$this->load->model('catalog/product');
 
 		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
@@ -156,6 +155,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			// Validate Products
+			$store->load->model('catalog/product');
+
 			$products = $this->model_checkout_subscription->getProducts($result['subscription_id']);
 
 			foreach ($products as $product) {
@@ -186,7 +187,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					$store->cart->add($product['product_id'], $product['quantity'], $option_data, $result['subscription_plan_id'], ['price' => $price]);
 				} else {
-					$error['product_' . $product['product_id']] = $this->language->get('error_product');
+					$error['product_' . $product['product_id']] = sprintf($this->language->get('error_product'), $product['name']);
 				}
 			}
 
@@ -292,9 +293,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				foreach ($products as $product) {
 					$order_data['products'][] = [
-						'subscription' => [],
-						'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
-					] + $product;
+							'subscription' => [],
+							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
+						] + $product;
 				}
 
 				// Order Totals
@@ -371,7 +372,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						echo '$this->{$key}->charge';
 
 						// Process payment
-						$response_info = $this->{$key}->charge($this->customer->getId(), $store->session->data['order_id'], $total, $order_data['payment_method']['code']);
+						$response_info = $store->{$key}->charge($this->customer->getId(), $store->session->data['order_id'], $total, $order_data['payment_method']['code']);
+
+						print_r($response_info);
 
 						if (isset($response_info['order_status_id'])) {
 							$order_status_id = $response_info['order_status_id'];
@@ -419,7 +422,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 						} else {
 
+<<<<<<< Updated upstream
 							echo '';
+=======
+							echo 'gfhfdghsd';
+>>>>>>> Stashed changes
 
 							// If payment failed change subscription history to failed
 							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message);
@@ -432,6 +439,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					}
 
 				} else {
+
+
+					// Add subscription history failed if no charge method
+					$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_method'));
 
 				}
 

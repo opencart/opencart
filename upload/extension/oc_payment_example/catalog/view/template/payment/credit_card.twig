@@ -1,0 +1,102 @@
+<fieldset>
+  <legend>{{ text_title }}</legend>
+  <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ text_description }}</div>
+  <form id="form-credit-card">
+    <div class="row">
+      <div class="col">
+        <div class="mb-3 required">
+          <label for="input-card-name" class="col-form-label">{{ entry_card_name }}</label>
+          <input type="text" name="card_name" value="" placeholder="{{ entry_card_name }}" id="input-card-name" class="form-control"/>
+          <div id="error-card-name" class="invalid-feedback"></div>
+        </div>
+        <div class="mb-3 required">
+          <label for="input-card-number" class="col-form-label">{{ entry_card_number }}</label>
+          <input type="text" name="card_number" value="" placeholder="**** **** **** ****" id="input-card-number" maxlength="22" class="form-control"/>
+          <div id="error-card-number" class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="mb-3 required">
+          <label for="input-card-expire" class="col-form-label">{{ entry_card_expire }}</label>
+          <div id="input-card-expire" class="text-nowrap" style="width: 100%;">
+            <select name="card_expire_month" class="form-select">
+              <option value="">{{ text_month }}</option>
+              {% for month in months %}
+                <option value="{{ month }}">{{ month }}</option>
+              {% endfor %}
+            </select>
+            <select name="card_expire_year" class="form-select">
+              <option value="">{{ text_year }}</option>
+              {% for year in years %}
+                <option value="{{ year }}">{{ year }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div id="error-card-expire" class="invalid-feedback"></div>
+        </div>
+        <div class="mb-3 required">
+          <label for="input-card-cvv" class="col-form-label">{{ entry_card_cvv }}</label>
+          <input type="text" name="card_cvv" value="" placeholder="***" id="input-card-cvv" size="3" maxLength="3" class="form-control"/>
+          <div id="error-card-cvv" class="invalid-feedback"></div>
+        </div>
+      </div>
+    </div>
+    {% if logged and not subscription %}
+      <div class="form-check">
+        <input type="checkbox" name="store" value="1" id="input-store" class="form-check-input"/>
+        <label for="input-store" class="form-check-label"><strong>{{ text_store }}</strong></label>
+      </div>
+    {% endif %}
+    <div class="text-end">
+      <button type="submit" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
+    </div>
+  </form>
+</fieldset>
+<script type="text/javascript"><!--
+$('#form-credit-card').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=extension/oc_payment_example/payment/credit_card.confirm&language={{ language }}',
+        type: 'post',
+        data: $('#form-credit-card').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        cache: false,
+        processData: false,
+        beforeSend: function() {
+            $('#button-confirm').button('loading');
+        },
+        complete: function() {
+            $('#button-confirm').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('#form-credit-card').find('.is-invalid').removeClass('is-invalid');
+            $('#form-credit-card').find('.invalid-feedback').removeClass('d-block');
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_order }}</td>
+        <td class="text-start">{{ column_card }}</td>
+        <td class="text-start">{{ column_amount }}</td>
+        <td class="text-start">{{ column_response }}</td>
+        <td class="text-start">{{ column_status }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if reports %}
+        {% for report in reports %}
+          <tr>
+            <td class="text-start"><a href="{{ report.order }}" target="_blank">{{ report.order_id }}</a></td>
+            <td class="text-start">{{ report.card }}</td>
+            <td class="text-start">{{ report.amount }}</td>
+            <td class="text-start">{{ report.response }}</td>
+            <td class="text-start">{{ report.status }}</td>
+            <td class="text-start">{{ report.date_added }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

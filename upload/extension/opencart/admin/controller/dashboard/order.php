@@ -92,9 +92,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/order');
 
 		$today = $this->model_sale_order->getTotalOrders(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
-
 		$yesterday = $this->model_sale_order->getTotalOrders(['filter_date_added' => date('Y-m-d', strtotime('-2 day'))]);
-
 		$difference = $today - $yesterday;
 
 		if ($difference && $today) {

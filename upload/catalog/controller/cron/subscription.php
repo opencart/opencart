@@ -310,7 +310,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'total'  => $total
 				];
 
-				$order_data = $order_data + $total_data;
+				$order_data += $total_data;
 
 				// Comment
 				$order_data['comment'] = $result['comment'];

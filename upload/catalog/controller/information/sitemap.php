@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Information;
  */
 class Sitemap extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Product;
  */
 class Related extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return ?\Opencart\System\Engine\Action
 	 */
 	public function index(): string {

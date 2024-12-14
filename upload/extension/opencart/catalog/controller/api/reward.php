@@ -9,7 +9,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('extension/opencart/api/reward');

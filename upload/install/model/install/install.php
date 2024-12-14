@@ -7,6 +7,8 @@ namespace Opencart\Install\Model\Install;
  */
 class Install extends \Opencart\System\Engine\Model {
 	/**
+	 * Database
+	 *
 	 * @param array<string, mixed> $data
 	 *
 	 * @throws \Exception

@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Account;
  */
 class Subscription extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -549,7 +551,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get Order
+	 * Get Orders
 	 *
 	 * @return string
 	 */

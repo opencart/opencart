@@ -82,7 +82,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set payment address
+	 * Set Payment Address
 	 *
 	 * @return array
 	 */
@@ -91,7 +91,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set shipping address
+	 * Set Shipping Address
 	 *
 	 * @return array
 	 */
@@ -106,7 +106,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get shipping methods
+	 * Get Shipping Methods
 	 *
 	 * @return array
 	 */
@@ -126,7 +126,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set shipping method
+	 * Set Shipping Method
 	 *
 	 * @return array
 	 */
@@ -160,7 +160,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get payment methods
+	 * Get Payment Methods
 	 *
 	 * @return array
 	 */
@@ -181,7 +181,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set payment method
+	 * Set Payment Method
 	 *
 	 * @return array
 	 */
@@ -215,6 +215,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
+	/**
+	 * Extension
+	 *
+	 * @return array
+	 */
 	protected function extension(): array {
 		$this->load->controller('api/customer');
 		$this->load->controller('api/cart');
@@ -252,7 +257,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set affiliate
+	 * Set Affiliate
 	 *
 	 * @return array
 	 */
@@ -261,7 +266,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get cart
+	 * Get Cart
 	 *
 	 * @return array
 	 */
@@ -293,7 +298,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Add product
+	 * Add Product
 	 *
 	 * @return array
 	 */

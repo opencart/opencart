@@ -57,7 +57,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Customer
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function setCustomer(): array {
 		$this->load->language('api/order');
@@ -94,7 +94,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Payment Address
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function setPaymentAddress(): array {
 		$this->load->language('api/order');
@@ -125,9 +125,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set shipping address
+	 * Set Shipping Address
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function setShippingAddress(): array {
 		$this->load->language('api/order');
@@ -158,7 +158,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get shipping methods
+	 * Get Shipping Methods
 	 *
 	 * @return array
 	 */
@@ -178,7 +178,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get payment methods
+	 * Get Payment Methods
 	 *
 	 * @return array
 	 */
@@ -200,9 +200,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Set payment method
+	 * Set Payment Method
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function setPaymentMethod(): array {
 		$this->setCustomer();
@@ -227,9 +227,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get cart
+	 * Get Cart
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function getCart(): array {
 		$this->setCustomer();
@@ -250,9 +250,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Add product
+	 * Add Product
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function addProduct(): array {
 		$this->setCustomer();

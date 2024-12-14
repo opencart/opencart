@@ -66,7 +66,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Histories
+	 * Get Return Histories
 	 *
 	 * @param int $return_id
 	 *

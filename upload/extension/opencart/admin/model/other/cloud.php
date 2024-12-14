@@ -16,7 +16,7 @@ class Cloud extends \Opencart\System\Engine\Model {
 		  `product_id` int(11) NOT NULL,
 		  `total` int(11) NOT NULL,
 		  PRIMARY KEY (`product_id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 	}
 
 	/**

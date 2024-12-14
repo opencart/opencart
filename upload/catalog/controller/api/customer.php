@@ -7,6 +7,8 @@ namespace Opencart\catalog\controller\api;
  */
 class Customer extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return array
 	 */
 	public function index(): array {

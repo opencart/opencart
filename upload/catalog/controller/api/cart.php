@@ -6,6 +6,11 @@ namespace Opencart\Catalog\Controller\Api;
  * @package Opencart\Catalog\Controller\Api
  */
 class Cart extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * @return array
+	 */
 	public function index(): array {
 		$this->load->language('api/cart');
 
@@ -131,7 +136,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Add
+	 * Add Product
 	 *
 	 * Add any single product
 	 *
@@ -291,6 +296,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $product_data;
 	}
 
+	/**
+	 * Get Totals
+	 *
+	 * @return array
+	 */
 	public function getTotals(): array {
 		$totals = [];
 		$taxes = $this->cart->getTaxes();

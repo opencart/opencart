@@ -91,9 +91,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 		$this->load->model('extension/opencart/report/sale');
 
 		$today = $this->model_extension_opencart_report_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
-
 		$yesterday = $this->model_extension_opencart_report_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-2 day'))]);
-
 		$difference = $today - $yesterday;
 
 		if ($difference && (int)$today) {

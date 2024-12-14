@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Product;
  */
 class Category extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index(): ?\Opencart\System\Engine\Action {

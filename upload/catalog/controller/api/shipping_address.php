@@ -7,9 +7,9 @@ namespace Opencart\catalog\controller\api;
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**
-	 * Set shipping address
+	 * Index
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('api/shipping_address');

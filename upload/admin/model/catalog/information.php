@@ -211,7 +211,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Description
+	 * Delete Descriptions
 	 *
 	 * @param int $information_id
 	 *

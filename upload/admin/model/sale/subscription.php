@@ -6,10 +6,10 @@ namespace Opencart\Admin\Model\Sale;
  * @package Opencart\Admin\Model\Sale
  */
 class Subscription extends \Opencart\System\Engine\Model {
-
 	/**
 	 * Delete Subscription
 	 *
+	 * @param int $subscription_id
 	 * @param int $order_id
 	 *
 	 * @return void
@@ -278,7 +278,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
-	/*
+	/**
 	 * Get Subscribed Products
 	 *
 	 * @param int $subscription_id
@@ -294,6 +294,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
+	 * @param int $subscription_id
+	 * @param int $subscription_product_id
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *
@@ -308,6 +310,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
+	 * @param int $subscription_id
 	 * @param int $order_id
 	 * @param int $order_product_id
 	 *

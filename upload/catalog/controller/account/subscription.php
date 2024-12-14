@@ -401,11 +401,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['continue'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url);
-			
+
 			$data['language'] = $this->config->get('config_language');
 
 			$data['customer_token'] = $this->session->data['customer_token'];
-			
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -422,7 +422,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-     * Cancel Subscription
+	 * Cancel Subscription
 	 *
 	 * @return void
 	 */
@@ -467,7 +467,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$this->load->model('checkout/subscription');
 
 			$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_canceled_status_id'));
-			
+
 			$json['success'] = $this->language->get('text_success');
 		}
 

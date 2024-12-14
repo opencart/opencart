@@ -12,7 +12,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 			`card_cvv` varchar(3) NOT NULL,
 			`date_added` datetime NOT NULL,
 			PRIMARY KEY (`credit_card_id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "credit_card_report` (
@@ -24,7 +24,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 			`order_status_id` int(11) NOT NULL,
 			`date_added` datetime NOT NULL,
 			PRIMARY KEY (`credit_card_report_id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 	}
 

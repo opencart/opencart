@@ -421,7 +421,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							$store->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
 
 						} else {
-							
+
 							// If payment failed change subscription history to failed
 							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message);
 						}

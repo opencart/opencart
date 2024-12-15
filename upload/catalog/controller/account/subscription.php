@@ -62,18 +62,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$currency_info = $this->model_localisation_currency->getCurrency($result['currency_id']);
-
-			if ($currency_info) {
-				$currency = $currency_info['code'];
-			} else {
-				$currency = $this->config->get('config_currency');
-			}
-
 			$description = '';
 
 			if ($result['trial_status']) {
-				$trial_price = $this->currency->format($result['trial_price'], $currency);
+				$trial_price = $this->currency->format($result['trial_price'], $result['currency']);
 				$trial_cycle = $result['trial_cycle'];
 				$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
 				$trial_duration = $result['trial_duration'];
@@ -81,7 +73,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 			}
 
-			$price = $this->currency->format($result['price'], $currency);
+			$price = $this->currency->format($result['price'], $result['currency']);
 			$cycle = $result['cycle'];
 			$frequency = $this->language->get('text_' . $result['frequency']);
 			$duration = $result['duration'];
@@ -316,14 +308,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['payment_method'] = '';
 			}
 
-			$currency_info = $this->model_localisation_currency->getCurrency($subscription_info['currency_id']);
-
-			if ($currency_info) {
-				$currency = $currency_info['code'];
-			} else {
-				$currency = $this->config->get('config_currency');
-			}
-
 			$data['products'] = [];
 
 			$this->load->model('catalog/product');
@@ -353,8 +337,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				$data['products'][] = [
 					'option'      => $option_data,
-					'trial_price' => $this->currency->format($result['trial_price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0), $currency),
-					'price'       => $this->currency->format($result['price'] + ($this->config->get('config_tax') ? $result['tax'] : 0), $currency),
+					'trial_price' => $this->currency->format($result['trial_price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0), $subscription_info['currency']),
+					'price'       => $this->currency->format($result['price'] + ($this->config->get('config_tax') ? $result['tax'] : 0), $subscription_info['currency']),
 					'view'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				] + $result;
 			}
@@ -362,7 +346,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['description'] = '';
 
 			if ($subscription_info['trial_status']) {
-				$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $currency);
+				$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $subscription_info['currency']);
 				$trial_cycle = $subscription_info['trial_cycle'];
 				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 				$trial_duration = $subscription_info['trial_duration'];
@@ -370,7 +354,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 			}
 
-			$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0), $currency);
+			$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0), $subscription_info['currency']);
 			$cycle = $subscription_info['cycle'];
 			$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 			$duration = $subscription_info['duration'];

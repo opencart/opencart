@@ -632,20 +632,20 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-			//	$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
 			} elseif ($data['sort'] == 'p.price') {
-			//	$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
+				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
-			//	$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY " . $data['sort'];
 			}
 		} else {
-			//$sql .= " ORDER BY `p`.`sort_order`";
+			$sql .= " ORDER BY `p`.`sort_order`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-		//	$sql .= " DESC, LCASE(`pd`.`name`) DESC";
+			$sql .= " DESC, LCASE(`pd`.`name`) DESC";
 		} else {
-		//	$sql .= " ASC, LCASE(`pd`.`name`) ASC";
+			$sql .= " ASC, LCASE(`pd`.`name`) ASC";
 		}
 
 		if (isset($data['start']) || isset($data['limit'])) {
@@ -657,20 +657,20 @@ class Product extends \Opencart\System\Engine\Model {
 				$data['limit'] = 20;
 			}
 
-		//	$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
 		$key = md5($sql);
 
-		//$product_data = $this->cache->get('product.' . $key);
+		$product_data = $this->cache->get('product.' . $key);
 
-		//if (!$product_data) {
-		$query = $this->db->query($sql);
-
-		$product_data = $query->rows;
-
-		//	$this->cache->set('product.' . $key, $product_data);
-		//}
+		if (!$product_data) {
+			$query = $this->db->query($sql);
+			
+			$product_data = $query->rows;
+			
+			$this->cache->set('product.' . $key, $product_data);
+		}
 
 		return (array)$product_data;
 	}

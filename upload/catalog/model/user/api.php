@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\User;
 /**
  * Class Api
- * 
+ *
  * Can be called from $this->load->model('user/api');
  *
  * @package Opencart\Catalog\Model\User

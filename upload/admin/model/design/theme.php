@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Theme
- * 
+ *
  * Can be called from $this->load->model('design/theme');
  *
  * @package Opencart\Admin\Model\Design

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Setting;
 /**
  * Class Modification
- * 
+ *
  * Can be called from $this->load->model('setting/modification');
  *
  * @package Opencart\Admin\Model\Setting

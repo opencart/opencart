@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Item
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/shipping/item');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Shipping

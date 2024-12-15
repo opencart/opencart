@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\OcPaymentExample\Payment;
 /**
  * Credit Card
- * 
+ *
  * Can be called from $this->load->model('extension/oc_payment_example/payment/credit_card');
  *
  * @package Opencart\Catalog\Model\Extension\OcPaymentExample\Payment
@@ -10,9 +10,9 @@ namespace Opencart\Catalog\Model\Extension\OcPaymentExample\Payment;
 class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
-	 * 
+	 *
 	 * @param array<string, mixed> $address
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getMethods(array $address): array {
@@ -64,10 +64,10 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Credit Card
-	 * 
+	 *
 	 * @param int $customer_id
 	 * @param int $credit_card_id
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getCreditCard(int $customer_id, int $credit_card_id): array {
@@ -78,9 +78,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Credit Cards
-	 * 
+	 *
 	 * @param int $customer_id
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getCreditCards(int $customer_id): array {
@@ -91,10 +91,10 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Credit Card
-	 * 
-	 * @param int $customer_id
+	 *
+	 * @param int   $customer_id
 	 * @param array $data
-	 * 
+	 *
 	 * @return void
 	 */
 	public function addCreditCard(int $customer_id, array $data): void {
@@ -103,10 +103,10 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Credit Card
-	 * 
+	 *
 	 * @param int $customer_id
 	 * @param int $credit_card_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteCreditCard(int $customer_id, int $credit_card_id): void {
@@ -115,8 +115,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stored
+	 *
 	 * @param int $customer_id
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getStored(int $customer_id): array {
@@ -125,12 +126,12 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Charge
-	 * 
-	 * @param int $customer_id
-	 * @param int $order_id
-	 * @param float $amount
+	 *
+	 * @param int    $customer_id
+	 * @param int    $order_id
+	 * @param float  $amount
 	 * @param string $code
-	 * 
+	 *
 	 * @return array
 	 */
 	public function charge(int $customer_id, int $order_id, float $amount, string $code): array {

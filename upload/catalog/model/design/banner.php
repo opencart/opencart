@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Design;
 /**
  * Class Banner
- * 
+ *
  * Can be called from $this->load->model('design/banner');
  *
  * @package Opencart\Catalog\Model\Design

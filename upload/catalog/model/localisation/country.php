@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Country
- * 
+ *
  * Can be called from $this->load->model('localisation/country');
  *
  * @package Opencart\Catalog\Model\Localisation

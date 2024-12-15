@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Cms;
 /**
  * Class Anti-Spam
- * 
+ *
  * Can be called from $this->load->model('cms/antispam');
  *
  * @package Opencart\Catalog\Model\Cms

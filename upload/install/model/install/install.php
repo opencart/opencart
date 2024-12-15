@@ -2,7 +2,7 @@
 namespace Opencart\Install\Model\Install;
 /**
  * Class Install
- * 
+ *
  * Can be called from $this->load->model('install/install');
  *
  * @package Opencart\Install\Model\Install

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Tool;
 /**
  * Class Upload
- * 
+ *
  * Can be called from $this->load->model('tool/upload');
  *
  * @package Opencart\Admin\Model\Tool

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute Group
- * 
+ *
  * Can be called from $this->load->model('catalog/attribute_group');
  *
  * @package Opencart\Admin\Model\Catalog

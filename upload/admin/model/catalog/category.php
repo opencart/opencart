@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Category
- * 
+ *
  * Can be called from $this->load->model('catalog/category');
  *
  * @package Opencart\Admin\Model\Catalog

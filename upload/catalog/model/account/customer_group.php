@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Customer Group
- * 
+ *
  * Can be called from $this->load->model('account/customer_group');
  *
  * @package Opencart\Catalog\Model\Account

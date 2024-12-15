@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class Custom Field
- * 
+ *
  * Can be called from $this->load->model('customer/custom_field');
  *
  * @package Opencart\Admin\Model\Customer
@@ -359,7 +359,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * Add Value Description
 	 *
 	 * @param int                  $custom_field_value_id
-	 * @param int                  $custom_field_id primary key of the custom field record to be fetched
+	 * @param int                  $custom_field_id                primary key of the custom field record to be fetched
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $custom_field_value_description
 	 *

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Subscription
- * 
+ *
  * Can be called from $this->load->model('account/subscription');
  *
  * @package Opencart\Catalog\Model\Account

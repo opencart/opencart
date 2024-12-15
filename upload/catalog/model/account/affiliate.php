@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Affiliate
- * 
+ *
  * Can be called from $this->load->model('account/affiliate');
  *
  * @package Opencart\Catalog\Model\Account

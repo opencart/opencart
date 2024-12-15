@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Option
- * 
+ *
  * Can be called from $this->load->model('catalog/option');
  *
  * @package Opencart\Admin\Model\Catalog

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Bestseller
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/module/bestseller');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Module

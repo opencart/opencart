@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Product
- * 
+ *
  * Can be called from $this->load->model('catalog/product');
  *
  * @package Opencart\Admin\Model\Catalog
@@ -1917,7 +1917,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id           primary key of the product record to be fetched
 	 * @param int $subscription_plan_id
 	 * @param int $customer_group_id
 	 *

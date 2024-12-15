@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Shipping
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/total/shipping');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total

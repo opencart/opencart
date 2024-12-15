@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Download
- * 
+ *
  * Can be called from $this->load->model('account/download');
  *
  * @package Opencart\Catalog\Model\Account

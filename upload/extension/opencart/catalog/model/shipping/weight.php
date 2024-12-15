@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Weight
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/shipping/weight');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Shipping

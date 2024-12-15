@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Setting;
 /**
  * Class Event
- * 
+ *
  * Can be called from $this->load->model('setting/event');
  *
  * @package Opencart\Admin\Model\Setting

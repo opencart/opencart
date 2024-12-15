@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Custom Field
- * 
+ *
  * Can be called from $this->load->model('account/custom_field');
  *
  * @package Opencart\Catalog\Model\Account

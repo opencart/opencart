@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Tax
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/total/tax');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total

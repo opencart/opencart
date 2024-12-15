@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Transaction
- * 
+ *
  * Can be called from $this->load->model('account/transaction');
  *
  * @package Opencart\Catalog\Model\Account

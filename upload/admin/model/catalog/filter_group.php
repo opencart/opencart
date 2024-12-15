@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter Group
- * 
+ *
  * Can be called from $this->load->model('catalog/filter_group');
  *
  * @package Opencart\Admin\Model\Catalog

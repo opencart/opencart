@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Shipping Method
- * 
+ *
  * Can be called from $this->load->model('checkout/shipping_method');
  *
  * @package Opencart\Catalog\Model\Checkout

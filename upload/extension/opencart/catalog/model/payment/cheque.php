@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class Cheque
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/payment/cheque');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Payment

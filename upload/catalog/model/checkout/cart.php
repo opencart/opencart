@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Cart
- * 
+ *
  * Can be called from $this->load->model('checkout/cart');
  *
  * @package Opencart\Catalog\Model\Checkout

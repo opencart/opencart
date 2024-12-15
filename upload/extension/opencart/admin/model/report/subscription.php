@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Subscription
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/report/subscription');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report

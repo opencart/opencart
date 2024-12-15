@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\OcPaymentExample\Payment;
 /**
  * Credit Card
- * 
+ *
  * Can be called from $this->load->model('extension/oc_payment_example/payment/credit_card');
  *
  * @package Opencart\Admin\Model\Extension\OcPaymentExample\Payment
@@ -10,7 +10,7 @@ namespace Opencart\Admin\Model\Extension\OcPaymentExample\Payment;
 class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Install
-	 * 
+	 *
 	 * @return void
 	 */
 	public function install(): void {
@@ -42,7 +42,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Uninstall
-	 * 
+	 *
 	 * @return void
 	 */
 	public function uninstall(): void {
@@ -52,8 +52,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Credit Card
+	 *
 	 * @param array<string, mixed> $data
-	 * 
+	 *
 	 * @return void
 	 */
 	public function addCreditCard(array $data): void {
@@ -62,8 +63,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Credit Card
+	 *
 	 * @param int $customer_payment_id
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteCreditCard(int $customer_payment_id): void {
@@ -72,11 +74,11 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Reports
-	 * 
+	 *
 	 * @param int $download_id
 	 * @param int $start
 	 * @param int $limit
-	 * 
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
@@ -95,7 +97,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reports
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getTotalReports(): int {

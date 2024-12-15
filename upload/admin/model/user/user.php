@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\User;
 /**
  * Class User
- * 
+ *
  * Can be called from $this->load->model('user/user');
  *
  * @package Opencart\Admin\Model\User

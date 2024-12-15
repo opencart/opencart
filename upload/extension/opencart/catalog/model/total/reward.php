@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Reward
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/total/reward');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total

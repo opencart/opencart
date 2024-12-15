@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Customer
- * 
+ *
  * Can be called from $this->load->model('account/approval');
  *
  * @package Opencart\Catalog\Model\Account

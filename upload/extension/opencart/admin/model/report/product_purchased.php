@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Product Purchased
- * 
+ *
  * Can be called from $this->load->model('extension/opencart/report/product_purchased');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report

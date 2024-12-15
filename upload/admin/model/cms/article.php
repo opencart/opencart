@@ -367,7 +367,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -397,7 +397,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int
 	 */

@@ -198,7 +198,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones By Country ID
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int
 	 */
@@ -211,7 +211,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones By Zone ID
 	 *
-	 * @param int $zone_id
+	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return int
 	 */

@@ -156,7 +156,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the total number of attribute records with group ID in the database.
 	 *
-	 * @param int $attribute_group_id foreign key of the attribute group record to be fetched
+	 * @param int $attribute_group_id foreign key of the attribute group record
 	 *
 	 * @return int total number of attribute records that have attribute group ID
 	 */
@@ -197,7 +197,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Delete attribute description record in the database.
 	 *
-	 * @param int $language_id primary key of the attribute language
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -228,7 +228,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
-	 * @return array<int, array<string, string>> Descriptions
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptions(int $attribute_id): array {
 		$attribute_data = [];
@@ -247,9 +247,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 * @param int $language_id primary key of the attribute language
+	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>> Descriptions by language_id
+	 * @return array<int, array<string, string>>
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");

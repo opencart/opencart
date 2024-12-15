@@ -306,7 +306,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return int
 	 */

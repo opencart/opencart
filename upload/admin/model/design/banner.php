@@ -161,7 +161,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Images By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */

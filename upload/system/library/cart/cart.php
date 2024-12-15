@@ -227,10 +227,10 @@ class Cart {
 							$price = $product_discount_query->row['price'] + $option_price;
 						} elseif ($product_discount_query->row['type'] == 'P') {
 							// Percentage
-							$price = $price - ($price * ($product_discount_query->row['price'] / 100));
+							$price -= ($price * ($product_discount_query->row['price'] / 100));
 						} elseif ($product_discount_query->row['type'] == 'S') {
 							// Subtract
-							$price = $price - $product_discount_query->row['price'];
+							$price -= $product_discount_query->row['price'];
 						}
 					}
 
@@ -326,7 +326,7 @@ class Cart {
 	/**
 	 * Update
 	 *
-	 * @param int $cart_id
+	 * @param int $cart_id  primary key of the cart record
 	 * @param int $quantity
 	 *
 	 * @return void
@@ -340,7 +340,7 @@ class Cart {
 	/**
 	 * Has
 	 *
-	 * @param int $cart_id
+	 * @param int $cart_id primary key of the cart record
 	 *
 	 * @return bool
 	 */
@@ -351,7 +351,7 @@ class Cart {
 	/**
 	 * Remove
 	 *
-	 * @param int $cart_id
+	 * @param int $cart_id primary key of the cart record
 	 *
 	 * @return void
 	 */

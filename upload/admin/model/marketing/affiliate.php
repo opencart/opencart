@@ -229,7 +229,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -252,7 +252,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

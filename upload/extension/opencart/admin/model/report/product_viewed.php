@@ -33,7 +33,7 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Report
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $viewed
 	 *
 	 * @return void

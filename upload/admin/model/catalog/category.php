@@ -490,7 +490,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -520,7 +520,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -534,7 +534,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Add Path
 	 *
 	 * @param int $category_id primary key of the category record
-	 * @param int $path_id
+	 * @param int $path_id     primary key of the category path record
 	 * @param int $level
 	 *
 	 * @return void
@@ -593,7 +593,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Paths By Path ID
 	 *
-	 * @param int $path_id
+	 * @param int $path_id primary key of the category path record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

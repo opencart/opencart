@@ -145,7 +145,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<string, mixed>
 	 */

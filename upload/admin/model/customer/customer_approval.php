@@ -11,7 +11,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Approvals By Customer ID
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

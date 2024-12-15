@@ -1114,7 +1114,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Category
 	 *
 	 * @param int $product_id  primary key of the product record
-	 * @param int $category_id
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
 	 */

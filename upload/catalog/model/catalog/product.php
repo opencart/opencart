@@ -44,7 +44,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Product
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -351,7 +351,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -364,8 +364,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Categories By Category ID
 	 *
-	 * @param int $product_id
-	 * @param int $category_id
+	 * @param int $product_id  primary key of the product record
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -392,7 +392,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attributes
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -130,7 +130,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *	Add Description
 	 *
 	 * @param int                  $attribute_group_id primary key of the attribute group record
-	 * @param int                  $language_id
+	 * @param int                  $language_id        primary key of the language record
 	 * @param array<string, mixed> $data               array of data
 	 *
 	 * @return void
@@ -153,7 +153,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -183,7 +183,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

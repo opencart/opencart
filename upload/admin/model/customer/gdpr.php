@@ -45,7 +45,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Gdpr(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -113,7 +113,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Gdpr(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

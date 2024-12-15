@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Currency
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -27,7 +27,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	 * Edit Currency
 	 *
 	 * @param int                  $currency_id primary key of the currency record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currencies
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */

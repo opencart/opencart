@@ -11,7 +11,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -46,7 +46,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 * Edit Store
 	 *
 	 * @param int                  $store_id
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -126,7 +126,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

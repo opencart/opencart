@@ -163,7 +163,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -283,7 +283,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Seo Urls
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

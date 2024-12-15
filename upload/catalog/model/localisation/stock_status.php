@@ -24,7 +24,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Statuses
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

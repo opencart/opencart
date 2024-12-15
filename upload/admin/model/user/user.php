@@ -11,7 +11,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add User
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -25,7 +25,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * Edit User
 	 *
 	 * @param int                  $user_id primary key of the user record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */
@@ -130,7 +130,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Users
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -209,7 +209,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -281,7 +281,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * Add Login
 	 *
 	 * @param int                  $user_id primary key of the user record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */
@@ -348,7 +348,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * Add Authorize
 	 *
 	 * @param int                  $user_id primary key of the user record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */

@@ -11,7 +11,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Coupons
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -54,7 +54,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Coupons
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

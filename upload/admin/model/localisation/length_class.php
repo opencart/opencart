@@ -11,7 +11,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Length Class
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -33,7 +33,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * Edit Length Class
 	 *
 	 * @param int                  $length_class_id primary key of the length class record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -80,7 +80,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Length Classes
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -150,7 +150,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $length_class_id primary key of the length class record
 	 * @param int                  $language_id     primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */

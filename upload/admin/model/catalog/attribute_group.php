@@ -11,7 +11,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Attribute Group
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -31,7 +31,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * Edit Attribute Group
 	 *
 	 * @param int                  $attribute_group_id primary key of the attribute group record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data               array of data
 	 *
 	 * @return void
 	 */
@@ -74,7 +74,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attribute Groups
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -131,7 +131,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $attribute_group_id primary key of the attribute group record
 	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data               array of data
 	 *
 	 * @return void
 	 */

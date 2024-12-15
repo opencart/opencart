@@ -11,7 +11,7 @@ class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Online
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -54,7 +54,7 @@ class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Online
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

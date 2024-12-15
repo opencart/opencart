@@ -11,7 +11,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -39,7 +39,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * Edit Layout
 	 *
 	 * @param int                  $layout_id primary key of the layout record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -113,7 +113,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -166,7 +166,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * Add Route
 	 *
 	 * @param int                  $layout_id primary key of the layout record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -237,7 +237,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * Add Module
 	 *
 	 * @param int                  $layout_id primary key of the layout record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */

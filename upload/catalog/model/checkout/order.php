@@ -11,7 +11,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -41,7 +41,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Edit Order
 	 *
 	 * @param int                  $order_id primary key of the order record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -201,7 +201,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Add Product
 	 *
 	 * @param int                  $order_id primary key of the order record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return int
 	 */
@@ -271,7 +271,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $order_id         primary key of the order record
 	 * @param int                  $order_product_id primary key of the order product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -310,7 +310,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $order_id         primary key of the order record
 	 * @param int                  $order_product_id primary key of the order product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -374,7 +374,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Add Total
 	 *
 	 * @param int                  $order_id primary key of the order record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */

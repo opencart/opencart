@@ -11,7 +11,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Geo Zone
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -35,7 +35,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * Edit Geo Zone
 	 *
 	 * @param int                  $geo_zone_id primary key of the geo zone record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -84,7 +84,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Geo Zones
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -150,7 +150,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * Add Zone
 	 *
 	 * @param int                  $geo_zone_id primary key of the geo zone record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

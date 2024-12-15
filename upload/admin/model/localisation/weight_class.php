@@ -11,7 +11,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Weight Class
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -33,7 +33,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * Edit Weight Class
 	 *
 	 * @param int                  $weight_class_id primary key of the weight class record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Weight Classes
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -148,7 +148,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $weight_class_id primary key of the weight class record
 	 * @param int                  $language_id     primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */

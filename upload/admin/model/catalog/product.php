@@ -11,7 +11,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -146,7 +146,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Edit Product
 	 *
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -378,7 +378,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Add Variant
 	 *
 	 * @param int                  $master_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return int
 	 */
@@ -512,7 +512,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $master_id  primary key of the product record
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -644,7 +644,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Edit Variants
 	 *
 	 * @param int                  $master_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -827,7 +827,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -926,7 +926,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -1048,7 +1048,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id  primary key of the product record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -1222,7 +1222,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int                  $product_id   primary key of the product record
 	 * @param int                  $attribute_id primary key of the attribute record
 	 * @param int                  $language_id  primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
 	 */
@@ -1316,7 +1316,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Add Option
 	 *
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
 	 */
@@ -1432,7 +1432,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int                  $product_id        primary key of the product record
 	 * @param int                  $product_option_id primary key of the product option record
 	 * @param int                  $option_id         primary key of the option record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return int
 	 */
@@ -1505,7 +1505,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Image
 	 *
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -1541,7 +1541,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *	Add Discount
 	 *
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -1589,7 +1589,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id        primary key of the product record
 	 * @param int                  $customer_group_id primary key of the customer group record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
 	 */
@@ -1894,7 +1894,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Add Subscription
 	 *
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 */
 	public function addSubscription(int $product_id, array $data): void {
 		$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$data['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "'");

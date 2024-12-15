@@ -11,7 +11,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Category
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -88,7 +88,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Edit Category
 	 *
 	 * @param int                  $category_id primary key of the category record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -355,7 +355,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -429,7 +429,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Categories
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -468,7 +468,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $category_id primary key of the category record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

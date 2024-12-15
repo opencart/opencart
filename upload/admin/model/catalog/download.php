@@ -11,7 +11,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Download
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -31,7 +31,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 * Edit Download
 	 *
 	 * @param int                  $download_id primary key of the download record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -75,7 +75,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Downloads
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -125,7 +125,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $download_id primary key of the download record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

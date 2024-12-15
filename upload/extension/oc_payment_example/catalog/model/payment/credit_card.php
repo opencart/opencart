@@ -93,7 +93,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	 * Add Credit Card
 	 *
 	 * @param int   $customer_id primary key of the customer record
-	 * @param array $data
+	 * @param array $data        array of data
 	 *
 	 * @return void
 	 */

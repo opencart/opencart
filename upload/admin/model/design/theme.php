@@ -11,7 +11,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Theme
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -25,7 +25,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * Edit Theme
 	 *
 	 * @param int                  $theme_id primary key of the theme record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */

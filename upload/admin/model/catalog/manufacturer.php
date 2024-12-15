@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Manufacturer
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -54,7 +54,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * Edit Manufacturer
 	 *
 	 * @param int                  $manufacturer_id primary key of the manufacturer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -133,7 +133,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturers
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

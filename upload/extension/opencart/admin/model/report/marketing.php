@@ -11,7 +11,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Marketing
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -70,7 +70,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Marketing
 	 *
-	 * @param array<mixed> $data
+	 * @param array<mixed> $data array of filters
 	 *
 	 * @return int
 	 */

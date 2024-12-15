@@ -12,7 +12,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 * Add Affiliate
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -30,7 +30,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 * Edit Affiliate
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

@@ -11,7 +11,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Information
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -56,7 +56,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * Edit Information
 	 *
 	 * @param int                  $information_id primary key of the information record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data           array of data
 	 *
 	 * @return void
 	 */
@@ -137,7 +137,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Information(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -204,7 +204,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $information_id primary key of the information record
 	 * @param int                  $language_id    primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data           array of data
 	 *
 	 * @return void
 	 */

@@ -11,7 +11,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter Group
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -33,7 +33,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * Edit Filter Group
 	 *
 	 * @param int                  $filter_group_id primary key of the filter group record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -80,7 +80,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filter Groups
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -141,7 +141,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $filter_group_id primary key of the filter group record
 	 * @param int                  $language_id     primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */

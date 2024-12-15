@@ -11,7 +11,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -33,7 +33,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * Edit Filter
 	 *
 	 * @param int                  $filter_id primary key of the filter record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 */
 	public function editFilter(int $filter_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
@@ -86,7 +86,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filters
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -135,7 +135,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -169,7 +169,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $filter_id   primary key of the filter record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

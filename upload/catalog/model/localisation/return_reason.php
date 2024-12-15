@@ -11,7 +11,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Reasons
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

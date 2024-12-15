@@ -11,7 +11,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Startup
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -84,7 +84,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startups
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -11,7 +11,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Translation
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */
@@ -23,7 +23,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * Edit Translation
 	 *
 	 * @param int                  $translation_id primary key of the translation record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data           array of data
 	 *
 	 * @return void
 	 */
@@ -80,7 +80,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Translations
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

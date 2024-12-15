@@ -11,7 +11,7 @@ class Blog extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Articles
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

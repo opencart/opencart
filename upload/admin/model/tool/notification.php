@@ -11,7 +11,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Notification
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -60,7 +60,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Notifications
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -93,7 +93,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Notifications
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

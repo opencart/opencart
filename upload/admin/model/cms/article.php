@@ -11,7 +11,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Article
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -59,7 +59,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * Edit Article
 	 *
 	 * @param int                  $article_id primary key of the article record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -155,7 +155,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Articles
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -215,7 +215,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Articles
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -236,7 +236,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $article_id  primary key of the article record
 	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -496,7 +496,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Comments
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -555,7 +555,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Comments
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

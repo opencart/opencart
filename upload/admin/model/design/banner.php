@@ -11,7 +11,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Banner
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -35,7 +35,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * Edit Banner
 	 *
 	 * @param int                  $banner_id primary key of the banner record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -82,7 +82,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Banners
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -139,7 +139,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $banner_id   primary key of the banner record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return void
 	 */

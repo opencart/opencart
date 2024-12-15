@@ -55,7 +55,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * Get Transactions
 	 *
 	 * @param int                  $customer_id primary key of the order record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

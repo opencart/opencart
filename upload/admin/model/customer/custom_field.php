@@ -11,7 +11,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Custom Field
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -45,7 +45,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * Edit Custom Field
 	 *
 	 * @param int                  $custom_field_id primary key of the custom field record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -108,7 +108,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Custom Fields
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -188,7 +188,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $custom_field_id primary key of the custom field record
 	 * @param int                  $language_id     primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -254,7 +254,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * Add Customer Group
 	 *
 	 * @param int                  $custom_field_id primary key of the custom field record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -290,7 +290,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * Add Value
 	 *
 	 * @param int                  $custom_field_id primary key of the custom field record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return int
 	 */

@@ -99,7 +99,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Cron(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

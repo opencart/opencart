@@ -11,7 +11,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Zone
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -27,7 +27,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * Edit Zone
 	 *
 	 * @param int                  $zone_id primary key of the zone record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */
@@ -66,7 +66,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zones
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -154,7 +154,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

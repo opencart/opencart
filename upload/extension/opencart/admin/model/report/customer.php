@@ -125,7 +125,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customers
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -188,7 +188,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -237,7 +237,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Orders
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -286,7 +286,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -319,7 +319,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reward Points
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -360,7 +360,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reward Points
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -393,7 +393,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Activities
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -444,7 +444,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customer Activities
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -481,7 +481,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Searches
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -536,7 +536,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customer Searches
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

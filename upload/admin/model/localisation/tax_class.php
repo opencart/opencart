@@ -11,7 +11,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Tax Class
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -35,7 +35,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	 * Edit Tax Class
 	 *
 	 * @param int                  $tax_class_id primary key of the tax class record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
 	 */
@@ -84,7 +84,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Classes
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -139,7 +139,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	 * Add Tax Rule
 	 *
 	 * @param int                  $tax_class_id primary key of the tax class record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
 	 */

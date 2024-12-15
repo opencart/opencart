@@ -11,7 +11,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int Subscription ID
 	 *
@@ -80,7 +80,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * Edit Subscription
 	 *
 	 * @param int                  $subscription_id primary key of the subscription record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 *
@@ -205,7 +205,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -300,7 +300,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * Add Product
 	 *
 	 * @param int                  $subscription_id primary key of the subscription record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -363,7 +363,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $subscription_id         primary key of the subscription record
 	 * @param int                  $subscription_product_id primary key of the subscription product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data                    array of data
 	 *
 	 * @return void
 	 */

@@ -55,7 +55,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	 * Get Rewards
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

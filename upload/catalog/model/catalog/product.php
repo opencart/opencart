@@ -33,7 +33,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id
 	 * @param int                  $quantity
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
 	 */
@@ -69,7 +69,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -236,7 +236,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -583,7 +583,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Specials
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

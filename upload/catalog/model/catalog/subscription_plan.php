@@ -24,7 +24,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plans
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

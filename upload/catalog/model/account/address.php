@@ -12,7 +12,7 @@ class Address extends \Opencart\System\Engine\Model {
 	 * Add Address
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return int
 	 */
@@ -33,7 +33,7 @@ class Address extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param int                  $address_id  primary key of the address record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

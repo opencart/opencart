@@ -11,7 +11,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Modification
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */
@@ -69,7 +69,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Modifications
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

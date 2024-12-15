@@ -11,7 +11,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */

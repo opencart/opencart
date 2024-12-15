@@ -11,7 +11,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Action
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return ?int
 	 */
@@ -37,7 +37,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * Edit Return Action
 	 *
 	 * @param int                  $return_action_id primary key of the return action record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Actions
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -138,7 +138,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $return_action_id primary key of the return action record
 	 * @param int                  $language_id      primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */

@@ -12,7 +12,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * Add Review
 	 *
 	 * @param int                  $product_id primary key of the product record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
 	 */

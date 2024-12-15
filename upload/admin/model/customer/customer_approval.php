@@ -22,7 +22,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Approvals
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -88,7 +88,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customer Approvals
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

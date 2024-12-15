@@ -11,7 +11,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -25,7 +25,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Edit Customer
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -127,7 +127,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customers
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -213,7 +213,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -295,7 +295,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Add Address
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return int
 	 */
@@ -316,7 +316,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param int                  $address_id  primary key of the address record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -886,7 +886,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Add Authorize
 	 *
 	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

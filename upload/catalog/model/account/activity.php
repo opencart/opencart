@@ -12,7 +12,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	 * Add Activity
 	 *
 	 * @param string               $key
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */

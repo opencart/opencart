@@ -11,7 +11,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Coupon
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -39,7 +39,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * Edit Coupon
 	 *
 	 * @param int                  $coupon_id primary key of the coupon record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -107,7 +107,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Coupons
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

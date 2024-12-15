@@ -11,7 +11,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add User Group
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -25,7 +25,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 * Edit User Group
 	 *
 	 * @param int                  $user_group_id primary key of the user group record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data          array of data
 	 *
 	 * @return void
 	 */
@@ -63,7 +63,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get User Groups
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

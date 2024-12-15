@@ -11,7 +11,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Api
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -35,7 +35,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 * Edit Api
 	 *
 	 * @param int                  $api_id primary key of the Api record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data   array of data
 	 *
 	 * @return void
 	 */
@@ -82,7 +82,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Apis
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

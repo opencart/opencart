@@ -11,7 +11,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Status
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return ?int
 	 */
@@ -37,7 +37,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * Edit Subscription Status
 	 *
 	 * @param int                  $subscription_status_id primary key of the subscription status record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data                   array of data
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Statuses
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -138,7 +138,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $subscription_status_id primary key of the subscription status record
 	 * @param int                  $language_id            primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data                   array of data
 	 *
 	 * @return void
 	 */

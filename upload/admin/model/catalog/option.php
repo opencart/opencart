@@ -11,7 +11,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -37,7 +37,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * Edit Option
 	 *
 	 * @param int                  $option_id primary key of the option record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -89,7 +89,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -151,7 +151,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $option_id   primary key of the option record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -217,7 +217,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * Add Value
 	 *
 	 * @param int                  $option_id primary key of the option record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data      array of data
 	 */
 	public function addValue(int $option_id, array $data): int {
 		if ($data['option_value_id']) {
@@ -284,7 +284,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @param int                  $option_value_id primary key of the option value record
 	 * @param int                  $option_id       primary key of the option record
 	 * @param int                  $language_id     primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */

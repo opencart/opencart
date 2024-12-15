@@ -64,7 +64,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Uploads
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -131,7 +131,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Uploads
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

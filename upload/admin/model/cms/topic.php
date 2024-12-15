@@ -11,7 +11,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Topic
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -50,7 +50,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * Edit Topic
 	 *
 	 * @param int                  $topic_id primary key of the topic record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -133,7 +133,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Topics
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -200,7 +200,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $topic_id    primary key of the topic record
 	 * @param int                  $language_id primary key of the language record
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */

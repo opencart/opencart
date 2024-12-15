@@ -7,7 +7,9 @@ namespace Opencart\catalog\controller\api;
  */
 class Affiliate extends \Opencart\System\Engine\Controller {
 	/**
-	 * @return array
+	 * Index
+	 *
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('api/affiliate');
@@ -30,7 +32,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Get subtotal
+		// Get Sub Total
 		if (isset($this->session->data['order_id'])) {
 			$subtotal = 0;
 

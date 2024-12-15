@@ -74,6 +74,8 @@ set_error_handler(/**
  */
 class CliCloud extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -297,6 +299,8 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Usage
+	 *
 	 * @return string
 	 */
 	public function usage(): string {

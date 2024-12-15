@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Cron;
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @param int    $cron_id
 	 * @param string $code
 	 * @param string $cycle

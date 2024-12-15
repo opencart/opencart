@@ -69,13 +69,13 @@ class Basic extends \Opencart\System\Engine\Controller {
 	public function save(): void {
 		$this->load->language('extension/opencart/theme/basic');
 
+		$json = [];
+
 		if (isset($this->request->get['store_id'])) {
 			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
-
-		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/opencart/theme/basic')) {
 			$json['error'] = $this->language->get('error_permission');

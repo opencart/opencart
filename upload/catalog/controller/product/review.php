@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Product;
  */
 class Review extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {

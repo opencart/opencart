@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Common;
  */
 class Menu extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return string
 	 */
 	public function index(): string {

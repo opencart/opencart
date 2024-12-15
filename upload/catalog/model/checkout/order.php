@@ -347,7 +347,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getSubscriptions(int $order_id): array {
 		$query = $this->db->query("SELECT *, os.price, `os`.`tax` FROM `" . DB_PREFIX . "order_subscription` `os` LEFT JOIN `" . DB_PREFIX . "order_product` `op` ON(`os`.`order_product_id` = `op`.`order_product_id`) WHERE `os`.`order_id` = '" . (int)$order_id . "'");
@@ -384,6 +384,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Delete Totals
 	 *
 	 * @param int $order_id
+	 *
+	 * @return void
 	 */
 	public function deleteTotals(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -618,7 +620,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Order History
+	 * Delete Order Histories
 	 *
 	 * @param int $order_id
 	 *

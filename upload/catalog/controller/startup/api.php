@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Startup;
  */
 class Api extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index(): ?\Opencart\System\Engine\Action {
@@ -106,6 +108,8 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Permission
+	 *
 	 * @return void
 	 */
 	public function permission(): void {

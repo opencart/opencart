@@ -95,6 +95,8 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
  */
 class CliInstall extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

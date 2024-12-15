@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Information;
  */
 class Contact extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

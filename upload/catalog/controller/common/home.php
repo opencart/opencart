@@ -7,6 +7,8 @@ namespace Opencart\Catalog\Controller\Common;
  */
 class Home extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

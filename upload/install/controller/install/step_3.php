@@ -7,6 +7,8 @@ namespace Opencart\Install\Controller\Install;
  */
 class Step3 extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {

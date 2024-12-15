@@ -305,9 +305,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param int   $subscription_id
-	 * @param array $data
-	 * @param array $product
+	 * @param int                  $subscription_id
+	 * @param array<string, mixed> $data
 	 *
 	 * @return void
 	 */
@@ -326,7 +325,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Product
+	 * Delete Subscription Products
 	 *
 	 * @param int $subscription_id
 	 *
@@ -339,7 +338,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get products
+	 * Get Products
 	 *
 	 * @param int $subscription_id
 	 *
@@ -366,26 +365,24 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Product Option
+	 * Add Option
 	 *
-	 * @param int   $subscription_id
-	 * @param int   $subscription_product_id
-	 * @param array $data
+	 * @param int                  $subscription_id
+	 * @param int                  $subscription_product_id
+	 * @param array<string, mixed> $data
 	 *
-	 * @
-	 *
-	 * @return array<string, mixed>
+	 * @return void
 	 */
 	public function addOption(int $subscription_id, int $subscription_product_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_option` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_product_id` = '" . (int)$subscription_product_id . "', `product_option_id` = '" . (int)$data['product_option_id'] . "', `product_option_value_id` = '" . (int)$data['product_option_value_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `value` = '" . $this->db->escape($data['value']) . "', `type` = '" . $this->db->escape($data['type']) . "'");
 	}
 
 	/**
-	 * Delete Product Options
+	 * Delete Subscription Options
 	 *
 	 * @param int $subscription_id
 	 *
-	 * @return array<string, mixed>
+	 * @return void
 	 */
 	public function deleteOptions(int $subscription_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_option` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -411,8 +408,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id
 	 * @param int $subscription_product_id
-	 * @param int $order_id
-	 * @param int $order_product_id
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -445,7 +440,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param string $code
 	 * @param string $description
 	 * @param bool   $status
-	 * @param bool   $notify
 	 *
 	 * @return void
 	 */

@@ -74,15 +74,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$data['date_added'] = '';
 			$data['log'] = '';
 		}
-
-
-
-		$version = preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $data['latest_version'], $match);
-
-		echo VERSION;
-		print_r($match);
-		print_r($response_info);
-		echo $version;
+		
 		// For testing
 		//$data['latest_version'] = 'master';
 
@@ -115,7 +107,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (version_compare($version, VERSION, '<') && !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $version)) {
+		if (version_compare($version, VERSION, '<') || !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $version)) {
 			$json['error'] = $this->language->get('error_version');
 		}
 

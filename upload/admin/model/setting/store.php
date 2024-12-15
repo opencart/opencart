@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Setting;
 /**
  * Class Store
+ * 
+ * Can be called from $this->load->model('setting/store');
  *
  * @package Opencart\Admin\Model\Setting
  */

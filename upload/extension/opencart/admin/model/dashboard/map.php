@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Dashboard;
 /**
  * Class Map
+ * 
+ * Can be called from $this->load->model('extension/opencart/dashboard/map');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Dashboard
  */

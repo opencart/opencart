@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Coupon
+ * 
+ * Can be called from $this->load->model('extension/opencart/total/coupon');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */

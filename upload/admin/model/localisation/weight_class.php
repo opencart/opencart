@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class WeightClass
+ * Class Weight Class
+ * 
+ * Can be called from $this->load->model('localisation/weight_class');
  *
  * @package Opencart\Admin\Model\Localisation
  */

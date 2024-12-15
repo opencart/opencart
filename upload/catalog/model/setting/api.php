@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Api
+ * 
+ * Can be called from $this->load->model('setting/api');
  *
  * @package Opencart\Catalog\Model\Setting
  */

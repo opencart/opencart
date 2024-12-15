@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class ReturnAction
+ * Class Return Action
+ * 
+ * Can be called from $this->load->model('localisation/return_action');
  *
  * @package Opencart\Admin\Model\Localisation
  */

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class StockStatus
+ * Class Stock Status
+ * 
+ * Can be called from $this->load->model('localisation/stock_status');
  *
  * @package Opencart\Admin\Model\Localisation
  */

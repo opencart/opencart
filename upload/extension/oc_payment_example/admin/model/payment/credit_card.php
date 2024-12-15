@@ -1,6 +1,18 @@
 <?php
 namespace Opencart\Admin\Model\Extension\OcPaymentExample\Payment;
+/**
+ * Credit Card
+ * 
+ * Can be called from $this->load->model('extension/oc_payment_example/payment/credit_card');
+ *
+ * @package Opencart\Admin\Model\Extension\OcPaymentExample\Payment
+ */
 class CreditCard extends \Opencart\System\Engine\Model {
+	/**
+	 * Install
+	 * 
+	 * @return void
+	 */
 	public function install(): void {
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "credit_card` (
 			`credit_card_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -28,19 +40,45 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		");
 	}
 
+	/**
+	 * Uninstall
+	 * 
+	 * @return void
+	 */
 	public function uninstall(): void {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "credit_card`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "credit_card_report`");
 	}
 
+	/**
+	 * Add Credit Card
+	 * @param array<string, mixed> $data
+	 * 
+	 * @return void
+	 */
 	public function addCreditCard(array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_payment` SET `customer_id` = '" . (int)$this->customer->getId() . "', `name` = '" . (int)$this->customer->getId() . "', `image` = '" . $this->db->escape($data['image']) . "', `type` = '" . $this->db->escape($data['type']) . "', `extension` = '" . $this->db->escape($data['extension']) . "', `code` = '" . $this->db->escape($data['code']) . "', `token` = '" . $this->db->escape($data['token']) . "', `date_expire` = '" . $this->db->escape($data['date_expire']) . "', `default` = '" . (bool)$data['default'] . "', `status` = '1', `date_added` = NOW()");
 	}
 
+	/**
+	 * Delete Credit Card
+	 * @param int $customer_payment_id
+	 * 
+	 * @return void
+	 */
 	public function deleteCreditCard(int $customer_payment_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_payment` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `customer_payment_id` = '" . (int)$customer_payment_id . "'");
 	}
 
+	/**
+	 * Get Reports
+	 * 
+	 * @param int $download_id
+	 * @param int $start
+	 * @param int $limit
+	 * 
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
@@ -55,6 +93,11 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * Get Total Reports
+	 * 
+	 * @return int
+	 */
 	public function getTotalReports(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "credit_card_report`");
 

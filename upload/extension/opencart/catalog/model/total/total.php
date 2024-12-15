@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Total
+ * 
+ * Can be called from $this->load->model('extension/opencart/total/total');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */

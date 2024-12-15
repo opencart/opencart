@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Cms;
 /**
  * Class Article
+ * 
+ * Can be called from $this->load->model('cms/article');
  *
  * @package Opencart\Admin\Model\Cms
  */

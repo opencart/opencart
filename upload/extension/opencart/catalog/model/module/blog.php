@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Blog
+ * 
+ * Can be called from $this->load->model('extension/opencart/module/blog');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Module
  */

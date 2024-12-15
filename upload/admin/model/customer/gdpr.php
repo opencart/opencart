@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class GDPR
+ * 
+ * Can be called from $this->load->model('customer/gdpr');
  *
  * @package Opencart\Admin\Model\Customer
  */

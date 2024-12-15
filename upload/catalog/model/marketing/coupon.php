@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Marketing;
 /**
  * Class Coupon
+ * 
+ * Can be called from $this->load->model('marketing/coupon');
  *
  * @package Opencart\Catalog\Model\Marketing
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Download
+ * 
+ * Can be called from $this->load->model('catalog/download');
  *
  * @package Opencart\Admin\Model\Catalog
  */

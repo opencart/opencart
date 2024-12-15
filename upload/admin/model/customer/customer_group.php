@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class Customer Group
+ * 
+ * Can be called from $this->load->model('customer/customer_group');
  *
  * @package Opencart\Admin\Model\Customer
  */

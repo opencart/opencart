@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Seo Url
+ * 
+ * Can be called from $this->load->model('design/seo_url');
  *
  * @package Opencart\Admin\Model\Design
  */

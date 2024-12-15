@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Product
+ * 
+ * Can be called from $this->load->model('catalog/product');
  *
  * @package Opencart\Admin\Model\Catalog
  */

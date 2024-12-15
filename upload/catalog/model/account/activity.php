@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Activity
+ * 
+ * Can be called from $this->load->model('account/activity');
  *
  * @package Opencart\Catalog\Model\Account
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Design;
 /**
  * Class Translation
+ * 
+ * Can be called from $this->load->model('design/translation');
  *
  * @package Opencart\Catalog\Model\Design
  */

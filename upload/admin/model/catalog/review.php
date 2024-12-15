@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Review
+ * 
+ * Can be called from $this->load->model('catalog/review');
  *
  * @package Opencart\Admin\Model\Catalog
  */

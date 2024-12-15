@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Search
+ * 
+ * Can be called from $this->load->model('account/search');
  *
  * @package Opencart\Catalog\Model\Account
  */

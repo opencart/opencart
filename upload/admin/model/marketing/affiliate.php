@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Marketing;
 /**
  * Class Affiliate
+ * 
+ * Can be called from $this->load->model('marketing/affiliate');
  *
  * @package Opencart\Admin\Model\Marketing
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Gdpr
+ * 
+ * Can be called from $this->load->model('account/gdpr');
  *
  * @package Opencart\Catalog\Model\Account
  */

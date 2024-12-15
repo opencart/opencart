@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class Customer
+ * 
+ * Can be called from $this->load->model('customer/customer');
  *
  * @package Opencart\Admin\Model\Customer
  */

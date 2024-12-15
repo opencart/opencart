@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Address Format
+ * 
+ * Can be called from $this->load->model('localisation/address_format');
  *
  * @package Opencart\Admin\Model\Localisation
  */

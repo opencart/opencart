@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Pickup
+ * 
+ * Can be called from $this->load->model('extension/opencart/shipping/pickup');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */

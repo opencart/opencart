@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Customer
+ * 
+ * Can be called from $this->load->model('extension/opencart/report/customer');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
  */

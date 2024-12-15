@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
- * Class BankTransfer
+ * Class Bank Transfer
+ * 
+ * Can be called from $this->load->model('extension/opencart/payment/bank_transfer');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Payment
  */

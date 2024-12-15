@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Sale;
 /**
  * Class Returns
+ * 
+ * Can be called from $this->load->model('sale/returns');
  *
  * @package Opencart\Admin\Model\Sale
  */

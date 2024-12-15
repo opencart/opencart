@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Address
+ * 
+ * Can be called from $this->load->model('account/address');
  *
  * @package Opencart\Catalog\Model\Account
  */

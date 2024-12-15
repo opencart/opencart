@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Cms;
 /**
  * Class Country
+ * 
+ * Can be called from $this->load->model('cms/antispam');
  *
  * @package Opencart\Admin\Model\Cms
  */

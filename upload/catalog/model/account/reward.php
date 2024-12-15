@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Reward
+ * 
+ * Can be called from $this->load->model('account/reward');
  *
  * @package Opencart\Catalog\Model\Account
  */

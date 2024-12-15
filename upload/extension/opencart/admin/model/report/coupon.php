@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Coupon
+ * 
+ * Can be called from $this->load->model('extension/opencart/report/coupon');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
  */

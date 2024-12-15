@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Design;
 /**
  * Class Layout
+ * 
+ * Can be called from $this->load->model('design/layout');
  *
  * @package Opencart\Catalog\Model\Design
  */

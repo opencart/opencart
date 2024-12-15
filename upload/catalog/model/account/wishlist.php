@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Wishlist
+ * 
+ * Can be called from $this->load->model('account/wishlist');
  *
  * @package Opencart\Catalog\Model\Account
  */

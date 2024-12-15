@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Geo Zone
+ * 
+ * Can be called from $this->load->model('localisation/geo_zone');
  *
  * @package Opencart\Catalog\Model\Localisation
  */

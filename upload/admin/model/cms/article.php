@@ -58,7 +58,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Article
 	 *
-	 * @param int                  $article_id
+	 * @param int                  $article_id primary key of the article record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -110,7 +110,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 * @param int $rating
 	 */
 	public function editRating(int $article_id, int $rating): void {
@@ -120,7 +120,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Article
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
 	 */
@@ -142,7 +142,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Article
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -234,7 +234,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $article_id
+	 * @param int                  $article_id  primary key of the article record
 	 * @param int                  $language_id
 	 * @param array<string, mixed> $data
 	 *
@@ -247,7 +247,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Descriptions
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
 	 */
@@ -258,7 +258,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -269,7 +269,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -288,7 +288,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -301,7 +301,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -313,7 +313,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
 	 */
@@ -324,7 +324,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return array<int, int>
 	 */
@@ -343,9 +343,9 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $layout_id  primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -356,7 +356,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
 	 */
@@ -378,7 +378,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return array<int, int>
 	 */
@@ -410,7 +410,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment Status
 	 *
-	 * @param int  $article_comment_id
+	 * @param int  $article_comment_id primary key of the article comment record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -424,8 +424,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment Rating
 	 *
-	 * @param int $article_id
-	 * @param int $article_comment_id
+	 * @param int $article_id         primary key of the article record
+	 * @param int $article_comment_id primary key of the article comment record
 	 * @param int $rating
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
@@ -435,7 +435,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Comment
 	 *
-	 * @param int $article_comment_id
+	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return void
 	 */
@@ -448,7 +448,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Comments by article ID
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
 	 */
@@ -461,7 +461,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Comment
 	 *
-	 * @param int $article_comment_id
+	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -474,8 +474,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ratings
 	 *
-	 * @param int $article_id
-	 * @param int $article_comment_id
+	 * @param int $article_id         primary key of the article record
+	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -34,7 +34,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Edit attribute record in the database.
 	 *
-	 * @param int                  $attribute_id primary key of the attribute record to edit
+	 * @param int                  $attribute_id primary key of the attribute record
 	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
@@ -54,7 +54,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Delete attribute record in the database.
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be deleted
+	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return void
 	 */
@@ -69,7 +69,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -156,7 +156,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the total number of attribute records with group ID in the database.
 	 *
-	 * @param int $attribute_group_id foreign key of the attribute record to be fetched
+	 * @param int $attribute_group_id foreign key of the attribute group record to be fetched
 	 *
 	 * @return int total number of attribute records that have attribute group ID
 	 */
@@ -184,7 +184,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *  Delete attribute description record in the database.
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return void
 	 */
@@ -210,8 +210,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute description record in the database.
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
-	 * @param int $language_id  primary key of the attribute language
+	 * @param int $attribute_id primary key of the attribute record
+	 * @param int $language_id  primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -226,7 +226,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 * @param int $attribute_id primary key of the attribute record to be fetched
+	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return array<int, array<string, string>> Descriptions
 	 */

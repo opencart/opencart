@@ -11,7 +11,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Status
 	 *
-	 * @param int $subscription_status_id
+	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
 	 * @return array<string, mixed>
 	 */

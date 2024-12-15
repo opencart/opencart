@@ -34,7 +34,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Tax Class
 	 *
-	 * @param int                  $tax_class_id
+	 * @param int                  $tax_class_id primary key of the tax class record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -56,7 +56,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Tax Class
 	 *
-	 * @param int $tax_class_id
+	 * @param int $tax_class_id primary key of the tax class record
 	 *
 	 * @return void
 	 */
@@ -71,7 +71,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Class
 	 *
-	 * @param int $tax_class_id
+	 * @param int $tax_class_id primary key of the tax class record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -138,7 +138,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Tax Rule
 	 *
-	 * @param int                  $tax_class_id
+	 * @param int                  $tax_class_id primary key of the tax class record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -150,7 +150,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Tax Rules
 	 *
-	 * @param int $tax_class_id
+	 * @param int $tax_class_id primary key of the tax class record
 	 *
 	 * @return void
 	 */
@@ -161,7 +161,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Rules
 	 *
-	 * @param int $tax_class_id
+	 * @param int $tax_class_id primary key of the tax class record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -174,7 +174,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Tax Rules By Tax Rate ID
 	 *
-	 * @param int $tax_rate_id
+	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
 	 * @return int
 	 */

@@ -110,7 +110,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Install
 	 *
-	 * @param int $extension_install_id
+	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return void
 	 */
@@ -121,7 +121,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $extension_install_id
+	 * @param int  $extension_install_id primary key of the extension install record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -133,7 +133,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Install
 	 *
-	 * @param int $extension_install_id
+	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -146,7 +146,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Install By Extension Download ID
 	 *
-	 * @param int $extension_download_id
+	 * @param int $extension_download_id primary key of the extension download record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -240,7 +240,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Path
 	 *
-	 * @param int    $extension_install_id
+	 * @param int    $extension_install_id primary key of the extension install record
 	 * @param string $path
 	 *
 	 * @return void
@@ -252,7 +252,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Path
 	 *
-	 * @param int $extension_path_id
+	 * @param int $extension_path_id primary key of the extension path record
 	 *
 	 * @return void
 	 */
@@ -263,7 +263,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Paths By Extension Install ID
 	 *
-	 * @param int $extension_install_id
+	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturer
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -78,7 +78,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout ID
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return int
 	 */

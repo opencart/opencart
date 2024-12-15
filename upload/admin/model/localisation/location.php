@@ -24,7 +24,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Location
 	 *
-	 * @param int                  $location_id
+	 * @param int                  $location_id primary key of the location record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -36,7 +36,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Location
 	 *
-	 * @param int $location_id
+	 * @param int $location_id primary key of the location record
 	 *
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Location
 	 *
-	 * @param int $location_id
+	 * @param int $location_id primary key of the location record
 	 *
 	 * @return array<string, mixed>
 	 */

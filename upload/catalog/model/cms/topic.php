@@ -11,7 +11,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Topic
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -27,7 +27,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Module
 	 *
-	 * @param int                  $module_id
+	 * @param int                  $module_id primary key of the module record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -39,7 +39,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Module
 	 *
-	 * @param int $module_id
+	 * @param int $module_id primary key of the module record
 	 *
 	 * @return void
 	 */
@@ -65,7 +65,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Module
 	 *
-	 * @param int $module_id
+	 * @param int $module_id primary key of the module record
 	 *
 	 * @return array<mixed>
 	 */

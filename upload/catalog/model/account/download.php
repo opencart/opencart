@@ -11,7 +11,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Download
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -93,7 +93,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Report
 	 *
-	 * @param int    $download_id
+	 * @param int    $download_id primary key of the download record
 	 * @param string $ip
 	 * @param string $country
 	 *

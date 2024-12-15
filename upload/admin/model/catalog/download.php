@@ -30,7 +30,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Download
 	 *
-	 * @param int                  $download_id
+	 * @param int                  $download_id primary key of the download record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -48,7 +48,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Download
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
 	 */
@@ -62,7 +62,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Download
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -123,8 +123,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $download_id primary key of the attribute record to be fetched
-	 * @param int                  $language_id
+	 * @param int                  $download_id primary key of the download record
+	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -136,7 +136,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Descriptions
 	 *
-	 * @param int $download_id primary key of the download record to be fetched
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
 	 */
@@ -147,7 +147,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -158,7 +158,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -177,7 +177,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -201,7 +201,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -224,7 +224,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
 	 */
@@ -235,7 +235,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return int
 	 */

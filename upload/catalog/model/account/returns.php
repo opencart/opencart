@@ -24,7 +24,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -70,7 +70,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Histories
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

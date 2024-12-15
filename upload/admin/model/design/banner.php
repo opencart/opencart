@@ -34,7 +34,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Banner
 	 *
-	 * @param int                  $banner_id
+	 * @param int                  $banner_id primary key of the banner record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -56,7 +56,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Banner
 	 *
-	 * @param int $banner_id
+	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return void
 	 */
@@ -69,7 +69,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Banner
 	 *
-	 * @param int $banner_id
+	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -137,8 +137,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Image
 	 *
-	 * @param int                  $banner_id
-	 * @param int                  $language_id
+	 * @param int                  $banner_id   primary key of the banner record
+	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -150,7 +150,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Images
 	 *
-	 * @param int $banner_id
+	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return void
 	 */
@@ -172,7 +172,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Images
 	 *
-	 * @param int $banner_id
+	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return array<int, array<int, array<string, mixed>>>
 	 */
@@ -191,7 +191,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Images By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

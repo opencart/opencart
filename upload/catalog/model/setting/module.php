@@ -11,7 +11,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Module
 	 *
-	 * @param int $module_id
+	 * @param int $module_id primary key of the Module record
 	 *
 	 * @return array<mixed>
 	 */

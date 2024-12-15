@@ -11,7 +11,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address Format
 	 *
-	 * @param int $address_format_id
+	 * @param int $address_format_id primary key of the address format record
 	 *
 	 * @return array<string, mixed>
 	 */

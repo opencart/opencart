@@ -38,7 +38,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Layout
 	 *
-	 * @param int                  $layout_id
+	 * @param int                  $layout_id primary key of the layout record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -66,7 +66,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layout
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -100,7 +100,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -165,7 +165,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Route
 	 *
-	 * @param int                  $layout_id
+	 * @param int                  $layout_id primary key of the layout record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -177,7 +177,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Routes
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -188,7 +188,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Routes By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -210,7 +210,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Routes
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -236,7 +236,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Module
 	 *
-	 * @param int                  $layout_id
+	 * @param int                  $layout_id primary key of the layout record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -248,7 +248,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Modules
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -270,7 +270,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Modules
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

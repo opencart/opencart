@@ -24,7 +24,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit User Group
 	 *
-	 * @param int                  $user_group_id
+	 * @param int                  $user_group_id primary key of the user group record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -36,7 +36,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete User Group
 	 *
-	 * @param int $user_group_id
+	 * @param int $user_group_id primary key of the user group record
 	 *
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get User Group
 	 *
-	 * @param int $user_group_id
+	 * @param int $user_group_id primary key of the user group record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -107,7 +107,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Permission
 	 *
-	 * @param int    $user_group_id
+	 * @param int    $user_group_id primary key of the user group record
 	 * @param string $type
 	 * @param string $route
 	 *
@@ -128,7 +128,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Remove Permission
 	 *
-	 * @param int    $user_group_id
+	 * @param int    $user_group_id primary key of the user group record
 	 * @param string $type
 	 * @param string $route
 	 *

@@ -29,7 +29,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Seo Url
 	 *
-	 * @param int    $seo_url_id
+	 * @param int    $seo_url_id  primary key of the Seo Url record
 	 * @param string $key
 	 * @param string $value
 	 * @param string $keyword
@@ -46,7 +46,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Url
 	 *
-	 * @param int $seo_url_id
+	 * @param int $seo_url_id primary key of the Seo Url record
 	 *
 	 * @return void
 	 */
@@ -60,7 +60,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @param string $key
 	 * @param string $value
 	 * @param int    $store_id
-	 * @param int    $language_id
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -81,7 +81,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Urls By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -103,7 +103,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Url
 	 *
-	 * @param int $seo_url_id
+	 * @param int $seo_url_id primary key of the Seo Url record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -119,7 +119,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @param string $key
 	 * @param string $value
 	 * @param int    $store_id
-	 * @param int    $language_id
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -144,7 +144,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $keyword
 	 * @param int    $store_id
-	 * @param int    $language_id
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -270,7 +270,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls By Language Id
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

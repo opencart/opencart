@@ -11,7 +11,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -26,7 +26,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -304,7 +304,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Orders By Subscription ID
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -317,7 +317,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return int
 	 */
@@ -330,7 +330,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Currency ID
 	 *
-	 * @param int $currency_id
+	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return int
 	 */
@@ -343,7 +343,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Subscription ID
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int
 	 */
@@ -369,7 +369,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Order Status ID
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return int
 	 */
@@ -428,7 +428,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Products
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -442,8 +442,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Product
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -456,7 +456,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -469,7 +469,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Product ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int
 	 */
@@ -482,7 +482,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -493,8 +493,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -507,7 +507,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -518,8 +518,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -532,7 +532,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Totals
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 */
 	public function deleteTotals(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -541,7 +541,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -554,7 +554,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals By Code
 	 *
-	 * @param int   $order_id
+	 * @param int   $order_id primary key of the order record
 	 * @param mixed $code
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -634,7 +634,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Create Invoice No
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return string
 	 */
@@ -661,7 +661,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reward Total
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int
 	 */
@@ -674,7 +674,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order History
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -685,7 +685,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -708,7 +708,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int
 	 */
@@ -721,7 +721,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories By Order Status ID
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return int
 	 */

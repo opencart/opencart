@@ -32,7 +32,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Weight Class
 	 *
-	 * @param int                  $weight_class_id
+	 * @param int                  $weight_class_id primary key of the weight class record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -52,7 +52,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Weight Class
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return void
 	 */
@@ -122,7 +122,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Weight Class
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -146,8 +146,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $weight_class_id
-	 * @param int                  $language_id
+	 * @param int                  $weight_class_id primary key of the weight class record
+	 * @param int                  $language_id     primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -159,7 +159,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return void
 	 */
@@ -170,7 +170,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -181,7 +181,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -200,7 +200,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

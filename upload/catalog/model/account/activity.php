@@ -29,7 +29,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Activities
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

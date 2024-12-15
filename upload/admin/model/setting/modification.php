@@ -22,7 +22,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Modification
 	 *
-	 * @param int $modification_id
+	 * @param int $modification_id primary key of the modification record
 	 *
 	 * @return void
 	 */
@@ -33,7 +33,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Modifications By Extension Install ID
 	 *
-	 * @param int $extension_install_id
+	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return void
 	 */
@@ -44,7 +44,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $modification_id
+	 * @param int  $modification_id primary key of the modification record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -56,7 +56,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Modification
 	 *
-	 * @param int $modification_id
+	 * @param int $modification_id primary key of the modification record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -122,7 +122,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	public function getTotalModifications(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "modification`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	/**

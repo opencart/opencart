@@ -11,7 +11,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plan
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed>
 	 */

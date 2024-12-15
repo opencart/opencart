@@ -24,7 +24,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Theme
 	 *
-	 * @param int                  $theme_id
+	 * @param int                  $theme_id primary key of the theme record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -36,7 +36,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Theme
 	 *
-	 * @param int $theme_id
+	 * @param int $theme_id primary key of the theme record
 	 *
 	 * @return void
 	 */
@@ -58,7 +58,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Theme
 	 *
-	 * @param int $theme_id
+	 * @param int $theme_id primary key of the theme record
 	 *
 	 * @return array<string, mixed>
 	 */

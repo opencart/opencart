@@ -32,7 +32,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Length Class
 	 *
-	 * @param int                  $length_class_id
+	 * @param int                  $length_class_id primary key of the length class record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -52,7 +52,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Length Class
 	 *
-	 * @param int $length_class_id
+	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Length Classes By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -135,7 +135,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Length Class
 	 *
-	 * @param int $length_class_id
+	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -148,8 +148,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $length_class_id
-	 * @param int                  $language_id
+	 * @param int                  $length_class_id primary key of the length class record
+	 * @param int                  $language_id     primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -161,7 +161,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Description
 	 *
-	 * @param int $length_class_id
+	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return void
 	 */
@@ -172,7 +172,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -183,7 +183,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $length_class_id
+	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -202,7 +202,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

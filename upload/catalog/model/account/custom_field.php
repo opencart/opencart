@@ -11,7 +11,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Custom Field
 	 *
-	 * @param int $custom_field_id
+	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -24,7 +24,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Custom Fields
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

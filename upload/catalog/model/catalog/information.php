@@ -11,7 +11,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Information
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -35,7 +35,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout ID
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return int
 	 */

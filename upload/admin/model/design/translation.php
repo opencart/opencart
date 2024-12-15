@@ -22,7 +22,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Translation
 	 *
-	 * @param int                  $translation_id
+	 * @param int                  $translation_id primary key of the translation record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -34,7 +34,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translation
 	 *
-	 * @param int $translation_id
+	 * @param int $translation_id primary key of the translation record
 	 *
 	 * @return void
 	 */
@@ -56,7 +56,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translations By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Translation
 	 *
-	 * @param int $translation_id
+	 * @param int $translation_id primary key of the translation record
 	 *
 	 * @return array<string, mixed>
 	 */

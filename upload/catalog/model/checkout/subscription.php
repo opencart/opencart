@@ -79,7 +79,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Subscription
 	 *
-	 * @param int                  $subscription_id
+	 * @param int                  $subscription_id primary key of the subscription record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -146,8 +146,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Subscription Status
 	 *
-	 * @param int  $subscription_id
-	 * @param bool $subscription_status_id
+	 * @param int  $subscription_id        primary key of the subscription record
+	 * @param bool $subscription_status_id primary key of the subscription status record
 	 *
 	 * @return void
 	 */
@@ -158,7 +158,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Remaining
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $remaining
 	 *
 	 * @return void
@@ -170,7 +170,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Trial Remaining
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $trial_remaining
 	 *
 	 * @return void
@@ -182,7 +182,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Date Next
 	 *
-	 * @param int    $subscription_id
+	 * @param int    $subscription_id primary key of the subscription record
 	 * @param string $date_next
 	 *
 	 * @return void
@@ -194,7 +194,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -299,7 +299,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param int                  $subscription_id
+	 * @param int                  $subscription_id primary key of the subscription record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -321,7 +321,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription Products
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
 	 */
@@ -334,7 +334,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -347,8 +347,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Product By Order Product ID
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -361,8 +361,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
-	 * @param int                  $subscription_id
-	 * @param int                  $subscription_product_id
+	 * @param int                  $subscription_id         primary key of the subscription record
+	 * @param int                  $subscription_product_id primary key of the subscription product record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -374,7 +374,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription Options
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
 	 */
@@ -385,9 +385,9 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
-	 * @param int $subscription_id
-	 * @param int $subscription_product_id
-	 * @param int $product_option_id
+	 * @param int $subscription_id         primary key of the subscription record
+	 * @param int $subscription_product_id primary key of the subscription product record
+	 * @param int $product_option_id       primary key of the product option record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -400,8 +400,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param int $subscription_id
-	 * @param int $subscription_product_id
+	 * @param int $subscription_id         primary key of the subscription record
+	 * @param int $subscription_product_id primary key of the subscription product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -414,8 +414,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int    $subscription_id
-	 * @param int    $subscription_status_id
+	 * @param int    $subscription_id        primary key of the subscription record
+	 * @param int    $subscription_status_id primary key of the subscription status record
 	 * @param string $comment
 	 * @param bool   $notify
 	 *
@@ -430,7 +430,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Log
 	 *
-	 * @param int    $subscription_id
+	 * @param int    $subscription_id primary key of the subscription record
 	 * @param string $code
 	 * @param string $description
 	 * @param bool   $status

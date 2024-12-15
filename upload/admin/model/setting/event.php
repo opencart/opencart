@@ -24,7 +24,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Event
 	 *
-	 * @param int $event_id
+	 * @param int $event_id primary key of the event record
 	 *
 	 * @return void
 	 */
@@ -46,7 +46,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $event_id
+	 * @param int  $event_id primary key of the event record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -70,7 +70,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Event
 	 *
-	 * @param int $event_id
+	 * @param int $event_id primary key of the event record
 	 *
 	 * @return array<string, mixed>
 	 */

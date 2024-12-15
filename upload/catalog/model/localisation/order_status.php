@@ -11,7 +11,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order Status
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return array<string, mixed>
 	 */

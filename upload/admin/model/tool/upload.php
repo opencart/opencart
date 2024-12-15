@@ -27,7 +27,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Upload
 	 *
-	 * @param int $upload_id
+	 * @param int $upload_id primary key of the upload record
 	 *
 	 * @return void
 	 */
@@ -38,7 +38,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Upload
 	 *
-	 * @param int $upload_id
+	 * @param int $upload_id primary key of the upload record
 	 *
 	 * @return array<string, mixed>
 	 */

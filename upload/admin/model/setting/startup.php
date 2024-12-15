@@ -24,7 +24,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Startup
 	 *
-	 * @param int $startup_id
+	 * @param int $startup_id primary key of the startup record
 	 *
 	 * @return void
 	 */
@@ -46,7 +46,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $startup_id
+	 * @param int  $startup_id primary key of the startup record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -58,7 +58,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startup
 	 *
-	 * @param int $startup_id
+	 * @param int $startup_id primary key of the startup record
 	 *
 	 * @return array<string, mixed>
 	 */

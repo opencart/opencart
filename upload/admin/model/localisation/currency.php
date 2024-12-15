@@ -26,7 +26,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Currency
 	 *
-	 * @param int                  $currency_id
+	 * @param int                  $currency_id primary key of the currency record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -54,7 +54,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Currency
 	 *
-	 * @param int $currency_id
+	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency
 	 *
-	 * @param int $currency_id
+	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -80,7 +80,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency By Code
 	 *
-	 * @param string $currency
+	 * @param string $currency primary key of the currency record
 	 *
 	 * @return array<string, mixed>
 	 */

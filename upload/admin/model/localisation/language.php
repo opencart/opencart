@@ -247,7 +247,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Language
 	 *
-	 * @param int                  $language_id
+	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -261,7 +261,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Language
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -382,7 +382,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Language
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */

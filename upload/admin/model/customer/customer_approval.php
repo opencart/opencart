@@ -75,7 +75,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Approval
 	 *
-	 * @param int $customer_approval_id
+	 * @param int $customer_approval_id primary key of the customer approval record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -133,7 +133,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Approve Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -145,7 +145,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Deny Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -156,7 +156,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Approve Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -168,7 +168,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Deny Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

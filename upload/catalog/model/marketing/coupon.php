@@ -103,7 +103,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return array<int, int>
 	 */
@@ -122,7 +122,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return array<int, int>
 	 */
@@ -141,9 +141,9 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int   $coupon_id
-	 * @param int   $order_id
-	 * @param int   $customer_id
+	 * @param int   $coupon_id   primary key of the coupon record
+	 * @param int   $order_id    primary key of the order record
+	 * @param int   $customer_id primary key of the customer record
 	 * @param float $amount
 	 *
 	 * @return void
@@ -155,7 +155,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Coupon Histories By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -166,7 +166,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param string $coupon_id
+	 * @param string $coupon_id primary key of the coupon record
 	 *
 	 * @return int
 	 */
@@ -179,8 +179,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories By Customer ID
 	 *
-	 * @param int $coupon_id
-	 * @param int $customer_id
+	 * @param int $coupon_id   primary key of the coupon record
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

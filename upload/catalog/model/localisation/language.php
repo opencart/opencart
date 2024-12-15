@@ -16,7 +16,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Language
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */

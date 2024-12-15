@@ -36,7 +36,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Order Status
 	 *
-	 * @param int                  $order_status_id
+	 * @param int                  $order_status_id primary key of the order status record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -54,7 +54,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order Status
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order Statuses By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -80,7 +80,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order Status
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -136,8 +136,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $order_status_id
-	 * @param int                  $language_id
+	 * @param int                  $order_status_id primary key of the order status record
+	 * @param int                  $language_id     primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -149,7 +149,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -168,7 +168,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

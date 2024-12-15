@@ -24,7 +24,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ips
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -37,7 +37,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int    $api_id
+	 * @param int    $api_id primary key of the Api record
 	 * @param string $call
 	 * @param string $ip
 	 */

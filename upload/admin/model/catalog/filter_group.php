@@ -12,6 +12,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * Add Filter Group
 	 *
 	 * @param array<string, mixed> $data
+	 *
+	 * @return int
 	 */
 	public function addFilterGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -30,7 +32,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Filter Group
 	 *
-	 * @param int                  $filter_group_id
+	 * @param int                  $filter_group_id primary key of the filter group record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -50,7 +52,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filter Group
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return void
 	 */
@@ -65,7 +67,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filter Group
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -137,8 +139,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $filter_group_id primary key of the attribute record to be fetched
-	 * @param int                  $language_id
+	 * @param int                  $filter_group_id primary key of the filter group record
+	 * @param int                  $language_id     primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -150,7 +152,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Descriptions
 	 *
-	 * @param int $filter_group_id primary key of the filter record to be fetched
+	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return void
 	 */
@@ -161,7 +163,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -170,7 +172,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -189,7 +191,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

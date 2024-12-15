@@ -24,7 +24,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Customer
 	 *
-	 * @param int                  $customer_id
+	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -40,7 +40,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Token
 	 *
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
 	 * @return void
@@ -52,7 +52,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Commenter
 	 *
-	 * @param int  $customer_id
+	 * @param int  $customer_id primary key of the customer record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -64,7 +64,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -266,7 +266,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers By Customer Group ID
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return int
 	 */
@@ -294,7 +294,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address
 	 *
-	 * @param int                  $customer_id
+	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return int
@@ -314,8 +314,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address
 	 *
-	 * @param int                  $customer_id
-	 * @param int                  $address_id
+	 * @param int                  $customer_id primary key of the customer record
+	 * @param int                  $address_id  primary key of the address record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -331,8 +331,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Addresses
 	 *
-	 * @param int $customer_id
-	 * @param int $address_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $address_id  primary key of the address record
 	 *
 	 * @return void
 	 */
@@ -349,7 +349,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address
 	 *
-	 * @param int $address_id
+	 * @param int $address_id primary key of the address record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -412,7 +412,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Addresses
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -475,7 +475,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Addresses
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -488,7 +488,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Addresses By Country ID
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int
 	 */
@@ -501,7 +501,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Addresses By Zone ID
 	 *
-	 * @param int $zone_id
+	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return int
 	 */
@@ -514,7 +514,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $comment
 	 *
 	 * @return void
@@ -526,7 +526,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Histories
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -537,7 +537,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -560,7 +560,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -573,7 +573,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Wishlists
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -595,7 +595,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Wishlist By Product ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -606,10 +606,10 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Transaction
 	 *
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $description
 	 * @param float  $amount
-	 * @param int    $order_id
+	 * @param int    $order_id    primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -620,7 +620,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transactions
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -631,7 +631,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transactions By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -642,7 +642,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transactions
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -665,7 +665,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -678,7 +678,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transaction Total
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return float
 	 */
@@ -691,7 +691,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int
 	 */
@@ -704,10 +704,10 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Reward
 	 *
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $description
 	 * @param int    $points
-	 * @param int    $order_id
+	 * @param int    $order_id    primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -718,7 +718,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -729,7 +729,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -740,7 +740,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rewards
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -763,7 +763,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Rewards
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -776,7 +776,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reward Total
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -789,7 +789,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Rewards By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int
 	 */
@@ -802,7 +802,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ips
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -813,7 +813,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ips
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -835,7 +835,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Ips
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -885,7 +885,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Authorize
 	 *
-	 * @param int                  $customer_id
+	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -897,7 +897,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Status
 	 *
-	 * @param int  $customer_authorize_id
+	 * @param int  $customer_authorize_id primary key of the customer authorize record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -909,7 +909,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Total
 	 *
-	 * @param int $customer_authorize_id
+	 * @param int $customer_authorize_id primary key of the customer authorize record
 	 * @param int $total
 	 *
 	 * @return void
@@ -921,7 +921,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Reset Authorizes
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -932,8 +932,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Authorizes
 	 *
-	 * @param int $customer_id
-	 * @param int $customer_authorize_id
+	 * @param int $customer_id           primary key of the customer record
+	 * @param int $customer_authorize_id primary key of the customer authorize record
 	 *
 	 * @return void
 	 */
@@ -950,7 +950,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize By Token
 	 *
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
 	 * @return array<string, mixed>
@@ -964,7 +964,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorizes
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -991,7 +991,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Authorizes
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

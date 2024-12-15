@@ -24,7 +24,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $notification_id
+	 * @param int  $notification_id primary key of the notification record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -36,7 +36,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Notification
 	 *
-	 * @param int $notification_id
+	 * @param int $notification_id primary key of the notification record
 	 *
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Notification
 	 *
-	 * @param int $notification_id
+	 * @param int $notification_id primary key of the notification record
 	 *
 	 * @return array<string, mixed>
 	 */

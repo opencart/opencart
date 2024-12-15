@@ -378,15 +378,15 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Categories By Category ID
 	 *
-	 * @param int $product_id
-	 * @param int $category_id
+	 * @param int $product_id  primary key of the product record
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return int
 	 */
 	public function getTotalCategoriesByCategoryId(int $product_id, int $category_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -413,9 +413,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Option Quantity
 	 *
-	 * @param int $product_id
-	 * @param int $product_option_id
-	 * @param int $product_option_value_id
+	 * @param int $product_id              primary key of the product record
+	 * @param int $product_option_id       primary key of the product option record
+	 * @param int $product_option_value_id primary key of the product option value record
 	 * @param int $quantity
 	 *
 	 * @return void
@@ -427,8 +427,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
-	 * @param int $product_id
-	 * @param int $product_option_id
+	 * @param int $product_id        primary key of the product record
+	 * @param int $product_option_id primary key of the product option record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -441,7 +441,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -460,8 +460,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option Value
 	 *
-	 * @param int $product_id
-	 * @param int $product_option_value_id
+	 * @param int $product_id              primary key of the product record
+	 * @param int $product_option_value_id primary key of the product option value record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -474,8 +474,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option Values
 	 *
-	 * @param int $product_id
-	 * @param int $product_option_id
+	 * @param int $product_id        primary key of the product record
+	 * @param int $product_option_id primary key of the product option record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -488,7 +488,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Discounts
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -501,7 +501,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Images
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -514,8 +514,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $product_id
-	 * @param int $subscription_plan_id
+	 * @param int $product_id           primary key of the product record
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -528,7 +528,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -541,7 +541,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int
 	 */
@@ -558,7 +558,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Related
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -704,7 +704,7 @@ AND ((`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW()) AND (`ps`.`date
 	/**
 	 * Add Report
 	 *
-	 * @param int    $product_id
+	 * @param int    $product_id primary key of the product record
 	 * @param string $ip
 	 * @param string $country
 	 *

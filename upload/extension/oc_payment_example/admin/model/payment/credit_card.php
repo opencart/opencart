@@ -64,7 +64,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Credit Card
 	 *
-	 * @param int $customer_payment_id
+	 * @param int $customer_payment_id primary key of the customer payment record
 	 *
 	 * @return void
 	 */
@@ -75,7 +75,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -104,7 +104,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "credit_card_report`");
 
 		if ($query->num_rows) {
-			return $query->row['total'];
+			return (int)$query->row['total'];
 		} else {
 			return 0;
 		}

@@ -55,7 +55,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Information
 	 *
-	 * @param int                  $information_id
+	 * @param int                  $information_id primary key of the information record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -103,7 +103,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Information
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
 	 */
@@ -124,7 +124,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Information
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -202,8 +202,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $information_id
-	 * @param int                  $language_id
+	 * @param int                  $information_id primary key of the information record
+	 * @param int                  $language_id    primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -215,7 +215,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
 	 */
@@ -226,7 +226,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -237,7 +237,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -256,7 +256,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -269,7 +269,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -281,7 +281,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
 	 */
@@ -303,7 +303,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return array<int, int>
 	 */
@@ -322,9 +322,9 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $layout_id      primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -335,7 +335,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
 	 */
@@ -346,7 +346,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -368,7 +368,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return array<int, int>
 	 */
@@ -387,7 +387,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int
 	 */

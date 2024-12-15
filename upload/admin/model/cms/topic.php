@@ -49,7 +49,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Topic
 	 *
-	 * @param int                  $topic_id
+	 * @param int                  $topic_id primary key of the topic record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -90,7 +90,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Topic
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
 	 */
@@ -110,7 +110,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Topic
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -198,8 +198,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $topic_id
-	 * @param int                  $language_id
+	 * @param int                  $topic_id    primary key of the topic record
+	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -211,7 +211,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * @param int $topic_id primary key of the attribute record to be fetched
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
 	 */
@@ -222,7 +222,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -233,7 +233,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -252,7 +252,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -265,7 +265,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -277,7 +277,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
 	 */
@@ -288,7 +288,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return array<int, int>
 	 */
@@ -307,9 +307,9 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id  primary key of the topic record
 	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -331,7 +331,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */

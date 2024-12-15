@@ -11,7 +11,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int $gdpr_id
+	 * @param int $gdpr_id primary key of the gdpr record
 	 * @param int $status
 	 *
 	 * @return void
@@ -23,7 +23,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Gdpr
 	 *
-	 * @param int $gdpr_id
+	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return void
 	 */
@@ -100,7 +100,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Gdpr
 	 *
-	 * @param int $gdpr_id
+	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return array<string, mixed>
 	 */

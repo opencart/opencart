@@ -33,7 +33,7 @@ class Bestseller extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Total
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $total
 	 *
 	 * @return void
@@ -45,7 +45,7 @@ class Bestseller extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */

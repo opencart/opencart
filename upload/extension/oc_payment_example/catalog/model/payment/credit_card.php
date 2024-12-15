@@ -65,7 +65,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Credit Card
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id    primary key of the customer record
 	 * @param int $credit_card_id
 	 *
 	 * @return array
@@ -79,7 +79,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Credit Cards
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array
 	 */
@@ -92,7 +92,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Credit Card
 	 *
-	 * @param int   $customer_id
+	 * @param int   $customer_id primary key of the customer record
 	 * @param array $data
 	 *
 	 * @return void
@@ -104,7 +104,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Credit Card
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id    primary key of the customer record
 	 * @param int $credit_card_id
 	 *
 	 * @return void
@@ -116,7 +116,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stored
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array
 	 */
@@ -127,8 +127,8 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Charge
 	 *
-	 * @param int    $customer_id
-	 * @param int    $order_id
+	 * @param int    $customer_id primary key of the customer record
+	 * @param int    $order_id    primary key of the order record
 	 * @param float  $amount
 	 * @param string $code
 	 *

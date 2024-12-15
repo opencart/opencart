@@ -62,7 +62,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int    $store_id
 	 * @param string $language
-	 * @param string $session_id
+	 * @param string $session_id primary key of the session record
 	 *
 	 * @throws \Exception
 	 *

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Cms;
 /**
- * Class Country
+ * Class Anti-Spam
  *
  * Can be called from $this->load->model('cms/antispam');
  *
@@ -24,7 +24,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Antispam
 	 *
-	 * @param int                  $antispam_id
+	 * @param int                  $antispam_id primary key of the anti-spam record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -36,7 +36,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Antispam
 	 *
-	 * @param int $antispam_id
+	 * @param int $antispam_id primary key of the anti-spam record
 	 *
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Antispam
 	 *
-	 * @param int $antispam_id
+	 * @param int $antispam_id primary key of the anti-spam record
 	 *
 	 * @return array<string, mixed>
 	 */

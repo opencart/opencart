@@ -34,7 +34,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Api
 	 *
-	 * @param int                  $api_id
+	 * @param int                  $api_id primary key of the Api record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -56,7 +56,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Api
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return void
 	 */
@@ -69,7 +69,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Api
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -139,7 +139,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Ip
 	 *
-	 * @param int    $api_id
+	 * @param int    $api_id primary key of the Api record
 	 * @param string $ip
 	 *
 	 * @return void
@@ -151,7 +151,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ips
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return void
 	 */
@@ -162,7 +162,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ips
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, string>
 	 */
@@ -181,7 +181,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -204,7 +204,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return int
 	 */

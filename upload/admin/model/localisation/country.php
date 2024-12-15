@@ -26,7 +26,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Country
 	 *
-	 * @param int                  $country_id
+	 * @param int                  $country_id primary key of the country record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -40,7 +40,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Country
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return void
 	 */
@@ -53,7 +53,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Country
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -198,7 +198,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Countries By Address Format ID
 	 *
-	 * @param int $address_format_id
+	 * @param int $address_format_id primary key of the address format record
 	 *
 	 * @return int
 	 */

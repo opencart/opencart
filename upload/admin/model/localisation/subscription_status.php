@@ -36,7 +36,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Subscription Status
 	 *
-	 * @param int                  $subscription_status_id
+	 * @param int                  $subscription_status_id primary key of the subscription status record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -54,7 +54,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription Status
 	 *
-	 * @param int $subscription_status_id
+	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription Statuses By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -80,7 +80,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Status
 	 *
-	 * @param int $subscription_status_id
+	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -136,8 +136,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $subscription_status_id
-	 * @param int                  $language_id
+	 * @param int                  $subscription_status_id primary key of the subscription status record
+	 * @param int                  $language_id            primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -149,7 +149,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $subscription_status_id
+	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -168,7 +168,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -38,7 +38,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Sessions
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -51,7 +51,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete API Sessions
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -64,7 +64,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Update Session
 	 *
-	 * @param string $api_session_id
+	 * @param string $api_session_id primary key of the Api Session record
 	 *
 	 * @return void
 	 */

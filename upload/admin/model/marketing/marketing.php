@@ -24,7 +24,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Marketing
 	 *
-	 * @param int                  $marketing_id
+	 * @param int                  $marketing_id primary key of the marketing record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -36,7 +36,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Marketing
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return void
 	 */
@@ -49,7 +49,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Marketing
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -187,7 +187,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Marketing Reports
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return void
 	 */
@@ -198,7 +198,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -221,7 +221,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return int
 	 */

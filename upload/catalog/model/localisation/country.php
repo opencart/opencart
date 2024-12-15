@@ -11,7 +11,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Country
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<string, mixed>
 	 */

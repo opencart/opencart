@@ -36,7 +36,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Reason
 	 *
-	 * @param int                  $return_reason_id
+	 * @param int                  $return_reason_id primary key of the return reason record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -54,7 +54,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Reason
 	 *
-	 * @param int $return_reason_id
+	 * @param int $return_reason_id primary key of the return reason record
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Reasons By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -80,7 +80,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Reason
 	 *
-	 * @param int $return_reason_id
+	 * @param int $return_reason_id primary key of the return reason record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -136,8 +136,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $return_reason_id
-	 * @param int                  $language_id
+	 * @param int                  $return_reason_id primary key of the return reason record
+	 * @param int                  $language_id      primary key of the language record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -149,7 +149,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $return_reason_id
+	 * @param int $return_reason_id primary key of the return reason record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -168,7 +168,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

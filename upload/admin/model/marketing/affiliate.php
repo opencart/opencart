@@ -22,7 +22,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Affiliate
 	 *
-	 * @param int                  $customer_id
+	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data
 	 *
 	 * @return void
@@ -34,7 +34,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Balance
 	 *
-	 * @param int   $customer_id
+	 * @param int   $customer_id primary key of the customer record
 	 * @param float $amount
 	 *
 	 * @return void
@@ -46,7 +46,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -59,7 +59,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -263,7 +263,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

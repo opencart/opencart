@@ -11,7 +11,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Location
 	 *
-	 * @param int $location_id
+	 * @param int $location_id primary key of the location record
 	 *
 	 * @return array<string, mixed>
 	 */

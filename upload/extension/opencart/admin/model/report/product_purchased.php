@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
- * Class ProductPurchased
+ * Class Product Purchased
+ *
+ * Can be called from $this->load->model('extension/opencart/report/product_purchased');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
  */
@@ -9,7 +11,7 @@ class ProductPurchased extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Purchased
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -52,7 +54,7 @@ class ProductPurchased extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Purchased
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

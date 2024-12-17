@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Blog
  *
+ * Can be called from $this->load->model('extension/opencart/module/blog');
+ *
  * @package Opencart\Catalog\Model\Extension\Opencart\Module
  */
 class Blog extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Articles
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

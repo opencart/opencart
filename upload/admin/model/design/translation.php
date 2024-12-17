@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Design;
 /**
  * Class Translation
  *
+ * Can be called from $this->load->model('design/translation');
+ *
  * @package Opencart\Admin\Model\Design
  */
 class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Translation
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */
@@ -20,8 +22,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Translation
 	 *
-	 * @param int                  $translation_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $translation_id primary key of the translation record
+	 * @param array<string, mixed> $data           array of data
 	 *
 	 * @return void
 	 */
@@ -32,7 +34,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translation
 	 *
-	 * @param int $translation_id
+	 * @param int $translation_id primary key of the translation record
 	 *
 	 * @return void
 	 */
@@ -54,7 +56,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translations By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -65,7 +67,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Translation
 	 *
-	 * @param int $translation_id
+	 * @param int $translation_id primary key of the translation record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -78,7 +80,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Translations
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

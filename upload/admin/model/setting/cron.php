@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Cron
  *
+ * Can be called from $this->load->model('setting/cron');
+ *
  * @package Opencart\Admin\Model\Setting
  */
 class Cron extends \Opencart\System\Engine\Model {
@@ -26,7 +28,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Cron
 	 *
-	 * @param int $cron_id
+	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return void
 	 */
@@ -48,7 +50,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Cron
 	 *
-	 * @param int $cron_id
+	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return void
 	 */
@@ -59,7 +61,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $cron_id
+	 * @param int  $cron_id primary key of the cron record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -71,7 +73,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Cron
 	 *
-	 * @param int $cron_id
+	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -97,7 +99,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Cron(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 /**
- * Class ReturnReason
+ * Class Return Reason
+ *
+ * Can be called from $this->load->model('localisation/return_reason');
  *
  * @package Opencart\Catalog\Model\Localisation
  */
@@ -9,7 +11,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Reasons
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

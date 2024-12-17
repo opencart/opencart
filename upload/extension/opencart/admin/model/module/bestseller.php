@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Module;
 /**
  * Class Bestseller
  *
+ * Can be called from $this->load->model('extension/opencart/module/bestseller');
+ *
  * @package Opencart\Admin\Model\Extension\Opencart\Module
  */
 class Bestseller extends \Opencart\System\Engine\Model {
@@ -31,7 +33,7 @@ class Bestseller extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Total
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $total
 	 *
 	 * @return void
@@ -43,7 +45,7 @@ class Bestseller extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */

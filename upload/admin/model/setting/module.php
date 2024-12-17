@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Module
  *
+ * Can be called from $this->load->model('setting/module');
+ *
  * @package Opencart\Admin\Model\Setting
  */
 class Module extends \Opencart\System\Engine\Model {
@@ -10,7 +12,7 @@ class Module extends \Opencart\System\Engine\Model {
 	 * Add Module
 	 *
 	 * @param string               $code
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -25,8 +27,8 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Module
 	 *
-	 * @param int                  $module_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $module_id primary key of the module record
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -37,7 +39,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Module
 	 *
-	 * @param int $module_id
+	 * @param int $module_id primary key of the module record
 	 *
 	 * @return void
 	 */
@@ -63,7 +65,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Module
 	 *
-	 * @param int $module_id
+	 * @param int $module_id primary key of the module record
 	 *
 	 * @return array<mixed>
 	 */

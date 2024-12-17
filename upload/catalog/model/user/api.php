@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\User;
 /**
  * Class Api
  *
+ * Can be called from $this->load->model('user/api');
+ *
  * @package Opencart\Catalog\Model\User
  */
 class Api extends \Opencart\System\Engine\Model {
@@ -22,7 +24,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ips
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -35,7 +37,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int    $api_id
+	 * @param int    $api_id primary key of the Api record
 	 * @param string $call
 	 * @param string $ip
 	 */

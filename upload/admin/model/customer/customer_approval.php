@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Customer;
 /**
  * Class Customer Approval
  *
+ * Can be called from $this->load->model('customer/customer_approval');
+ *
  * @package Opencart\Admin\Model\Customer
  */
 class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Approvals By Customer ID
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -20,7 +22,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Approvals
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -73,7 +75,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Approval
 	 *
-	 * @param int $customer_approval_id
+	 * @param int $customer_approval_id primary key of the customer approval record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -86,7 +88,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customer Approvals
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -131,7 +133,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Approve Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -143,7 +145,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Deny Customer
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -154,7 +156,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Approve Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -166,7 +168,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Deny Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

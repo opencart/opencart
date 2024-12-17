@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Cms;
 /**
  * Class Topic
  *
+ * Can be called from $this->load->model('cms/topic');
+ *
  * @package Opencart\Catalog\Model\Cms
  */
 class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Topic
 	 *
-	 * @param int $topic_id
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Manufacturer
  *
+ * Can be called from $this->load->model('catalog/manufacturer');
+ *
  * @package Opencart\Catalog\Model\Catalog
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturer
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -22,7 +24,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturer(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -76,7 +78,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout ID
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return int
 	 */

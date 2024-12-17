@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Address Format
  *
+ * Can be called from $this->load->model('localisation/address_format');
+ *
  * @package Opencart\Admin\Model\Localisation
  */
 class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address Format
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,8 +24,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address Format
 	 *
-	 * @param int                  $address_format_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $address_format_id primary key of the address format record
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
 	 */
@@ -34,7 +36,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Address Format
 	 *
-	 * @param int $address_format_id
+	 * @param int $address_format_id primary key of the address format record
 	 *
 	 * @return void
 	 */
@@ -45,7 +47,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address Format
 	 *
-	 * @param int $address_format_id
+	 * @param int $address_format_id primary key of the address format record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -58,7 +60,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address Formats
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -85,7 +87,7 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Address Formats
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

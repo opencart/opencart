@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class TaxRate
+ * Class Tax Rate
+ *
+ * Can be called from $this->load->model('localisation/tax_rate');
  *
  * @package Opencart\Admin\Model\Localisation
  */
@@ -9,7 +11,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Tax Rate
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -30,8 +32,8 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Tax Rate
 	 *
-	 * @param int                  $tax_rate_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $tax_rate_id primary key of the tax rate record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -50,7 +52,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Tax Rate
 	 *
-	 * @param int $tax_rate_id
+	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
 	 * @return void
 	 */
@@ -63,7 +65,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Rate
 	 *
-	 * @param int $tax_rate_id
+	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -76,7 +78,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Tax Rates
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -133,7 +135,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Tax Rates By Geo Zone ID
 	 *
-	 * @param int $geo_zone_id
+	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return int
 	 */
@@ -146,8 +148,8 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Group
 	 *
-	 * @param int $tax_rate_id
-	 * @param int $customer_group_id
+	 * @param int $tax_rate_id       primary key of the tax rate record
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
 	 */
@@ -158,7 +160,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Groups
 	 *
-	 * @param int $tax_rate_id
+	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
 	 * @return void
 	 */
@@ -169,7 +171,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Groups By Customer Group ID
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
 	 */
@@ -180,7 +182,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Groups
 	 *
-	 * @param int $tax_rate_id
+	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
 	 * @return array<int, int>
 	 */

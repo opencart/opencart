@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class WeightClass
+ * Class Weight Class
+ *
+ * Can be called from $this->load->model('localisation/weight_class');
  *
  * @package Opencart\Admin\Model\Localisation
  */
@@ -9,7 +11,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Weight Class
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -30,8 +32,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Weight Class
 	 *
-	 * @param int                  $weight_class_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $weight_class_id primary key of the weight class record
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -50,7 +52,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Weight Class
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return void
 	 */
@@ -65,7 +67,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Weight Classes
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -120,7 +122,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Weight Class
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -144,9 +146,9 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $weight_class_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $weight_class_id primary key of the weight class record
+	 * @param int                  $language_id     primary key of the language record
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -157,7 +159,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Description
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return void
 	 */
@@ -168,7 +170,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -179,7 +181,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -198,7 +200,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

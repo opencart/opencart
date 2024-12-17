@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Store
  *
+ * Can be called from $this->load->model('setting/store');
+ *
  * @package Opencart\Admin\Model\Setting
  */
 class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -44,7 +46,7 @@ class Store extends \Opencart\System\Engine\Model {
 	 * Edit Store
 	 *
 	 * @param int                  $store_id
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -124,7 +126,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -284,7 +286,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int
 	 */
@@ -323,7 +325,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Country ID
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int
 	 */
@@ -336,7 +338,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Zone ID
 	 *
-	 * @param int $zone_id
+	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return int
 	 */
@@ -349,7 +351,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Customer Group ID
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return int
 	 */
@@ -362,7 +364,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Information ID
 	 *
-	 * @param int $information_id
+	 * @param int $information_id primary key of the information record
 	 *
 	 * @return int
 	 */
@@ -377,7 +379,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Order Status ID
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return int
 	 */

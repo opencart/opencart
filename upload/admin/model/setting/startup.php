@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Startup
  *
+ * Can be called from $this->load->model('setting/startup');
+ *
  * @package Opencart\Admin\Model\Setting
  */
 class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Startup
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,7 +24,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Startup
 	 *
-	 * @param int $startup_id
+	 * @param int $startup_id primary key of the startup record
 	 *
 	 * @return void
 	 */
@@ -44,7 +46,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $startup_id
+	 * @param int  $startup_id primary key of the startup record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -56,7 +58,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startup
 	 *
-	 * @param int $startup_id
+	 * @param int $startup_id primary key of the startup record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -82,7 +84,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startups
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

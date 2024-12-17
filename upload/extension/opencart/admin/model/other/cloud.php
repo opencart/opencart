@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Other;
 /**
  * Class Cloud
  *
+ * Can be called from $this->load->model('extension/opencart/other/cloud');
+ *
  * @package Opencart\Admin\Model\Extension\Opencart\Other
  */
 class Cloud extends \Opencart\System\Engine\Model {
@@ -31,7 +33,7 @@ class Cloud extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Total
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $total
 	 *
 	 * @return void
@@ -43,7 +45,7 @@ class Cloud extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */

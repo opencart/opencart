@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Startup
  *
+ * Can be called from $this->load->model('setting/startup');
+ *
  * @package Opencart\Catalog\Model\Setting
  */
 class Startup extends \Opencart\System\Engine\Model {

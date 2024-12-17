@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\User;
 /**
  * Class Api
  *
+ * Can be called from $this->load->model('user/api');
+ *
  * @package Opencart\Admin\Model\User
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Api
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -32,8 +34,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Api
 	 *
-	 * @param int                  $api_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $api_id primary key of the Api record
+	 * @param array<string, mixed> $data   array of data
 	 *
 	 * @return void
 	 */
@@ -54,7 +56,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Api
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return void
 	 */
@@ -67,7 +69,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Api
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -80,7 +82,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Apis
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -137,7 +139,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Ip
 	 *
-	 * @param int    $api_id
+	 * @param int    $api_id primary key of the Api record
 	 * @param string $ip
 	 *
 	 * @return void
@@ -149,7 +151,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ips
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return void
 	 */
@@ -160,7 +162,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ips
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, string>
 	 */
@@ -179,7 +181,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -202,7 +204,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $api_id
+	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return int
 	 */

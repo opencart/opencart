@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
- * Class CustomerTransaction
+ * Class Customer Transaction
+ *
+ * Can be called from $this->load->model('extension/opencart/report/customer_transaction');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
  */
@@ -9,7 +11,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transactions
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -50,7 +52,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

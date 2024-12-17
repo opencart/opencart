@@ -3,14 +3,16 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Transaction
  *
+ * Can be called from $this->load->model('account/transaction');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Transaction
 	 *
-	 * @param int    $customer_id
-	 * @param int    $order_id
+	 * @param int    $customer_id primary key of the customer record
+	 * @param int    $order_id    primary key of the order record
 	 * @param string $description
 	 * @param float  $amount
 	 *
@@ -23,8 +25,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transaction
 	 *
-	 * @param int $customer_id
-	 * @param int $order_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $order_id    primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -41,7 +43,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transaction By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -52,8 +54,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transactions
 	 *
-	 * @param int                  $customer_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_id primary key of the order record
+	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -98,7 +100,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -111,7 +113,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int
 	 */
@@ -124,7 +126,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transaction Total
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return float
 	 */

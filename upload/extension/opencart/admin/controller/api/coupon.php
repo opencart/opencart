@@ -8,7 +8,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Api;
 class Coupon extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
-	 * 
+	 *
 	 * @return string
 	 */
 	public function index(): string {

@@ -3,14 +3,16 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Address
  *
+ * Can be called from $this->load->model('account/address');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address
 	 *
-	 * @param int                  $customer_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_id primary key of the customer record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return int
 	 */
@@ -29,9 +31,9 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address
 	 *
-	 * @param int                  $customer_id
-	 * @param int                  $address_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_id primary key of the customer record
+	 * @param int                  $address_id  primary key of the address record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -46,8 +48,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Address
 	 *
-	 * @param int $customer_id
-	 * @param int $address_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $address_id  primary key of the address record
 	 *
 	 * @return void
 	 */
@@ -64,8 +66,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address
 	 *
-	 * @param int $customer_id
-	 * @param int $address_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $address_id  primary key of the address record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -128,7 +130,7 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Addresses
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -191,7 +193,7 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Addresses
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

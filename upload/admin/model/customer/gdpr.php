@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Customer;
 /**
  * Class GDPR
  *
+ * Can be called from $this->load->model('customer/gdpr');
+ *
  * @package Opencart\Admin\Model\Customer
  */
 class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int $gdpr_id
+	 * @param int $gdpr_id primary key of the gdpr record
 	 * @param int $status
 	 *
 	 * @return void
@@ -21,7 +23,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Gdpr
 	 *
-	 * @param int $gdpr_id
+	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return void
 	 */
@@ -43,7 +45,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Gdpr(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -98,7 +100,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Gdpr
 	 *
-	 * @param int $gdpr_id
+	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -111,7 +113,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Gdpr(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

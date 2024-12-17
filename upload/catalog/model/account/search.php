@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Search
  *
+ * Can be called from $this->load->model('account/search');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Search extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Search
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */

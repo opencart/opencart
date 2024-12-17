@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 /**
- * Class StockStatus
+ * Class Stock Status
+ *
+ * Can be called from $this->load->model('localisation/stock_status');
  *
  * @package Opencart\Catalog\Model\Localisation
  */
@@ -9,7 +11,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Status
 	 *
-	 * @param int $stock_status_id
+	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -22,7 +24,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Statuses
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

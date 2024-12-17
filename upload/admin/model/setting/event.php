@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Event
  *
+ * Can be called from $this->load->model('setting/event');
+ *
  * @package Opencart\Admin\Model\Setting
  */
 class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Event
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of of data
 	 *
 	 * @return int
 	 */
@@ -22,7 +24,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Event
 	 *
-	 * @param int $event_id
+	 * @param int $event_id primary key of the event record
 	 *
 	 * @return void
 	 */
@@ -44,7 +46,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $event_id
+	 * @param int  $event_id primary key of the event record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -68,7 +70,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Event
 	 *
-	 * @param int $event_id
+	 * @param int $event_id primary key of the event record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -94,7 +96,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Events
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

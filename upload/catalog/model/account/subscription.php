@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Subscription
  *
+ * Can be called from $this->load->model('account/subscription');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -66,7 +68,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscription By Shipping Address ID
 	 *
-	 * @param int $address_id
+	 * @param int $address_id primary key of the address record
 	 *
 	 * @return int
 	 */
@@ -79,7 +81,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscription By Payment Address ID
 	 *
-	 * @param int $address_id
+	 * @param int $address_id primary key of the address record
 	 *
 	 * @return int
 	 */
@@ -92,8 +94,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription By Order Product ID
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -106,8 +108,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Products
 	 *
-	 * @param int $subscription_id
-	 * @param int $address_id
+	 * @param int $subscription_id primary key of the subscription record
+	 * @param int $address_id      primary key of the address record
 	 *
 	 * @return int
 	 */
@@ -120,7 +122,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int
 	 */
@@ -133,8 +135,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param int $subscription_id
-	 * @param int $subscription_product_id
+	 * @param int $subscription_id         primary key of the subscription record
+	 * @param int $subscription_product_id primary key of the subscription product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -147,7 +149,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -170,7 +172,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int
 	 */

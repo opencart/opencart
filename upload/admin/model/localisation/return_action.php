@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class ReturnAction
+ * Class Return Action
+ *
+ * Can be called from $this->load->model('localisation/return_action');
  *
  * @package Opencart\Admin\Model\Localisation
  */
@@ -9,7 +11,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Action
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +36,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Action
 	 *
-	 * @param int                  $return_action_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $return_action_id primary key of the return action record
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -52,7 +54,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Action
 	 *
-	 * @param int $return_action_id
+	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return void
 	 */
@@ -65,7 +67,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Actions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -78,7 +80,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Action
 	 *
-	 * @param int $return_action_id
+	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -91,7 +93,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Actions
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -134,9 +136,9 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $return_action_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $return_action_id primary key of the return action record
+	 * @param int                  $language_id      primary key of the language record
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -147,7 +149,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $return_action_id
+	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -166,7 +168,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

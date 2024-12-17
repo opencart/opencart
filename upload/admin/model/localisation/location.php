@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Location
  *
+ * Can be called from $this->load->model('localisation/location');
+ *
  * @package Opencart\Admin\Model\Localisation
  */
 class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Location
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,8 +24,8 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Location
 	 *
-	 * @param int                  $location_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $location_id primary key of the location record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -34,7 +36,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Location
 	 *
-	 * @param int $location_id
+	 * @param int $location_id primary key of the location record
 	 *
 	 * @return void
 	 */
@@ -45,7 +47,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Location
 	 *
-	 * @param int $location_id
+	 * @param int $location_id primary key of the location record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -58,7 +60,7 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Locations
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

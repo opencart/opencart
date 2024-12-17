@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Returns
  *
+ * Can be called from $this->load->model('sale/returns');
+ *
  * @package Opencart\Admin\Model\Sale
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,8 +24,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return
 	 *
-	 * @param int                  $return_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $return_id primary key of the return record
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -34,8 +36,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Status ID
 	 *
-	 * @param int $return_id
-	 * @param int $return_status_id
+	 * @param int $return_id        primary key of the return record
+	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return void
 	 */
@@ -46,7 +48,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return void
 	 */
@@ -59,7 +61,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -72,7 +74,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Returns
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -160,7 +162,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -213,7 +215,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns By Return Status ID
 	 *
-	 * @param int $return_status_id
+	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return int
 	 */
@@ -226,7 +228,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns By Return Reason ID
 	 *
-	 * @param int $return_reason_id
+	 * @param int $return_reason_id primary key of the return reason record
 	 *
 	 * @return int
 	 */
@@ -239,7 +241,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns By Return Action ID
 	 *
-	 * @param int $return_action_id
+	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return int
 	 */
@@ -252,8 +254,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int    $return_id
-	 * @param int    $return_status_id
+	 * @param int    $return_id        primary key of the return record
+	 * @param int    $return_status_id primary key of the return status record
 	 * @param string $comment
 	 * @param bool   $notify
 	 *
@@ -268,7 +270,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Histories
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return void
 	 */
@@ -279,7 +281,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -302,7 +304,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return int
 	 */
@@ -315,7 +317,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories By Return Status ID
 	 *
-	 * @param int $return_status_id
+	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return int
 	 */

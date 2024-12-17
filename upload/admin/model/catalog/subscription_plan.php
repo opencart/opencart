@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Subscription Plan
  *
+ * Can be called from $this->load->model('catalog/subscription_plan');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Plan
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -28,8 +30,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Subscription Plan
 	 *
-	 * @param int                  $subscription_plan_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $subscription_plan_id primary key of the subscription plan record
+	 * @param array<string, mixed> $data                 array of data
 	 *
 	 * @return void
 	 */
@@ -46,7 +48,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Copy Subscription Plan
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
 	 */
@@ -57,7 +59,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription Plan
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
 	 */
@@ -74,7 +76,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plan
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -87,7 +89,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plans
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -135,9 +137,9 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $subscription_plan_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $subscription_plan_id primary key of the subscription plan record
+	 * @param int                  $language_id          primary key of the language record
+	 * @param array<string, mixed> $data                 array of data
 	 *
 	 * @return void
 	 */
@@ -148,7 +150,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
 	 */
@@ -159,7 +161,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -168,7 +170,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -187,7 +189,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

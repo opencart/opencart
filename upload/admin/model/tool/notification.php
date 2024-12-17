@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Tool;
 /**
  * Class Notification
  *
+ * Can be called from $this->load->model('tool/notification');
+ *
  * @package Opencart\Admin\Model\Tool
  */
 class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Notification
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,7 +24,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $notification_id
+	 * @param int  $notification_id primary key of the notification record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -34,7 +36,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Notification
 	 *
-	 * @param int $notification_id
+	 * @param int $notification_id primary key of the notification record
 	 *
 	 * @return void
 	 */
@@ -45,7 +47,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Notification
 	 *
-	 * @param int $notification_id
+	 * @param int $notification_id primary key of the notification record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -58,7 +60,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Notifications
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -91,7 +93,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Notifications
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

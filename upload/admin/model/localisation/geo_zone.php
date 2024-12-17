@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class GeoZone
+ * Class Geo Zone
+ *
+ * Can be called from $this->load->model('localisation/geo_zone');
  *
  * @package Opencart\Admin\Model\Localisation
  */
@@ -9,7 +11,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Geo Zone
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -32,8 +34,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Geo Zone
 	 *
-	 * @param int                  $geo_zone_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $geo_zone_id primary key of the geo zone record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -54,7 +56,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Geo Zone
 	 *
-	 * @param int $geo_zone_id
+	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return void
 	 */
@@ -69,7 +71,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Geo Zone
 	 *
-	 * @param int $geo_zone_id
+	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -82,7 +84,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Geo Zones
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -147,8 +149,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Zone
 	 *
-	 * @param int                  $geo_zone_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $geo_zone_id primary key of the geo zone record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -159,7 +161,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Zones
 	 *
-	 * @param int $geo_zone_id
+	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return void
 	 */
@@ -170,7 +172,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zones
 	 *
-	 * @param int $geo_zone_id
+	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -183,7 +185,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones
 	 *
-	 * @param int $geo_zone_id
+	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return int
 	 */
@@ -196,7 +198,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones By Country ID
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int
 	 */
@@ -209,7 +211,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones By Zone ID
 	 *
-	 * @param int $zone_id
+	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return int
 	 */

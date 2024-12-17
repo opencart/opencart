@@ -9,7 +9,7 @@ class Thumb extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return string
 	 */

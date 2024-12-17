@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Language
  *
+ * Can be called from $this->load->model('localisation/language');
+ *
  * @package Opencart\Admin\Model\Localisation
  */
 class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Language
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -245,8 +247,8 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Language
 	 *
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $language_id primary key of the language record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -259,7 +261,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Language
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -380,7 +382,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Language
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -434,7 +436,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Languages
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */

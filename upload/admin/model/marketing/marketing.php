@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Marketing;
 /**
  * Class Marketing
  *
+ * Can be called from $this->load->model('marketing/marketing');
+ *
  * @package Opencart\Admin\Model\Marketing
  */
 class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Marketing
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,8 +24,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Marketing
 	 *
-	 * @param int                  $marketing_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $marketing_id primary key of the marketing record
+	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
 	 */
@@ -34,7 +36,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Marketing
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return void
 	 */
@@ -47,7 +49,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Marketing
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -73,7 +75,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Marketing(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -148,7 +150,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Marketing(s)
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -185,7 +187,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Marketing Reports
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return void
 	 */
@@ -196,7 +198,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -219,7 +221,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $marketing_id
+	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return int
 	 */

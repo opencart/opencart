@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 /**
- *  Class Banner
+ * Class Banner
  *
  * Can be called from $this->load->model('design/banner');
  *
@@ -135,7 +135,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Image
+	 * Add Image
 	 *
 	 * @param int                  $banner_id   primary key of the banner record
 	 * @param int                  $language_id primary key of the language record
@@ -148,7 +148,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Banner Images
+	 * Delete Banner Images
 	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
@@ -159,7 +159,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Banner Images By Language ID
+	 * Delete Banner Images By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

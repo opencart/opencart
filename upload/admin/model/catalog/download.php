@@ -121,7 +121,7 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $download_id primary key of the download record
 	 * @param int                  $language_id primary key of the language record
@@ -134,7 +134,7 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Download Descriptions
+	 * Delete Download Descriptions
 	 *
 	 * @param int $download_id primary key of the download record
 	 *

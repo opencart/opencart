@@ -1111,7 +1111,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Category
+	 * Add Category
 	 *
 	 * @param int $product_id  primary key of the product record
 	 * @param int $category_id primary key of the category record
@@ -1123,7 +1123,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Product To Categories
+	 * Delete Product To Categories
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1164,7 +1164,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Filter
+	 * Add Filter
 	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $filter_id  primary key of the filter record
@@ -1176,7 +1176,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Product Filters
+	 * Delete Product Filters
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1502,7 +1502,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Image
+	 * Add Image
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -1514,7 +1514,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Product Images
+	 * Delete Product Images
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1538,7 +1538,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Discount
+	 * Add Discount
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -1550,7 +1550,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Product Discounts
+	 * Delete Product Discounts
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1844,7 +1844,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Related
+	 * Add Related
 	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $related_id primary key of the product related record
@@ -1860,7 +1860,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Product Related
+	 * Delete Product Related
 	 *
 	 * @param int $product_id primary key of the product record
 	 *

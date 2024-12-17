@@ -270,7 +270,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Product
+	 * Delete Subscription Products
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
@@ -310,7 +310,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Options
+	 * Delete Subscription Options
 	 *
 	 * @param int $subscription_id  primary key of the subscription record
 	 * @param int $order_id         primary key of the order record
@@ -339,7 +339,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Histories
+	 * Delete Subscription Histories
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
@@ -399,7 +399,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Logs
+	 * Delete Subscription Logs
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *

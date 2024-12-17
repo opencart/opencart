@@ -108,7 +108,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Install
+	 * Delete Extension Install
 	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
@@ -250,7 +250,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Path
+	 * Delete Extension Path
 	 *
 	 * @param int $extension_path_id primary key of the extension path record
 	 *

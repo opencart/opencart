@@ -209,7 +209,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Topic Descriptions
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -220,7 +220,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Topic Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -275,7 +275,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores
+	 * Delete Topic To Stores
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -318,7 +318,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts
+	 * Delete Topic To Layouts
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -329,7 +329,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Layout ID
+	 * Delete Topic To Layouts By Layout ID
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *

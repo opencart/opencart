@@ -157,7 +157,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 *	Delete Weight Class Description
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
 	 *
@@ -168,7 +168,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Weight Class Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

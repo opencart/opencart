@@ -178,7 +178,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 *	Delete Filter Descriptions
 	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
@@ -189,7 +189,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Filter Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

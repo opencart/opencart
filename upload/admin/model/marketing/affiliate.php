@@ -44,7 +44,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Affiliate
+	 * Delete Customer Affiliate
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -250,7 +250,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Reports
+	 * Delete Customer Affiliate Reports
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

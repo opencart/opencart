@@ -213,7 +213,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Information Descriptions
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -224,7 +224,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Information Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -279,7 +279,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores
+	 * Delete Information To Stores
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -290,7 +290,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores By Store ID
+	 * Delete Information To Stores By Store ID
 	 *
 	 * @param int $store_id
 	 *
@@ -333,7 +333,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts
+	 * Delete Information To Layouts
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -344,7 +344,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Layout ID
+	 * Delete Information To Layouts By Layout ID
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -355,7 +355,7 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Store ID
+	 * Delete Information To Layouts By Store ID
 	 *
 	 * @param int $store_id
 	 *

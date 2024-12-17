@@ -9,7 +9,7 @@ namespace Opencart\Admin\Model\Customer;
  */
 class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
-	 * Delete Approvals By Customer ID
+	 * Delete Customer Approvals By Customer ID
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

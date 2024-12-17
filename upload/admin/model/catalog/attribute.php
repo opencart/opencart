@@ -180,7 +180,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 *	Delete Attribute Descriptions
 	 *
 	 *  Delete attribute description record in the database.
 	 *
@@ -193,7 +193,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions By Language ID
+	 *	Delete Attribute Descriptions By Language ID
 	 *
 	 *	Delete attribute description record in the database.
 	 *

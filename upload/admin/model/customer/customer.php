@@ -281,7 +281,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Activities
+	 * Delete Customer Activities
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -571,7 +571,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Wishlists
+	 * Delete Customer Wishlists
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -582,7 +582,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Wishlist By Store ID
+	 * Delete Customer Wishlist By Store ID
 	 *
 	 * @param int $store_id
 	 *
@@ -593,7 +593,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Wishlist By Product ID
+	 * Delete Customer Wishlist By Product ID
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -618,7 +618,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Transactions
+	 * Delete Customer Transactions
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -629,7 +629,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Transactions By Order ID
+	 * Delete Customer Transactions By Order ID
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -716,7 +716,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Rewards
+	 * Delete Customer Rewards
 	 *
 	 * @param int $customer_id primary key of the order record
 	 *
@@ -727,7 +727,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Rewards By Order ID
+	 * Delete Customer Rewards By Order ID
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -800,7 +800,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Ips
+	 * Delete Customer Ips
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -872,7 +872,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Login Attempts
+	 * Delete Customer Login Attempts
 	 *
 	 * @param string $email
 	 *
@@ -930,7 +930,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Authorizes
+	 * Delete Customer Authorizes
 	 *
 	 * @param int $customer_id           primary key of the customer record
 	 * @param int $customer_authorize_id primary key of the customer authorize record

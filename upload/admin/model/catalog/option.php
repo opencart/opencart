@@ -160,7 +160,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Option Descriptions
 	 *
 	 * @param int $option_id primary key of the option record
 	 *
@@ -171,7 +171,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Option Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -240,7 +240,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Values
+	 * Delete Option Values
 	 *
 	 * @param int $option_id primary key of the option record
 	 *
@@ -293,7 +293,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Value Descriptions By Option ID
+	 * Delete Option Value Descriptions By Option ID
 	 *
 	 * @param int $option_id primary key of the option record
 	 *
@@ -304,7 +304,7 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Value Descriptions By Language ID
+	 * Delete Option Value Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

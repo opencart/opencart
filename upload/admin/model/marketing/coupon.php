@@ -165,7 +165,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Products
+	 * Delete Coupon Products
 	 *
 	 * @param int $coupon_id primary key of the coupon record
 	 *
@@ -176,7 +176,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Products By Product ID
+	 * Delete Coupon Products By Product ID
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -218,7 +218,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Categories
+	 * Delete Coupon Categories
 	 *
 	 * @param int $coupon_id primary key of the coupon record
 	 *
@@ -229,7 +229,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Categories By Category ID
+	 * Delete Coupon Categories By Category ID
 	 *
 	 * @param int $category_id primary key of the category record
 	 *

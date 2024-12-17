@@ -175,7 +175,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Routes
+	 * Delete Layout Routes
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -186,7 +186,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Routes By Layout ID
+	 * Delete Layout Routes By Layout ID
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -197,7 +197,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Routes By Store ID
+	 * Delete Layout Routes By Store ID
 	 *
 	 * @param int $store_id
 	 *
@@ -246,7 +246,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Modules
+	 * Delete Layout Modules
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -257,7 +257,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Modules By Code
+	 * Delete Layout Modules By Code
 	 *
 	 * @param string $code
 	 *

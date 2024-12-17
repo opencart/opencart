@@ -202,7 +202,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores
+	 * Delete Manufacturer To Stores
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
@@ -213,7 +213,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores By Store ID
+	 * Delete Manufacturer To Stores By Store ID
 	 *
 	 * @param int $store_id
 	 *
@@ -256,7 +256,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts
+	 * Delete Manufacturer To Layouts
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
@@ -267,7 +267,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Layout ID
+	 * Delete Manufacturer To Layouts By Layout ID
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -278,7 +278,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Store ID
+	 * Delete Manufacturer To Layouts By Store ID
 	 *
 	 * @param int $store_id
 	 *

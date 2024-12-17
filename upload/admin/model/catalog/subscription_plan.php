@@ -148,7 +148,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Subscription Plan Descriptions
 	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
@@ -159,7 +159,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Subscription Plan Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 */

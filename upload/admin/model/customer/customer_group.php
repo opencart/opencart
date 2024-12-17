@@ -138,7 +138,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Customer Group Descriptions
 	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
@@ -149,7 +149,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Customer Group Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

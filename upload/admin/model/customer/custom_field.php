@@ -197,7 +197,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Custom Field Descriptions
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
@@ -208,7 +208,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Custom Field Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -263,7 +263,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer Groups
+	 * Delete Custom Field Customer Groups
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
@@ -311,7 +311,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Values
+	 * Delete Custom Field Values
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
@@ -370,7 +370,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Value Descriptions
+	 * Delete Custom Field Value Descriptions
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
@@ -381,7 +381,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Value Descriptions By Language ID
+	 * Delete Custom Field Value Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

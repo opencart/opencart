@@ -245,7 +245,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 *	Delete Article Descriptions
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -256,7 +256,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Article Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -311,7 +311,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores
+	 * Delete Article To Stores
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -354,7 +354,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts
+	 * Delete Article To Layouts
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -365,7 +365,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Layout ID
+	 * Delete Article To Layouts By Layout ID
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -433,7 +433,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Comment
+	 * Delete Article Comment
 	 *
 	 * @param int $article_comment_id primary key of the article comment record
 	 *
@@ -446,7 +446,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Comments by article ID
+	 * Delete Article Comments by article ID
 	 *
 	 * @param int $article_id primary key of the article record
 	 *

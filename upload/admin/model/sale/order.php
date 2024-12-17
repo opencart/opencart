@@ -426,7 +426,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Products
+	 * Delete Order Products
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -480,7 +480,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Options
+	 * Delete Order Options
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -505,7 +505,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscription
+	 * Delete Order Subscription
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -530,7 +530,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Totals
+	 * Delete Order Totals
 	 *
 	 * @param int $order_id primary key of the order record
 	 */
@@ -672,7 +672,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Order History
+	 * Delete Order Histories
 	 *
 	 * @param int $order_id primary key of the order record
 	 *

@@ -149,7 +149,7 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Ips
+	 * Delete Api Ips
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *

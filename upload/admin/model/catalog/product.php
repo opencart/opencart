@@ -1057,7 +1057,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions
+	 * Delete Product Descriptions
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1068,7 +1068,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Product Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -1123,7 +1123,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Categories
+	 *	Delete Product To Categories
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1134,7 +1134,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Categories By Category ID
+	 * Delete Product To Categories By Category ID
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
@@ -1176,7 +1176,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Filters
+	 *	Delete Product Filters
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1187,7 +1187,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Filters By Filter ID
+	 * Delete Product Filters By Filter ID
 	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
@@ -1231,7 +1231,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Attributes
+	 * Delete Product Attributes
 	 *
 	 * @param int $product_id   primary key of the product record
 	 * @param int $attribute_id primary key of the attribute record
@@ -1249,7 +1249,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Attributes By Language ID
+	 * Delete Product Attributes By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -1349,7 +1349,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Options
+	 * Delete Product Options
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1451,7 +1451,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Option Values
+	 * Delete Product Option Values
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1514,7 +1514,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Images
+	 *	Delete Product Images
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1550,7 +1550,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Discounts
+	 *	Delete Product Discounts
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1561,7 +1561,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Discounts By Customer ID
+	 * Delete Product Discounts By Customer ID
 	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
@@ -1572,7 +1572,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Discounts
+	 * Get Product Discounts
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1598,7 +1598,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Rewards
+	 * Delete Product Rewards
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1609,7 +1609,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Rewards By Customer Group ID
+	 * Delete Product Rewards By Customer Group ID
 	 *
 	 * @param int $customer_group_id primary key of the customer group record to be deleted
 	 *
@@ -1651,7 +1651,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Downloads
+	 * Delete Product Downloads
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1706,7 +1706,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores
+	 * Delete Product To Stores
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1717,7 +1717,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Stores By Store ID
+	 * Delete Product To Stores By Store ID
 	 *
 	 * @param int $store_id
 	 *
@@ -1760,7 +1760,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts
+	 * Delete Product To Layouts
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1771,7 +1771,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Layout ID
+	 * Delete Product Layouts By Layout ID
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -1782,7 +1782,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Layouts By Store ID
+	 * Delete Product To Layouts By Store ID
 	 *
 	 * @param int $store_id
 	 *
@@ -1860,7 +1860,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Related
+	 *	Delete Product Related
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1905,7 +1905,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscriptions
+	 * Delete Product Subscriptions
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1944,7 +1944,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscriptions By Subscription Plan ID
+	 * Delete Product Subscriptions By Subscription Plan ID
 	 *
 	 * @param int $subscription_plan_id primary key of the product subscription plan record
 	 *
@@ -1968,7 +1968,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Reports
+	 * Delete Product Reports
 	 *
 	 * @param int $product_id primary key of the product record
 	 *

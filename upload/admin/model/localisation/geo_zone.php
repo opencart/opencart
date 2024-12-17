@@ -159,7 +159,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Zones
+	 * Delete Zone To Geo Zones
 	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *

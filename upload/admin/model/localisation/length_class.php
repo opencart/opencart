@@ -159,7 +159,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Description
+	 * Delete Length Class Descriptions
 	 *
 	 * @param int $length_class_id primary key of the length class record
 	 *
@@ -170,7 +170,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
+	 * Delete Length Class Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

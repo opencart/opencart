@@ -1,4 +1,3 @@
-<h2>{{ heading_title }}</h2>
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>
@@ -11,14 +10,14 @@
       </tr>
     </thead>
     <tbody>
-      {% if payment_methods %}
-        {% for payment_method in payment_methods %}
+      {% if credit_cards %}
+        {% for credit_card in credit_cards %}
           <tr>
-            <td>{{ payment_method.name }}</td>
-            <td>{{ payment_method.image }}</td>
-            <td>{{ payment_method.type }}</td>
-            <td>{{ payment_method.date_expire }}</td>
-            <td class="text-end"><a href="{{ payment_method.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+            <td>{{ credit_card.name }}</td>
+            <td>{{ credit_card.image }}</td>
+            <td>{{ credit_card.type }}</td>
+            <td>{{ credit_card.date_expire }}</td>
+            <td class="text-end"><a href="{{ credit_card.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
           </tr>
         {% endfor %}
       {% else %}
@@ -35,37 +34,3 @@
     </tfoot>
   </table>
 </div>
-<script type="text/javascript"><!--
-$('#payment-method').on('click', '.btn-danger', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).attr('href'),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).prop('disabled', true);
-        },
-        complete: function() {
-            $(element).prop('disabled', false);
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#payment-method').load('index.php?route=account/payment_method.list&customer_token={{ customer_token }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-//--></script>

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Extension\OcPaymentExample\Account;
 class CreditCard extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('account/payment_method');
+		$this->load->language('extension/oc_payment_example/account/credit_card');
 
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
 			$this->session->data['redirect'] = $this->url->link('account/payment_method', 'language=' . $this->config->get('config_language'));
@@ -19,27 +19,17 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	protected function getList(): string {
-		$data['payment_methods'] = [];
+		$data['credit_cards'] = [];
 
-		$this->load->model('setting/extension');
 
-		$results = $this->model_setting_extension->getExtensionsByType('payment');
 
-		foreach ($results as $result) {
-			if ($this->config->get('payment_' . $result['code'] . '_status')) {
-				$output = $this->load->controller('extension/' . $result['extension'] . '/account/' . $result['code']);
 
-				if (!$output instanceof \Exception) {
-					$data['payment_methods'][] = $output;
-				}
-			}
-		}
 
 		return $this->load->view('extension/oc_payment_example/account/credit_card_list', $data);
 	}
 
 	public function add(): string {
-		$this->load->language('extension/oc_payment_example/payment/credit_card');
+		$this->load->language('extension/oc_payment_example/account/credit_card');
 
 		if (isset($this->session->data['payment_method'])) {
 			$data['logged'] = $this->customer->isLogged();
@@ -177,6 +167,9 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * Delete Credit Card
+	 */
 	public function delete(): void {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 

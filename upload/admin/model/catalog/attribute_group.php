@@ -127,7 +127,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $attribute_group_id primary key of the attribute group record
 	 * @param int                  $language_id        primary key of the language record
@@ -140,7 +140,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
 	 * @param int $attribute_group_id primary key of the attribute group record
 	 *
@@ -151,7 +151,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions By Language ID
+	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

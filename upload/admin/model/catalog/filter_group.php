@@ -137,7 +137,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $filter_group_id primary key of the filter group record
 	 * @param int                  $language_id     primary key of the language record
@@ -150,7 +150,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *

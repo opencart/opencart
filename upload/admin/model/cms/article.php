@@ -232,10 +232,10 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $article_id  primary key of the article record
-	 * @param int                  $language_id
+	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
@@ -245,7 +245,7 @@ class Article extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
 	 * @param int $article_id primary key of the article record
 	 *

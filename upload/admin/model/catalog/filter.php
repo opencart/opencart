@@ -165,7 +165,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $filter_id   primary key of the filter record
 	 * @param int                  $language_id primary key of the language record
@@ -178,7 +178,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
 	 * @param int $filter_id primary key of the filter record
 	 *

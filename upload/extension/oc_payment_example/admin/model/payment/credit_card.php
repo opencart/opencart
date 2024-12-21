@@ -17,6 +17,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "credit_card` (
 			`credit_card_id` int(11) NOT NULL AUTO_INCREMENT,
 			`customer_id` int(11) NOT NULL,
+			`type` varchar(64) NOT NULL,
 			`card_name` varchar(64) NOT NULL,
 			`card_number` varchar(64) NOT NULL,
 			`card_expire_month` varchar(64) NOT NULL,
@@ -30,6 +31,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "credit_card_report` (
 			`credit_card_report_id` int(11) NOT NULL AUTO_INCREMENT,
 			`order_id` int(11) NOT NULL,
+			`type` varchar(64) NOT NULL,
 			`card_name` varchar(64) NOT NULL,
 			`amount` decimal(15,4) NOT NULL,
 			`response` text NOT NULL,
@@ -58,7 +60,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addCreditCard(array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_payment` SET `customer_id` = '" . (int)$this->customer->getId() . "', `name` = '" . (int)$this->customer->getId() . "', `image` = '" . $this->db->escape($data['image']) . "', `type` = '" . $this->db->escape($data['type']) . "', `extension` = '" . $this->db->escape($data['extension']) . "', `code` = '" . $this->db->escape($data['code']) . "', `token` = '" . $this->db->escape($data['token']) . "', `date_expire` = '" . $this->db->escape($data['date_expire']) . "', `default` = '" . (bool)$data['default'] . "', `status` = '1', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_payment` SET `customer_id` = '" . (int)$this->customer->getId() . "', `name` = '" . (int)$this->customer->getId() . "', `type` = '" . $this->db->escape($data['type']) . "', `extension` = '" . $this->db->escape($data['extension']) . "', `code` = '" . $this->db->escape($data['code']) . "', `token` = '" . $this->db->escape($data['token']) . "', `date_expire` = '" . $this->db->escape($data['date_expire']) . "', `default` = '" . (bool)$data['default'] . "', `status` = '1', `date_added` = NOW()");
 	}
 
 	/**

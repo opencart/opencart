@@ -8,6 +8,15 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$data['logged'] = $this->customer->isLogged();
 			$data['subscription'] = $this->cart->hasSubscription();
 
+			$data['types'] = [];
+
+			foreach (['visa', 'mastercard'] as $type) {
+				$data['types'][] = [
+					'text'  => $this->language->get('text_' . $type),
+					'value' => $type
+				];
+			}
+
 			$data['months'] = [];
 
 			foreach (range(1, 12) as $month) {
@@ -48,6 +57,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$keys = [
 			'card_name',
+			'type',
 			'card_number',
 			'card_expire_month',
 			'card_expire_year',
@@ -83,6 +93,10 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 
+		if (!in_array($this->request->post['type'], ['visa', 'mastercard'])) {
+			$json['error']['card_type'] = $this->language->get('error_card_type');
+		}
+
 		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
 			$json['error']['card_number'] = $this->language->get('error_card_number');
 		}
@@ -97,13 +111,13 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Credit Card charge code goes here
-
 			$response = $this->config->get('payment_credit_card_response');
 
 			// Card storage
 			if ($this->customer->isLogged() && ($this->request->post['store'] || $this->cart->hasSubscription())) {
 				$credit_card_data = [
 					'card_name'         => $this->request->post['card_name'],
+					'type'              => $this->request->post['type'],
 					'card_number'       => '**** **** **** ' . substr($this->request->post['card_number'], -4),
 					'card_expire_month' => $this->request->post['card_expire_month'],
 					'card_expire_year'  => $this->request->post['card_expire_year'],
@@ -216,45 +230,6 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 				$json['redirect'] = $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true);
 			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function delete(): void {
-		$this->load->language('extension/oc_payment_example/payment/credit_card');
-
-		$json = [];
-
-		if (isset($this->request->get['credit_card_id'])) {
-			$credit_card_id = (int)$this->request->get['credit_card_id'];
-		} else {
-			$credit_card_id = 0;
-		}
-
-		if (!$this->customer->isLogged()) {
-			$json['error'] = $this->language->get('error_logged');
-		}
-
-		$this->load->model('extension/oc_payment_example/payment/credit_card');
-
-		$credit_card_info = $this->model_extension_oc_payment_example_payment_credit_card->getCreditCard($this->customer->getId(), $credit_card_id);
-
-		if (!$credit_card_info) {
-			$json['error'] = $this->language->get('error_credit_card');
-		}
-
-		if (!$json) {
-			$this->model_extension_oc_payment_example_payment_credit_card->deleteCreditCard($this->customer->getId(), $credit_card_id);
-
-			$json['success'] = $this->language->get('text_delete');
-
-			// Clear payment and shipping methods
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

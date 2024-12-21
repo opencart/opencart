@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Customer Group
  *
+ * Can be called from $this->load->model('account/customer_group');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Group
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<string, mixed>
 	 */

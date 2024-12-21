@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Event
  *
+ * Can be called from $this->load->model('setting/event');
+ *
  * @package Opencart\Catalog\Model\Setting
  */
 class Event extends \Opencart\System\Engine\Model {

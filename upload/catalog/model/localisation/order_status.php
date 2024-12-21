@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 /**
- * Class OrderStatus
+ * Class Order Status
+ *
+ * Can be called from $this->load->model('localisation/order_status');
  *
  * @package Opencart\Catalog\Model\Localisation
  */
@@ -9,7 +11,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order Status
 	 *
-	 * @param int $order_status_id
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return array<string, mixed>
 	 */

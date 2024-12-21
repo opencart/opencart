@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Manufacturer
  *
+ * Can be called from $this->load->model('catalog/manufacturer');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Manufacturer
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -51,8 +53,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Manufacturer
 	 *
-	 * @param int                  $manufacturer_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $manufacturer_id primary key of the manufacturer record
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -98,7 +100,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Manufacturer
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
 	 */
@@ -118,7 +120,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturer
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -131,7 +133,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturers
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -190,7 +192,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -202,7 +204,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
 	 */
@@ -224,7 +226,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<int, int>
 	 */
@@ -243,9 +245,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $layout_id       primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -256,7 +258,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
 	 */
@@ -267,7 +269,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -289,7 +291,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<int, int>
 	 */
@@ -308,7 +310,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int
 	 */

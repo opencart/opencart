@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Customer
  *
+ * Can be called from $this->load->model('account/approval');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Approval extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Approval
 	 *
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $type
 	 *
 	 * @return void
@@ -21,7 +23,7 @@ class Approval extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Approvals
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

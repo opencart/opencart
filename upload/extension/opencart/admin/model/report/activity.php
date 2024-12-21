@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Activity
  *
+ * Can be called from $this->load->model('extension/opencart/report/activity');
+ *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
  */
 class Activity extends \Opencart\System\Engine\Model {

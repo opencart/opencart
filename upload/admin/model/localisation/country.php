@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Country
  *
+ * Can be called from $this->load->model('localisation/country');
+ *
  * @package Opencart\Admin\Model\Localisation
  */
 class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Country
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -24,8 +26,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Country
 	 *
-	 * @param int                  $country_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $country_id primary key of the country record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -38,7 +40,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Country
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return void
 	 */
@@ -51,7 +53,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Country
 	 *
-	 * @param int $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -90,7 +92,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Countries
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -163,7 +165,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Countries
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -196,7 +198,7 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Countries By Address Format ID
 	 *
-	 * @param int $address_format_id
+	 * @param int $address_format_id primary key of the address format record
 	 *
 	 * @return int
 	 */

@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\User;
 /**
  * Class User
  *
+ * Can be called from $this->load->model('user/user');
+ *
  * @package Opencart\Admin\Model\User
  */
 class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add User
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,8 +24,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit User
 	 *
-	 * @param int                  $user_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $user_id primary key of the user record
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */
@@ -38,7 +40,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Password
 	 *
-	 * @param int    $user_id
+	 * @param int    $user_id  primary key of the user record
 	 * @param string $password
 	 *
 	 * @return void
@@ -62,7 +64,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete User
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 *
 	 * @return void
 	 */
@@ -76,7 +78,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get User
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -128,7 +130,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Users
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -207,7 +209,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -252,7 +254,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users By Group ID
 	 *
-	 * @param int $user_group_id
+	 * @param int $user_group_id primary key of the user group record
 	 *
 	 * @return int
 	 */
@@ -278,8 +280,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Login
 	 *
-	 * @param int                  $user_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $user_id primary key of the user record
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */
@@ -290,7 +292,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete User Logins
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 *
 	 * @return void
 	 */
@@ -301,7 +303,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Logins
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -328,7 +330,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Logins
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 *
 	 * @return int
 	 */
@@ -345,8 +347,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Authorize
 	 *
-	 * @param int                  $user_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $user_id primary key of the user record
+	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
 	 */
@@ -357,7 +359,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Status
 	 *
-	 * @param int  $user_authorize_id
+	 * @param int  $user_authorize_id primary key of the user authorize record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -369,7 +371,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Total
 	 *
-	 * @param int $user_authorize_id
+	 * @param int $user_authorize_id primary key of the user authorize record
 	 * @param int $total
 	 *
 	 * @return void
@@ -381,7 +383,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Total By User ID
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 * @param int $total
 	 *
 	 * @return void
@@ -393,8 +395,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete User Authorizes
 	 *
-	 * @param int $user_id
-	 * @param int $user_authorize_id
+	 * @param int $user_id           primary key of the user record
+	 * @param int $user_authorize_id primary key of the user authorize record
 	 *
 	 * @return void
 	 */
@@ -411,7 +413,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize
 	 *
-	 * @param int $user_authorize_id
+	 * @param int $user_authorize_id primary key of the user authorize record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -424,7 +426,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize By Token
 	 *
-	 * @param int    $user_id
+	 * @param int    $user_id primary key of the user record
 	 * @param string $token
 	 *
 	 * @return array<string, mixed>
@@ -438,7 +440,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorizes
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -465,7 +467,7 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Authorizes
 	 *
-	 * @param int $user_id
+	 * @param int $user_id primary key of the user record
 	 *
 	 * @return int
 	 */

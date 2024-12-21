@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Tool;
 /**
  * Class Upload
  *
+ * Can be called from $this->load->model('tool/upload');
+ *
  * @package Opencart\Admin\Model\Tool
  */
 class Upload extends \Opencart\System\Engine\Model {
@@ -25,7 +27,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Upload
 	 *
-	 * @param int $upload_id
+	 * @param int $upload_id primary key of the upload record
 	 *
 	 * @return void
 	 */
@@ -36,7 +38,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Upload
 	 *
-	 * @param int $upload_id
+	 * @param int $upload_id primary key of the upload record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -62,7 +64,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Uploads
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -129,7 +131,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Uploads
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

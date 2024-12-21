@@ -3,14 +3,16 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Reward
  *
+ * Can be called from $this->load->model('account/reward');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Reward
 	 *
-	 * @param int    $customer_id
-	 * @param int    $order_id
+	 * @param int    $customer_id primary key of the customer record
+	 * @param int    $order_id    primary key of the order record
 	 * @param string $description
 	 * @param int    $points
 	 *
@@ -23,8 +25,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reward
 	 *
-	 * @param int $customer_id
-	 * @param int $order_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $order_id    primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -41,7 +43,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reward By Order ID
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -52,8 +54,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rewards
 	 *
-	 * @param int                  $customer_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_id primary key of the customer record
+	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -98,7 +100,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Rewards
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */
@@ -111,7 +113,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reward Total
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

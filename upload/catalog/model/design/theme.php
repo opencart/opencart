@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Design;
 /**
  * Class Theme
  *
+ * Can be called from $this->load->model('design/theme');
+ *
  * @package Opencart\Catalog\Model\Design
  */
 class Theme extends \Opencart\System\Engine\Model {

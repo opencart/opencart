@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Marketing;
 /**
  * Class Marketing
  *
+ * Can be called from $this->load->model('marketing/marketing');
+ *
  * @package Opencart\Catalog\Model\Marketing
  */
 class Marketing extends \Opencart\System\Engine\Model {
@@ -22,7 +24,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Report
 	 *
-	 * @param int    $marketing_id
+	 * @param int    $marketing_id primary key of the marketing record
 	 * @param string $ip
 	 * @param string $country
 	 *

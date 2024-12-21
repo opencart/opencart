@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Marketing;
 /**
  * Class Coupon
  *
+ * Can be called from $this->load->model('marketing/coupon');
+ *
  * @package Opencart\Admin\Model\Marketing
  */
 class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Coupon
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -36,8 +38,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Coupon
 	 *
-	 * @param int                  $coupon_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $coupon_id primary key of the coupon record
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -64,7 +66,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Coupon
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return void
 	 */
@@ -79,7 +81,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Coupon
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -105,7 +107,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Coupons
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -153,8 +155,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param int $coupon_id
-	 * @param int $product_id
+	 * @param int $coupon_id  primary key of the coupon record
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -165,7 +167,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Products
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return void
 	 */
@@ -176,7 +178,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Products By Product ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -187,7 +189,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return array<int, int>
 	 */
@@ -206,8 +208,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Category
 	 *
-	 * @param int $coupon_id
-	 * @param int $category_id
+	 * @param int $coupon_id   primary key of the coupon record
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
 	 */
@@ -218,7 +220,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Categories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return void
 	 */
@@ -229,7 +231,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Categories By Category ID
 	 *
-	 * @param int $category_id
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
 	 */
@@ -240,7 +242,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return array<int, int>
 	 */
@@ -270,7 +272,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Histories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -293,7 +295,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Coupon Histories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return void
 	 */
@@ -304,7 +306,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $coupon_id
+	 * @param int $coupon_id primary key of the coupon record
 	 *
 	 * @return int
 	 */

@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Cron
  *
+ * Can be called from $this->load->model('setting/cron');
+ *
  * @package Opencart\Catalog\Model\Setting
  */
 class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Cron
 	 *
-	 * @param int $cron_id
+	 * @param int $cron_id primary key of the Cron record
 	 *
 	 * @return void
 	 */
@@ -20,7 +22,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
-	 * @param int  $cron_id
+	 * @param int  $cron_id primary key of the Cron record
 	 * @param bool $status
 	 *
 	 * @return void
@@ -32,7 +34,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Cron
 	 *
-	 * @param int $cron_id
+	 * @param int $cron_id primary key of the Cron record
 	 *
 	 * @return array<string, mixed>
 	 */

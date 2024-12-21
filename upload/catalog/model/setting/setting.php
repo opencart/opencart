@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Setting
  *
+ * Can be called from $this->load->model('setting/setting');
+ *
  * @package Opencart\Catalog\Model\Setting
  */
 class Setting extends \Opencart\System\Engine\Model {

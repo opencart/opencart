@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Returns
  *
+ * Can be called from $this->load->model('account/returns');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,7 +24,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -68,7 +70,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Histories
 	 *
-	 * @param int $return_id
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

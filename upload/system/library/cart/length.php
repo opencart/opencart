@@ -73,7 +73,7 @@ class Length {
 	 * Format
 	 *
 	 * @param float  $value
-	 * @param int    $length_class_id
+	 * @param int    $length_class_id primary key of the length class record
 	 * @param string $decimal_point
 	 * @param string $thousand_point
 	 *
@@ -90,7 +90,7 @@ class Length {
 	/**
 	 * getUnit
 	 *
-	 * @param int $length_class_id
+	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return string
 	 */

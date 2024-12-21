@@ -3,14 +3,16 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Wishlist
  *
+ * Can be called from $this->load->model('account/wishlist');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Wishlist extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Wishlist
 	 *
-	 * @param int $customer_id
-	 * @param int $product_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $product_id  primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -23,8 +25,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Wishlist
 	 *
-	 * @param int $customer_id
-	 * @param int $product_id
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $product_id  primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -41,7 +43,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Wishlist
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -54,7 +56,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Wishlist
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

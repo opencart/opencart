@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Category
  *
+ * Can be called from $this->load->model('catalog/category');
+ *
  * @package Opencart\Catalog\Model\Catalog
  */
 class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Category
 	 *
-	 * @param int $category_id
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -22,7 +24,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param int $parent_id
+	 * @param int $parent_id primary key of the parent category record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -35,7 +37,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filters
 	 *
-	 * @param int $category_id
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -68,7 +70,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout ID
 	 *
-	 * @param int $category_id
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return int
 	 */

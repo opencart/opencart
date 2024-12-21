@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
- * Class StockStatus
+ * Class Stock Status
+ *
+ * Can be called from $this->load->model('localisation/stock_status');
  *
  * @package Opencart\Admin\Model\Localisation
  */
@@ -9,7 +11,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Stock Status
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return ?int
 	 */
@@ -34,8 +36,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Stock Status
 	 *
-	 * @param int                  $stock_status_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $stock_status_id primary key of the stock status record
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -52,7 +54,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stock Status
 	 *
-	 * @param int $stock_status_id
+	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return void
 	 */
@@ -65,7 +67,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stock Statuses By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -78,7 +80,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Status
 	 *
-	 * @param int $stock_status_id
+	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -91,7 +93,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Statuses
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -134,9 +136,9 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $stock_status_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $stock_status_id primary key of the stock status record
+	 * @param int                  $language_id     primary key of the language record
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 */
@@ -147,7 +149,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $stock_status_id
+	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -166,7 +168,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

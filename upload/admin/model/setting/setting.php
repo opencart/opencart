@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Setting
  *
+ * Can be called from $this->load->model('setting/setting');
+ *
  * @package Opencart\Admin\Model\Setting
  */
 class Setting extends \Opencart\System\Engine\Model {
@@ -47,7 +49,7 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * Edit Setting
 	 *
 	 * @param string               $code
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data     array of data
 	 * @param int                  $store_id
 	 *
 	 * @return void

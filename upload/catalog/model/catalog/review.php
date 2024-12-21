@@ -3,14 +3,16 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Review
  *
+ * Can be called from $this->load->model('catalog/review');
+ *
  * @package Opencart\Catalog\Model\Catalog
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Review
 	 *
-	 * @param int                  $product_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
 	 */
@@ -23,7 +25,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reviews By Product ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -46,7 +48,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reviews By Product ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int
 	 */

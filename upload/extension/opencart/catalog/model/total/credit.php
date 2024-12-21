@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Credit
  *
+ * Can be called from $this->load->model('extension/opencart/total/credit');
+ *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total
  */
 class Credit extends \Opencart\System\Engine\Model {

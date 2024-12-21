@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Location
  *
+ * Can be called from $this->load->model('localisation/location');
+ *
  * @package Opencart\Catalog\Model\Localisation
  */
 class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Location
 	 *
-	 * @param int $location_id
+	 * @param int $location_id primary key of the location record
 	 *
 	 * @return array<string, mixed>
 	 */

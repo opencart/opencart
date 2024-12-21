@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Module
  *
+ * Can be called from $this->load->model('setting/module');
+ *
  * @package Opencart\Catalog\Model\Setting
  */
 class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Module
 	 *
-	 * @param int $module_id
+	 * @param int $module_id primary key of the Module record
 	 *
 	 * @return array<mixed>
 	 */

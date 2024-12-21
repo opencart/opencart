@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Marketing;
 /**
  * Class Affiliate
  *
+ * Can be called from $this->load->model('marketing/affiliate');
+ *
  * @package Opencart\Admin\Model\Marketing
  */
 class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Affiliate
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */
@@ -20,8 +22,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Affiliate
 	 *
-	 * @param int                  $customer_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_id primary key of the customer record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -32,7 +34,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Balance
 	 *
-	 * @param int   $customer_id
+	 * @param int   $customer_id primary key of the customer record
 	 * @param float $amount
 	 *
 	 * @return void
@@ -44,7 +46,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -57,7 +59,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Affiliate
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -91,7 +93,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Affiliates
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -178,7 +180,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Affiliates
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -227,7 +229,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -250,7 +252,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */
@@ -261,7 +263,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int
 	 */

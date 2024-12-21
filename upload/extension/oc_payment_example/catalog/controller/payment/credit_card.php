@@ -96,11 +96,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			/*
-			*
-			* Credit Card charge code goes here
-			*
-			*/
+			// Credit Card charge code goes here
 
 			$response = $this->config->get('payment_credit_card_response');
 
@@ -144,7 +140,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	 * Stored
 	 *
 	 * Called when customer has selected to use stored payment method
- 	 *
+	 *
 	 * @return string
 	 */
 	public function stored(): void {
@@ -201,11 +197,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			/*
-			 *
-			 * Credit Card validation code goes here
-			 *
-			 */
+			// Credit Card validation code goes here
 
 			// Charge
 			$response_info = $this->model_extension_oc_payment_example_payment_credit_card->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $credit_card_id);

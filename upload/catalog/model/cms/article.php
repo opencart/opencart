@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Cms;
 /**
  * Class Article
  *
+ * Can be called from $this->load->model('cms/article');
+ *
  * @package Opencart\Catalog\Model\Cms
  */
 class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Article
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -22,7 +24,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Articles
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -115,7 +117,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 * @param int $rating
 	 */
 	public function editRating(int $article_id, int $rating): void {
@@ -125,7 +127,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Articles
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -179,7 +181,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout ID
 	 *
-	 * @param int $article_id
+	 * @param int $article_id primary key of the article record
 	 *
 	 * @return int
 	 */
@@ -196,8 +198,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Comment
 	 *
-	 * @param int                  $article_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $article_id primary key of the article record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
 	 */
@@ -212,8 +214,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment Rating
 	 *
-	 * @param int $article_id
-	 * @param int $article_comment_id
+	 * @param int $article_id         primary key of the article record
+	 * @param int $article_comment_id primary key of the article comment record
 	 * @param int $rating
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
@@ -223,7 +225,7 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Comment
 	 *
-	 * @param int $article_comment_id
+	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -236,8 +238,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Comments
 	 *
-	 * @param int                  $article_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $article_id primary key of the article record
+	 * @param array<string, mixed> $data       array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -301,8 +303,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Comments
 	 *
-	 * @param int                  $article_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $article_id primary key of the article record
+	 * @param array<string, mixed> $data       array of filters
 	 *
 	 * @return int
 	 */
@@ -327,8 +329,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Rating
 	 *
-	 * @param int  $article_id
-	 * @param int  $article_comment_id
+	 * @param int  $article_id         primary key of the article record
+	 * @param int  $article_comment_id primary key of the article comment record
 	 * @param bool $rating
 	 *
 	 * @return void
@@ -340,8 +342,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rating
 	 *
-	 * @param int $article_id
-	 * @param int $article_comment_id
+	 * @param int $article_id         primary key of the article record
+	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return void
 	 */
@@ -352,8 +354,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Ratings
 	 *
-	 * @param int $article_id
-	 * @param int $article_comment_id
+	 * @param int $article_id         primary key of the article record
+	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

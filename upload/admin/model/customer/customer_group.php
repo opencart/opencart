@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Customer;
 /**
  * Class Customer Group
  *
+ * Can be called from $this->load->model('customer/customer_group');
+ *
  * @package Opencart\Admin\Model\Customer
  */
 class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Group
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -28,8 +30,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Customer Group
 	 *
-	 * @param int                  $customer_group_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_group_id primary key of the customer group record
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
 	 */
@@ -46,7 +48,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Group
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
 	 */
@@ -68,7 +70,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Group
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -81,7 +83,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Groups
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -125,9 +127,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $customer_group_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $customer_group_id primary key of the customer group record
+	 * @param int                  $language_id       primary key of the language record
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
 	 */
@@ -138,7 +140,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
 	 */
@@ -149,7 +151,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -160,7 +162,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $customer_group_id
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -179,7 +181,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Free
  *
- * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
+ * Can be called from $this->load->model('extension/opencart/shipping/free');
  */
 class Free extends \Opencart\System\Engine\Model {
 	/**

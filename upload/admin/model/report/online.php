@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Report;
 /**
  * Class Online
  *
+ * Can be called from $this->load->model('report/online');
+ *
  * @package Opencart\Admin\Model\Report
  */
 class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Online
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -52,7 +54,7 @@ class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Online
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

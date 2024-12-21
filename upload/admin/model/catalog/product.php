@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Product
  *
+ * Can be called from $this->load->model('catalog/product');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -143,8 +145,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Product
 	 *
-	 * @param int                  $product_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -294,7 +296,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Copy Product
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int
 	 */
@@ -333,7 +335,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Product
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -375,8 +377,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Variant
 	 *
-	 * @param int                  $master_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $master_id primary key of the product record
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return int
 	 */
@@ -508,9 +510,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Variant
 	 *
-	 * @param int                  $master_id
-	 * @param int                  $product_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $master_id  primary key of the product record
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -641,8 +643,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Variants
 	 *
-	 * @param int                  $master_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $master_id primary key of the product record
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -779,7 +781,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $rating
 	 *
 	 * @return void
@@ -791,8 +793,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Master ID
 	 *
-	 * @param int $product_id
-	 * @param int $master_id
+	 * @param int $product_id primary key of the product record
+	 * @param int $master_id  primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -803,7 +805,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Product
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -825,7 +827,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -924,7 +926,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -979,7 +981,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Manufacturer ID
 	 *
-	 * @param int $manufacturer_id
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return int
 	 */
@@ -992,7 +994,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Tax Class ID
 	 *
-	 * @param int $tax_class_id
+	 * @param int $tax_class_id primary key of the tax class record
 	 *
 	 * @return int
 	 */
@@ -1005,7 +1007,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Stock Status ID
 	 *
-	 * @param int $stock_status_id
+	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return int
 	 */
@@ -1018,7 +1020,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Weight Class ID
 	 *
-	 * @param int $weight_class_id
+	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return int
 	 */
@@ -1031,7 +1033,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Length Class ID
 	 *
-	 * @param int $length_class_id
+	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return int
 	 */
@@ -1044,9 +1046,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
-	 * @param int                  $product_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id  primary key of the product record
+	 * @param int                  $language_id primary key of the language record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -1057,7 +1059,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1068,7 +1070,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -1079,7 +1081,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1098,7 +1100,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -1111,8 +1113,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Category
 	 *
-	 * @param int $product_id
-	 * @param int $category_id
+	 * @param int $product_id  primary key of the product record
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
 	 */
@@ -1123,7 +1125,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Categories
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1134,7 +1136,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Categories By Category ID
 	 *
-	 * @param int $category_id
+	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
 	 */
@@ -1145,7 +1147,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int>
 	 */
@@ -1164,8 +1166,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Filter
 	 *
-	 * @param int $product_id
-	 * @param int $filter_id
+	 * @param int $product_id primary key of the product record
+	 * @param int $filter_id  primary key of the filter record
 	 *
 	 * @return void
 	 */
@@ -1176,7 +1178,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Filters
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1187,7 +1189,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filters By Filter ID
 	 *
-	 * @param int $filter_id
+	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
 	 */
@@ -1198,7 +1200,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filters
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int>
 	 */
@@ -1217,10 +1219,10 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Attribute
 	 *
-	 * @param int                  $product_id   primary key of the attribute record to be fetched
-	 * @param int                  $attribute_id
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id   primary key of the product record
+	 * @param int                  $attribute_id primary key of the attribute record
+	 * @param int                  $language_id  primary key of the language record
+	 * @param array<string, mixed> $data         array of data
 	 *
 	 * @return void
 	 */
@@ -1231,8 +1233,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Attributes
 	 *
-	 * @param int $product_id   primary key of the product record to be fetched
-	 * @param int $attribute_id
+	 * @param int $product_id   primary key of the product record
+	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return void
 	 */
@@ -1249,7 +1251,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Attributes By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -1260,7 +1262,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attributes
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1287,7 +1289,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attributes By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1300,7 +1302,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Attributes By Attribute ID
 	 *
-	 * @param int $attribute_id
+	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return int
 	 */
@@ -1313,8 +1315,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
-	 * @param int                  $product_id primary key of the attribute record to be fetched
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
 	 */
@@ -1349,7 +1351,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1362,8 +1364,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
-	 * @param int $product_id        primary key of the product record to be fetched
-	 * @param int $product_option_id primary key of the option record to be fetched
+	 * @param int $product_id        primary key of the product record
+	 * @param int $product_option_id primary key of the product option record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -1376,7 +1378,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1414,7 +1416,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Options By Option ID
 	 *
-	 * @param int $option_id
+	 * @param int $option_id primary key of the option record
 	 *
 	 * @return int
 	 */
@@ -1427,10 +1429,10 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option Value
 	 *
-	 * @param int                  $product_id        primary key of the attribute record to be fetched
-	 * @param int                  $product_option_id
-	 * @param int                  $option_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id        primary key of the product record
+	 * @param int                  $product_option_id primary key of the product option record
+	 * @param int                  $option_id         primary key of the option record
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return int
 	 */
@@ -1451,7 +1453,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Option Values
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1462,8 +1464,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option Value
 	 *
-	 * @param int $product_id
-	 * @param int $product_option_value_id
+	 * @param int $product_id              primary key of the product record
+	 * @param int $product_option_value_id primary key of the product option value record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -1476,7 +1478,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option Values By Option ID
 	 *
-	 * @param int $option_id
+	 * @param int $option_id primary key of the option record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1489,7 +1491,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Option Values By Option Value ID
 	 *
-	 * @param int $option_value_id
+	 * @param int $option_value_id primary key of the option value record
 	 *
 	 * @return int
 	 */
@@ -1502,8 +1504,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Image
 	 *
-	 * @param int                  $product_id primary key of the product record to be fetched
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -1514,7 +1516,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Images
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1525,7 +1527,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Images
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1538,8 +1540,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Discount
 	 *
-	 * @param int                  $product_id primary key of the product record to be fetched
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return void
 	 */
@@ -1550,7 +1552,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Discounts
 	 *
-	 * @param int $product_id primary key of the product record to be deleted
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1561,7 +1563,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Discounts By Customer ID
 	 *
-	 * @param int $customer_group_id primary key of the customer group record to be deleted
+	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
 	 */
@@ -1572,7 +1574,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Discounts
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1585,9 +1587,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Reward
 	 *
-	 * @param int                  $product_id        primary key of the product record to be fetched
-	 * @param int                  $customer_group_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id        primary key of the product record
+	 * @param int                  $customer_group_id primary key of the customer group record
+	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
 	 */
@@ -1598,7 +1600,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1620,7 +1622,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rewards
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1639,8 +1641,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Download
 	 *
-	 * @param int $product_id  primary key of the product record to be fetched
-	 * @param int $download_id
+	 * @param int $product_id  primary key of the product record
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
 	 */
@@ -1651,7 +1653,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Downloads
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1662,7 +1664,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Downloads
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int>
 	 */
@@ -1681,7 +1683,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Downloads By Download ID
 	 *
-	 * @param int $download_id
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return int
 	 */
@@ -1694,7 +1696,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 * @param int $store_id
 	 *
 	 * @return void
@@ -1706,7 +1708,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1728,7 +1730,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stores
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int>
 	 */
@@ -1747,9 +1749,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 * @param int $store_id
-	 * @param int $layout_id
+	 * @param int $layout_id  primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -1760,7 +1762,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1771,7 +1773,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
 	 */
@@ -1793,7 +1795,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, string>
 	 */
@@ -1812,7 +1814,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int>
 	 */
@@ -1831,7 +1833,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts By Layout ID
 	 *
-	 * @param int $layout_id
+	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int
 	 */
@@ -1844,14 +1846,15 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Related
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
-	 * @param int $related_id
+	 * @param int $product_id primary key of the product record
+	 * @param int $related_id primary key of the product related record
 	 *
 	 * @return void
 	 */
 	public function addRelated(int $product_id, int $related_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_related` WHERE `product_id` = '" . (int)$product_id . "' AND `related_id` = '" . (int)$related_id . "'");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_related` SET `product_id` = '" . (int)$product_id . "', `related_id` = '" . (int)$related_id . "'");
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_related` WHERE `product_id` = '" . (int)$related_id . "' AND `related_id` = '" . (int)$product_id . "'");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_related` SET `product_id` = '" . (int)$related_id . "', `related_id` = '" . (int)$product_id . "'");
 	}
@@ -1859,7 +1862,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Related
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1871,7 +1874,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Related
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int>
 	 */
@@ -1890,8 +1893,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription
 	 *
-	 * @param int                  $product_id primary key of the product record to be fetched
-	 * @param array<string, mixed> $data
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
 	 */
 	public function addSubscription(int $product_id, array $data): void {
 		$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$data['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "'");
@@ -1904,7 +1907,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1915,9 +1918,9 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
-	 * @param int $subscription_plan_id
-	 * @param int $customer_group_id
+	 * @param int $product_id           primary key of the product record
+	 * @param int $subscription_plan_id primary key of the product subscription plan record
+	 * @param int $customer_group_id    primary key of the customer group record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -1930,7 +1933,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -1943,7 +1946,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions By Subscription Plan ID
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the product subscription plan record
 	 *
 	 * @return void
 	 */
@@ -1954,7 +1957,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions By Subscription Plan ID
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the product subscription plan record
 	 *
 	 * @return int
 	 */
@@ -1967,7 +1970,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -1978,7 +1981,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -2001,7 +2004,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int
 	 */

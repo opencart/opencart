@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Currency
  *
+ * Can be called from $this->load->model('localisation/currency');
+ *
  * @package Opencart\Catalog\Model\Localisation
  */
 class Currency extends \Opencart\System\Engine\Model {
@@ -23,7 +25,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency
 	 *
-	 * @param int $currency_id
+	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -36,7 +38,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency By Code
 	 *
-	 * @param string $currency
+	 * @param string $currency primary key of the currency record
 	 *
 	 * @return array<string, mixed>
 	 */

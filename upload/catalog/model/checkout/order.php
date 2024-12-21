@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Order
  *
+ * Can be called from $this->load->model('checkout/order');
+ *
  * @package Opencart\Catalog\Model\Checkout
  */
 class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -38,8 +40,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Order
 	 *
-	 * @param int                  $order_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $order_id primary key of the order record
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -82,8 +84,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Transaction ID
 	 *
-	 * @param int    $order_id
-	 * @param string $transaction_id
+	 * @param int    $order_id       primary key of the order record
+	 * @param string $transaction_id primary key of the transaction record
 	 *
 	 * @return void
 	 */
@@ -94,8 +96,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Order Status ID
 	 *
-	 * @param int $order_id
-	 * @param int $order_status_id
+	 * @param int $order_id        primary key of the order record
+	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return void
 	 */
@@ -106,7 +108,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment
 	 *
-	 * @param int    $order_id
+	 * @param int    $order_id primary key of the order record
 	 * @param string $comment
 	 *
 	 * @return void
@@ -118,7 +120,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -144,7 +146,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -198,8 +200,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
-	 * @param int                  $order_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $order_id primary key of the order record
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return int
 	 */
@@ -225,8 +227,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Products
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return void
 	 */
@@ -240,8 +242,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Product
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -254,7 +256,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -267,9 +269,9 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
-	 * @param int                  $order_id
-	 * @param int                  $order_product_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $order_id         primary key of the order record
+	 * @param int                  $order_product_id primary key of the order product record
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -280,8 +282,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return void
 	 */
@@ -292,8 +294,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -306,9 +308,9 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription
 	 *
-	 * @param int                  $order_id
-	 * @param int                  $order_product_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $order_id         primary key of the order record
+	 * @param int                  $order_product_id primary key of the order product record
+	 * @param array<string, mixed> $data             array of data
 	 *
 	 * @return void
 	 */
@@ -319,8 +321,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return void
 	 */
@@ -331,8 +333,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
-	 * @param int $order_id
-	 * @param int $order_product_id
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -345,7 +347,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -358,7 +360,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Subscription ID
 	 *
-	 * @param int $subscription_id
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int
 	 */
@@ -371,8 +373,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Total
 	 *
-	 * @param int                  $order_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $order_id primary key of the order record
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -383,7 +385,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Totals
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */
@@ -394,7 +396,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -407,8 +409,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
-	 * @param int    $order_id
-	 * @param int    $order_status_id
+	 * @param int    $order_id        primary key of the order record
+	 * @param int    $order_status_id primary key of the order status record
 	 * @param string $comment
 	 * @param bool   $notify
 	 * @param bool   $override
@@ -622,7 +624,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order Histories
 	 *
-	 * @param int $order_id
+	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
 	 */

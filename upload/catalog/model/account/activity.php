@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Activity
  *
+ * Can be called from $this->load->model('account/activity');
+ *
  * @package Opencart\Catalog\Model\Account
  */
 class Activity extends \Opencart\System\Engine\Model {
@@ -10,7 +12,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	 * Add Activity
 	 *
 	 * @param string               $key
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */
@@ -27,7 +29,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Activities
 	 *
-	 * @param int $customer_id
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 */

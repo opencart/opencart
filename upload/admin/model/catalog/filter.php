@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter
  *
+ * Can be called from $this->load->model('catalog/filter');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -30,8 +32,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Filter
 	 *
-	 * @param int                  $filter_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $filter_id primary key of the filter record
+	 * @param array<string, mixed> $data      array of data
 	 */
 	public function editFilter(int $filter_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
@@ -48,7 +50,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filter
 	 *
-	 * @param int $filter_id
+	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
 	 */
@@ -71,7 +73,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filter
 	 *
-	 * @param int $filter_id
+	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -84,7 +86,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filters
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -133,7 +135,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */
@@ -152,7 +154,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters By Filter Group ID
 	 *
-	 * @param int $filter_group_id
+	 * @param int $filter_group_id primary key of the filter record
 	 *
 	 * @return int
 	 */
@@ -165,9 +167,9 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Add Description
 	 *
-	 * @param int                  $filter_id   primary key of the attribute record to be fetched
-	 * @param int                  $language_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $filter_id   primary key of the filter record
+	 * @param int                  $language_id primary key of the language record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -178,7 +180,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 *	Delete Descriptions
 	 *
-	 * @param int $filter_id
+	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
 	 */
@@ -189,7 +191,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -200,7 +202,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * @param int $filter_id
+	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return array<int, array<string, string>>
 	 */
@@ -219,7 +221,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>>
 	 */

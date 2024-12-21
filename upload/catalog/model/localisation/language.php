@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Language
  *
+ * Can be called from $this->load->model('localisation/language');
+ *
  * @package Opencart\Catalog\Model\Localisation
  */
 class Language extends \Opencart\System\Engine\Model {
@@ -14,7 +16,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Language
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */

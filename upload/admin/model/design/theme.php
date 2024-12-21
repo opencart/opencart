@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Design;
 /**
  * Class Theme
  *
+ * Can be called from $this->load->model('design/theme');
+ *
  * @package Opencart\Admin\Model\Design
  */
 class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Theme
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -22,8 +24,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Theme
 	 *
-	 * @param int                  $theme_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $theme_id primary key of the theme record
+	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
 	 */
@@ -34,7 +36,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Theme
 	 *
-	 * @param int $theme_id
+	 * @param int $theme_id primary key of the theme record
 	 *
 	 * @return void
 	 */
@@ -56,7 +58,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Theme
 	 *
-	 * @param int $theme_id
+	 * @param int $theme_id primary key of the theme record
 	 *
 	 * @return array<string, mixed>
 	 */

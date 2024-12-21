@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Review
  *
+ * Can be called from $this->load->model('catalog/review');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Review
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -31,8 +33,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Review
 	 *
-	 * @param int                  $review_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $review_id primary key of the review record
+	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
 	 */
@@ -50,7 +52,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Review
 	 *
-	 * @param int $review_id
+	 * @param int $review_id primary key of the review record
 	 *
 	 * @return void
 	 */
@@ -72,7 +74,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reviews By Product ID
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
 	 */
@@ -85,7 +87,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Review
 	 *
-	 * @param int $review_id
+	 * @param int $review_id primary key of the review record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -98,7 +100,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Rating
 	 *
-	 * @param int $product_id primary key of the product record to be fetched
+	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int
 	 */
@@ -115,7 +117,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reviews
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -182,7 +184,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reviews
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Latest
  *
+ * Can be called from $this->load->model('extension/opencart/module/latest');
+ *
  * @package Opencart\Catalog\Model\Extension\Opencart\Module
  */
 class Latest extends \Opencart\Catalog\Model\Catalog\Product {

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
- * Class ProductViewed
+ * Class Product Viewed
+ *
+ * Can be called from $this->load->model('extension/opencart/report/product_viewed');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
  */
@@ -31,7 +33,7 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Report
 	 *
-	 * @param int $product_id
+	 * @param int $product_id primary key of the product record
 	 * @param int $viewed
 	 *
 	 * @return void

@@ -3,13 +3,15 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Currency
  *
+ * Can be called from $this->load->model('localisation/currency');
+ *
  * @package Opencart\Admin\Model\Localisation
  */
 class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Currency
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
 	 */
@@ -24,8 +26,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Currency
 	 *
-	 * @param int                  $currency_id
-	 * @param array<string, mixed> $data
+	 * @param int                  $currency_id primary key of the currency record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 */
@@ -52,7 +54,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Currency
 	 *
-	 * @param int $currency_id
+	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return void
 	 */
@@ -65,7 +67,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency
 	 *
-	 * @param int $currency_id
+	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -78,7 +80,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency By Code
 	 *
-	 * @param string $currency
+	 * @param string $currency primary key of the currency record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -91,7 +93,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currencies
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */

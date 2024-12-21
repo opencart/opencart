@@ -3,13 +3,15 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Subscription Plan
  *
+ * Can be called from $this->load->model('catalog/subscription_plan');
+ *
  * @package Opencart\Catalog\Model\Catalog
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plan
 	 *
-	 * @param int $subscription_plan_id
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -22,7 +24,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plans
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

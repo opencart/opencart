@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Design;
 /**
  * Class Seo Url
  *
+ * Can be called from $this->load->model('design/seo_url');
+ *
  * @package Opencart\Admin\Model\Design
  */
 class SeoUrl extends \Opencart\System\Engine\Model {
@@ -27,7 +29,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Seo Url
 	 *
-	 * @param int    $seo_url_id
+	 * @param int    $seo_url_id  primary key of the Seo Url record
 	 * @param string $key
 	 * @param string $value
 	 * @param string $keyword
@@ -44,7 +46,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Url
 	 *
-	 * @param int $seo_url_id
+	 * @param int $seo_url_id primary key of the Seo Url record
 	 *
 	 * @return void
 	 */
@@ -58,7 +60,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @param string $key
 	 * @param string $value
 	 * @param int    $store_id
-	 * @param int    $language_id
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -79,7 +81,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Urls By Language ID
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
 	 */
@@ -101,7 +103,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Url
 	 *
-	 * @param int $seo_url_id
+	 * @param int $seo_url_id primary key of the Seo Url record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -117,7 +119,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @param string $key
 	 * @param string $value
 	 * @param int    $store_id
-	 * @param int    $language_id
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -142,7 +144,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $keyword
 	 * @param int    $store_id
-	 * @param int    $language_id
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -161,7 +163,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -268,7 +270,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls By Language Id
 	 *
-	 * @param int $language_id
+	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -281,7 +283,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Seo Urls
 	 *
-	 * @param array<string, mixed> $data
+	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int
 	 */

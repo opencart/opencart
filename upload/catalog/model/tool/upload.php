@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Tool;
 /**
  * Class Upload
  *
+ * Can be called from $this->load->model('tool/upload');
+ *
  * @package Opencart\Catalog\Model\Tool
  */
 class Upload extends \Opencart\System\Engine\Model {

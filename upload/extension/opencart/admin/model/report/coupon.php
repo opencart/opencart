@@ -56,7 +56,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of coupon records
 	 */
 	public function getTotalCoupons(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT `coupon_id`) AS `total` FROM `" . DB_PREFIX . "coupon_history`";

@@ -26,7 +26,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> ip records that have api ID
 	 */
 	public function getIps(int $api_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
@@ -40,6 +40,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 * @param int    $api_id primary key of the Api record
 	 * @param string $call
 	 * @param string $ip
+	 * 
+	 * @return void
 	 */
 	public function addHistory($api_id, $call, $ip): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_history` SET `api_id` = '" . (int)$api_id . "', `call` = '" . $this->db->escape($call) . "', `ip` = '" . $this->db->escape($ip) . "', `date_added` = NOW()");

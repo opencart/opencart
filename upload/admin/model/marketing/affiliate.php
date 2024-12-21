@@ -61,7 +61,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> affiliate record that has customer ID
 	 */
 	public function getAffiliate(int $customer_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `ca`.`custom_field`, `ca`.`status` FROM `" . DB_PREFIX . "customer_affiliate` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`) WHERE `ca`.`customer_id` = '" . (int)$customer_id . "'");
@@ -95,7 +95,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> affiliate records
 	 */
 	public function getAffiliates(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `name`, `ca`.`status` FROM `" . DB_PREFIX . "customer_affiliate` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`)";
@@ -182,7 +182,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of affiliate records
 	 */
 	public function getTotalAffiliates(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_affiliate` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`)";
@@ -233,7 +233,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> report records that have customer ID
 	 */
 	public function getReports(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -265,7 +265,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of report records
 	 */
 	public function getTotalReports(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");

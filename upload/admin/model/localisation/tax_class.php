@@ -73,7 +73,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> tax class record that has tax class ID
 	 */
 	public function getTaxClass(int $tax_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
@@ -86,7 +86,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> tax class records
 	 */
 	public function getTaxClasses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "tax_class` ORDER BY `title`";
@@ -127,7 +127,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Tax Classes
 	 *
-	 * @return int
+	 * @return int total number of tax class records
 	 */
 	public function getTotalTaxClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_class`");
@@ -163,7 +163,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> tax rule records that have tax class ID
 	 */
 	public function getTaxRules(int $tax_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "' ORDER BY `priority` ASC");
@@ -176,7 +176,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
-	 * @return int
+	 * @return int total number of tax rule records that have tax rate ID
 	 */
 	public function getTotalTaxRulesByTaxRateId(int $tax_rate_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT `tax_class_id`) AS `total` FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");

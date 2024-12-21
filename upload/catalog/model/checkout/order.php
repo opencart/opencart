@@ -148,7 +148,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> order record that has order ID
 	 */
 	public function getOrder(int $order_id): array {
 		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = `o`.`language_id`) AS order_status FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
@@ -245,7 +245,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> product record that has order ID, order product ID
 	 */
 	public function getProduct(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -258,7 +258,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> product records that have order ID
 	 */
 	public function getProducts(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -297,7 +297,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> option records that have order ID, order product ID
 	 */
 	public function getOptions(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -336,7 +336,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> subscription record that have order ID, order product ID
 	 */
 	public function getSubscription(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -349,7 +349,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> subscription records that have order ID
 	 */
 	public function getSubscriptions(int $order_id): array {
 		$query = $this->db->query("SELECT *, os.price, `os`.`tax` FROM `" . DB_PREFIX . "order_subscription` `os` LEFT JOIN `" . DB_PREFIX . "order_product` `op` ON(`os`.`order_product_id` = `op`.`order_product_id`) WHERE `os`.`order_id` = '" . (int)$order_id . "'");
@@ -362,7 +362,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
-	 * @return int
+	 * @return int total number of order that have subscription ID
 	 */
 	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
@@ -398,7 +398,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> total records that have order ID
 	 */
 	public function getTotals(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order` ASC");

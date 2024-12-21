@@ -69,7 +69,7 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $address_id  primary key of the address record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> address record that has customer ID, address ID
 	 */
 	public function getAddress(int $customer_id, int $address_id): array {
 		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$customer_id . "'");
@@ -132,7 +132,7 @@ class Address extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> address records that have customer ID
 	 */
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
@@ -195,7 +195,7 @@ class Address extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of address records that have customer ID
 	 */
 	public function getTotalAddresses(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");

@@ -76,7 +76,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of return records
 	 */
 	public function getTotalReturns(array $data = []): int {
 		if (!empty($data['filter_group'])) {

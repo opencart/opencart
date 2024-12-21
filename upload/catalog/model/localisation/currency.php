@@ -27,7 +27,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $currency_id primary key of the currency record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> currency record that has currency ID
 	 */
 	public function getCurrency(int $currency_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
@@ -51,7 +51,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currencies
 	 *
-	 * @return array<string, array<string, mixed>>
+	 * @return array<string, array<string, mixed>> currency records
 	 */
 	public function getCurrencies(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "currency` WHERE `status` = '1' ORDER BY `title` ASC";

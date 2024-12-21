@@ -64,7 +64,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $download_id primary key of the download record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> download record that has download ID
 	 */
 	public function getDownload(int $download_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "download` `d` LEFT JOIN `" . DB_PREFIX . "download_description` `dd` ON (`d`.`download_id` = `dd`.`download_id`) WHERE `d`.`download_id` = '" . (int)$download_id . "' AND `dd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -77,7 +77,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> download records
 	 */
 	public function getDownloads(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "download` `d` LEFT JOIN `" . DB_PREFIX . "download_description` `dd` ON (`d`.`download_id` = `dd`.`download_id`) WHERE `dd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -121,8 +121,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
-	 *
+	 * Add Description
+	 * 
 	 * @param int                  $download_id primary key of the download record
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
@@ -134,8 +134,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
-	 *
+	 * Delete Descriptions
+	 * 
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
@@ -160,7 +160,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $download_id primary key of the download record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have download ID
 	 */
 	public function getDescriptions(int $download_id): array {
 		$download_description_data = [];
@@ -179,7 +179,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -190,7 +190,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Downloads
 	 *
-	 * @return int
+	 * @return int total number of download records
 	 */
 	public function getTotalDownloads(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download`");
@@ -205,7 +205,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> report records that have download ID
 	 */
 	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -237,7 +237,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $download_id primary key of the download record
 	 *
-	 * @return int
+	 * @return int total number of report records that have download ID
 	 */
 	public function getTotalReports(int $download_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");

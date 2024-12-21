@@ -11,7 +11,7 @@ class Cart extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> product records
 	 */
 	public function getProducts(): array {
 		$this->load->language('checkout/cart');

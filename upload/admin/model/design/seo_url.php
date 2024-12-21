@@ -105,7 +105,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $seo_url_id primary key of the Seo Url record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> seo url record that has seo url ID
 	 */
 	public function getSeoUrl(int $seo_url_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
@@ -165,7 +165,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> seo url records
 	 */
 	public function getSeoUrls(array $data = []): array {
 		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `su`.`store_id`) AS `store`, (SELECT `name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `su`.`language_id`) AS `language` FROM `" . DB_PREFIX . "seo_url` `su`";
@@ -259,7 +259,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $store_id
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> seo url records that have store ID
 	 */
 	public function getSeoUrlsByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -272,7 +272,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> seo url records that have language ID
 	 */
 	public function getSeoUrlsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -285,7 +285,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of seo url records
 	 */
 	public function getTotalSeoUrls(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "seo_url`";

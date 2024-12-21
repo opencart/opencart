@@ -11,7 +11,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Extensions
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> extension records
 	 */
 	public function getExtensions(): array {
 		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");

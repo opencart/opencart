@@ -13,7 +13,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_status_id primary key of the order status record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> order status record that has order status ID
 	 */
 	public function getOrderStatus(int $order_status_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -24,7 +24,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order Statuses
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> order status records
 	 */
 	public function getOrderStatuses(): array {
 		$sql = "SELECT `order_status_id`, `name` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";

@@ -13,7 +13,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $download_id primary key of the download record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> download record that has download ID
 	 */
 	public function getDownload(int $download_id): array {
 		$implode = [];
@@ -39,7 +39,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> download records
 	 */
 	public function getDownloads(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
@@ -70,7 +70,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Downloads
 	 *
-	 * @return int
+	 * @return int total number of download records
 	 */
 	public function getTotalDownloads(): int {
 		$implode = [];

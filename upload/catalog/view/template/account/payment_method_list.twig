@@ -1,29 +1,7 @@
 {% if payment_methods %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>{{ column_payment_method }}</th>
-          <th></th>
-          <th>{{ column_type }}</th>
-          <th>{{ column_date_expire }}</th>
-          <th class="text-end">{{ column_action }}</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tbody>
-        {% for payment_method in payment_methods %}
-          <tr>
-            <td>{{ payment_method.name }}</td>
-            <td>{{ payment_method.image }}</td>
-            <td>{{ payment_method.type }}</td>
-            <td>{{ payment_method.date_expire }}</td>
-            <td class="text-end"><a href="{{ payment_method.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+{% for payment_method in payment_methods %}
+{{ payment_method }}
+{% endfor %}
 {% else %}
-  <p>{{ text_no_results }}</p>
+<p>{{ text_no_results }}</p>
 {% endif %}

@@ -48,6 +48,40 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $method_data;
 	}
 
+	/*
+	 *
+	 */
+	public function getStored(int $customer_id): array {
+		$this->load->language('extension/oc_payment_example/payment/credit_card');
+
+		$method_data = [];
+
+		if ($this->config->get('payment_credit_card_status')) {
+			$option_data = [];
+
+			$results = $this->getCreditCards($this->customer->getId());
+
+			foreach ($results as $result) {
+				$option_data[$result['credit_card_id']] = [
+					'code' => 'credit_card.' . $result['credit_card_id'],
+					'name' => $this->language->get('text_card_use') . ' ' . $result['card_number']
+				];
+			}
+
+			$method_data = [
+				'code'       => 'credit_card',
+				'name'       => $this->language->get('heading_title'),
+				'option'     => $option_data,
+				'sort_order' => $this->config->get('payment_credit_card_sort_order')
+			];
+		}
+
+		return $method_data;
+	}
+
+	/*
+	 *
+	 */
 	public function getCreditCard(int $customer_id, int $credit_card_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
 
@@ -66,10 +100,6 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	public function deleteCreditCard(int $customer_id, int $credit_card_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
-	}
-
-	public function getStored(int $customer_id): array {
-		return $this->getCreditCards($customer_id);
 	}
 
 	public function charge(int $customer_id, int $order_id, float $amount, string $code): array {

@@ -370,7 +370,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Subscription Options
+	 * Delete Options
 	 *
 	 * @param int $subscription_id
 	 *

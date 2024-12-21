@@ -1,0 +1,71 @@
+<h2>{{ heading_title }}</h2>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_payment_method }}</th>
+        <th></th>
+        <th>{{ column_type }}</th>
+        <th>{{ column_date_expire }}</th>
+        <th class="text-end">{{ column_action }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if payment_methods %}
+        {% for payment_method in payment_methods %}
+          <tr>
+            <td>{{ payment_method.name }}</td>
+            <td>{{ payment_method.image }}</td>
+            <td>{{ payment_method.type }}</td>
+            <td>{{ payment_method.date_expire }}</td>
+            <td class="text-end"><a href="{{ payment_method.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="5" class="text-center">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4"></td>
+        <td class="text-end"><button type="button" class="btn btn-primary">{{ button_add }}</button></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<script type="text/javascript"><!--
+$('#payment-method').on('click', '.btn-danger', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method').load('index.php?route=account/payment_method.list&customer_token={{ customer_token }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

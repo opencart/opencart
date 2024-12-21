@@ -66,7 +66,7 @@ class Cart {
 	/**
 	 * Get Products
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> product records
 	 */
 	public function getProducts(): array {
 		if (!$this->data) {

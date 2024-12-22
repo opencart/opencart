@@ -314,7 +314,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

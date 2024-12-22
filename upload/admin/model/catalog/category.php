@@ -718,7 +718,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $category_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

@@ -334,7 +334,6 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 
 			$this->model_catalog_category->addPath($category['category_id'], $category['category_id'], $level);
-
 			$this->model_catalog_category->repairCategories($category['category_id']);
 		}
 	}

@@ -76,22 +76,27 @@ class Layout extends \Opencart\System\Engine\Model {
 		$this->deleteRoutes($layout_id);
 		$this->deleteModules($layout_id);
 
+		// Category
 		$this->load->model('catalog/category');
 
 		$this->model_catalog_category->deleteLayoutsByLayoutId($layout_id);
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteLayoutsByLayoutId($layout_id);
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$this->model_catalog_information->deleteLayoutsByLayoutId($layout_id);
 
+		// CMS Article
 		$this->load->model('cms/article');
 
 		$this->model_cms_article->deleteLayoutsByLayoutId($layout_id);
 
+		// CMS Topic
 		$this->load->model('cms/topic');
 
 		$this->model_cms_topic->deleteLayoutsByLayoutId($layout_id);

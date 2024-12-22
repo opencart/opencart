@@ -72,37 +72,45 @@ class Store extends \Opencart\System\Engine\Model {
 		$this->model_catalog_category->deleteLayoutsByStoreId($store_id);
 		$this->model_catalog_category->deleteStoresByStoreId($store_id);
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$this->model_catalog_information->deleteLayoutsByStoreId($store_id);
 		$this->model_catalog_information->deleteStoresByStoreId($store_id);
 
+		// Manufacturer
 		$this->load->model('catalog/manufacturer');
 
 		$this->model_catalog_manufacturer->deleteLayoutsByStoreId($store_id);
 		$this->model_catalog_manufacturer->deleteStoresByStoreId($store_id);
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteLayoutsByStoreId($store_id);
 		$this->model_catalog_product->deleteStoresByStoreId($store_id);
 
+		// GDPR
 		$this->load->model('customer/gdpr');
 
 		$this->model_customer_gdpr->deleteGdprsByStoreId($store_id);
 
+		// Theme
 		$this->load->model('design/theme');
 
 		$this->model_design_theme->deleteThemesByStoreId($store_id);
 
+		// Translation
 		$this->load->model('design/translation');
 
 		$this->model_design_translation->deleteTranslationsByStoreId($store_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByStoreId($store_id);
 
+		// Setting
 		$this->load->model('setting/setting');
 
 		$this->model_setting_setting->deleteSettingsByStoreId($store_id);

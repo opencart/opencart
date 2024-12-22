@@ -134,10 +134,12 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->model_checkout_order->deleteTotals($order_id);
 		$this->model_checkout_order->deleteHistories($order_id);
 
+		// Transaction
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionsByOrderId($order_id);
 
+		// Reward
 		$this->load->model('account/reward');
 
 		$this->model_account_reward->deleteRewardsByOrderId($order_id);

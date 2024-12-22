@@ -68,6 +68,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_subscription_plan->deleteDescriptions($subscription_plan_id);
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteSubscriptionsBySubscriptionPlanId($subscription_plan_id);

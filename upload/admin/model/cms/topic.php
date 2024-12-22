@@ -100,6 +100,7 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->model_cms_topic->deleteDescriptions($topic_id);
 		$this->model_cms_topic->deleteStores($topic_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);

@@ -278,14 +278,17 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->model_catalog_category->deleteStores($category_id);
 		$this->model_catalog_category->deleteLayouts($category_id);
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteCategoriesByCategoryId($category_id);
 
+		// Coupon
 		$this->load->model('marketing/coupon');
 
 		$this->model_marketing_coupon->deleteCategoriesByCategoryId($category_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$path = $this->model_catalog_category->getPath($category_id);

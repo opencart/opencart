@@ -34,6 +34,7 @@ class Order extends \Opencart\System\Engine\Model {
 		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry($order_query->row['payment_country_id']);
@@ -46,6 +47,7 @@ class Order extends \Opencart\System\Engine\Model {
 				$payment_iso_code_3 = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($order_query->row['payment_zone_id']);
@@ -82,6 +84,7 @@ class Order extends \Opencart\System\Engine\Model {
 				$reward += $product['reward'];
 			}
 
+			// Customer
 			$this->load->model('customer/customer');
 
 			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
@@ -92,6 +95,7 @@ class Order extends \Opencart\System\Engine\Model {
 				$affiliate = '';
 			}
 
+			// Language
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguage($order_query->row['language_id']);

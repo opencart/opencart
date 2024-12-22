@@ -42,8 +42,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
-		print_r($results);
-
 		foreach ($results as $result) {
 			//if (($result['trial_status'] && $result['trial_remaining']) || (!$result['duration'] && $result['remaining'])) {
 			$error = [];
@@ -151,13 +149,23 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!isset($error['payment_method'])) {
-				$store->session->data['payment_method'] = $result['payment_method'];
+				// Validate if payment extension installed
+				$store->load->model('setting/extension');
+
+				$extension_info = $store->model_setting_extension->getExtensionByCode('payment', oc_substr($result['payment_method']['code'], 0, strpos($result['payment_method']['code'], '.')));
+
+				if (!$extension_info) {
+					$store->session->data['payment_method'] = $result['payment_method'];
+				} else {
+					$error['extension'] = $this->language->get('error_extension');
+				}
 			}
 
 			// Validate Products
+			$store->load->model('checkout/subscription');
 			$store->load->model('catalog/product');
 
-			$products = $this->model_checkout_subscription->getProducts($result['subscription_id']);
+			$products = $store->model_checkout_subscription->getProducts($result['subscription_id']);
 
 			foreach ($products as $product) {
 				$product_info = $store->model_catalog_product->getProduct($product['product_id']);
@@ -293,9 +301,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				foreach ($products as $product) {
 					$order_data['products'][] = [
-							'subscription' => [],
-							'tax'          => $this->tax->getTax($price, $product['tax_class_id'])
-						] + $product;
+						'subscription' => [],
+						'tax'          => $store->tax->getTax($price, $product['tax_class_id'])
+					] + $product;
 				}
 
 				// Order Totals
@@ -348,105 +356,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
-				// Validate if payment extension installed
-				if (isset($this->session->data['payment_method'])) {
-					$code = oc_substr($this->session->data['payment_method']['code'], 0, strpos($this->session->data['payment_method']['code'], '.'));
-				} else {
-					$code = '';
-				}
-
-				$this->load->model('setting/extension');
-
-				$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
-
-				if ($extension_info) {
-					// Load payment method used by the subscription
-					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
-
-					$key = 'model_extension_' . $extension_info['extension'] . '_payment_' . $extension_info['code'];
-
-					echo '$key';
-
-					if (isset($store->{$key}->charge)) {
-
-						echo '$this->{$key}->charge';
-
-						// Process payment
-						$response_info = $store->{$key}->charge($this->customer->getId(), $store->session->data['order_id'], $total, $order_data['payment_method']['code']);
-
-						print_r($response_info);
-
-						if (isset($response_info['order_status_id'])) {
-							$order_status_id = $response_info['order_status_id'];
-						} else {
-							$order_status_id = 0;
-						}
-
-						if ($response_info['message']) {
-							$message = $response_info['message'];
-						} else {
-							$message = '';
-						}
-
-						$store->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id, $message, false);
-						$store->model_checkout_order->addHistory($store->session->data['order_id'], $order_status_id);
-
-						// If payment order status is active or processing
-						if (!in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
-							$remaining = 0;
-							$date_next = '';
-
-							if ($result['trial_status'] && $result['trial_remaining'] > 1) {
-								$remaining = $result['trial_remaining'] - 1;
-								$date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
-
-								$this->model_account_subscription->editTrialRemaining($result['subscription_id'], $remaining);
-							} elseif ($result['duration'] && $result['remaining']) {
-								$remaining = $result['remaining'] - 1;
-								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
-
-								// If duration make sure there is remaining
-								$this->model_account_subscription->editRemaining($result['subscription_id'], $remaining);
-							} elseif (!$result['duration']) {
-								// If duration is unlimited
-								$date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
-							}
-
-							if ($date_next) {
-								$store->load->model('checkout/subscription');
-
-								$store->model_checkout_subscription->editDateNext($result['subscription_id'], $date_next);
-							}
-
-							$store->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
-
-						} else {
-
-							// If payment failed change subscription history to failed
-							$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $message);
-						}
-
-					} else {
-
-						// Add subscription history failed if no charge method
-						$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_method'));
-					}
-
-				} else {
-
-
-					// Add subscription history failed if no charge method
-					$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_method'));
-
-				}
-
+				$store->load->controller('extension/' . $extension_info['extension'] . '/cron/' . $extension_info['code']);
 			} else {
-				// Errors
-				$this->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('text_log'));
+			// Add subscription history failed if payment method for cron didn't exist
+				$store->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('text_log'));
 
 				// Log errors
 				foreach ($error as $key => $value) {
-					$this->model_checkout_subscription->addLog($result['subscription_id'], $key, $value);
+					$store->model_checkout_subscription->addLog($result['subscription_id'], $key, $value);
 				}
 			}
 

@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\OcPaymentExample\Payment;
+/**
+ * Credit Card Model
+ */
 class CreditCard extends \Opencart\System\Engine\Model {
+	/*
+	 * Get the payment methods
+	 */
 	public function getMethods(array $address): array {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
@@ -80,23 +86,28 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function charge(int $customer_id, int $order_id, float $amount, string $code): array {
-		$part = explode('.', $code);
+	/*
+	 * Charge the customer's credit card
+	 */
+	public function charge(int $customer_id, array $data): bool {
+		$pos = strpos($data['payment_method']['code'], '.');
 
-		//$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card` SET `customer_id` = '" . (int)$customer_id . "', `card_name` = '" . $this->db->escape($data['card_name']) . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `card_expire_month` = '" . $this->db->escape($data['card_expire_month']) . "', `card_expire_year` = '" . $this->db->escape($data['card_expire_year']) . "', `card_cvv` = '" . $this->db->escape($data['card_cvv']) . "', `date_added` = NOW()");
-
-		if ($this->config->get('payment_credit_card_response')) {
-			$response_data = [
-				'order_status_id' => $this->config->get('payment_credit_card_approved_status_id'),
-				'message'         => ''
-			];
+		if ($pos !== false) {
+			$credit_card_id = oc_substr($data['payment_method']['code'], $pos + 1);
 		} else {
-			$response_data = [
-				'order_status_id' => $this->config->get('payment_credit_card_failed_status_id'),
-				'message'         => ''
-			];
+			return false;
 		}
 
-		return $response_data;
+		$credit_card_info = $this->getCreditCard($customer_id, $credit_card_id);
+
+		if ($credit_card_info) {
+			$status = $this->config->get('payment_credit_card_response');
+		} else {
+			$status = false;
+		}
+
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card_report` SET `customer_id` = '" . (int)$customer_id . "', `credit_card_id` = '" . (int)$credit_card_id . "', `order_id` = '" . (int)$data['order_id'] . "', `card_number` = '" . $this->db->escape($credit_card_info['card_number']) . "', `type` = '" . $this->db->escape($credit_card_info['type']) . "', `amount` = '" . $this->db->escape($data['total']) . "', `response` = '" . (bool)$status . "', `date_added` = NOW()");
+
+		return $status;
 	}
 }

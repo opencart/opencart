@@ -25,7 +25,6 @@
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
-
               <fieldset>
                 <legend>{{ text_developer }}</legend>
                 <div class="row mb-3">
@@ -34,7 +33,7 @@
                     <select name="payment_credit_card_response" id="input-response" class="form-select">
                       <option value="1"{% if payment_credit_card_response %} selected{% endif %}>{{ text_approve }}</option>
                       <option value="0"{% if not payment_credit_card_response %} selected{% endif %}>{{ text_deny }}</option>
-                    </select>
+                    </select> <div class="form-text">{{ help_response }}</div>
                   </div>
                 </div>
               </fieldset>

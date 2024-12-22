@@ -211,21 +211,14 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Credit Card validation code goes here
-
-			// Charge
-			$response_info = $this->model_extension_oc_payment_example_payment_credit_card->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $credit_card_id);
+			$this->load->model('checkout/order');
 
 			// Set Credit Card response
-			if ($response_info) {
-				$this->load->model('checkout/order');
-
+			if ($this->model_extension_oc_payment_example_payment_credit_card->charge($this->customer->getId(), $order_info)) {
 				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_approved_status_id'), '', true);
 
 				$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
 			} else {
-				$this->load->model('checkout/order');
-
 				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_failed_status_id'), '', true);
 
 				$json['redirect'] = $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true);

@@ -54,6 +54,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/oc_payment_example/payment/credit_card', $data));
 	}
 
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
@@ -75,6 +80,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * Install
+	 *
+	 * @return void
+	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/payment')) {
 			$this->load->model('extension/oc_payment_example/payment/credit_card');
@@ -83,6 +93,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Uninstall
+	 *
+	 * @return void
+	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/payment')) {
 			$this->load->model('extension/oc_payment_example/payment/credit_card');
@@ -91,12 +106,22 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Report
+	 *
+	 * @return void
+	 */
 	public function report(): void {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
 		$this->response->setOutput($this->getReport());
 	}
 
+	/**
+	 * Get Report
+	 *
+	 * @return string
+	 */
 	public function getReport(): string {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -112,14 +137,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['reports'][] = [
-				'order_id'   => $result['order_id'],
-				'card'       => $result['card'],
+				'card_type'  => $this->language->get('text_' . $result['type']),
 				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-				'response'   => $result['response'],
-				'status'     => $result['order_status'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'order'      => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
-			];
+			] + $result;
 		}
 
 		$report_total = $this->model_extension_oc_payment_example_payment_credit_card->getTotalReports();

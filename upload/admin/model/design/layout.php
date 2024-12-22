@@ -102,7 +102,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> layout record that has layout ID
 	 */
 	public function getLayout(int $layout_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -115,7 +115,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> layout records
 	 */
 	public function getLayouts(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "layout`";
@@ -154,7 +154,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts
 	 *
-	 * @return int
+	 * @return int total number of layout records
 	 */
 	public function getTotalLayouts(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "layout`");
@@ -212,7 +212,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> route records that have layout ID
 	 */
 	public function getRoutes(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -225,7 +225,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $store_id
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> route records that have store ID
 	 */
 	public function getRoutesByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -272,7 +272,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> module records that have layout ID
 	 */
 	public function getModules(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' ORDER BY `position` ASC, `sort_order` ASC");

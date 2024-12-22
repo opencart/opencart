@@ -60,7 +60,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $startup_id primary key of the startup record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> startup record that has startup ID
 	 */
 	public function getStartup(int $startup_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE `startup_id` = '" . (int)$startup_id . "'");
@@ -86,7 +86,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> startup records
 	 */
 	public function getStartups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "startup`";
@@ -131,7 +131,7 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Startups
 	 *
-	 * @return int
+	 * @return int total number of startup records
 	 */
 	public function getTotalStartups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "startup`");

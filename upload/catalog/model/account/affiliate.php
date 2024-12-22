@@ -56,7 +56,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> affiliate record that has customer ID
 	 */
 	public function getAffiliate(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");

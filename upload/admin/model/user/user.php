@@ -80,7 +80,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_id primary key of the user record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> user record that has user ID
 	 */
 	public function getUser(int $user_id): array {
 		$query = $this->db->query("SELECT *, (SELECT `ug`.`name` FROM `" . DB_PREFIX . "user_group` `ug` WHERE `ug`.`user_group_id` = `u`.`user_group_id`) AS `user_group` FROM `" . DB_PREFIX . "user` `u` WHERE `u`.`user_id` = '" . (int)$user_id . "'");
@@ -132,7 +132,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> user records
 	 */
 	public function getUsers(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`u`.`firstname`, ' ', `u`.`lastname`) AS `name`, (SELECT `ug`.`name` FROM `" . DB_PREFIX . "user_group` `ug` WHERE `ug`.`user_group_id` = `u`.`user_group_id`) AS user_group FROM `" . DB_PREFIX . "user` `u`";
@@ -211,7 +211,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of user records
 	 */
 	public function getTotalUsers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` `u` ";
@@ -256,7 +256,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_group_id primary key of the user group record
 	 *
-	 * @return int
+	 * @return int total number of user records that have user group ID
 	 */
 	public function getTotalUsersByGroupId(int $user_group_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
@@ -307,7 +307,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> login records that have user ID
 	 */
 	public function getLogins(int $user_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -332,7 +332,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_id primary key of the user record
 	 *
-	 * @return int
+	 * @return int total number of login records that have user ID
 	 */
 	public function getTotalLogins(int $user_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
@@ -415,7 +415,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_authorize_id primary key of the user authorize record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> authorize record that has user authorize ID
 	 */
 	public function getAuthorize(int $user_authorize_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_authorize` WHERE `user_authorize_id` = '" . (int)$user_authorize_id . "'");
@@ -429,7 +429,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * @param int    $user_id primary key of the user record
 	 * @param string $token
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> authorize record that has user ID, token
 	 */
 	public function getAuthorizeByToken(int $user_id, string $token): array {
 		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
@@ -444,7 +444,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> authorize records
 	 */
 	public function getAuthorizes(int $user_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -469,7 +469,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_id primary key of the user record
 	 *
-	 * @return int
+	 * @return int total number of authorize records that have user ID
 	 */
 	public function getTotalAuthorizes(int $user_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");

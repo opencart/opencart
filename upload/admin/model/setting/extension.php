@@ -11,7 +11,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Extensions
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> extension records
 	 */
 	public function getExtensions(): array {
 		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");
@@ -51,7 +51,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $extension
 	 *
-	 * @return int
+	 * @return int total number of extension records that have extension ID
 	 */
 	public function getTotalExtensionsByExtension(string $extension): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension` WHERE `extension` = '" . $this->db->escape($extension) . "'");
@@ -99,7 +99,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int install records
 	 */
 	public function addInstall(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
@@ -135,7 +135,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> install record that has extension install ID
 	 */
 	public function getInstall(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
@@ -148,7 +148,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $extension_download_id primary key of the extension download record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> install record that has extension download ID
 	 */
 	public function getInstallByExtensionDownloadId(int $extension_download_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
@@ -174,7 +174,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> install records
 	 */
 	public function getInstalls(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
@@ -223,7 +223,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of install records
 	 */
 	public function getTotalInstalls(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
@@ -265,7 +265,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> path records that have extension install ID
 	 */
 	public function getPathsByExtensionInstallId(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `extension_path_id` ASC");

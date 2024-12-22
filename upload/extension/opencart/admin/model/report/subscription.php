@@ -78,7 +78,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of subscription records
 	 */
 	public function getTotalSubscriptions(array $data = []): int {
 		if (!empty($data['filter_group'])) {

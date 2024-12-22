@@ -252,7 +252,7 @@ class Customer {
 	/**
 	 * getAddressId
 	 *
-	 * @return int
+	 * @return int address record
 	 */
 	public function getAddressId(): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer_id . "' AND `default` = '1'");
@@ -267,7 +267,7 @@ class Customer {
 	/**
 	 * Get Balance
 	 *
-	 * @return float
+	 * @return float total number of balance records
 	 */
 	public function getBalance(): float {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer_id . "'");
@@ -278,7 +278,7 @@ class Customer {
 	/**
 	 * Get Reward Points
 	 *
-	 * @return float
+	 * @return float total number of reward point records
 	 */
 	public function getRewardPoints(): float {
 		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer_id . "'");

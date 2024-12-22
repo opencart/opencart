@@ -55,7 +55,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> country record that has country ID
 	 */
 	public function getCountry(int $country_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
@@ -94,7 +94,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> country records
 	 */
 	public function getCountries(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
@@ -167,7 +167,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of country records
 	 */
 	public function getTotalCountries(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`";
@@ -200,7 +200,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $address_format_id primary key of the address format record
 	 *
-	 * @return int
+	 * @return int total number of country records that have address format ID
 	 */
 	public function getTotalCountriesByAddressFormatId(int $address_format_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . (int)$address_format_id . "'");

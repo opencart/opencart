@@ -151,7 +151,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_status_id primary key of the return status record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have return status ID
 	 */
 	public function getDescriptions(int $return_status_id): array {
 		$return_status_data = [];
@@ -170,7 +170,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -181,7 +181,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Return Statuses
 	 *
-	 * @return int
+	 * @return int total number of return status records
 	 */
 	public function getTotalReturnStatuses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");

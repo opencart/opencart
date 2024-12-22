@@ -67,7 +67,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> tax rate record that has tax rate ID
 	 */
 	public function getTaxRate(int $tax_rate_id): array {
 		$query = $this->db->query("SELECT `tr`.`tax_rate_id`, `tr`.`name` AS name, `tr`.`rate`, `tr`.`type`, `tr`.`geo_zone_id`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr`.`tax_rate_id` = '" . (int)$tax_rate_id . "'");
@@ -80,7 +80,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> tax rate records
 	 */
 	public function getTaxRates(array $data = []): array {
 		$sql = "SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`)";
@@ -124,7 +124,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Tax Rates
 	 *
-	 * @return int
+	 * @return int total number of tax rate records
 	 */
 	public function getTotalTaxRates(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate`");
@@ -137,7 +137,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
-	 * @return int
+	 * @return int total number of tax rate records that have geo zone ID
 	 */
 	public function getTotalTaxRatesByGeoZoneId(int $geo_zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
@@ -184,7 +184,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $tax_rate_id primary key of the tax rate record
 	 *
-	 * @return array<int, int>
+	 * @return array<int, int> customer group records that have tax rate ID
 	 */
 	public function getCustomerGroups(int $tax_rate_id): array {
 		$tax_customer_group_data = [];

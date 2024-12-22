@@ -95,7 +95,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> customer record that has customer ID
 	 */
 	public function getCustomer(int $customer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -129,7 +129,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> customer records
 	 */
 	public function getCustomers(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `name`, `cgd`.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` `c` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`c`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -215,7 +215,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of customer records
 	 */
 	public function getTotalCustomers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` `c`";
@@ -268,7 +268,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
-	 * @return int
+	 * @return int total number of customer records that have customer group ID
 	 */
 	public function getTotalCustomersByCustomerGroupId(int $customer_group_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
@@ -351,7 +351,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $address_id primary key of the address record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> address record that has address ID
 	 */
 	public function getAddress(int $address_id): array {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
@@ -414,7 +414,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> address records that have customer ID
 	 */
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
@@ -477,7 +477,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of address records that have customer ID
 	 */
 	public function getTotalAddresses(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -490,7 +490,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return int
+	 * @return int total number of address records that have country ID
 	 */
 	public function getTotalAddressesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `country_id` = '" . (int)$country_id . "'");
@@ -503,7 +503,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
-	 * @return int
+	 * @return int total number of address records that have zone ID
 	 */
 	public function getTotalAddressesByZoneId(int $zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `zone_id` = '" . (int)$zone_id . "'");
@@ -541,7 +541,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> history records that have customer ID
 	 */
 	public function getHistories(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -562,7 +562,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of history records that have customer ID
 	 */
 	public function getTotalHistories(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -646,7 +646,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> transaction records that have customer ID
 	 */
 	public function getTransactions(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -667,7 +667,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of transaction records that have customer ID
 	 */
 	public function getTotalTransactions(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -693,7 +693,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return int
+	 * @return int total number of transaction records that have order ID
 	 */
 	public function getTotalTransactionsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -744,7 +744,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> reward records that have customer ID
 	 */
 	public function getRewards(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -765,7 +765,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of reward records that have customer ID
 	 */
 	public function getTotalRewards(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -791,7 +791,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return int
+	 * @return int total number of reward records that have order ID
 	 */
 	public function getTotalRewardsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > '0'");
@@ -817,7 +817,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> ip records that have customer ID
 	 */
 	public function getIps(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -837,7 +837,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of ip records that have customer ID
 	 */
 	public function getTotalIps(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -953,7 +953,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> authorize token record that has customer ID
 	 */
 	public function getAuthorizeByToken(int $customer_id, string $token): array {
 		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "') AS `attempts` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
@@ -968,7 +968,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> authorize records that have customer ID
 	 */
 	public function getAuthorizes(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -993,7 +993,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of authorize records that have customer ID
 	 */
 	public function getTotalAuthorizes(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'");

@@ -45,7 +45,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> wishlist records that have customer ID
 	 */
 	public function getWishlist(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");
@@ -58,7 +58,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of wishlist records that have customer ID
 	 */
 	public function getTotalWishlist(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");

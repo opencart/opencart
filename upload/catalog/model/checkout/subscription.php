@@ -207,7 +207,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> subscription records
 	 */
 	public function getSubscriptions(array $data): array {
 		$sql = "SELECT `s`.`subscription_id`, `s`.*, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`, (SELECT `ss`.`name` FROM `" . DB_PREFIX . "subscription_status` `ss` WHERE `ss`.`subscription_status_id` = `s`.`subscription_status_id` AND `ss`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `subscription_status` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
@@ -336,7 +336,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> product records that have subscription ID
 	 */
 	public function getProducts(int $subscription_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -345,12 +345,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Subscription Product By Order Product ID
+	 * Get Product By Order Product ID
 	 *
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> product record that has order ID, order product ID
 	 */
 	public function getProductByOrderProductId(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -389,7 +389,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $subscription_product_id primary key of the subscription product record
 	 * @param int $product_option_id       primary key of the product option record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> option record that has subscription ID, subscription product ID, product option ID
 	 */
 	public function getOption(int $subscription_id, int $subscription_product_id, int $product_option_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_option` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `subscription_product_id` = '" . (int)$subscription_product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "'");
@@ -403,7 +403,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $subscription_id         primary key of the subscription record
 	 * @param int $subscription_product_id primary key of the subscription product record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> option records that have subscription ID, subscription product ID
 	 */
 	public function getOptions(int $subscription_id, int $subscription_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_option` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `subscription_product_id` = '" . (int)$subscription_product_id . "'");

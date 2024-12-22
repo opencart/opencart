@@ -24,7 +24,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> customer approval records
 	 */
 	public function getCustomerApprovals(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS customer, `cgd`.`name` AS customer_group, `ca`.`type` FROM `" . DB_PREFIX . "customer_approval` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`c`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -77,7 +77,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_approval_id primary key of the customer approval record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> customer approval record that has customer approval ID
 	 */
 	public function getCustomerApproval(int $customer_approval_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_approval_id` = '" . (int)$customer_approval_id . "'");
@@ -90,7 +90,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of customer approval records
 	 */
 	public function getTotalCustomerApprovals(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_approval` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`)";

@@ -55,7 +55,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> zone record that has zone ID
 	 */
 	public function getZone(int $zone_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
@@ -68,7 +68,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> zone records
 	 */
 	public function getZones(array $data = []): array {
 		$sql = "SELECT *, `z`.`name`, `z`.`status`, `c`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
@@ -131,7 +131,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> zone records that have country ID
 	 */
 	public function getZonesByCountryId(int $country_id): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1' ORDER BY `name`";
@@ -156,7 +156,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of zone records
 	 */
 	public function getTotalZones(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
@@ -193,7 +193,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return int
+	 * @return int total number of zone records that have country ID
 	 */
 	public function getTotalZonesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "'");

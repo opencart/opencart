@@ -69,7 +69,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> weight class records
 	 */
 	public function getWeightClasses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -124,7 +124,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> weight class record that has weight class ID
 	 */
 	public function getWeightClass(int $weight_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wc`.`weight_class_id` = '" . (int)$weight_class_id . "' AND `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -135,7 +135,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Weight Classes
 	 *
-	 * @return int
+	 * @return int total number of weight class records
 	 */
 	public function getTotalWeightClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class`");
@@ -144,7 +144,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $weight_class_id primary key of the weight class record
 	 * @param int                  $language_id     primary key of the language record
@@ -157,7 +157,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Description
+	 * Delete Description
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
 	 *
@@ -183,7 +183,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> description records that have weight class ID
 	 */
 	public function getDescriptions(int $weight_class_id): array {
 		$weight_class_data = [];
@@ -202,7 +202,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class_description` WHERE `language_id` = '" . (int)$language_id . "'");

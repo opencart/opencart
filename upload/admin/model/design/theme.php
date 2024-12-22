@@ -60,7 +60,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $theme_id primary key of the theme record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> theme record that has theme ID
 	 */
 	public function getTheme(int $theme_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE `theme_id` = '" . (int)$theme_id . "'");
@@ -74,7 +74,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> theme records
 	 */
 	public function getThemes(int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -93,7 +93,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Themes
 	 *
-	 * @return int
+	 * @return int total number of theme records
 	 */
 	public function getTotalThemes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "theme`");

@@ -9,9 +9,9 @@ namespace Opencart\Admin\Model\Catalog;
  */
 class Attribute extends \Opencart\System\Engine\Model {
 	/**
-	 *	Add Attribute
-	 *
-	 *	Create a new attribute record in the database.
+	 * Add Attribute
+	 * 
+	 * Create a new attribute record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -30,9 +30,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Edit Attribute
+	 * Edit Attribute
 	 *
-	 *	Edit attribute record in the database.
+	 * Edit attribute record in the database.
 	 *
 	 * @param int                  $attribute_id primary key of the attribute record
 	 * @param array<string, mixed> $data         array of data
@@ -50,9 +50,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Attribute
+	 * Delete Attribute
 	 *
-	 *	Delete attribute record in the database.
+	 * Delete attribute record in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
@@ -65,13 +65,13 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Attribute
+	 * Get Attribute
 	 *
-	 *	Get the record of the attribute record in the database.
+	 * Get the record of the attribute record in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> attribute record that has attribute ID
 	 */
 	public function getAttribute(int $attribute_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute` `a` LEFT JOIN `" . DB_PREFIX . "attribute_description` `ad` ON (`a`.`attribute_id` = `ad`.`attribute_id`) WHERE `a`.`attribute_id` = '" . (int)$attribute_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -80,13 +80,13 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Attributes
+	 * Get Attributes
 	 *
-	 *	Get the record of the attribute record in the database.
+	 * Get the record of the attribute record in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> attribute records
 	 */
 	public function getAttributes(array $data = []): array {
 		$sql = "SELECT *, (SELECT `agd`.`name` FROM `" . DB_PREFIX . "attribute_group_description` `agd` WHERE `agd`.`attribute_group_id` = `a`.`attribute_group_id` AND `agd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `attribute_group` FROM `" . DB_PREFIX . "attribute` `a` LEFT JOIN `" . DB_PREFIX . "attribute_description` `ad` ON (`a`.`attribute_id` = `ad`.`attribute_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -135,9 +135,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Total Attributes
+	 * Get Total Attributes
 	 *
-	 *	Get the total number of attribute records in the database.
+	 * Get the total number of attribute records in the database.
 	 *
 	 * @return int total number of attribute records
 	 */
@@ -152,9 +152,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Total Attributes By Attribute Group ID
+	 * Get Total Attributes By Attribute Group ID
 	 *
-	 *	Get the total number of attribute records with group ID in the database.
+	 * Get the total number of attribute records with group ID in the database.
 	 *
 	 * @param int $attribute_group_id foreign key of the attribute group record
 	 *
@@ -167,7 +167,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Description
+	 * Add Description
 	 *
 	 * @param int                  $attribute_id primary key of the attribute record
 	 * @param int                  $language_id  primary key of the attribute language
@@ -180,9 +180,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions
+	 * Delete Descriptions
 	 *
-	 *  Delete attribute description record in the database.
+	 * Delete attribute description record in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
@@ -193,9 +193,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Descriptions By Language ID
+	 * Delete Descriptions By Language ID
 	 *
-	 *	Delete attribute description record in the database.
+	 * Delete attribute description record in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -206,14 +206,14 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Description
-	 *
-	 *	Get the record of the attribute description record in the database.
+	 * Get Description
+	 * 
+	 * Get the record of the attribute description record in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 * @param int $language_id  primary key of the language record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> description record that has attribute ID, language ID
 	 */
 	public function getDescription(int $attribute_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "' AND language_id = '" . (int)$language_id . "'");
@@ -222,13 +222,13 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Descriptions
+	 * Get Descriptions
 	 *
-	 *	Get the record of the attribute record in the database.
+	 * Get the record of the attribute record in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have attribute ID
 	 */
 	public function getDescriptions(int $attribute_id): array {
 		$attribute_data = [];
@@ -243,13 +243,13 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Get Descriptions By Language ID
+	 * Get Descriptions By Language ID
 	 *
-	 *	Get the record of the attribute record in the database.
+	 * Get the record of the attribute record in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `language_id` = '" . (int)$language_id . "'");

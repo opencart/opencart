@@ -13,7 +13,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> category record that has category ID
 	 */
 	public function getCategory(int $category_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_to_store` `c2s` ON (`c`.`category_id` = `c2s`.`category_id`) WHERE `c`.`category_id` = '" . (int)$category_id . "' AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `c2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `c`.`status` = '1'");
@@ -26,7 +26,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $parent_id primary key of the parent category record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> category records that have parent ID
 	 */
 	public function getCategories(int $parent_id = 0): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_to_store` `c2s` ON (`c`.`category_id` = `c2s`.`category_id`) WHERE `c`.`parent_id` = '" . (int)$parent_id . "' AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `c2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `c`.`status` = '1' ORDER BY `c`.`sort_order`, LCASE(`cd`.`name`)");
@@ -39,7 +39,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> filter records that have category ID
 	 */
 	public function getFilters(int $category_id): array {
 		$implode = [];
@@ -72,7 +72,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
-	 * @return int
+	 * @return int layout record that has category ID
 	 */
 	public function getLayoutId(int $category_id): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");

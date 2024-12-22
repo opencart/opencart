@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 /**
- *  Class Banner
+ * Class Banner
  *
  * Can be called from $this->load->model('design/banner');
  *
@@ -71,7 +71,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> banner record that has banner ID
 	 */
 	public function getBanner(int $banner_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "banner` WHERE `banner_id` = '" . (int)$banner_id . "'");
@@ -84,7 +84,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> banner records
 	 */
 	public function getBanners(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "banner`";
@@ -126,7 +126,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Banners
 	 *
-	 * @return int
+	 * @return int total number of banner records
 	 */
 	public function getTotalBanners(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "banner`");
@@ -135,7 +135,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Add Image
+	 * Add Image
 	 *
 	 * @param int                  $banner_id   primary key of the banner record
 	 * @param int                  $language_id primary key of the language record
@@ -148,7 +148,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Images
+	 * Delete Images
 	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
@@ -159,7 +159,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 *	Delete Images By Language ID
+	 * Delete Images By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -174,7 +174,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
-	 * @return array<int, array<int, array<string, mixed>>>
+	 * @return array<int, array<int, array<string, mixed>>> image records that have banner ID
 	 */
 	public function getImages(int $banner_id): array {
 		$banner_image_data = [];
@@ -193,7 +193,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> image records that have language ID
 	 */
 	public function getImagesByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `language_id` = '" . (int)$language_id . "'");

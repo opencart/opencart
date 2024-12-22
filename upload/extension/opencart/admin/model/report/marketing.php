@@ -72,7 +72,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of marketing records
 	 */
 	public function getTotalMarketing(array $data = []): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`");

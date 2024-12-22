@@ -73,7 +73,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> geo zone record that has geo zone ID
 	 */
 	public function getGeoZone(int $geo_zone_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
@@ -86,7 +86,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> geo zone records
 	 */
 	public function getGeoZones(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "geo_zone`";
@@ -138,7 +138,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Geo Zones
 	 *
-	 * @return int
+	 * @return int total number of geo zone records
 	 */
 	public function getTotalGeoZones(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "geo_zone`");
@@ -174,7 +174,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> geo zone records that have geo zone ID
 	 */
 	public function getZones(int $geo_zone_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
@@ -187,7 +187,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
-	 * @return int
+	 * @return int total number of zone records
 	 */
 	public function getTotalZones(int $geo_zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
@@ -200,7 +200,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return int
+	 * @return int total number of zone records that have country ID
 	 */
 	public function getTotalZonesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `country_id` = '" . (int)$country_id . "'");
@@ -213,7 +213,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
-	 * @return int
+	 * @return int total number of zone records that have zone ID
 	 */
 	public function getTotalZonesByZoneId(int $zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `zone_id` = '" . (int)$zone_id . "'");

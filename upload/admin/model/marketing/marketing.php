@@ -51,7 +51,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> marketing record that has marketing ID
 	 */
 	public function getMarketing(int $marketing_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "marketing` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
@@ -77,7 +77,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> marketing records
 	 */
 	public function getMarketings(array $data = []): array {
 		$implode = [];
@@ -152,7 +152,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of marketing records
 	 */
 	public function getTotalMarketings(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`";
@@ -202,7 +202,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> report records that have marketing ID
 	 */
 	public function getReports(int $marketing_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -223,7 +223,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 *
-	 * @return int
+	 * @return int total number of report records
 	 */
 	public function getTotalReports(int $marketing_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");

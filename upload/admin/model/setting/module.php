@@ -57,6 +57,7 @@ class Module extends \Opencart\System\Engine\Model {
 	public function deleteModulesByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'");
 
+		// Layout
 		$this->load->model('design/layout');
 
 		$this->model_design_layout->deleteModulesByCode($code);

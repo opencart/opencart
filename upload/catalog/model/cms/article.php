@@ -360,13 +360,13 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> rating records that have article ID
 	 */
 	public function getRatings(int $article_id, int $article_comment_id = 0): array {
-		$sql = "SELECT rating, COUNT(*) AS total FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";
+		$sql = "SELECT `rating`, COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";
 
 		if ($article_comment_id) {
 			$sql .= " AND `article_comment_id` = '" . (int)$article_comment_id . "'";
 		}
 
-		$sql .= " GROUP BY rating";
+		$sql .= " GROUP BY `rating`";
 
 		$query = $this->db->query($sql);
 

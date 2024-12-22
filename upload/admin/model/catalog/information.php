@@ -77,6 +77,7 @@ class Information extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('information_id', $information_id);
@@ -114,6 +115,7 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->model_catalog_information->deleteStores($information_id);
 		$this->model_catalog_information->deleteLayouts($information_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('information_id', $information_id);
@@ -329,7 +331,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $information_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

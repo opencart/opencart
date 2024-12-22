@@ -59,10 +59,12 @@ class Filter extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_filter->deleteDescriptions($filter_id);
 
+		// Category
 		$this->load->model('catalog/category');
 
 		$this->model_catalog_category->deleteFiltersByFilterId($filter_id);
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteFiltersByFilterId($filter_id);

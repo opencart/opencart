@@ -120,7 +120,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	 * @return int total number of modification records
 	 */
 	public function getTotalModifications(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "modification`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "modification`");
 
 		return (int)$query->row['total'];
 	}

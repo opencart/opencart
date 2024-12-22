@@ -13,7 +13,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> zone record that has zone ID
 	 */
 	public function getZone(int $zone_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "' AND `status` = '1'");
@@ -26,7 +26,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> zone records that have country ID
 	 */
 	public function getZonesByCountryId(int $country_id): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1' ORDER BY `name`";

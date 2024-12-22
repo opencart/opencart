@@ -13,7 +13,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return float
+	 * @return float total number of sale records
 	 */
 	public function getTotalSales(array $data = []): float {
 		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` > '0'";
@@ -30,7 +30,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Country
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> total number of order records by country
 	 */
 	public function getTotalOrdersByCountry(): array {
 		$query = $this->db->query("SELECT COUNT(*) AS `total`, SUM(`o`.`total`) AS amount, c.`iso_code_2` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "country` c ON (`o`.`payment_country_id` = c.`country_id`) WHERE `o`.`order_status_id` > '0' GROUP BY `o`.`payment_country_id`");
@@ -41,7 +41,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Day
 	 *
-	 * @return array<int, array<string, int>>
+	 * @return array<int, array<string, int>> total number of order records by day
 	 */
 	public function getTotalOrdersByDay(): array {
 		$implode = [];
@@ -74,7 +74,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Week
 	 *
-	 * @return array<int, array<string, int>>
+	 * @return array<int, array<string, int>> total number of order records by week
 	 */
 	public function getTotalOrdersByWeek(): array {
 		$implode = [];
@@ -111,7 +111,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Month
 	 *
-	 * @return array<int, array<string, int>>
+	 * @return array<int, array<string, int>> total number of order records by month
 	 */
 	public function getTotalOrdersByMonth(): array {
 		$implode = [];
@@ -146,7 +146,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Year
 	 *
-	 * @return array<int, array<string, int>>
+	 * @return array<int, array<string, int>> total number of order records by year
 	 */
 	public function getTotalOrdersByYear(): array {
 		$implode = [];
@@ -246,7 +246,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of order records
 	 */
 	public function getTotalOrders(array $data = []): int {
 		if (!empty($data['filter_group'])) {
@@ -358,7 +358,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of tax records
 	 */
 	public function getTotalTaxes(array $data = []): int {
 		if (!empty($data['filter_group'])) {
@@ -472,7 +472,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of shipping records
 	 */
 	public function getTotalShipping(array $data = []): int {
 		if (!empty($data['filter_group'])) {

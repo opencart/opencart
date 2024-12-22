@@ -57,7 +57,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param int                  $customer_id primary key of the order record
 	 * @param array<string, mixed> $data        array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> transaction records that have customer ID
 	 */
 	public function getTransactions(int $customer_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
@@ -102,7 +102,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
-	 * @return int
+	 * @return int total number of transaction records that have customer ID
 	 */
 	public function getTotalTransactions(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -115,7 +115,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
-	 * @return int
+	 * @return int total number of transaction records that have order ID
 	 */
 	public function getTotalTransactionsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");

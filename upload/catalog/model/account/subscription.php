@@ -13,7 +13,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> subscription record that has subscription ID
 	 */
 	public function getSubscription(int $subscription_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
@@ -34,7 +34,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> subscription records
 	 */
 	public function getSubscriptions(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
@@ -53,7 +53,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions
 	 *
-	 * @return int
+	 * @return int total number of subscription records
 	 */
 	public function getTotalSubscriptions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `subscription_status_id` > '0' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");
@@ -70,7 +70,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $address_id primary key of the address record
 	 *
-	 * @return int
+	 * @return int total number of subscription records that have address ID
 	 */
 	public function getTotalSubscriptionByShippingAddressId(int $address_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `shipping_address_id` = '" . (int)$address_id . "'");
@@ -83,7 +83,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $address_id primary key of the address record
 	 *
-	 * @return int
+	 * @return int total number of subscription records that have address ID
 	 */
 	public function getTotalSubscriptionByPaymentAddressId(int $address_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `payment_address_id` = '" . (int)$address_id . "'");
@@ -97,7 +97,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> subscription records that have order ID, order product ID
 	 */
 	public function getProductByOrderProductId(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -111,7 +111,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $address_id      primary key of the address record
 	 *
-	 * @return int
+	 * @return array<int, array<string, mixed>> subscription records that have subscription ID
 	 */
 	public function getProducts(int $subscription_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -124,7 +124,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
-	 * @return int
+	 * @return int total number of product records that have subscription ID
 	 */
 	public function getTotalProducts(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_product` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -138,7 +138,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $subscription_id         primary key of the subscription record
 	 * @param int $subscription_product_id primary key of the subscription product record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> option records that have subscription ID, subscription product ID
 	 */
 	public function getOptions(int $subscription_id, int $subscription_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_option` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `subscription_product_id` = '" . (int)$subscription_product_id . "'");
@@ -153,7 +153,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> history records that have subscription ID
 	 */
 	public function getHistories(int $subscription_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -174,7 +174,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
-	 * @return int
+	 * @return int total number of history records that have subscription ID
 	 */
 	public function getTotalHistories(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_id` = '" . (int)$subscription_id . "'");

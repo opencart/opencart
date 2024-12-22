@@ -58,7 +58,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $modification_id primary key of the modification record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> modification record that has modification ID
 	 */
 	public function getModification(int $modification_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "modification` WHERE `modification_id` = '" . (int)$modification_id . "'");
@@ -71,7 +71,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> modification records
 	 */
 	public function getModifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "modification`";
@@ -117,7 +117,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Modifications
 	 *
-	 * @return int
+	 * @return int total number of modification records
 	 */
 	public function getTotalModifications(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "modification`");

@@ -69,7 +69,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> filter group record that has filter group ID
 	 */
 	public function getFilterGroup(int $filter_group_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group` `fg` LEFT JOIN `" . DB_PREFIX . "filter_group_description` `fgd` ON (`fg`.`filter_group_id` = `fgd`.`filter_group_id`) WHERE `fg`.`filter_group_id` = '" . (int)$filter_group_id . "' AND `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -82,7 +82,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> filter group records
 	 */
 	public function getFilterGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` `fg` LEFT JOIN `" . DB_PREFIX . "filter_group_description` `fgd` ON (`fg`.`filter_group_id` = `fgd`.`filter_group_id`) WHERE `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -128,7 +128,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filter Groups
 	 *
-	 * @return int
+	 * @return int total number of filter group records
 	 */
 	public function getTotalFilterGroups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter_group`");
@@ -164,6 +164,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
+	 * 
+	 * @return void
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -174,7 +176,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have filter group ID
 	 */
 	public function getDescriptions(int $filter_group_id): array {
 		$filter_group_data = [];
@@ -193,7 +195,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group_description` WHERE `language_id` = '" . (int)$language_id . "'");

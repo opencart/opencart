@@ -13,7 +13,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> article record that has article ID
 	 */
 	public function getArticle(int $article_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `a`.`article_id` = '" . (int)$article_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'");
@@ -26,7 +26,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> article records
 	 */
 	public function getArticles(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
@@ -129,7 +129,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of article records
 	 */
 	public function getTotalArticles(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
@@ -183,7 +183,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
-	 * @return int
+	 * @return int total number of layout records that have article ID
 	 */
 	public function getLayoutId(int $article_id): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_to_layout` WHERE `article_id` = '" . (int)$article_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");
@@ -227,7 +227,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $article_comment_id primary key of the article comment record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> comment record that has article comment ID
 	 */
 	public function getComment(int $article_comment_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `status` = '1'");
@@ -241,7 +241,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int                  $article_id primary key of the article record
 	 * @param array<string, mixed> $data       array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> comment records that have article ID
 	 */
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
@@ -306,7 +306,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int                  $article_id primary key of the article record
 	 * @param array<string, mixed> $data       array of filters
 	 *
-	 * @return int
+	 * @return int total number of comment records that have article ID
 	 */
 	public function getTotalComments(int $article_id, array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
@@ -357,7 +357,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @param int $article_id         primary key of the article record
 	 * @param int $article_comment_id primary key of the article comment record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> rating records that have article ID
 	 */
 	public function getRatings(int $article_id, int $article_comment_id = 0): array {
 		$sql = "SELECT rating, COUNT(*) AS total FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";

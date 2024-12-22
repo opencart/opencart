@@ -72,7 +72,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $event_id primary key of the event record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> event record that has event ID
 	 */
 	public function getEvent(int $event_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "'");
@@ -98,7 +98,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> event records
 	 */
 	public function getEvents(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";
@@ -144,7 +144,7 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Events
 	 *
-	 * @return int
+	 * @return int total number of event records
 	 */
 	public function getTotalEvents(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "event`");

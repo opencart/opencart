@@ -89,7 +89,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $review_id primary key of the review record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> review record that has review ID
 	 */
 	public function getReview(int $review_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.`name` FROM `" . DB_PREFIX . "product_description` pd WHERE pd.`product_id` = r.`product_id` AND pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS product FROM `" . DB_PREFIX . "review` r WHERE r.`review_id` = '" . (int)$review_id . "'");
@@ -102,7 +102,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
-	 * @return int
+	 * @return int total number of rating records that have product ID
 	 */
 	public function getRating(int $product_id): int {
 		$query = $this->db->query("SELECT AVG(`rating`) AS `total` FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '1'");
@@ -119,7 +119,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> review records
 	 */
 	public function getReviews(array $data = []): array {
 		$sql = "SELECT `r`.`review_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -186,7 +186,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of review records
 	 */
 	public function getTotalReviews(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -219,7 +219,7 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reviews Awaiting Approval
 	 *
-	 * @return int
+	 * @return int total number of reviews awaiting approval records
 	 */
 	public function getTotalReviewsAwaitingApproval(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` WHERE `status` = '0'");

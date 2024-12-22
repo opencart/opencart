@@ -56,7 +56,7 @@ class ProductPurchased extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of purchased records
 	 */
 	public function getTotalPurchased(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT op.`product_id`) AS `total` FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` `o` ON (op.`order_id` = `o`.`order_id`)";

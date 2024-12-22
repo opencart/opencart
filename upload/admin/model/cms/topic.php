@@ -112,7 +112,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> topic records that have topic ID
 	 */
 	public function getTopic(int $topic_id): array {
 		$sql = "SELECT DISTINCT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`) WHERE `t`.`topic_id` = '" . (int)$topic_id . "' AND `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -135,7 +135,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> topic records
 	 */
 	public function getTopics(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`) WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -187,7 +187,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Topics
 	 *
-	 * @return int
+	 * @return int total number of topic records
 	 */
 	public function getTotalTopics(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic`");
@@ -235,7 +235,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> description records that have topic ID
 	 */
 	public function getDescriptions(int $topic_id): array {
 		$topic_description_data = [];
@@ -254,7 +254,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -290,7 +290,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
-	 * @return array<int, int>
+	 * @return array<int, int> store records that have topic ID
 	 */
 	public function getStores(int $topic_id): array {
 		$topic_store_data = [];

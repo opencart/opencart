@@ -190,7 +190,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of customer records
 	 */
 	public function getTotalCustomers(array $data = []): int {
 		if (!empty($data['filter_group'])) {
@@ -288,7 +288,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of order records
 	 */
 	public function getTotalOrders(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT `o`.`customer_id`) AS `total` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`o`.`customer_id` = `c`.`customer_id`) WHERE `o`.`customer_id` > '0'";
@@ -362,7 +362,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of reward point records
 	 */
 	public function getTotalRewardPoints(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT cr.`customer_id`) AS `total` FROM `" . DB_PREFIX . "customer_reward` cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.`customer_id` = c.`customer_id`)";
@@ -446,7 +446,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of customer activity records
 	 */
 	public function getTotalCustomerActivities(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
@@ -538,7 +538,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int
+	 * @return int total number of customer search records
 	 */
 	public function getTotalCustomerSearches(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_search` cs LEFT JOIN `" . DB_PREFIX . "customer` c ON (cs.`customer_id` = c.`customer_id`)";

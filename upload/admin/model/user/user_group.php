@@ -49,7 +49,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $user_group_id primary key of the user group record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> user group record that has user group ID
 	 */
 	public function getUserGroup(int $user_group_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
@@ -65,7 +65,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> user group records
 	 */
 	public function getUserGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user_group` ORDER BY `name`";
@@ -96,7 +96,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total User Groups
 	 *
-	 * @return int
+	 * @return int total number of user group records
 	 */
 	public function getTotalUserGroups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_group`");

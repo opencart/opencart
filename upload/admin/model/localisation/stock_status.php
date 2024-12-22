@@ -151,7 +151,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have stock status ID
 	 */
 	public function getDescriptions(int $stock_status_id): array {
 		$stock_status_data = [];
@@ -181,7 +181,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stock Statuses
 	 *
-	 * @return int
+	 * @return int total number of stock status records
 	 */
 	public function getTotalStockStatuses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");

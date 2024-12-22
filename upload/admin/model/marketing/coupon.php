@@ -83,7 +83,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id primary key of the coupon record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> coupon record that has coupon ID
 	 */
 	public function getCoupon(int $coupon_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "coupon` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
@@ -109,7 +109,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> coupon records
 	 */
 	public function getCoupons(array $data = []): array {
 		$sql = "SELECT `coupon_id`, `name`, `code`, `discount`, `date_start`, `date_end`, `status` FROM `" . DB_PREFIX . "coupon`";
@@ -191,7 +191,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id primary key of the coupon record
 	 *
-	 * @return array<int, int>
+	 * @return array<int, int> product records that have coupon ID
 	 */
 	public function getProducts(int $coupon_id): array {
 		$coupon_product_data = [];
@@ -244,7 +244,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id primary key of the coupon record
 	 *
-	 * @return array<int, int>
+	 * @return array<int, int> category records that have coupon ID
 	 */
 	public function getCategories(int $coupon_id): array {
 		$coupon_category_data = [];
@@ -261,7 +261,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Coupons
 	 *
-	 * @return int
+	 * @return int total number of coupon records
 	 */
 	public function getTotalCoupons(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon`");
@@ -276,7 +276,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> history records that have coupon ID
 	 */
 	public function getHistories(int $coupon_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -308,7 +308,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $coupon_id primary key of the coupon record
 	 *
-	 * @return int
+	 * @return int total number of history records
 	 */
 	public function getTotalHistories(int $coupon_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` WHERE `coupon_id` = '" . (int)$coupon_id . "'");

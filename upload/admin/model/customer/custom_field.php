@@ -97,7 +97,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> custom field record that has custom field ID
 	 */
 	public function getCustomField(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cf`.`custom_field_id` = '" . (int)$custom_field_id . "' AND `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -110,7 +110,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> custom field records
 	 */
 	public function getCustomFields(array $data = []): array {
 		if (empty($data['filter_customer_group_id'])) {
@@ -175,7 +175,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Custom Fields
 	 *
-	 * @return int
+	 * @return int total number of custom field records
 	 */
 	public function getTotalCustomFields(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
@@ -223,7 +223,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have custom field ID
 	 */
 	public function getDescriptions(int $custom_field_id): array {
 		$custom_field_data = [];
@@ -242,7 +242,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have information ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -278,7 +278,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> customer group records that have custom field ID
 	 */
 	public function getCustomerGroups(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -328,7 +328,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_value_id primary key of the custom field value record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> value record that has custom field value ID
 	 */
 	public function getValue(int $custom_field_value_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value` `cfv` LEFT JOIN `" . DB_PREFIX . "custom_field_value_description` `cfvd` ON (`cfv`.`custom_field_value_id` = `cfvd`.`custom_field_value_id`) WHERE `cfv`.`custom_field_value_id` = '" . (int)$custom_field_value_id . "' AND `cfvd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -341,7 +341,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> value records that have custom field ID
 	 */
 	public function getValues(int $custom_field_id): array {
 		$custom_field_value_data = [];
@@ -396,7 +396,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> value description records that have custom field ID
 	 */
 	public function getValueDescriptions(int $custom_field_id): array {
 		$custom_field_value_data = [];
@@ -423,7 +423,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> value description records that have language ID
 	 */
 	public function getValueDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");

@@ -71,7 +71,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> api record that has api ID
 	 */
 	public function getApi(int $api_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api` WHERE `api_id` = '" . (int)$api_id . "'");
@@ -84,7 +84,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> api records
 	 */
 	public function getApis(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";
@@ -128,7 +128,7 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Apis
 	 *
-	 * @return int
+	 * @return int total number of api records
 	 */
 	public function getTotalApis(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "api`");
@@ -164,7 +164,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
-	 * @return array<int, string>
+	 * @return array<int, string> IP records that have api id
 	 */
 	public function getIps(int $api_id): array {
 		$ip_data = [];
@@ -185,7 +185,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> history records that have api ID
 	 */
 	public function getHistories(int $api_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -206,7 +206,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
-	 * @return int
+	 * @return int total number of history records that have api ID
 	 */
 	public function getTotalHistories(int $api_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "api_history` WHERE `api_id` = '" . (int)$api_id . "'");

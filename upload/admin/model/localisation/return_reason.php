@@ -151,7 +151,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_reason_id primary key of the return reason record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have return reason ID
 	 */
 	public function getDescriptions(int $return_reason_id): array {
 		$return_reason_data = [];
@@ -170,7 +170,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> description records by language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -181,7 +181,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Return Reasons
 	 *
-	 * @return int
+	 * @return int total number of return reason records
 	 */
 	public function getTotalReturnReasons(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");

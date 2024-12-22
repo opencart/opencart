@@ -67,7 +67,7 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $module_id primary key of the module record
 	 *
-	 * @return array<mixed>
+	 * @return array<mixed> module record that has module ID
 	 */
 	public function getModule(int $module_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
@@ -82,7 +82,7 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Modules
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> module records
 	 */
 	public function getModules(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `code`");

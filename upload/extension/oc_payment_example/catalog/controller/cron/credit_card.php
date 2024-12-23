@@ -74,12 +74,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 					$this->model_checkout_subscription->editDateNext($order_info['subscription_id'], $date_next);
 				}
 
-				$this->model_checkout_subscription->addHistory($order_info['subscription_id'], $order_status_id, $this->language->get('text_success'));
+				$this->model_checkout_subscription->addHistory($order_info['subscription_id'], $this->config->get('config_subscription_active_status_id'), $this->language->get('text_success'));
 			} else {
 				// If payment failed change subscription history to failed
 				$this->model_checkout_subscription->addHistory($order_info['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('error_payment_failed'));
 			}
-
 
 			$this->model_checkout_order->addHistory($order_id, $order_status_id);
 		}

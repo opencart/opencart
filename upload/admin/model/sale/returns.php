@@ -76,7 +76,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>> return records	
+	 * @return array<int, array<string, mixed>> return records
 	 */
 	public function getReturns(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`r`.`firstname`, ' ', `r`.`lastname`) AS `customer`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r`";

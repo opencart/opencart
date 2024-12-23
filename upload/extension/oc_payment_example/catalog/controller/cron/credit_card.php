@@ -1,6 +1,11 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\OcPaymentExample\Cron;
 class CreditCard extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 * 
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/oc_payment_example/cron/credit_card');
 

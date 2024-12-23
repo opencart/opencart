@@ -149,16 +149,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!isset($error['payment_method'])) {
-				// Validate if payment extension installed
-				$store->load->model('setting/extension');
-
-				$extension_info = $store->model_setting_extension->getExtensionByCode('payment', oc_substr($result['payment_method']['code'], 0, strpos($result['payment_method']['code'], '.')));
-
-				if (!$extension_info) {
-					$store->session->data['payment_method'] = $result['payment_method'];
-				} else {
-					$error['extension'] = $this->language->get('error_extension');
-				}
+				$store->session->data['payment_method'] = $result['payment_method'];
 			}
 
 			// Validate Products
@@ -356,9 +347,20 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
-				$store->load->controller('extension/' . $extension_info['extension'] . '/cron/' . $extension_info['code']);
-			} else {
-			// Add subscription history failed if payment method for cron didn't exist
+				// Validate if payment extension installed
+				$store->load->model('setting/extension');
+
+				$extension_info = $store->model_setting_extension->getExtensionByCode('payment', strstr($result['payment_method']['code'], '.', true));
+
+				if ($extension_info) {
+					$store->load->controller('extension/' . $extension_info['extension'] . '/cron/' . $extension_info['code']);
+				} else {
+					$error['extension'] = $this->language->get('error_extension');
+				}
+			}
+
+			if ($error) {
+				// Add subscription history failed if payment method for cron didn't exist
 				$store->model_checkout_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('text_log'));
 
 				// Log errors

@@ -203,6 +203,26 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Subscription
+	 *
+	 * @param int $subscription_id primary key of the subscription record
+	 *
+	 * @return array<string, mixed> subscription record that has subscription ID
+	 */
+	public function getSubscription(int $subscription_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		if ($query->num_rows) {
+			return [
+				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '',
+				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : ''
+			] + $query->row;
+		}
+
+		return [];
+	}
+
+	/**
 	 * Get Subscriptions
 	 *
 	 * @param array<string, mixed> $data array of filters

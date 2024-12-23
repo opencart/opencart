@@ -23,6 +23,7 @@ $_['column_date_added']     = 'Date Added';
 // Entry
 $_['entry_response']        = 'Card Processor Response';
 $_['entry_approved_status'] = 'Approved Status';
+$_['entry_denied_status']   = 'Denied Status';
 $_['entry_failed_status']   = 'Failed Status';
 $_['entry_order_status']    = 'Order Status';
 $_['entry_geo_zone']        = 'Geo Zone';
@@ -33,4 +34,4 @@ $_['entry_sort_order']      = 'Sort Order';
 $_['help_response']         = 'Choose if the credit card should return approved or denied making test orders';
 
 // Error
-$_['error_permission']      = 'Warning: You do not have permission to modify payment credit card!';
+$_['error_permission']      = 'Warning: You do not have permission to modify payment method credit card!';

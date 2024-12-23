@@ -33,7 +33,8 @@
                     <select name="payment_credit_card_response" id="input-response" class="form-select">
                       <option value="1"{% if payment_credit_card_response %} selected{% endif %}>{{ text_approve }}</option>
                       <option value="0"{% if not payment_credit_card_response %} selected{% endif %}>{{ text_deny }}</option>
-                    </select> <div class="form-text">{{ help_response }}</div>
+                    </select>
+                    <div class="form-text">{{ help_response }}</div>
                   </div>
                 </div>
               </fieldset>
@@ -45,6 +46,16 @@
                     <select name="payment_credit_card_approved_status_id" id="input-approved-status" class="form-select">
                       {% for order_status in order_statuses %}
                         <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_approved_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-denied-status" class="col-sm-2 col-form-label">{{ entry_denied_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_credit_card_denied_status_id" id="input-denied-status" class="form-select">
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_denied_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -84,7 +95,8 @@
                   <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="payment_credit_card_status" value="0"/> <input type="checkbox" name="payment_credit_card_status" value="1" id="input-status" class="form-check-input"{% if payment_credit_card_status %} checked{% endif %}/>
+                      <input type="hidden" name="payment_credit_card_status" value="0"/>
+                      <input type="checkbox" name="payment_credit_card_status" value="1" id="input-status" class="form-check-input"{% if payment_credit_card_status %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>

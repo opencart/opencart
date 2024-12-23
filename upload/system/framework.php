@@ -65,12 +65,28 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 
 // Exception Handler
 set_exception_handler(function(\Throwable $e) use ($log, $config): void {
+	$output  = 'Error: ' . $e->getMessage() . "\n";
+	$output .= 'File: ' . $e->getFile() . "\n";
+	$output .= 'Line: ' . $e->getLine() . "\n\n";
+
+	foreach ($e->getTrace() as $key => $trace) {
+		$output .= 'Backtrace: ' . $key . "\n";
+		$output .= 'File: ' . $trace['file'] . "\n";
+		$output .= 'Line: ' . $trace['line'] . "\n";
+
+		if (isset($trace['class'])) {
+			$output .= 'Class: ' . $trace['class'] . "\n";
+		}
+
+		$output .= 'Function: ' . $trace['function'] . "\n\n";
+	}
+
 	if ($config->get('error_log')) {
-		$log->write($e->getMessage() . ': in ' . $e->getFile() . ' on line ' . $e->getLine());
+		$log->write(trim($output));
 	}
 
 	if ($config->get('error_display')) {
-		echo '<b>' . $e->getMessage() . '</b>: in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+		echo $output;
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();

@@ -29,6 +29,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$data['payment_credit_card_response'] = $this->config->get('payment_credit_card_response');
 
 		$data['payment_credit_card_approved_status_id'] = $this->config->get('payment_credit_card_approved_status_id');
+		$data['payment_credit_card_denied_status_id'] = $this->config->get('payment_credit_card_denied_status_id');
 		$data['payment_credit_card_failed_status_id'] = $this->config->get('payment_credit_card_failed_status_id');
 		$data['payment_credit_card_order_status_id'] = $this->config->get('payment_credit_card_order_status_id');
 

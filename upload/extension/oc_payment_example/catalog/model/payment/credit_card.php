@@ -87,27 +87,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	}
 
 	/*
-	 * Charge the customer's credit card
+	 * Add Report
 	 */
-	public function charge(int $customer_id, array $data): bool {
-		$pos = strpos($data['payment_method']['code'], '.');
-
-		if ($pos !== false) {
-			$credit_card_id = oc_substr($data['payment_method']['code'], $pos + 1);
-		} else {
-			return false;
-		}
-
-		$credit_card_info = $this->getCreditCard($customer_id, $credit_card_id);
-
-		if ($credit_card_info) {
-			$status = $this->config->get('payment_credit_card_response');
-		} else {
-			$status = false;
-		}
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card_report` SET `customer_id` = '" . (int)$customer_id . "', `credit_card_id` = '" . (int)$credit_card_id . "', `order_id` = '" . (int)$data['order_id'] . "', `card_number` = '" . $this->db->escape($credit_card_info['card_number']) . "', `type` = '" . $this->db->escape($credit_card_info['type']) . "', `amount` = '" . $this->db->escape($data['total']) . "', `response` = '" . (bool)$status . "', `date_added` = NOW()");
-
-		return $status;
+	public function addReport(int $customer_id, array $data) {
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card_report` SET `customer_id` = '" . (int)$customer_id . "', `credit_card_id` = '" . (int)$data['credit_card_id'] . "', `order_id` = '" . (int)$data['order_id'] . "', `card_number` = '" . $this->db->escape($credit_card_info['card_number']) . "', `type` = '" . $this->db->escape($credit_card_info['type']) . "', `amount` = '" . $this->db->escape($data['total']) . "', `response` = '" . (bool)$status . "', `date_added` = NOW()");
 	}
 }

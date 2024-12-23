@@ -1,6 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\OcPaymentExample\Payment;
 class CreditCard extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 * 
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 

@@ -82,7 +82,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> stock status record that has stock status ID
 	 */
 	public function getStockStatus(int $stock_status_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -95,7 +95,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> stock status records
 	 */
 	public function getStockStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -170,7 +170,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<int, array<string, string>> description records that have language ID
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$language_id . "'");

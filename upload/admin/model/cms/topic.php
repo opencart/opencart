@@ -100,6 +100,7 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->model_cms_topic->deleteDescriptions($topic_id);
 		$this->model_cms_topic->deleteStores($topic_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);
@@ -314,7 +315,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

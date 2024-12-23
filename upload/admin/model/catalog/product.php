@@ -357,14 +357,17 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteStores($product_id);
 		$this->model_catalog_product->deleteSubscriptions($product_id);
 
+		// Review
 		$this->load->model('catalog/review');
 
 		$this->model_catalog_review->deleteReviewsByProductId($product_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
 
+		// Coupon
 		$this->load->model('marketing/coupon');
 
 		$this->model_marketing_coupon->deleteProductsByProductId($product_id);

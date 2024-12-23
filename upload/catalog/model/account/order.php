@@ -19,6 +19,7 @@ class Order extends \Opencart\System\Engine\Model {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `customer_id` != '0' AND `order_status_id` > '0'");
 
 		if ($order_query->num_rows) {
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry($order_query->row['payment_country_id']);
@@ -31,6 +32,7 @@ class Order extends \Opencart\System\Engine\Model {
 				$payment_iso_code_3 = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($order_query->row['payment_zone_id']);
@@ -51,6 +53,7 @@ class Order extends \Opencart\System\Engine\Model {
 				$shipping_iso_code_3 = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($order_query->row['shipping_zone_id']);

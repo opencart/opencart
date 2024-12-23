@@ -81,10 +81,12 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->deleteWishlists($customer_id);
 		$this->deleteIps($customer_id);
 
+		// Affiliate
 		$this->load->model('marketing/affiliate');
 
 		$this->model_marketing_affiliate->deleteAffiliate($customer_id);
 
+		// Customer Approval
 		$this->load->model('customer/customer_approval');
 
 		$this->model_customer_customer_approval->deleteApprovalsByCustomerId($customer_id);
@@ -357,6 +359,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
 
 		if ($address_query->num_rows) {
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry($address_query->row['country_id']);
@@ -373,6 +376,7 @@ class Customer extends \Opencart\System\Engine\Model {
 				$address_format_id = 0;
 			}
 
+			// Address Format
 			$this->load->model('localisation/address_format');
 
 			$address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
@@ -383,6 +387,7 @@ class Customer extends \Opencart\System\Engine\Model {
 				$address_format = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($address_query->row['zone_id']);

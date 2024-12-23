@@ -135,7 +135,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> user records
 	 */
 	public function getUsers(array $data = []): array {
-		$sql = "SELECT *, CONCAT(`u`.`firstname`, ' ', `u`.`lastname`) AS `name`, (SELECT `ug`.`name` FROM `" . DB_PREFIX . "user_group` `ug` WHERE `ug`.`user_group_id` = `u`.`user_group_id`) AS user_group FROM `" . DB_PREFIX . "user` `u`";
+		$sql = "SELECT *, CONCAT(`u`.`firstname`, ' ', `u`.`lastname`) AS `name`, (SELECT `ug`.`name` FROM `" . DB_PREFIX . "user_group` `ug` WHERE `ug`.`user_group_id` = `u`.`user_group_id`) AS `user_group` FROM `" . DB_PREFIX . "user` `u`";
 
 		$implode = [];
 

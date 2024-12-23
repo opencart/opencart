@@ -18,7 +18,6 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	 */
 	public function addWishlist(int $customer_id, int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `product_id` = '" . (int)$product_id . "'");
-
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_wishlist` SET `customer_id` = '" . (int)$customer_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `product_id` = '" . (int)$product_id . "', `date_added` = NOW()");
 	}
 

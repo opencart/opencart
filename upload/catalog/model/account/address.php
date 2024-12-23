@@ -75,6 +75,7 @@ class Address extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($address_query->num_rows) {
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry($address_query->row['country_id']);
@@ -91,6 +92,7 @@ class Address extends \Opencart\System\Engine\Model {
 				$address_format_id = 0;
 			}
 
+			// Address Format
 			$this->load->model('localisation/address_format');
 
 			$address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
@@ -101,6 +103,7 @@ class Address extends \Opencart\System\Engine\Model {
 				$address_format = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($address_query->row['zone_id']);

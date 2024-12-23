@@ -132,6 +132,7 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->model_cms_article->deleteLayouts($article_id);
 		$this->model_cms_article->deleteCommentsByArticleId($article_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', $article_id);
@@ -350,7 +351,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $article_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_layout` SET `article_id` = '" . (int)$article_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_layout` SET `article_id` = '" . (int)$article_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -480,7 +481,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> rating records that have article ID
 	 */
 	public function getRatings(int $article_id, int $article_comment_id = 0): array {
-		$sql = "SELECT rating, COUNT(*) AS total FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";
+		$sql = "SELECT rating, COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";
 
 		if ($article_comment_id) {
 			$sql .= " AND `article_comment_id` = '" . (int)$article_comment_id . "'";

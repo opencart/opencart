@@ -278,14 +278,17 @@ class Category extends \Opencart\System\Engine\Model {
 		$this->model_catalog_category->deleteStores($category_id);
 		$this->model_catalog_category->deleteLayouts($category_id);
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$this->model_catalog_product->deleteCategoriesByCategoryId($category_id);
 
+		// Coupon
 		$this->load->model('marketing/coupon');
 
 		$this->model_marketing_coupon->deleteCategoriesByCategoryId($category_id);
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$path = $this->model_catalog_category->getPath($category_id);
@@ -718,7 +721,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function addLayout(int $category_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**

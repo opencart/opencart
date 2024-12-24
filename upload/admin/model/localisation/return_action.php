@@ -82,7 +82,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_action_id primary key of the return action record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> return action record that has return action ID
 	 */
 	public function getReturnAction(int $return_action_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -95,7 +95,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> return action records
 	 */
 	public function getReturnActions(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";

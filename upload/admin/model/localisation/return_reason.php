@@ -82,7 +82,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_reason_id primary key of the return reason record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> return reason record that has return reason ID
 	 */
 	public function getReturnReason(int $return_reason_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `return_reason_id` = '" . (int)$return_reason_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -95,7 +95,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> return reason records
 	 */
 	public function getReturnReasons(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";

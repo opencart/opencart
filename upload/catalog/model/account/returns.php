@@ -26,7 +26,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $return_id primary key of the return record
 	 *
-	 * @return array<string, mixed>
+	 * @return array<string, mixed> return record that has return ID
 	 */
 	public function getReturn(int $return_id): array {
 		$query = $this->db->query("SELECT `r`.`return_id`, `r`.`order_id`, `r`.`firstname`, `r`.`lastname`, `r`.`email`, `r`.`telephone`, `r`.`product`, `r`.`model`, `r`.`quantity`, `r`.`opened`, (SELECT `rr`.`name` FROM `" . DB_PREFIX . "return_reason` `rr` WHERE `rr`.`return_reason_id` = `r`.`return_reason_id` AND `rr`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `reason`, (SELECT `ra`.`name` FROM `" . DB_PREFIX . "return_action` `ra` WHERE `ra`.`return_action_id` = `r`.`return_action_id` AND `ra`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `action`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `status`, `r`.`comment`, `r`.`date_ordered`, `r`.`date_added`, `r`.`date_modified` FROM `" . DB_PREFIX . "return` `r` WHERE `r`.`return_id` = '" . (int)$return_id . "' AND `r`.`customer_id` = '" . $this->customer->getId() . "'");
@@ -40,7 +40,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $start
 	 * @param int $limit
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> return records
 	 */
 	public function getReturns(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {

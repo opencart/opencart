@@ -43,6 +43,7 @@ $_['column_model']               = 'Model';
 $_['column_quantity']            = 'Quantity';
 $_['column_trial_price']         = 'Trial Price';
 $_['column_price']               = 'Price';
+$_['column_amount']              = 'Amount';
 $_['column_code']                = 'Code';
 $_['column_description']         = 'Description';
 $_['column_action']              = 'Action';

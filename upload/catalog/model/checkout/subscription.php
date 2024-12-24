@@ -210,7 +210,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> subscription record that has subscription ID
 	 */
 	public function getSubscription(int $subscription_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		if ($query->num_rows) {
 			return [

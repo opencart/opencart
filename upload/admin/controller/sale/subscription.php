@@ -431,7 +431,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!empty($subscription_info)) {
 			$data['subscription_id'] = $subscription_info['subscription_id'];
 		} else {
-			$data['subscription_id'] = '';
+			$data['subscription_id'] = 0;
 		}
 
 		if (!empty($subscription_info)) {
@@ -1096,13 +1096,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/order');
 
-		$results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id);
+		$results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'       => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . '&page={page}')
+				'view'       => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
 			] + $result;
 		}
 

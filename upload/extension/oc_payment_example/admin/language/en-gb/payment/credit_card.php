@@ -12,6 +12,8 @@ $_['text_developer']        = 'Developer';
 $_['text_approve']          = 'Approve';
 $_['text_deny']             = 'Deny';
 $_['text_report']           = 'Report';
+$_['text_visa']             = 'VISA';
+$_['text_mastercard']       = 'Mastercard';
 
 // Column
 $_['column_order']          = 'Order ID';

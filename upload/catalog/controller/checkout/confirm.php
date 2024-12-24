@@ -86,6 +86,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data = [];
 
 			$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
+			$order_data['subscription_id'] = 0;
 
 			// Store Details
 			$order_data['store_id'] = $this->config->get('config_store_id');

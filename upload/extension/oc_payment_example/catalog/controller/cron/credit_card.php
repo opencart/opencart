@@ -43,6 +43,18 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			// Credit Card charge code goes here
 			$response = $this->config->get('payment_credit_card_response');
 
+			// Add report to the credit card table
+			$report_data = [
+				'order_id'       => $order_id,
+				'credit_card_id' => $credit_card_info['credit_card_id'],
+				'card_number'    => $credit_card_info['card_number'],
+				'type'           => $credit_card_info['type'],
+				'amount'         => $order_info['total'],
+				'response'       => $response
+			];
+
+			$this->model_extension_oc_payment_example_payment_credit_card->addReport($this->customer->getId(), $report_data);
+
 			if ($response) {
 				$order_status_id = (int)$this->config->get('payment_credit_card_approved_status_id');
 			} else {
@@ -50,7 +62,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			}
 
 			// If payment order status is active or processing
-			if (!in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
+			if (in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				$remaining = 0;
 				$date_next = '';
 
@@ -81,10 +93,8 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->model_checkout_order->addHistory($order_id, $order_status_id);
-		}
-
-		if ($error) {
-			$this->model_checkout_order->addHistory($order_id, $this->config->get('config_void_status_id'));
+		} else {
+			$this->model_checkout_order->addHistory($order_id, $this->config->get('config_failed_status_id'));
 
 			// Add subscription history failed if payment method for cron didn't exist
 			$this->model_checkout_subscription->addHistory($order_info['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('text_log'));

@@ -13,7 +13,7 @@
         {% for order in orders %}
           <tr>
             <td class="text-end"><a href="{{ order.view }}" target="_blank">{{ order.order_id }}</a></td>
-            <td>{{ order.status }}</td>
+            <td>{{ order.order_status }}</td>
             <td class="text-end">{{ order.total }}</td>
             <td>{{ order.date_added }}</td>
           </tr>

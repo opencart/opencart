@@ -82,7 +82,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['order_id']);
 			}
 		} else {
-			$json['error'] = $this->language->get('error_order');
+			$json['error']['warning'] = $this->language->get('error_order');
 		}
 
 		if (!$this->config->get('payment_credit_card_status') || !isset($this->session->data['payment_method']) || $this->session->data['payment_method']['code'] != 'credit_card.credit_card') {
@@ -119,21 +119,31 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('extension/oc_payment_example/payment/credit_card');
 
-				$this->model_extension_oc_payment_example_payment_credit_card->addCreditCard($this->customer->getId(), $credit_card_data);
+				$credit_card_id = $this->model_extension_oc_payment_example_payment_credit_card->addCreditCard($this->customer->getId(), $credit_card_data);
+			} else {
+				$credit_card_id = 0;
 			}
 
 			// Credit Card charge code goes here
 			$response = $this->config->get('payment_credit_card_response');
 
+			// Add report to the credit card table
+			$report_data = [
+				'order_id'       => $order_id,
+				'credit_card_id' => $credit_card_id,
+				'card_number'    => $this->request->post['card_number'],
+				'type'           => $this->request->post['type'],
+				'amount'         => $order_info['total'],
+				'response'       => $response
+			];
+
+			$this->model_extension_oc_payment_example_payment_credit_card->addReport($this->customer->getId(), $report_data);
+
 			if ($response) {
-
-
 				$this->model_checkout_order->addHistory($order_id, $this->config->get('payment_credit_card_approved_status_id'), '', true);
 
 				$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
 			} else {
-
-
 				$this->model_checkout_order->addHistory($order_id, $this->config->get('payment_credit_card_denied_status_id'), '', true);
 
 				$json['redirect'] = $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true);
@@ -193,11 +203,12 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 			// Add report to the credit card table
 			$report_data = [
-				'order_id'    => $order_id,
-				'card_number' => $credit_card_info['card_number'],
-				'type'        => $credit_card_info['type'],
-				'amount'      => $order_info['total'],
-				'response'    => $response
+				'order_id'       => $order_id,
+				'credit_card_id' => $credit_card_info['credit_card_id'],
+				'card_number'    => $credit_card_info['card_number'],
+				'type'           => $credit_card_info['type'],
+				'amount'         => $order_info['total'],
+				'response'       => $response
 			];
 
 			$this->model_extension_oc_payment_example_payment_credit_card->addReport($this->customer->getId(), $report_data);

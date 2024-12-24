@@ -312,8 +312,16 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<string, mixed>> order records that have subscription ID
 	 */
-	public function getOrdersBySubscriptionId(int $subscription_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	public function getOrdersBySubscriptionId(int $subscription_id, int $start = 0, int $limit = 20): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 1;
+		}
+
+		$query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`subscription_id` = '" . (int)$subscription_id . "' ORDER BY `order_id` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

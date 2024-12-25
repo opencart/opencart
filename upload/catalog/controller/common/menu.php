@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Menu
  * 
- * Can be called from $this->load->controller('common/maintenance');
+ * Can be called from $this->load->controller('common/menu');
  *
  * @package Opencart\Catalog\Controller\Common
  */

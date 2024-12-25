@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Category
  *
+ * @example $category_model = $this->model_catalog_category;
+ *
  * Can be called from $this->load->model('catalog/category');
  *
  * @package Opencart\Catalog\Model\Catalog

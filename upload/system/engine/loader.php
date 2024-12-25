@@ -150,6 +150,9 @@ class Loader {
 
 		$proxy = new \Opencart\System\Engine\Proxy();
 
+		// pass the object to proxy in order to provide access to public properties
+		$proxy->setObject($object);
+		
 		foreach (get_class_methods($object) as $method) {
 			if (substr($method, 0, 2) != '__') {
 				$proxy->{$method} = $this->callback($route . '.' . $method);

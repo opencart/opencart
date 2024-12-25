@@ -166,14 +166,20 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$options = $store->model_catalog_product->getOptions($product['product_id'], $product['order_product_id']);
 
 						foreach ($options as $option) {
-							if ($option['required']) {
-								$option_info = $this->model_checkout_subscription->getOption($result['subscription_id'], $product['subscription_product_id'], $option['product_option_id']);
+							$option_info = $this->model_checkout_subscription->getOption($result['subscription_id'], $product['subscription_product_id'], $option['product_option_id']);
 
-								if ($option_info && $option_info['value']) {
+							if ($option_info) {
+								if ($option['type'] == 'select' || $option['type'] == 'radio') {
+									$option_data[$option['product_option_id']] = $option_info['product_option_value_id'];
+								} elseif ($option['type'] == 'checkbox') {
+									$option_data[$option['product_option_id']][] = $option_info['product_option_value_id'];
+								} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
 									$option_data[$option['product_option_id']] = $option_info['value'];
-								} else {
-									$error['option_' . $product['product_id'] . '_' . $option['product_option_id']] = sprintf($this->language->get('error_option'), $option['name']);
 								}
+							}
+
+							if ($option['required'] && !isset($option_data[$option['product_option_id']])) {
+								$error['option_' . $product['product_id'] . '_' . $option['product_option_id']] = sprintf($this->language->get('error_option'), $option['name']);
 							}
 						}
 

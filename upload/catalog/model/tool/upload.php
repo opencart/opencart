@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Tool;
 /**
  * Class Upload
+ * 
+ * @example $upload_model = $this->model_tool_upload;
  *
  * Can be called from $this->load->model('tool/upload');
  *

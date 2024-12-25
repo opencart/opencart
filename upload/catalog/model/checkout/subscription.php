@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Subscription
+ * 
+ * @example $subscription_model = $this->model_checkout_subscription;
  *
  * Can be called from $this->load->model('checkout/subscription');
  *

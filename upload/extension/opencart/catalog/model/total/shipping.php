@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Shipping
+ * 
+ * @example $shipping_model = $this->model_extension_opencart_total_shipping;
  *
  * Can be called from $this->load->model('extension/opencart/total/shipping');
  *

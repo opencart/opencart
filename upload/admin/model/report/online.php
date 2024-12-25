@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Report;
 /**
  * Class Online
+ * 
+ * @example $online_model = $this->model_report_online;
  *
  * Can be called from $this->load->model('report/online');
  *

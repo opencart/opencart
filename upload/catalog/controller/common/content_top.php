@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Content Top
+ * 
+ * Can be called from $this->load->controller('common/content_top');
  *
  * @package Opencart\Catalog\Controller\Common
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Maintenance
+ * 
+ * Can be called from $this->load->controller('common/maintenance');
  *
  * @package Opencart\Catalog\Controller\Common
  */

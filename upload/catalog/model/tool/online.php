@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Tool;
 /**
  * Class Online
+ * 
+ * @example $online_model = $this->model_tool_online;
  *
  * Can be called from $this->load->model('tool/online');
  *

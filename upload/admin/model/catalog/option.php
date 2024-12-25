@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Option
+ * 
+ * @example $option_model = $this->model_catalog_option;
  *
  * Can be called from $this->load->model('catalog/option');
  *

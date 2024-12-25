@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\OcPaymentExample\Payment;
 /**
  * Credit Card
+ * 
+ * @example $credit_card_model = $this->model_extension_oc_payment_example_payment_credit_card;
  *
  * Can be called from $this->load->model('extension/oc_payment_example/payment/credit_card');
  *

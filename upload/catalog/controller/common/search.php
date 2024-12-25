@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Search
+ * 
+ * Can be called from $this->load->controller('common/search');
  *
  * @package Opencart\Catalog\Controller\Common
  */

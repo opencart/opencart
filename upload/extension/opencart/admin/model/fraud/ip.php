@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Fraud;
 /**
  * Class Ip
+ * 
+ * @example $ip_model = $this->model_extension_opencart_fraud_ip;
  *
  * Can be called from $this->load->model('extension/opencart/fraud/ip');
  *

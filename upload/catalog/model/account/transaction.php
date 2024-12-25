@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Transaction
+ * 
+ * @example $transaction_model = $this->model_account_transaction;
  *
  * Can be called from $this->load->model('account/transaction');
  *

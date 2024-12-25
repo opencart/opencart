@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Return Action
+ * 
+ * @example $return_action_model = $this->model_localisation_return_action;
  *
  * Can be called from $this->load->model('localisation/return_action');
  *

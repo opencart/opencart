@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Home
+ * 
+ * Can be called from $this->load->controller('common/home');
  *
  * @package Opencart\Catalog\Controller\Common
  */

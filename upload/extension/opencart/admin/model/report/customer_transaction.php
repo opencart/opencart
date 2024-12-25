@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Customer Transaction
+ * 
+ * @example $customer_transaction_model = $this->model_extension_opencart_report_customer_transaction;
  *
  * Can be called from $this->load->model('extension/opencart/report/customer_transaction');
  *

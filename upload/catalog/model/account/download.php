@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Download
+ * 
+ * @example $download_model = $this->model_account_download;
  *
  * Can be called from $this->load->model('account/download');
  *

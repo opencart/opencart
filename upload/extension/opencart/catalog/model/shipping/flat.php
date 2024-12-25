@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Flat
+ * 
+ * @example $flat_model = $this->model_extension_opencart_shipping_flat;
  *
  * Can be called from $this->load->model('extension/opencart/shipping/flat');
  *

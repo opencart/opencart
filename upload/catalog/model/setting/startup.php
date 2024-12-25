@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Startup
+ * 
+ * @example $startup_model = $this->model_setting_startup;
  *
  * Can be called from $this->load->model('setting/startup');
  *

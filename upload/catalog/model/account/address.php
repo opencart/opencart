@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Address
+ * 
+ * @example $address_model = $this->model_account_address;
  *
  * Can be called from $this->load->model('account/address');
  *

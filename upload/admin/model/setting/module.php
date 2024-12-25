@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Setting;
 /**
  * Class Module
+ * 
+ * @example $modification_model = $this->model_setting_module;
  *
  * Can be called from $this->load->model('setting/module');
  *

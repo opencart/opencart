@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Bestseller
+ * 
+ * @example $bestseller_model = $this->model_extension_opencart_module_bestseller;
  *
  * Can be called from $this->load->model('extension/opencart/module/bestseller');
  *

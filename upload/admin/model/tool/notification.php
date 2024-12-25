@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Tool;
 /**
  * Class Notification
+ * 
+ * @example $notification_model = $this->model_tool_notification;
  *
  * Can be called from $this->load->model('tool/notification');
  *

@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Low Order Fee
+ * 
+ * @example $low_order_fee_model = $this->model_extension_opencart_total_low_order_fee;
  *
  * Can be called from $this->load->model('extension/opencart/total/low_order_fee');
  *

@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Affiliate
+ * 
+ * @example $affiliate_model = $this->model_account_affiliate;
  *
  * Can be called from $this->load->model('account/affiliate');
  *

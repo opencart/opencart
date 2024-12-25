@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute
+ * 
+ * @example $attribute_model = $this->model_catalog_attribute;
  *
  * Can be called from $this->load->model('catalog/attribute');
  *

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Length Class
+ * 
+ * @example $length_class_model = $this->model_localisation_length_class;
  *
  * Can be called from $this->load->model('localisation/length_class');
  *

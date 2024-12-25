@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Marketing;
 /**
  * Class Marketing
+ * 
+ * @example $marketing_model = $this->model_marketing_marketing;
  *
  * Can be called from $this->load->model('marketing/marketing');
  *

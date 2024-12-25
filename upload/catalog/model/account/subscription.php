@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Subscription
+ * 
+ * @example $subscription_model = $this->model_account_subscription;
  *
  * Can be called from $this->load->model('account/subscription');
  *

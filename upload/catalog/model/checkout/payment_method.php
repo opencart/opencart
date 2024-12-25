@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Payment Method
+ * 
+ * @example $payment_method_model = $this->model_checkout_payment_method;
  *
  * Can be called from $this->load->model('checkout/payment_method');
  *

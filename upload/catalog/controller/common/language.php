@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Language
+ * 
+ * Can be called from $this->load->controller('common/language');
  *
  * @package Opencart\Catalog\Controller\Common
  */

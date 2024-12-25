@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Pagination
+ * 
+ * Can be called from $this->load->controller('common/pagination');
  *
  * @package Opencart\Admin\Controller\Common
  */

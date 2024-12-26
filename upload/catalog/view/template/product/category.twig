@@ -47,7 +47,7 @@
         {% endif %}
       {% endif %}
       {% if products %}
-        <div id="display-control" class="row">
+        <div class="row">
           <div class="col-lg-3">
             <div class="mb-3">
               <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fa-solid fa-arrow-right-arrow-left"></i> <span class="d-none d-xl-inline">{{ text_compare }}</span></a>
@@ -61,7 +61,8 @@
           </div>
           <div class="col-lg-4 offset-lg-1 col-6">
             <div class="input-group mb-3">
-              <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select" onchange="location = this.value;">
+              <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+              <select id="input-sort" class="form-select" onchange="location = this.value;">
                 {% for sorts in sorts %}
                   <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
                 {% endfor %}
@@ -70,7 +71,8 @@
           </div>
           <div class="col-lg-3 col-6">
             <div class="input-group mb-3">
-              <label for="input-limit" class="input-group-text">{{ text_limit }}</label> <select id="input-limit" class="form-select" onchange="location = this.value;">
+              <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
+              <select id="input-limit" class="form-select" onchange="location = this.value;">
                 {% for limits in limits %}
                   <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
                 {% endfor %}

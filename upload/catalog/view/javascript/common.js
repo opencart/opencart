@@ -448,10 +448,6 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '[data-oc-toggle=\'\']', function() {
-
-    });
-
     // Cookie Policy
     $('#cookie button').on('click', function() {
         var element = this;

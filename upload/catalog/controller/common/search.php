@@ -16,14 +16,27 @@ class Search extends \Opencart\System\Engine\Controller {
 
 		$data['text_search'] = $this->language->get('text_search');
 
+		$data['action'] = $this->url->link('common/search.redirect', 'language=' . $this->config->get('config_language'));
+
 		if (isset($this->request->get['search'])) {
 			$data['search'] = $this->request->get['search'];
 		} else {
 			$data['search'] = '';
 		}
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('common/search', $data);
+	}
+
+	/**
+	 * Redirect
+	 */
+	public function redirect() {
+		if (isset($this->request->post['search'])) {
+			$search = urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$search = '';
+		}
+
+		$this->response->redirect($this->url->link('product/search', 'search=' . $search, true));
 	}
 }

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Sale;
 /**
  * Class Order
+ * 
+ * @example $order_model = $this->model_sale_order;
  *
  * Can be called from $this->load->model('sale/order');
  *

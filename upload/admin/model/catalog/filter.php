@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter
+ * 
+ * @example $filter_model = $this->model_catalog_filter;
  *
  * Can be called from $this->load->model('catalog/filter');
  *

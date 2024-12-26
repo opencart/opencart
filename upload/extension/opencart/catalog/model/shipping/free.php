@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Free
+ * 
+ * @example $free_model = $this->model_extension_opencart_shipping_free;
  *
  * Can be called from $this->load->model('extension/opencart/shipping/free');
  */

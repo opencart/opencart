@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Customer Group
+ * 
+ * @example $customer_group_model = $this->model_account_customer_group;
  *
  * Can be called from $this->load->model('account/customer_group');
  *

@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Column Right
+ * 
+ * Can be called from $this->load->controller('common/column_right');
  *
  * @package Opencart\Catalog\Controller\Common
  */

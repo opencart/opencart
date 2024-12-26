@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Cart
+ * 
+ * @example $cart_model = $this->model_checkout_cart;
  *
  * Can be called from $this->load->model('checkout/cart');
  *

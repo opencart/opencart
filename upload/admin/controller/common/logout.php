@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Logout
+ * 
+ * Can be called from $this->load->controller('common/logout');
  *
  * @package Opencart\Admin\Controller\Common
  */

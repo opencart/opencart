@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Header
+ * 
+ * Can be called from $this->load->controller('common/header');
  *
  * @package Opencart\Catalog\Controller\Common
  */

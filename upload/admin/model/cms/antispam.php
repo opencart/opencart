@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Cms;
 /**
  * Class Anti-Spam
+ * 
+ * @example $antispam_model = $this->model_cms_antispam;
  *
  * Can be called from $this->load->model('cms/antispam');
  *

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Footer
+ * 
+ * Can be called from $this->load->controller('common/footer');
  *
  * @package Opencart\Admin\Controller\Common
  */

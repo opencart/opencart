@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class Custom Field
+ * 
+ * @example $customer_model = $this->model_customer_customer;
  *
  * Can be called from $this->load->model('customer/custom_field');
  *
@@ -361,7 +363,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int                  $custom_field_value_id          primary key of the custom field value record
 	 * @param int                  $custom_field_id                primary key of the custom field record
 	 * @param int                  $language_id                    primary key of the language record
-	 * @param array<string, mixed> $custom_field_value_description
+	 * @param array<string, mixed> $custom_field_value_description array of data
 	 *
 	 * @return void
 	 */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Login
+ * 
+ * Can be called from $this->load->controller('common/login');
  *
  * @package Opencart\Admin\Controller\Common
  */

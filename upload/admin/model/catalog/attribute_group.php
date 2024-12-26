@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute Group
+ * 
+ * @example $attribute_group_model = $this->model_catalog_attribute_group;
  *
  * Can be called from $this->load->model('catalog/attribute_group');
  *

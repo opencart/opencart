@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Order Status
+ * 
+ * @example $order_status_model = $this->model_localisation_order_status;
  *
  * Can be called from $this->load->model('localisation/order_status');
  *

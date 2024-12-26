@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Subscription
+ * 
+ * @example $subscription_model = $this->model_extension_opencart_report_subscription;
  *
  * Can be called from $this->load->model('extension/opencart/report/subscription');
  *

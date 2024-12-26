@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Sub Total
+ * 
+ * @example $sub_total_model = $this->model_extension_opencart_total_sub_total;
  *
  * Can be called from $this->load->model('extension/opencart/total/sub_total');
  *

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\User;
 /**
  * Class User Group
+ * 
+ * @example $user_group_model = $this->model_user_user_group;
  *
  * Can be called from $this->load->model('user/user_group');
  *

@@ -356,7 +356,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> subscription records that have order ID
 	 */
 	public function getSubscriptions(int $order_id): array {
-		$query = $this->db->query("SELECT *, `os`.price, `os`.`tax` FROM `" . DB_PREFIX . "order_subscription` `os` LEFT JOIN `" . DB_PREFIX . "order_product` `op` ON(`os`.`order_product_id` = `op`.`order_product_id`) WHERE `os`.`order_id` = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT *, `os`.`price`, `os`.`tax` FROM `" . DB_PREFIX . "order_subscription` `os` LEFT JOIN `" . DB_PREFIX . "order_product` `op` ON(`os`.`order_product_id` = `op`.`order_product_id`) WHERE `os`.`order_id` = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}

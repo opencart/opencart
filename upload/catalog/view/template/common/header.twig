@@ -14,7 +14,9 @@
   {% endif %}
   <script src="{{ jquery }}" type="text/javascript"></script>
   <link href="{{ bootstrap }}" type="text/css" rel="stylesheet" media="screen"/>
-  <link href="{{ icons }}" type="text/css" rel="stylesheet"/>
+  {% if icon %}
+    <link rel="icon" href="{{ icon }}" type="image/png">
+  {% endif %}
   <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
   <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
   <link rel="icon" href="{{ icon }}" type="image/png">

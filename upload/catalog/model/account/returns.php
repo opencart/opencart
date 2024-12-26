@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Returns
- * 
+ *
  * @example $returns_model = $this->model_account_returns;
  *
  * Can be called from $this->load->model('account/returns');

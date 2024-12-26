@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Option
- * 
+ *
  * @example $option_model = $this->model_catalog_option;
  *
  * Can be called from $this->load->model('catalog/option');
@@ -220,7 +220,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $option_id primary key of the option record
 	 * @param array<string, mixed> $data      array of data
-	 * 
+	 *
 	 * @return int total numbers of value records
 	 */
 	public function addValue(int $option_id, array $data): int {

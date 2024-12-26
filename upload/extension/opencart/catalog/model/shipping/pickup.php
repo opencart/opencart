@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Pickup
- * 
+ *
  * @example $pickup_model = $this->model_extension_opencart_shipping_pickup;
  *
  * Can be called from $this->load->model('extension/opencart/shipping/pickup');
@@ -13,7 +13,7 @@ class Pickup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Quote
 	 *
-	 * @param array<string, mixed> $address
+	 * @param array<string, mixed> $address array of data
 	 *
 	 * @return array<string, mixed>
 	 */

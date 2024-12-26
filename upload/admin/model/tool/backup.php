@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Tool;
 /**
  * Class Backup
- * 
+ *
  * @example $backup_model = $this->model_tool_backup;
  *
  * Can be called from $this->load->model('tool/backup');

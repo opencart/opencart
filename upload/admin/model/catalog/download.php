@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Download
- * 
+ *
  * @example $download_model = $this->model_catalog_download;
  *
  * Can be called from $this->load->model('catalog/download');
@@ -124,7 +124,7 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
-	 * 
+	 *
 	 * @param int                  $download_id primary key of the download record
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
@@ -137,7 +137,7 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Descriptions
-	 * 
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void

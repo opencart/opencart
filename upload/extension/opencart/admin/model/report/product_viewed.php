@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Product Viewed
- * 
+ *
  * @example $product_viewed_model = $this->model_extension_opencart_report_product_viewed;
  *
  * Can be called from $this->load->model('extension/opencart/report/product_viewed');

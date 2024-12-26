@@ -60,7 +60,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/*
+	/**
 	 *  Action Statuses
 	 *
 	 *	EXPORT

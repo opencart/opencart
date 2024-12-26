@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\OcPaymentExample\Payment;
 /**
  * Credit Card
- * 
+ *
  * @example $credit_card_model = $this->model_extension_oc_payment_example_payment_credit_card;
  *
  * Can be called from $this->load->model('extension/oc_payment_example/payment/credit_card');
@@ -80,9 +80,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
-	 * @param int $download_id primary key of the download record
 	 * @param int $start
 	 * @param int $limit
+	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */

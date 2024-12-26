@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Column Left
- * 
+ *
  * Can be called from $this->load->controller('common/column_left');
  *
  * @package Opencart\Catalog\Controller\Common

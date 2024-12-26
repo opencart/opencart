@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute
- * 
+ *
  * @example $attribute_model = $this->model_catalog_attribute;
  *
  * Can be called from $this->load->model('catalog/attribute');
@@ -12,7 +12,7 @@ namespace Opencart\Admin\Model\Catalog;
 class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Attribute
-	 * 
+	 *
 	 * Create a new attribute record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
@@ -209,7 +209,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Description
-	 * 
+	 *
 	 * Get the record of the attribute description record in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record

@@ -94,7 +94,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
-                $output = $this->load->controller('extension/' . $result['extension'] . '/account/' . $result['code']);
+				$output = $this->load->controller('extension/' . $result['extension'] . '/account/' . $result['code']);
 
 				if (is_string($output)) {
 					$data['payment_methods'][] = $output;

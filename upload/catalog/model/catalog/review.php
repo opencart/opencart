@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Review
- * 
+ *
  * @example $review_model = $this->model_catalog_review;
  *
  * Can be called from $this->load->model('catalog/review');

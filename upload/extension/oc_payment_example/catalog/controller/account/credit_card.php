@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\OcPaymentExample\Account;
 class CreditCard extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
-	 * 
+	 *
 	 * @return string
 	 */
 	public function index(): string {

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Subscription Plan
- * 
+ *
  * @example $subscription_plan_model = $this->model_catalog_subscription_plan;
  *
  * Can be called from $this->load->model('catalog/subscription_plan');

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Search
- * 
+ *
  * @example $search_model = $this->model_account_search;
  *
  * Can be called from $this->load->model('account/search');

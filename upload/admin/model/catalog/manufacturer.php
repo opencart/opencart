@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Manufacturer
- * 
+ *
  * @example $manufacturer_model = $this->model_catalog_manufacturer;
  *
  * Can be called from $this->load->model('catalog/manufacturer');

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Cart
- * 
+ *
  * Can be called from $this->load->controller('common/cart');
  *
  * @package Opencart\Catalog\Controller\Common

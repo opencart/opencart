@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Sale;
 /**
  * Class Subscription
- * 
+ *
  * @example $subscription_model = $this->model_sale_subscription;
  *
  * Can be called from $this->load->model('sale/subscription');

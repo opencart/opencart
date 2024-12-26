@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Pagination
- * 
+ *
  * @package Opencart\Admin\Controller\Common
  */
 class Pagination extends \Opencart\System\Engine\Controller {

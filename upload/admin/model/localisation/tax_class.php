@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Tax Class
- * 
+ *
  * @example $tax_class_model = $this->model_localisation_tax_class;
  *
  * Can be called from $this->load->model('localisation/tax_class');

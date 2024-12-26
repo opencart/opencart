@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Customer
- * 
+ *
  * @example $customer_model = $this->model_extension_opencart_report_customer;
  *
  * Can be called from $this->load->model('extension/opencart/report/customer');

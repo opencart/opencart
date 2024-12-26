@@ -196,7 +196,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/gdpr_list', $data);
 	}
 
-	/*
+	/**
 	 *  Action Statuses
 	 *
 	 *	EXPORT

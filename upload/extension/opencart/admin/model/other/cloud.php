@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Other;
 /**
  * Class Cloud
- * 
+ *
  * @example $cloud_model = $this->model_extension_opencart_other_cloud;
  *
  * Can be called from $this->load->model('extension/opencart/other/cloud');

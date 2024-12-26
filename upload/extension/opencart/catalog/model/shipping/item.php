@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
  * Class Item
- * 
+ *
  * @example $item_model = $this->model_extension_opencart_shipping_item;
  *
  * Can be called from $this->load->model('extension/opencart/shipping/item');
@@ -13,7 +13,7 @@ class Item extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Quote
 	 *
-	 * @param array<string, mixed> $address
+	 * @param array<string, mixed> $address array of data
 	 *
 	 * @return array<string, mixed>
 	 */

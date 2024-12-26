@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Sale;
 /**
  * Class Returns
- * 
+ *
  * @example $returns_model = $this->model_sale_returns;
  *
  * Can be called from $this->load->model('sale/returns');

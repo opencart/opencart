@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Product
- * 
+ *
  * @example $product_model = $this->model_catalog_product;
  *
  * Can be called from $this->load->model('catalog/product');
@@ -602,11 +602,11 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-					$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
 			} elseif ($data['sort'] == 'p.price') {
-					$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
+				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
-					$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY " . $data['sort'];
 			}
 		} else {
 			$sql .= " ORDER BY `p`.`sort_order`";

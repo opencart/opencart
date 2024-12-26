@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Currency
- * 
+ *
  * Can be called from $this->load->controller('common/currency');
  *
  * @package Opencart\Catalog\Controller\Common

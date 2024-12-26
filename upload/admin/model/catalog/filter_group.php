@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter Group
- * 
+ *
  * @example $filter_group_model = $this->model_catalog_filter_group;
  *
  * Can be called from $this->load->model('catalog/filter_group');
@@ -166,7 +166,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {

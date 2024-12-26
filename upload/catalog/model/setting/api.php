@@ -55,7 +55,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> session records that have api id
 	 */
 	public function deleteSessions(int $api_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, `date_modified`) < NOW() AND `api_id` = '" . (int)$api_id . "'");

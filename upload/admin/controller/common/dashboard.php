@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Dashboard
- * 
+ *
  * Can be called from $this->load->controller('common/dashboard');
  *
  * @package Opencart\Admin\Controller\Common

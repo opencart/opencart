@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Translation
- * 
+ *
  * @example $translation_model = $this->model_design_translation;
  *
  * Can be called from $this->load->model('design/translation');

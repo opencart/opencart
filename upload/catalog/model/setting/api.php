@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Api
- * 
+ *
  * @example $api_model = $this->model_setting_api;
  *
  * Can be called from $this->load->model('setting/api');
@@ -55,7 +55,7 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
-	 * @return array<int, array<string, mixed>> session records that have api id
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function deleteSessions(int $api_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, `date_modified`) < NOW() AND `api_id` = '" . (int)$api_id . "'");

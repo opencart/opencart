@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\OcPaymentExample\Payment;
 /**
  * Credit Card
- * 
+ *
  * @example $credit_card_model = $this->model_extension_oc_payment_example_payment_credit_card;
  *
  * Can be called from $this->load->model('extension/oc_payment_example/payment/credit_card');
@@ -10,8 +10,12 @@ namespace Opencart\Catalog\Model\Extension\OcPaymentExample\Payment;
  * @package Opencart\Catalog\Model\Extension\OcPaymentExample\Payment
  */
 class CreditCard extends \Opencart\System\Engine\Model {
-	/*
+	/**
 	 * Get the payment methods
+	 *
+	 * @param array<string, mixed> $address array of filters
+	 *
+	 * @return array<string, mixed>
 	 */
 	public function getMethods(array $address): array {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
@@ -60,44 +64,34 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $method_data;
 	}
 
-	/*
-	 * Add a credit card to the customer's account
-	 */
+	// Add a credit card to the customer's account
 	public function addCreditCard(int $customer_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card` SET `customer_id` = '" . (int)$customer_id . "', `card_name` = '" . $this->db->escape($data['card_name']) . "', `type` = '" . $this->db->escape($data['type']) . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `card_expire_month` = '" . $this->db->escape($data['card_expire_month']) . "', `card_expire_year` = '" . $this->db->escape($data['card_expire_year']) . "', `card_cvv` = '" . $this->db->escape($data['card_cvv']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	/*
-	 * Delete a credit card from the customer's account
-	 */
+	// Delete a credit card from the customer's account
 	public function deleteCreditCard(int $customer_id, int $credit_card_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
 	}
 
-	/*
-	 * Get a credit card from the customer's account
-	 */
+	// Get a credit card from the customer's account
 	public function getCreditCard(int $customer_id, int $credit_card_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
 
 		return $query->row;
 	}
 
-	/*
-	 * Get all credit cards from the customer's account
-	 */
+	// Get all credit cards from the customer's account
 	public function getCreditCards(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->rows;
 	}
 
-	/*
-	 * Add Report
-	 */
-	public function addReport(int $customer_id, array $data) {
+	// Add Report
+	public function addReport(int $customer_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card_report` SET `customer_id` = '" . (int)$customer_id . "', `credit_card_id` = '" . (int)$data['credit_card_id'] . "', `order_id` = '" . (int)$data['order_id'] . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `type` = '" . $this->db->escape($data['type']) . "', `amount` = '" . $this->db->escape($data['amount']) . "', `response` = '" . (bool)$data['response'] . "', `date_added` = NOW()");
 	}
 }

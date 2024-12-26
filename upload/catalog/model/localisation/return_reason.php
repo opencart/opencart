@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Return Reason
- * 
+ *
  * @example $return_reason_model = $this->model_localisation_return_reason;
  *
  * Can be called from $this->load->model('localisation/return_reason');

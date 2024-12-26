@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class Customer Approval
- * 
+ *
  * @example $customer_approval_model = $this->model_customer_customer_approval;
  *
  * Can be called from $this->load->model('customer/customer_approval');

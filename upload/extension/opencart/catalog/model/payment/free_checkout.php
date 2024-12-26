@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class Free Checkout
- * 
+ *
  * @example $free_checkout_model = $this->model_extension_opencart_payment_free_checkout;
  *
  * Can be called from $this->load->model('extension/opencart/payment/free_checkout');
@@ -13,7 +13,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *
-	 * @param array<string, mixed> $address
+	 * @param array<string, mixed> $address array of data
 	 *
 	 * @return array<string, mixed>
 	 */

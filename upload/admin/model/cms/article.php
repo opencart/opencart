@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Cms;
 /**
  * Class Article
- * 
+ *
  * @example $article_model = $this->model_cms_article;
  *
  * Can be called from $this->load->model('cms/article');

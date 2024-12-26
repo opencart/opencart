@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Search
- * 
+ *
  * Can be called from $this->load->controller('common/search');
  *
  * @package Opencart\Catalog\Controller\Common
@@ -32,7 +32,7 @@ class Search extends \Opencart\System\Engine\Controller {
 	/**
 	 * Redirect
 	 */
-	public function redirect() {
+	public function redirect(): void {
 		if (isset($this->request->post['search'])) {
 			$search = urlencode(html_entity_decode($this->request->post['search'], ENT_QUOTES, 'UTF-8'));
 		} else {

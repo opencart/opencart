@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Layout
- * 
+ *
  * @example $layout_model = $this->model_design_layout;
  *
  * Can be called from $this->load->model('design/layout');

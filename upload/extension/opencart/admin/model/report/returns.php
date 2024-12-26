@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Returns
- * 
+ *
  * @example $returns_model = $this->model_extension_opencart_report_returns;
  *
  * Can be called from $this->load->model('extension/opencart/report/returns');

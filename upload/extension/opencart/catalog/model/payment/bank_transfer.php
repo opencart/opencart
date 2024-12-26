@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class Bank Transfer
- * 
+ *
  * @example $bank_transfer_model = $this->model_extension_opencart_payment_bank_transfer;
  *
  * Can be called from $this->load->model('extension/opencart/payment/bank_transfer');
@@ -13,7 +13,7 @@ class BankTransfer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *
-	 * @param array<string, mixed> $address
+	 * @param array<string, mixed> $address array of data
 	 *
 	 * @return array<string, mixed>
 	 */

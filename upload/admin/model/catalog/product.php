@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Product
- * 
+ *
  * @example $product_model = $this->model_catalog_product;
  *
  * Can be called from $this->load->model('catalog/product');

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Security
- * 
+ *
  * Can be called from $this->load->controller('common/security');
  *
  * @package Opencart\Admin\Controller\Common

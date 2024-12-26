@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Activity
- * 
+ *
  * @example $activity_model = $this->model_extension_opencart_report_activity;
  *
  * Can be called from $this->load->model('extension/opencart/report/activity');

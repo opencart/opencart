@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Tax Rate
- * 
+ *
  * @example $tax_rate_model = $this->model_localisation_tax_rate;
  *
  * Can be called from $this->load->model('localisation/tax_rate');

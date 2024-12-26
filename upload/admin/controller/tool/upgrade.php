@@ -74,7 +74,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$data['date_added'] = '';
 			$data['log'] = '';
 		}
-		
+
 		// For testing
 		//$data['latest_version'] = 'master';
 

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Sale;
 /**
  * Class Order
- * 
+ *
  * @example $order_model = $this->model_sale_order;
  *
  * Can be called from $this->load->model('sale/order');
@@ -311,6 +311,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Get Orders By Subscription ID
 	 *
 	 * @param int $subscription_id primary key of the subscription record
+	 * @param int $start
+	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> order records that have subscription ID
 	 */

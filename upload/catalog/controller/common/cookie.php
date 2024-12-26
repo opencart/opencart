@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Cookie
- * 
+ *
  * Can be called from $this->load->controller('common/cookie');
  *
  * @package Opencart\Catalog\Controller\Common

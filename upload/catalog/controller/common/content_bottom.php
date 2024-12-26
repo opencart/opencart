@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Content Bottom
- * 
+ *
  * Can be called from $this->load->controller('common/column_bottom');
  *
  * @package Opencart\Catalog\Controller\Common

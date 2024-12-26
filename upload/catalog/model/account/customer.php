@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Customer
- * 
+ *
  * @example $customer_model = $this->model_account_customer;
  *
  * Can be called from $this->load->model('account/customer');

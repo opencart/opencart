@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Subscription Plan
- * 
+ *
  * @example $subscription_plan_model = $this->model_catalog_subscription_plan;
  *
  * Can be called from $this->load->model('catalog/subscription_plan');
@@ -165,7 +165,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 * Delete Descriptions By Language ID
 	 *
 	 * @param int $language_id primary key of the language record
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {

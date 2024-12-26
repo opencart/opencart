@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\OcPaymentExample\Payment;
 class CreditCard extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
-	 * 
+	 *
 	 * @return string
 	 */
 	public function index(): string {
@@ -221,7 +221,6 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			if ($response) {
 				/*
 				 * Credit Card charge code goes here
-				 *
 				 */
 				$this->model_checkout_order->addHistory($order_id, $this->config->get('payment_credit_card_approved_status_id'), '', true);
 

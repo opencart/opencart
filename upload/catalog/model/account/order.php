@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 /**
  * Class Order
- * 
+ *
  * @example $order_model = $this->model_account_order;
  *
  * Can be called from $this->load->model('account/order');

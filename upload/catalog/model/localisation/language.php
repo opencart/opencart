@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Language
- * 
+ *
  * @example $language_model = $this->model_localisation_language;
  *
  * Can be called from $this->load->model('localisation/language');

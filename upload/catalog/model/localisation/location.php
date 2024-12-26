@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Location
- * 
+ *
  * @example $location_model = $this->model_localisation_location;
  *
  * Can be called from $this->load->model('localisation/location');

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
  * Class Latest
- * 
+ *
  * @example $latest_model = $this->model_extension_opencart_module_latest;
  *
  * Can be called from $this->load->model('extension/opencart/module/latest');

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Tool;
 /**
  * Class Image
- * 
+ *
  * @example $image_model = $this->model_tool_image;
  *
  * Can be called from $this->load->model('tool/image');

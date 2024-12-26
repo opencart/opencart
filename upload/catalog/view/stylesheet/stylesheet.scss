@@ -27,10 +27,6 @@ label {
   font-weight: normal;
 }
 
-.nav-tabs {
-  margin-bottom: 15px;
-}
-
 div.required .col-form-label:before, div.required .form-label:before {
   content: '* ';
   color: #F00;
@@ -117,14 +113,15 @@ div.required .col-form-label:before, div.required .form-label:before {
 
 /* top */
 #top {
-  background-color: #EEEEEE;
-  border-bottom: 1px solid #e2e2e2;
-  padding: 10px 0;
+  background-color: var(--bs-tertiary-bg);
+  border-bottom: 1px solid var(--bs-border-color);
   margin: 0 0 20px 0;
   min-height: 44px;
   position: relative;
 
   .nav {
+    padding: 10px 0px;
+
     > .list-inline {
       > .list-inline-item, .list-inline-item > a, .list-inline-item .dropdown > a {
         color: #888;
@@ -366,13 +363,18 @@ div.required .col-form-label:before, div.required .form-label:before {
   padding-bottom: 300px;
 }
 
+@media (max-width: 576px) {
+  #container, #content, #column-left, #column-right {
+    padding-bottom: 350px;
+  }
+}
+
 /* footer */
 footer {
   border: 1px solid #000000;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: auto;
   padding-top: 30px;
   background-color: #303030;
   border-top: 1px solid #ddd;
@@ -407,6 +409,7 @@ footer {
   margin: 0 0 20px 0;
   padding: 8px 0;
   border: 1px solid #ddd;
+  border-radius: var(--bs-border-radius);
   background-color: #f5f5f5;
 
   i {
@@ -445,9 +448,6 @@ footer {
   }
 }
 
-.pagination {
-  margin: 0;
-}
 
 /* buttons */
 .btn-inverse {
@@ -472,7 +472,9 @@ footer {
 .product-thumb {
   border: 1px solid #ddd;
   margin-bottom: 15px;
-
+  position: relative;
+  height: 100%;
+  padding-bottom: 30px;
   h4 {
     font-weight: bold;
   }
@@ -496,6 +498,9 @@ footer {
     display: flex;
     border-top: 1px solid #ddd;
     background-color: #eee;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 
     button {
       flex: 33%;
@@ -624,6 +629,9 @@ footer {
     border-color: #1f90bb #1f90bb #145e7a;
   }
 }
+.nav-tabs {
+  margin-bottom: 15px;
+}
 
 .form-check {
   .form-check-input {
@@ -632,22 +640,6 @@ footer {
 }
 
 /* Theme Custom CSS */
-#display-control {
-  #compare-total {
-    &.a {
-      margin-top: -2px;
-      padding: 0.35rem 0.565rem;
-    }
-  }
-}
-
-#product-product {
-  h1 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-}
-
 #information-contact {
   .card {
     margin-bottom: 20px;

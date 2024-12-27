@@ -20,6 +20,23 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$data['code'] = $this->session->data['currency'];
 
+		$data['currencies'] = [];
+
+		$this->load->model('localisation/currency');
+
+		$results = $this->model_localisation_currency->getCurrencies();
+
+		foreach ($results as $result) {
+			if ($result['status']) {
+				if ($result['code'] == $this->session->data['currency']) {
+					$data['symbol_left'] = $result['symbol_left'];
+					$data['symbol_right'] = $result['symbol_right'];
+				}
+
+				$data['currencies'][] = $result;
+			}
+		}
+
 		$url_data = $this->request->get;
 
 		if (isset($url_data['route'])) {
@@ -30,18 +47,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		unset($url_data['route']);
 		unset($url_data['_route_']);
-
-		$data['currencies'] = [];
-
-		$this->load->model('localisation/currency');
-
-		$results = $this->model_localisation_currency->getCurrencies();
-
-		foreach ($results as $result) {
-			if ($result['status']) {
-				$data['currencies'][] = $result;
-			}
-		}
 
 		$url = '';
 

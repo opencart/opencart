@@ -28,14 +28,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if ($result['status']) {
-				if ($result['code'] == $this->session->data['currency']) {
-					$data['symbol_left'] = $result['symbol_left'];
-					$data['symbol_right'] = $result['symbol_right'];
-				}
-
-				$data['currencies'][] = $result;
+				$data['currencies'][$result['code']] = $result;
 			}
 		}
+
+		$data['currency'] = $data['currencies'][$result['code']]['title'];
+		$data['symbol_left'] = $data['currencies'][$result['code']]['symbol_left'];
+		$data['symbol_right'] = $data['currencies'][$result['code']]['symbol_right'];
 
 		$url_data = $this->request->get;
 

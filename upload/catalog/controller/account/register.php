@@ -61,7 +61,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
 			foreach ($customer_groups as $customer_group) {
-				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				if (in_array($customer_group['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 					$data['customer_groups'][] = $customer_group;
 				}
 			}

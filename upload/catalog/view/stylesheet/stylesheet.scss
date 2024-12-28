@@ -111,12 +111,19 @@ button:focus {
   border-bottom: 1px solid var(--bs-border-color);
   margin-bottom: 20px;
   position: relative;
+  padding-bottom: 5px;
+
+  ul.list-inline {
+    margin-bottom: 0;
+  }
 
   .list-inline-item {
     > a, .dropdown > a {
       font-size: 1.1em;
-      line-height: 20px;
       color: var(--bs-gray-600);
+      line-height: 40px;
+      vertical-align: middle;
+      padding: 10px 0px 5px 0px;
     }
   }
 }

@@ -93,11 +93,17 @@ button:focus {
   border-bottom: 1px solid var(--bs-border-color);
   margin-bottom: 20px;
   position: relative;
+  padding-bottom: 5px;
+}
+#top ul.list-inline {
+  margin-bottom: 0;
 }
 #top .list-inline-item > a, #top .list-inline-item .dropdown > a {
   font-size: 1.1em;
-  line-height: 20px;
   color: var(--bs-gray-600);
+  line-height: 40px;
+  vertical-align: middle;
+  padding: 10px 0px 5px 0px;
 }
 /* logo */
 #logo {

@@ -25,7 +25,6 @@
           </div>
         </div>
       </div>
-
       {% if payment_address or shipping_address %}
         <div class="row">
           {% if payment_address %}
@@ -48,7 +47,6 @@
           {% endif %}
         </div>
       {% endif %}
-
       <div class="row">
         {% if shipping_method %}
           <div class="col mb-3">
@@ -67,7 +65,6 @@
           </div>
         </div>
       </div>
-
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -83,34 +80,32 @@
             {% set product_row = 0 %}
             {% for product in products %}
               <tr id="product-row-{{ product_row }}">
-                <td>
-                  <form id="form-product-{{ product_row }}">
-                    <a href="{{ product.view }}">{{ product.name }}</a>
-                    <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
-                    <ul class="list-unstyled mb-0">
+                <td><a href="{{ product.view }}">{{ product.name }}</a>
+                  <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <small> - {{ text_model }}: {{ product.model }}</small>
+                    </li>
+                    {% for option in product.option %}
                       <li>
-                        <small> - {{ text_model }}: {{ product.model }}</small>
+                        <small> - {{ option.name }}: {{ option.value }}</small>
+                        <div id="error-{{ product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
                       </li>
-                      {% for option in product.option %}
-                        <li>
-                          <small> - {{ option.name }}: {{ option.value }}</small>
-                          <div id="error-{{ product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
-                        </li>
-                      {% endfor %}
-                      {% if product.subscription %}
-                        <li>
-                          <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
-                          <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
-                        </li>
-                      {% endif %}
-                      {% if product.reward %}
-                        <li>
-                          <small> - {{ text_points }}: {{ product.reward }}</small>
-                        </li>
-                      {% endif %}
-                    </ul>
-                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-                    <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
+                    {% endfor %}
+                    {% if product.subscription %}
+                      <li>
+                        <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
+                        <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
+                      </li>
+                    {% endif %}
+                    {% if product.reward %}
+                      <li>
+                        <small> - {{ text_points }}: {{ product.reward }}</small>
+                      </li>
+                    {% endif %}
+                  </ul>
+                  <form id="form-product-{{ product_row }}">
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
                     {% for option in product.option %}
                       {% if option.type == 'select' or option.type == 'radio' %}
                         <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
@@ -135,7 +130,7 @@
                   </div>
                 </td>
               </tr>
-              {% set order_product_row = order_product_row + 1 %}
+              {% set product_row = product_row + 1 %}
             {% endfor %}
             {% for total in totals %}
               <tr>

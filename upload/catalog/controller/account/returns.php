@@ -61,7 +61,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['returns'][] = [
-				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'href'       => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)
 			] + $result;
@@ -149,10 +148,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['order_id'] = $return_info['order_id'];
 			$data['date_ordered'] = date($this->language->get('date_format_short'), strtotime($return_info['date_ordered']));
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_added']));
+
+			$data['customer_id'] = $return_info['customer_id'];
 			$data['firstname'] = $return_info['firstname'];
 			$data['lastname'] = $return_info['lastname'];
 			$data['email'] = $return_info['email'];
 			$data['telephone'] = $return_info['telephone'];
+
+			$data['product'] = $return_info['product'];
 			$data['product'] = $return_info['product'];
 			$data['model'] = $return_info['model'];
 			$data['quantity'] = $return_info['quantity'];
@@ -161,18 +164,11 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['comment'] = nl2br($return_info['comment']);
 			$data['action'] = $return_info['action'];
 
-			$data['histories'] = [];
-
-			$results = $this->model_account_returns->getHistories($return_id);
-
-			foreach ($results as $result) {
-				$data['histories'][] = [
-					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'comment'    => nl2br($result['comment'])
-				] + $result;
-			}
+			// History
+			$data['history'] = $this->getHistory();
 
 			$data['continue'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . $url . '&customer_token=' . $this->session->data['customer_token']);
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -455,5 +451,67 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('common/success', $data));
+	}
+
+	/**
+	 * History
+	 *
+	 * @return void
+	 */
+	public function history(): void {
+		$this->load->language('account/return');
+
+		$this->response->setOutput($this->getHistory());
+	}
+
+	/**
+	 * Get History
+	 *
+	 * @return string
+	 */
+	public function getHistory(): string {
+		if (isset($this->request->get['return_id'])) {
+			$return_id = (int)$this->request->get['return_id'];
+		} else {
+			$return_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'account/return.history') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			return '';
+		}
+
+		$data['histories'] = [];
+
+		$this->load->model('account/returns');
+
+		$results = $this->model_account_returns->getHistories($return_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['histories'][] = [
+				'comment'    => nl2br($result['comment']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			] + $result;
+		}
+
+		$return_total = $this->model_account_returns->getTotalHistories($return_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $return_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('account/return.history', 'customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $return_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($return_total - $limit)) ? $return_total : ((($page - 1) * $limit) + $limit), $return_total, ceil($return_total / $limit));
+
+		return $this->load->view('account/returns_history', $data);
 	}
 }

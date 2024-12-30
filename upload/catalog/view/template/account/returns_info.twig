@@ -6,33 +6,47 @@
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
-      <h1>{{ heading_title }}</h1>
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <td colspan="2">{{ text_return_detail }}</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="width: 50%;"><b>{{ text_return_id }}</b> #{{ return_id }}
-              <br/>
-              <b>{{ text_date_added }}</b> {{ date_added }}</td>
-            <td style="width: 50%;"><b>{{ text_orders_id }}</b> #{{ order_id }}
-              <br/>
-              <b>{{ text_date_ordered }}</b> {{ date_ordered }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>{{ text_product }}</h3>
+    <div id="content" class="col">
+      {{ content_top }}
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_return_id }}</strong>
+            <br/>
+            {{ return_id }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_date_added }}</strong>
+            <br/>
+            {{ date_added }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_order_id }}</strong>
+            <br/>
+            {{ order_id }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_date_ordered }}</strong>
+            <br/>
+            {{ date_ordered }}
+          </div>
+        </div>
+      </div>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td style="width: 33.3%;">{{ column_product }}</td>
-              <td style="width: 33.3%;">{{ column_model }}</td>
-              <td class="text-end" style="width: 33.3%;">{{ column_quantity }}</td>
+              <th>{{ column_product }}</th>
+              <th>{{ column_model }}</th>
+              <th class="text-end">{{ column_quantity }}</th>
             </tr>
           </thead>
           <tbody>
@@ -44,70 +58,50 @@
           </tbody>
         </table>
       </div>
-      <h3>{{ text_reason }}</h3>
-      <div class="table-responsive">
-        <table class="list table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th style="width: 33.3%;">{{ column_reason }}</th>
-              <th style="width: 33.3%;">{{ column_opened }}</th>
-              <th style="width: 33.3%;">{{ column_action }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ reason }}</td>
-              <td>{{ opened }}</td>
-              <td>{{ action }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_reason }}</strong>
+            <br/>
+            {{ reason }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_opened }}</strong>
+            <br/>
+            {{ opened }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_action }}</strong>
+            <br/>
+            {% if action %}{{ action }}{% else %}{{ text_tbc }}{% endif %}
+          </div>
+        </div>
       </div>
       {% if comment %}
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <td>{{ text_comment }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ comment }}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="form-control mb-3" style="min-height: 64px;">
+          <strong class="lead">{{ text_comment }}</strong>
+          <br/>
+          {{ comment }}
         </div>
       {% endif %}
-      <h3>{{ text_history }}</h3>
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th style="width: 33.3%;">{{ column_date_added }}</th>
-              <th style="width: 33.3%;">{{ column_status }}</th>
-              <th style="width: 33.3%;">{{ column_comment }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% if histories %}
-              {% for history in histories %}
-                <tr>
-                  <td>{{ history.date_added }}</td>
-                  <td>{{ history.status }}</td>
-                  <td>{{ history.comment }}</td>
-                </tr>
-              {% endfor %}
-            {% else %}
-              <tr>
-                <td colspan="3" class="text-center">{{ text_no_results }}</td>
-              </tr>
-            {% endif %}
-          </tbody>
-        </table>
-      </div>
-      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      <h2>{{ text_history }}</h2>
+      <div id="history">{{ history }}</div>
+      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
+<script type="text/javascript"><!--
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+//--></script>
+
 {{ footer }}

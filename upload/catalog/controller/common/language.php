@@ -46,12 +46,14 @@ class Language extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$this->config->set('config_language_id', $result['language_id']);
 
-			$data['languages'][] = ['href' => $this->url->link($route, 'language=' . $result['code'] . $url, true)] + $result;
+			$data['languages'][$result['code']] = ['href' => $this->url->link($route, 'language=' . $result['code'] . $url, true)] + $result;
 		}
 
 		$this->config->set('config_language_id', $language_id);
 
+		$data['name'] = $data['languages'][$result['code']]['name'];
 		$data['code'] = $this->config->get('config_language');
+		$data['image'] = $data['languages'][$result['code']]['image'];
 
 		return $this->load->view('common/language', $data);
 	}

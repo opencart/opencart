@@ -11,7 +11,6 @@
           <th class="d-none d-lg-table-cell"><a href="{{ sort_model }}"{% if sort == 'r.model' %} class="{{ order|lower }}"{% endif %}>{{ column_model }}</a></th>
           <th><a href="{{ sort_status }}"{% if sort == 'return_status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'r.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
-          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_modified }}"{% if sort == 'r.date_modified' %} class="{{ order|lower }}"{% endif %}>{{ column_date_modified }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -27,13 +26,12 @@
               <td class="d-none d-lg-table-cell">{{ return.model }}</td>
               <td>{{ return.return_status }}</td>
               <td class="d-none d-lg-table-cell">{{ return.date_added }}</td>
-              <td class="d-none d-lg-table-cell">{{ return.date_modified }}</td>
               <td class="text-end"><a href="{{ return.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="10">{{ text_no_results }}</td>
+            <td class="text-center" colspan="9">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

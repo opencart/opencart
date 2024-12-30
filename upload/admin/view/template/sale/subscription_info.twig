@@ -21,7 +21,7 @@
           {% if order_id %}
             <div class="col mb-3">
               <div class="form-control p-0 border rounded" style="min-height: 64px;">
-                <div class="lead p-2"><strong>{{ text_order }}</strong>
+                <div class="lead p-2"><strong>{{ text_order_id }}</strong>
                   <br/>
                   <a href="{{ order_edit }}" target="_blank">{{ order_id }}</a>
                 </div>
@@ -391,7 +391,6 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
     'source': function(request, response) {
@@ -989,11 +988,6 @@ $('#button-refresh').on('click', function() {
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
-
-            if (json['success']) {
-
-               //cart_render(json['products'], json['totals'], json['shipping_required']);
-            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1089,8 +1083,6 @@ $('#button-confirm').on('click', function() {
                 if (json['subscription_id']) {
                     $('#input-subscription-id').val(json['subscription_id']);
                 }
-
-                //cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

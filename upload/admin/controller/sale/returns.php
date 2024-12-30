@@ -303,9 +303,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['returns'][] = [
-				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('sale/returns.form', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'edit'       => $this->url->link('sale/returns.form', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)
 			] + $result;
 		}
 
@@ -356,7 +355,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['sort_model'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.model' . $url);
 		$data['sort_status'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=return_status' . $url);
 		$data['sort_date_added'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_modified' . $url);
 
 		$url = '';
 
@@ -425,9 +423,15 @@ class Returns extends \Opencart\System\Engine\Controller {
 	public function form(): void {
 		$this->load->language('sale/returns');
 
+		if (isset($this->request->get['return_id'])) {
+			$return_id = (int)$this->request->get['return_id'];
+		} else {
+			$return_id = 0;
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_form'] = !$return_id ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $return_id);
 
 		$url = '';
 
@@ -551,27 +555,17 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($return_info)) {
-			$data['product'] = $return_info['product'];
-		} else {
-			$data['product'] = '';
-		}
-
-		if (!empty($return_info)) {
 			$data['product_id'] = $return_info['product_id'];
+			$data['product'] = $return_info['product'];
+			$data['model'] = $return_info['model'];
+			$data['quantity'] = $return_info['quantity'];
+			$data['product_edit'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $return_info['product_id']);
 		} else {
 			$data['product_id'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['model'] = $return_info['model'];
-		} else {
+			$data['product'] = '';
 			$data['model'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['quantity'] = $return_info['quantity'];
-		} else {
 			$data['quantity'] = '';
+			$data['product_edit'] = '';
 		}
 
 		if (!empty($return_info)) {

@@ -78,7 +78,6 @@
         </thead>
         <tbody>
           {% if products %}
-
             {% for product in products %}
               <tr>
                 <td><a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
@@ -118,18 +117,15 @@
             {{ date_next }}
           </div>
         </div>
-
-          <div class="col">
-            <div class="form-control">
-              <strong class="lead">{{ text_remaining }}</strong>
-              <br/>
-              {% if duration %}
-              {{ remaining }}
-              {% else %}
-              {{ text_cancel }}
-              {% endif %}
-            </div>
+        {% if duration %}
+        <div class="col">
+          <div class="form-control">
+            <strong class="lead">{{ text_remaining }}</strong>
+            <br/>
+            {{ remaining }}
           </div>
+        </div>
+        {% endif %}
       </div>
       <div class="text-end mb-3">
         <button type="button" id="button-cancel" class="btn btn-danger">{{ button_cancel }}</button>

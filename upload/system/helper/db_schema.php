@@ -5787,10 +5787,6 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
 				'name' => 'customer_id',
 				'type' => 'int(11)'
 			],
@@ -5809,6 +5805,10 @@ function oc_db_schema() {
 			[
 				'name' => 'telephone',
 				'type' => 'varchar(32)'
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
 			],
 			[
 				'name' => 'product',

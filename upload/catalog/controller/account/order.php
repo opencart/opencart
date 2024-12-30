@@ -70,7 +70,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['orders'][] = [
-				'name'          => $result['firstname'] . ' ' . $result['lastname'],
 				'status'        => $order_status,
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'product_total' => $this->model_account_order->getTotalProductsByOrderId($result['order_id']),

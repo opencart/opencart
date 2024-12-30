@@ -85,7 +85,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $order_id primary key of the order record
+	 * @param int $return_id primary key of the return record
 	 *
 	 * @return int total number of history records that have return ID
 	 */

@@ -324,7 +324,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param int                  $subscription_id primary key of the subscription record
 	 * @param array<string, mixed> $data            array of data
 	 *
-	 * @return int int returns the primary key of the new subscription product record
+	 * @return int returns the primary key of the new subscription product record
 	 */
 	public function addProduct(int $subscription_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_product` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$data['order_id'] . "', `order_product_id` = '" . (int)$data['order_product_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `model` = '" . $this->db->escape($data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `price` = '" . (float)$data['price'] . "'");

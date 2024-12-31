@@ -15,7 +15,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new attribute group record
 	 */
 	public function addAttributeGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");

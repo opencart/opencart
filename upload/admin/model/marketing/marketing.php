@@ -15,7 +15,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new coupon record
 	 */
 	public function addMarketing(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `date_added` = NOW()");

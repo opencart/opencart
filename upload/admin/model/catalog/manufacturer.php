@@ -15,7 +15,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new manufacturer record
 	 */
 	public function addManufacturer(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");

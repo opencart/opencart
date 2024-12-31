@@ -15,7 +15,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new category record
 	 */
 	public function addCategory(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW(), `date_added` = NOW()");

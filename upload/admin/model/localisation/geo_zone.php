@@ -15,7 +15,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new geo zone record
 	 */
 	public function addGeoZone(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "'");

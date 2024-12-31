@@ -85,9 +85,9 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
-	 * @param int $order_id primary key of the order record
+	 * @param int $return_id primary key of the return record
 	 *
-	 * @return int total number of history records that have order ID
+	 * @return int total number of history records that have return ID
 	 */
 	public function getTotalHistories(int $return_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_history` WHERE `return_id` = '" . (int)$return_id . "'");

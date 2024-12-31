@@ -73,7 +73,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!is_writable($file)) {
-				$json['error'] =  sprintf($this->language->get('error_writable'), $file);
+				$json['error'] = sprintf($this->language->get('error_writable'), $file);
 			}
 		} else {
 			$json['error'] = sprintf($this->language->get('error_file'), $file);

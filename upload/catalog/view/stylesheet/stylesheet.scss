@@ -203,6 +203,7 @@ button:focus {
   .dropdown-inner {
     display: table;
     border-bottom: 1px solid #ddd;
+	width: 100%;
 
     ul {
       display: table-cell;

@@ -15,7 +15,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new custom field record
 	 */
 	public function addCustomField(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -294,7 +294,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int                  $custom_field_id primary key of the custom field record
 	 * @param array<string, mixed> $data            array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new custom field value record
 	 */
 	public function addValue(int $custom_field_id, array $data): int {
 		if ($data['custom_field_value_id']) {

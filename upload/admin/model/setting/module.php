@@ -16,7 +16,7 @@ class Module extends \Opencart\System\Engine\Model {
 	 * @param string               $code
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new module record
 	 */
 	public function addModule(string $code, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "'");

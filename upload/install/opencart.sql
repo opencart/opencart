@@ -53,7 +53,18 @@ INSERT INTO `oc_attribute_description` (`attribute_id`, `language_id`, `name`) V
 (8, 1, 'test 5'),
 (9, 1, 'test 6'),
 (10, 1, 'test 7'),
-(11, 1, 'test 8');
+(11, 1, 'test 8'),
+(1, 2, 'Description'),
+(2, 2, 'Nombre de cœurs'),
+(3, 2, 'Fréquence d’horloge'),
+(4, 2, 'test 1'),
+(5, 2, 'test 2'),
+(6, 2, 'test 3'),
+(7, 2, 'test 4'),
+(8, 2, 'test 5'),
+(9, 2, 'test 6'),
+(10, 2, 'test 7'),
+(11, 2, 'test 8');
 
 -----------------------------------------------------------
 
@@ -77,7 +88,11 @@ INSERT INTO `oc_attribute_group_description` (`attribute_group_id`, `language_id
 (3, 1, 'Memory'),
 (4, 1, 'Technical'),
 (5, 1, 'Motherboard'),
-(6, 1, 'Processor');
+(6, 1, 'Processor'),
+(3, 2, 'Mémoire'),
+(4, 2, 'Technique'),
+(5, 2, 'Carte mère'),
+(6, 2, 'Processeur');
 
 -----------------------------------------------------------
 
@@ -110,7 +125,21 @@ INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `t
 (90, 8, 1, 'Disney', '', 'catalog/demo/manufacturer/disney.png', 0),
 (80, 7, 1, 'MacBookAir', '', 'catalog/demo/banners/MacBookAir.jpg', 0),
 (97, 8, 1, 'Starbucks', '', 'catalog/demo/manufacturer/starbucks.png', 0),
-(98, 8, 1, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0);
+(98, 8, 1, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0),
+(99, 7, 2, 'iPhone 6', 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'catalog/demo/banners/iPhone6.jpg', 0),
+(100, 6, 2, 'HP Banner', 'index.php?route=product/manufacturer.info&amp;manufacturer_id=7', 'catalog/demo/compaq_presario.jpg', 0),
+(101, 8, 2, 'NFL', '', 'catalog/demo/manufacturer/nfl.png', 0),
+(102, 8, 2, 'RedBull', '', 'catalog/demo/manufacturer/redbull.png', 0),
+(103, 8, 2, 'Sony', '', 'catalog/demo/manufacturer/sony.png', 0),
+(104, 8, 2, 'Coca Cola', '', 'catalog/demo/manufacturer/cocacola.png', 0),
+(105, 8, 2, 'Burger King', '', 'catalog/demo/manufacturer/burgerking.png', 0),
+(106, 8, 2, 'Canon', '', 'catalog/demo/manufacturer/canon.png', 0),
+(107, 8, 2, 'Harley Davidson', '', 'catalog/demo/manufacturer/harley.png', 0),
+(108, 8, 2, 'Dell', '', 'catalog/demo/manufacturer/dell.png', 0),
+(109, 8, 2, 'Disney', '', 'catalog/demo/manufacturer/disney.png', 0),
+(110, 7, 2, 'MacBookAir', '', 'catalog/demo/banners/MacBookAir.jpg', 0),
+(111, 8, 2, 'Starbucks', '', 'catalog/demo/manufacturer/starbucks.png', 0),
+(112, 8, 2, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0);
 
 -----------------------------------------------------------
 
@@ -202,7 +231,45 @@ INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `de
 (55, 1, 'test 23', '', 'test 23', '', ''),
 (56, 1, 'test 24', '', 'test 24', '', ''),
 (57, 1, 'Tablets', '', 'Tablets', '', ''),
-(58, 1, 'test 25', '', 'test 25', '', '');
+(58, 1, 'test 25', '', 'test 25', '', ''),
+(28, 2, 'Moniteurs', '', 'Moniteurs', '', ''),
+(33, 2, 'Caméras', '', 'Caméras', '', ''),
+(32, 2, 'Webcams', '', 'Webcams', '', ''),
+(31, 2, 'Scanners', '', 'Scanners', '', ''),
+(30, 2, 'Imprimantes', '', 'Imprimantes', '', ''),
+(29, 2, 'Souris et Boules de Suivi', '', 'Souris et Boules de Suivi', '', ''),
+(27, 2, 'Mac', '', 'Mac', '', ''),
+(26, 2, 'PC', '', 'PC', '', ''),
+(17, 2, 'Logiciels', '', 'Logiciels', '', ''),
+(25, 2, 'Composants', '', 'Composants', '', ''),
+(24, 2, 'Téléphones &amp; PDA', '', 'Téléphones &amp; PDA', '', ''),
+(20, 2, 'Bureaux', '&lt;p&gt;\r\n	Exemple de texte de description de catégorie&lt;/p&gt;\r\n', 'Bureaux', 'Exemple de description de catégorie', ''),
+(35, 2, 'test 1', '', 'test 1', '', ''),
+(36, 2, 'test 2', '', 'test 2', '', ''),
+(37, 2, 'test 5', '', 'test 5', '', ''),
+(38, 2, 'test 4', '', 'test 4', '', ''),
+(39, 2, 'test 6', '', 'test 6', '', ''),
+(40, 2, 'test 7', '', 'test 7', '', ''),
+(41, 2, 'test 8', '', 'test 8', '', ''),
+(42, 2, 'test 9', '', 'test 9', '', ''),
+(43, 2, 'test 11', '', 'test 11', '', ''),
+(34, 2, 'Lecteurs MP3', '&lt;p&gt;\r\n	Shop Laptop propose uniquement les meilleures offres d''ordinateurs portables sur le marché. En comparant les offres de PC World, Comet, Dixons, The Link et Carphone Warehouse, Shop Laptop offre la sélection la plus complète d''ordinateurs portables sur Internet. Chez Shop Laptop, nous nous efforçons d''offrir à nos clients les meilleures offres possibles. Des ordinateurs portables reconditionnés aux netbooks, Shop Laptop garantit que chaque ordinateur - dans toutes les couleurs, styles, tailles et spécifications techniques - figure sur le site au prix le plus bas possible.&lt;/p&gt;\r\n', 'Lecteurs MP3', '', ''),
+(18, 2, 'Ordinateurs Portables &amp; Notebooks', '&lt;p&gt;\r\n	Shop Laptop propose uniquement les meilleures offres d''ordinateurs portables sur le marché. En comparant les offres de PC World, Comet, Dixons, The Link et Carphone Warehouse, Shop Laptop offre la sélection la plus complète d''ordinateurs portables sur Internet. Chez Shop Laptop, nous nous efforçons d''offrir à nos clients les meilleures offres possibles. Des ordinateurs portables reconditionnés aux netbooks, Shop Laptop garantit que chaque ordinateur - dans toutes les couleurs, styles, tailles et spécifications techniques - figure sur le site au prix le plus bas possible.&lt;/p&gt;\r\n', 'Ordinateurs Portables &amp; Notebooks', '', ''),
+(44, 2, 'test 12', '', 'test 12', '', ''),
+(45, 2, 'Windows', '', 'Windows', '', ''),
+(46, 2, 'Macs', '', 'Macs', '', ''),
+(47, 2, 'test 15', '', 'test 15', '', ''),
+(48, 2, 'test 16', '', 'test 16', '', ''),
+(49, 2, 'test 17', '', 'test 17', '', ''),
+(50, 2, 'test 18', '', 'test 18', '', ''),
+(51, 2, 'test 19', '', 'test 19', '', ''),
+(52, 2, 'test 20', '', 'test 20', '', ''),
+(53, 2, 'test 21', '', 'test 21', '', ''),
+(54, 2, 'test 22', '', 'test 22', '', ''),
+(55, 2, 'test 23', '', 'test 23', '', ''),
+(56, 2, 'test 24', '', 'test 24', '', ''),
+(57, 2, 'Tablettes', '', 'Tablettes', '', ''),
+(58, 2, 'test 25', '', 'test 25', '', '');
 
 -----------------------------------------------------------
 
@@ -648,7 +715,10 @@ INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `sort_order`) 
 INSERT INTO `oc_customer_group_description` (`customer_group_id`, `language_id`, `name`, `description`) VALUES
 (1, 1, 'Default', 'Default customer group'),
 (2, 1, 'Retail', 'Retail customers'),
-(3, 1, 'Wholesale', 'Wholesale customers');
+(3, 1, 'Wholesale', 'Wholesale customers'),
+(1, 2, 'Par Défaut', 'Groupe de clients par défaut'),
+(2, 2, 'Détail', 'Clients au détail'),
+(3, 2, 'Grossiste', 'Clients grossistes');
 
 -----------------------------------------------------------
 
@@ -753,7 +823,34 @@ INSERT INTO `oc_custom_field_description` (`custom_field_id`, `language_id`, `na
 (25, 1, 'Select'),
 (26, 1, 'Text'),
 (27, 1, 'Textarea'),
-(28, 1, 'Time');
+(28, 1, 'Time'),
+(1, 2, 'Sélectionner'),
+(2, 2, 'Bouton Radio'),
+(3, 2, 'Case à Cocher'),
+(4, 2, 'Texte'),
+(5, 2, 'Zone de Texte'),
+(6, 2, 'Fichier'),
+(7, 2, 'Date'),
+(8, 2, 'Heure'),
+(9, 2, 'Date &amp; Heure'),
+(11, 2, 'Case à Cocher'),
+(12, 2, 'Heure'),
+(13, 2, 'Date'),
+(14, 2, 'Date &amp; Heure'),
+(15, 2, 'Fichier'),
+(16, 2, 'Bouton Radio'),
+(17, 2, 'Sélectionner'),
+(18, 2, 'Texte'),
+(19, 2, 'Zone de Texte'),
+(20, 2, 'Case à Cocher'),
+(21, 2, 'Date'),
+(22, 2, 'Date &amp; Heure'),
+(23, 2, 'Fichier'),
+(24, 2, 'Bouton Radio'),
+(25, 2, 'Sélectionner'),
+(26, 2, 'Texte'),
+(27, 2, 'Zone de Texte'),
+(28, 2, 'Heure');
 
 -----------------------------------------------------------
 
@@ -823,7 +920,34 @@ INSERT INTO `oc_custom_field_value_description` (`custom_field_value_id`, `langu
 (43, 1, 24, 'Test 3'),
 (44, 1, 25, 'Test 1'),
 (45, 1, 25, 'Test 2'),
-(46, 1, 25, 'Test 3');
+(46, 1, 25, 'Test 3'),
+(1, 2, 1, 'Test 1'),
+(2, 2, 1, 'test 2'),
+(3, 2, 1, 'Test 3'),
+(4, 2, 2, 'Test 1'),
+(5, 2, 2, 'Test 2'),
+(6, 2, 2, 'Test 3'),
+(7, 2, 3, 'Test 1'),
+(8, 2, 3, 'Test 2'),
+(9, 2, 3, 'Test 3'),
+(20, 2, 11, 'Test 1'),
+(21, 2, 11, 'Test 2'),
+(22, 2, 11, 'Test 3'),
+(32, 2, 16, 'Test 1'),
+(33, 2, 16, 'Test 2'),
+(34, 2, 16, 'Test 3'),
+(35, 2, 17, 'Test 1'),
+(36, 2, 17, 'Test 2'),
+(37, 2, 17, 'Test 3'),
+(38, 2, 20, 'Test 1'),
+(39, 2, 20, 'Test 2'),
+(40, 2, 20, 'Test 3'),
+(41, 2, 24, 'Test 1'),
+(42, 2, 24, 'Test 2'),
+(43, 2, 24, 'Test 3'),
+(44, 2, 25, 'Test 1'),
+(45, 2, 25, 'Test 2'),
+(46, 2, 25, 'Test 3');
 
 -----------------------------------------------------------
 
@@ -1370,7 +1494,11 @@ INSERT INTO `oc_information_description` (`information_id`, `language_id`, `titl
 (1, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
 (2, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
-(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
+(4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
+(1, 2, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', 'About Us', '', ''),
+(2, 2, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
+(3, 2, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
+(4, 2, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
 
 -----------------------------------------------------------
 
@@ -1391,7 +1519,8 @@ INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
 --
 
 INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `sort_order`, `status`) VALUES
-(1, 'English', 'en-gb', 'en-gb,en', 1, 1);
+(1, 'English', 'en-gb', 'en-gb,en', 1, 1),
+(2, 'French', 'fr-fr', 'fr-fr,fr', 2, 1);
 
 -----------------------------------------------------------
 
@@ -1475,7 +1604,10 @@ INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES
 INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES
 (1, 1, 'Centimeter', 'cm'),
 (2, 1, 'Millimeter', 'mm'),
-(3, 1, 'Inch', 'in');
+(3, 1, 'Inch', 'in'),
+(1, 2, 'Centimètre', 'cm'),
+(2, 2, 'Millimètre', 'mm'),
+(3, 2, 'Pouce', 'po');
 
 -----------------------------------------------------------
 
@@ -1553,7 +1685,18 @@ INSERT INTO `oc_option_description` (`option_id`, `language_id`, `name`) VALUES
 (9, 1, 'Time'),
 (10, 1, 'Date &amp; Time'),
 (12, 1, 'Delivery Date'),
-(11, 1, 'Size');
+(11, 1, 'Size'),
+(1, 2, 'Bouton Radio'),
+(2, 2, 'Case à Cocher'),
+(4, 2, 'Texte'),
+(6, 2, 'Zone de Texte'),
+(8, 2, 'Date'),
+(7, 2, 'Fichier'),
+(5, 2, 'Sélectionner'),
+(9, 2, 'Heure'),
+(10, 2, 'Date &amp; Heure'),
+(12, 2, 'Date de Livraison'),
+(11, 2, 'Taille');
 
 -----------------------------------------------------------
 
@@ -1597,7 +1740,21 @@ INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `op
 (24, 1, 2, 'Checkbox 2'),
 (48, 1, 11, 'Large'),
 (47, 1, 11, 'Medium'),
-(46, 1, 11, 'Small');
+(46, 1, 11, 'Small'),
+(43, 2, 1, 'Grand'),
+(32, 2, 1, 'Petit'),
+(45, 2, 2, 'Case à Cocher 4'),
+(44, 2, 2, 'Case à Cocher 3'),
+(31, 2, 1, 'Moyen'),
+(42, 2, 5, 'Jaune'),
+(41, 2, 5, 'Vert'),
+(39, 2, 5, 'Rouge'),
+(40, 2, 5, 'Bleu'),
+(23, 2, 2, 'Case à Cocher 1'),
+(24, 2, 2, 'Case à Cocher 2'),
+(48, 2, 11, 'Grand'),
+(47, 2, 11, 'Moyen'),
+(46, 2, 11, 'Petit');
 
 -----------------------------------------------------------
 
@@ -1619,7 +1776,21 @@ INSERT INTO `oc_order_status` (`order_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (16, 1, 'Voided'),
 (15, 1, 'Processed'),
-(14, 1, 'Expired');
+(14, 1, 'Expired'),
+(2, 2, 'En Cours de Traitement'),
+(3, 2, 'Expédié'),
+(7, 2, 'Annulé'),
+(5, 2, 'Terminé'),
+(8, 2, 'Refusé'),
+(9, 2, 'Annulation de Remboursement'),
+(10, 2, 'Échoué'),
+(11, 2, 'Remboursé'),
+(12, 2, 'Reversé'),
+(13, 2, 'Rétrofacturation'),
+(1, 2, 'En Attente'),
+(16, 2, 'Annulé'),
+(15, 2, 'Traitée'),
+(14, 2, 'Expiré');
 
 -----------------------------------------------------------
 
@@ -1659,7 +1830,12 @@ INSERT INTO `oc_product_attribute` (`product_id`, `attribute_id`, `language_id`,
 (47, 4, 1, '16GB'),
 (43, 4, 1, '8gb'),
 (42, 3, 1, '100mhz'),
-(47, 2, 1, '4');
+(47, 2, 1, '4'),
+(43, 2, 2, '1'),
+(47, 4, 2, '16GB'),
+(43, 4, 2, '8gb'),
+(42, 3, 2, '100mhz'),
+(47, 2, 2, '4');
 
 -----------------------------------------------------------
 
@@ -1686,7 +1862,37 @@ INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `desc
 (31, 1, 'Nikon D300', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Engineered with pro-level features and performance, the 12.3-effective-megapixel D300 combines brand new technologies with advanced features inherited from Nikon&amp;#39;s newly announced D3 professional digital SLR camera to offer serious photographers remarkable performance combined with agility.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Similar to the D3, the D300 features Nikon&amp;#39;s exclusive EXPEED Image Processing System that is central to driving the speed and processing power needed for many of the camera&amp;#39;s new features. The D300 features a new 51-point autofocus system with Nikon&amp;#39;s 3D Focus Tracking feature and two new LiveView shooting modes that allow users to frame a photograph using the camera&amp;#39;s high-resolution LCD monitor. The D300 shares a similar Scene Recognition System as is found in the D3; it promises to greatly enhance the accuracy of autofocus, autoexposure, and auto white balance by recognizing the subject or scene being photographed and applying this information to the calculations for the three functions.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 reacts with lightning speed, powering up in a mere 0.13 seconds and shooting with an imperceptible 45-millisecond shutter release lag time. The D300 is capable of shooting at a rapid six frames per second and can go as fast as eight frames per second when using the optional MB-D10 multi-power battery pack. In continuous bursts, the D300 can shoot up to 100 shots at full 12.3-megapixel resolution. (NORMAL-LARGE image setting, using a SanDisk Extreme IV 1GB CompactFlash card.)&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 incorporates a range of innovative technologies and features that will significantly improve the accuracy, control, and performance photographers can get from their equipment. Its new Scene Recognition System advances the use of Nikon&amp;#39;s acclaimed 1,005-segment sensor to recognize colors and light patterns that help the camera determine the subject and the type of scene being photographed before a picture is taken. This information is used to improve the accuracy of autofocus, autoexposure, and auto white balance functions in the D300. For example, the camera can track moving subjects better and by identifying them, it can also automatically select focus points faster and with greater accuracy. It can also analyze highlights and more accurately determine exposure, as well as infer light sources to deliver more accurate white balance detection.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'Nikon D300', '', ''),
 (49, 1, 'Samsung Galaxy Tab 10.1', '&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1, is the world&amp;rsquo;s thinnest tablet, measuring 8.6 mm thickness, running with Android 3.0 Honeycomb OS on a 1GHz dual-core Tegra 2 processor, similar to its younger brother Samsung Galaxy Tab 8.9.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 gives pure Android 3.0 experience, adding its new TouchWiz UX or TouchWiz 4.0 &amp;ndash; includes a live panel, which lets you to customize with different content, such as your pictures, bookmarks, and social feeds, sporting a 10.1 inches WXGA capacitive touch screen with 1280 x 800 pixels of resolution, equipped with 3 megapixel rear camera with LED flash and a 2 megapixel front camera, HSPA+ connectivity up to 21Mbps, 720p HD video recording capability, 1080p HD playback, DLNA support, Bluetooth 2.1, USB 2.0, gyroscope, Wi-Fi 802.11 a/b/g/n, micro-SD slot, 3.5mm headphone jack, and SIM slot, including the Samsung Stick &amp;ndash; a Bluetooth microphone that can be carried in a pocket like a pen and sound dock with powered subwoofer.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 will come in 16GB / 32GB / 64GB verities and pre-loaded with Social Hub, Reader&amp;rsquo;s Hub, Music Hub and Samsung Mini Apps Tray &amp;ndash; which gives you access to more commonly used apps to help ease multitasking and it is capable of Adobe Flash Player 10.2, powered by 6860mAh battery that gives you 10hours of video-playback time.&amp;nbsp;&amp;auml;&amp;ouml;&lt;/p&gt;\r\n', '', 'Samsung Galaxy Tab 10.1', '', ''),
 (42, 1, 'Apple Cinema 30&quot;', '&lt;p&gt;\r\n	&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there''s no limit to what you can achieve. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it''s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple''s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br&gt;\r\n	&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;\r\n	Features:&lt;/h3&gt;\r\n&lt;p&gt;\r\n	Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Unique hinge design for effortless adjustment&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;\r\n	Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2048 x 1280&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1920 x 1200&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1280 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		170° horizontal; 170° vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Display Power,&lt;/li&gt;\r\n	&lt;li&gt;\r\n		System sleep, wake&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Brightness&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br&gt;\r\n	Cable&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		DVI (Digital Visual Interface)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		USB 2.0&lt;/li&gt;\r\n	&lt;li&gt;\r\n		DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br&gt;\r\n	Requires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum power when operating: 150W&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Operating temperature: 50° to 95° F (10° to 35° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Storage temperature: -40° to 116° F (-40° to 47° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		FCC Part 15 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55022 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55024&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VCCI Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AS/NZS 3548 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CNS 13438 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ICES-003 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ISO 13406 part 2&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MPR II&lt;/li&gt;\r\n	&lt;li&gt;\r\n		IEC 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UL 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CSA 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ENERGY STAR&lt;/li&gt;\r\n	&lt;li&gt;\r\n		TCO ''03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Size and weight&lt;/b&gt;&lt;br&gt;\r\n	30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Mac Pro, all graphic options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MacBook Pro&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'Apple Cinema 30', '', ''),
-(30, 1, 'Canon EOS 5D', '&lt;p&gt;\r\n	Canon''s press material for the EOS 5D states that it ''defines (a) new D-SLR category'', while we''re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably ''chunkier''). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR''s, an important difference when compared to the latter is that the EOS 5D doesn''t have any environmental seals. While Canon don''t specifically refer to the EOS 5D as a ''professional'' digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they''ve not bought too many EF-S lenses...) äë&lt;/p&gt;\r\n', '', 'sdf', '', '');
+(30, 1, 'Canon EOS 5D', '&lt;p&gt;\r\n	Canon''s press material for the EOS 5D states that it ''defines (a) new D-SLR category'', while we''re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably ''chunkier''). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR''s, an important difference when compared to the latter is that the EOS 5D doesn''t have any environmental seals. While Canon don''t specifically refer to the EOS 5D as a ''professional'' digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they''ve not bought too many EF-S lenses...) äë&lt;/p&gt;\r\n', '', 'sdf', '', ''),
+(35, 2, 'Produit 8', '&lt;p&gt;\r\n	Produit 8&lt;/p&gt;\r\n', '', 'Produit 8', '', ''),
+(48, 2, 'iPod Classic', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Plus d''espace pour bouger.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Avec 80 Go ou 160 Go de stockage et jusqu''à 40 heures d''autonomie, le nouvel iPod classic vous permet de profiter de jusqu''à 40 000 chansons ou jusqu''à 200 heures de vidéo ou toute combinaison où que vous soyez.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Naviguez dans votre collection musicale en feuilletant les pochettes d''album. Sélectionnez un album pour le retourner et voir la liste des morceaux.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Interface améliorée.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Profitez d''une toute nouvelle manière de parcourir et de visualiser votre musique et vos vidéos.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Design plus élégant.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Beau, durable et plus élégant que jamais, l''iPod classic est désormais doté d''un boîtier en aluminium anodisé et en acier inoxydable poli aux bords arrondis.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'iPod Classic', '', ''),
+(40, 2, 'iPhone', '&lt;p class=&quot;intro&quot;&gt;\r\n	L''iPhone est un téléphone mobile révolutionnaire qui vous permet de passer un appel en tapant simplement un nom ou un numéro dans votre carnet d''adresses, une liste de favoris ou un journal d''appels. Il synchronise également automatiquement tous vos contacts depuis un PC, un Mac ou un service Internet. Et il vous permet de sélectionner et d''écouter vos messages vocaux dans l''ordre que vous souhaitez, comme un email.&lt;/p&gt;\r\n', '', 'iPhone', '', ''),
+
+(28, 2, 'HTC Touch HD', '&lt;p&gt;\r\n	HTC Touch - en Haute Définition. Regardez des vidéos musicales et du contenu en streaming avec une clarté haute définition impressionnante pour une expérience mobile que vous n''auriez jamais imaginée possible. Élégant et séduisant, le HTC Touch HD offre la prochaine génération de fonctionnalités mobiles, le tout à portée de main. Entièrement intégré à Windows Mobile Professional 6.1, ultrarapide 3.5G, GPS, appareil photo 5 MP, et bien plus - le tout livré sur un écran tactile WVGA de 3,8 pouces d''une netteté époustouflante - prenez le contrôle de votre monde mobile avec le HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Caractéristiques&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Processeur Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Système d''exploitation Windows Mobile&amp;reg; 6.1 Professionnel&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Mémoire : 512 Mo ROM, 288 Mo RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Dimensions : 115 mm x 62,8 mm x 12 mm / 146,4 grammes&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Écran tactile plat TFT-LCD de 3,8 pouces avec résolution WVGA de 480 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/WCDMA : Europe/Asie : 900/2100 MHz ; Jusqu''à 2 Mbps en liaison montante et 7,2 Mbps en liaison descendante&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GSM/GPRS/EDGE quadribande : Europe/Asie : 850/900/1800/1900 MHz (Fréquence de bande, disponibilité HSUPA et vitesse des données dépendantes de l''opérateur.)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Contrôle de l''appareil via HTC TouchFLO&amp;trade; 3D &amp;amp; Boutons tactiles en façade&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GPS et A-GPS prêts&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth&amp;reg; 2.0 avec Débit de Données Amélioré (EDR) et A2DP pour casques stéréo sans fil&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wi-Fi&amp;reg; : IEEE 802.11 b/g&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HTC ExtUSB&amp;trade; (mini-USB 11 broches 2.0)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Appareil photo couleur 5 mégapixels avec autofocus&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Appareil photo couleur CMOS VGA&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Prise audio intégrée de 3,5 mm, microphone, haut-parleur et radio FM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Formats de sonneries : AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n	&lt;li&gt;\r\n		40 sonneries polyphoniques et format MIDI standard 0 et 1 (SMF)/SP MIDI&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Batterie rechargeable Lithium-ion ou Lithium-ion polymère de 1350 mAh&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Emplacement d''extension : carte mémoire microSD&amp;trade; (Compatible SD 2.0)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Gamme de tension/fréquence de l''adaptateur secteur : 100 ~ 240V AC, 50/60 Hz Sortie DC : 5V et 1A&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Caractéristiques spéciales : Radio FM, Capteur G&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'HTC Touch HD', '', ''),
+
+(44, 2, 'MacBook Air', '&lt;div&gt;\r\n	Le MacBook Air est ultra-fin, ultra-portable et totalement unique. Mais on ne perd pas des centimètres et des grammes du jour au lendemain. C&apos;est le résultat d&apos;une révision des conventions. D&apos;innovations sans fil multiples. Et d&apos;un design révolutionnaire. Avec le MacBook Air, l&apos;informatique mobile atteint soudainement une nouvelle norme.&lt;/div&gt;\r\n', '', 'MacBook Air', '', ''),
+(45, 2, 'MacBook Pro', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Dernière architecture mobile Intel&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Équipé des processeurs mobiles les plus avancés d&apos;Intel, le nouveau MacBook Pro Core 2 Duo est plus de 50 % plus rapide que le MacBook Pro Core Duo original et prend désormais en charge jusqu&apos;à 4 Go de RAM.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Graphismes de pointe&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			La NVIDIA GeForce 8600M GT offre une puissance de traitement graphique exceptionnelle. Pour une toile créative ultime, vous pouvez même configurer le modèle 17 pouces avec un écran de résolution 1920 x 1200.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Conçu pour la vie en déplacement&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Des innovations telles qu&apos;une connexion magnétique pour l&apos;alimentation et un clavier éclairé avec capteur de lumière ambiante placent le MacBook Pro dans une classe à part.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Connectez. Créez. Communiquez.&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Configurez rapidement une visioconférence avec la caméra iSight intégrée. Contrôlez vos présentations et vos médias à une distance de 9 mètres grâce à la télécommande Apple incluse. Connectez-vous à des périphériques haut débit avec FireWire 800 et DVI.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Technologie sans fil de nouvelle génération&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Grâce à la technologie sans fil 802.11n, le MacBook Pro offre jusqu&apos;à cinq fois la performance et jusqu&apos;à deux fois la portée des technologies de génération précédente.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'MacBook Pro', '', ''),
+
+(29, 2, 'Palm Treo Pro', '&lt;p&gt;\r\n	Redéfinissez votre journée de travail avec le smartphone Palm Treo Pro. Parfaitement équilibré, il vous permet de répondre aux emails professionnels et personnels, de rester à jour sur vos rendez-vous et contacts, et d&apos;utiliser le Wi-Fi ou le GPS lors de vos déplacements. Ensuite, regardez une vidéo sur YouTube, consultez les actualités et le sport sur le web, ou écoutez quelques chansons. Équilibrez travail et loisirs comme vous le souhaitez avec le Palm Treo Pro.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Caractéristiques&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Édition Professionnelle&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Processeur Qualcomm&amp;reg; MSM7201 400 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Écran tactile TFT couleur transflectif 320x320&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Radio HSDPA/UMTS/EDGE/GPRS/GSM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UMTS tri-bande &amp;mdash; 850 MHz, 1900 MHz, 2100 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GSM quadri-bande &amp;mdash; 850/900/1800/1900&lt;/li&gt;\r\n	&lt;li&gt;\r\n		802.11b/g avec authentification WPA, WPA2 et 801.1x&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GPS intégré&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth Version : 2.0 + Enhanced Data Rate&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Stockage : 256 Mo (100 Mo disponibles pour l&apos;utilisateur), 128 Mo de RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Appareil photo 2.0 mégapixels, jusqu&apos;à 8x zoom numérique et capture vidéo&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Batterie lithium-ion amovible et rechargeable de 1500 mAh&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Jusqu&apos;à 5 heures d&apos;autonomie en conversation et jusqu&apos;à 250 heures en veille&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Extension via carte MicroSDHC (jusqu&apos;à 32 Go pris en charge)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroUSB 2.0 pour synchronisation et recharge&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Prise casque stéréo 3,5 mm&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Dimensions : 60 mm (L) x 114 mm (H) x 13,5 mm (P) / 133 g&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'Palm Treo Pro', '', ''),
+
+(36, 2, 'iPod Nano', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Vidéo dans votre poche.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		C&apos;est le petit iPod avec une grande idée : la vidéo. Le lecteur de musique le plus populaire au monde vous permet désormais de profiter de films, d&apos;émissions de télévision et plus encore sur un écran de deux pouces, 65 % plus lumineux qu&apos;auparavant.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Naviguez dans votre collection musicale en feuilletant les pochettes d&apos;album. Sélectionnez un album pour le retourner et voir la liste des morceaux.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Interface améliorée.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Profitez d&apos;une toute nouvelle manière de parcourir et de visualiser votre musique et vos vidéos.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Élégant et coloré.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Avec un boîtier en aluminium anodisé et en acier inoxydable poli et un choix de cinq couleurs, l&apos;iPod nano est conçu pour impressionner.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Disponible en téléchargement gratuit, iTunes facilite la navigation et l&apos;achat de millions de chansons, films, émissions de télévision, livres audio et jeux, ainsi que le téléchargement de podcasts gratuits sur l&apos;iTunes Store. Vous pouvez également importer votre propre musique, gérer toute votre bibliothèque multimédia et synchroniser facilement votre iPod ou iPhone.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'iPod Nano', '', ''),
+(46, 2, 'Sony VAIO', '&lt;div&gt;\r\n	Puissance sans précédent. La nouvelle génération de technologie de traitement est arrivée. Intégrée dans les derniers ordinateurs portables VAIO, elle repose sur la toute dernière innovation d&apos;Intel : la technologie de processeur Intel&amp;reg; Centrino&amp;reg; 2. Offrant une vitesse incroyable, une connectivité sans fil étendue, un support multimédia amélioré et une efficacité énergétique accrue, tous les éléments essentiels de haute performance sont parfaitement combinés en une seule puce.&lt;/div&gt;\r\n', '', 'Sony VAIO', '', ''),
+(47, 2, 'HP LP3065', '&lt;p&gt;\r\n	Impressionnez vos collègues avec le nouvel écran plat HP LP3065 de 30 pouces en diagonale. Cet écran phare offre des performances et des fonctionnalités de présentation de premier ordre sur un immense écran au format large, tout en vous permettant de travailler dans un confort optimal - vous pourriez même oublier que vous êtes au bureau.&lt;/p&gt;\r\n', '', 'HP LP3065', '', ''),
+
+(32, 2, 'iPod Touch', '&lt;p&gt;\r\n	&lt;strong&gt;Interface multi-touch révolutionnaire.&lt;/strong&gt;&lt;br /&gt;\r\n	L&apos;iPod touch est doté de la même technologie d&apos;écran multi-touch que l&apos;iPhone. Pincez pour zoomer sur une photo. Faites défiler vos chansons et vidéos d&apos;un simple geste. Parcourez votre bibliothèque par pochettes d&apos;album avec Cover Flow.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Superbe écran large de 3,5 pouces.&lt;/strong&gt;&lt;br /&gt;\r\n	Voyez vos films, émissions de télévision et photos prendre vie avec des couleurs vives et éclatantes sur l&apos;écran de 320 x 480 pixels.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Téléchargement de musique directement depuis iTunes.&lt;/strong&gt;&lt;br /&gt;\r\n	Faites vos achats sur l&apos;iTunes Wi-Fi Music Store depuis n&apos;importe où avec le Wi-Fi. Parcourez ou recherchez la musique que vous souhaitez, prévisualisez-la et achetez-la d&apos;un simple tapotement.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Naviguez sur le web avec le Wi-Fi.&lt;/strong&gt;&lt;br /&gt;\r\n	Parcourez le web avec Safari et regardez des vidéos YouTube sur le premier iPod doté du Wi-Fi intégré.&lt;br /&gt;\r\n	&amp;nbsp;&lt;/p&gt;\r\n', '', 'iPod Touch', '', ''),
+(41, 2, 'iMac', '&lt;div&gt;\r\n	Alors que vous pensiez que l&apos;iMac avait tout, il y a maintenant encore plus. Des processeurs Intel Core 2 Duo plus puissants. Et plus de mémoire en standard. Combinez cela avec Mac OS X Leopard et iLife &apos;08, et l&apos;iMac est plus tout-en-un que jamais. L&apos;iMac offre des performances incroyables dans un espace incroyablement mince.&lt;/div&gt;\r\n', '', 'iMac', '', ''),
+(33, 2, 'Samsung SyncMaster 941BW', '&lt;div&gt;\r\n	Imaginez les avantages d&apos;opter pour un grand écran sans ralentir. Le grand écran 941BW de 19 pouces combine un format large avec un temps de réponse rapide des pixels, pour des images plus grandes, plus d&apos;espace de travail et des mouvements nets. De plus, les technologies exclusives MagicBright 2, MagicColor et MagicTune permettent d&apos;obtenir l&apos;image idéale dans chaque situation, tandis que les bords fins et élégants et les supports réglables apportent du style exactement comme vous le souhaitez. Avec le moniteur LCD analogique/numérique large Samsung 941BW, il est facile d&apos;imaginer ce qu&apos;il offre.&lt;/div&gt;\r\n', '', 'Samsung SyncMaster 941BW', '', ''),
+(34, 2, 'iPod Shuffle', '&lt;div&gt;\r\n	&lt;strong&gt;Conçu pour être porté.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Accrochez le lecteur de musique le plus portable au monde et emportez jusqu&apos;à 240 chansons partout avec vous. Choisissez parmi cinq couleurs, dont quatre nouvelles teintes, pour affirmer votre style musical.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Le hasard rencontre le rythme.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Avec la fonction de remplissage automatique d&apos;iTunes, l&apos;iPod shuffle peut offrir une nouvelle expérience musicale à chaque synchronisation. Pour encore plus de variété, vous pouvez mélanger les chansons pendant la lecture grâce à un interrupteur.&lt;/p&gt;\r\n	&lt;strong&gt;Tout est simple.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Rechargez et synchronisez avec le dock USB inclus. Utilisez les commandes de l&apos;iPod shuffle d&apos;une seule main. Profitez de jusqu&apos;à 12 heures de musique ininterrompue sans saut.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'iPod Shuffle', '', ''),
+
+(43, 2, 'MacBook', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Processeur Intel Core 2 Duo&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Propulsé par un processeur Intel Core 2 Duo atteignant des vitesses allant jusqu&apos;à 2,16 GHz, le nouveau MacBook est le plus rapide jamais conçu.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;1 Go de mémoire, disques durs plus grands&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Le nouveau MacBook est désormais équipé de 1 Go de mémoire en standard et de disques durs plus grands sur toute la gamme, parfaits pour exécuter plus de vos applications préférées et stocker des collections multimédias croissantes.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Design élégant de 1,08 pouce d&apos;épaisseur&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Le MacBook facilite vos déplacements grâce à son boîtier en polycarbonate robuste, ses technologies sans fil intégrées et son adaptateur secteur MagSafe innovant qui se déconnecte automatiquement en cas de tension sur le câble.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Caméra iSight intégrée&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Dès la sortie de la boîte, vous pouvez discuter en visioconférence avec des amis ou des membres de votre famille, enregistrer une vidéo à votre bureau ou prendre des photos amusantes avec Photo Booth.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'MacBook', '', ''),
+(31, 2, 'Nikon D300', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Conçu avec des fonctionnalités et des performances de niveau professionnel, le D300 de 12,3 mégapixels effectifs combine des technologies totalement nouvelles avec des fonctionnalités avancées héritées du D3, le reflex numérique professionnel récemment annoncé par Nikon, pour offrir aux photographes sérieux des performances remarquables associées à une grande agilité.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		À l&apos;instar du D3, le D300 est doté du système exclusif de traitement d&apos;images EXPEED de Nikon, essentiel pour atteindre la vitesse et la puissance de traitement nécessaires à de nombreuses nouvelles fonctionnalités de l&apos;appareil. Le D300 propose un nouveau système de mise au point automatique à 51 points avec la fonction de suivi 3D de Nikon et deux nouveaux modes de prise de vue LiveView qui permettent aux utilisateurs de cadrer une photo à l&apos;aide de l&apos;écran LCD haute résolution de l&apos;appareil. Le D300 partage un système de reconnaissance de scène similaire à celui du D3 ; il promet d&apos;améliorer considérablement la précision de la mise au point automatique, de l&apos;exposition automatique et de la balance des blancs automatique en reconnaissant le sujet ou la scène photographiée et en appliquant ces informations aux calculs des trois fonctions.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Le D300 réagit à une vitesse fulgurante, s&apos;allumant en seulement 0,13 seconde et prenant des photos avec un temps de réponse au déclenchement imperceptible de 45 millisecondes. Le D300 est capable de prendre des photos à une vitesse rapide de six images par seconde et peut atteindre huit images par seconde lorsqu&apos;il est utilisé avec le grip optionnel MB-D10 à alimentation multiple. En rafales continues, le D300 peut prendre jusqu&apos;à 100 photos à une résolution complète de 12,3 mégapixels. (Paramètre d&apos;image NORMAL-LARGE, utilisant une carte CompactFlash SanDisk Extreme IV 1 Go.)&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Le D300 intègre une gamme de technologies et de fonctionnalités innovantes qui amélioreront considérablement la précision, le contrôle et les performances que les photographes peuvent obtenir avec leur équipement. Son nouveau système de reconnaissance de scène améliore l&apos;utilisation du capteur 1 005 segments réputé de Nikon pour reconnaître les couleurs et les motifs lumineux, ce qui aide l&apos;appareil à déterminer le sujet et le type de scène photographiée avant qu&apos;une photo ne soit prise. Ces informations sont utilisées pour améliorer la précision des fonctions de mise au point automatique, d&apos;exposition automatique et de balance des blancs automatique du D300. Par exemple, l&apos;appareil peut mieux suivre les sujets en mouvement et, en les identifiant, il peut également sélectionner automatiquement les points de mise au point plus rapidement et avec une plus grande précision. Il peut également analyser les hautes lumières et déterminer plus précisément l&apos;exposition, ainsi qu&apos;interpréter les sources lumineuses pour offrir une détection de la balance des blancs plus précise.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', 'Nikon D300', '', ''),
+
+(49, 2, 'Samsung Galaxy Tab 10.1', '&lt;p&gt;\r\n	La Samsung Galaxy Tab 10.1 est la tablette la plus fine au monde, avec une épaisseur de 8,6 mm, fonctionnant sous Android 3.0 Honeycomb OS avec un processeur Tegra 2 double cœur à 1 GHz, similaire à son petit frère, la Samsung Galaxy Tab 8.9.&lt;/p&gt;\r\n&lt;p&gt;\r\n	La Samsung Galaxy Tab 10.1 offre une expérience Android 3.0 pure, avec sa nouvelle interface TouchWiz UX ou TouchWiz 4.0 &amp;ndash; comprenant un panneau interactif vous permettant de personnaliser avec différents contenus, tels que vos photos, favoris et flux sociaux. Elle est équipée d&apos;un écran tactile capacitif WXGA de 10,1 pouces avec une résolution de 1280 x 800 pixels, d&apos;un appareil photo arrière de 3 mégapixels avec flash LED et d&apos;un appareil photo avant de 2 mégapixels. Elle prend en charge la connectivité HSPA+ jusqu&apos;à 21 Mbps, l&apos;enregistrement vidéo HD 720p, la lecture HD 1080p, la compatibilité DLNA, le Bluetooth 2.1, l&apos;USB 2.0, un gyroscope, le Wi-Fi 802.11 a/b/g/n, un emplacement micro-SD, une prise casque 3,5 mm et un emplacement pour carte SIM, incluant le Samsung Stick &amp;ndash; un microphone Bluetooth pouvant être porté dans une poche comme un stylo et une station d&apos;accueil audio avec caisson de basses intégré.&lt;/p&gt;\r\n&lt;p&gt;\r\n	La Samsung Galaxy Tab 10.1 sera disponible en versions 16 Go, 32 Go et 64 Go, préchargée avec Social Hub, Reader&apos;s Hub, Music Hub et Samsung Mini Apps Tray &amp;ndash; qui vous donne accès à des applications fréquemment utilisées pour faciliter le multitâche. Elle est également compatible avec Adobe Flash Player 10.2 et alimentée par une batterie de 6860 mAh offrant jusqu&apos;à 10 heures de lecture vidéo.&amp;nbsp;&amp;auml;&amp;ouml;&lt;/p&gt;\r\n', '', 'Samsung Galaxy Tab 10.1', '', ''),
+
+(42, 2, 'Apple Cinema 30&quot;', '&lt;p&gt;\r\n	&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;L''écran Apple Cinema HD 30 pouces offre une résolution impressionnante de 2560 x 1600 pixels. Conçu spécifiquement pour les professionnels de la création, cet écran fournit plus d''espace pour un accès simplifié à tous les outils et palettes nécessaires pour éditer, formater et composer votre travail. Associez cet écran à un Mac Pro, MacBook Pro ou PowerMac G5, et il n''y a aucune limite à ce que vous pouvez accomplir. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Le Cinema HD est équipé d''un écran à cristaux liquides à matrice active produisant des images sans scintillement, offrant deux fois la luminosité, deux fois la netteté et deux fois le rapport de contraste d''un écran CRT classique. Contrairement à d''autres écrans plats, il est conçu avec une interface numérique pure pour fournir des images sans distorsion qui n''ont jamais besoin d''être ajustées. Avec plus de 4 millions de pixels numériques, cet écran est particulièrement adapté aux applications scientifiques et techniques telles que la visualisation de structures moléculaires ou l''analyse de données géologiques. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offrant une performance couleur précise et brillante, le Cinema HD restitue jusqu''à 16,7 millions de couleurs sur une large gamme, vous permettant de voir des nuances subtiles entre les couleurs, des pastels doux aux tons riches et précieux. Un large angle de vision garantit une couleur uniforme d''un bord à l''autre. La technologie ColorSync d''Apple vous permet de créer des profils personnalisés pour maintenir une cohérence des couleurs à l''écran et à l''impression. Résultat : vous pouvez utiliser cet écran en toute confiance dans toutes vos applications nécessitant une précision des couleurs.
+&lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Présenté dans un nouveau design en aluminium, l''écran dispose d''un cadre très fin qui améliore la précision visuelle. Chaque écran est équipé de deux ports FireWire 400 et de deux ports USB 2.0, rendant l''attachement des périphériques de bureau, tels que iSight, iPod, appareils photo numériques et fixes, disques durs, imprimantes et scanners, encore plus accessible et pratique. Profitant de l''empreinte beaucoup plus fine et légère d''un écran LCD, les nouveaux écrans prennent en charge la norme de montage VESA (Video Electronics Standards Association). Les clients disposant du kit adaptateur de montage VESA Cinema Display en option bénéficient de la flexibilité de monter leur écran à l''endroit le plus approprié pour leur environnement de travail. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Le Cinema HD dispose d''un design à câble unique avec une connexion élégante pour USB 2.0, FireWire 400 et une connexion purement numérique utilisant l''interface standard de l''industrie Digital Video Interface (DVI). La connexion DVI permet une connexion purement numérique directe.&lt;br&gt;\r\n	&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;\r\n	Caractéristiques :&lt;/h3&gt;\r\n&lt;p&gt;\r\n	Performance d''affichage inégalée&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Écran à cristaux liquides à matrice active de 30 pouces (visibles) offrant une qualité d''image époustouflante et des couleurs vives et saturées.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Prise en charge d''une résolution de 2560 par 1600 pixels pour l''affichage d''images fixes et vidéo en haute définition.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Design au format large permettant l''affichage simultané de deux pages complètes de texte et de graphiques.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Connecteur DVI standard pour une connexion directe aux ordinateurs Mac et Windows.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Angle de vision extrêmement large (170 degrés) horizontal et vertical pour une visibilité et des performances colorimétriques maximales.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Réponse ultra-rapide des pixels pour une lecture fluide des vidéos numériques.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Prise en charge de 16,7 millions de couleurs saturées, adaptées à toutes les applications graphiques intensives.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Installation et utilisation simples&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Câble unique avec une connexion élégante pour les ports DVI, USB et FireWire.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Hub USB 2.0 intégré à deux ports pour une connexion facile des périphériques de bureau.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Deux ports FireWire 400 pour prendre en charge iSight et d''autres périphériques de bureau.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Design élégant et raffiné&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Immense espace de travail virtuel, empreinte très réduite.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Design à cadre étroit pour minimiser l''impact visuel de l''utilisation de deux écrans.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Design unique de charnière pour un ajustement sans effort.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Prise en charge des solutions de montage VESA (adaptateur de montage VESA pour Cinema Display vendu séparément).&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;\r\n	Spécifications techniques&lt;/h3&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Taille de l''écran (taille de l''image visible en diagonale)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Apple Cinema HD Display : 30 pouces (29,7 pouces visibles).&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Type d''écran&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Écran à cristaux liquides à matrice active TFT (Thin Film Transistor).&lt;/li&gt;
+(AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Résolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		2560 x 1600 pixels (résolution optimale)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2048 x 1280&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1920 x 1200&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1280 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Couleurs d''affichage (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16,7 millions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Angle de vision (typique)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		170° horizontal ; 170° vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Luminosité (typique)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Écran Cinema HD 30 pouces : 400 cd/m²&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Rapport de contraste (typique)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Temps de réponse (typique)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Pas de pixel&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Écran Cinema HD 30 pouces : 0,250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Traitement de l''écran&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Revêtement antireflet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Commandes utilisateur (matériel et logiciel)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Alimentation de l''écran,&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Mise en veille et réveil du système&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Luminosité&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Inclinaison de l''écran&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Connecteurs et câbles&lt;/b&gt;&lt;br&gt;\r\n	Câble&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		DVI (Digital Visual Interface)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		USB 2.0&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Alimentation DC (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Connecteurs&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Hub USB 2.0 à deux ports, auto-alimenté&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Deux ports FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Port de sécurité Kensington&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Adaptateur de montage VESA&lt;/b&gt;&lt;br&gt;\r\n	Nécessite l''adaptateur de montage VESA Cinema Display en option (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Compatible avec les solutions de montage conformes à la norme VESA FDMI (MIS-D, 100, C)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Exigences électriques&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Tension d''entrée : 100-240 VCA 50-60 Hz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Puissance maximale en fonctionnement : 150 W&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Mode économie d''énergie : 3 W ou moins&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Exigences environnementales&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Température de fonctionnement : 10° à 35° C (50° à 95° F)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Température de stockage : -40° à 47° C (-40° à 116° F)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Humidité de fonctionnement : 20 % à 80 % sans condensation&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Altitude maximale de fonctionnement : 10 000 pieds&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Approvals d''agence&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		FCC Part 15 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55022 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55024&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VCCI Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AS/NZS 3548 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CNS 13438 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ICES-003 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ISO 13406 partie 2&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MPR II&lt;/li&gt;\r\n	&lt;li&gt;\r\n		IEC 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UL 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CSA 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ENERGY STAR&lt;/li&gt;\r\n	&lt;li&gt;\r\n		TCO ''03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Dimensions et poids&lt;/b&gt;&lt;br&gt;\r\n	Écran Apple Cinema HD 30 pouces&lt;/p&gt;
+Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Hauteur : 21,3 pouces (54,3 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Largeur : 27,2 pouces (68,8 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Profondeur : 8,46 pouces (21,5 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Poids : 27,5 livres (12,5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Exigences système&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Mac Pro, toutes options graphiques&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MacBook Pro&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI-X) avec ATI Radeon 9650 ou mieux ou NVIDIA GeForce 6800 GT DDL ou mieux&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI Express), toutes options graphiques&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PowerBook G4 avec support DVI double lien&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PC Windows et carte graphique prenant en charge les ports DVI avec une bande passante numérique double lien et norme VESA DDC pour une configuration plug-and-play&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', 'Apple Cinema 30', '', ''),
+(30, 2, 'Canon EOS 5D', '&lt;p&gt;\r\n	Le matériel de presse de Canon pour l''EOS 5D déclare qu''il ''définit une nouvelle catégorie de reflex numériques'', et bien que nous ne soyons généralement pas trop préoccupés par le discours marketing, cette déclaration est clairement assez précise. L''EOS 5D est différent de tout reflex numérique précédent en ce qu''il combine un capteur plein format (taille 35 mm) de haute résolution (12,8 mégapixels) avec un boîtier relativement compact (légèrement plus grand que l''EOS 20D, bien qu''en main, il semble nettement plus ''massif''). L''EOS 5D est destiné à se positionner entre l''EOS 20D et les reflex numériques professionnels EOS-1D. Une différence importante par rapport à ces derniers est que l''EOS 5D n''a pas de joints d''étanchéité environnementaux. Bien que Canon ne fasse pas spécifiquement référence à l''EOS 5D comme à un reflex numérique ''professionnel'', il séduira évidemment les professionnels qui souhaitent un reflex numérique de haute qualité dans un boîtier plus léger que l''EOS-1D. Il attirera sans aucun doute également les propriétaires actuels de l''EOS 20D (espérons simplement qu''ils n''ont pas acheté trop d''objectifs EF-S...). äë&lt;/p&gt;\r\n', '', 'sdf', '', '');
 
 -----------------------------------------------------------
 
@@ -1925,8 +2131,10 @@ INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
 INSERT INTO `oc_return_action` (`return_action_id`, `language_id`, `name`) VALUES
 (1, 1, 'Refunded'),
 (2, 1, 'Credit Issued'),
-(3, 1, 'Replacement Sent');
-
+(3, 1, 'Replacement Sent'),
+(1, 2, 'Refunded'),
+(2, 2, 'Credit Issued'),
+(3, 2, 'Replacement Sent');
 -----------------------------------------------------------
 
 --
@@ -1938,7 +2146,12 @@ INSERT INTO `oc_return_reason` (`return_reason_id`, `language_id`, `name`) VALUE
 (2, 1, 'Received Wrong Item'),
 (3, 1, 'Order Error'),
 (4, 1, 'Faulty, please supply details'),
-(5, 1, 'Other, please supply details');
+(5, 1, 'Other, please supply details'),
+(1, 2, 'Dead On Arrival'),
+(2, 2, 'Received Wrong Item'),
+(3, 2, 'Order Error'),
+(4, 2, 'Faulty, please supply details'),
+(5, 2, 'Other, please supply details');
 
 -----------------------------------------------------------
 
@@ -1949,7 +2162,10 @@ INSERT INTO `oc_return_reason` (`return_reason_id`, `language_id`, `name`) VALUE
 INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (3, 1, 'Complete'),
-(2, 1, 'Awaiting Products');
+(2, 1, 'Awaiting Products'),
+(1, 2, 'Pending'),
+(3, 2, 'Complete'),
+(2, 2, 'Awaiting Products');
 
 -----------------------------------------------------------
 
@@ -2257,7 +2473,82 @@ INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `key`, `value`, `keyword`, 
 (0, 1, 'route', 'information/information', 'information', -1),
 (0, 1, 'route', 'product/product', 'product', -1),
 (0, 1, 'route', 'product/category', 'catalog', -1),
-(0, 1, 'route', 'product/manufacturer', 'brands', -1);
+(0, 1, 'route', 'product/manufacturer', 'brands', -1),
+(0, 2, 'product_id', '47', 'hp-lp3065-fr', 1),
+(0, 2, 'product_id', '48', 'ipod-classic-fr', 1),
+(0, 2, 'product_id', '28', 'htc-touch-hd-fr', 1),
+(0, 2, 'product_id', '43', 'macbook-fr', 1),
+(0, 2, 'product_id', '44', 'macbook-air-fr', 1),
+(0, 2, 'product_id', '45', 'macbook-pro-fr', 1),
+(0, 2, 'product_id', '30', 'canon-eos-5d-fr', 1),
+(0, 2, 'product_id', '31', 'nikon-d300-fr', 1),
+(0, 2, 'product_id', '29', 'palm-treo-pro-fr', 1),
+(0, 2, 'product_id', '35', 'product-8-fr', 1),
+(0, 2, 'product_id', '49', 'samsung-galaxy-tab-10-1-fr', 1),
+(0, 2, 'product_id', '33', 'samsung-syncmaster-941bw-fr', 1),
+(0, 2, 'product_id', '46', 'sony-vaio-fr', 1),
+(0, 2, 'product_id', '41', 'imac-fr', 1),
+(0, 2, 'product_id', '40', 'iphone-fr', 1),
+(0, 2, 'product_id', '36', 'ipod-nano-fr', 1),
+(0, 2, 'product_id', '34', 'ipod-shuffle-fr', 1),
+(0, 2, 'product_id', '32', 'ipod-touch-fr', 1),
+(0, 2, 'product_id', '50', 'apple-4-fr', 1),
+(0, 2, 'product_id', '42', 'apple-cinema-fr', 1),
+(0, 2, 'manufacturer_id', '5', 'htc-fr', 0),
+(0, 2, 'manufacturer_id', '7', 'hewlett-packard-fr', 0),
+(0, 2, 'manufacturer_id', '6', 'palm-fr', 0),
+(0, 2, 'manufacturer_id', '10', 'sony-fr', 0),
+(0, 2, 'manufacturer_id', '9', 'canon-fr', 0),
+(0, 2, 'manufacturer_id', '8', 'apple-fr', 0),
+(0, 2, 'path', '30', 'printer-fr', 0),
+(0, 2, 'path', '20_27', 'desktops/mac-fr', 0),
+(0, 2, 'path', '20_26', 'desktops/pc-fr', 0),
+(0, 2, 'path', '25', 'component-fr', 0),
+(0, 2, 'path', '25_29', 'component/mouse-fr', 0),
+(0, 2, 'path', '33', 'cameras-fr', 0),
+(0, 2, 'path', '25_28', 'component/monitor-fr', 0),
+(0, 2, 'path', '25_28_35', 'component/monitor/test-1-fr', 0),
+(0, 2, 'path', '25_28_36', 'component/monitor/test-2-fr', 0),
+(0, 2, 'path', '25_30', 'component/printers-fr', 0),
+(0, 2, 'path', '25_31', 'component/scanner-fr', 0),
+(0, 2, 'path', '25_32', 'component/web-camera-fr', 0),
+(0, 2, 'path', '20', 'desktops-fr', 0),
+(0, 2, 'path', '18', 'laptop-notebook-fr', 0),
+(0, 2, 'path', '18_46', 'laptop-notebook/macs-fr', 0),
+(0, 2, 'path', '18_45', 'laptop-notebook/windows-fr', 0),
+(0, 2, 'path', '34', 'mp3-players-fr', 0),
+(0, 2, 'path', '34_43', 'mp3-players/test-11-fr', 0),
+(0, 2, 'path', '34_44', 'mp3-players/test-12-fr', 0),
+(0, 2, 'path', '34_47', 'mp3-players/test-15-fr', 0),
+(0, 2, 'path', '34_48', 'mp3-players/test-16-fr', 0),
+(0, 2, 'path', '34_49', 'mp3-players/test-17-fr', 0),
+(0, 2, 'path', '34_50', 'mp3-players/test-18-fr', 0),
+(0, 2, 'path', '34_51', 'mp3-players/test-19-fr', 0),
+(0, 2, 'path', '34_52', 'mp3-players/test-20-fr', 0),
+(0, 2, 'path', '34_52_58', 'mp3-players/test-20/test-25-fr', 0),
+(0, 2, 'path', '34_53', 'mp3-players/test-21-fr', 0),
+(0, 2, 'path', '34_54', 'mp3-players/test-22-fr', 0),
+(0, 2, 'path', '34_55', 'mp3-players/test-23-fr', 0),
+(0, 2, 'path', '34_56', 'mp3-players/test-24-fr', 0),
+(0, 2, 'path', '34_38', 'mp3-players/test-4-fr', 0),
+(0, 2, 'path', '34_37', 'mp3-players/test-5-fr', 0),
+(0, 2, 'path', '34_39', 'mp3-players/test-6-fr', 0),
+(0, 2, 'path', '34_40', 'mp3-players/test-7-fr', 0),
+(0, 2, 'path', '34_41', 'mp3-players/test-8-fr', 0),
+(0, 2, 'path', '34_42', 'mp3-players/test-9-fr', 0),
+(0, 2, 'path', '24', 'smartphone-fr', 0),
+(0, 2, 'path', '17', 'software-fr', 0),
+(0, 2, 'path', '57', 'tablet-fr', 0),
+(0, 2, 'information_id', '1', 'about-us-fr', 0),
+(0, 2, 'information_id', '2', 'terms-fr', 0),
+(0, 2, 'information_id', '4', 'delivery-fr', 0),
+(0, 2, 'information_id', '3', 'privacy-fr', 0),
+(0, 2, 'language', 'fr-fr', 'fr-fr', -2),
+(0, 2, 'route', 'information/information.info', 'info-fr', 0),
+(0, 2, 'route', 'information/information', 'information-fr', -1),
+(0, 2, 'route', 'product/product', 'product-fr', -1),
+(0, 2, 'route', 'product/category', 'catalog-fr', -1),
+(0, 2, 'route', 'product/manufacturer', 'brands-fr', -1);
 
 -----------------------------------------------------------
 
@@ -2284,7 +2575,11 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 (7, 1, 'In Stock'),
 (8, 1, 'Pre-Order'),
 (5, 1, 'Out Of Stock'),
-(6, 1, '2-3 Days');
+(6, 1, '2-3 Days'),
+(7, 2, 'In Stock'),
+(8, 2, 'Pre-Order'),
+(5, 2, 'Out Of Stock'),
+(6, 2, '2-3 Days');
 
 -----------------------------------------------------------
 
@@ -2306,7 +2601,10 @@ INSERT INTO `oc_subscription_plan` (`subscription_plan_id`, `frequency`, `durati
 INSERT INTO `oc_subscription_plan_description` (`subscription_plan_id`, `language_id`, `name`) VALUES
 (1, 1, 'Daily'),
 (2, 1, 'Weekly'),
-(3, 1, 'Monthly');
+(3, 1, 'Monthly'),
+(1, 2, 'Daily'),
+(2, 2, 'Weekly'),
+(3, 2, 'Monthly');
 
 -----------------------------------------------------------
 
@@ -2321,7 +2619,14 @@ INSERT INTO `oc_subscription_status` (`subscription_status_id`, `language_id`, `
 (4, 1, 'Suspended'),
 (5, 1, 'Cancelled'),
 (6, 1, 'Failed'),
-(7, 1, 'Denied');
+(7, 1, 'Denied'),
+(1, 2, 'En attente'),
+(2, 2, 'Actif'),
+(3, 2, 'Expiré'),
+(4, 2, 'Suspendu'),
+(5, 2, 'Annulé'),
+(6, 2, 'Échoué'),
+(7, 2, 'Refusé');
 
 -----------------------------------------------------------
 
@@ -2404,7 +2709,11 @@ INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `ti
 (1, 1, 'Kilogram', 'kg'),
 (2, 1, 'Gram', 'g'),
 (3, 1, 'Pound ', 'lb'),
-(4, 1, 'Ounce', 'oz');
+(4, 1, 'Ounce', 'oz'),
+(1, 2, 'Kilogramme', 'kg'),
+(2, 2, 'Gramme', 'g'),
+(3, 2, 'Livre', 'lb'),
+(4, 2, 'Once', 'oz');
 
 -----------------------------------------------------------
 

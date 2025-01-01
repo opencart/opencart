@@ -2,7 +2,6 @@
 // Text
 $_['text_refine']      = 'Refine Search';
 $_['text_product']     = 'Products';
-$_['text_error']       = 'Category not found!';
 $_['text_no_results']  = 'There are no products to list in this category.';
 $_['text_compare']     = 'Product Compare (%s)';
 $_['text_sort']        = 'Sort By';

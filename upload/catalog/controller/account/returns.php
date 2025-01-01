@@ -156,13 +156,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['telephone'] = $return_info['telephone'];
 
 			$data['product'] = $return_info['product'];
-			$data['product'] = $return_info['product'];
 			$data['model'] = $return_info['model'];
 			$data['quantity'] = $return_info['quantity'];
 			$data['reason'] = $return_info['reason'];
 			$data['opened'] = $return_info['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no');
-			$data['comment'] = nl2br($return_info['comment']);
 			$data['action'] = $return_info['action'];
+			$data['comment'] = nl2br($return_info['comment']);
 
 			// History
 			$data['history'] = $this->getHistory();

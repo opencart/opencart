@@ -66,9 +66,6 @@
                   {% else %}
                     <div id="value-product"></div>
                   {% endif %}
-                  <input type="hidden" name="product_id" value="{{ product_id }}"/>
-                  <input type="hidden" name="model" value="{{ model }}"/>
-                  <input type="hidden" name="quantity" value="{{ quantity }}"/>
                 </td>
                 <td id="value-model">{{ model }}</td>
                 <td id="value-quantity" class="text-end">{{ quantity }}</td>
@@ -85,7 +82,7 @@
                   <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected{% endif %}>{{ return_reason.name }}</option>
                 {% endfor %}
               </select>
-              <label for="input-return-reason">{{ entry_return_reason }}</label>
+              <label for="input-return-reason">{{ entry_reason }}</label>
             </form>
             <div id="error-return-reason" class="invalid-feedback"></div>
           </div>
@@ -105,7 +102,7 @@
                   <option value="{{ return_action.return_action_id }}"{% if return_action.return_action_id == return_action_id %} selected{% endif %}>{{ return_action.name }}</option>
                 {% endfor %}
               </select>
-              <label for="input-return-action">{{ entry_return_action }}</label>
+              <label for="input-return-action">{{ entry_action }}</label>
             </form>
           </div>
         </div>
@@ -176,9 +173,7 @@
         <form id="form-customer">
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
-            <div class="input-group">
-              <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
-            </div>
+            <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
@@ -224,7 +219,9 @@
             <label for="input-product" class="form-label">{{ entry_product }}</label>
             <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
-            <input type="hidden" name="product_id" value="" id="input-product-id"/>
+            <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+            <input type="hidden" name="model" value="{{ model }}" id="input-model"/>
+            <input type="hidden" name="quantity" value="{{ quantity }}" id="input-quantity"/>
           </div>
           <div class="mb-3">
             <label for="input-model" class="form-label">{{ entry_model }}</label>
@@ -308,10 +305,18 @@ $('#input-product').autocomplete({
     }
 });
 
+$('#button-product').on('click', function() {
+    $('#value-product').html('<a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-product-id').val() + '" target="_blank">' + $('#input-product').val() + '</a>');
+    $('#value-model').html($('#input-model').val());
+    $('#value-quantity').html($('#input-quantity').val());
+
+    $('#modal-product').modal('hide');
+});
+
 $('#button-save').on('click', function() {
     var element = this;
 
-    console.log($('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize());
+    console.log($('#form-customer, #form-product, #form-comment, #input-order-id').serialize());
 
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
@@ -352,38 +357,6 @@ $('#button-save').on('click', function() {
                     $('#input-product-info').addClass('is-invalid');
 
                     delete json['error']['product'];
-                }
-
-                if (json['error']['payment_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-address-info').addClass('is-invalid');
-
-                    delete json['error']['payment_address'];
-                }
-
-                if (json['error']['shipping_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-address-info').addClass('is-invalid');
-
-                    delete json['error']['shipping_address'];
-                }
-
-                if (json['error']['shipping_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-method-info').addClass('is-invalid');
-
-                    delete json['error']['shipping_method'];
-                }
-
-                if (json['error']['payment_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-method-info').addClass('is-invalid');
-
-                    delete json['error']['payment_method'];
                 }
 
                 for (key in json['error']) {

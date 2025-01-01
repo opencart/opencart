@@ -15,7 +15,6 @@ $_['text_reviews']               = '%s reviews';
 $_['text_write']                 = 'Write a review';
 $_['text_login']                 = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
 $_['text_tags']                  = 'Tags:';
-$_['text_error']                 = 'Product not found!';
 $_['text_subscription']          = 'Subscription';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';

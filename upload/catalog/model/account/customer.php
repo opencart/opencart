@@ -15,7 +15,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new customer record
 	 */
 	public function addCustomer(array $data): int {
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {

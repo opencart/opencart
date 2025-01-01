@@ -15,7 +15,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new option record
 	 */
 	public function addOption(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -221,7 +221,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @param int                  $option_id primary key of the option record
 	 * @param array<string, mixed> $data      array of data
 	 *
-	 * @return int total numbers of value records
+	 * @return int returns the primary key of the new option value record
 	 */
 	public function addValue(int $option_id, array $data): int {
 		if ($data['option_value_id']) {

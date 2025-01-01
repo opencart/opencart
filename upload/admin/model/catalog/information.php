@@ -15,7 +15,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new information record
 	 */
 	public function addInformation(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -243,7 +243,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
-	 * @return array<int, array<string, string>> information records that have information ID
+	 * @return array<int, array<string, string>> description records that have information ID
 	 */
 	public function getDescriptions(int $information_id): array {
 		$information_description_data = [];

@@ -1,7 +1,7 @@
 <div class="text-center">
   {% if logged %}
     <button type="button" value="{{ like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
-    <button type="button" value="{{ dislike }}"  data-bs-toggle="tooltip" title="{{ button_dislike }}"data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
+    <button type="button" value="{{ dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
     <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-secondary">{{ button_comment }}</button>
   {% else %}
     <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></a>

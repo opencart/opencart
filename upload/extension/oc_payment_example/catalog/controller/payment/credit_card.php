@@ -219,7 +219,9 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$this->model_extension_oc_payment_example_payment_credit_card->addReport($this->customer->getId(), $report_data);
 
 			if ($response) {
-				// Credit Card charge code goes here
+				/**
+				 * Credit Card charge code goes here
+				 */
 				$this->model_checkout_order->addHistory($order_id, $this->config->get('payment_credit_card_approved_status_id'), '', true);
 
 				$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);

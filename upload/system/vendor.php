@@ -64,12 +64,6 @@ if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/bootstrap.php')) {
 	require_once(DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/bootstrap.php');
 }
 
-// symfony/polyfill-php80
-$autoloader->register('Symfony\Polyfill\Php80', DIR_STORAGE . 'vendor/symfony/polyfill-php80//', true);
-if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-php80/bootstrap.php')) {
-	require_once(DIR_STORAGE . 'vendor/symfony/polyfill-php80/bootstrap.php');
-}
-
 // symfony/polyfill-php81
 $autoloader->register('Symfony\Polyfill\Php81', DIR_STORAGE . 'vendor/symfony/polyfill-php81//', true);
 if (is_file(DIR_STORAGE . 'vendor/symfony/polyfill-php81/bootstrap.php')) {

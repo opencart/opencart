@@ -114,7 +114,7 @@ class Currency {
 	}
 
 	/**
-	 * getId
+	 * Get Id
 	 *
 	 * @param string $currency
 	 *
@@ -129,7 +129,7 @@ class Currency {
 	}
 
 	/**
-	 * getSymbolLeft
+	 * Get Symbol Left
 	 *
 	 * @param string $currency
 	 *
@@ -144,7 +144,7 @@ class Currency {
 	}
 
 	/**
-	 * getSymbolRight
+	 * Get Symbol Right
 	 *
 	 * @param string $currency
 	 *
@@ -159,7 +159,7 @@ class Currency {
 	}
 
 	/**
-	 * getDecimalPlace
+	 * Get Decimal Place
 	 *
 	 * @param string $currency
 	 *
@@ -174,7 +174,7 @@ class Currency {
 	}
 
 	/**
-	 * getValue
+	 * Get Value
 	 *
 	 * @param string $currency
 	 *

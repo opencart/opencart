@@ -153,7 +153,7 @@ class User {
 	}
 
 	/**
-	 * hasPermission
+	 * Has Permission
 	 *
 	 * @param string $key
 	 * @param string $value
@@ -169,7 +169,7 @@ class User {
 	}
 
 	/**
-	 * isLogged
+	 * Is Logged
 	 *
 	 * @return bool
 	 */
@@ -178,7 +178,7 @@ class User {
 	}
 
 	/**
-	 * getId
+	 * Get Id
 	 *
 	 * @return int
 	 */
@@ -187,7 +187,7 @@ class User {
 	}
 
 	/**
-	 * getUserName
+	 * Get User Name
 	 *
 	 * @return string
 	 */
@@ -196,7 +196,7 @@ class User {
 	}
 
 	/**
-	 * getFirstName
+	 * Get First Name
 	 *
 	 * @return string
 	 */
@@ -205,7 +205,7 @@ class User {
 	}
 
 	/**
-	 * getLastName
+	 * Get Last Name
 	 *
 	 * @return string
 	 */
@@ -214,7 +214,7 @@ class User {
 	}
 
 	/**
-	 * getEmail
+	 * Get Email
 	 *
 	 * @return string
 	 */
@@ -223,7 +223,7 @@ class User {
 	}
 
 	/**
-	 * getGroupId
+	 * Get Group Id
 	 *
 	 * @return int
 	 */

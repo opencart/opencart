@@ -243,7 +243,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
-	 * @return array<int, array<string, string>> information records that have information ID
+	 * @return array<int, array<string, string>> description records that have information ID
 	 */
 	public function getDescriptions(int $information_id): array {
 		$information_description_data = [];

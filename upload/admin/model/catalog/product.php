@@ -812,7 +812,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
-	 * @return array<string, mixed> product records that have product ID
+	 * @return array<string, mixed> product record that has product ID
 	 */
 	public function getProduct(int $product_id): array {
 		$product_data = [];

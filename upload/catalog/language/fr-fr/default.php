@@ -90,7 +90,7 @@ $_['error_session']         = 'Attention : La session a expiré, veuillez soumet
 // Sélecteur de date
 $_['datepicker']            = 'fr';
 
-// Lorsque l'on effectue la traduction, il faut seulement inclure le code de langage correspondant
+// Lorsqu'on effectue la traduction, il faut seulement inclure le code de langage correspondant
 // Datepicker
 //$_['datepicker']            = 'af';
 //$_['datepicker']            = 'ar-dz';

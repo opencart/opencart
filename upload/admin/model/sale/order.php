@@ -398,7 +398,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Processing Status
 	 *
-	 * @return int total number of order records
+	 * @return int total number of order processing status records
 	 */
 	public function getTotalOrdersByProcessingStatus(): int {
 		$implode = [];
@@ -421,7 +421,7 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Complete Status
 	 *
-	 * @return int total number of order records by complete status
+	 * @return int total number of order complete status records
 	 */
 	public function getTotalOrdersByCompleteStatus(): int {
 		$implode = [];

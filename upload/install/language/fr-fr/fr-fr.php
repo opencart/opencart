@@ -8,4 +8,4 @@ $_['button_continue'] = 'Continuer';
 $_['button_back']     = 'Dos';
 
 // Error
-$_['error_exception'] = 'Code d\'erreur (%s) : %s dans %s sur la ligne %s';
+$_['error_exception'] = "Code d'erreur (%s)\u{a0}: %s dans %s sur la ligne %s";

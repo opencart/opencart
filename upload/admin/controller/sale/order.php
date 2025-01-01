@@ -1957,7 +1957,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function autocomplete() {
+	public function autocomplete(): void {
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {

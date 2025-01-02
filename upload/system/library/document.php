@@ -43,7 +43,7 @@ class Document {
 	private array $meta = [];
 
 	/**
-	 * setTitle
+	 * Set Title
 	 *
 	 * @param string $title
 	 *
@@ -54,7 +54,7 @@ class Document {
 	}
 
 	/**
-	 * getTitle
+	 * Get Title
 	 *
 	 * @return string
 	 */
@@ -63,7 +63,7 @@ class Document {
 	}
 
 	/**
-	 * setDescription
+	 * Set Description
 	 *
 	 * @param string $description
 	 *

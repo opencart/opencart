@@ -82,7 +82,7 @@ class PgSQL {
 	}
 
 	/**
-	 * countAffected
+	 * Count Affected
 	 *
 	 * @return int
 	 */
@@ -91,7 +91,7 @@ class PgSQL {
 	}
 
 	/**
-	 * getLastId
+	 * Get Last Id
 	 *
 	 * @return int
 	 */
@@ -102,7 +102,7 @@ class PgSQL {
 	}
 
 	/**
-	 * isConnected
+	 * Is Connected
 	 *
 	 * @return bool
 	 */

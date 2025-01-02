@@ -26,8 +26,3 @@ $_['entry_sort_order'] = 'Ordre de Tri';
 $_['error_permission'] = 'Attention : Vous n\'avez pas la permission de modifier les bannières !';
 $_['error_name']       = 'Le nom de la bannière doit contenir entre 3 et 64 caractères !';
 $_['error_title']      = 'Le titre de la bannière doit contenir entre 2 et 64 caractères !';
-
-
-
-
-

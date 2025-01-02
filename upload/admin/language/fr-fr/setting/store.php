@@ -126,4 +126,3 @@ $_['error_image_compare']              = 'Les dimensions des images de comparais
 $_['error_image_wishlist']             = 'Les dimensions des images de la liste de souhaits sont requises !';
 $_['error_image_cart']                 = 'Les dimensions des images du panier sont requises !';
 $_['error_image_location']             = 'Les dimensions des images de l\'emplacement sont requises !';
-?>

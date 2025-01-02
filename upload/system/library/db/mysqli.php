@@ -135,7 +135,7 @@ class MySQLi {
 	}
 
 	/**
-	 * countAffected
+	 * Count Affected
 	 *
 	 * @return int
 	 */
@@ -144,7 +144,7 @@ class MySQLi {
 	}
 
 	/**
-	 * getLastId
+	 * Get Last Id
 	 *
 	 * @return int
 	 */
@@ -153,7 +153,7 @@ class MySQLi {
 	}
 
 	/**
-	 * isConnected
+	 * Is Connected
 	 *
 	 * @return bool
 	 */

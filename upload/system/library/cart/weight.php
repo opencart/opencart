@@ -88,7 +88,7 @@ class Weight {
 	}
 
 	/**
-	 * getUnit
+	 * Get Unit
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
 	 *

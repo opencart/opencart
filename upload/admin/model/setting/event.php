@@ -15,7 +15,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of of data
 	 *
-	 * @return int
+	 * @return int returns the primary key of the new event record
 	 */
 	public function addEvent(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($data['code']) . "', `description` = '" . $this->db->escape($data['description']) . "', `trigger` = '" . $this->db->escape($data['trigger']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");

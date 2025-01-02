@@ -82,7 +82,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *	pending    = 1
 	 *	processing = 2
 	 *	denied     = -1
-	*/
+	 */
 	/**
 	 * Action
 	 *

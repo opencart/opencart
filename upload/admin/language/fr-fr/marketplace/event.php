@@ -20,4 +20,3 @@ $_['entry_action']      = 'Action';
 
 // Erreur
 $_['error_permission']  = 'Attention : Vous n’avez pas la permission de modifier les événements !';
-

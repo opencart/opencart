@@ -54,4 +54,3 @@ avec ce programme. Si ce n\'est pas le cas, consultez &lt;http://www.gnu.org/lic
   propriétaires via cette bibliothèque. Si c\'est ce que vous souhaitez faire, utilisez
   la Licence Publique Générale Limitée GNU au lieu de cette licence. Mais avant, veuillez lire
   &lt;http://www.gnu.org/philosophy/why-not-lgpl.html&gt;.</p>';
-

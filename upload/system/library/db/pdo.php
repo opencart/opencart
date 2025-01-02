@@ -105,7 +105,7 @@ class PDO {
 	}
 
 	/**
-	 * countAffected
+	 * Count Affected
 	 *
 	 * @return int
 	 */
@@ -114,7 +114,7 @@ class PDO {
 	}
 
 	/**
-	 * getLastId
+	 * Get Last Id
 	 *
 	 * @return ?int
 	 */
@@ -125,7 +125,7 @@ class PDO {
 	}
 
 	/**
-	 * isConnected
+	 * Is Connected
 	 *
 	 * @return bool
 	 */

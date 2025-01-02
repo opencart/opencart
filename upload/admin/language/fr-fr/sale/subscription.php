@@ -93,4 +93,3 @@ $_['error_subscription_plan']    = 'Attention : Le plan d\'abonnement n\'existe 
 $_['error_subscription_status']  = 'Attention : Le statut de l\'abonnement doit être sélectionné !';
 $_['error_payment_method']       = 'Attention : La méthode de paiement n\'existe pas !';
 $_['error_service_type']		 = 'Le statut du service n\'a pas été inclus dans cette transaction. Si vous voyez ce message d\'erreur, veuillez contacter votre développeur d\'extension qui gère les services d\'abonnement pour résoudre ce problème !';
-

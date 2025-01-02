@@ -76,4 +76,3 @@ $_['error_permission']   = 'Attention : Vous n’avez pas la permission de modif
 $_['error_api']          = 'Attention : Vous devez entrer vos informations d’API OpenCart en cliquant sur <i class="fa-solid fa-triangle-exclamation"></i> avant de pouvoir télécharger des extensions ou effectuer des achats !';
 $_['error_purchase']     = 'L’extension n’a pas pu être achetée !';
 $_['error_download']     = 'L’extension n’a pas pu être téléchargée !';
-

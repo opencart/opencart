@@ -13,7 +13,7 @@ class Template {
 	protected array $path = [];
 
 	/**
-	 * addPath
+	 * Add Path
 	 *
 	 * @param string $namespace
 	 * @param string $directory

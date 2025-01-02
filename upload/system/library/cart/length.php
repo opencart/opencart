@@ -88,7 +88,7 @@ class Length {
 	}
 
 	/**
-	 * getUnit
+	 * Get Unit
 	 *
 	 * @param int $length_class_id primary key of the length class record
 	 *

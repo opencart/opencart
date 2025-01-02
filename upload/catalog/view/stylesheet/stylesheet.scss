@@ -160,6 +160,11 @@ button:focus {
 #header-cart {
   margin-bottom: 10px;
 
+
+  .img-thumbnail {
+    min-width: 100px;
+  }
+
   .btn-lg {
     font-size: 15px;
     line-height: 18px;
@@ -215,6 +220,10 @@ button:focus {
             background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
           }
         }
+      }
+
+      a {
+        min-width: 160px;
       }
     }
   }
@@ -280,6 +289,7 @@ button:focus {
       }
     }
   }
+
   @media (max-width: 767px) {
     border-radius: 4px;
     div {

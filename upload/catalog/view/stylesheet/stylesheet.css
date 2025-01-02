@@ -132,6 +132,9 @@ button:focus {
 #header-cart {
   margin-bottom: 10px;
 }
+#header-cart .img-thumbnail {
+  min-width: 100px;
+}
 #header-cart .btn-lg {
   font-size: 15px;
   line-height: 18px;
@@ -176,6 +179,9 @@ button:focus {
 #menu .dropdown-inner ul li a:hover {
   color: #ffffff;
   background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+}
+#menu .dropdown-inner ul a {
+  min-width: 160px;
 }
 #menu .see-all {
   display: block;

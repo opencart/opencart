@@ -24,9 +24,9 @@ $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
 $_['text_comment']               = 'Commentaires sur la commande';
 $_['text_history']               = 'Historique des commandes';
-$_['text_success']               = 'Succès : Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">panier</a> !';
-$_['text_no_results']            = 'Vous n\'avez passé aucune commande précédente !';
-$_['text_error']                 = 'La commande demandée est introuvable !';
+$_['text_success']               = 'Succès: Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">panier</a>!';
+$_['text_no_results']            = 'Vous n\'avez passé aucune commande précédente!';
+$_['text_error']                 = 'La commande demandée est introuvable!';
 
 // Column
 $_['column_order_id']            = 'ID de commande';

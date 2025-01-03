@@ -3,7 +3,7 @@
 $_['heading_title']     = 'Classes de Taxes';
 
 // Texte
-$_['text_success']      = 'Succès : Vous avez modifié les classes de taxes!';
+$_['text_success']      = 'Succès: Vous avez modifié les classes de taxes!';
 $_['text_list']         = 'Liste des Classes de Taxes';
 $_['text_add']          = 'Ajouter une Classe de Taxes';
 $_['text_edit']         = 'Modifier une Classe de Taxes';

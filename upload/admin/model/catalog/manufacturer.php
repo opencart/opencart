@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Manufacturer
  *
- * @example $manufacturer_model = $this->model_catalog_manufacturer;
- *
  * Can be called from $this->load->model('catalog/manufacturer');
  *
  * @package Opencart\Admin\Model\Catalog
@@ -16,6 +14,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new manufacturer record
+	 *
+	 * @example
+	 *
+	 * $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($data);
 	 */
 	public function addManufacturer(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -59,6 +61,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $data);
 	 */
 	public function editManufacturer(int $manufacturer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -105,6 +111,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
 	 */
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -126,6 +136,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<string, mixed> manufacturer record that has manufacturer ID
+	 *
+	 * @example
+	 *
+	 * $manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 	 */
 	public function getManufacturer(int $manufacturer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -139,6 +153,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> manufacturer records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_catalog_manufacturer->getManufacturers();
 	 */
 	public function getManufacturers(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
@@ -185,6 +203,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * Get Total Manufacturers
 	 *
 	 * @return int total number of manufacturer records
+	 *
+	 * @example
+	 *
+	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
 	 */
 	public function getTotalManufacturers(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
@@ -199,6 +221,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->addStore($manufacturer_id, $store_id);
 	 */
 	public function addStore(int $manufacturer_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
@@ -210,6 +236,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->deleteStores($manufacturer_id);
 	 */
 	public function deleteStores(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -221,6 +251,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->deleteStoresByStoreId($store_id);
 	 */
 	public function deleteStoresByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -232,6 +266,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<int, int> store records that have manufacturer ID
+	 *
+	 * @example
+	 *
+	 * $data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($manufacturer_id);
 	 */
 	public function getStores(int $manufacturer_id): array {
 		$manufacturer_store_data = [];
@@ -253,6 +291,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id       primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->addLayout($manufacturer_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $manufacturer_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
@@ -264,6 +306,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 	 */
 	public function deleteLayouts(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -275,6 +321,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->deleteLayoutsByLayoutId($layout_id);
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -286,6 +336,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_manufacturer->deleteLayoutsByStoreId($store_id);
 	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -297,6 +351,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<int, int> layout records that have manufacturer ID
+	 *
+	 * @example
+	 *
+	 * $manufacturer_layout = $this->model_catalog_manufacturer->getLayouts($manufacturer_id);
 	 */
 	public function getLayouts(int $manufacturer_id): array {
 		$manufacturer_layout_data = [];
@@ -316,6 +374,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int total number of layout records that have layout ID
+	 *
+	 * @example
+	 *
+	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalLayoutsByLayoutId($layout_id);
 	 */
 	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");

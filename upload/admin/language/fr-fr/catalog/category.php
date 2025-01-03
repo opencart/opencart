@@ -3,7 +3,7 @@
 $_['heading_title']           = 'Catégories';
 
 // Text
-$_['text_success']            = 'Succès : Vous avez modifié les catégories!';
+$_['text_success']            = 'Succès: Vous avez modifié les catégories!';
 $_['text_list']               = 'Liste des Catégories';
 $_['text_add']                = 'Ajouter une Catégorie';
 $_['text_edit']               = 'Modifier la Catégorie';
@@ -39,8 +39,8 @@ $_['help_top']                = 'Afficher dans la barre de menu du haut. Fonctio
 $_['help_column']             = 'Nombre de colonnes à utiliser pour les 3 catégories inférieures. Fonctionne uniquement pour les catégories parentes principales.';
 
 // Error
-$_['error_warning']           = 'Attention : Veuillez vérifier attentivement le formulaire pour les erreurs!';
-$_['error_permission']        = 'Attention : Vous n\'avez pas la permission de modifier les catégories!';
+$_['error_warning']           = 'Attention: Veuillez vérifier attentivement le formulaire pour les erreurs!';
+$_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les catégories!';
 $_['error_name']              = 'Le nom de la catégorie doit contenir entre 1 et 255 caractères!';
 $_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères!';
 $_['error_parent']            = 'La catégorie parente que vous avez choisie est un enfant de la catégorie actuelle!';

@@ -15,4 +15,4 @@ $_['column_date_expire']    = 'Date d\'Expiration';
 $_['column_action']         = 'Action';
 
 // Error
-$_['error_payment_method']  = 'Attention : La méthode de paiement est introuvable !';
+$_['error_payment_method']  = 'Attention: La méthode de paiement est introuvable!';

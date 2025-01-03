@@ -25,8 +25,8 @@ $_['text_status']                 = 'Statut de l\'abonnement';
 $_['text_description']            = 'Description';
 $_['text_quantity']               = 'Quantité';
 $_['text_order']                  = 'Historique des commandes';
-$_['text_no_results']             = 'Aucun abonnement trouvé !';
-$_['text_error']                  = 'La commande récurrente demandée est introuvable !';
+$_['text_no_results']             = 'Aucun abonnement trouvé!';
+$_['text_error']                  = 'La commande récurrente demandée est introuvable!';
 $_['text_cancelled']              = 'Le paiement récurrent a été annulé';
 
 // Column
@@ -39,5 +39,5 @@ $_['column_comment']              = 'Commentaire';
 $_['column_date_added']           = 'Date d\'ajout';
 
 // Error
-$_['error_not_cancelled']         = 'Erreur : %s';
+$_['error_not_cancelled']         = 'Erreur: %s';
 $_['error_not_found']             = 'Impossible d\'annuler l\'abonnement';

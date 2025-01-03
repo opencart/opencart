@@ -3,7 +3,7 @@
 $_['heading_title']      = 'Sauvegarde &amp; Restauration';
 
 // Text
-$_['text_success']       = 'Succès : Vous avez modifié votre base de données avec succès !';
+$_['text_success']       = 'Succès: Vous avez modifié votre base de données avec succès!';
 $_['text_backup']        = 'Sauvegarde de la table %s, enregistrements %s à %s';
 $_['text_restore']       = 'Restauration %s sur %s';
 $_['text_option']        = 'Options de sauvegarde';
@@ -22,11 +22,11 @@ $_['entry_progress']     = 'Progression';
 $_['entry_export']       = 'Exporter';
 
 // Error
-$_['error_permission']   = 'Attention : Vous n\'avez pas la permission de modifier la sauvegarde &amp; restauration !';
-$_['error_export']       = 'Attention : Vous devez sélectionner au moins une table à exporter !';
-$_['error_table']        = 'La table %s n\'est pas dans la liste autorisée !';
-$_['error_file']         = 'Le fichier est introuvable !';
-$_['error_directory']    = 'Le répertoire est introuvable !';
-$_['error_not_found']    = 'Erreur : Impossible de trouver le fichier %s !';
-$_['error_headers_sent'] = 'Erreur : Les en-têtes ont déjà été envoyés !';
-$_['error_upload_size']  = 'Le fichier téléchargé ne peut pas dépasser %s !';
+$_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier la sauvegarde &amp; restauration!';
+$_['error_export']       = 'Attention: Vous devez sélectionner au moins une table à exporter!';
+$_['error_table']        = 'La table %s n\'est pas dans la liste autorisée!';
+$_['error_file']         = 'Le fichier est introuvable!';
+$_['error_directory']    = 'Le répertoire est introuvable!';
+$_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s!';
+$_['error_headers_sent'] = 'Erreur: Les en-têtes ont déjà été envoyés!';
+$_['error_upload_size']  = 'Le fichier téléchargé ne peut pas dépasser %s!';

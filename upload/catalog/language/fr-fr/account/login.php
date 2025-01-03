@@ -17,7 +17,7 @@ $_['entry_email']                  = 'Adresse e-mail';
 $_['entry_password']               = 'Mot de passe';
 
 // Error
-$_['error_token']                  = 'Attention : Session de jeton invalide. Veuillez vous reconnecter !';
-$_['error_login']                  = 'Attention : Aucune correspondance pour l\'adresse e-mail et/ou le mot de passe.';
-$_['error_attempts']               = 'Attention : Votre compte a dépassé le nombre autorisé de tentatives de connexion. Veuillez réessayer dans 1 heure.';
-$_['error_approved']               = 'Attention : Votre compte nécessite une approbation avant de pouvoir vous connecter.';
+$_['error_token']                  = 'Attention: Session de jeton invalide. Veuillez vous reconnecter !';
+$_['error_login']                  = 'Attention: Aucune correspondance pour l\'adresse e-mail et/ou le mot de passe.';
+$_['error_attempts']               = 'Attention: Votre compte a dépassé le nombre autorisé de tentatives de connexion. Veuillez réessayer dans 1 heure.';
+$_['error_approved']               = 'Attention: Votre compte nécessite une approbation avant de pouvoir vous connecter.';

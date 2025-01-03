@@ -3,8 +3,8 @@
 $_['heading_title']     = 'Modifications';
 
 // Texte
-$_['text_success']      = 'Succès : Vous avez modifié les modifications !';
-$_['text_refresh']      = 'Chaque fois que vous activez / désactivez ou supprimez une modification, vous devez cliquer sur le bouton actualiser pour reconstruire le cache de vos modifications !';
+$_['text_success']      = 'Succès: Vous avez modifié les modifications!';
+$_['text_refresh']      = 'Chaque fois que vous activez / désactivez ou supprimez une modification, vous devez cliquer sur le bouton actualiser pour reconstruire le cache de vos modifications!';
 $_['text_list']         = 'Liste des modifications';
 $_['text_info']         = 'Informations sur les modifications';
 
@@ -23,4 +23,4 @@ $_['entry_code']        = 'Code';
 $_['entry_xml']         = 'XML';
 
 // Erreur
-$_['error_permission']  = 'Attention : Vous n\'avez pas la permission de modifier les modifications !';
+$_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier les modifications!';

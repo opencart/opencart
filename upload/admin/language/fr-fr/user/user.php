@@ -3,7 +3,7 @@
 $_['heading_title']         = 'Utilisateurs';
 
 // Text
-$_['text_success']          = 'Succès : Vous avez modifié les utilisateurs !';
+$_['text_success']          = 'Succès: Vous avez modifié les utilisateurs!';
 $_['text_list']             = 'Liste des utilisateurs';
 $_['text_add']              = 'Ajouter un utilisateur';
 $_['text_edit']             = 'Modifier un utilisateur';
@@ -37,14 +37,14 @@ $_['tab_authorize']         = 'Autoriser';
 $_['tab_login']             = 'Connexion';
 
 // Error
-$_['error_permission']      = 'Attention : Vous n\'avez pas la permission de modifier les utilisateurs !';
-$_['error_account']         = 'Attention : Vous ne pouvez pas supprimer votre propre compte !';
-$_['error_login']           = 'Attention : La connexion de l\'utilisateur n\'existe pas !';
-$_['error_username']        = 'Le nom d\'utilisateur doit contenir entre 3 et 20 caractères !';
-$_['error_username_exists'] = 'Attention : Le nom d\'utilisateur est déjà utilisé !';
-$_['error_firstname']       = 'Le prénom doit contenir entre 1 et 32 caractères !';
-$_['error_lastname']        = 'Le nom doit contenir entre 1 et 32 caractères !';
-$_['error_email']           = 'L\'adresse e-mail ne semble pas valide !';
-$_['error_email_exists']    = 'Attention : L\'adresse e-mail est déjà enregistrée !';
-$_['error_password']        = 'Le mot de passe doit contenir entre 4 et 20 caractères !';
-$_['error_confirm']         = 'Le mot de passe et la confirmation ne correspondent pas !';
+$_['error_permission']      = 'Attention: Vous n\'avez pas la permission de modifier les utilisateurs!';
+$_['error_account']         = 'Attention: Vous ne pouvez pas supprimer votre propre compte!';
+$_['error_login']           = 'Attention: La connexion de l\'utilisateur n\'existe pas!';
+$_['error_username']        = 'Le nom d\'utilisateur doit contenir entre 3 et 20 caractères!';
+$_['error_username_exists'] = 'Attention: Le nom d\'utilisateur est déjà utilisé!';
+$_['error_firstname']       = 'Le prénom doit contenir entre 1 et 32 caractères!';
+$_['error_lastname']        = 'Le nom doit contenir entre 1 et 32 caractères!';
+$_['error_email']           = 'L\'adresse e-mail ne semble pas valide!';
+$_['error_email_exists']    = 'Attention: L\'adresse e-mail est déjà enregistrée!';
+$_['error_password']        = 'Le mot de passe doit contenir entre 4 et 20 caractères!';
+$_['error_confirm']         = 'Le mot de passe et la confirmation ne correspondent pas!';

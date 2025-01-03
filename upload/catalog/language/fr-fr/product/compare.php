@@ -17,9 +17,9 @@ $_['text_summary']      = 'Résumé';
 $_['text_weight']       = 'Poids';
 $_['text_dimension']    = 'Dimensions (L x l x H)';
 $_['text_compare']      = 'Comparateur de produits (%s)';
-$_['text_success']      = 'Succès : Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">comparateur de produits</a> !';
-$_['text_remove']       = 'Succès : Vous avez modifié votre comparateur de produits !';
+$_['text_success']      = 'Succès: Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">comparateur de produits</a>!';
+$_['text_remove']       = 'Succès: Vous avez modifié votre comparateur de produits!';
 $_['text_no_results']   = 'Vous n\'avez sélectionné aucun produit à comparer.';
 
 // Erreur
-$_['error_product']     = 'Attention : Produit introuvable !';
+$_['error_product']     = 'Attention: Produit introuvable!';

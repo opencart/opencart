@@ -18,7 +18,7 @@ $_['text_select']           = ' --- Veuillez sélectionner --- ';
 $_['text_all_zones']        = 'Toutes les zones';
 $_['text_pagination']       = 'Affichage de %d à %d sur %d (%d Pages)';
 $_['text_loading']          = 'Chargement...';
-$_['text_no_results']       = 'Aucun résultat !';
+$_['text_no_results']       = 'Aucun résultat!';
 $_['text_just_now']         = 'à l\'instant';
 $_['text_seconds_ago']      = 'il y a %s secondes';
 $_['text_minute_ago']       = 'il y a %s minute';
@@ -74,18 +74,18 @@ $_['button_grid']           = 'Grille';
 $_['button_map']            = 'Voir la carte Google';
 
 // Erreur
-$_['error_exception']       = 'Code d\'erreur (%s) : %s dans %s à la ligne %s';
-$_['error_upload_1']        = 'Attention : Le fichier téléchargé dépasse la directive upload_max_filesize dans php.ini !';
-$_['error_upload_2']        = 'Attention : Le fichier téléchargé dépasse la directive MAX_FILE_SIZE spécifiée dans le formulaire HTML !';
-$_['error_upload_3']        = 'Attention : Le fichier a été partiellement téléchargé !';
-$_['error_upload_4']        = 'Attention : Aucun fichier n\'a été téléchargé !';
-$_['error_upload_6']        = 'Attention : Un dossier temporaire est manquant !';
-$_['error_upload_7']        = 'Attention : Échec de l\'écriture du fichier sur le disque !';
-$_['error_upload_8']        = 'Attention : Téléchargement du fichier arrêté par extension !';
-$_['error_upload_999']      = 'Attention : Aucun code d\'erreur disponible !';
-$_['error_upload_size']     = 'Attention : Le fichier téléchargé dépasse la taille maximale de %s Mo !';
-$_['error_curl']            = 'CURL : Code d\'erreur (%s) : %s';
-$_['error_session']         = 'Attention : La session a expiré, veuillez soumettre à nouveau le formulaire !';
+$_['error_exception']       = 'Code d\'erreur (%s): %s dans %s à la ligne %s';
+$_['error_upload_1']        = 'Attention: Le fichier téléchargé dépasse la directive upload_max_filesize dans php.ini!';
+$_['error_upload_2']        = 'Attention: Le fichier téléchargé dépasse la directive MAX_FILE_SIZE spécifiée dans le formulaire HTML!';
+$_['error_upload_3']        = 'Attention: Le fichier a été partiellement téléchargé!';
+$_['error_upload_4']        = 'Attention: Aucun fichier n\'a été téléchargé!';
+$_['error_upload_6']        = 'Attention: Un dossier temporaire est manquant!';
+$_['error_upload_7']        = 'Attention: Échec de l\'écriture du fichier sur le disque!';
+$_['error_upload_8']        = 'Attention: Téléchargement du fichier arrêté par extension!';
+$_['error_upload_999']      = 'Attention: Aucun code d\'erreur disponible!';
+$_['error_upload_size']     = 'Attention: Le fichier téléchargé dépasse la taille maximale de %s Mo!';
+$_['error_curl']            = 'CURL: Code d\'erreur (%s): %s';
+$_['error_session']         = 'Attention: La session a expiré, veuillez soumettre à nouveau le formulaire!';
 
 // Sélecteur de date
 $_['datepicker']            = 'fr';

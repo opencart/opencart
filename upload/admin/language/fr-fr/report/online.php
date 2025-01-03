@@ -4,7 +4,7 @@ $_['heading_title']     = 'Rapport en ligne';
 
 // Texte
 $_['text_extension']    = 'Extensions';
-$_['text_success']      = 'Succès : Vous avez modifié le rapport des clients en ligne !';
+$_['text_success']      = 'Succès: Vous avez modifié le rapport des clients en ligne!';
 $_['text_list']         = 'Liste en ligne';
 $_['text_filter']       = 'Filtrer';
 $_['text_guest']        = 'Invité';
@@ -22,4 +22,4 @@ $_['entry_ip']          = 'IP';
 $_['entry_customer']    = 'Client';
 
 // Erreur
-$_['error_permission']  = 'Attention : Vous n\'avez pas la permission de modifier le rapport des clients en ligne !';
+$_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier le rapport des clients en ligne!';

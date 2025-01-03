@@ -3,7 +3,7 @@
 $_['heading_title']             = 'Affiliés';
 
 // Texte
-$_['text_success']              = 'Succès : Vous avez modifié les affiliés !';
+$_['text_success']              = 'Succès: Vous avez modifié les affiliés!';
 $_['text_list']                 = 'Liste des affiliés';
 $_['text_add']                  = 'Ajouter un affilié';
 $_['text_edit']                 = 'Modifier un affilié';
@@ -68,15 +68,15 @@ $_['help_tracking']             = 'Le code de suivi qui sera utilisé pour suivr
 $_['help_commission']           = 'Pourcentage que l’affilié reçoit sur chaque commande.';
 
 // Erreur
-$_['error_warning']             = 'Attention : Veuillez vérifier attentivement le formulaire pour les erreurs !';
-$_['error_permission']          = 'Attention : Vous n’avez pas la permission de modifier les affiliés !';
-$_['error_customer']            = 'Attention : Client requis !';
-$_['error_already']             = 'Attention : Le client est déjà enregistré en tant qu’affilié !';
-$_['error_tracking']            = 'Code de suivi requis !';
-$_['error_exists']              = 'Le code de suivi est déjà utilisé par un autre affilié !';
-$_['error_payment_method']      = 'Mode de paiement requis !';
-$_['error_cheque']              = 'Nom du bénéficiaire du chèque requis !';
-$_['error_paypal']              = 'L’adresse email PayPal ne semble pas valide !';
-$_['error_bank_account_name']   = 'Nom du compte requis !';
-$_['error_bank_account_number'] = 'Numéro de compte requis !';
-$_['error_custom_field']        = '%s requis !';
+$_['error_warning']             = 'Attention: Veuillez vérifier attentivement le formulaire pour les erreurs!';
+$_['error_permission']          = 'Attention: Vous n’avez pas la permission de modifier les affiliés!';
+$_['error_customer']            = 'Attention: Client requis!';
+$_['error_already']             = 'Attention: Le client est déjà enregistré en tant qu’affilié!';
+$_['error_tracking']            = 'Code de suivi requis!';
+$_['error_exists']              = 'Le code de suivi est déjà utilisé par un autre affilié!';
+$_['error_payment_method']      = 'Mode de paiement requis!';
+$_['error_cheque']              = 'Nom du bénéficiaire du chèque requis!';
+$_['error_paypal']              = 'L’adresse email PayPal ne semble pas valide!';
+$_['error_bank_account_name']   = 'Nom du compte requis!';
+$_['error_bank_account_number'] = 'Numéro de compte requis!';
+$_['error_custom_field']        = '%s requis!';

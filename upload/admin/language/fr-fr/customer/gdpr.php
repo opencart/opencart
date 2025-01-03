@@ -3,7 +3,7 @@
 $_['heading_title']     = 'Approbations RGPD';
 
 // Text
-$_['text_success']      = 'Succès : Vous avez modifié les approbations RGPD !';
+$_['text_success']      = 'Succès : Vous avez modifié les approbations RGPD!';
 $_['text_list']         = 'Liste des Approbations RGPD';
 $_['text_info']         = '<strong>RGPD</strong> Les demandes de suppression de compte seront traitées après <strong>%s jours</strong> pour permettre la détection de fraude, les rétrofacturations ou les remboursements.';
 $_['text_approve']      = 'Approuver';
@@ -33,4 +33,4 @@ $_['entry_date_from']   = 'Date de Début';
 $_['entry_date_to']     = 'Date de Fin';
 
 // Error
-$_['error_permission']  = 'Attention : Vous n\'avez pas la permission de modifier les approbations RGPD !';
+$_['error_permission']  = 'Attention : Vous n\'avez pas la permission de modifier les approbations RGPD!';

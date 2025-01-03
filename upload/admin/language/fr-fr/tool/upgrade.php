@@ -3,7 +3,7 @@
 $_['heading_title']        = 'Mise à niveau';
 
 // Text
-$_['text_success']         = 'Succès : Vous utilisez la dernière version %s !';
+$_['text_success']         = 'Succès: Vous utilisez la dernière version %s!';
 $_['text_upgrade']         = 'Vérifier la dernière version';
 $_['text_information']     = 'Informations sur la version';
 $_['text_current_version'] = 'Version actuelle';
@@ -20,11 +20,11 @@ $_['text_patch']           = 'Application des correctifs...';
 $_['button_upgrade']       = 'Mettre à niveau';
 
 // Error
-$_['error_permission']     = 'Attention : Vous n\'avez pas la permission de modifier les mises à niveau !';
-$_['error_connection']     = 'Impossible de se connecter au serveur de mise à niveau !';
-$_['error_version']        = 'La version est inférieure à la version actuelle !';
-$_['error_download']       = 'La mise à niveau n\'a pas pu être téléchargée !';
-$_['error_file']           = 'Le fichier de mise à niveau est introuvable !';
-$_['error_directory']      = 'Impossible de créer le répertoire %s !';
-$_['error_copy']           = 'Impossible de copier le fichier %s vers %s !';
-$_['error_unzip']          = 'Impossible d\'ouvrir le fichier zip !';
+$_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier les mises à niveau!';
+$_['error_connection']     = 'Impossible de se connecter au serveur de mise à niveau!';
+$_['error_version']        = 'La version est inférieure à la version actuelle!';
+$_['error_download']       = 'La mise à niveau n\'a pas pu être téléchargée!';
+$_['error_file']           = 'Le fichier de mise à niveau est introuvable!';
+$_['error_directory']      = 'Impossible de créer le répertoire %s!';
+$_['error_copy']           = 'Impossible de copier le fichier %s vers %s!';
+$_['error_unzip']          = 'Impossible d\'ouvrir le fichier .zip!';

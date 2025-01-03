@@ -3,7 +3,7 @@
 $_['heading_title']           = 'Articles';
 
 // Text
-$_['text_success']            = 'Succès : Vous avez modifié les articles!';
+$_['text_success']            = 'Succès: Vous avez modifié les articles!';
 $_['text_list']               = 'Liste des Articles';
 $_['text_add']                = 'Ajouter un Article';
 $_['text_edit']               = 'Modifier l\'Article';
@@ -33,8 +33,8 @@ $_['entry_keyword']           = 'Mot-clé';
 $_['entry_layout']            = 'Disposition de Remplacement';
 
 // Error
-$_['error_warning']           = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs!';
-$_['error_permission']        = 'Attention : Vous n\'avez pas la permission de modifier les articles!';
+$_['error_warning']           = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
+$_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les articles!';
 $_['error_name']              = 'Le nom de l\'article doit contenir entre 1 et 255 caractères!';
 $_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères!';
 $_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères!';

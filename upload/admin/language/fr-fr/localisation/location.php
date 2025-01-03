@@ -3,11 +3,11 @@
 $_['heading_title']    = 'Emplacements des Magasins';
 
 // Texte
-$_['text_success']     = 'Succès : Vous avez modifié les emplacements des magasins !';
+$_['text_success']     = 'Succès : Vous avez modifié les emplacements des magasins!';
 $_['text_list']        = 'Liste des Emplacements des Magasins';
 $_['text_add']         = 'Ajouter un Emplacement de Magasin';
 $_['text_edit']        = 'Modifier un Emplacement de Magasin';
-$_['text_geocode']     = 'Le géocodage n\'a pas réussi pour la raison suivante :';
+$_['text_geocode']     = 'Le géocodage n\'a pas réussi pour la raison suivante:';
 
 // Colonne
 $_['column_name']      = 'Nom du Magasin';
@@ -29,7 +29,7 @@ $_['help_open']        = 'Remplissez les horaires d\'ouverture de vos magasins.'
 $_['help_comment']     = 'Ce champ est pour toutes les notes spéciales que vous souhaitez communiquer au client, par exemple : Le magasin n\'accepte pas les chèques.';
 
 // Erreur
-$_['error_permission'] = 'Attention : Vous n\'avez pas la permission de modifier les emplacements des magasins !';
-$_['error_name']       = 'Le nom du magasin doit contenir entre 3 et 32 caractères !';
-$_['error_address']    = 'L\'adresse doit contenir entre 3 et 128 caractères !';
-$_['error_telephone']  = 'Le numéro de téléphone doit contenir entre 3 et 32 caractères !';
+$_['error_permission'] = 'Attention : Vous n\'avez pas la permission de modifier les emplacements des magasins!';
+$_['error_name']       = 'Le nom du magasin doit contenir entre 3 et 32 caractères!';
+$_['error_address']    = 'L\'adresse doit contenir entre 3 et 128 caractères!';
+$_['error_telephone']  = 'Le numéro de téléphone doit contenir entre 3 et 32 caractères!';

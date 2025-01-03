@@ -3,7 +3,7 @@
 $_['heading_title']           = 'Produits';
 
 // Text
-$_['text_success']            = 'Succès : Vous avez modifié les produits !';
+$_['text_success']            = 'Succès : Vous avez modifié les produits!';
 $_['text_variant']            = 'Veuillez noter que comme il s\'agit d\'un produit variant, vous devez remplacer les données du <a href="%s" target="_blank" class="alert-link">produit principal</a>. Sinon, les données seront remplacées par celles du <a href="%s" target="_blank" class="alert-link">produit principal</a> lors de l\'enregistrement.';
 $_['text_list']               = 'Liste des Produits';
 $_['text_add']                = 'Ajouter un Produit';
@@ -122,12 +122,12 @@ $_['help_option']             = '(Autocomplétion)';
 $_['help_points']             = 'Nombre de points nécessaires pour acheter cet article. Si vous ne voulez pas que ce produit soit acheté avec des points, laissez 0.';
 
 // Error
-$_['error_warning']           = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs !';
-$_['error_permission']        = 'Attention : Vous n\'avez pas la permission de modifier les produits !';
-$_['error_name']              = 'Le nom du produit doit contenir plus de 1 caractère et moins de 255 caractères !';
-$_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères !';
-$_['error_model']             = 'Le modèle du produit doit contenir plus de 1 caractère et moins de 64 caractères !';
-$_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères !';
-$_['error_keyword_exists']    = 'L\'URL SEO doit être unique !';
+$_['error_warning']           = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs!';
+$_['error_permission']        = 'Attention : Vous n\'avez pas la permission de modifier les produits!';
+$_['error_name']              = 'Le nom du produit doit contenir plus de 1 caractère et moins de 255 caractères!';
+$_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères!';
+$_['error_model']             = 'Le modèle du produit doit contenir plus de 1 caractère et moins de 64 caractères!';
+$_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères!';
+$_['error_keyword_exists']    = 'L\'URL SEO doit être unique!';
 $_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _ !';
-$_['error_required']          = '%s requis !';
+$_['error_required']          = '%s requis!';

@@ -3,7 +3,7 @@
 $_['heading_title']           = 'Sujets';
 
 // Text
-$_['text_success']            = 'Succès : Vous avez modifié les sujets !';
+$_['text_success']            = 'Succès : Vous avez modifié les sujets!';
 $_['text_list']               = 'Liste des Sujets';
 $_['text_add']                = 'Ajouter un Sujet';
 $_['text_edit']               = 'Modifier le Sujet';
@@ -28,10 +28,10 @@ $_['entry_status']            = 'Statut';
 $_['entry_keyword']           = 'Mot-clé';
 
 // Error
-$_['error_warning']           = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs !';
-$_['error_permission']        = 'Attention : Vous n\'avez pas la permission de modifier les sujets !';
-$_['error_name']              = 'Le nom du sujet doit contenir entre 1 et 255 caractères !';
-$_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères !';
-$_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères !';
-$_['error_keyword_exists']    = 'L\'URL SEO doit être unique !';
+$_['error_warning']           = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs!';
+$_['error_permission']        = 'Attention : Vous n\'avez pas la permission de modifier les sujets!';
+$_['error_name']              = 'Le nom du sujet doit contenir entre 1 et 255 caractères!';
+$_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères!';
+$_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères!';
+$_['error_keyword_exists']    = 'L\'URL SEO doit être unique!';
 $_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _ !';

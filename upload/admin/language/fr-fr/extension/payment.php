@@ -3,7 +3,7 @@
 $_['heading_title']     = 'Paiements';
 
 // Texte
-$_['text_success']      = 'Succès : Vous avez modifié les paiements !';
+$_['text_success']      = 'Succès : Vous avez modifié les paiements!';
 $_['text_list']         = 'Liste des paiements';
 
 // Colonne
@@ -14,5 +14,5 @@ $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
 // Erreur
-$_['error_permission']  = 'Attention : Vous n\'êtes pas autorisé à modifier les paiements !';
-$_['error_extension']   = 'Attention : L\'extension n\'existe pas !';
+$_['error_permission']  = 'Attention : Vous n\'êtes pas autorisé à modifier les paiements!';
+$_['error_extension']   = 'Attention : L\'extension n\'existe pas!';

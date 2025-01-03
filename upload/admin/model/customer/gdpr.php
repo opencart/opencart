@@ -15,9 +15,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @param int $status
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_gdpr->editStatus($gdpr_id, $status);
 	 */
 	public function editStatus(int $gdpr_id, int $status): void {
@@ -30,9 +30,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_gdpr->deleteGdpr($gdpr_id);
 	 */
 	public function deleteGdpr(int $gdpr_id): void {
@@ -45,9 +45,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_gdpr->deleteGdprsByStoreId($store_id);
 	 */
 	public function deleteGdprsByStoreId(int $store_id): void {
@@ -60,9 +60,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> gdpr records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_customer_gdpr->getGdprs();
 	 */
 	public function getGdprs(array $data = []): array {
@@ -119,9 +119,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return array<string, mixed> gdpr record that has gdpr ID
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $gdpr_info = $this->model_customer_gdpr->getGdpr($gdpr_id);
 	 */
 	public function getGdpr(int $gdpr_id): array {
@@ -136,9 +136,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of gdpr records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $gdpr_total = $this->model_customer_gdpr->getTotalGdprs();
 	 */
 	public function getTotalGdprs(array $data = []): int {
@@ -179,9 +179,9 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * Get Expires
 	 *
 	 * @return array<int, array<string, mixed>> expire records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * ?
 	 */
 	public function getExpires(): array {

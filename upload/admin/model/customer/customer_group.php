@@ -14,9 +14,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new customer group record
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_group_id = $this->model_customer_customer_group->addCustomerGroup($data);
 	 */
 	public function addCustomerGroup(array $data): int {
@@ -38,9 +38,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_group->editCustomerGroup($customer_group_id, $data);
 	 */
 	public function editCustomerGroup(int $customer_group_id, array $data): void {
@@ -59,9 +59,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_group->deleteCustomerGroup($customer_group_id);
 	 */
 	public function deleteCustomerGroup(int $customer_group_id): void {
@@ -87,9 +87,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<string, mixed> customer group record that has customer group ID
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
 	 */
 	public function getCustomerGroup(int $customer_group_id): array {
@@ -104,9 +104,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> customer group records that have customer group ID
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 	 */
 	public function getCustomerGroups(array $data = []): array {
@@ -154,9 +154,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data              array of data
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_group->addDescription($customer_group_id, $language_id, $data);
 	 */
 	public function addDescription(int $customer_group_id, int $language_id, array $data): void {
@@ -169,9 +169,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * ?
 	 */
 	public function deleteDescriptions(int $customer_group_id): void {
@@ -184,9 +184,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_group->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -199,9 +199,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<int, array<string, string>> description records that have customer group ID
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_group_description = $this->model_customer_customer_group->getDescriptions($customer_group_id);
 	 */
 	public function getDescriptions(int $customer_group_id): array {
@@ -222,9 +222,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_customer_customer_group->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -237,9 +237,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * Get Total Customer Groups
 	 *
 	 * @return int total number of customer group records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
 	 */
 	public function getTotalCustomerGroups(): int {

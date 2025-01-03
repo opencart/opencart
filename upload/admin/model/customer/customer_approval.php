@@ -14,9 +14,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_approval->deleteApprovalsByCustomerId($customer_id);
 	 */
 	public function deleteApprovalsByCustomerId(int $customer_id): void {
@@ -29,9 +29,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> customer approval records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_customer_customer_approval->getCustomerApprovals();
 	 */
 	public function getCustomerApprovals(array $data = []): array {
@@ -86,9 +86,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param int $customer_approval_id primary key of the customer approval record
 	 *
 	 * @return array<string, mixed> customer approval record that has customer approval ID
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_approval_info = $this->model_customer_customer_approval->getCustomerApproval($customer_approval_id);
 	 */
 	public function getCustomerApproval(int $customer_approval_id): array {
@@ -103,9 +103,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of customer approval records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_approval_total = $this->model_customer_customer_approval->getTotalCustomerApprovals();
 	 */
 	public function getTotalCustomerApprovals(array $data = []): int {
@@ -152,9 +152,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_approval->approveCustomer($customer_id);
 	 */
 	public function approveCustomer(int $customer_id): void {
@@ -168,9 +168,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_approval->denyCustomer($customer_id);
 	 */
 	public function denyCustomer(int $customer_id): void {
@@ -183,9 +183,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_approval->approveAffiliate($customer_id);
 	 */
 	public function approveAffiliate(int $customer_id): void {
@@ -199,9 +199,9 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer_approval->denyAffiliate($customer_id);
 	 */
 	public function denyAffiliate(int $customer_id): void {

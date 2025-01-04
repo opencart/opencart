@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Returns
  *
- * @example $returns_model = $this->model_extension_opencart_report_returns;
- *
  * Can be called from $this->load->model('extension/opencart/report/returns');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
@@ -16,6 +14,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
+	 * 
+	 * $results = $this->model_extension_opencart_report_returns->getReturns();
 	 */
 	public function getReturns(array $data = []): array {
 		$sql = "SELECT MIN(`r`.`date_added`) AS `date_start`, MAX(`r`.`date_added`) AS `date_end`, COUNT(`r`.`return_id`) AS `returns` FROM `" . DB_PREFIX . "return` `r`";
@@ -79,6 +79,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of return records
+	 * 
+	 * @example 
+	 * 
+	 * $return_total = $this->model_extension_opencart_report_returns->getTotalReturns();
 	 */
 	public function getTotalReturns(array $data = []): int {
 		if (!empty($data['filter_group'])) {

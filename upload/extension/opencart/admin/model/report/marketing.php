@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Marketing
  *
- * @example $marketing_model = $this->model_extension_opencart_report_marketing;
- *
  * Can be called from $this->load->model('extension/opencart/report/marketing');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
@@ -16,6 +14,10 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
+	 * 
+	 * @example 
+	 * 
+	 * $results = $this->model_extension_opencart_report_marketing->getMarketing();
 	 */
 	public function getMarketing(array $data = []): array {
 		$sql = "SELECT `m`.`marketing_id`, `m`.`name` AS `campaign`, `m`.`code`, `m`.`clicks` AS `clicks`, (SELECT COUNT(DISTINCT `order_id`) FROM `" . DB_PREFIX . "order` `o1` WHERE `o1`.`marketing_id` = `m`.`marketing_id`";
@@ -75,6 +77,10 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @param array<mixed> $data array of filters
 	 *
 	 * @return int total number of marketing records
+	 * 
+	 * @example 
+	 * 
+	 * $marketing_total = $this->model_extension_opencart_report_marketing();
 	 */
 	public function getTotalMarketing(array $data = []): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`");

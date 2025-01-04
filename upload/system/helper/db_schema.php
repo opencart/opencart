@@ -548,7 +548,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'rating',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'status',
@@ -602,7 +602,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'rating',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -740,7 +740,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'customer_id',
@@ -749,7 +749,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'rating',
 				'type'    => 'tinyint(1)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -868,7 +868,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -988,7 +988,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -1023,12 +1023,12 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name'    => 'customer_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'session_id',
@@ -1041,7 +1041,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'subscription_plan_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'option',
@@ -4958,7 +4958,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'rating',
 				'type'    => 'int(1)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name'    => 'sort_order',
@@ -5518,7 +5518,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'store_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -5564,7 +5564,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'product_id',
 				'type'    => 'int(11)',
-				'default' => 0
+				'default' => '0'
 			],
 			[
 				'name'    => 'customer_group_id',
@@ -6073,7 +6073,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'rating',
 				'type'    => 'int(1)',
-				'default' => 0
+				'default' => '0'
 
 			],
 			[
@@ -6240,7 +6240,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'serialized',
 				'type'    => 'tinyint(1)',
-				'default' => 0
+				'default' => '0'
 			]
 		],
 		'primary' => [

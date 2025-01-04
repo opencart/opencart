@@ -257,7 +257,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $attribute_description_info = $this->model_catalog_attribute->getDescription($attribute_id, $language_id);
 	 */
 	public function getDescription(int $attribute_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "' AND `language_id` = '" . (int)$language_id . "'");

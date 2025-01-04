@@ -200,7 +200,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_catalog_subscription_plan->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `language_id` = '" . (int)$language_id . "'");

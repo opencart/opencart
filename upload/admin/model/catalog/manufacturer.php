@@ -269,7 +269,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($manufacturer_id);
+	 * $manufacturer_store = $this->model_catalog_manufacturer->getStores($manufacturer_id);
 	 */
 	public function getStores(int $manufacturer_id): array {
 		$manufacturer_store_data = [];

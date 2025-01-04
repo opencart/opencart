@@ -303,7 +303,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_cms_article->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -341,7 +341,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $article_description = $this->model_cms_article->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -482,7 +482,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $layout_total = $this->model_cms_article->getTotalLayoutsByLayoutId($layout_id);
 	 */
 	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");

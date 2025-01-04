@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Returns
  *
- * @example $returns_model = $this->model_sale_returns;
- *
  * Can be called from $this->load->model('sale/returns');
  *
  * @package Opencart\Admin\Model\Sale
@@ -16,6 +14,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $return_id = $this->model_sale_returns->addReturn($data);
 	 */
 	public function addReturn(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `return_status_id` = '" . (int)$data['return_status_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -30,6 +32,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_returns->editReturn($return_id, $data);
 	 */
 	public function editReturn(int $return_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_modified` = NOW() WHERE `return_id` = '" . (int)$return_id . "'");
@@ -42,6 +48,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_returns->editReturnStatusId($return_id, $return_status_id);
 	 */
 	public function editReturnStatusId(int $return_id, int $return_status_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `return_status_id` = '" . (int)$return_status_id . "', `date_modified` = NOW() WHERE `return_id` = '" . (int)$return_id . "'");
@@ -53,6 +63,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_returns->deleteReturn($return_id);
 	 */
 	public function deleteReturn(int $return_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return` WHERE `return_id` = '" . (int)$return_id . "'");
@@ -66,6 +80,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed> return record that has return ID
+	 *
+	 * @example
+	 *
+	 * $return_info = $this->model_sale_returns->getReturn($return_id);
 	 */
 	public function getReturn(int $return_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) FROM `" . DB_PREFIX . "customer` `c` WHERE `c`.`customer_id` = `r`.`customer_id`) AS `customer`, (SELECT `c`.`language_id` FROM `" . DB_PREFIX . "customer` `c` WHERE `c`.`customer_id` = `r`.`customer_id`) AS `language_id`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r` WHERE `r`.`return_id` = '" . (int)$return_id . "'");
@@ -79,6 +97,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> return records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_sale_returns->getReturns();
 	 */
 	public function getReturns(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`r`.`firstname`, ' ', `r`.`lastname`) AS `customer`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `return_status` FROM `" . DB_PREFIX . "return` `r`";
@@ -167,6 +189,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of return records
+	 *
+	 * @example
+	 *
+	 * $return_total = $this->model_sale_returns->getTotalReturns($data);
 	 */
 	public function getTotalReturns(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` `r`";
@@ -220,6 +246,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return int total number of return records that have return status ID
+	 *
+	 * @example
+	 *
+	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId($return_status_id);
 	 */
 	public function getTotalReturnsByReturnStatusId(int $return_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
@@ -233,6 +263,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_reason_id primary key of the return reason record
 	 *
 	 * @return int total number of layout records that have return reason ID
+	 *
+	 * @example
+	 *
+	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnReasonId($return_reason_id);
 	 */
 	public function getTotalReturnsByReturnReasonId(int $return_reason_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `return_reason_id` = '" . (int)$return_reason_id . "'");
@@ -246,6 +280,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return int total number of return records that have return action ID
+	 *
+	 * @example
+	 *
+	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
 	 */
 	public function getTotalReturnsByReturnActionId(int $return_action_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
@@ -262,6 +300,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param bool   $notify
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_returns->addHistory($return_id, $return_status_id, $comment, $notify);
 	 */
 	public function addHistory(int $return_id, int $return_status_id, string $comment, bool $notify): void {
 		$this->editReturnStatusId($return_id, $return_status_id);
@@ -275,6 +317,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_returns->deleteHistories($return_id);
 	 */
 	public function deleteHistories(int $return_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_history` WHERE `return_id` = '" . (int)$return_id . "'");
@@ -288,6 +334,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> history records that have return ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_sale_returns->getHistories($return_id, $start, $limit);
 	 */
 	public function getHistories(int $return_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -309,6 +359,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return int total number of history records that have return ID
+	 *
+	 * @example
+	 *
+	 * $history_total = $this->model_sale_returns->getTotalHistories($return_id);
 	 */
 	public function getTotalHistories(int $return_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_history` WHERE `return_id` = '" . (int)$return_id . "'");
@@ -322,6 +376,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return int total number of history records that have return status ID
+	 *
+	 * @example
+	 *
+	 * $return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId($return_status_id);
 	 */
 	public function getTotalHistoriesByReturnStatusId(int $return_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_history` WHERE `return_status_id` = '" . (int)$return_status_id . "'");

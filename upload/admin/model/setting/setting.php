@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Setting
  *
- * @example $setting_model = $this->model_setting_setting;
- *
  * Can be called from $this->load->model('setting/setting');
  *
  * @package Opencart\Admin\Model\Setting
@@ -16,6 +14,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return array<int, array<string, mixed>> setting records that have store ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_setting_setting->getSettings($store_id);
 	 */
 	public function getSettings(int $store_id = 0): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' OR `store_id` = '0' ORDER BY `store_id` ASC");
@@ -30,6 +32,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int    $store_id
 	 *
 	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $setting_info = $this->model_setting_setting->getSetting($code, $store_id);
 	 */
 	public function getSetting(string $code, int $store_id = 0): array {
 		$setting_data = [];
@@ -55,6 +61,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int                  $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_setting->editSetting($code, $data, $store_id);
 	 */
 	public function editSetting(string $code, array $data, int $store_id = 0): void {
 		$this->deleteSetting($code, $store_id);
@@ -73,6 +83,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int    $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_setting->deleteSetting($code, $store_id);
 	 */
 	public function deleteSetting(string $code, int $store_id = 0): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
@@ -84,6 +98,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param string $code
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_setting->deleteSettingsByCode($code);
 	 */
 	public function deleteSettingsByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($code) . "'");
@@ -95,6 +113,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_setting->deleteSettingsByStoreId($store_id);
 	 */
 	public function deleteSettingsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -107,6 +129,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int    $store_id
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $value = $this->model_setting_setting->getValue($key, $store_id);
 	 */
 	public function getValue(string $key, int $store_id = 0): string {
 		$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
@@ -127,6 +153,10 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @param int                 $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_setting->editValue($code, $key, $value, $store_id);
 	 */
 	public function editValue(string $code = '', string $key = '', $value = '', int $store_id = 0): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(!is_array($value) ? $value : json_encode($value)) . "', `serialized` = '" . (bool)is_array($value) . "' WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND `store_id` = '" . (int)$store_id . "'");

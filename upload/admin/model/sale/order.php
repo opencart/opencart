@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Order
  *
- * @example $order_model = $this->model_sale_order;
- *
  * Can be called from $this->load->model('sale/order');
  *
  * @package Opencart\Admin\Model\Sale
@@ -16,6 +14,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_order->deleteOrder($order_id);
 	 */
 	public function deleteOrder(int $order_id): void {
 		$this->deleteProducts($order_id);
@@ -31,6 +33,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<string, mixed> order record that has order ID
+	 *
+	 * @example
+	 *
+	 * $order_info = $this->model_sale_order->getOrder($order_id);
 	 */
 	public function getOrder(int $order_id): array {
 		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
@@ -135,6 +141,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> order records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_sale_order->getOrders();
 	 */
 	public function getOrders(array $data = []): array {
 		$sql = "SELECT `o`.`order_id`, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status`, `o`.`store_name`, `o`.`custom_field`, `o`.`payment_method`, `o`.`payment_custom_field`, `o`.`shipping_method`, `o`.`shipping_custom_field`, `o`.`total`, `o`.`currency_code`, `o`.`currency_value`, `o`.`date_added`, `o`.`date_modified` FROM `" . DB_PREFIX . "order` `o`";
@@ -247,6 +257,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of order records
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrders();
 	 */
 	public function getTotalOrders(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order`";
@@ -315,6 +329,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> order records that have subscription ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id, $start, $limit);
 	 */
 	public function getOrdersBySubscriptionId(int $subscription_id, int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
@@ -336,6 +354,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return int total number of order records that have language ID
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
 	 */
 	public function getTotalOrdersByLanguageId(int $language_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `language_id` = '" . (int)$language_id . "' AND `order_status_id` > '0'");
@@ -349,6 +371,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return int total number of order records that have currency ID
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersByCurrencyId($currency_id);
 	 */
 	public function getTotalOrdersByCurrencyId(int $currency_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `currency_id` = '" . (int)$currency_id . "' AND `order_status_id` > '0'");
@@ -362,6 +388,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int total number of order records that have subscription ID
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersBySubscriptionId($subscription_id);
 	 */
 	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -375,6 +405,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return int total number of order records that have store ID
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
 	 */
 	public function getTotalOrdersByStoreId(int $store_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -388,6 +422,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return int total number of order records that have order status ID
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersByOrderStatusId($order_status_id);
 	 */
 	public function getTotalOrdersByOrderStatusId(int $order_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `order_status_id` > '0'");
@@ -399,6 +437,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Processing Status
 	 *
 	 * @return int total number of order processing status records
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersByProcessingStatus();
 	 */
 	public function getTotalOrdersByProcessingStatus(): int {
 		$implode = [];
@@ -422,6 +464,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Complete Status
 	 *
 	 * @return int total number of order complete status records
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrdersByCompleteStatus();
 	 */
 	public function getTotalOrdersByCompleteStatus(): int {
 		$implode = [];
@@ -447,6 +493,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_order->deleteProducts($order_id);
 	 */
 	public function deleteProducts(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -462,6 +512,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>> product record that has order ID, order product ID
+	 *
+	 * @example
+	 *
+	 * $order_product = $this->model_sale_order->getProduct($order_id, $order_product_id);
 	 */
 	public function getProduct(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -475,6 +529,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>> product records that have order ID
+	 *
+	 * @example
+	 *
+	 * $products = $this->model_sale_order->getProducts($order_id);
 	 */
 	public function getProducts(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `order_product_id` ASC");
@@ -488,6 +546,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int total number of product records that have product ID
+	 *
+	 * @example
+	 *
+	 * $product_total = $this->model_sale_order->getTotalProductsByProductId($product_id);
 	 */
 	public function getTotalProductsByProductId(int $product_id): int {
 		$query = $this->db->query("SELECT SUM(`op`.`quantity`) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `op`.`product_id` = '" . (int)$product_id . "' AND `order_status_id` > '0'");
@@ -501,6 +563,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_order->deleteOptions($ordder_id);
 	 */
 	public function deleteOptions(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -513,6 +579,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>> option records that have order ID, order product ID
+	 *
+	 * @example
+	 *
+	 * $options = $this->model_sale_order->getOptions($order_id, $order_product_id);
 	 */
 	public function getOptions(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -526,6 +596,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_order->deleteSubscription($order_id);
 	 */
 	public function deleteSubscription(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -538,6 +612,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return array<string, mixed> subscription record that has order ID, order product ID
+	 *
+	 * @example
+	 *
+	 * $subscription_info = $this->model_sale_order->getSubscription($order_id, $order_product_id);
 	 */
 	public function getSubscription(int $order_id, int $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
@@ -549,6 +627,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * Delete Totals
 	 *
 	 * @param int $order_id primary key of the order record
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_order->deleteTotals($order_id);
 	 */
 	public function deleteTotals(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -560,6 +642,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>> total records that have order ID
+	 *
+	 * @example
+	 *
+	 * $totals = $this->model_sale_order->getTotals($order_id);
 	 */
 	public function getTotals(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order`");
@@ -574,6 +660,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param mixed $code
 	 *
 	 * @return array<int, array<string, mixed>> total records that have order ID, code
+	 *
+	 * @example
+	 *
+	 * $order_totals = $this->model_sale_order->getTotalsByCode($order_id, $code);
 	 */
 	public function getTotalsByCode(int $order_id, $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' AND `code` = '" . $this->db->escape($code) . "' ORDER BY `sort_order`");
@@ -587,6 +677,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return float total number of sale records
+	 *
+	 * @example
+	 *
+	 * $sale_total = $this->model_sale_order->getTotalSales();
 	 */
 	public function getTotalSales(array $data = []): float {
 		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order`";
@@ -653,6 +747,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
 	 */
 	public function createInvoiceNo(int $order_id): string {
 		$order_info = $this->getOrder($order_id);
@@ -680,6 +778,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int reward records that have order ID
+	 *
+	 * @example
+	 *
+	 * $points = $this->model_sale_order->getRewardTotal($order_id);
 	 */
 	public function getRewardTotal(int $order_id): int {
 		$query = $this->db->query("SELECT SUM(`reward`) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -693,6 +795,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_sale_order->deleteHistories($order_id);
 	 */
 	public function deleteHistories(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -706,6 +812,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> history records that have order ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_sale_order->getHistories($order_id, $start, $limit);
 	 */
 	public function getHistories(int $order_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
@@ -727,6 +837,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int total number of history records
+	 *
+	 * @example
+	 *
+	 * $history_total = $this->model_sale_order->getTotalHistories($order_id);
 	 */
 	public function getTotalHistories(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -740,6 +854,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return int total number of history records that have order status ID
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_sale_order->getTotalHistoriesByOrderStatusId($order_status_id);
 	 */
 	public function getTotalHistoriesByOrderStatusId(int $order_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
@@ -755,6 +873,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int        $end
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_sale_order->getEmailsByProductsOrdered($products, $start, $limit);
 	 */
 	public function getEmailsByProductsOrdered(array $products, int $start, int $end): array {
 		$implode = [];
@@ -774,6 +896,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param array<int> $products array of filters
 	 *
 	 * @return int total number of email by product ordered records
+	 *
+	 * @example
+	 *
+	 * $email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($products);
 	 */
 	public function getTotalEmailsByProductsOrdered(array $products): int {
 		$implode = [];

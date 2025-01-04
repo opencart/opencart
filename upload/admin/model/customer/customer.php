@@ -33,6 +33,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 *
+	 * @example
+	 *
 	 * $this->model_customer_customer->editCustomer($customer_id, $data);
 	 */
 	public function editCustomer(int $customer_id, array $data): void {

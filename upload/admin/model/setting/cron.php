@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Cron
  *
- * @example $cron_model = $this->model_setting_cron;
- *
  * Can be called from $this->load->model('setting/cron');
  *
  * @package Opencart\Admin\Model\Setting
@@ -20,6 +18,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param bool   $status
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $cron_id = $this->model_setting_cron->addCron($code, $description, $cycle, $action, $status);
 	 */
 	public function addCron(string $code, string $description, string $cycle, string $action, bool $status): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `description` = '" . $this->db->escape($description) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -33,6 +35,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_cron->deleteCron($cron_id);
 	 */
 	public function deleteCron(int $cron_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
@@ -44,6 +50,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param string $code
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_cron->deleteCronByCode($code);
 	 */
 	public function deleteCronByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
@@ -55,6 +65,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_cron->editCron($cron_id);
 	 */
 	public function editCron(int $cron_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE `cron_id` = '" . (int)$cron_id . "'");
@@ -67,6 +81,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param bool $status
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_setting_cron->editStatus($cron_id, $status);
 	 */
 	public function editStatus(int $cron_id, bool $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (bool)$status . "' WHERE `cron_id` = '" . (int)$cron_id . "'");
@@ -78,6 +96,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return array<string, mixed> cron record that has cron ID
+	 *
+	 * @example
+	 *
+	 * $cron_info = $this->model_setting_cron->getCron($cron_id);
 	 */
 	public function getCron(int $cron_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
@@ -91,6 +113,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param string $code
 	 *
 	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $cron_info = $this->model_setting_cron->getCronByCode($code);
 	 */
 	public function getCronByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
@@ -104,6 +130,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> cron records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_setting_cron->getCrons();
 	 */
 	public function getCrons(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
@@ -150,6 +180,10 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * Get Total Cron(s)
 	 *
 	 * @return int total number of cron records
+	 *
+	 * @example
+	 *
+	 * $cron_total = $this->model_setting_cron->getTotalCrons();
 	 */
 	public function getTotalCrons(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cron`");

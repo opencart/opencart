@@ -624,6 +624,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $path = $this->model_catalog_category->getPath($category_id);
 	 */
 	public function getPath(int $category_id): string {
 		return implode('_', array_column($this->model_catalog_category->getPaths($category_id), 'path_id'));

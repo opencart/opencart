@@ -175,6 +175,10 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_localisation_weight_class->addDescription($weight_class_id, $language_id, $data);
 	 */
 	public function addDescription(int $weight_class_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "weight_class_description` SET `weight_class_id` = '" . (int)$weight_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `unit` = '" . $this->db->escape($data['unit']) . "'");

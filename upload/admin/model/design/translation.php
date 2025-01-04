@@ -57,7 +57,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translations By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

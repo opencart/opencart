@@ -14,7 +14,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @param string $key
 	 * @param string $value
 	 * @param string $keyword
-	 * @param int    $store_id
+	 * @param int    $store_id    primary key of the store record
 	 * @param int    $language_id primary key of the language record
 	 * @param int    $sort_order
 	 *
@@ -37,7 +37,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @param string $key
 	 * @param string $value
 	 * @param string $keyword
-	 * @param int    $store_id
+	 * @param int    $store_id    primary key of the store record
 	 * @param int    $language_id primary key of the language record
 	 * @param int    $sort_order
 	 *
@@ -71,7 +71,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $key
 	 * @param string $value
-	 * @param int    $store_id
+	 * @param int    $store_id    primary key of the store record
 	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return void
@@ -112,7 +112,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Urls By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -146,7 +146,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @param string $key
 	 * @param string $value
-	 * @param int    $store_id
+	 * @param int    $store_id    primary key of the store record
 	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
@@ -175,7 +175,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * Get Seo Url By Keyword
 	 *
 	 * @param string $keyword
-	 * @param int    $store_id
+	 * @param int    $store_id    primary key of the store record
 	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
@@ -301,7 +301,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls By Store Id
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return array<int, array<string, mixed>> seo url records that have store ID
 	 *

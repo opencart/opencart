@@ -353,7 +353,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $article_id primary key of the article record
-	 * @param int $store_id
+	 * @param int $store_id   primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -407,7 +407,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * Add Layout
 	 *
 	 * @param int $article_id primary key of the article record
-	 * @param int $store_id
+	 * @param int $store_id   primary key of the store record
 	 * @param int $layout_id  primary key of the layout record
 	 *
 	 * @return void

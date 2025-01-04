@@ -685,7 +685,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Wishlist By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

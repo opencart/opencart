@@ -59,7 +59,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Themes By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

@@ -740,7 +740,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $category_id primary key of the category record
-	 * @param int $store_id
+	 * @param int $store_id    primaery key of the store record
 	 *
 	 * @return void
 	 *
@@ -770,7 +770,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -809,7 +809,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Add Layout
 	 *
 	 * @param int $category_id primary key of the category record
-	 * @param int $store_id
+	 * @param int $store_id    primary key of the store record
 	 * @param int $layout_id   primary key of the layout record
 	 *
 	 * @return void
@@ -855,7 +855,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

@@ -240,7 +240,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Routes By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -272,7 +272,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Routes By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return array<int, array<string, mixed>> route records that have store ID
 	 *

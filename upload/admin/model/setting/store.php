@@ -49,7 +49,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Store
 	 *
-	 * @param int                  $store_id
+	 * @param int                  $store_id primary key of the store record
 	 * @param array<string, mixed> $data     array of data
 	 *
 	 * @return void
@@ -67,7 +67,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Store
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -133,7 +133,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Store
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return array<string, mixed> store record that has store ID
 	 *
@@ -179,7 +179,7 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Create Store Instance
 	 *
-	 * @param int    $store_id
+	 * @param int    $store_id primary key of the store record
 	 * @param string $language
 	 * @param string $currency
 	 *

@@ -1944,7 +1944,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $product_id primary key of the product record
-	 * @param int $store_id
+	 * @param int $store_id   primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -1974,7 +1974,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -2013,7 +2013,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Add Layout
 	 *
 	 * @param int $product_id primary key of the product record
-	 * @param int $store_id
+	 * @param int $store_id   primary key of the store record
 	 * @param int $layout_id  primary key of the layout record
 	 *
 	 * @return void
@@ -2059,7 +2059,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

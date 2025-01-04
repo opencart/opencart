@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Sale
  *
- * @example $sale_model = $this->model_extension_opencart_report_sale;
- *
  * Can be called from $this->load->model('extension/opencart/report/sale');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
@@ -16,6 +14,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return float total number of sale records
+	 *
+	 * @example
+	 *
+	 * $sale_total = $this->model_extension_opencart_report_sale->getTotalSales();
 	 */
 	public function getTotalSales(array $data = []): float {
 		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` > '0'";
@@ -33,6 +35,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Country
 	 *
 	 * @return array<int, array<string, mixed>> total number of order records by country
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();
 	 */
 	public function getTotalOrdersByCountry(): array {
 		$query = $this->db->query("SELECT COUNT(*) AS `total`, SUM(`o`.`total`) AS `amount`, `c`.`iso_code_2` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`o`.`payment_country_id` = `c`.`country_id`) WHERE `o`.`order_status_id` > '0' GROUP BY `o`.`payment_country_id`");
@@ -44,6 +50,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Day
 	 *
 	 * @return array<int, array<string, int>> total number of order records by day
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getTotalOrdersByDay();
 	 */
 	public function getTotalOrdersByDay(): array {
 		$implode = [];
@@ -77,6 +87,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Week
 	 *
 	 * @return array<int, array<string, int>> total number of order records by week
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getTotalOrdersByWeek();
 	 */
 	public function getTotalOrdersByWeek(): array {
 		$implode = [];
@@ -114,6 +128,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Month
 	 *
 	 * @return array<int, array<string, int>> total number of order records by month
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getTotalOrdersByMonth();
 	 */
 	public function getTotalOrdersByMonth(): array {
 		$implode = [];
@@ -149,6 +167,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Year
 	 *
 	 * @return array<int, array<string, int>> total number of order records by year
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getTotalOrdersByYear();
 	 */
 	public function getTotalOrdersByYear(): array {
 		$implode = [];
@@ -184,6 +206,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getOrders();
 	 */
 	public function getOrders(array $data = []): array {
 		$sql = "SELECT MIN(`o`.`date_added`) AS `date_start`, MAX(`o`.`date_added`) AS `date_end`, COUNT(*) AS `orders`, SUM((SELECT SUM(`op`.`quantity`) FROM `" . DB_PREFIX . "order_product` `op` WHERE `op`.`order_id` = `o`.`order_id` GROUP BY `op`.`order_id`)) AS `products`, SUM((SELECT SUM(`ot`.`value`) FROM `" . DB_PREFIX . "order_total` `ot` WHERE `ot`.`order_id` = `o`.`order_id` AND `ot`.`code` = 'tax' GROUP BY `ot`.`order_id`)) AS `tax`, SUM(`o`.`total`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
@@ -249,6 +275,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of order records
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_extension_opencart_report_sale->getTotalOrders();
 	 */
 	public function getTotalOrders(array $data = []): int {
 		if (!empty($data['filter_group'])) {
@@ -298,6 +328,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getTaxes();
 	 */
 	public function getTaxes(array $data = []): array {
 		$sql = "SELECT MIN(`o`.`date_added`) AS `date_start`, MAX(`o`.`date_added`) AS `date_end`, `ot`.`title`, SUM(`ot`.`value`) AS `total`, COUNT(`o`.`order_id`) AS `orders` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "order_total` `ot` ON (`ot`.`order_id` = `o`.`order_id`) WHERE `ot`.`code` = 'tax'";
@@ -361,6 +395,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of tax records
+	 *
+	 * @example
+	 *
+	 * $tax_total = $this->model_extension_opencart_report_sale->getTotalTaxes();
 	 */
 	public function getTotalTaxes(array $data = []): int {
 		if (!empty($data['filter_group'])) {
@@ -412,6 +450,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_sale->getShipping();
 	 */
 	public function getShipping(array $data = []): array {
 		$sql = "SELECT MIN(`o`.`date_added`) AS `date_start`, MAX(`o`.`date_added`) AS `date_end`, `ot`.`title`, SUM(`ot`.`value`) AS `total`, COUNT(`o`.`order_id`) AS `orders` FROM `" . DB_PREFIX . "order` `o` LEFT JOIN `" . DB_PREFIX . "order_total` `ot` ON (`o`.`order_id` = `ot`.`order_id`) WHERE `ot`.`code` = 'shipping'";
@@ -475,6 +517,10 @@ class Sale extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of shipping records
+	 *
+	 * @example
+	 *
+	 * $shipping_total = $this->model_extension_opencart_report_sale->getTotalShipping();
 	 */
 	public function getTotalShipping(array $data = []): int {
 		if (!empty($data['filter_group'])) {

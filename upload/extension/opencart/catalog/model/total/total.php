@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Total
  *
- * @example $total_model = $this->model_extension_opencart_total_total;
- *
  * Can be called from $this->load->model('extension/opencart/total/total');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total

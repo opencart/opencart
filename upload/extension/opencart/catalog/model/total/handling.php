@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Handling
  *
- * @example $handling_model = $this->model_extension_opencart_total_handling;
- *
  * Can be called from $this->load->model('extension/opencart/total/handling');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total

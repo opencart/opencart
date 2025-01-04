@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Subscription
  *
- * @example $subscription_model = $this->model_extension_opencart_report_subscription;
- *
  * Can be called from $this->load->model('extension/opencart/report/subscription');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Report
@@ -16,6 +14,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_subscription->getSubscriptions();
 	 */
 	public function getSubscriptions(array $data = []): array {
 		$sql = "SELECT MIN(`s`.`date_added`) AS `date_start`, MAX(`s`.`date_added`) AS `date_end`, COUNT(*) AS `subscriptions`, SUM((SELECT SUM(`ot`.`value`) FROM `" . DB_PREFIX . "order_total` `ot` WHERE `ot`.`order_id` = `s`.`order_id` AND `ot`.`code` = 'tax' GROUP BY `ot`.`order_id`)) AS `tax`, SUM(`s`.`quantity`) AS `products`, SUM(`s`.`price`) AS `total` FROM `" . DB_PREFIX . "subscription` `s`";
@@ -81,6 +83,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of subscription records
+	 *
+	 * @example
+	 *
+	 * $subscription_total = $this->model_extension_opencart_report_subscription->getTotalSubscriptions();
 	 */
 	public function getTotalSubscriptions(array $data = []): int {
 		if (!empty($data['filter_group'])) {

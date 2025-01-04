@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
  * Class Reward
  *
- * @example $reward_model = $this->model_extension_opencart_total_reward;
- *
  * Can be called from $this->load->model('extension/opencart/total/reward');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Total

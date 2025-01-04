@@ -15,6 +15,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @return array<int, array<string, mixed>>
 	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_returns->getReturns();
 	 */
 	public function getReturns(array $data = []): array {

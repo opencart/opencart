@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class COD
  *
- * @example $cod_model = $this->model_extension_opencart_payment_cod;
- *
  * Can be called from $this->load->model('extension/opencart/payment/cod');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Payment

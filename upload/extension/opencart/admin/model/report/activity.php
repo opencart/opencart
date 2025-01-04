@@ -12,9 +12,9 @@ class Activity extends \Opencart\System\Engine\Model {
 	 * Get Activities
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_activity->getActivities();
 	 */
 	public function getActivities(): array {

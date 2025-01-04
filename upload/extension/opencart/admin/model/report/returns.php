@@ -14,7 +14,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
+	 *
 	 * $results = $this->model_extension_opencart_report_returns->getReturns();
 	 */
 	public function getReturns(array $data = []): array {
@@ -79,9 +79,9 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of return records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $return_total = $this->model_extension_opencart_report_returns->getTotalReturns();
 	 */
 	public function getTotalReturns(array $data = []): int {

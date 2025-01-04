@@ -12,9 +12,9 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * Install
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_other_cloud->install();
 	 */
 	public function install(): void {
@@ -29,9 +29,9 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * Uninstall
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_other_cloud->uninstall();
 	 */
 	public function uninstall(): void {
@@ -45,9 +45,9 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * @param int $total
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_other_cloud->editTotal($product_id, $total);
 	 */
 	public function editTotal(int $product_id, int $total): void {
@@ -60,9 +60,9 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_other_cloud->delete($product_id);
 	 */
 	public function delete(int $product_id): void {
@@ -76,9 +76,9 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_other_cloud->getReports();
 	 */
 	public function getReports(int $start = 0, int $limit = 10): array {

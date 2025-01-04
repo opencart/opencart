@@ -14,9 +14,9 @@ class ProductPurchased extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_product_purchased->getPurchased();
 	 */
 	public function getPurchased(array $data = []): array {
@@ -61,9 +61,9 @@ class ProductPurchased extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of purchased records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $purchased_total = $this->model_extension_opencart_report_product_purchased->getTotalPurchased();
 	 */
 	public function getTotalPurchased(array $data = []): int {

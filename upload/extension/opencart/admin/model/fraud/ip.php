@@ -12,9 +12,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * Install
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_fraud_ip->install();
 	 */
 	public function install(): void {
@@ -29,9 +29,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * Uninstall
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_fraud_ip->uninstall();
 	 */
 	public function uninstall(): void {
@@ -44,9 +44,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * @param string $ip
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_fraud_ip->addIp($ip);
 	 */
 	public function addIp(string $ip): void {
@@ -59,9 +59,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * @param string $ip
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_fraud_ip->removeIp($ip);
 	 */
 	public function removeIp(string $ip): void {
@@ -75,9 +75,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_fraud_ip->getIps();
 	 */
 	public function getIps(int $start = 0, int $limit = 10): array {
@@ -98,9 +98,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * Get Total Ips
 	 *
 	 * @return int
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $ip_total = $this->model_extension_opencart_fraud_ip->getTotalIps();
 	 */
 	public function getTotalIps(): int {
@@ -115,9 +115,9 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * @param string $ip
 	 *
 	 * @return int
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $ip_total = $this->model_extension_opencart_fraud_ip->getTotalIpsByIp($ip);
 	 */
 	public function getTotalIpsByIp(string $ip): int {

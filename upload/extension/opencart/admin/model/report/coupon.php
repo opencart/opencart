@@ -14,9 +14,9 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_coupon->getCoupons();
 	 */
 	public function getCoupons(array $data = []): array {
@@ -61,9 +61,9 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of coupon records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $coupon_total = $this->model_extension_opencart_report_coupon->getTotalCoupons()
 	 */
 	public function getTotalCoupons(array $data = []): int {

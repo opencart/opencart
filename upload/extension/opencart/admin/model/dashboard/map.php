@@ -12,9 +12,9 @@ class Map extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Country
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $order_total = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();
 	 */
 	public function getTotalOrdersByCountry(): array {

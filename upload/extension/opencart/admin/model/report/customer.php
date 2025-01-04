@@ -12,9 +12,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Get Total Customers By Day
 	 *
 	 * @return array<int, array<string, int>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_total = $this->model_extension_opencart_report_customer->getTotalCustomersByDay();
 	 */
 	public function getTotalCustomersByDay(): array {
@@ -43,9 +43,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Get Total Customers By Week
 	 *
 	 * @return array<int, array<string, int>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_total = $this->model_extension_opencart_report_customer->getTotalCustomersByWeek();
 	 */
 	public function getTotalCustomersByWeek(): array {
@@ -78,9 +78,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Get Total Customers By Month
 	 *
 	 * @return array<int, array<string, int>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_total = $this->model_extension_opencart_report_customer->getTotalCustomersByMonth();
 	 */
 	public function getTotalCustomersByMonth(): array {
@@ -111,9 +111,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Get Total Customers By Year
 	 *
 	 * @return array<int, array<string, int>>
-	 * 
+	 *
 	 * @example
-	 * 
+	 *
 	 * $customer_total = $this->model_extension_opencart_report_customer->getTotalCustomersByYear();
 	 */
 	public function getTotalCustomersByYear(): array {
@@ -144,9 +144,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
+	 *
 	 * @example
-	 * 
+	 *
 	 * $results = $this->model_extension_opencart_report_customer->getCustomers();
 	 */
 	public function getCustomers(array $data = []): array {
@@ -211,9 +211,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of customer records
-	 * 
+	 *
 	 * @example
-	 * 
+	 *
 	 * $customer_total = $this->model_extension_opencart_report_customer->getTotalCustomers();
 	 */
 	public function getTotalCustomers(array $data = []): int {
@@ -264,9 +264,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
+	 *
 	 * @example
-	 * 
+	 *
 	 * $results = $this->model_extension_opencart_report_customer->getOrders();
 	 */
 	public function getOrders(array $data = []): array {
@@ -317,9 +317,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of order records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $order_total = $this->model_extension_opencart_report_customer->getTotalOrders();
 	 */
 	public function getTotalOrders(array $data = []): int {
@@ -354,9 +354,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_customer->getRewardPoints();
 	 */
 	public function getRewardPoints(array $data = []): array {
@@ -399,9 +399,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of reward point records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $reward_total = $this->model_extension_opencart_report_customer->getTotalRewardPoints();
 	 */
 	public function getTotalRewardPoints(array $data = []): int {
@@ -436,9 +436,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_customer->getCustomerActivities();
 	 */
 	public function getCustomerActivities(array $data = []): array {
@@ -491,9 +491,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of customer activity records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $customer_total = $this->model_extension_opencart_report_customer->getTotalCustomerActivities();
 	 */
 	public function getTotalCustomerActivities(array $data = []): int {
@@ -532,9 +532,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_customer->getCustomerSearches();
 	 */
 	public function getCustomerSearches(array $data = []): array {
@@ -591,9 +591,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of customer search records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_customer->getTotalCustomerSearches();
 	 */
 	public function getTotalCustomerSearches(array $data = []): int {

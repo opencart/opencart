@@ -14,9 +14,9 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_marketing->getMarketing();
 	 */
 	public function getMarketing(array $data = []): array {
@@ -77,9 +77,9 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @param array<mixed> $data array of filters
 	 *
 	 * @return int total number of marketing records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $marketing_total = $this->model_extension_opencart_report_marketing();
 	 */
 	public function getTotalMarketing(array $data = []): int {

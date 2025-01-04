@@ -14,9 +14,9 @@ class CustomerTransaction extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_customer_transaction->getTransactions();
 	 */
 	public function getTransactions(array $data = []): array {
@@ -59,9 +59,9 @@ class CustomerTransaction extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of transaction records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $transaction_total = $this->model_extension_opencart_report_customer_transaction->getTotalTransactions();
 	 */
 	public function getTotalTransactions(array $data = []): int {

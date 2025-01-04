@@ -12,9 +12,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * Install
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_report_product_viewed->install();
 	 */
 	public function install(): void {
@@ -29,9 +29,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * Uninstall
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_report_product_viewed->uninstall();
 	 */
 	public function uninstall(): void {
@@ -45,9 +45,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * @param int $viewed
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_report_product_viewed->addReport($product_id, $viewed);
 	 */
 	public function addReport(int $product_id, int $viewed): void {
@@ -61,9 +61,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $results = $this->model_extension_opencart_report_product_viewed->getViewed();
 	 */
 	public function getViewed(int $start = 0, int $limit = 10): array {
@@ -84,9 +84,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * Get Total Viewed
 	 *
 	 * @return int total number of viewed records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $viewed_total = $this->model_extension_opencart_report_product_viewed->getTotalViewed();
 	 */
 	public function getTotalViewed(): int {
@@ -99,9 +99,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * Get Total
 	 *
 	 * @return int total number of viewed records
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $viewed_total = $this->model_extension_opencart_report_product_viewed->getTotal();
 	 */
 	public function getTotal(): int {
@@ -114,9 +114,9 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 	 * Clear
 	 *
 	 * @return void
-	 * 
-	 * @example 
-	 * 
+	 *
+	 * @example
+	 *
 	 * $this->model_extension_opencart_report_product_viewed->clear();
 	 */
 	public function clear(): void {

@@ -261,7 +261,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_cms_topic->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -299,7 +299,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $topic_description = $this->model_cms_topic->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -372,7 +372,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
@@ -387,7 +387,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_cms_topic->deleteLayouts($article_id);
 	 */
 	public function deleteLayouts(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");

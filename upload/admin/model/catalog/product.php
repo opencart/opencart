@@ -2322,7 +2322,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_product->getReports($product_id, ($page - 1) * $limit, $limit);
+	 * $results = $this->model_catalog_product->getReports($product_id, $start, $limit);
 	 */
 	public function getReports(int $product_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

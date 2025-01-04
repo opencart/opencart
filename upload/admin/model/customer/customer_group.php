@@ -172,7 +172,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer_group->deleteDescriptions($customer_group_id);
 	 */
 	public function deleteDescriptions(int $customer_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");

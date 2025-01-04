@@ -329,7 +329,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteActivities($customer_id);
 	 */
 	public function deleteActivities(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_activity` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -548,7 +548,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $address_total = $this->model_customer_customer->getTotalAddresses($customer_id);
 	 */
 	public function getTotalAddresses(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -615,7 +615,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteHistories($customer_id);
 	 */
 	public function deleteHistories(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -674,7 +674,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteWishlists($customer_id);
 	 */
 	public function deleteWishlists(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -689,7 +689,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteWishlistByStoreId($store_id);
 	 */
 	public function deleteWishlistByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -704,7 +704,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteWishlistByProductId($product_id);
 	 */
 	public function deleteWishlistByProductId(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -737,7 +737,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteTransactions($customer_id);
 	 */
 	public function deleteTransactions(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -863,7 +863,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteRewards($customer_id);
 	 */
 	public function deleteRewards(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -971,7 +971,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * ?
+	 * $this->model_customer_customer->deleteIps($customer_id);
 	 */
 	public function deleteIps(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");

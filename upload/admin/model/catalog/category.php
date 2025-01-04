@@ -740,7 +740,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $category_id primary key of the category record
-	 * @param int $store_id    primaery key of the store record
+	 * @param int $store_id    primary key of the store record
 	 *
 	 * @return void
 	 *

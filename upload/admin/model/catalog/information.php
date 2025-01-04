@@ -316,7 +316,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $information_id primary key of the information record
-	 * @param int $store_id       primaery key of the store record
+	 * @param int $store_id       primary key of the store record
 	 *
 	 * @return void
 	 *

@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
  * Class Free Checkout
  *
- * @example $free_checkout_model = $this->model_extension_opencart_payment_free_checkout;
- *
  * Can be called from $this->load->model('extension/opencart/payment/free_checkout');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Payment

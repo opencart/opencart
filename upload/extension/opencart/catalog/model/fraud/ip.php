@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Fraud;
 /**
  * Class Ip
  *
- * @example $ip_model = $this->model_extension_opencart_fraud_ip;
- *
  * Can be called from $this->load->model('extension/opencart/fraud/ip');
  *
  * @package Opencart\Catalog\Model\Extension\Opencart\Fraud
@@ -16,6 +14,10 @@ class Ip extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $order_info
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $check = $this->model_extension_opencart_fraud_ip($order_info);
 	 */
 	public function check(array $order_info): int {
 		$status = false;

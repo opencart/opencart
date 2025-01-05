@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Zone
  *
- * @example $zone_model = $this->model_localisation_zone;
- *
  * Can be called from $this->load->model('localisation/zone');
  *
  * @package Opencart\Admin\Model\Localisation
@@ -16,6 +14,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $zone_id = $this->model_localisation_zone->addZone($data);
 	 */
 	public function addZone(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -32,6 +34,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data    array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_localisation_zone->editZone($zone_id, $data);
 	 */
 	public function editZone(int $zone_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `zone_id` = '" . (int)$zone_id . "'");
@@ -45,6 +51,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_localisation_zone->deleteZone($zone_id);
 	 */
 	public function deleteZone(int $zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
@@ -58,6 +68,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return array<string, mixed> zone record that has zone ID
+	 *
+	 * @example
+	 *
+	 * $zone_info = $this->model_localisation_zone->getZone($zone_id);
 	 */
 	public function getZone(int $zone_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
@@ -71,6 +85,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> zone records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_localisation_zone->getZones();
 	 */
 	public function getZones(array $data = []): array {
 		$sql = "SELECT *, `z`.`name`, `z`.`status`, `c`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
@@ -134,6 +152,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<int, array<string, mixed>> zone records that have country ID
+	 *
+	 * @example
+	 *
+	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
 	public function getZonesByCountryId(int $country_id): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1' ORDER BY `name`";
@@ -159,6 +181,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of zone records
+	 *
+	 * @example
+	 *
+	 * $zone_total = $this->model_localisation_zone->getTotalZones();
 	 */
 	public function getTotalZones(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
@@ -196,6 +222,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int total number of zone records that have country ID
+	 *
+	 * @example
+	 *
+	 * $zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
 	 */
 	public function getTotalZonesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "'");

@@ -316,7 +316,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $information_id primary key of the information record
-	 * @param int $store_id
+	 * @param int $store_id       primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -346,7 +346,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -385,7 +385,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 * Add Layout
 	 *
 	 * @param int $information_id primary key of the information record
-	 * @param int $store_id
+	 * @param int $store_id       primary key of the store record
 	 * @param int $layout_id      primary key of the layout record
 	 *
 	 * @return void
@@ -431,7 +431,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

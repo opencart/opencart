@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Tool;
 /**
  * Class Backup
  *
- * @example $backup_model = $this->model_tool_backup;
- *
  * Can be called from $this->load->model('tool/backup');
  *
  * @package Opencart\Admin\Model\Tool
@@ -14,6 +12,10 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * Get Tables
 	 *
 	 * @return array<int, string>
+	 *
+	 * @example
+	 *
+	 * $tables = $this->model_tool_backup->getTables();
 	 */
 	public function getTables(): array {
 		$table_data = [];
@@ -37,6 +39,10 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * @param int    $limit
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $records = $this->model_tool_backup->getRecords($table, $start, $limit);
 	 */
 	public function getRecords(string $table, int $start = 0, int $limit = 100): array {
 		if ($start < 0) {
@@ -62,6 +68,10 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * @param string $table
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $record_total = $this->model_tool_backup->getTotalRecords($table);
 	 */
 	public function getTotalRecords(string $table): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . $table . "`");

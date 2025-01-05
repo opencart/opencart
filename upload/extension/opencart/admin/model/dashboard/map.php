@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Extension\Opencart\Dashboard;
 /**
  * Class Map
  *
- * @example $map_model = $this->model_extension_opencart_dashboard_map;
- *
  * Can be called from $this->load->model('extension/opencart/dashboard/map');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Dashboard
@@ -14,6 +12,10 @@ class Map extends \Opencart\System\Engine\Model {
 	 * Get Total Orders By Country
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $order_total = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();
 	 */
 	public function getTotalOrdersByCountry(): array {
 		$implode = [];

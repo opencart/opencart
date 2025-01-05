@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Extension\Opencart\Other;
 /**
  * Class Cloud
  *
- * @example $cloud_model = $this->model_extension_opencart_other_cloud;
- *
  * Can be called from $this->load->model('extension/opencart/other/cloud');
  *
  * @package Opencart\Admin\Model\Extension\Opencart\Other
@@ -14,6 +12,10 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * Install
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_extension_opencart_other_cloud->install();
 	 */
 	public function install(): void {
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "product_bestseller` (
@@ -27,6 +29,10 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * Uninstall
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_extension_opencart_other_cloud->uninstall();
 	 */
 	public function uninstall(): void {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "product_bestseller`");
@@ -39,6 +45,10 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * @param int $total
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_extension_opencart_other_cloud->editTotal($product_id, $total);
 	 */
 	public function editTotal(int $product_id, int $total): void {
 		$this->db->query("REPLACE INTO `" . DB_PREFIX . "product_bestseller` SET `product_id` = '" . (int)$product_id . "', `total` = '" . (int)$total . "'");
@@ -50,6 +60,10 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_extension_opencart_other_cloud->delete($product_id);
 	 */
 	public function delete(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_bestseller` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -62,6 +76,10 @@ class Cloud extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_other_cloud->getReports();
 	 */
 	public function getReports(int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

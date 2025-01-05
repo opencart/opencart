@@ -253,7 +253,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_download->getReports($download_id, ($page - 1) * $limit, $limit);
+	 * $results = $this->model_catalog_download->getReports($download_id, $start, $limit);
 	 */
 	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {

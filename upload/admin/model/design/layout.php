@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Design;
 /**
  * Class Layout
  *
- * @example $layout_model = $this->model_design_layout;
- *
  * Can be called from $this->load->model('design/layout');
  *
  * @package Opencart\Admin\Model\Design
@@ -16,6 +14,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new layout record
+	 *
+	 * @example
+	 *
+	 * $layout_id = $this->model_design_layout->addLayout($data);
 	 */
 	public function addLayout(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "'");
@@ -44,6 +46,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->editLayout($layout_id, $data);
 	 */
 	public function editLayout(int $layout_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "' WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -71,6 +77,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->deleteLayout($layout_id);
 	 */
 	public function deleteLayout(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -110,6 +120,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<string, mixed> layout record that has layout ID
+	 *
+	 * @example
+	 *
+	 * $layout_info = $this->model_design_layout->getLayout($layout_id);
 	 */
 	public function getLayout(int $layout_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -123,6 +137,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> layout records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_design_layout->getLayouts();
 	 */
 	public function getLayouts(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "layout`";
@@ -162,6 +180,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * Get Total Layouts
 	 *
 	 * @return int total number of layout records
+	 *
+	 * @example
+	 *
+	 * $layout_total = $this->model_design_layout->getTotalLayouts();
 	 */
 	public function getTotalLayouts(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "layout`");
@@ -176,6 +198,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->addRoute($layout_id, $data);
 	 */
 	public function addRoute(int $layout_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_route` SET `layout_id` = '" . (int)$layout_id . "', `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "'");
@@ -187,6 +213,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->deleteRoutes($layout_id);
 	 */
 	public function deleteRoutes(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -198,6 +228,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->deleteRoutesByLayoutId($layout_id);
 	 */
 	public function deleteRoutesByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -206,9 +240,13 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Routes By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->deleteRoutesByStoreId($store_id);
 	 */
 	public function deleteRoutesByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -220,6 +258,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<int, array<string, mixed>> route records that have layout ID
+	 *
+	 * @example
+	 *
+	 * $layout_routes = $this->model_design_layout->getRoutes($layout_id);
 	 */
 	public function getRoutes(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -230,9 +272,13 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Routes By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return array<int, array<string, mixed>> route records that have store ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_design_layout->getRoutesByStoreId($store_id);
 	 */
 	public function getRoutesByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -247,6 +293,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->addModule($layout_id, $data);
 	 */
 	public function addModule(int $layout_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = '" . $this->db->escape($data['code']) . "', `position` = '" . $this->db->escape($data['position']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -258,6 +308,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->deleteModules($layout_id);
 	 */
 	public function deleteModules(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -269,6 +323,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param string $code
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_design_layout->deleteModulesByCode($code);
 	 */
 	public function deleteModulesByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` = '" . $this->db->escape($code) . "' OR `code` LIKE '" . $this->db->escape($code . '.%') . "'");
@@ -280,6 +338,10 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<int, array<string, mixed>> module records that have layout ID
+	 *
+	 * @example
+	 *
+	 * $layout_modules = $this->model_design_layout->getModules($layout_id);
 	 */
 	public function getModules(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' ORDER BY `position` ASC, `sort_order` ASC");

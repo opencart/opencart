@@ -218,7 +218,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * Add Store
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
-	 * @param int $store_id
+	 * @param int $store_id        primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -248,7 +248,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *
@@ -269,7 +269,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($manufacturer_id);
+	 * $manufacturer_store = $this->model_catalog_manufacturer->getStores($manufacturer_id);
 	 */
 	public function getStores(int $manufacturer_id): array {
 		$manufacturer_store_data = [];
@@ -287,7 +287,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * Add Layout
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
-	 * @param int $store_id
+	 * @param int $store_id        primary key of the store record
 	 * @param int $layout_id       primary key of the layout record
 	 *
 	 * @return void
@@ -333,7 +333,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
-	 * @param int $store_id
+	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
 	 *

@@ -506,99 +506,73 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['return_id'] = 0;
 		}
 
+		// Order
 		if (!empty($return_info)) {
 			$data['order_id'] = $return_info['order_id'];
+			$data['date_ordered'] = ($return_info['date_ordered'] != '0000-00-00' ? $return_info['date_ordered'] : '');
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_added']));
+			$data['order_edit'] = $this->url->link('sale/order.form', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $return_info['order_id']);
 		} else {
 			$data['order_id'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['date_ordered'] = ($return_info['date_ordered'] != '0000-00-00' ? $return_info['date_ordered'] : '');
-		} else {
 			$data['date_ordered'] = '';
+			$data['date_added'] = date($this->language->get('date_format_short'));
+			$data['order_edit'] = '';
 		}
 
+		// Customer
 		if (!empty($return_info)) {
 			$data['customer'] = $return_info['customer'];
+			$data['customer_id'] = $return_info['customer_id'];
+			$data['firstname'] = $return_info['firstname'];
+			$data['lastname'] = $return_info['lastname'];
+			$data['email'] = $return_info['email'];
+			$data['telephone'] = $return_info['telephone'];
+			$data['customer_edit'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $return_info['customer_id']);
 		} else {
 			$data['customer'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['customer_id'] = $return_info['customer_id'];
-		} else {
-			$data['customer_id'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['firstname'] = $return_info['firstname'];
-		} else {
+			$data['customer_id'] = 0;
 			$data['firstname'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['lastname'] = $return_info['lastname'];
-		} else {
 			$data['lastname'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['email'] = $return_info['email'];
-		} else {
 			$data['email'] = '';
-		}
-
-		if (!empty($return_info)) {
-			$data['telephone'] = $return_info['telephone'];
-		} else {
 			$data['telephone'] = '';
+			$data['customer_edit'] = '';
 		}
 
+		// Product
 		if (!empty($return_info)) {
-			$data['product_id'] = $return_info['product_id'];
 			$data['product'] = $return_info['product'];
+			$data['product_id'] = $return_info['product_id'];
 			$data['model'] = $return_info['model'];
 			$data['quantity'] = $return_info['quantity'];
 			$data['product_edit'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $return_info['product_id']);
 		} else {
-			$data['product_id'] = '';
 			$data['product'] = '';
+			$data['product_id'] = '';
 			$data['model'] = '';
 			$data['quantity'] = '';
 			$data['product_edit'] = '';
 		}
 
+		// Return
 		if (!empty($return_info)) {
+			$data['return_reason_id'] = $return_info['return_reason_id'];
+			$data['return_action_id'] = $return_info['return_action_id'];
 			$data['opened'] = $return_info['opened'];
+			$data['comment'] = $return_info['comment'];
 		} else {
+			$data['return_reason_id'] = 0;
+			$data['return_action_id'] = 0;
 			$data['opened'] = '';
+			$data['comment'] = '';
 		}
 
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
 
-		if (!empty($return_info)) {
-			$data['return_reason_id'] = $return_info['return_reason_id'];
-		} else {
-			$data['return_reason_id'] = 0;
-		}
-
 		$this->load->model('localisation/return_action');
 
 		$data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
-
-		if (!empty($return_info)) {
-			$data['return_action_id'] = $return_info['return_action_id'];
-		} else {
-			$data['return_action_id'] = 0;
-		}
-
-		if (!empty($return_info)) {
-			$data['comment'] = $return_info['comment'];
-		} else {
-			$data['comment'] = '';
-		}
 
 		$this->load->model('localisation/return_status');
 
@@ -655,6 +629,11 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
+
+
+		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
+			$json['error']['product'] = $this->language->get('error_product');
+		}
 
 
 		if (!oc_validate_length($this->request->post['product'], 1, 255)) {

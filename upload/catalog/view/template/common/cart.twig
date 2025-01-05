@@ -29,7 +29,7 @@
                   {% endif %}
                 </ul>
               </td>
-              <td class="text-end">x {{ product.quantity }}</td>
+              <td class="text-end text-nowrap">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
               <td class="text-end">
                 <form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">

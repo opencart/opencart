@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Returns
  *
- * @example $returns_model = $this->model_sale_returns;
- *
  * Can be called from $this->load->model('sale/returns');
  *
  * @package Opencart\Admin\Model\Sale
@@ -13,9 +11,34 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
-	 * @param array<string, mixed> $data array of data
+	 * @param array<string, mixed> $data array of data to be inserted
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $return_data = [
+	 *   'order_id'         => 1,
+	 *   'product_id'       => 1,
+	 *   'customer_id'      => 1,
+	 *   'firstname'        => 'John',
+	 *   'lastname'         => 'Doe',
+	 *   'email'            => ''
+	 *   'telephone'        => '1234567890',
+	 *   'product'          => 'Product Name',
+	 *   'model'            => 'Product Model',
+	 *   'quantity'         => 1,
+	 *   'opened'           => 1,
+	 *   'return_reason_id' => 1,
+	 *   'return_action_id' => 1,
+	 *   'return_status_id' => 1,
+	 *   'comment'          => 'Comment',
+	 *   'date_ordered'     => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('sale/returns');
+	 *
+     * $return_id = $this->model_sale_returns->addReturn($return_data);
 	 */
 	public function addReturn(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `return_status_id` = '" . (int)$data['return_status_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_added` = NOW(), `date_modified` = NOW()");

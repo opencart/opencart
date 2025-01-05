@@ -16,7 +16,6 @@
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
           <div class="col mb-3">
             <div class="input-group">
               <div class="form-control rounded-start" style="min-height: 64px;">
@@ -36,7 +35,6 @@
               {% endif %}
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="input-group">
               <div id="input-customer-info" class="form-control rounded-start" style="min-height: 64px;">
@@ -52,7 +50,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="form-control p-0 rounded">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -62,7 +59,6 @@
             </div>
           </div>
         </div>
-
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <div class="form-floating">
@@ -70,7 +66,8 @@
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
-              </select> <label for="input-store">{{ entry_store }}</label>
+              </select>
+              <label for="input-store">{{ entry_store }}</label>
             </div>
           </div>
 
@@ -80,7 +77,8 @@
                 {% for language in languages %}
                   <option value="{{ language.code }}"{% if language.code == language_code %} selected{% endif %}>{{ language.name }}</option>
                 {% endfor %}
-              </select> <label for="input-language">{{ entry_language }}</label>
+              </select>
+              <label for="input-language">{{ entry_language }}</label>
             </div>
           </div>
 
@@ -178,7 +176,6 @@
             </tfoot>
           </table>
         </form>
-
         <div class="row">
           <div class="col-md mb-3">
             <div class="input-group">
@@ -221,7 +218,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
               <div id="input-shipping-address-info" class="form-control rounded-start" style="min-height: 128px;">
@@ -264,7 +260,6 @@
             </div>
           </div>
         </div>
-
         <div class="row">
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
@@ -277,7 +272,6 @@
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div id="payment-method" class="col-md mb-3">
             <div class="input-group">
               <div id="input-payment-method-info" class="form-control rounded-start" style="min-height: 64px;">
@@ -290,13 +284,11 @@
             </div>
           </div>
         </div>
-
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
             {% for extension in extensions %}
               <div class="col mb-3">{{ extension }}</div>
             {% endfor %}
-
             <div class="col mb-3">
               <div class="input-group">
                 <div class="form-control rounded-start">
@@ -312,7 +304,6 @@
                 {% endif %}
               </div>
             </div>
-
             <div class="col mb-3">
               <div class="input-group">
                 <div id="input-affiliate-info" class="form-control rounded-start" style="min-height: 64px;">
@@ -328,7 +319,6 @@
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
-
             <div class="col mb-3">
               <div class="input-group">
                 <div class="form-control rounded-start">
@@ -350,9 +340,7 @@
             </div>
           </div>
         </div>
-
         <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fa-solid fa-angle-down"></i></button>
-
         <div class="row mb-3">
           <div class="col">
             <div class="input-group">
@@ -366,7 +354,6 @@
             </div>
           </div>
         </div>
-
         <table class="table table-bordered">
           <tbody id="order-total">
             {% for order_total in order_totals %}

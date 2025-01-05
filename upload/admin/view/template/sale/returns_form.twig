@@ -19,18 +19,30 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+
           <div class="col mb-3">
-            <form id="form-order" class="form-floating">
-              <input type="text" value="{{ order_id }}" placeholder="{{ entry_order }}" id="input-order" class="form-control form-control-lg" autocomplete="off"/> <label for="input-order">{{ entry_order_id }}</label>
-            </form>
+            <div class="input-group">
+              <div class="form-control p-0 border rounded" style="min-height: 64px;">
+                <div class="lead p-2"><strong>{{ text_order_id }}</strong>
+                  <br/>
+                  {% if order_id %}
+                    <div id="order-value"><a href="{{ order_edit }}" target="_blank">{{ order_id }}</a></div>
+                  {% else %}
+                    <div id="order-value">&nbsp;</div>
+                  {% endif %}
+                </div>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-return" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+            </div>
           </div>
+
           <div class="col mb-3">
             <div class="input-group">
               <div id="input-customer-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
-                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    <div id="customer-value"><a href="{{ customer_edit }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
                   {% else %}
                     <div id="customer-value">{{ firstname }} {{ lastname }}</div>
                   {% endif %}
@@ -39,14 +51,16 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
+
           <div class="col mb-3">
             <div class="form-control p-0 border rounded" style="min-height: 64px;">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                 <br/>
-                {{ date_added }}
+                <div id="value-date-added">{{ date_added }}</div>
               </div>
             </div>
           </div>
+
         </div>
         <form id="form-cart">
           <table class="table table-bordered">
@@ -55,21 +69,19 @@
                 <th>{{ column_product }}</th>
                 <th>{{ column_model }}</th>
                 <th class="text-end">{{ column_quantity }}</th>
-                <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>
+                <td id="value-product">
                   {% if product_id %}
-                  <div id="value-product"><a href="{{ product_edit }}" target="_blank">{{ product }}</a></div>
+                    <a href="{{ product_edit }}" target="_blank">{{ product }}</a>
                   {% else %}
-                    <div id="value-product"></div>
+                    &nbsp;
                   {% endif %}
                 </td>
                 <td id="value-model">{{ model }}</td>
                 <td id="value-quantity" class="text-end">{{ quantity }}</td>
-                <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button></td>
               </tr>
             </tbody>
           </table>
@@ -81,8 +93,7 @@
                 {% for return_reason in return_reasons %}
                   <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected{% endif %}>{{ return_reason.name }}</option>
                 {% endfor %}
-              </select>
-              <label for="input-return-reason">{{ entry_reason }}</label>
+              </select> <label for="input-return-reason">{{ entry_reason }}</label>
             </form>
             <div id="error-return-reason" class="invalid-feedback"></div>
           </div>
@@ -91,8 +102,7 @@
               <select name="opened" id="input-opened" class="form-select">
                 <option value="1"{% if opened %} selected{% endif %}>{{ text_opened }}</option>
                 <option value="0"{% if not opened %} selected{% endif %}>{{ text_unopened }}</option>
-              </select>
-              <label for="input-opened">{{ entry_opened }}</label>
+              </select> <label for="input-opened">{{ entry_opened }}</label>
             </form>
           </div>
           <div class="col mb-3">
@@ -101,16 +111,14 @@
                 {% for return_action in return_actions %}
                   <option value="{{ return_action.return_action_id }}"{% if return_action.return_action_id == return_action_id %} selected{% endif %}>{{ return_action.name }}</option>
                 {% endfor %}
-              </select>
-              <label for="input-return-action">{{ entry_action }}</label>
+              </select> <label for="input-return-action">{{ entry_action }}</label>
             </form>
           </div>
         </div>
         <div class="row mb-3">
           <div class="col">
             <form id="form-comment" class="form-floating">
-              <textarea name="comment" rows="10" placeholder="{{ entry_comment }}" id="input-comment" class="form-control" style="min-height: 100px;">{{ comment }}</textarea>
-              <label for="input-comment">{{ entry_comment }}</label>
+              <textarea name="comment" rows="10" placeholder="{{ entry_comment }}" id="input-comment" class="form-control" style="min-height: 100px;">{{ comment }}</textarea> <label for="input-comment">{{ entry_comment }}</label>
             </form>
           </div>
         </div>
@@ -119,15 +127,12 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_history }}</div>
       <div class="card-body">
-        <fieldset>
-          <legend>{{ text_history }}</legend>
-          <div id="history">{{ history }}</div>
-        </fieldset>
+        <div id="history">{{ history }}</div>
         <fieldset>
           <form id="form-history">
             <legend>{{ text_history_add }}</legend>
             <div class="row mb-3">
-              <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
+              <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="return_status_id" id="input-return-status" class="form-select">
                   {% for return_status in return_statuses %}
@@ -140,8 +145,7 @@
               <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
               <div class="col-sm-10">
                 <div class="form-check form-switch form-switch-lg">
-                  <input type="hidden" name="notify" value="0"/>
-                  <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
+                  <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
                 </div>
               </div>
             </div>
@@ -162,6 +166,45 @@
   </div>
 </div>
 
+<div id="modal-return" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_return }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-return">
+          <div class="mb-3">
+            <label for="input-order" class="form-label">{{ entry_order_id }}</label>
+            <div class="input-group">
+              <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order" class="form-control"/> <button type="button" id="button-order" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            </div>
+          </div>
+          <div class="text-end mb-1">
+
+
+          </div>
+          <fieldset>
+            <legend>{{ text_product }}</legend>
+            <div class="mb-3 required">
+              <label for="input-product" class="form-label">{{ entry_product }}</label> <select name="product_id" id="input-product" class="form-select" disabled>
+                <option value="0">{{ text_select }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/> <input type="hidden" name="model" value="{{ model }}" id="input-model"/>
+            </div>
+            <div class="text-end">
+              <button type="submit" id="button-return" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="modal-customer" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -172,29 +215,23 @@
       <div class="modal-body">
         <form id="form-customer">
           <div class="mb-3">
-            <label for="input-customer" class="form-label">{{ entry_customer }}</label>
-            <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
-            <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            <label for="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
           <div class="mb-3 required">
-            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
             <div id="error-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
             <div id="error-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-email" class="form-label">{{ entry_email }}</label>
-            <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+            <label for="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
-            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
-            <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
           <div class="text-end">
@@ -206,39 +243,6 @@
   </div>
 </div>
 
-<div id="modal-product" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ text_product }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="form-product">
-          <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label>
-            <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
-            <ul id="autocomplete-product" class="dropdown-menu"></ul>
-            <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
-            <input type="hidden" name="model" value="{{ model }}" id="input-model"/>
-            <input type="hidden" name="quantity" value="{{ quantity }}" id="input-quantity"/>
-          </div>
-          <div class="mb-3">
-            <label for="input-model" class="form-label">{{ entry_model }}</label>
-            <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
-          </div>
-          <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-            <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
-          </div>
-          <div class="text-end">
-            <button type="button" id="button-product" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
     'source': function(request, response) {
@@ -270,6 +274,61 @@ $('#input-customer').autocomplete({
     }
 });
 
+var products = [];
+
+$('#button-order').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.autocomplete&user_token={{ user_token }}&order_id=' + $('#input-order').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            // Check for errors
+            if (json['error']) {
+                $('#form-return').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            html = '<option value="">{{ text_select|escape('js') }}</option>';
+
+            if (json['products']) {
+                var products = json['products'];
+
+                for (i = 0; i < json['products'].length; i++) {
+                    html += '<option value="' + json['products'][i]['product_id'] + '">' + json['products'][i]['name'] + '</option>';
+                }
+
+                $('#input-product').html(html);
+
+                $('#input-product').prop('disabled', false);
+            } else {
+                $('#input-product').prop('disabled', true);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+
+
+    $('#value-product').html('<a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-product-id').val() + '" target="_blank">' + $('#input-product').val() + '</a>');
+    $('#value-model').html($('#input-model').val());
+    $('#value-quantity').html($('#input-quantity').val());
+
+    $('#modal-product').modal('hide');
+});
+
 $('#button-customer').on('click', function() {
     var customer_id = $('#input-customer-id').val();
 
@@ -282,46 +341,15 @@ $('#button-customer').on('click', function() {
     $('#modal-customer').modal('hide');
 });
 
-$('#input-product').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id'],
-                        model: item['model']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('#input-product').val(item['label']);
-        $('#input-product-id').val(item['value']);
-        $('#input-model').val(item['model']);
-    }
-});
-
-$('#button-product').on('click', function() {
-    $('#value-product').html('<a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-product-id').val() + '" target="_blank">' + $('#input-product').val() + '</a>');
-    $('#value-model').html($('#input-model').val());
-    $('#value-quantity').html($('#input-quantity').val());
-
-    $('#modal-product').modal('hide');
-});
-
 $('#button-save').on('click', function() {
     var element = this;
 
     console.log($('#form-customer, #form-product, #form-comment, #input-order-id').serialize());
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
+        url: 'index.php?route=sale/return.save&user_token={{ user_token }}',
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize(),
+        data: $('#form-customer, #form-cart, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -371,28 +399,6 @@ $('#button-save').on('click', function() {
                 if (json['order_id']) {
                     $('#order-id-value').val(json['order_id']);
                 }
-
-                if (json['points']) {
-                    $('#point-value').html(json['points']);
-                    $('#button-reward-add').prop('disabled', false);
-                    $('#button-reward-remove').prop('disabled', false);
-                } else {
-                    $('#point-value').html(0);
-                    $('#button-reward-add').prop('disabled', true);
-                    $('#button-reward-remove').prop('disabled', true);
-                }
-
-                if (json['commission']) {
-                    $('#commission-value').html(json['commission']);
-                    $('#button-commission-add').prop('disabled', false);
-                    $('#button-commission-remove').prop('disabled', false);
-                } else {
-                    $('#commission-value').html('&nbsp;');
-                    $('#button-commission-add').prop('disabled', true);
-                    $('#button-commission-remove').prop('disabled', true);
-                }
-
-                cart_render(json['products'], json['totals'], json['shipping_required']);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

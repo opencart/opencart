@@ -115,6 +115,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			return [
+				'products'              => $this->getProducts($order_id),
 				'custom_field'          => json_decode($order_query->row['custom_field'], true),
 				'payment_zone_code'     => $payment_zone_code,
 				'payment_iso_code_2'    => $payment_iso_code_2,

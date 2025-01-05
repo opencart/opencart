@@ -3,7 +3,7 @@
 $_['heading_title']              = 'Commandes';
 
 // Texte
-$_['text_success']               = 'Succès : Vous avez modifié les commandes !';
+$_['text_success']               = 'Succès: Vous avez modifié les commandes!';
 $_['text_list']                  = 'Liste des commandes';
 $_['text_add']                   = 'Ajouter une commande';
 $_['text_edit']                  = 'Commande (#%s)';
@@ -16,14 +16,14 @@ $_['text_product_add']           = 'Ajouter un produit';
 $_['text_voucher_add']           = 'Ajouter un bon';
 $_['text_points']                = 'Points';
 $_['text_reward']                = 'Points de fidélité';
-$_['text_reward_add']            = 'Succès : Points de fidélité ajoutés !';
-$_['text_reward_remove']         = 'Succès : Points de fidélité supprimés !';
+$_['text_reward_add']            = 'Succès: Points de fidélité ajoutés!';
+$_['text_reward_remove']         = 'Succès: Points de fidélité supprimés!';
 $_['text_affiliate']             = 'Affilié';
 $_['text_commission']            = 'Commission';
-$_['text_commission_add']        = 'Succès : Commission ajoutée !';
-$_['text_commission_remove']     = 'Succès : Commission supprimée !';
-$_['text_restock']               = 'Succès : Les produits ont été réapprovisionnés !';
-$_['text_upload']                = 'Votre fichier a été téléchargé avec succès !';
+$_['text_commission_add']        = 'Succès: Commission ajoutée!';
+$_['text_commission_remove']     = 'Succès: Commission supprimée!';
+$_['text_restock']               = 'Succès: Les produits ont été réapprovisionnés!';
+$_['text_upload']                = 'Votre fichier a été téléchargé avec succès!';
 $_['text_subscription']          = 'Abonnement';
 $_['text_subscription_trial']    = '%s tous les %d %s(s) pour %d paiement(s), puis ';
 $_['text_subscription_duration'] = '%s tous les %d %s(s) pour %d paiement(s)';
@@ -129,10 +129,10 @@ $_['entry_date_to']              = 'Date de fin';
 $_['help_override']              = 'Si la commande du client est bloquée pour changer le statut de la commande en raison d\'une extension anti-fraude, activez le dépassement.';
 
 // Erreur
-$_['error_warning']              = 'Avertissement : Veuillez vérifier attentivement le formulaire pour les erreurs !';
-$_['error_permission']           = 'Avertissement : Vous n\'avez pas la permission de modifier les commandes !';
-$_['error_invoice_no']           = 'Avertissement : Le N° de facture a déjà été créé !';
-$_['error_order']                = 'Avertissement : La commande n\'existe pas !';
-$_['error_affiliate']            = 'Avertissement : L\'affilié n\'existe pas !';
-$_['error_reward_add']           = 'Avertissement : Les points de fidélité pour cette commande ont déjà été ajoutés !';
-$_['error_commission_add']       = 'Avertissement : La commission affiliée pour cette commande a déjà été ajoutée !';
+$_['error_warning']              = 'Avertissement: Veuillez vérifier attentivement le formulaire pour les erreurs!';
+$_['error_permission']           = 'Avertissement: Vous n\'avez pas la permission de modifier les commandes!';
+$_['error_invoice_no']           = 'Avertissement: Le N° de facture a déjà été créé!';
+$_['error_order']                = 'Avertissement: La commande n\'existe pas!';
+$_['error_affiliate']            = 'Avertissement: L\'affilié n\'existe pas!';
+$_['error_reward_add']           = 'Avertissement: Les points de fidélité pour cette commande ont déjà été ajoutés!';
+$_['error_commission_add']       = 'Avertissement: La commission affiliée pour cette commande a déjà été ajoutée!';

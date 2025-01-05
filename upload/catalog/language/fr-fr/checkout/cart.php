@@ -3,12 +3,12 @@
 $_['heading_title']              = 'Panier d\'achat';
 
 // Texte
-$_['text_success']               = 'Succès : Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">panier d\'achat</a> !';
-$_['text_edit']                  = 'Succès : Vous avez modifié votre panier d\'achat !';
-$_['text_remove']                = 'Succès : Vous avez retiré un article de votre panier d\'achat !';
-$_['text_login']                 = 'Attention : Vous devez <a href="%s">vous connecter</a> ou <a href="%s">créer un compte</a> pour voir les prix !';
-$_['text_no_results']            = 'Votre panier est vide !';
-$_['text_next']                  = 'Que souhaitez-vous faire ensuite ?';
+$_['text_success']               = 'Succès: Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">panier d\'achat</a>!';
+$_['text_edit']                  = 'Succès: Vous avez modifié votre panier d\'achat!';
+$_['text_remove']                = 'Succès: Vous avez retiré un article de votre panier d\'achat!';
+$_['text_login']                 = 'Attention: Vous devez <a href="%s">vous connecter</a> ou <a href="%s">créer un compte</a> pour voir les prix!';
+$_['text_no_results']            = 'Votre panier est vide!';
+$_['text_next']                  = 'Que souhaitez-vous faire ensuite?';
 $_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompense que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre livraison.';
 $_['text_points']                = 'Points de récompense';
 $_['text_subscription']          = 'Abonnement';
@@ -30,8 +30,8 @@ $_['column_price']               = 'Prix unitaire';
 $_['column_total']               = 'Total';
 
 // Erreur
-$_['error_stock']                = 'Les produits marqués avec *** ne sont pas disponibles en quantité souhaitée ou ne sont pas en stock !';
-$_['error_minimum']              = 'Le montant minimum de commande pour %s est de %s !';
-$_['error_required']             = '%s requis !';
-$_['error_product']              = 'Attention : Le produit est introuvable !';
-$_['error_subscription']         = 'Veuillez sélectionner un plan d\'abonnement !';
+$_['error_stock']                = 'Les produits marqués avec *** ne sont pas disponibles en quantité souhaitée ou ne sont pas en stock!';
+$_['error_minimum']              = 'Le montant minimum de commande pour %s est de %s!';
+$_['error_required']             = '%s requis!';
+$_['error_product']              = 'Attention: Le produit est introuvable!';
+$_['error_subscription']         = 'Veuillez sélectionner un plan d\'abonnement!';

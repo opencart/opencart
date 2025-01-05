@@ -91,7 +91,7 @@ class Install extends \Opencart\System\Engine\Model {
 		}
 		*/
 		// Data
-		$lines = file(DIR_APPLICATION . 'opencart.sql', FILE_IGNORE_NEW_LINES);
+		$lines = file(DIR_APPLICATION . 'opencart-' . $this->config->get('language_code') . '.sql', FILE_IGNORE_NEW_LINES);
 
 		if ($lines) {
 			$sql = '';

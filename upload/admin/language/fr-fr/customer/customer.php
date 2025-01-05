@@ -3,7 +3,7 @@
 $_['heading_title']         = 'Clients';
 
 // Text
-$_['text_success']          = 'Succès : Vous avez modifié les clients!';
+$_['text_success']          = 'Succès: Vous avez modifié les clients!';
 $_['text_list']             = 'Liste des Clients';
 $_['text_add']              = 'Ajouter un Client';
 $_['text_edit']             = 'Modifier un Client';
@@ -84,11 +84,11 @@ $_['help_safe']             = 'Définir à vrai pour éviter que ce client soit 
 $_['help_points']           = 'Utilisez un signe moins pour supprimer des points.';
 
 // Error
-$_['error_warning']         = 'Attention : Veuillez vérifier le formulaire pour les erreurs!';
-$_['error_permission']      = 'Attention : Vous n\'avez pas la permission de modifier les clients!';
-$_['error_customer']        = 'Attention : Le client n\'existe pas!';
-$_['error_exists']          = 'Attention : L\'adresse e-mail est déjà enregistrée!';
-$_['error_address']         = 'Attention : L\'adresse n\'existe pas!';
+$_['error_warning']         = 'Attention: Veuillez vérifier le formulaire pour les erreurs!';
+$_['error_permission']      = 'Attention: Vous n\'avez pas la permission de modifier les clients!';
+$_['error_customer']        = 'Attention: Le client n\'existe pas!';
+$_['error_exists']          = 'Attention: L\'adresse e-mail est déjà enregistrée!';
+$_['error_address']         = 'Attention: L\'adresse n\'existe pas!';
 $_['error_firstname']       = 'Le prénom doit contenir entre 1 et 32 caractères!';
 $_['error_lastname']        = 'Le nom doit contenir entre 1 et 32 caractères!';
 $_['error_email']           = 'L\'adresse e-mail ne semble pas être valide!';

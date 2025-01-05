@@ -22,14 +22,14 @@ $_['entry_password']       = 'Mot de Passe';
 $_['entry_confirm']        = 'Confirmer le Mot de Passe';
 
 // Error
-$_['error_token']          = 'Attention : Jeton d\'inscription invalide !';
-$_['error_exists']         = 'Attention : L\'adresse e-mail est déjà enregistrée !';
-$_['error_customer_group'] = 'Le groupe de clients ne semble pas être valide !';
-$_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères !';
-$_['error_lastname']       = 'Le nom doit contenir entre 1 et 32 caractères !';
-$_['error_email']          = 'L\'adresse e-mail ne semble pas être valide !';
-$_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caractères !';
-$_['error_custom_field']   = '%s requis !';
-$_['error_regex']          = '%s n\'est pas une entrée valide !';
-$_['error_password']       = 'Le mot de passe doit contenir entre 4 et 20 caractères !';
-$_['error_agree']          = 'Attention : Vous devez accepter les %s !';
+$_['error_token']          = 'Attention: Jeton d\'inscription invalide!';
+$_['error_exists']         = 'Attention: L\'adresse e-mail est déjà enregistrée!';
+$_['error_customer_group'] = 'Le groupe de clients ne semble pas être valide!';
+$_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères!';
+$_['error_lastname']       = 'Le nom doit contenir entre 1 et 32 caractères!';
+$_['error_email']          = 'L\'adresse e-mail ne semble pas être valide!';
+$_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caractères!';
+$_['error_custom_field']   = '%s requis!';
+$_['error_regex']          = '%s n\'est pas une entrée valide!';
+$_['error_password']       = 'Le mot de passe doit contenir entre 4 et 20 caractères!';
+$_['error_agree']          = 'Attention: Vous devez accepter les %s!';

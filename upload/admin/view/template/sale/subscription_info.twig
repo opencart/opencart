@@ -17,7 +17,7 @@
     <div class="card mb-3">
       <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
-        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+        <div class="row">
           {% if order_id %}
             <div class="col mb-3">
               <div class="form-control p-0 border rounded" style="min-height: 64px;">
@@ -114,7 +114,6 @@
                           <small> - {{ text_model }}: {{ subscription_product.model }}</small>
                         </li>
                         {% for option in subscription_product.option %}
-
                           {% if option.type != 'file' %}
                             <li>
                               <small> - {{ option.name }}: {{ option.value }}</small>
@@ -126,7 +125,6 @@
                               <div id="error-product-{{ subscription_product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
                             </li>
                           {% endif %}
-
                         {% endfor %}
                       </ul>
                       <input type="hidden" name="product[{{ subscription_product_row }}][product_id]" value="{{ subscription_product.product_id }}"/>

@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Customer;
 /**
  * Class Custom Field
  *
- * @example $custom_field_model = $this->model_customer_custom_field;
- *
  * Can be called from $this->load->model('customer/custom_field');
  *
  * @package Opencart\Admin\Model\Customer
@@ -16,6 +14,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new custom field record
+	 *
+	 * @example
+	 *
+	 * $custom_field_id = $this->model_customer_custom_field->addCustomField($data);
 	 */
 	public function addCustomField(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -50,6 +52,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_customer_custom_field->editCustomField($custom_field_id, $data);
 	 */
 	public function editCustomField(int $custom_field_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -85,6 +91,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_customer_custom_field->deleteCustomField($custom_field_id);
 	 */
 	public function deleteCustomField(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -100,6 +110,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return array<string, mixed> custom field record that has custom field ID
+	 *
+	 * @example
+	 *
+	 * $custom_field_info = $this->model_customer_custom_field->getCustomField($custom_field_id);
 	 */
 	public function getCustomField(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cf`.`custom_field_id` = '" . (int)$custom_field_id . "' AND `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -113,6 +127,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> custom field records
+	 *
+	 * @example
+	 *
+	 * $custom_fields = $this->model_customer_custom_field->getCustomFields();
 	 */
 	public function getCustomFields(array $data = []): array {
 		if (empty($data['filter_customer_group_id'])) {
@@ -178,6 +196,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * Get Total Custom Fields
 	 *
 	 * @return int total number of custom field records
+	 *
+	 * @example
+	 *
+	 * $custom_field_total = $this->model_customer_custom_field->getTotalCustomFields();
 	 */
 	public function getTotalCustomFields(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
@@ -193,6 +215,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_customer_custom_field->addDescription($custom_field_id, $language_id, $data);
 	 */
 	public function addDescription(int $custom_field_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_description` SET `custom_field_id` = '" . (int)$custom_field_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -204,6 +230,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function deleteDescriptions(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -215,6 +245,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_customer_custom_field->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -226,6 +260,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return array<int, array<string, string>> description records that have custom field ID
+	 *
+	 * @example
+	 *
+	 * $custom_field_description = $this->model_customer_custom_field->getDescriptions($custom_field_id);
 	 */
 	public function getDescriptions(int $custom_field_id): array {
 		$custom_field_data = [];
@@ -245,6 +283,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have information ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_customer_custom_field->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -259,6 +301,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function addCustomerGroup(int $custom_field_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_customer_group` SET `custom_field_id` = '" . (int)$custom_field_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `required` = '" . (int)(isset($data['required']) ? 1 : 0) . "'");
@@ -270,9 +316,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function deleteCustomerGroups(int $custom_field_id): void {
-		$this->db->query("delete FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 	}
 
 	/**
@@ -281,6 +331,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return array<int, array<string, mixed>> customer group records that have custom field ID
+	 *
+	 * @example
+	 *
+	 * $custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($custom_field_id);
 	 */
 	public function getCustomerGroups(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -295,6 +349,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return int returns the primary key of the new custom field value record
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function addValue(int $custom_field_id, array $data): int {
 		if ($data['custom_field_value_id']) {
@@ -318,6 +376,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function deleteValues(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -331,6 +393,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_value_id primary key of the custom field value record
 	 *
 	 * @return array<string, mixed> value record that has custom field value ID
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function getValue(int $custom_field_value_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value` `cfv` LEFT JOIN `" . DB_PREFIX . "custom_field_value_description` `cfvd` ON (`cfv`.`custom_field_value_id` = `cfvd`.`custom_field_value_id`) WHERE `cfv`.`custom_field_value_id` = '" . (int)$custom_field_value_id . "' AND `cfvd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -344,6 +410,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return array<int, array<string, mixed>> value records that have custom field ID
+	 *
+	 * @example
+	 *
+	 * $custom_field_value = $this->model_customer_custom_field->getValues($custom_field_id);
 	 */
 	public function getValues(int $custom_field_id): array {
 		$custom_field_value_data = [];
@@ -366,6 +436,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $custom_field_value_description array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_customer_custom_field->addValueDescription($custom_field_value_id, $custom_field_id, $language_id, $custom_field_value_description);
 	 */
 	public function addValueDescription(int $custom_field_value_id, int $custom_field_id, int $language_id, array $custom_field_value_description): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_value_description` SET `custom_field_value_id` = '" . (int)$custom_field_value_id . "', `language_id` = '" . (int)$language_id . "', `custom_field_id` = '" . (int)$custom_field_id . "', `name` = '" . $this->db->escape($custom_field_value_description['name']) . "'");
@@ -377,6 +451,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * ?
 	 */
 	public function deleteValueDescriptions(int $custom_field_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -388,6 +466,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_customer_custom_field->deleteValueDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteValueDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -399,6 +481,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $custom_field_id primary key of the custom field record
 	 *
 	 * @return array<int, array<string, mixed>> value description records that have custom field ID
+	 *
+	 * @example
+	 *
+	 * $custom_field_values = $this->model_customer_custom_field->getValueDescriptions($custom_field_id);
 	 */
 	public function getValueDescriptions(int $custom_field_id): array {
 		$custom_field_value_data = [];
@@ -426,6 +512,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> value description records that have language ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($language_id);
 	 */
 	public function getValueDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `language_id` = '" . (int)$language_id . "'");

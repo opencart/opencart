@@ -3,7 +3,7 @@
 $_['heading_title']       = 'Coupons';
 
 // Texte
-$_['text_success']        = 'Succès : Vous avez modifié les coupons !';
+$_['text_success']        = 'Succès: Vous avez modifié les coupons!';
 $_['text_list']           = 'Liste des coupons';
 $_['text_add']            = 'Ajouter un coupon';
 $_['text_edit']           = 'Modifier un coupon';
@@ -51,7 +51,7 @@ $_['help_uses_total']     = 'Le nombre maximum de fois que le coupon peut être 
 $_['help_uses_customer']  = 'Le nombre maximum de fois que le coupon peut être utilisé par un client unique. Laissez vide pour illimité.';
 
 // Erreur
-$_['error_permission']    = 'Attention : Vous n’avez pas la permission de modifier les coupons !';
-$_['error_exists']        = 'Attention : Le code du coupon est déjà utilisé !';
-$_['error_name']          = 'Le nom du coupon doit comporter entre 3 et 128 caractères !';
-$_['error_code']          = 'Le code doit comporter entre 3 et 20 caractères !';
+$_['error_permission']    = 'Attention: Vous n’avez pas la permission de modifier les coupons!';
+$_['error_exists']        = 'Attention: Le code du coupon est déjà utilisé!';
+$_['error_name']          = 'Le nom du coupon doit comporter entre 3 et 128 caractères!';
+$_['error_code']          = 'Le code doit comporter entre 3 et 20 caractères!';

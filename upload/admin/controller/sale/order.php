@@ -1948,7 +1948,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->deleteTransactionByOrderId($order_id);
+			$this->model_customer_customer->deleteTransactionsByOrderId($order_id);
 
 			$json['success'] = $this->language->get('text_commission_remove');
 		}

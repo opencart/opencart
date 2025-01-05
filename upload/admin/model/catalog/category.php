@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Category
  *
- * @example $category_model = $this->model_catalog_category;
- *
  * Can be called from $this->load->model('catalog/category');
  *
  * @package Opencart\Admin\Model\Catalog
@@ -16,6 +14,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new category record
+	 *
+	 * @example
+	 *
+	 * $category_id = $this->model_catalog_category->addCategory($data);
 	 */
 	public function addCategory(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
@@ -93,6 +95,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->editCategory($category_id, $this->request->post);
 	 */
 	public function editCategory(int $category_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
@@ -271,6 +277,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteCategory($category_id);
 	 */
 	public function deleteCategory(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -318,6 +328,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $parent_id primary key of the parent category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->repairCategories();
 	 */
 	public function repairCategories(int $parent_id = 0): void {
 		$categories = $this->model_catalog_category->getCategories(['filter_parent_id' => $parent_id]);
@@ -349,6 +363,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<string, mixed> category record that has category ID
+	 *
+	 * @example
+	 *
+	 * $category_info = $this->model_catalog_category->getCategory($category_id);
 	 */
 	public function getCategory(int $category_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT GROUP_CONCAT(`cd1`.`name` ORDER BY `level` SEPARATOR ' > ') FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = cd1.`category_id` AND `cp`.`category_id` != `cp`.`path_id`) WHERE `cp`.`category_id` = `c`.`category_id` AND `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY `cp`.`category_id`) AS `path` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`c`.`category_id` = `cd2`.`category_id`) WHERE `c`.`category_id` = '" . (int)$category_id . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -362,6 +380,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> category records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_catalog_category->getCategories();
 	 */
 	public function getCategories(array $data = []): array {
 		$sql = "SELECT `cp`.`category_id` AS `category_id`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' > ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -436,6 +458,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of category records
+	 *
+	 * @example
+	 *
+	 * $category_total = $this->model_catalog_category->getTotalCategories($filter_data);
 	 */
 	public function getTotalCategories(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -465,6 +491,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->addDescription($category_id, $language_id, $category_description);
 	 */
 	public function addDescription(int $category_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -476,6 +506,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteDescriptions($category_id);
 	 */
 	public function deleteDescriptions(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -487,6 +521,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -498,6 +536,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, array<string, string>> description records that have category ID
+	 *
+	 * @example
+	 *
+	 * $category_description = $this->model_catalog_category->getDescriptions($category_id);
 	 */
 	public function getDescriptions(int $category_id): array {
 		$category_description_data = [];
@@ -517,6 +559,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_catalog_category->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -532,6 +578,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $level
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->addPath($category_id, $path_id, $level);
 	 */
 	public function addPath(int $category_id, int $path_id, int $level): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
@@ -543,6 +593,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deletePaths($category_id);
 	 */
 	public function deletePaths(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -555,6 +609,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $level
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deletePathsByLevel($category_id, $level);
 	 */
 	public function deletePathsByLevel(int $category_id, int $level = 0): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' AND `level` < '" . (int)$level . "'");
@@ -577,6 +635,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, array<string, mixed>> path records that have category ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_catalog_category->getPaths($parent_id);
 	 */
 	public function getPaths(int $category_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
@@ -590,6 +652,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $path_id primary key of the category path record
 	 *
 	 * @return array<int, array<string, mixed>> path records that have path ID
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_catalog_category->getPathsByPathId($category_id);
 	 */
 	public function getPathsByPathId(int $path_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$path_id . "' ORDER BY `level` ASC");
@@ -604,6 +670,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $filter_id   primary key of the filter record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->addFilter($category_id, $filter_id);
 	 */
 	public function addFilter(int $category_id, int $filter_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_filter` SET `category_id` = '" . (int)$category_id . "', `filter_id` = '" . (int)$filter_id . "'");
@@ -615,6 +685,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteFilters($category_id);
 	 */
 	public function deleteFilters(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_filter` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -626,6 +700,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteFiltersByFilterId($filter_id);
 	 */
 	public function deleteFiltersByFilterId(int $filter_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
@@ -637,6 +715,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, int> filter records that have category ID
+	 *
+	 * @example
+	 *
+	 * $filters = $this->model_catalog_category->getFilters($category_id);
 	 */
 	public function getFilters(int $category_id): array {
 		$category_filter_data = [];
@@ -657,6 +739,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->addStore($category_id, $store_id);
 	 */
 	public function addStore(int $category_id, int $store_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "'");
@@ -668,6 +754,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteStores($category_id);
 	 */
 	public function deleteStores(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -679,6 +769,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteStoresByStoreId($store_id);
 	 */
 	public function deleteStoresByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -690,6 +784,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, int> store records that have category ID
+	 *
+	 * @example
+	 *
+	 * $category_store = $this->model_catalog_category->getStores($category_id);
 	 */
 	public function getStores(int $category_id): array {
 		$category_store_data = [];
@@ -711,6 +809,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id   primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->addLayout($category_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $category_id, int $store_id, int $layout_id): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
@@ -722,6 +824,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteLayouts($category_id);
 	 */
 	public function deleteLayouts(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -733,6 +839,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteLayoutsByLayoutId($layout_id);
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -744,6 +854,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $store_id
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_catalog_category->deleteLayoutsByStoreId($store_id);
 	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `store_id` = '" . (int)$store_id . "'");
@@ -755,6 +869,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, int> layout records that have category ID
+	 *
+	 * @example
+	 *
+	 * $category_layout = $this->model_catalog_category->getLayouts($category_id);
 	 */
 	public function getLayouts(int $category_id): array {
 		$category_layout_data = [];
@@ -774,6 +892,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int total number of layout records that have layout ID
+	 *
+	 * @example
+	 *
+	 * $category_total = $this->model_catalog_category->getTotalLayoutsByLayoutId($layout_id);
 	 */
 	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");

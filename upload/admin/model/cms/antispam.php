@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Cms;
 /**
  * Class Anti-Spam
  *
- * @example $antispam_model = $this->model_cms_antispam;
- *
  * Can be called from $this->load->model('cms/antispam');
  *
  * @package Opencart\Admin\Model\Cms
@@ -16,6 +14,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $antispam_id = $this->model_cms_antispam->addAntispam($data);
 	 */
 	public function addAntispam(array $data = []): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "'");
@@ -30,6 +32,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_cms_antispam->editAntispam($antispam_id, $data);
 	 */
 	public function editAntispam(int $antispam_id, array $data = []): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "' WHERE `antispam_id` = '" . (int)$antispam_id . "'");
@@ -41,6 +47,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param int $antispam_id primary key of the anti-spam record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->model_cms_antispam->deleteAntispam($antispam_id);
 	 */
 	public function deleteAntispam(int $antispam_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "antispam` WHERE `antispam_id` = '" . (int)$antispam_id . "'");
@@ -52,6 +62,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param int $antispam_id primary key of the anti-spam record
 	 *
 	 * @return array<string, mixed> antispam record that has antispam ID
+	 *
+	 * @example
+	 *
+	 * $antispam_info = $this->model_cms_antispam->getAntispam($antispam_id);
 	 */
 	public function getAntispam(int $antispam_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "antispam` WHERE `antispam_id` = '" . (int)$antispam_id . "'");
@@ -65,6 +79,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> antispam records
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_cms_antispam->getAntispams();
 	 */
 	public function getAntispams(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "antispam`";
@@ -116,6 +134,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of antispam records
+	 *
+	 * @example
+	 *
+	 * $antispam_total = $this->model_cms_antispam->getTotalAntispams();
 	 */
 	public function getTotalAntispams(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "antispam`";

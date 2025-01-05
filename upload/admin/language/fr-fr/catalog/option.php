@@ -3,7 +3,7 @@
 $_['heading_title']      = 'Options';
 
 // Text
-$_['text_success']       = 'Succès : Vous avez modifié les options !';
+$_['text_success']       = 'Succès: Vous avez modifié les options!';
 $_['text_list']          = 'Liste des Options';
 $_['text_add']           = 'Ajouter une Option';
 $_['text_edit']          = 'Modifier l\'Option';
@@ -34,10 +34,10 @@ $_['entry_image']        = 'Image';
 $_['entry_sort_order']   = 'Ordre de Tri';
 
 // Error
-$_['error_warning']      = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs !';
-$_['error_permission']   = 'Attention : Vous n\'avez pas la permission de modifier les options !';
-$_['error_name']         = 'Le nom de l\'option doit contenir entre 1 et 128 caractères !';
-$_['error_type']         = 'Attention : Les valeurs de l\'option sont requises !';
-$_['error_option_value'] = 'Le nom de la valeur de l\'option doit contenir entre 1 et 128 caractères !';
-$_['error_value']        = 'Attention : Cette valeur d\'option ne peut pas être supprimée car elle est actuellement assignée à %s produits !';
-$_['error_product']      = 'Attention : Cette option ne peut pas être supprimée car elle est actuellement assignée à %s produits !';
+$_['error_warning']      = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
+$_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier les options!';
+$_['error_name']         = 'Le nom de l\'option doit contenir entre 1 et 128 caractères!';
+$_['error_type']         = 'Attention: Les valeurs de l\'option sont requises!';
+$_['error_option_value'] = 'Le nom de la valeur de l\'option doit contenir entre 1 et 128 caractères!';
+$_['error_value']        = 'Attention: Cette valeur d\'option ne peut pas être supprimée car elle est actuellement assignée à %s produits!';
+$_['error_product']      = 'Attention: Cette option ne peut pas être supprimée car elle est actuellement assignée à %s produits!';

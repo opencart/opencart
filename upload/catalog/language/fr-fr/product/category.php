@@ -2,7 +2,7 @@
 // Texte
 $_['text_refine']      = 'Affiner la recherche';
 $_['text_product']     = 'Produits';
-$_['text_error']       = 'Catégorie introuvable !';
+$_['text_error']       = 'Catégorie introuvable!';
 $_['text_no_results']  = 'Aucun produit à afficher dans cette catégorie.';
 $_['text_compare']     = 'Comparer les produits (%s)';
 $_['text_sort']        = 'Trier par';

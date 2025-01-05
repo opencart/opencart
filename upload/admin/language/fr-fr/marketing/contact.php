@@ -4,8 +4,8 @@ $_['heading_title']        = 'Mail';
 
 // Texte
 $_['text_mail']            = 'Envoyez des e-mails aux clients';
-$_['text_success']         = 'Votre message a été envoyé avec succès !';
-$_['text_sent']            = 'Votre message a été envoyé avec succès à %s - %s destinataires !';
+$_['text_success']         = 'Votre message a été envoyé avec succès!';
+$_['text_sent']            = 'Votre message a été envoyé avec succès à %s - %s destinataires!';
 $_['text_default']         = 'Par défaut';
 $_['text_newsletter']      = 'Tous les abonnés à la newsletter';
 $_['text_customer_all']    = 'Tous les clients';
@@ -31,7 +31,7 @@ $_['help_affiliate']       = '(Complétion automatique)';
 $_['help_product']         = 'Envoyer uniquement aux clients ayant commandé des produits dans la liste. (Complétion automatique)';
 
 // Erreur
-$_['error_permission']     = 'Attention : Vous n’avez pas la permission d’envoyer des e-mails !';
-$_['error_subject']        = 'Le sujet de l’e-mail est requis !';
-$_['error_message']        = 'Le message de l’e-mail est requis !';
-$_['error_email']          = 'Aucun destinataire d’e-mail !';
+$_['error_permission']     = 'Attention: Vous n’avez pas la permission d’envoyer des e-mails!';
+$_['error_subject']        = 'Le sujet de l’e-mail est requis!';
+$_['error_message']        = 'Le message de l’e-mail est requis!';
+$_['error_email']          = 'Aucun destinataire d’e-mail!';

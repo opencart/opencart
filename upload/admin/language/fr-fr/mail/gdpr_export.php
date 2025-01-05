@@ -1,6 +1,6 @@
 <?php
 // Texte
-$_['text_subject']    = '%s - Demande d\'exportation RGPD terminée !';
+$_['text_subject']    = '%s - Demande d\'exportation RGPD terminée!';
 $_['text_request']    = 'Exporter les données personnelles';
 $_['text_hello']      = 'Bonjour <strong>%s</strong>,';
 $_['text_user']       = 'Utilisateur';

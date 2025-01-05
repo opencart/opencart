@@ -3,7 +3,7 @@
 $_['heading_title']        = 'Retours de Produits';
 
 // Texte
-$_['text_success']         = 'Succès : Vous avez modifié les retours !';
+$_['text_success']         = 'Succès: Vous avez modifié les retours!';
 $_['text_list']            = 'Liste des Retours de Produits';
 $_['text_add']             = 'Ajouter un Retour de Produit';
 $_['text_edit']            = 'Modifier un Retour de Produit';
@@ -53,13 +53,13 @@ $_['entry_date_to']        = 'Date de Fin';
 $_['help_product']         = '(Autocomplétion)';
 
 // Erreur
-$_['error_warning']        = 'Avertissement : Veuillez vérifier attentivement le formulaire pour les erreurs !';
-$_['error_permission']     = 'Avertissement : Vous n\'avez pas la permission de modifier les retours !';
-$_['error_return']         = 'Avertissement : Impossible de trouver le retour sélectionné !';
-$_['error_order_id']       = 'L\'ID de commande est requis !';
-$_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères !';
-$_['error_lastname']       = 'Le nom doit contenir entre 1 et 32 caractères !';
-$_['error_email']          = 'L\'adresse e-mail ne semble pas être valide !';
-$_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caractères !';
-$_['error_product']        = 'Le nom du produit doit contenir entre 1 et 255 caractères !';
-$_['error_model']          = 'Le modèle du produit doit contenir entre 1 et 64 caractères !';
+$_['error_warning']        = 'Avertissement: Veuillez vérifier attentivement le formulaire pour les erreurs!';
+$_['error_permission']     = 'Avertissement: Vous n\'avez pas la permission de modifier les retours!';
+$_['error_return']         = 'Avertissement: Impossible de trouver le retour sélectionné!';
+$_['error_order_id']       = 'L\'ID de commande est requis!';
+$_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères!';
+$_['error_lastname']       = 'Le nom doit contenir entre 1 et 32 caractères!';
+$_['error_email']          = 'L\'adresse e-mail ne semble pas être valide!';
+$_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caractères!';
+$_['error_product']        = 'Le nom du produit doit contenir entre 1 et 255 caractères!';
+$_['error_model']          = 'Le modèle du produit doit contenir entre 1 et 64 caractères!';

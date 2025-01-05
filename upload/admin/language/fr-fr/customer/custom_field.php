@@ -3,7 +3,7 @@
 $_['heading_title']        = 'Champs Personnalisés';
 
 // Text
-$_['text_success']         = 'Succès : Vous avez modifié les champs personnalisés !';
+$_['text_success']         = 'Succès: Vous avez modifié les champs personnalisés!';
 $_['text_list']            = 'Liste des Champs Personnalisés';
 $_['text_add']             = 'Ajouter un Champ Personnalisé';
 $_['text_edit']            = 'Modifier le Champ Personnalisé';
@@ -46,11 +46,11 @@ $_['entry_status']         = 'Statut';
 $_['entry_sort_order']     = 'Ordre de Tri';
 
 // Help
-$_['help_regex']           = 'Utilisez regex. Exemple : [^a-zA-Z0-9_-]';
+$_['help_regex']           = 'Utilisez regex. Exemple: [^a-zA-Z0-9_-]';
 $_['help_sort_order']      = 'Utilisez un nombre négatif pour compter à rebours à partir du dernier champ dans l\'ensemble.';
 
 // Error
-$_['error_permission']     = 'Attention : Vous n\'avez pas la permission de modifier les champs personnalisés !';
-$_['error_name']           = 'Le nom du champ personnalisé doit contenir entre 1 et 128 caractères !';
-$_['error_type']           = 'Attention : Les valeurs de champ personnalisé sont requises !';
-$_['error_custom_value']   = 'Le nom de la valeur personnalisée doit contenir entre 1 et 128 caractères !';
+$_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier les champs personnalisés!';
+$_['error_name']           = 'Le nom du champ personnalisé doit contenir entre 1 et 128 caractères!';
+$_['error_type']           = 'Attention: Les valeurs de champ personnalisé sont requises!';
+$_['error_custom_value']   = 'Le nom de la valeur personnalisée doit contenir entre 1 et 128 caractères!';

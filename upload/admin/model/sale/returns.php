@@ -58,7 +58,28 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_sale_returns->editReturn($return_id, $data);
+	 * $return_data = [
+	 *   'order_id'         => 1,
+	 *   'product_id'       => 1,
+	 *   'customer_id'      => 1,
+	 *   'firstname'        => 'John',
+	 *   'lastname'         => 'Doe',
+	 *   'email'            => ''
+	 *   'telephone'        => '1234567890',
+	 *   'product'          => 'Product Name',
+	 *   'model'            => 'Product Model',
+	 *   'quantity'         => 1,
+	 *   'opened'           => 1,
+	 *   'return_reason_id' => 1,
+	 *   'return_action_id' => 1,
+	 *   'return_status_id' => 1,
+	 *   'comment'          => 'Comment',
+	 *   'date_ordered'     => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('sale/returns');
+	 *
+	 * $this->model_sale_returns->editReturn($return_id, $return_data);
 	 */
 	public function editReturn(int $return_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_modified` = NOW() WHERE `return_id` = '" . (int)$return_id . "'");
@@ -73,6 +94,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/returns');
 	 *
 	 * $this->model_sale_returns->editReturnStatusId($return_id, $return_status_id);
 	 */
@@ -215,7 +238,20 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $return_total = $this->model_sale_returns->getTotalReturns($data);
+	 * $filter_data = [
+	 *   'filter_return_id'        => 1,
+	 *   'filter_customer'         => 'John Doe',
+	 *   'filter_order_id'         => 1,
+	 *   'filter_product'          => 'Product Name',
+	 *   'filter_model'            => 'Product Model',
+	 *   'filter_return_status_id' => 1,
+	 *   'filter_date_from'        => '2021-01-01',
+	 *   'filter_date_to'          => '2021-01-31'
+	 * ];
+	 *
+	 * $this->load->model('sale/returns');
+	 *
+	 * $total_returns = $this->model_sale_returns->getTotalReturns($filter_data);
 	 */
 	public function getTotalReturns(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` `r`";

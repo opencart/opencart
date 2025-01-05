@@ -17,7 +17,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $translation_id = $this->model_design_translation->addTranslation($data);
+	 * $this->model_design_translation->addTranslation($data);
 	 */
 	public function addTranslation(array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `date_added` = NOW()");

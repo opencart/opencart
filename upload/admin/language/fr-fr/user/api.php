@@ -3,7 +3,7 @@
 $_['heading_title']        = 'APIs';
 
 // Text
-$_['text_success']         = 'Succès : Vous avez modifié les APIs !';
+$_['text_success']         = 'Succès: Vous avez modifié les APIs!';
 $_['text_list']            = 'Liste des APIs';
 $_['text_add']             = 'Ajouter une API';
 $_['text_edit']            = 'Modifier une API';
@@ -25,7 +25,7 @@ $_['entry_status']         = 'Statut';
 $_['entry_ip']             = 'IP';
 
 // Error
-$_['error_permission']     = 'Attention : Vous n\'avez pas la permission de modifier les APIs !';
-$_['error_username']       = 'Le nom d\'utilisateur API doit contenir entre 3 et 20 caractères !';
-$_['error_key']            = 'La clé API doit contenir entre 64 et 256 caractères !';
-$_['error_ip']             = 'Vous devez ajouter au moins une IP à la liste autorisée !';
+$_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier les APIs!';
+$_['error_username']       = 'Le nom d\'utilisateur API doit contenir entre 3 et 20 caractères!';
+$_['error_key']            = 'La clé API doit contenir entre 64 et 256 caractères!';
+$_['error_ip']             = 'Vous devez ajouter au moins une IP à la liste autorisée!';

@@ -3,7 +3,7 @@
 $_['heading_title']         = 'Statistiques';
 
 // Texte
-$_['text_success']          = 'Succès : Vous avez modifié les statistiques !';
+$_['text_success']          = 'Succès: Vous avez modifié les statistiques!';
 $_['text_list']             = 'Liste des statistiques';
 $_['text_order_sale']       = 'Ventes de commandes';
 $_['text_order_processing'] = 'Commandes en traitement';
@@ -21,4 +21,4 @@ $_['column_value']          = 'Valeur';
 $_['column_action']         = 'Action';
 
 // Erreur
-$_['error_permission']      = 'Avertissement : Vous n\'avez pas la permission de modifier les statistiques !';
+$_['error_permission']      = 'Avertissement: Vous n\'avez pas la permission de modifier les statistiques!';

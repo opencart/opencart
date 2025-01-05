@@ -3,7 +3,7 @@
 $_['heading_title']      = 'Statuts d’Abonnement';
 
 // Texte
-$_['text_success']       = 'Succès : Vous avez modifié les statuts d’abonnement!';
+$_['text_success']       = 'Succès: Vous avez modifié les statuts d’abonnement!';
 $_['text_list']          = 'Liste des Statuts d’Abonnement';
 $_['text_add']           = 'Ajouter un Statut d’Abonnement';
 $_['text_edit']          = 'Modifier un Statut d’Abonnement';

@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter Group
  *
- * Can be called from $this->load->model('catalog/filter_group');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class FilterGroup extends \Opencart\System\Engine\Model {
@@ -17,7 +15,13 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $filter_group_id = $this->model_catalog_filter_group->addFilterGroup($data);
+	 * $filter_group_data = [
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
+	 * $filter_group_id = $this->model_catalog_filter_group->addFilterGroup($filter_group_data);
 	 */
 	public function addFilterGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -43,6 +47,12 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $filter_group_data = [
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
 	 * $this->model_catalog_filter_group->editFilterGroup($filter_group_id, $data);
 	 */
 	public function editFilterGroup(int $filter_group_id, array $data): void {
@@ -66,6 +76,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
 	 * $this->model_catalog_filter_group->deleteFilterGroup($filter_group_id);
 	 */
 	public function deleteFilterGroup(int $filter_group_id): void {
@@ -85,6 +97,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
 	 * $filter_group_info = $this->model_catalog_filter_group->getFilterGroup($filter_group_id);
 	 */
 	public function getFilterGroup(int $filter_group_id): array {
@@ -102,7 +116,16 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_filter_group->getFilterGroups();
+	 * $filter_data = [
+	 *     'sort'  => 'fgd.name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
+	 * $results = $this->model_catalog_filter_group->getFilterGroups($filter_data);
 	 */
 	public function getFilterGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` `fg` LEFT JOIN `" . DB_PREFIX . "filter_group_description` `fgd` ON (`fg`.`filter_group_id` = `fgd`.`filter_group_id`) WHERE `fgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -152,6 +175,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
 	 * $filter_group_total = $this->model_catalog_filter_group->getTotalFilterGroups();
 	 */
 	public function getTotalFilterGroups(): int {
@@ -171,7 +196,13 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_filter_group->addDescription($filter_group_id, $language_id, $filter_group_description);
+	 * $filter_group_data['filter_group_description'] = [
+	 *     'name' => 'Filter Group Name'
+	 * ];
+	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
+	 * $this->model_catalog_filter_group->addDescription($filter_group_id, $language_id, $filter_group_data);
 	 */
 	public function addDescription(int $filter_group_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group_description` SET `filter_group_id` = '" . (int)$filter_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -185,6 +216,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/filter_group');
 	 *
 	 * $this->model_catalog_filter_group->deleteDescriptions($filter_group_id);
 	 */
@@ -201,6 +234,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/filter_group');
+	 *
 	 * $this->model_catalog_filter_group->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -215,6 +250,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have filter group ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/filter_group');
 	 *
 	 * $filter_group_description = $this->model_catalog_filter_group->getDescriptions($filter_group_id);
 	 */
@@ -238,6 +275,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have language ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/filter_group');
 	 *
 	 * $results = $this->model_catalog_filter_group->getDescriptionsByLanguageId($language_id);
 	 */

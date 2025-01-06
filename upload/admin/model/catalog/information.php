@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Information
  *
- * Can be called from $this->load->model('catalog/information');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class Information extends \Opencart\System\Engine\Model {
@@ -17,7 +15,14 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $information_id = $this->model_catalog_information->addInformation($data);
+	 * $information_data = [
+	 *     'sort_order' => 0,
+	 *     'status'     => 1
+	 * ];
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $information_id = $this->model_catalog_information->addInformation($information_data);
 	 */
 	public function addInformation(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -66,7 +71,14 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_information->editInformation($information_id, $data);
+	 * $information_data = [
+	 *     'sort_order' => 0,
+	 *     'status'     => 1
+	 * ];
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->editInformation($information_id, $information_data);
 	 */
 	public function editInformation(int $information_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
@@ -118,6 +130,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->deleteInformation($information_id);
 	 */
 	public function deleteInformation(int $information_id): void {
@@ -144,6 +158,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $information_info = $this->model_catalog_information->getInformation($information_id);
 	 */
 	public function getInformation(int $information_id): array {
@@ -161,7 +177,16 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_information->getInformations();
+	 * $filter_data = [
+	 *     'sort'  => 'id.title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $results = $this->model_catalog_information->getInformations($filter_data);
 	 */
 	public function getInformations(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -217,6 +242,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $information_total = $this->model_catalog_information->getTotalInformations();
 	 */
 	public function getTotalInformations(): int {
@@ -236,7 +263,17 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_information->addDescription($information_id, $language_id, $information_description);
+	 * $information_data['information_description'] = [
+	 *     'title'            => 'Information Title',
+	 *     'description'      => 'Information Description',
+	 *     'meta_title'       => 'Meta Title',
+	 *     'meta_description' => 'Meta Description',
+	 *     'meta_keyword'     => 'Meta Keyword'
+	 * ];
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->addDescription($information_id, $language_id, $information_data);
 	 */
 	public function addDescription(int $information_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -250,6 +287,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $this->model_catalog_information->deleteDescriptions($information_id);
 	 */
@@ -266,6 +305,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -280,6 +321,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have information ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $information_description = $this->model_catalog_information->getDescriptions($information_id);
 	 */
@@ -304,6 +347,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $results = $this->model_catalog_information->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -322,6 +367,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->addStore($information_id, $store_id);
 	 */
 	public function addStore(int $information_id, int $store_id): void {
@@ -336,6 +383,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $this->model_catalog_information->deleteStores($information_id);
 	 */
@@ -352,6 +401,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->deleteStoresByStoreId($store_id);
 	 */
 	public function deleteStoresByStoreId(int $store_id): void {
@@ -366,6 +417,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> store records that have information ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $information_store = $this->model_catalog_information->getStores($information_id);
 	 */
@@ -392,6 +445,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->addLayout($information_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $information_id, int $store_id, int $layout_id): void {
@@ -406,6 +461,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $this->model_catalog_information->deleteLayouts($information_id);
 	 */
@@ -422,6 +479,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->deleteLayoutsByLayoutId($layout_id);
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
@@ -437,6 +496,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/information');
+	 *
 	 * $this->model_catalog_information->deleteLayoutsByStoreId($store_id);
 	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
@@ -451,6 +512,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> layout records that have information ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $information_layout = $this->model_catalog_information->getLayouts($information_id);
 	 */
@@ -474,6 +537,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @return int total number of layout records that have layout ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/information');
 	 *
 	 * $information_total = $this->model_catalog_information->getTotalLayoutsByLayoutId($layout_id);
 	 */

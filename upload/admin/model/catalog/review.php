@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Review
  *
- * Can be called from $this->load->model('catalog/review');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class Review extends \Opencart\System\Engine\Model {
@@ -17,7 +15,18 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $review_id = $this->model_catalog_review->addReview($data);
+	 * $review_data = [
+	 *     'author'     => 'Review Author Name',
+	 *     'product_id' => 1,
+	 *     'text'       => 'Review Text',
+	 *     'rating'     => 4,
+	 *     'status'     => 1,
+	 *     'date_added' => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('catalog/review');
+	 *
+	 * $review_id = $this->model_catalog_review->addReview($review_data);
 	 */
 	public function addReview(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "'");
@@ -44,6 +53,17 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $review_data = [
+	 *     'author'     => 'Review Author Name',
+	 *     'product_id' => 1,
+	 *     'text'       => 'Review Text',
+	 *     'rating'     => 4,
+	 *     'status'     => 1,
+	 *     'date_added' => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('catalog/review');
+	 *
 	 * $this->model_catalog_review->editReview($review_id, $data);
 	 */
 	public function editReview(int $review_id, array $data): void {
@@ -65,6 +85,8 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/review');
 	 *
 	 * $this->model_catalog_review->deleteReview($review_id);
 	 */
@@ -92,6 +114,8 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/review');
+	 *
 	 * $this->model_catalog_review->deleteReviewsByProductId($product_id);
 	 */
 	public function deleteReviewsByProductId(int $product_id): void {
@@ -109,6 +133,8 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/review');
+	 *
 	 * $review_info = $this->model_catalog_review->getReview($review_id);
 	 */
 	public function getReview(int $review_id): array {
@@ -125,6 +151,8 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @return int total number of rating records that have product ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/review');
 	 *
 	 * $rating_info = $this->model_catalog_review->getRating($product_id);
 	 */
@@ -147,7 +175,21 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_review->getReviews();
+	 * $filter_data = [
+	 *     'filter_product'   => 'Product Name',
+	 *     'filter_author'    => 'Author Name',
+	 *     'filter_status'    => 1,
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'sort'             => 'DESC',
+	 *     'order'            => 'r.date_added',
+	 *     'start'            => 0,
+	 *     'limit'            => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/review');
+	 *
+	 * $results = $this->model_catalog_review->getReviews($filter_data);
 	 */
 	public function getReviews(array $data = []): array {
 		$sql = "SELECT `r`.`review_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -218,6 +260,20 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $filter_data = [
+	 *     'filter_product'   => 'Product Name',
+	 *     'filter_author'    => 'Author Name',
+	 *     'filter_status'    => 1,
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'sort'             => 'DESC',
+	 *     'order'            => 'r.date_added',
+	 *     'start'            => 0,
+	 *     'limit'            => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/review');
+	 *
 	 * $review_total = $this->model_catalog_review->getTotalReviews($filter_data);
 	 */
 	public function getTotalReviews(array $data = []): int {
@@ -254,6 +310,8 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @return int total number of reviews awaiting approval records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/review');
 	 *
 	 * $review_total = $this->model_catalog_review->getTotalReviewsAwaitingApproval());
 	 */

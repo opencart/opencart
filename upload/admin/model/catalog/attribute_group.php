@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute Group
  *
- * Can be called from $this->load->model('catalog/attribute_group');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class AttributeGroup extends \Opencart\System\Engine\Model {
@@ -17,7 +15,13 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $attribute_group_id = $this->model_catalog_attribute_group->addAttributeGroup($data);
+	 * $attribute_group_data = [
+	 *     'sort_order' => 0,
+	 * ];
+	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
+	 * $attribute_group_id = $this->model_catalog_attribute_group->addAttributeGroup($attribute_group_data);
 	 */
 	public function addAttributeGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -41,7 +45,13 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_attribute_group->editAttributeGroup($attribute_group_id, $data);
+	 * $attribute_group_data = [
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
+	 * $this->model_catalog_attribute_group->editAttributeGroup($attribute_group_id, $attribute_group_data);
 	 */
 	public function editAttributeGroup(int $attribute_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
@@ -62,6 +72,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
 	 * $this->model_catalog_attribute_group->deleteAttributeGroup($attribute_group_id);
 	 */
 	public function deleteAttributeGroup(int $attribute_group_id): void {
@@ -78,6 +90,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> attribute group record that has attribute group ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/attribute_group');
 	 *
 	 * $attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup($attribute_group_id);
 	 */
@@ -96,7 +110,16 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $attribute_groups = $this->model_catalog_attribute_group->getAttributeGroups();
+	 * $this->load->model('catalog/attribute_group');
+	 *
+	 * $filter_data = [
+	 *	  'sort'  => 'agd.name',
+	 *	  'order' => 'DESC',
+	 *	  'start' => 0,
+	 *	  'limit' => 50
+	 * ];
+	 *
+	 * $attribute_groups = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
 	 */
 	public function getAttributeGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = `agd`.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -142,6 +165,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
 	 * $attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
 	 */
 	public function getTotalAttributeGroups(): int {
@@ -161,7 +186,15 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_attribute_group->addDescription($attribute_group_id, $language_id, $attribute_group_description);
+	 * $attribute_group_data['attribute_group_description'] = [
+	 *     'attribute_group_id' => 1,
+	 *	   'language_id'        => 1,
+	 *	   'name'               => 'Attribute Group Description Name'
+	 * ];
+	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
+	 * $this->model_catalog_attribute_group->addDescription($attribute_group_id, $language_id, $attribute_group_data);
 	 */
 	public function addDescription(int $attribute_group_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group_description` SET `attribute_group_id` = '" . (int)$attribute_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -175,6 +208,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/attribute_group');
 	 *
 	 * $this->model_catalog_attribute_group->deleteDescriptions($attribute_group_id);
 	 */
@@ -191,6 +226,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
 	 * $this->model_catalog_attribute_group->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -205,6 +242,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have attribute group ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/attribute_group');
 	 *
 	 * $attribute_group_description = $this->model_catalog_attribute_group->getDescriptions($attribute_group_id);
 	 */
@@ -228,6 +267,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have language ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/attribute_group');
 	 *
 	 * $results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($language_id);
 	 */

@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Download
  *
- * Can be called from $this->load->model('catalog/download');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class Download extends \Opencart\System\Engine\Model {
@@ -17,7 +15,15 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $download_id = $this->model_catalog_download->addDownload($data);
+	 * $download_data = [
+	 *     'filename'   => 'download_filename',
+	 *     'mask'       => 'mask string',
+	 *     'date_added' => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('catalog/download');
+	 *
+	 * $download_id = $this->model_catalog_download->addDownload($download_data);
 	 */
 	public function addDownload(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "', `date_added` = NOW()");
@@ -41,7 +47,15 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_download->editDownload($download_id, $data);
+	 * $download_data = [
+	 *     'filename'   => 'download_filename',
+	 *     'mask'       => 'mask string',
+	 *     'date_added' => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('catalog/download');
+	 *
+	 * $this->model_catalog_download->editDownload($download_id, $download_data);
 	 */
 	public function editDownload(int $download_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "' WHERE `download_id` = '" . (int)$download_id . "'");
@@ -62,6 +76,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/download');
+	 *
 	 * $this->model_catalog_download->deleteDownload($download_id);
 	 */
 	public function deleteDownload(int $download_id): void {
@@ -80,6 +96,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/download');
+	 *
 	 * $download_info = $this->model_catalog_download->getDownload($download_id);
 	 */
 	public function getDownload(int $download_id): array {
@@ -97,7 +115,16 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_download->getDownloads();
+	 * $filter_data = [
+	 *     'sort'  => 'dd.name',
+	 *     'order' => 'DESC',
+	 *     'start' => (1 - 1) * 50,
+	 *     'limit' => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/download');
+	 *
+	 * $results = $this->model_catalog_download->getDownloads($filter_data);
 	 */
 	public function getDownloads(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "download` `d` LEFT JOIN `" . DB_PREFIX . "download_description` `dd` ON (`d`.`download_id` = `dd`.`download_id`) WHERE `dd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -151,7 +178,13 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_download->addDescription($download_id, $language_id, $download_description);
+	 * $download_data['download_description'] = [
+	 *     'name' => 'Download Name'
+	 * ];
+	 *
+	 * $this->load->model('catalog/download');
+	 *
+	 * $this->model_catalog_download->addDescription($download_id, $language_id, $download_data);
 	 */
 	public function addDescription(int $download_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "download_description` SET `download_id` = '" . (int)$download_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -165,6 +198,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/download');
 	 *
 	 * $this->model_catalog_download->deleteDescriptions($download_id);
 	 */
@@ -181,6 +216,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/download');
+	 *
 	 * $this->model_catalog_download->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -195,6 +232,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have download ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/download');
 	 *
 	 * $download_description = $this->model_catalog_download->getDescriptions($download_id);
 	 */
@@ -219,6 +258,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/download');
+	 *
 	 * $results = $this->model_catalog_download->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -233,6 +274,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @return int total number of download records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/download');
 	 *
 	 * $download_total = $this->model_catalog_download->getTotalDownloads();
 	 */
@@ -252,6 +295,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> report records that have download ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/download');
 	 *
 	 * $results = $this->model_catalog_download->getReports($download_id, $start, $limit);
 	 */
@@ -278,6 +323,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/download');
+	 *
 	 * $this->model_catalog_download->deleteReports($download_id);
 	 */
 	public function deleteReports(int $download_id): void {
@@ -292,6 +339,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @return int total number of report records that have download ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/download');
 	 *
 	 * $report_total = $this->model_catalog_download->getTotalReports($download_id);
 	 */

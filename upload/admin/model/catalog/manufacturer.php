@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Manufacturer
  *
- * Can be called from $this->load->model('catalog/manufacturer');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
@@ -17,7 +15,15 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($data);
+	 * $manufacturer_data = [
+	 *     'name'       => 'Manufacturer Name',
+	 *     'image'      => 'manufacturer_image',
+	 *     'sort_order' => 'DESC'
+	 * ];
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($manufacturer_data);
 	 */
 	public function addManufacturer(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -63,6 +69,14 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $manufacturer_data = [
+	 *     'name'       => 'Manufacturer Name',
+	 *     'image'      => 'manufacturer_image',
+	 *     'sort_order' => 'DESC'
+	 * ];
+	 *
+	 * $this->load->model('catalog/manufacturer');
 	 *
 	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $data);
 	 */
@@ -114,6 +128,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
 	 */
 	public function deleteManufacturer(int $manufacturer_id): void {
@@ -139,6 +155,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 	 */
 	public function getManufacturer(int $manufacturer_id): array {
@@ -156,7 +174,16 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_manufacturer->getManufacturers();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 	 */
 	public function getManufacturers(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
@@ -206,6 +233,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
 	 */
 	public function getTotalManufacturers(): int {
@@ -224,6 +253,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $this->model_catalog_manufacturer->addStore($manufacturer_id, $store_id);
 	 */
 	public function addStore(int $manufacturer_id, int $store_id): void {
@@ -238,6 +269,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
 	 *
 	 * $this->model_catalog_manufacturer->deleteStores($manufacturer_id);
 	 */
@@ -254,6 +287,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $this->model_catalog_manufacturer->deleteStoresByStoreId($store_id);
 	 */
 	public function deleteStoresByStoreId(int $store_id): void {
@@ -268,6 +303,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> store records that have manufacturer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
 	 *
 	 * $manufacturer_store = $this->model_catalog_manufacturer->getStores($manufacturer_id);
 	 */
@@ -294,6 +331,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $this->model_catalog_manufacturer->addLayout($manufacturer_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $manufacturer_id, int $store_id, int $layout_id): void {
@@ -308,6 +347,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
 	 *
 	 * $this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 	 */
@@ -324,6 +365,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $this->model_catalog_manufacturer->deleteLayoutsByLayoutId($layout_id);
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
@@ -339,6 +382,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
 	 * $this->model_catalog_manufacturer->deleteLayoutsByStoreId($store_id);
 	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
@@ -353,6 +398,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> layout records that have manufacturer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
 	 *
 	 * $manufacturer_layout = $this->model_catalog_manufacturer->getLayouts($manufacturer_id);
 	 */
@@ -376,6 +423,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * @return int total number of layout records that have layout ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
 	 *
 	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalLayoutsByLayoutId($layout_id);
 	 */

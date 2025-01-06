@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Option
  *
- * Can be called from $this->load->model('catalog/option');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class Option extends \Opencart\System\Engine\Model {
@@ -17,7 +15,14 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $option_id = $this->model_catalog_option->addOption($data);
+	 * $option_data = [
+	 *     'type'       => 'radio',
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/option');
+	 *
+	 * $option_id = $this->model_catalog_option->addOption($option_data);
 	 */
 	public function addOption(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -47,7 +52,14 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_option->editOption($option_id, $data);
+	 * $option_data = [
+	 *     'type'       => 'radio',
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/option');
+	 *
+	 * $this->model_catalog_option->editOption($option_id, $option_data);
 	 */
 	public function editOption(int $option_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `option_id` = '" . (int)$option_id . "'");
@@ -76,6 +88,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $this->model_catalog_option->deleteOption($option_id);
 	 */
 	public function deleteOption(int $option_id): void {
@@ -94,6 +108,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $option_info = $this->model_catalog_option->getOption($option_id);
 	 */
 	public function getOption(int $option_id): array {
@@ -111,7 +127,16 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_catalog_option->getOptions();
+	 * $filter_data = [
+	 *     'sort'  => 'od.name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/option');
+	 *
+	 * $results = $this->model_catalog_option->getOptions($filter_data);
 	 */
 	public function getOptions(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "option` `o` LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -162,6 +187,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $option_total = $this->model_catalog_option->getTotalOptions();
 	 */
 	public function getTotalOptions(): int {
@@ -181,7 +208,13 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_option->addDescription($option_id, $language_id, $value);
+	 * $option_data['option_description'] = [
+	 *     'name' => 'Option Name'
+	 * ];
+	 *
+	 * $this->load->model('catalog/option');
+	 *
+	 * $this->model_catalog_option->addDescription($option_id, $language_id, $option_data);
 	 */
 	public function addDescription(int $option_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `option_id` = '" . (int)$option_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -195,6 +228,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/option');
 	 *
 	 * $this->model_catalog_option->deleteDescriptions($option_id);
 	 */
@@ -211,6 +246,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $this->model_catalog_option->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -225,6 +262,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have option ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/option');
 	 *
 	 * $option_description = $this->model_catalog_option->getDescriptions($option_id);
 	 */
@@ -249,6 +288,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $results = $this->model_catalog_option->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -267,7 +308,16 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_option->addValue($option_id, $option_value);
+	 * $option_value_data = [
+	 *     'option_value_id' => 1,
+	 *     'option_id'       => 1,
+	 *     'image'           => 'option_image',
+	 *     'sort_order'      => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/option');
+	 *
+	 * $this->model_catalog_option->addValue($option_id, $option_value_data);
 	 */
 	public function addValue(int $option_id, array $data): int {
 		if ($data['option_value_id']) {
@@ -298,6 +348,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $this->model_catalog_option->deleteValues($option_id);
 	 */
 	public function deleteValues(int $option_id): void {
@@ -315,6 +367,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $option_value_info = $this->model_catalog_option->getValue($option_value_id);
 	 */
 	public function getValue(int $option_value_id): array {
@@ -331,6 +385,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> value records that have option ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/option');
 	 *
 	 * $option_values = $this->model_catalog_option->getValues($option_id);
 	 */
@@ -352,7 +408,13 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_option->addValueDescription($option_value_id, $option_id, $language_id, $option_value_description);
+	 * $option_value_description_data = [
+	 *     'name' => 'Option Value Name'
+	 * ];
+	 *
+	 * $this->load->model('catalog/option');
+	 *
+	 * $this->model_catalog_option->addValueDescription($option_value_id, $option_id, $language_id, $option_value_description_data);
 	 */
 	public function addValueDescription(int $option_value_id, int $option_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `option_value_id` = '" . (int)$option_value_id . "', `language_id` = '" . (int)$language_id . "', `option_id` = '" . (int)$option_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -366,6 +428,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/option');
 	 *
 	 * $this->model_catalog_option->deleteValueDescriptionsByOptionId($option_id);
 	 */
@@ -382,6 +446,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/option');
+	 *
 	 * $this->model_catalog_option->deleteValueDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteValueDescriptionsByLanguageId(int $language_id): void {
@@ -396,6 +462,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> value description records that have option ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/option');
 	 *
 	 * $option_values = $this->model_catalog_option->getValueDescriptions($option_id);
 	 */
@@ -427,6 +495,8 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> value description records that have language ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/option');
 	 *
 	 * $results = $this->model_catalog_option->getValueDescriptionsByLanguageId($language_id);
 	 */

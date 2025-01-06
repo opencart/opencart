@@ -491,6 +491,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
+
 		$data['save'] = $this->url->link('sale/returns.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -609,8 +611,22 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (empty($this->request->post['order_id'])) {
-			$json['error']['order_id'] = $this->language->get('error_order_id');
+		$this->load->model('sale/order');
+
+		$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
+
+		if (!$order_info) {
+			$json['error']['order'] = $this->language->get('error_order_id');
+		}
+
+		if ($this->request->post['customer_id']) {
+			$this->load->model('customer/customer');
+
+			$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
+
+			if (!$customer_info) {
+				$json['error']['customer'] = $this->language->get('error_customer');
+			}
 		}
 
 		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
@@ -625,12 +641,20 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->request->post['telephone'] && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
+		$this->load->model('catalog/product');
+
+		$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
+
+		if (!$product_info) {
 			$json['error']['product'] = $this->language->get('error_product');
+		}
+		
+		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
+			$json['error']['product'] = $this->language->get('error_name');
 		}
 
 		if (!oc_validate_length($this->request->post['model'], 1, 64)) {
@@ -641,8 +665,20 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['quantity'] = $this->language->get('error_quantity');
 		}
 
-		if (empty($this->request->post['return_reason_id'])) {
+		$this->load->model('localisation/return_reason');
+
+		$return_reason_info = $this->model_localisation_return_reason->getReturnReason($this->request->post['return_reason_id']);
+
+		if (!$return_reason_info) {
 			$json['error']['reason'] = $this->language->get('error_reason');
+		}
+
+		$this->load->model('localisation/return_action');
+
+		$return_action_info = $this->model_localisation_return_action->getReturnAction($this->request->post['return_action_id']);
+
+		if (!$return_action_info) {
+			$json['error']['action'] = $this->language->get('error_action');
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {
@@ -654,11 +690,11 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			if (!$this->request->post['return_id']) {
 				$json['return_id'] = $this->model_sale_returns->addReturn($this->request->post);
+
+				$this->model_sale_returns->addHistory($json['return_id'], $this->request->post['return_status_id']);
 			} else {
 				$this->model_sale_returns->editReturn($this->request->post['return_id'], $this->request->post);
 			}
-
-			$this->model_sale_returns->addHistory($this->request->post['return_id'] ? $this->request->post['return_id'] : $json['return_id'], $this->request->post['return_status_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

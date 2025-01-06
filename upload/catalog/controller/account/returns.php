@@ -210,6 +210,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language'))
 		];
 
+		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
+		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
+
 		$this->session->data['return_token'] = oc_token(26);
 
 		$data['save'] = $this->url->link('account/returns.save', 'language=' . $this->config->get('config_language') . '&return_token=' . $this->session->data['return_token']);
@@ -366,7 +369,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
-			if (!oc_validate_length($this->request->post['telephone'], 3, 32)) {
+			if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 

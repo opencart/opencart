@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Tax Rate
  *
- * Can be called from $this->load->model('localisation/tax_rate');
+ * Can be loaded using $this->load->model('localisation/tax_rate');
  *
  * @package Opencart\Admin\Model\Localisation
  */

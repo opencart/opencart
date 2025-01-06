@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Tool;
 /**
  * Class Image
  *
- * Can be called from $this->load->model('tool/image');
+ * Can be loaded using $this->load->model('tool/image');
  *
  * @package Opencart\Admin\Model\Tool
  */

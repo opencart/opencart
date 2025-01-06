@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Report;
 /**
  * Class Online
  *
- * Can be called from $this->load->model('report/online');
+ * Can be loaded using $this->load->model('report/online');
  *
  * @package Opencart\Admin\Model\Report
  */

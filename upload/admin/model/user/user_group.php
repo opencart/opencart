@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\User;
 /**
  * Class User Group
  *
- * Can be called from $this->load->model('user/user_group');
+ * Can be loaded using $this->load->model('user/user_group');
  *
  * @package Opencart\Admin\Model\User
  */

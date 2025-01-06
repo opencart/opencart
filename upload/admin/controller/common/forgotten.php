@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Forgotten
  *
- * Can be called from $this->load->controller('common/forgotten');
+ * Can be loaded using $this->load->controller('common/forgotten');
  *
  * @package Opencart\Admin\Controller\Common
  */

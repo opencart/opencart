@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Zone
  *
- * Can be called from $this->load->model('localisation/zone');
+ * Can be loaded using $this->load->model('localisation/zone');
  *
  * @package Opencart\Admin\Model\Localisation
  */

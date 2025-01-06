@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Order
  *
- * Can be called from $this->load->model('sale/order');
+ * Can be loaded using $this->load->model('sale/order');
  *
  * @package Opencart\Admin\Model\Sale
  */

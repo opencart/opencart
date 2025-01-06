@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\User;
 /**
  * Class Api
  *
- * Can be called from $this->load->model('user/api');
+ * Can be loaded using $this->load->model('user/api');
  *
  * @package Opencart\Admin\Model\User
  */

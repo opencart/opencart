@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Design;
 /**
  * Class Translation
  *
- * Can be called from $this->load->model('design/translation');
+ * Can be loaded using $this->load->model('design/translation');
  *
  * @package Opencart\Admin\Model\Design
  */

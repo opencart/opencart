@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Cms;
 /**
  * Class Anti-Spam
  *
- * Can be called from $this->load->model('cms/antispam');
+ * Can be loaded using $this->load->model('cms/antispam');
  *
  * @package Opencart\Admin\Model\Cms
  */

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Marketing;
 /**
  * Class Coupon
  *
- * Can be called from $this->load->model('marketing/coupon');
+ * Can be loaded using $this->load->model('marketing/coupon');
  *
  * @package Opencart\Admin\Model\Marketing
  */

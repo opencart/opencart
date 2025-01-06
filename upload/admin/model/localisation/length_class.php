@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Length Class
  *
- * Can be called from $this->load->model('localisation/length_class');
+ * Can be loaded using $this->load->model('localisation/length_class');
  *
  * @package Opencart\Admin\Model\Localisation
  */

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Address Format
  *
- * Can be called from $this->load->model('localisation/address_format');
+ * Can be loaded using $this->load->model('localisation/address_format');
  *
  * @package Opencart\Admin\Model\Localisation
  */

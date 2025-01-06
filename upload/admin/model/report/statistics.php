@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Report;
 /**
  * Class Statistics
  *
- * Can be called from $this->load->model('report/statistics');
+ * Can be loaded using $this->load->model('report/statistics');
  *
  * @package Opencart\Admin\Model\Report
  */

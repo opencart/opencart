@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Customer;
 /**
  * Class Custom Field
  *
- * Can be called from $this->load->model('customer/custom_field');
+ * Can be loaded using $this->load->model('customer/custom_field');
  *
  * @package Opencart\Admin\Model\Customer
  */

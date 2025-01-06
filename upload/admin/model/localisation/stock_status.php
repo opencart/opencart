@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Stock Status
  *
- * Can be called from $this->load->model('localisation/stock_status');
+ * Can be loaded using $this->load->model('localisation/stock_status');
  *
  * @package Opencart\Admin\Model\Localisation
  */

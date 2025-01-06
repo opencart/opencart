@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Design;
 /**
  * Class Theme
  *
- * Can be called from $this->load->model('design/theme');
+ * Can be loaded using $this->load->model('design/theme');
  *
  * @package Opencart\Admin\Model\Design
  */

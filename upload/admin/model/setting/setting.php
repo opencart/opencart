@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Setting
  *
- * Can be called from $this->load->model('setting/setting');
+ * Can be loaded using $this->load->model('setting/setting');
  *
  * @package Opencart\Admin\Model\Setting
  */

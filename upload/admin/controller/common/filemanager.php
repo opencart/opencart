@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class File Manager
  *
- * Can be called from $this->load->controller('common/filemanager');
+ * Can be loaded using $this->load->controller('common/filemanager');
  *
  * @package Opencart\Admin\Controller\Common
  */

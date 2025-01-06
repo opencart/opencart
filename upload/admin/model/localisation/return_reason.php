@@ -17,6 +17,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->>load->model('localisation/return_reason');
+	 *
 	 * $return_reason_id = $this->model_localisation_return_reason->addReturnReason($data);
 	 */
 	public function addReturnReason(array $data): ?int {
@@ -84,6 +86,8 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_reason');
 	 *
 	 * $this->model_localisation_return_reason->deleteReturnReasonsByLanguageId($language_id);
 	 */

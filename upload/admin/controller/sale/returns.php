@@ -652,7 +652,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (!$product_info) {
 			$json['error']['product'] = $this->language->get('error_product');
 		}
-		
+
 		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
 			$json['error']['product'] = $this->language->get('error_name');
 		}

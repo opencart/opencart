@@ -3,8 +3,6 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Category
  *
- * Can be called from $this->load->model('catalog/category');
- *
  * @package Opencart\Admin\Model\Catalog
  */
 class Category extends \Opencart\System\Engine\Model {
@@ -17,7 +15,18 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $category_id = $this->model_catalog_category->addCategory($data);
+	 * $category_data = [
+	 *     'image'         => 'category_image',
+	 *     'parent_id'     => 0,
+	 *     'sort_order'    => 0,
+	 *     'status'        => 1,
+	 *     'date_added'    => '2021-01-01',
+	 *     'date_modified' => '2021-01-31'
+	 * ];
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $category_id = $this->model_catalog_category->addCategory($category_data);
 	 */
 	public function addCategory(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
@@ -98,7 +107,17 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_category->editCategory($category_id, $this->request->post);
+	 * $category_data = [
+	 *     'image'         => 'category_image',
+	 *     'parent_id'     => 0,
+	 *     'sort_order'    => 0,
+	 *     'status'        => 1,
+	 *     'date_modified' => '2021-01-01'
+	 * ];
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $this->model_catalog_category->editCategory($category_id, $category_data);
 	 */
 	public function editCategory(int $category_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
@@ -280,6 +299,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deleteCategory($category_id);
 	 */
 	public function deleteCategory(int $category_id): void {
@@ -331,6 +352,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->repairCategories();
 	 */
 	public function repairCategories(int $parent_id = 0): void {
@@ -366,6 +389,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $category_info = $this->model_catalog_category->getCategory($category_id);
 	 */
 	public function getCategory(int $category_id): array {
@@ -382,6 +407,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> category records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $results = $this->model_catalog_category->getCategories();
 	 */
@@ -461,6 +488,17 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $filter_data = [
+	 *     'filter_name'   => 'Filter Name',
+	 *     'filter_status' => 1,
+	 *     'sort'          => 'name',
+	 *     'order'         => 'DESC',
+	 *     'start'         => 0,
+	 *     'limit'         => 50
+	 * ];
+	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $category_total = $this->model_catalog_category->getTotalCategories($filter_data);
 	 */
 	public function getTotalCategories(array $data = []): int {
@@ -494,7 +532,17 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_catalog_category->addDescription($category_id, $language_id, $category_description);
+	 * $category_data['category_description'] = [
+	 *     'name'             => 'Category Name',
+	 *     'description'      => 'Category Description',
+	 *     'meta_title'       => 'Meta Title',
+	 *     'meta_description' => 'Meta Description',
+	 *     'meta_keyword'     => 'Meta Keyword'
+	 * ];
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $this->model_catalog_category->addDescription($category_id, $language_id, $category_data);
 	 */
 	public function addDescription(int $category_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -508,6 +556,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $this->model_catalog_category->deleteDescriptions($category_id);
 	 */
@@ -524,6 +574,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -538,6 +590,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have category ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $category_description = $this->model_catalog_category->getDescriptions($category_id);
 	 */
@@ -562,6 +616,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $results = $this->model_catalog_category->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -581,6 +637,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->addPath($category_id, $path_id, $level);
 	 */
 	public function addPath(int $category_id, int $path_id, int $level): void {
@@ -595,6 +653,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $this->model_catalog_category->deletePaths($category_id);
 	 */
@@ -612,6 +672,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deletePathsByLevel($category_id, $level);
 	 */
 	public function deletePathsByLevel(int $category_id, int $level = 0): void {
@@ -627,6 +689,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $path = $this->model_catalog_category->getPath($category_id);
 	 */
 	public function getPath(int $category_id): string {
@@ -641,6 +705,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> path records that have category ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $results = $this->model_catalog_category->getPaths($parent_id);
 	 */
@@ -658,6 +724,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> path records that have path ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $results = $this->model_catalog_category->getPathsByPathId($category_id);
 	 */
@@ -677,6 +745,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->addFilter($category_id, $filter_id);
 	 */
 	public function addFilter(int $category_id, int $filter_id): void {
@@ -691,6 +761,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $this->model_catalog_category->deleteFilters($category_id);
 	 */
@@ -707,6 +779,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deleteFiltersByFilterId($filter_id);
 	 */
 	public function deleteFiltersByFilterId(int $filter_id): void {
@@ -721,6 +795,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> filter records that have category ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $filters = $this->model_catalog_category->getFilters($category_id);
 	 */
@@ -746,6 +822,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->addStore($category_id, $store_id);
 	 */
 	public function addStore(int $category_id, int $store_id): void {
@@ -760,6 +838,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $this->model_catalog_category->deleteStores($category_id);
 	 */
@@ -776,6 +856,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deleteStoresByStoreId($store_id);
 	 */
 	public function deleteStoresByStoreId(int $store_id): void {
@@ -790,6 +872,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> store records that have category ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $category_store = $this->model_catalog_category->getStores($category_id);
 	 */
@@ -816,6 +900,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->addLayout($category_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $category_id, int $store_id, int $layout_id): void {
@@ -830,6 +916,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $this->model_catalog_category->deleteLayouts($category_id);
 	 */
@@ -846,6 +934,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deleteLayoutsByLayoutId($layout_id);
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
@@ -861,6 +951,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('catalog/category');
+	 *
 	 * $this->model_catalog_category->deleteLayoutsByStoreId($store_id);
 	 */
 	public function deleteLayoutsByStoreId(int $store_id): void {
@@ -875,6 +967,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> layout records that have category ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $category_layout = $this->model_catalog_category->getLayouts($category_id);
 	 */
@@ -898,6 +992,8 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @return int total number of layout records that have layout ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('catalog/category');
 	 *
 	 * $category_total = $this->model_catalog_category->getTotalLayoutsByLayoutId($layout_id);
 	 */

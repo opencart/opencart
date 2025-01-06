@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Returns
  *
- * Can be called from $this->load->model('sale/returns');
+ * Can be loaded using $this->load->model('sale/returns');
  *
  * @package Opencart\Admin\Model\Sale
  */
@@ -112,6 +112,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/returns');
+	 *
 	 * $this->model_sale_returns->deleteReturn($return_id);
 	 */
 	public function deleteReturn(int $return_id): void {
@@ -129,6 +131,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/returns');
+	 *
 	 * $return_info = $this->model_sale_returns->getReturn($return_id);
 	 */
 	public function getReturn(int $return_id): array {
@@ -145,6 +149,19 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> return records
 	 *
 	 * @example
+	 *
+	 * $filter_data = [
+	 *   'filter_return_id'        => 1,
+	 *   'filter_customer'         => 'John Doe',
+	 *   'filter_order_id'         => 1,
+	 *   'filter_product'          => 'Product Name',
+	 *   'filter_model'            => 'Product Model',
+	 *   'filter_return_status_id' => 1,
+	 *   'filter_date_from'        => '2021-01-01',
+	 *   'filter_date_to'          => '2021-01-31'
+	 * ];
+	 *
+     * $this->load->model('sale/returns');
 	 *
 	 * $results = $this->model_sale_returns->getReturns();
 	 */
@@ -308,6 +325,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/returns');
+	 *
 	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId($return_status_id);
 	 */
 	public function getTotalReturnsByReturnStatusId(int $return_status_id): int {
@@ -342,7 +361,9 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
+	 * $this->load->model('sale/returns');
+	 *
+     * $return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
 	 */
 	public function getTotalReturnsByReturnActionId(int $return_action_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
@@ -361,6 +382,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/returns');
 	 *
 	 * $this->model_sale_returns->addHistory($return_id, $return_status_id, $comment, $notify);
 	 */

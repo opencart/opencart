@@ -1958,6 +1958,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function autocomplete(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
@@ -1967,6 +1971,16 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/order');
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
+
+		if (!$order_info) {
+			$json['error'] = $this->language->get('error_order');
+		}
+
+		if (!$json) {
+			$this->load->model('sale/order');
+
+			$json = $this->model_sale_order->getOrder($order_id);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($order_info));

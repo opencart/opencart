@@ -629,13 +629,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-
-
-		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
-			$json['error']['product'] = $this->language->get('error_product');
-		}
-
-
 		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
 			$json['error']['product'] = $this->language->get('error_product');
 		}
@@ -644,15 +637,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
-
+		if ($this->request->post['quantity']) {
+			$json['error']['quantity'] = $this->language->get('errorquantity');
+		}
 
 		if (empty($this->request->post['return_reason_id'])) {
 			$json['error']['reason'] = $this->language->get('error_reason');
 		}
-
-
-
-
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');

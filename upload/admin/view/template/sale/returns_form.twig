@@ -19,7 +19,6 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
           <div class="col mb-3">
             <div class="input-group">
               <div class="form-control p-0 border rounded" style="min-height: 64px;">
@@ -32,10 +31,9 @@
                   {% endif %}
                 </div>
               </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-return" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-order" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="input-group">
               <div id="input-customer-info" class="form-control rounded-start" style="min-height: 64px;">
@@ -51,7 +49,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="form-control p-0 border rounded" style="min-height: 64px;">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -60,32 +57,35 @@
               </div>
             </div>
           </div>
-
         </div>
-        <form id="form-cart">
-          <table class="table table-bordered">
-            <thead>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>{{ column_product }}</th>
+              <th>{{ column_model }}</th>
+              <th class="text-end">{{ column_quantity }}</th>
+            </tr>
+          </thead>
+          <tbody id="return-product">
+            {% if product_id %}
               <tr>
-                <th>{{ column_product }}</th>
-                <th>{{ column_model }}</th>
-                <th class="text-end">{{ column_quantity }}</th>
+                <td><a href="{{ product_edit }}" target="_blank">{{ product }}</a></td>
+                <td>{{ model }}</td>
+                <td class="text-end">{{ quantity }}</td>
               </tr>
-            </thead>
-            <tbody>
+            {% else %}
               <tr>
-                <td id="value-product">
-                  {% if product_id %}
-                    <a href="{{ product_edit }}" target="_blank">{{ product }}</a>
-                  {% else %}
-                    &nbsp;
-                  {% endif %}
-                </td>
-                <td id="value-model">{{ model }}</td>
-                <td id="value-quantity" class="text-end">{{ quantity }}</td>
+                <td colspan="3" class="text-center">{{ text_no_results }}</td>
               </tr>
-            </tbody>
-          </table>
-        </form>
+            {% endif %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"></td>
+              <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+            </tr>
+          </tfoot>
+        </table>
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <form id="form-return-reason" class="form-floating">
@@ -98,7 +98,7 @@
             <div id="error-return-reason" class="invalid-feedback"></div>
           </div>
           <div class="col mb-3">
-            <form id="form-return-reason" class="form-floating">
+            <form id="form-opened" class="form-floating">
               <select name="opened" id="input-opened" class="form-select">
                 <option value="1"{% if opened %} selected{% endif %}>{{ text_opened }}</option>
                 <option value="0"{% if not opened %} selected{% endif %}>{{ text_unopened }}</option>
@@ -158,15 +158,14 @@
             <div class="text-end">
               <button type="submit" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
             </div>
-            <input type="hidden" name="return_id" value="{{ return_id }}" id="input-return-id"/></form>
+            <input type="hidden" name="return_id" value="{{ return_id }}" id="input-return-id"/>
           </form>
         </fieldset>
       </div>
     </div>
   </div>
 </div>
-
-<div id="modal-return" class="modal">
+<div id="modal-order" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -174,37 +173,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-return">
+        <form id="form-order">
           <div class="mb-3">
-            <label for="input-order" class="form-label">{{ entry_order_id }}</label>
-            <div class="input-group">
-              <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order" class="form-control"/> <button type="button" id="button-order" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
-            </div>
+            <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+            <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
           </div>
-          <div class="text-end mb-1">
-
-
+          <div class="text-end">
+            <button type="submit" id="button-order" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
-          <fieldset>
-            <legend>{{ text_product }}</legend>
-            <div class="mb-3 required">
-              <label for="input-product" class="form-label">{{ entry_product }}</label> <select name="product_id" id="input-product" class="form-select" disabled>
-                <option value="0">{{ text_select }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/> <input type="hidden" name="model" value="{{ model }}" id="input-model"/>
-            </div>
-            <div class="text-end">
-              <button type="submit" id="button-return" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
-            </div>
-          </fieldset>
         </form>
       </div>
     </div>
   </div>
 </div>
-
 <div id="modal-customer" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -215,35 +196,132 @@
       <div class="modal-body">
         <form id="form-customer">
           <div class="mb-3">
-            <label for="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+            <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+            <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
           <div class="mb-3 required">
-            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
             <div id="error-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
             <div id="error-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+            <label for="input-email" class="form-label">{{ entry_email }}</label>
+            <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
-            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
+            <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
           <div class="text-end">
-            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
+<div id="modal-product" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_product }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-product">
+          <div class="mb-3 required">
+            <label for="input-product" class="form-label">{{ entry_product }}</label>
+            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <ul id="autocomplete-product" class="dropdown-menu"></ul>
+            <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+          </div>
+          <div class="mb-3 required">
+            <label for="input-model" class="form-label">{{ entry_model }}</label>
+            <input type="text" name="model" value="" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+          </div>
+          <div class="mb-3">
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
+            <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+          </div>
+          <div class="text-end">
+            <button type="submit" id="button-product" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript"><!--
+var products = [];
+
+$('#form-order').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.autocomplete&user_token={{ user_token }}&order_id=' + $('#input-order-id').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-order').button('loading');
+        },
+        complete: function() {
+            $('#button-order').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            // Check for errors
+            if (json['error']) {
+                $('#form-order').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['order_id']) {
+                $('#order-value').html('<a href="index.php?route=sale/order.form&user_token={{ user_token }}&order_id=' + json['order_id'] + '" target="_blank">' + json['order_id'] + '</a>');
+
+                $('#input-customer').val(json['firstname'] + ' ' + json['lastname']);
+                $('#input-customer-id').val(json['customer_id']);
+                $('#input-firstname').val(json['firstname']);
+                $('#input-lastname').val(json['lastname']);
+                $('#input-email').val(json['email']);
+                $('#input-telephone').val(json['telephone']);
+
+                $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'] + '" target="_blank">' + json['firstname'] + ' ' + json['lastname'] + '</a>');
+
+                html = '<select name="product_id" id="input-product" class="form-select">';
+
+                //<option value="0">{{ text_select }}</option>';
+
+                for (i = 0; i < json['products'].length; i++) {
+                    html += '<option value="' + json['products'][i]['product_id'] + '">' + json['products'][i]['name'] + '</option>';
+                }
+
+                html += '</select>';
+
+                $('#input-product').replaceWith(html);
+            }
+
+            $('#modal-order').modal('hide');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -274,62 +352,9 @@ $('#input-customer').autocomplete({
     }
 });
 
-var products = [];
+$('#form-customer').on('submit', function(e) {
+    e.preventDefault();
 
-$('#button-order').on('click', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order.autocomplete&user_token={{ user_token }}&order_id=' + $('#input-order').val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').removeClass('d-block');
-
-            // Check for errors
-            if (json['error']) {
-                $('#form-return').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            html = '<option value="">{{ text_select|escape('js') }}</option>';
-
-            if (json['products']) {
-                var products = json['products'];
-
-                for (i = 0; i < json['products'].length; i++) {
-                    html += '<option value="' + json['products'][i]['product_id'] + '">' + json['products'][i]['name'] + '</option>';
-                }
-
-                $('#input-product').html(html);
-
-                $('#input-product').prop('disabled', false);
-            } else {
-                $('#input-product').prop('disabled', true);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-
-
-    $('#value-product').html('<a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-product-id').val() + '" target="_blank">' + $('#input-product').val() + '</a>');
-    $('#value-model').html($('#input-model').val());
-    $('#value-quantity').html($('#input-quantity').val());
-
-    $('#modal-product').modal('hide');
-});
-
-$('#button-customer').on('click', function() {
     var customer_id = $('#input-customer-id').val();
 
     if (customer_id) {
@@ -341,15 +366,62 @@ $('#button-customer').on('click', function() {
     $('#modal-customer').modal('hide');
 });
 
+$('#input-product').autocomplete({
+    'source': function(request, response) {
+        console.log('gdfg');
+
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id'],
+                        model: item['model']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-product-id').val(item['value']);
+        $('#input-product').val(item['label']);
+        $('#input-model').val(item['model']);
+    }
+});
+
+var products = [];
+
+$('#form-product').on('submit', function(e) {
+    e.preventDefault();
+
+    html  = '<tr>';
+
+    if ($('#input-product-id').val()) {
+        html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-product-id').val() + '" target="_blank">' + $('#input-product').val() + '</a></td>';
+        html += '  <td>' + $('#input-model').val() + '</td>';
+        html += '  <td class="text-end">' + $('#input-quantity').val() + '</td>';
+    } else {
+        html += '<td colspan="3" class="text-center">{{ text_no_results }}</td>';
+    }
+
+    html += '</tr>';
+
+    $('#return-product').html(html);
+
+    $('#modal-product').modal('hide');
+});
+
 $('#button-save').on('click', function() {
     var element = this;
 
-    console.log($('#form-customer, #form-product, #form-comment, #input-order-id').serialize());
+    console.log($('#form-order, #form-customer, #form-product, #form-return-reason, #form-opened, #form-return-action, #form-comment, #input-return-id').serialize());
 
     $.ajax({
         url: 'index.php?route=sale/return.save&user_token={{ user_token }}',
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-payment-address, #form-payment-method, #collapse-order form, #form-comment, #input-order-id').serialize(),
+        data: $('#form-order, #form-customer, #form-product, #form-return-reason, #form-opened, #form-return-action, #form-comment, #input-return-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {

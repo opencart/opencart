@@ -53,7 +53,7 @@
             <div class="form-control p-0 border rounded" style="min-height: 64px;">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                 <br/>
-                <div id="value-date-added">{{ date_added }}</div>
+                <div>{{ date_added }}</div>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
             <tr>
               <th>{{ column_product }}</th>
               <th>{{ column_model }}</th>
-              <th class="text-end">{{ column_quantity }}</th>
+              <th class="text-end" style="width: 1px;">{{ column_quantity }}</th>
             </tr>
           </thead>
           <tbody id="return-product">
@@ -93,7 +93,8 @@
                 {% for return_reason in return_reasons %}
                   <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected{% endif %}>{{ return_reason.name }}</option>
                 {% endfor %}
-              </select> <label for="input-return-reason">{{ entry_reason }}</label>
+              </select>
+              <label for="input-return-reason">{{ entry_reason }}</label>
             </form>
             <div id="error-return-reason" class="invalid-feedback"></div>
           </div>
@@ -102,16 +103,18 @@
               <select name="opened" id="input-opened" class="form-select">
                 <option value="1"{% if opened %} selected{% endif %}>{{ text_opened }}</option>
                 <option value="0"{% if not opened %} selected{% endif %}>{{ text_unopened }}</option>
-              </select> <label for="input-opened">{{ entry_opened }}</label>
+              </select>
+              <label for="input-opened">{{ entry_opened }}</label>
             </form>
           </div>
           <div class="col mb-3">
             <form id="form-return-action" class="form-floating">
-              <select name="return_reason_id" id="input-return-action" class="form-select">
+              <select name="return_action_id" id="input-return-action" class="form-select">
                 {% for return_action in return_actions %}
                   <option value="{{ return_action.return_action_id }}"{% if return_action.return_action_id == return_action_id %} selected{% endif %}>{{ return_action.name }}</option>
                 {% endfor %}
-              </select> <label for="input-return-action">{{ entry_action }}</label>
+              </select>
+              <label for="input-return-action">{{ entry_action }}</label>
             </form>
           </div>
         </div>
@@ -177,6 +180,7 @@
           <div class="mb-3">
             <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
             <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+            <input type="hidden" name="date_ordered" value="{{ date_ordered }}" id="input-date-ordered"/>
           </div>
           <div class="text-end">
             <button type="submit" id="button-order" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
@@ -239,18 +243,26 @@
       <div class="modal-body">
         <form id="form-product">
           <div class="mb-3 required">
-            <label for="input-product" class="form-label">{{ entry_product }}</label>
-            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
-            <ul id="autocomplete-product" class="dropdown-menu"></ul>
-            <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+            <label for="input-return" class="form-label">{{ entry_product }}</label>
+            <select name="product_id" id="input-return" class="form-select">
+              {% if product_id %}
+                <option value="{{ product_id }}">{{ product }}</option>
+              {% else %}
+                <option value="0">{{ text_select }}</option>
+              {% endif %}
+            </select>
+            <input type="hidden" name="product" value="{{ product }}" id="input-product"/>
+            <div id="error-product" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
             <label for="input-model" class="form-label">{{ entry_model }}</label>
-            <input type="text" name="model" value="" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+            <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+            <div id="error-model" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-            <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+            <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+            <div id="error-quantity" class="invalid-feedback"></div>
           </div>
           <div class="text-end">
             <button type="submit" id="button-product" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
@@ -292,6 +304,7 @@ $('#form-order').on('submit', function(e) {
             if (json['order_id']) {
                 $('#order-value').html('<a href="index.php?route=sale/order.form&user_token={{ user_token }}&order_id=' + json['order_id'] + '" target="_blank">' + json['order_id'] + '</a>');
 
+                $('#input-date-ordered').val(json['date_added']);
                 $('#input-customer').val(json['firstname'] + ' ' + json['lastname']);
                 $('#input-customer-id').val(json['customer_id']);
                 $('#input-firstname').val(json['firstname']);
@@ -301,17 +314,15 @@ $('#form-order').on('submit', function(e) {
 
                 $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'] + '" target="_blank">' + json['firstname'] + ' ' + json['lastname'] + '</a>');
 
-                html = '<select name="product_id" id="input-product" class="form-select">';
-
-                //<option value="0">{{ text_select }}</option>';
+                html = '<option value="0">{{ text_select }}</option>';
 
                 for (i = 0; i < json['products'].length; i++) {
-                    html += '<option value="' + json['products'][i]['product_id'] + '">' + json['products'][i]['name'] + '</option>';
+                    html += '<option value="' + i + '"' + (json['products'][i]['product_id'] == $('#input-product-id').val() ? ' selected' : '') + '>' + json['products'][i]['name'] + '</option>';
                 }
 
-                html += '</select>';
+                $('#input-return').html(html);
 
-                $('#input-product').replaceWith(html);
+                products = json['products'];
             }
 
             $('#modal-order').modal('hide');
@@ -366,42 +377,22 @@ $('#form-customer').on('submit', function(e) {
     $('#modal-customer').modal('hide');
 });
 
-$('#input-product').autocomplete({
-    'source': function(request, response) {
-        console.log('gdfg');
-
-        $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id'],
-                        model: item['model']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('#input-product-id').val(item['value']);
-        $('#input-product').val(item['label']);
-        $('#input-model').val(item['model']);
+$('#input-return').on('change', function(e) {
+    if (products[this.value]) {
+       $('#input-product').val(products[this.value]['name']);
+       $('#input-model').val(products[this.value]['model']);
     }
 });
-
-var products = [];
 
 $('#form-product').on('submit', function(e) {
     e.preventDefault();
 
     html  = '<tr>';
 
-    if ($('#input-product-id').val()) {
-        html += '  <td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-product-id').val() + '" target="_blank">' + $('#input-product').val() + '</a></td>';
-        html += '  <td>' + $('#input-model').val() + '</td>';
-        html += '  <td class="text-end">' + $('#input-quantity').val() + '</td>';
+    if ($('#input-return').val()) {
+        html += '<td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-return').val() + '" target="_blank">' + $('#input-product').val() + '</a></td>';
+        html += '<td>' + $('#input-model').val() + '</td>';
+        html += '<td class="text-end">' + $('#input-quantity').val() + '</td>';
     } else {
         html += '<td colspan="3" class="text-center">{{ text_no_results }}</td>';
     }
@@ -419,9 +410,9 @@ $('#button-save').on('click', function() {
     console.log($('#form-order, #form-customer, #form-product, #form-return-reason, #form-opened, #form-return-action, #form-comment, #input-return-id').serialize());
 
     $.ajax({
-        url: 'index.php?route=sale/return.save&user_token={{ user_token }}',
+        url: 'index.php?route=sale/returns.save&user_token={{ user_token }}',
         type: 'post',
-        data: $('#form-order, #form-customer, #form-product, #form-return-reason, #form-opened, #form-return-action, #form-comment, #input-return-id').serialize(),
+        data: $('#form-order, #form-customer, #form-product, #form-return-reason, #form-opened, #form-return-action, #form-comment, #input-return-status, #input-return-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -443,13 +434,27 @@ $('#button-save').on('click', function() {
             }
 
             if (typeof json['error'] == 'object') {
-                if (json['error']['customer']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                keys = [
+                    'order_id',
+                    'date_ordered'
+                ];
 
-                    $('#input-customer-info').addClass('is-invalid');
+                if (json['error']['order']) {
+                    $('#input-order-info').addClass('is-invalid');
 
-                    delete json['error']['customer'];
                 }
+
+                keys = [
+                    'firstname',
+                    'lastname',
+                    'email',
+                    'telephone'
+                ];
+
+                if (json['error']['customer']) {
+                    $('#input-customer-info').addClass('is-invalid');
+                }
+
 
                 if (json['error']['product']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');

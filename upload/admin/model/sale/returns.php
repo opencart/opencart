@@ -387,7 +387,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_sale_returns->addHistory($return_id, $return_status_id, $comment, $notify);
 	 */
-	public function addHistory(int $return_id, int $return_status_id, string $comment, bool $notify): void {
+	public function addHistory(int $return_id, int $return_status_id, string $comment = '', bool $notify = false): void {
 		$this->editReturnStatusId($return_id, $return_status_id);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_history` SET `return_id` = '" . (int)$return_id . "', `return_status_id` = '" . (int)$return_status_id . "', `notify` = '" . (int)$notify . "', `comment` = '" . $this->db->escape(strip_tags($comment)) . "', `date_added` = NOW()");

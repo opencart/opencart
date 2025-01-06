@@ -509,7 +509,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		// Order
 		if (!empty($return_info)) {
 			$data['order_id'] = $return_info['order_id'];
-			$data['date_ordered'] = ($return_info['date_ordered'] != '0000-00-00' ? $return_info['date_ordered'] : '');
+			$data['date_ordered'] = $return_info['date_ordered'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_added']));
 			$data['order_edit'] = $this->url->link('sale/order.form', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $return_info['order_id']);
 		} else {
@@ -549,7 +549,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['product'] = '';
 			$data['product_id'] = '';
 			$data['model'] = '';
-			$data['quantity'] = '';
+			$data['quantity'] = 1;
 			$data['product_edit'] = '';
 		}
 
@@ -625,7 +625,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if (!oc_validate_length($this->request->post['telephone'], 3, 32)) {
+		if ($this->request->post['telephone'] && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -637,8 +637,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
-		if ($this->request->post['quantity']) {
-			$json['error']['quantity'] = $this->language->get('errorquantity');
+		if ((int)$this->request->post['quantity'] < 1) {
+			$json['error']['quantity'] = $this->language->get('error_quantity');
 		}
 
 		if (empty($this->request->post['return_reason_id'])) {
@@ -657,6 +657,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			} else {
 				$this->model_sale_returns->editReturn($this->request->post['return_id'], $this->request->post);
 			}
+
+			$this->model_sale_returns->addHistory($this->request->post['return_id'] ? $this->request->post['return_id'] : $json['return_id'], $this->request->post['return_status_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

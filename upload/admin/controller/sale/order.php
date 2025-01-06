@@ -1977,12 +1977,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('sale/order');
-
-			$json = $this->model_sale_order->getOrder($order_id);
+			$json = $order_info;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($order_info));
+		$this->response->setOutput(json_encode($json));
 	}
 }

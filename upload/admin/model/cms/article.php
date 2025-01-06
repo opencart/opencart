@@ -614,36 +614,32 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_cms_article->getComments();
 	 */
 	public function getComments(array $data = []): array {
-		$sql = "SELECT *, `ac`.`rating`, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`)";
+		$sql = "SELECT *, `ac`.`rating`, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_keyword']) . '%') . "'";
+			$sql .= " AND LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_keyword']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_article'])) {
-			$implode[] = "LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_article']) . '%') . "'";
+			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_article']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_customer_id'])) {
-			$implode[] = "`ac`.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
+			$sql .= " AND `ac`.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
 		}
 
 		if (!empty($data['filter_author'])) {
-			$implode[] = "LCASE(`ac`.`author`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_author']) . '%') . "'";
+			$sql .= " AND LCASE(`ac`.`author`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_author']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`ac`.`status` = '" . (bool)$data['filter_status'] . "'";
+			$sql .= " AND `ac`.`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`ac`.`date_added`) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+			$sql .= " AND DATE(`ac`.`date_added`) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 
 		$sql .= " ORDER BY `ac`.`date_added` DESC";

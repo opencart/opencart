@@ -17,7 +17,14 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $geo_zone_id = $this->model_localisation_geo_zone->addGeoZone($data);
+	 * $geo_zone_data = [
+	 *     'name'        => 'Geo Zone Name',
+	 *     'description' => 'Geo Zone Description'
+	 * ];
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $geo_zone_id = $this->model_localisation_geo_zone->addGeoZone($geo_zone_data);
 	 */
 	public function addGeoZone(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "'");
@@ -45,7 +52,14 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_geo_zone->editGeoZone($geo_zone_id, $data);
+	 * $geo_zone_data = [
+	 *     'name'        => 'Geo Zone Name',
+	 *     'description' => 'Geo Zone Description'
+	 * ];
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $this->model_localisation_geo_zone->editGeoZone($geo_zone_id, $geo_zone_data);
 	 */
 	public function editGeoZone(int $geo_zone_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "geo_zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "' WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
@@ -70,6 +84,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
 	 * $this->model_localisation_geo_zone->deleteGeoZone($geo_zone_id);
 	 */
 	public function deleteGeoZone(int $geo_zone_id): void {
@@ -89,6 +105,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
 	 * $geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($geo_zone_id);
 	 */
 	public function getGeoZone(int $geo_zone_id): array {
@@ -106,7 +124,16 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_geo_zone->getGeoZones();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
 	 */
 	public function getGeoZones(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "geo_zone`";
@@ -162,7 +189,16 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones($filter_data);
 	 */
 	public function getTotalGeoZones(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "geo_zone`");
@@ -180,7 +216,15 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_geo_zone->addZone($geo_zone_id, $data);
+	 * $zone_to_geo_zone_data = [
+	 *     'geo_zone_id' => 1,
+	 *     'country_id'  => 1,
+	 *     'zone_id'     => 1
+	 * ];
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $this->model_geo_zone->addZone($geo_zone_id, $zone_to_geo_zone_data);
 	 */
 	public function addZone(int $geo_zone_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone_to_geo_zone` SET `geo_zone_id` = '" . (int)$geo_zone_id . "', `country_id` = '" . (int)$data['country_id'] . "', `zone_id` = '" . (int)$data['zone_id'] . "'");
@@ -194,6 +238,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/geo_zone');
 	 *
 	 * $this->model_geo_zone->deleteZones($geo_zone_id);
 	 */
@@ -209,6 +255,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> geo zone records that have geo zone ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/geo_zone');
 	 *
 	 * $results = $this->model_localisation_geo_zone->getGeoZones($geo_zone_id);
 	 */
@@ -227,6 +275,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
 	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZones($geo_zone_id);
 	 */
 	public function getTotalZones(int $geo_zone_id): int {
@@ -244,6 +294,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
 	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByCountryId($country_id);
 	 */
 	public function getTotalZonesByCountryId(int $country_id): int {
@@ -260,6 +312,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * @return int total number of zone records that have zone ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/geo_zone');
 	 *
 	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByZoneId($zone_id);
 	 */

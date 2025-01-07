@@ -20,7 +20,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * $theme_data = [
 	 *     'route'  => '',
 	 *     'code'   => '',
-	 *     'status' => ''
+	 *     'status' => 0
 	 * ];
 	 *
 	 * $theme_id = $this->model_design_theme->addTheme($theme_data);
@@ -44,7 +44,7 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * $theme_data = [
 	 *     'route'  => '',
 	 *     'code'   => '',
-	 *     'status' => ''
+	 *     'status' => 1
 	 * ];
 	 *
 	 * $this->model_design_theme->editTheme($theme_id, $theme_data);

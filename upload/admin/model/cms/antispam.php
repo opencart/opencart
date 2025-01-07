@@ -95,7 +95,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *     'sort'           => 'keyword',
 	 *     'order'          => 'DESC',
 	 *     'start'          => 0,
-	 *     'limit'          => 50
+	 *     'limit'          => 10
 	 * ];
 	 *
 	 * $results = $this->model_cms_antispam->getAntispams($filter_data);
@@ -158,7 +158,7 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *     'sort'           => 'keyword',
 	 *     'order'          => 'DESC',
 	 *     'start'          => 0,
-	 *     'limit'          => 50
+	 *     'limit'          => 10
 	 * ];
 	 *
 	 * $antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);

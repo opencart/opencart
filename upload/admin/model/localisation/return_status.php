@@ -17,7 +17,13 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $return_status_id = $this->model_localisation_return_status->addReturnStatus($data);
+	 * $return_status_data['return_status'][1] = [
+	 *     'name' => 'Return Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_status');
+	 *
+	 * $return_status_id = $this->model_localisation_return_status->addReturnStatus($return_status_data);
 	 */
 	public function addReturnStatus(array $data): ?int {
 		$return_status_id = 0;
@@ -47,7 +53,13 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_return_status->editReturnStatus($return_status_id, $data);
+	 * $return_status_data['return_status'][1] = [
+	 *     'name' => 'Return Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_status');
+	 *
+	 * $this->model_localisation_return_status->editReturnStatus($return_status_id, $return_status_data);
 	 */
 	public function editReturnStatus(int $return_status_id, array $data): void {
 		$this->deleteReturnStatus($return_status_id);
@@ -68,6 +80,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/return_status');
+	 *
 	 * $this->model_localisation_return_status->deleteReturnStatus($return_status_id);
 	 */
 	public function deleteReturnStatus(int $return_status_id): void {
@@ -84,6 +98,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_status');
 	 *
 	 * $this->model_localisation_return_status->deleteReturnStatusesByLanguageId($language_id);
 	 */
@@ -102,6 +118,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/return_status');
+	 *
 	 * $return_status_info = $this->model_localisation_return_status->getReturnStatus($return_status_id);
 	 */
 	public function getReturnStatus(int $return_status_id): array {
@@ -119,7 +137,16 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $return_statuses = $this->model_localisation_return_status->getReturnStatuses();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_status');
+	 *
+	 * $return_statuses = $this->model_localisation_return_status->getReturnStatuses($filter_data);
 	 */
 	public function getReturnStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -168,7 +195,15 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_return_status->addDescription($return_status_id, $language_id, $data);
+	 * $return_status_data = [
+	 *     'return_status_id' => 1,
+	 *     'language_id'      => 1,
+	 *     'name'             => 'Return Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_status');
+	 *
+	 * $this->model_localisation_return_status->addDescription($return_status_id, $language_id, $return_status_data);
 	 */
 	public function addDescription(int $return_status_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `return_status_id` = '" . (int)$return_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -182,6 +217,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have return status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_status');
 	 *
 	 * $return_status = $this->model_localisation_return_status->getDescriptions($return_status_id);
 	 */
@@ -206,6 +243,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/return_status');
+	 *
 	 * $results = $this->model_localisation_return_status->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -220,6 +259,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 * @return int total number of return status records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_status');
 	 *
 	 * $return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
 	 */

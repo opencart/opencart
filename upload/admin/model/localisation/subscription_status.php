@@ -17,7 +17,13 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $subscription_status_id = $this->model_localisation_subscription_status->addSubscriptionStatus($data);
+	 * $subscription_status_data['subscription_status'][1] = [
+	 *     'name' => 'Subscription Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
+	 * $subscription_status_id = $this->model_localisation_subscription_status->addSubscriptionStatus($subscription_status_data);
 	 */
 	public function addSubscriptionStatus(array $data): ?int {
 		$subscription_status_id = 0;
@@ -47,7 +53,13 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_subscription_status->editSubscriptionStatus($subscription_status_id, $data);
+	 * $subscription_status_data['subscription_status'][1] = [
+	 *     'name' => 'Subscription Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
+	 * $this->model_localisation_subscription_status->editSubscriptionStatus($subscription_status_id, $subscription_status_data);
 	 */
 	public function editSubscriptionStatus(int $subscription_status_id, array $data): void {
 		$this->deleteSubscriptionStatus($subscription_status_id);
@@ -68,6 +80,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
 	 * $this->model_localisation_subscription_status->deleteSubscriptionStatus($subscription_status_id);
 	 */
 	public function deleteSubscriptionStatus(int $subscription_status_id): void {
@@ -84,6 +98,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/subscription_status');
 	 *
 	 * $this->model_localisation_subscription_status->deleteStockStatusesByLanguageId($language_id);
 	 */
@@ -102,6 +118,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
 	 * $subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_status_id);
 	 */
 	public function getSubscriptionStatus(int $subscription_status_id): array {
@@ -119,7 +137,16 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $subscription_statuses = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
+	 * $subscription_statuses = $this->model_localisation_subscription_status->getSubscriptionStatuses($filter_data);
 	 */
 	public function getSubscriptionStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -168,7 +195,15 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_subscription_status->addDescription($subscription_status_id, $language_id, $data);
+	 * $subscription_status_data = [
+	 *     'subscription_status_id' => 1,
+	 *     'language_id'            => 1,
+	 *     'name'                   => 'Subscription Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
+	 * $this->model_localisation_subscription_status->addDescription($subscription_status_id, $language_id, $subscription_status_data);
 	 */
 	public function addDescription(int $subscription_status_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -182,6 +217,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have subscription status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/subscription_status');
 	 *
 	 * $subscription_status = $this->model_localisation_subscription_status->getDescriptions($subscription_status_id);
 	 */
@@ -206,6 +243,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
 	 * $results = $this->model_localisation_subscription_status->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -220,6 +259,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * @return int total number of subscription status records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/subscription_status');
 	 *
 	 * $subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
 	 */

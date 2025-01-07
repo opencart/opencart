@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Product
  *
+ * Can be loaded using $this->load->model('catalog/product');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Product extends \Opencart\System\Engine\Model {
@@ -40,7 +42,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'weight_class_id' => 0,
 	 *     'length'          => 0.00000000,
 	 *     'length_class_id' => 0,
-	 *     'status'          => 1,
+	 *     'status'          => 0,
 	 *     'tax_class_id'    => 0,
 	 *     'sort_order'      => 0,
 	 *     'date_added'      => '2021-01-01',
@@ -969,7 +971,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'filter_quantity_to'     => 100,
 	 *     'filter_status'          => 1,
 	 *     'start'                  => 0,
-	 *     'limit'                  => 50
+	 *     'limit'                  => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/product');
@@ -1088,7 +1090,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'filter_quantity_to'     => 100,
 	 *     'filter_status'          => 1,
 	 *     'start'                  => 0,
-	 *     'limit'                  => 50
+	 *     'limit'                  => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/product');

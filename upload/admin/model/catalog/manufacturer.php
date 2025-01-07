@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Manufacturer
  *
+ * Can be loaded using $this->load->model('catalog/manufacturer');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
@@ -78,7 +80,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/manufacturer');
 	 *
-	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $data);
+	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $manufacturer_data);
 	 */
 	public function editManufacturer(int $manufacturer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -178,7 +180,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *     'sort'  => 'name',
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
-	 *     'limit' => 50
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/manufacturer');

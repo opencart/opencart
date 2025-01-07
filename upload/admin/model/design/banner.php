@@ -17,7 +17,12 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $banner_id = $this->model_design_banner->addBanner($data);
+	 * $banner_data = [
+	 *     'name'   => 'Banner Name',
+	 *     'status' => 0
+	 * ];
+	 *
+	 * $banner_id = $this->model_design_banner->addBanner($banner_data);
 	 */
 	public function addBanner(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -45,7 +50,12 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_banner->editBanner($banner_id, $data);
+	 * $banner_data = [
+	 *     'name'   => 'Banner Name',
+	 *     'status' => 1
+	 * ];
+	 *
+	 * $this->model_design_banner->editBanner($banner_id, $banner_data);
 	 */
 	public function editBanner(int $banner_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `banner_id` = '" . (int)$banner_id . "'");
@@ -104,7 +114,14 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_design_banner->getBanners();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_design_banner->getBanners($filter_data);
 	 */
 	public function getBanners(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "banner`";
@@ -169,7 +186,14 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_banner->addImage($banner_id, $language_id, $data);
+	 * $banner_image_data = [
+	 *     'title'      => 'Banner Title',
+	 *     'link'       => 'Banner Link',
+	 *     'image'      => 'Banner Image',
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->model_design_banner->addImage($banner_id, $language_id, $banner_image_data);
 	 */
 	public function addImage(int $banner_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `link` = '" . $this->db->escape($data['link']) . "', `image` = '" . $this->db->escape($data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");

@@ -17,7 +17,14 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $article_id = $this->model_cms_article->addArticle($data);
+	 * $article_data = [
+	 *     'author'        => 'Author Name',
+	 *     'status'        => 0,
+	 *     'date_added'    => '2021-01-01',
+	 *     'date_modified' => '2021-01-31'
+	 * ];
+	 *
+	 * $article_id = $this->model_cms_article->addArticle($article_data);
 	 */
 	public function addArticle(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article` SET `topic_id` = '" . (int)$data['topic_id'] . "', `author` = '" . $this->db->escape($data['author']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -69,7 +76,14 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_cms_article->editArticle($article_id, $data);
+	 * $article_data = [
+	 *     'author'        => 'Author Name',
+	 *     'status'        => 1,
+	 *     'date_added'    => '2021-01-01',
+	 *     'date_modified' => '2021-01-31'
+	 * ];
+	 *
+	 * $this->model_cms_article->editArticle($article_id, $article_data);
 	 */
 	public function editArticle(int $article_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `topic_id` = '" . (int)$data['topic_id'] . "', `author` = '" . $this->db->escape($data['author']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `article_id` = '" . (int)$article_id . "'");
@@ -184,7 +198,14 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_cms_article->getArticles();
+	 * $filter_data = [
+	 *     'sort'  => 'a.date_added',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_cms_article->getArticles($filter_data);
 	 */
 	public function getArticles(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -248,7 +269,14 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $article_total = $this->model_cms_article->getTotalArticles();
+	 * $filter_data = [
+	 *     'sort'  => 'a.date_added',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $article_total = $this->model_cms_article->getTotalArticles($filter_data);
 	 */
 	public function getTotalArticles(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
@@ -273,7 +301,17 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_cms_article->addDescription($article_id, $language_id, $data);
+	 * $article_data['article_description'] = [
+	 *     'image'            => 'article_image',
+	 *     'name'             => 'Article Name',
+	 *     'description'      => 'Article Description',
+	 *     'tag'              => 'Article Tag',
+	 *     'meta_title'       => 'Meta Title',
+	 *     'meta_description' => 'Meta Description',
+	 *     'meta_keyword'     => 'Meta Keyword'
+	 * ];
+	 *
+	 * $this->model_cms_article->addDescription($article_id, $language_id, $article_data);
 	 */
 	public function addDescription(int $article_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
@@ -611,7 +649,18 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_cms_article->getComments();
+	 * $filter_data = [
+	 *     'filter_keyword'   => 'Keyword',
+	 *     'filter_article'   => 'Article Name',
+	 *     'filter_customer'  => 'Customer Name',
+	 *     'filter_status'    => 1,
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $results = $this->model_cms_article->getComments($filter_data);
 	 */
 	public function getComments(array $data = []): array {
 		$sql = "SELECT *, `ac`.`rating`, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -670,7 +719,18 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $comment_total = $this->model_cms_article->getTotalComments();
+	 * $filter_data = [
+	 *     'filter_keyword'   => 'Keyword',
+	 *     'filter_article'   => 'Article Name',
+	 *     'filter_customer'  => 'Customer Name',
+	 *     'filter_status'    => 1,
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $comment_total = $this->model_cms_article->getTotalComments($filter_data);
 	 */
 	public function getTotalComments(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`)";

@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Category
  *
+ * Can be loaded using $this->load->model('catalog/category');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Category extends \Opencart\System\Engine\Model {
@@ -19,7 +21,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *     'image'         => 'category_image',
 	 *     'parent_id'     => 0,
 	 *     'sort_order'    => 0,
-	 *     'status'        => 1,
+	 *     'status'        => 0,
 	 *     'date_added'    => '2021-01-01',
 	 *     'date_modified' => '2021-01-31'
 	 * ];
@@ -494,7 +496,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *     'sort'          => 'name',
 	 *     'order'         => 'DESC',
 	 *     'start'         => 0,
-	 *     'limit'         => 50
+	 *     'limit'         => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/category');

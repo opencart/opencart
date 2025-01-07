@@ -17,7 +17,13 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_translation->addTranslation($data);
+	 * $translation_data = [
+	 *     'route' => '',
+	 *     'key'   => '',
+	 *     'value' => ''
+	 * ];
+	 *
+	 * $this->model_design_translation->addTranslation($translation_data);
 	 */
 	public function addTranslation(array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `date_added` = NOW()");
@@ -33,7 +39,13 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_translation->editTranslation($translation_id, $data);
+	 * $translation_data = [
+	 *     'route' => '',
+	 *     'key'   => '',
+	 *     'value' => ''
+	 * ];
+	 *
+	 * $this->model_design_translation->editTranslation($translation_id, $translation_data);
 	 */
 	public function editTranslation(int $translation_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
@@ -110,7 +122,14 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_design_translation->getTranslations();
+	 * $filter_data = [
+	 *     'sort'  => 'store',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_design_translation->getTranslations($filter_data);
 	 */
 	public function getTranslations(array $data = []): array {
 		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t`";

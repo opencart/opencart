@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Filter Group
  *
+ * Can be loaded using $this->load->model('catalog/filter_group');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class FilterGroup extends \Opencart\System\Engine\Model {
@@ -53,7 +55,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/filter_group');
 	 *
-	 * $this->model_catalog_filter_group->editFilterGroup($filter_group_id, $data);
+	 * $this->model_catalog_filter_group->editFilterGroup($filter_group_id, $filter_group_data);
 	 */
 	public function editFilterGroup(int $filter_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
@@ -120,7 +122,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 *     'sort'  => 'fgd.name',
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
-	 *     'limit' => 50
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/filter_group');

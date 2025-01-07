@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Option
  *
+ * Can be loaded using $this->load->model('catalog/option');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Option extends \Opencart\System\Engine\Model {
@@ -131,7 +133,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *     'sort'  => 'od.name',
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
-	 *     'limit' => 50
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/option');
@@ -309,7 +311,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $option_value_data = [
-	 *     'option_value_id' => 1,
+	 *     'option_value_id' => 0,
 	 *     'option_id'       => 1,
 	 *     'image'           => 'option_image',
 	 *     'sort_order'      => 0

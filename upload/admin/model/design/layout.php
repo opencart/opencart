@@ -17,7 +17,11 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $layout_id = $this->model_design_layout->addLayout($data);
+	 * $layout_data = [
+	 *     'name' => 'Layout Name'
+	 * ];
+	 *
+	 * $layout_id = $this->model_design_layout->addLayout($layout_data);
 	 */
 	public function addLayout(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "'");
@@ -49,7 +53,11 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_layout->editLayout($layout_id, $data);
+	 * $layout_data = [
+	 *     'name' => 'Layout Name'
+	 * ];
+	 *
+	 * $this->model_design_layout->editLayout($layout_id, $layout_data);
 	 */
 	public function editLayout(int $layout_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "' WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -140,7 +148,14 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_design_layout->getLayouts();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_design_layout->getLayouts($filter_data);
 	 */
 	public function getLayouts(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "layout`";
@@ -183,7 +198,14 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $layout_total = $this->model_design_layout->getTotalLayouts();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $layout_total = $this->model_design_layout->getTotalLayouts($filter_data);
 	 */
 	public function getTotalLayouts(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "layout`");
@@ -201,7 +223,12 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_layout->addRoute($layout_id, $data);
+	 * $layout_route_data = [
+	 *     'store_id' => 1,
+	 *     'route'    => ''
+	 * ];
+	 *
+	 * $this->model_design_layout->addRoute($layout_id, $layout_route_data);
 	 */
 	public function addRoute(int $layout_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_route` SET `layout_id` = '" . (int)$layout_id . "', `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "'");
@@ -296,7 +323,13 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_layout->addModule($layout_id, $data);
+	 * $layout_module_data = [
+	 *     'code'       => '',
+	 *     'position'   => 'top',
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->model_design_layout->addModule($layout_id, $layout_module_data);
 	 */
 	public function addModule(int $layout_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = '" . $this->db->escape($data['code']) . "', `position` = '" . $this->db->escape($data['position']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");

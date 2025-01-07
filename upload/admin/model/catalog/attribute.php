@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute
  *
+ * Can be loaded using $this->load->model('catalog/attribute');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Attribute extends \Opencart\System\Engine\Model {
@@ -57,7 +59,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/attribute');
 	 *
-	 * $this->model_catalog_attribute->editAttribute($attribute_id, $data);
+	 * $this->model_catalog_attribute->editAttribute($attribute_id, $attribute_data);
 	 */
 	public function editAttribute(int $attribute_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_id` = '" . (int)$attribute_id . "'");
@@ -126,7 +128,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *     'sort'  => 'ad.name',
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
-	 *     'limit' => 50
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute');
@@ -235,7 +237,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $attribute_data['attribute_description'] = [
-	 *     'name' => 'Attribute Description Name'
+	 *     'name' => 'Attribute Name'
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute');

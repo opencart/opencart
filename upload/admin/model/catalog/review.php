@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Review
  *
+ * Can be loaded using $this->load->model('catalog/review');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Review extends \Opencart\System\Engine\Model {
@@ -20,7 +22,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'product_id' => 1,
 	 *     'text'       => 'Review Text',
 	 *     'rating'     => 4,
-	 *     'status'     => 1,
+	 *     'status'     => 0,
 	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
@@ -64,7 +66,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/review');
 	 *
-	 * $this->model_catalog_review->editReview($review_id, $data);
+	 * $this->model_catalog_review->editReview($review_id, $review_data);
 	 */
 	public function editReview(int $review_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
@@ -184,7 +186,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'sort'             => 'DESC',
 	 *     'order'            => 'r.date_added',
 	 *     'start'            => 0,
-	 *     'limit'            => 50
+	 *     'limit'            => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');
@@ -269,7 +271,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'sort'             => 'DESC',
 	 *     'order'            => 'r.date_added',
 	 *     'start'            => 0,
-	 *     'limit'            => 50
+	 *     'limit'            => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');

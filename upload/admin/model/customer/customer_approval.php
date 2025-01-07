@@ -32,7 +32,18 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_customer_customer_approval->getCustomerApprovals();
+	 * $filter_data = [
+	 *     'filter_customer'          => 'Customer Name',
+	 *     'filter_email'             => 'Customer Email',
+	 *     'filter_customer_group_id' => 1,
+	 *     'filter_type'              => 'customer',
+	 *     'filter_date_from'         => '2021-01-01',
+	 *     'filter_date_to'           => '2021-01-31',
+	 *     'start'                    => 0,
+	 *     'limit'                    => 10
+	 * ];
+	 *
+	 * $results = $this->model_customer_customer_approval->getCustomerApprovals($filter_data);
 	 */
 	public function getCustomerApprovals(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `cgd`.`name` AS `customer_group`, `ca`.`type` FROM `" . DB_PREFIX . "customer_approval` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`c`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -106,7 +117,18 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $customer_approval_total = $this->model_customer_customer_approval->getTotalCustomerApprovals();
+	 * $filter_data = [
+	 *     'filter_customer'          => 'Customer Name',
+	 *     'filter_email'             => 'Customer Email',
+	 *     'filter_customer_group_id' => 1,
+	 *     'filter_type'              => 'customer',
+	 *     'filter_date_from'         => '2021-01-01',
+	 *     'filter_date_to'           => '2021-01-31',
+	 *     'start'                    => 0,
+	 *     'limit'                    => 10
+	 * ];
+	 *
+	 * $customer_approval_total = $this->model_customer_customer_approval->getTotalCustomerApprovals($filter_data);
 	 */
 	public function getTotalCustomerApprovals(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_approval` `ca` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ca`.`customer_id` = `c`.`customer_id`)";

@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Subscription Plan
  *
+ * Can be loaded using $this->load->model('catalog/subscription_plan');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
@@ -52,7 +54,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $subscription_data = [
+	 * $subscription_plan_data = [
 	 *     'trial_frequency' => 'month',
 	 *     'trial_duration'  => 1,
 	 *     'trial_cycle'     => 5,
@@ -65,7 +67,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/subscription_plan');
 	 *
-	 * $this->model_catalog_subscription_plan->editSubscriptionPlan($subscription_plan_id, $data);
+	 * $this->model_catalog_subscription_plan->editSubscriptionPlan($subscription_plan_id, $subscription_plan_data);
 	 */
 	public function editSubscriptionPlan(int $subscription_plan_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription_plan` SET `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
@@ -150,7 +152,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *     'sort'  => 'rd.name',
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
-	 *     'limit' => 50
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/subscription_plan');

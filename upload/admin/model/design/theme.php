@@ -17,7 +17,13 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $theme_id = $this->model_design_theme->addTheme($data);
+	 * $theme_data = [
+	 *     'route'  => '',
+	 *     'code'   => '',
+	 *     'status' => ''
+	 * ];
+	 *
+	 * $theme_id = $this->model_design_theme->addTheme($theme_data);
 	 */
 	public function addTheme(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `code` = '" . $this->db->escape($data['code']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
@@ -35,7 +41,13 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_design_theme->editTheme($theme_id, $data);
+	 * $theme_data = [
+	 *     'route'  => '',
+	 *     'code'   => '',
+	 *     'status' => ''
+	 * ];
+	 *
+	 * $this->model_design_theme->editTheme($theme_id, $theme_data);
 	 */
 	public function editTheme(int $theme_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$data['store_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `code` = '" . $this->db->escape($data['code']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW() WHERE `theme_id` = '" . (int)$theme_id . "'");

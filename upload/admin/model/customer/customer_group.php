@@ -17,7 +17,12 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $customer_group_id = $this->model_customer_customer_group->addCustomerGroup($data);
+	 * $customer_group_data = [
+	 *     'approval'   => 0,
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $customer_group_id = $this->model_customer_customer_group->addCustomerGroup($customer_group_data);
 	 */
 	public function addCustomerGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group` SET `approval` = '" . (isset($data['approval']) ? (bool)$data['approval'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -41,7 +46,12 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_customer_customer_group->editCustomerGroup($customer_group_id, $data);
+	 * $customer_group_data = [
+	 *     'approval'   => 0,
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->model_customer_customer_group->editCustomerGroup($customer_group_id, $customer_group_data);
 	 */
 	public function editCustomerGroup(int $customer_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer_group` SET `approval` = '" . (isset($data['approval']) ? (bool)$data['approval'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
@@ -107,7 +117,14 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $customer_groups = $this->model_customer_customer_group->getCustomerGroups();
+	 * $filter_data = [
+	 *     'sort'  => 'cgd.name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $customer_groups = $this->model_customer_customer_group->getCustomerGroups($filter_data);
 	 */
 	public function getCustomerGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -157,7 +174,12 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_customer_customer_group->addDescription($customer_group_id, $language_id, $data);
+	 * $customer_group_data['customer_group_description'] = [
+	 *     'name'        => 'Customer Group Name',
+	 *     'description' => 'Customer Group Description'
+	 * ];
+	 *
+	 * $this->model_customer_customer_group->addDescription($customer_group_id, $language_id, $customer_group_data);
 	 */
 	public function addDescription(int $customer_group_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "'");

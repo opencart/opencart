@@ -63,7 +63,17 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_customer_gdpr->getGdprs();
+	 * $filter_data = [
+	 *     'filter_email'     => 'Customer Email',
+	 *     'filter_action'    => 'export',
+	 *     'filter_status'    => 1,
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $results = $this->model_customer_gdpr->getGdprs($filter_data);
 	 */
 	public function getGdprs(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "gdpr`";
@@ -139,7 +149,17 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $gdpr_total = $this->model_customer_gdpr->getTotalGdprs();
+	 * $filter_data = [
+	 *     'filter_email'     => 'Customer Email',
+	 *     'filter_action'    => 'export',
+	 *     'filter_status'    => 1,
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);
 	 */
 	public function getTotalGdprs(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "gdpr`";

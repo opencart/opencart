@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Download
  *
+ * Can be loaded using $this->load->model('catalog/download');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Download extends \Opencart\System\Engine\Model {
@@ -18,7 +20,6 @@ class Download extends \Opencart\System\Engine\Model {
 	 * $download_data = [
 	 *     'filename'   => 'download_filename',
 	 *     'mask'       => 'mask string',
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/download');
@@ -50,7 +51,6 @@ class Download extends \Opencart\System\Engine\Model {
 	 * $download_data = [
 	 *     'filename'   => 'download_filename',
 	 *     'mask'       => 'mask string',
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/download');
@@ -118,8 +118,8 @@ class Download extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'sort'  => 'dd.name',
 	 *     'order' => 'DESC',
-	 *     'start' => (1 - 1) * 50,
-	 *     'limit' => 50
+	 *     'start' => 0,
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/download');

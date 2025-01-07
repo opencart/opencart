@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Information
  *
+ * Can be loaded using $this->load->model('catalog/information');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class Information extends \Opencart\System\Engine\Model {
@@ -17,7 +19,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * $information_data = [
 	 *     'sort_order' => 0,
-	 *     'status'     => 1
+	 *     'status'     => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/information');
@@ -181,7 +183,7 @@ class Information extends \Opencart\System\Engine\Model {
 	 *     'sort'  => 'id.title',
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
-	 *     'limit' => 50
+	 *     'limit' => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/information');

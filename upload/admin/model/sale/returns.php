@@ -37,8 +37,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('sale/returns');
 	 *
-     * $return_id = $this->model_sale_returns->addReturn($return_data);
-
+	 * $return_id = $this->model_sale_returns->addReturn($return_data);
 	 */
 	public function addReturn(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -158,7 +157,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *   'filter_date_to'          => '2021-01-31'
 	 * ];
 	 *
-     * $this->load->model('sale/returns');
+	 * $this->load->model('sale/returns');
 	 *
 	 * $results = $this->model_sale_returns->getReturns();
 	 */
@@ -360,7 +359,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('sale/returns');
 	 *
-     * $return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
+	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
 	 */
 	public function getTotalReturnsByReturnActionId(int $return_action_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `return_action_id` = '" . (int)$return_action_id . "'");

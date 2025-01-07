@@ -3,6 +3,8 @@ namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Attribute Group
  *
+ * Can be loaded using $this->load->model('catalog/attribute_group');
+ *
  * @package Opencart\Admin\Model\Catalog
  */
 class AttributeGroup extends \Opencart\System\Engine\Model {
@@ -116,7 +118,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *	  'sort'  => 'agd.name',
 	 *	  'order' => 'DESC',
 	 *	  'start' => 0,
-	 *	  'limit' => 50
+	 *	  'limit' => 10
 	 * ];
 	 *
 	 * $attribute_groups = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
@@ -189,7 +191,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * $attribute_group_data['attribute_group_description'] = [
 	 *     'attribute_group_id' => 1,
 	 *	   'language_id'        => 1,
-	 *	   'name'               => 'Attribute Group Description Name'
+	 *	   'name'               => 'Attribute Group Name'
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute_group');

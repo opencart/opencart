@@ -17,7 +17,11 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $antispam_id = $this->model_cms_antispam->addAntispam($data);
+	 * $antispam_data = [
+	 *     'keyword' => 'Keyword'
+	 * ];
+	 *
+	 * $antispam_id = $this->model_cms_antispam->addAntispam($antispam_data);
 	 */
 	public function addAntispam(array $data = []): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "'");
@@ -35,7 +39,11 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_cms_antispam->editAntispam($antispam_id, $data);
+	 * $antispam_data = [
+	 *     'keyword' => 'Keyword'
+	 * ];
+	 *
+	 * $this->model_cms_antispam->editAntispam($antispam_id, $antispam_data);
 	 */
 	public function editAntispam(int $antispam_id, array $data = []): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "antispam` SET `keyword` = '" . $this->db->escape((string)$data['keyword']) . "' WHERE `antispam_id` = '" . (int)$antispam_id . "'");
@@ -82,7 +90,15 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_cms_antispam->getAntispams();
+	 * $filter_data = [
+	 *     'filter_keyword' => 'Keyword',
+	 *     'sort'           => 'keyword',
+	 *     'order'          => 'DESC',
+	 *     'start'          => 0,
+	 *     'limit'          => 50
+	 * ];
+	 *
+	 * $results = $this->model_cms_antispam->getAntispams($filter_data);
 	 */
 	public function getAntispams(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "antispam`";
@@ -137,7 +153,15 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $antispam_total = $this->model_cms_antispam->getTotalAntispams();
+	 * $filter_data = [
+	 *     'filter_keyword' => 'Keyword',
+	 *     'sort'           => 'keyword',
+	 *     'order'          => 'DESC',
+	 *     'start'          => 0,
+	 *     'limit'          => 50
+	 * ];
+	 *
+	 * $antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
 	 */
 	public function getTotalAntispams(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "antispam`";

@@ -17,7 +17,16 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $custom_field_id = $this->model_customer_custom_field->addCustomField($data);
+	 * $custom_field_data = [
+	 *     'type'       => 'radio',
+	 *     'value'      => 'Custom Field Value',
+	 *     'validation' => '',
+	 *     'location'   => 'account',
+	 *     'status'     => 0,
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $custom_field_id = $this->model_customer_custom_field->addCustomField($custom_field_data);
 	 */
 	public function addCustomField(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -55,7 +64,16 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_customer_custom_field->editCustomField($custom_field_id, $data);
+	 * $custom_field_data = [
+	 *     'type'       => 'radio',
+	 *     'value'      => 'Custom Field Value',
+	 *     'validation' => '',
+	 *     'location'   => 'account',
+	 *     'status'     => 1,
+	 *     'sort_order' => 0
+	 * ];
+	 *
+	 * $this->model_customer_custom_field->editCustomField($custom_field_id, $custom_field_data);
 	 */
 	public function editCustomField(int $custom_field_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
@@ -130,7 +148,14 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $custom_fields = $this->model_customer_custom_field->getCustomFields();
+	 * $filter_data = [
+	 *     'sort'  => 'cfd.name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 	 */
 	public function getCustomFields(array $data = []): array {
 		if (empty($data['filter_customer_group_id'])) {
@@ -199,7 +224,14 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $custom_field_total = $this->model_customer_custom_field->getTotalCustomFields();
+	 * $filter_data = [
+	 *     'sort'  => 'cfd.name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $custom_field_total = $this->model_customer_custom_field->getTotalCustomFields($filter_data);
 	 */
 	public function getTotalCustomFields(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
@@ -218,7 +250,11 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_customer_custom_field->addDescription($custom_field_id, $language_id, $data);
+	 * $custom_field_data['custom_field_description'] = [
+	 *     'name' => 'Custom Field Name'
+	 * ];
+	 *
+	 * $this->model_customer_custom_field->addDescription($custom_field_id, $language_id, $custom_field_data);
 	 */
 	public function addDescription(int $custom_field_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_description` SET `custom_field_id` = '" . (int)$custom_field_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -304,7 +340,12 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_customer_custom_field->addCustomerGroup($custom_field_id, $data);
+	 * $custom_field_data['custom_field_customer_group'] = [
+	 *     'customer_group_id' => 1,
+	 *     'required'          => 0
+	 * ];
+	 *
+	 * $this->model_customer_custom_field->addCustomerGroup($custom_field_id, $custom_field_data);
 	 */
 	public function addCustomerGroup(int $custom_field_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field_customer_group` SET `custom_field_id` = '" . (int)$custom_field_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `required` = '" . (int)(isset($data['required']) ? 1 : 0) . "'");
@@ -352,7 +393,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_customer_custom_field->addValue($custom_field_id, $data);
+	 * $custom_field_data['custom_field_value'] = [
+	 *     'custom_field_value_id' => 0,
+	 *     'custom_field_id'       => 1,
+	 *     'sort_order'            => 0
+	 * ];
+	 *
+	 * $value = $this->model_customer_custom_field->addValue($custom_field_id, $custom_field_data);
 	 */
 	public function addValue(int $custom_field_id, array $data): int {
 		if ($data['custom_field_value_id']) {

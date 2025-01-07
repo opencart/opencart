@@ -55,7 +55,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *     'status' => 1
 	 * ];
 	 *
-	 * $this->model_design_banner->editBanner($banner_id, $data);
+	 * $this->model_design_banner->editBanner($banner_id, $banner_data);
 	 */
 	public function editBanner(int $banner_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `banner_id` = '" . (int)$banner_id . "'");

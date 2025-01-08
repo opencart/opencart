@@ -32,7 +32,7 @@ $_['text_unwritable']        = 'Non modifiable';
 $_['text_missing']           = 'Manquant';
 
 // Erreur
-$_['error_version']          = 'Attention : Vous devez utiliser PHP 7.4 ou une version supérieure pour qu\'OpenCart fonctionne !';
+$_['error_version']          = 'Attention : Vous devez utiliser PHP 8.0 ou une version supérieure pour qu\'OpenCart fonctionne !';
 $_['error_file_upload']      = 'Attention : file_uploads doit être activé !';
 $_['error_session']          = 'Attention : OpenCart ne fonctionnera pas avec session.auto_start activé !';
 $_['error_db']               = 'Attention : Une extension de base de données doit être chargée dans le php.ini pour qu\'OpenCart fonctionne !';

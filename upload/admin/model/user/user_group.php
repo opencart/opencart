@@ -100,7 +100,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *     'order' => 'DESC',
 	 *     'start' => 0,
 	 *     'limit' => 10
-	 *	];
+	 * ];
 	 *
 	 * $results = $this->model_user_user_group->getUserGroups($filter_data);
 	 */

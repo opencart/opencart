@@ -17,7 +17,19 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $currency_id = $this->model_localisation_currency->addCurrency($data);
+	 * $currency_data = [
+	 *     'title'         => 'Currency Title',
+	 *     'code'          => 'Currency Code',
+	 *     'symbol_left'   => '',
+	 *     'symbol_right'  => '',
+	 *     'decimal_place' => 2,
+	 *     'value'         => 0.00000000,
+	 *     'status'        => 0
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_id = $this->model_localisation_currency->addCurrency($currency_data);
 	 */
 	public function addCurrency(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW()");
@@ -37,7 +49,19 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_currency->editCurrency($currency_id, $data);
+	 * $currency_data = [
+	 *     'title'         => 'Currency Title',
+	 *     'code'          => 'Currency Code',
+	 *     'symbol_left'   => '',
+	 *     'symbol_right'  => '',
+	 *     'decimal_place' => 2,
+	 *     'value'         => 0.00000000,
+	 *     'status'        => 1
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $this->model_localisation_currency->editCurrency($currency_id, $currency_data);
 	 */
 	public function editCurrency(int $currency_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
@@ -54,6 +78,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
 	 *
 	 * $this->model_localisation_currency->editValueByCode($code, $value);
 	 */
@@ -72,6 +98,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/currency');
+	 *
 	 * $this->model_localisation_currency->deleteCurrency($currency_id);
 	 */
 	public function deleteCurrency(int $currency_id): void {
@@ -88,6 +116,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> currency record that has currency ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
 	 *
 	 * $currency_info = $this->model_localisation_currency->getCurrency($currency_id);
 	 */
@@ -106,6 +136,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/currency');
+	 *
 	 * $currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
 	 */
 	public function getCurrencyByCode(string $currency): array {
@@ -123,7 +155,16 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_currency->getCurrencies();
+	 * $filter_data = [
+	 *     'sort'  => 'title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $results = $this->model_localisation_currency->getCurrencies($filter_data);
 	 */
 	public function getCurrencies(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "currency`";
@@ -185,7 +226,16 @@ class Currency extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $currency_total = $this->model_localisation_currency->getTotalCurrencies();
+	 * $filter_data = [
+	 *     'sort'  => 'title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_total = $this->model_localisation_currency->getTotalCurrencies($filter_data);
 	 */
 	public function getTotalCurrencies(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "currency`");

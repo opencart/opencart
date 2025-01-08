@@ -17,9 +17,23 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $marketing_id = $this->model_marketing_marketing->addMarketing($data);
+	 * $marketing_data = [
+	 *     'name'        => 'Marketing Name',
+	 *     'description' => 'Marketing Description',
+	 *     'code'        => ''
+	 * ];
+	 *
+	 * $this->load->model('marketing/marketing');
+	 *
+	 * $marketing_id = $this->model_marketing_marketing->addMarketing($marketing_data);
 	 */
 	public function addMarketing(array $data): int {
+		$marketing_data = [
+			'name'        => 'Marketing Name',
+			'description' => 'Marketing Description',
+			'code'        => ''
+		];
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
@@ -35,7 +49,15 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_marketing_marketing->editMarketing($marketing_id, $data);
+	 * $marketing_data = [
+	 *     'name'        => 'Marketing Name',
+	 *     'description' => 'Marketing Description',
+	 *     'code'        => ''
+	 * ];
+	 *
+	 * $this->load->model('marketing/marketing');
+	 *
+	 * $this->model_marketing_marketing->editMarketing($marketing_id, $marketing_data);
 	 */
 	public function editMarketing(int $marketing_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "' WHERE `marketing_id` = '" . (int)$marketing_id . "'");
@@ -49,6 +71,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/marketing');
 	 *
 	 * $this->model_marketing_marketing->deleteMarketing($marketing_id);
 	 */
@@ -67,6 +91,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/marketing');
+	 *
 	 * $marketing_info = $this->model_marketing_marketing->getMarketing($marketing_id);
 	 */
 	public function getMarketing(int $marketing_id): array {
@@ -83,6 +109,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/marketing');
 	 *
 	 * $marketing_info = $this->model_marketing_marketing->getMarketingByCode($code);
 	 */
@@ -101,7 +129,20 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_marketing_marketing->getMarketings();
+	 * $filter_data = [
+	 *     'filter_name'      => 'Marketing Name',
+	 *     'filter_code'      => '',
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'sort'             => 'm.name',
+	 *     'order'            => 'DESC',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $this->load->model('marketing/marketing');
+	 *
+	 * $results = $this->model_marketing_marketing->getMarketings($filter_data);
 	 */
 	public function getMarketings(array $data = []): array {
 		$implode = [];
@@ -180,7 +221,20 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $marketing_total = $this->model_marketing_marketing->getTotalMarketings();
+	 * $filter_data = [
+	 *     'filter_name'      => 'Marketing Name',
+	 *     'filter_code'      => '',
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'sort'             => 'm.name',
+	 *     'order'            => 'DESC',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $this->load->model('marketing/marketing');
+	 *
+	 * $marketing_total = $this->model_marketing_marketing->getTotalMarketings($filter_data);
 	 */
 	public function getTotalMarketings(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`";
@@ -221,6 +275,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/marketing');
+	 *
 	 * $this->model_marketing_marketing->deleteReports($marketing_id);
 	 */
 	public function deleteReports(int $marketing_id): void {
@@ -237,6 +293,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> report records that have marketing ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/marketing');
 	 *
 	 * $results = $this->model_marketing_marketing->getReports($marketing_id, $start, $limit);
 	 */
@@ -262,6 +320,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	 * @return int total number of report records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/marketing');
 	 *
 	 * $report_total = $this->model_marketing_marketing->getTotalReports($marketing_id);
 	 */

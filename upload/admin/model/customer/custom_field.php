@@ -26,6 +26,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'sort_order' => 0
 	 * ];
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $custom_field_id = $this->model_customer_custom_field->addCustomField($custom_field_data);
 	 */
 	public function addCustomField(array $data): int {
@@ -73,6 +75,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'sort_order' => 0
 	 * ];
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->editCustomField($custom_field_id, $custom_field_data);
 	 */
 	public function editCustomField(int $custom_field_id, array $data): void {
@@ -112,6 +116,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->deleteCustomField($custom_field_id);
 	 */
 	public function deleteCustomField(int $custom_field_id): void {
@@ -130,6 +136,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> custom field record that has custom field ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $custom_field_info = $this->model_customer_custom_field->getCustomField($custom_field_id);
 	 */
@@ -154,6 +162,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 	 */
@@ -231,6 +241,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'limit' => 10
 	 * ];
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $custom_field_total = $this->model_customer_custom_field->getTotalCustomFields($filter_data);
 	 */
 	public function getTotalCustomFields(): int {
@@ -254,6 +266,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'name' => 'Custom Field Name'
 	 * ];
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->addDescription($custom_field_id, $language_id, $custom_field_data);
 	 */
 	public function addDescription(int $custom_field_id, int $language_id, array $data): void {
@@ -268,6 +282,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $this->model_customer_custom_field->deleteDescriptions($custom_field_id);
 	 */
@@ -284,6 +300,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -298,6 +316,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have custom field ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $custom_field_description = $this->model_customer_custom_field->getDescriptions($custom_field_id);
 	 */
@@ -322,6 +342,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $results = $this->model_customer_custom_field->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -345,6 +367,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'required'          => 0
 	 * ];
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->addCustomerGroup($custom_field_id, $custom_field_data);
 	 */
 	public function addCustomerGroup(int $custom_field_id, array $data): void {
@@ -360,6 +384,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->deleteCustomerGroups($custom_field_id);
 	 */
 	public function deleteCustomerGroups(int $custom_field_id): void {
@@ -374,6 +400,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> customer group records that have custom field ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($custom_field_id);
 	 */
@@ -398,6 +426,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *     'custom_field_id'       => 1,
 	 *     'sort_order'            => 0
 	 * ];
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $value = $this->model_customer_custom_field->addValue($custom_field_id, $custom_field_data);
 	 */
@@ -426,6 +456,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->deleteValues($custom_field_id);
 	 */
 	public function deleteValues(int $custom_field_id): void {
@@ -443,6 +475,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $custom_field_value = $this->model_customer_custom_field->getValue($custom_field_value_id);
 	 */
 	public function getValue(int $custom_field_value_id): array {
@@ -459,6 +493,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> value records that have custom field ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $custom_field_value = $this->model_customer_custom_field->getValues($custom_field_id);
 	 */
@@ -486,6 +522,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->addValueDescription($custom_field_value_id, $custom_field_id, $language_id, $custom_field_value_description);
 	 */
 	public function addValueDescription(int $custom_field_value_id, int $custom_field_id, int $language_id, array $custom_field_value_description): void {
@@ -500,6 +538,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $this->model_customer_custom_field->deleteValueDescriptions($custom_field_id);
 	 */
@@ -516,6 +556,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/custom_field');
+	 *
 	 * $this->model_customer_custom_field->deleteValueDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteValueDescriptionsByLanguageId(int $language_id): void {
@@ -530,6 +572,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> value description records that have custom field ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $custom_field_values = $this->model_customer_custom_field->getValueDescriptions($custom_field_id);
 	 */
@@ -561,6 +605,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> value description records that have language ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/custom_field');
 	 *
 	 * $results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($language_id);
 	 */

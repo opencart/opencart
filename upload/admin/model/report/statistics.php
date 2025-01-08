@@ -15,6 +15,8 @@ class Statistics extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('report/statistics');
+	 *
 	 * $results = $this->model_report_statistics->getStatistics();
 	 */
 	public function getStatistics(): array {
@@ -31,6 +33,8 @@ class Statistics extends \Opencart\System\Engine\Model {
 	 * @return float
 	 *
 	 * @example
+	 *
+	 * $this->load->model('report/statistics');
 	 *
 	 * $value = (float)$this->model_report_statistics->getValue($code);
 	 */
@@ -54,6 +58,8 @@ class Statistics extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('report/statistics');
+	 *
 	 * $this->model_report_statistics->addValue($code, $value);
 	 */
 	public function addValue(string $code, float $value): void {
@@ -70,6 +76,8 @@ class Statistics extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('report/statistics');
+	 *
 	 * $this->model_report_statistics->removeValue($code, $value);
 	 */
 	public function removeValue(string $code, float $value): void {
@@ -85,6 +93,8 @@ class Statistics extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('report/statistics');
 	 *
 	 * $this->model_report_statistics->editValue($code, $value);
 	 */

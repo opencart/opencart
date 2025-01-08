@@ -22,6 +22,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $seo_url_id = $this->model_design_seo_url->addSeoUrl($key, $value, $keyword, $store_id, $language_id, $sort_order);
 	 */
 	public function addSeoUrl(string $key, string $value, string $keyword, int $store_id, int $language_id, int $sort_order = 0): int {
@@ -45,6 +47,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $this->model_design_seo_url->editSeoUrl($seo_url_id, $key, $value, $keyword, $store_id, $language_id, $sort_order);
 	 */
 	public function editSeoUrl(int $seo_url_id, string $key, string $value, string $keyword, int $store_id, int $language_id, int $sort_order = 0): void {
@@ -59,6 +63,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/seo_url');
 	 *
 	 * $this->model_design_seo_url->deleteSeoUrl($seo_url_id);
 	 */
@@ -77,6 +83,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/seo_url');
 	 *
 	 * $this->model_design_seo_url->deleteSeoUrlsByKeyValue($key, $value, $store_id, $language_id);
 	 */
@@ -103,6 +111,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $this->model_design_seo_url->deleteSeoUrlsByLanguageId($language_id);
 	 */
 	public function deleteSeoUrlsByLanguageId(int $language_id): void {
@@ -118,6 +128,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $this->model_design_seo_url->deleteSeoUrlsByStoreId($store_id);
 	 */
 	public function deleteSeoUrlsByStoreId(int $store_id): void {
@@ -132,6 +144,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> seo url record that has seo url ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/seo_url');
 	 *
 	 * $seo_url_info = $this->model_design_seo_url->getSeoUrl($seo_url_id);
 	 */
@@ -152,6 +166,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/seo_url');
 	 *
 	 * $seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value, $store_id, $language_id);
 	 */
@@ -182,6 +198,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 	 */
 	public function getSeoUrlByKeyword(string $keyword, int $store_id, int $language_id = 0): array {
@@ -204,6 +222,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> seo url records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/seo_url');
 	 *
 	 * $results = $this->model_design_seo_url->getSeoUrls();
 	 */
@@ -284,6 +304,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $results = $this->model_design_seo_url->getSeoUrlsByKeyValue($key, $value);
 	 */
 	public function getSeoUrlsByKeyValue(string $key, string $value): array {
@@ -307,6 +329,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $results = $this->model_design_seo_url->getSeoUrlsByStoreId($store_id);
 	 */
 	public function getSeoUrlsByStoreId(int $store_id): array {
@@ -324,6 +348,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/seo_url');
+	 *
 	 * $results = $this->model_design_seo_url->getSeoUrlsByLanguageId($language_id);
 	 */
 	public function getSeoUrlsByLanguageId(int $language_id): array {
@@ -340,6 +366,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * @return int total number of seo url records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/seo_url');
 	 *
 	 * $seo_url_total = $this->model_design_seo_url->getTotalSeoUrls();
 	 */

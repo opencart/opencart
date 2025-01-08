@@ -21,6 +21,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *     'keyword' => 'Keyword'
 	 * ];
 	 *
+	 * $this->load->model('cms/antispam');
+	 *
 	 * $antispam_id = $this->model_cms_antispam->addAntispam($antispam_data);
 	 */
 	public function addAntispam(array $data = []): int {
@@ -43,6 +45,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *     'keyword' => 'Keyword'
 	 * ];
 	 *
+	 * $this->load->model('cms/antispam');
+	 *
 	 * $this->model_cms_antispam->editAntispam($antispam_id, $antispam_data);
 	 */
 	public function editAntispam(int $antispam_id, array $data = []): void {
@@ -58,6 +62,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/antispam');
+	 *
 	 * $this->model_cms_antispam->deleteAntispam($antispam_id);
 	 */
 	public function deleteAntispam(int $antispam_id): void {
@@ -72,6 +78,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> antispam record that has antispam ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/antispam');
 	 *
 	 * $antispam_info = $this->model_cms_antispam->getAntispam($antispam_id);
 	 */
@@ -95,8 +103,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *     'sort'           => 'keyword',
 	 *     'order'          => 'DESC',
 	 *     'start'          => 0,
-	 *     'limit'          => 50
+	 *     'limit'          => 10
 	 * ];
+	 *
+	 * $this->load->model('cms/antispam');
 	 *
 	 * $results = $this->model_cms_antispam->getAntispams($filter_data);
 	 */
@@ -158,8 +168,10 @@ class Antispam extends \Opencart\System\Engine\Model {
 	 *     'sort'           => 'keyword',
 	 *     'order'          => 'DESC',
 	 *     'start'          => 0,
-	 *     'limit'          => 50
+	 *     'limit'          => 10
 	 * ];
+	 *
+	 * $this->load->model('cms/antispam');
 	 *
 	 * $antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
 	 */

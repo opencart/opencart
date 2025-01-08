@@ -17,7 +17,14 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $address_format_id = $this->model_localisation_address_format->addAddressFormat($data);
+	 * $address_format_data = [
+	 *     'name'           => 'Address Format Name',
+	 *     'address_format' => ''
+	 * ];
+	 *
+	 * $this->load->model('localisation/address_format');
+	 *
+	 * $address_format_id = $this->model_localisation_address_format->addAddressFormat($address_format_data);
 	 */
 	public function addAddressFormat(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "address_format` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "'");
@@ -35,7 +42,14 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_address_format->editAddressFormat($address_format_id, $data);
+	 * $address_format_data = [
+	 *     'name'           => 'Address Format Name',
+	 *     'address_format' => ''
+	 * ];
+	 *
+	 * $this->load->model('localisation/address_format');
+	 *
+	 * $this->model_localisation_address_format->editAddressFormat($address_format_id, $address_format_data);
 	 */
 	public function editAddressFormat(int $address_format_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "address_format` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "' WHERE `address_format_id` = '" . (int)$address_format_id . "'");
@@ -49,6 +63,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/address_format');
 	 *
 	 * $this->model_localisation_address_format->deleteAddressFormat($address_format_id);
 	 */
@@ -64,6 +80,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> address format record that has address format ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/address_format');
 	 *
 	 * $address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
 	 */
@@ -82,7 +100,14 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_address_format->getAddressFormats();
+	 * $filter_data = [
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/address_format');
+	 *
+	 * $results = $this->model_localisation_address_format->getAddressFormats($filter_data);
 	 */
 	public function getAddressFormats(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "address_format`";
@@ -113,7 +138,14 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $address_format_total = $this->model_localisation_address_format->getTotalAddressFormats();
+	 * $filter_data = [
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/address_format');
+	 *
+	 * $address_format_total = $this->model_localisation_address_format->getTotalAddressFormats($filter_data);
 	 */
 	public function getTotalAddressFormats(array $data = []): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address_format`");

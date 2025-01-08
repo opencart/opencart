@@ -22,6 +22,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *     'status'     => 0
 	 * ];
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $topic_id = $this->model_cms_topic->addTopic($topic_data);
 	 */
 	public function addTopic(array $data): int {
@@ -70,6 +72,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *     'status'     => 1
 	 * ];
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->editTopic($topic_id, $topic_data);
 	 */
 	public function editTopic(int $topic_id, array $data): void {
@@ -114,6 +118,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->deleteTopic($topic_id);
 	 */
 	public function deleteTopic(int $topic_id): void {
@@ -138,6 +144,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> topic records that have topic ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/topic');
 	 *
 	 * $topic_info = $this->model_cms_topic->getTopic($topic_id);
 	 */
@@ -172,6 +180,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('cms/topic');
 	 *
 	 * $topics = $this->model_cms_topic->getTopics($filter_data);
 	 */
@@ -236,6 +246,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *     'limit' => 10
 	 * ];
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $topic_total = $this->model_cms_topic->getTotalTopics($filter_data);
 	 */
 	public function getTotalTopics(): int {
@@ -264,6 +276,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *     'meta_keyword'     => 'Meta Keyword'
 	 * ];
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->addDescription($topic_id, $language_id, $topic_data);
 	 */
 	public function addDescription(int $topic_id, int $language_id, array $data): void {
@@ -278,6 +292,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/topic');
 	 *
 	 * $this->model_cms_topic->deleteDescriptions($topic_id);
 	 */
@@ -294,6 +310,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -308,6 +326,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> description records that have topic ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/topic');
 	 *
 	 * $results = $this->model_cms_topic->getDescriptions($topic_id);
 	 */
@@ -332,6 +352,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $topic_description = $this->model_cms_topic->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -350,6 +372,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->addStore($topic_id, $store_id);
 	 */
 	public function addStore(int $topic_id, int $store_id): void {
@@ -365,6 +389,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->deleteStores($topic_id);
 	 */
 	public function deleteStores(int $topic_id): void {
@@ -379,6 +405,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> store records that have topic ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/topic');
 	 *
 	 * $topic_store = $this->model_cms_topic->getStores($topic_id);
 	 */
@@ -405,6 +433,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
@@ -420,6 +450,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/topic');
+	 *
 	 * $this->model_cms_topic->deleteLayouts($article_id);
 	 */
 	public function deleteLayouts(int $article_id): void {
@@ -434,6 +466,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/topic');
 	 *
 	 * $this->model_cms_topic->deleteLayoutsByLayoutId($layout_id);
 	 */

@@ -17,7 +17,21 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $coupon_id = $this->model_marketing_coupon->addCoupon($data);
+	 * $coupon_data = [
+	 *     'name'       => 'Coupon Name',
+	 *     'code'       => 'Coupon Code',
+	 *     'discount'   => 0.0000,
+	 *     'type'       => 'F',
+	 *     'total'      => 0.0000,
+	 *     'logged'     => 0,
+	 *     'shipping'   => 0,
+	 *     'date_start' => '2021-01-01',
+	 *     'date_end'   => '2021-01-31'
+	 * ];
+	 *
+	 * $this->load->model('marketing/coupon');
+	 *
+	 * $coupon_id = $this->model_marketing_coupon->addCoupon($coupon_data);
 	 */
 	public function addCoupon(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `discount` = '" . (float)$data['discount'] . "', `type` = '" . $this->db->escape((string)$data['type']) . "', `total` = '" . (float)$data['total'] . "', `logged` = '" . (isset($data['logged']) ? (bool)$data['logged'] : 0) . "', `shipping` = '" . (isset($data['shipping']) ? (bool)$data['shipping'] : 0) . "', `date_start` = '" . $this->db->escape((string)$data['date_start']) . "', `date_end` = '" . $this->db->escape((string)$data['date_end']) . "', `uses_total` = '" . (int)$data['uses_total'] . "', `uses_customer` = '" . (int)$data['uses_customer'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = NOW()");
@@ -49,7 +63,21 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_marketing_coupon->editCoupon($coupon_id, $data);
+	 * $coupon_data = [
+	 *     'name'       => 'Coupon Name',
+	 *     'code'       => 'Coupon Code',
+	 *     'discount'   => 0.0000,
+	 *     'type'       => 'F',
+	 *     'total'      => 0.0000,
+	 *     'logged'     => 0,
+	 *     'shipping'   => 0,
+	 *     'date_start' => '2021-01-01',
+	 *     'date_end'   => '2021-01-31'
+	 * ];
+	 *
+	 * $this->load->model('marketing/coupon');
+	 *
+	 * $this->model_marketing_coupon->editCoupon($coupon_id, $coupon_data);
 	 */
 	public function editCoupon(int $coupon_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "coupon` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `discount` = '" . (float)$data['discount'] . "', `type` = '" . $this->db->escape((string)$data['type']) . "', `total` = '" . (float)$data['total'] . "', `logged` = '" . (isset($data['logged']) ? (bool)$data['logged'] : 0) . "', `shipping` = '" . (isset($data['shipping']) ? (bool)$data['shipping'] : 0) . "', `date_start` = '" . $this->db->escape((string)$data['date_start']) . "', `date_end` = '" . $this->db->escape((string)$data['date_end']) . "', `uses_total` = '" . (int)$data['uses_total'] . "', `uses_customer` = '" . (int)$data['uses_customer'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `coupon_id` = '" . (int)$coupon_id . "'");
@@ -80,6 +108,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $this->model_marketing_coupon->deleteCoupon($coupon_id);
 	 */
 	public function deleteCoupon(int $coupon_id): void {
@@ -99,6 +129,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $coupon_info = $this->model_marketing_coupon->getCoupon($coupon_id);
 	 */
 	public function getCoupon(int $coupon_id): array {
@@ -115,6 +147,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 	 */
@@ -133,7 +167,16 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_marketing_coupon->getCoupons();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('marketing/coupon');
+	 *
+	 * $results = $this->model_marketing_coupon->getCoupons($filter_data);
 	 */
 	public function getCoupons(array $data = []): array {
 		$sql = "SELECT `coupon_id`, `name`, `code`, `discount`, `date_start`, `date_end`, `status` FROM `" . DB_PREFIX . "coupon`";
@@ -186,6 +229,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $this->model_marketing_coupon->addProduct($coupon_id, $product_id);
 	 */
 	public function addProduct(int $coupon_id, int $product_id): void {
@@ -200,6 +245,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $this->model_marketing_coupon->deleteProducts($coupon_id);
 	 */
@@ -216,6 +263,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $this->model_marketing_coupon->deleteProductsByProductId($product_id);
 	 */
 	public function deleteProductsByProductId(int $product_id): void {
@@ -230,6 +279,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> product records that have coupon ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $products = $this->model_marketing_coupon->getProducts($coupon_id);
 	 */
@@ -255,6 +306,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $this->model_marketing_coupon->addCategory($coupon_id, $category_id);
 	 */
 	public function addCategory(int $coupon_id, int $category_id): void {
@@ -269,6 +322,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $this->model_marketing_coupon->deleteCategories($coupon_id);
 	 */
@@ -285,6 +340,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $this->model_marketing_coupon->deleteCategoriesByCategoryId($category_id);
 	 */
 	public function deleteCategoriesByCategoryId(int $category_id): void {
@@ -299,6 +356,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> category records that have coupon ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $categories = $this->model_marketing_coupon->getCategories($coupon_id);
 	 */
@@ -321,6 +380,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $coupon_total = $this->model_marketing_coupon->getTotalCoupons();
 	 */
 	public function getTotalCoupons(): int {
@@ -339,6 +400,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> history records that have coupon ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $results = $this->model_marketing_coupon->getHistories($coupon_id, $start, $limit);
 	 */
@@ -365,6 +428,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('marketing/coupon');
+	 *
 	 * $this->model_marketing_coupon->deleteHistories($coupon_id);
 	 */
 	public function deleteHistories(int $coupon_id): void {
@@ -379,6 +444,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return int total number of history records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('marketing/coupon');
 	 *
 	 * $history_total = $this->model_marketing_coupon->getTotalHistories($coupon_id);
 	 */

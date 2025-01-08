@@ -177,7 +177,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	 *     'limit'            => 10
 	 * ];
 	 *
-	 * $upload_total = $this->model_tool_upload->getTotalUploads();
+	 * $upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
 	 */
 	public function getTotalUploads(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "upload`";

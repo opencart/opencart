@@ -303,7 +303,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'limit'                => 10
 	 * ];
 	 *
-	 * $user_total = $this->model_user_user->getTotalUsers();
+	 * $user_total = $this->model_user_user->getTotalUsers($filter_data);
 	 */
 	public function getTotalUsers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` `u` ";

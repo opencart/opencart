@@ -593,8 +593,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Customer
 		if (!empty($order_info)) {
 			$data['customer_id'] = $order_info['customer_id'];
+			$data['customer_edit'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 		} else {
 			$data['customer_id'] = 0;
+			$data['customer_edit'] = '';
 		}
 
 		$this->load->model('customer/customer_group');
@@ -635,12 +637,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['account_custom_field'] = $order_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = [];
-		}
-
-		if (!empty($order_info)) {
-			$data['customer_edit'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
-		} else {
-			$data['customer_edit'] = '';
 		}
 
 		// Custom Fields
@@ -918,8 +914,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Affiliate
 		if (!empty($order_info)) {
 			$data['affiliate_id'] = $order_info['affiliate_id'];
+			$data['affiliate_edit'] = $this->url->link('marketing/affiliate.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 		} else {
 			$data['affiliate_id'] = 0;
+			$data['affiliate_edit'] = '';
 		}
 
 		if (!empty($order_info)) {

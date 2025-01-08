@@ -21,41 +21,37 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <div class="input-group">
-              <div class="form-control p-0 border rounded" style="min-height: 64px;">
-                <div class="lead p-2"><strong>{{ text_order_id }}</strong>
+              <section id="section-order" class="form-control rounded-start" style="min-height: 64px;">
+                <div class="lead"><strong>{{ text_order_id }}</strong>
                   <br/>
-                  {% if order_id %}
-                    <div id="order-value"><a href="{{ order_edit }}" target="_blank">{{ order_id }}</a></div>
-                  {% else %}
-                    <div id="order-value">&nbsp;</div>
-                  {% endif %}
+                  <div id="output-order">{% if order_id %}<a href="{{ order_edit }}" target="_blank">{{ order_id }}</a>{% endif %}</div>
                 </div>
-              </div>
+              </section>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-order" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
           <div class="col mb-3">
             <div class="input-group">
-              <div id="input-customer-info" class="form-control rounded-start" style="min-height: 64px;">
+              <section id="section-customer" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
-                    <div id="customer-value"><a href="{{ customer_edit }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    <div id="value-customer"><a href="{{ customer_edit }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
                   {% else %}
-                    <div id="customer-value">{{ firstname }} {{ lastname }}</div>
+                    <div id="value-customer">{{ firstname }} {{ lastname }}</div>
                   {% endif %}
                 </div>
-              </div>
+              </section>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
           <div class="col mb-3">
-            <div class="form-control p-0 border rounded" style="min-height: 64px;">
+            <section class="form-control p-0 border rounded" style="min-height: 64px;">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                 <br/>
                 <div>{{ date_added }}</div>
               </div>
-            </div>
+            </section>
           </div>
         </div>
         <table class="table table-bordered">
@@ -121,7 +117,8 @@
         <div class="row mb-3">
           <div class="col">
             <form id="form-comment" class="form-floating">
-              <textarea name="comment" rows="10" placeholder="{{ entry_comment }}" id="input-comment" class="form-control" style="min-height: 100px;">{{ comment }}</textarea> <label for="input-comment">{{ entry_comment }}</label>
+              <textarea name="comment" rows="10" placeholder="{{ entry_comment }}" id="input-comment" class="form-control" style="min-height: 100px;">{{ comment }}</textarea>
+              <label for="input-comment">{{ entry_comment }}</label>
             </form>
           </div>
         </div>
@@ -176,7 +173,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-order">
+        <form id="form-order" data-oc-target="#section-order">
           <div class="mb-3">
             <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
             <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
@@ -198,7 +195,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-customer">
+        <form id="form-customer" data-oc-target="#section-customer">
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <input type="text" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
@@ -241,7 +238,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-product">
+        <form id="form-product" data-oc-target="#section-product">
           <div class="mb-3 required">
             <label for="input-return" class="form-label">{{ entry_product }}</label>
             <select name="product_id" id="input-return" class="form-select">
@@ -302,7 +299,7 @@ $('#form-order').on('submit', function(e) {
             }
 
             if (json['order_id']) {
-                $('#order-value').html('<a href="index.php?route=sale/order.form&user_token={{ user_token }}&order_id=' + json['order_id'] + '" target="_blank">' + json['order_id'] + '</a>');
+                $('#output-order').html('<a href="index.php?route=sale/order.form&user_token={{ user_token }}&order_id=' + json['order_id'] + '" target="_blank">' + json['order_id'] + '</a>');
 
                 $('#input-date-ordered').val(json['date_added']);
                 $('#input-customer').val(json['firstname'] + ' ' + json['lastname']);
@@ -312,7 +309,7 @@ $('#form-order').on('submit', function(e) {
                 $('#input-email').val(json['email']);
                 $('#input-telephone').val(json['telephone']);
 
-                $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'] + '" target="_blank">' + json['firstname'] + ' ' + json['lastname'] + '</a>');
+                $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'] + '" target="_blank">' + json['firstname'] + ' ' + json['lastname'] + '</a>');
 
                 html = '<option value="0">{{ text_select }}</option>';
 
@@ -369,9 +366,9 @@ $('#form-customer').on('submit', function(e) {
     var customer_id = $('#input-customer-id').val();
 
     if (customer_id) {
-        $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + customer_id + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+        $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + customer_id + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
     } else {
-        $('#customer-value').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
+        $('#output-customer').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
     }
 
     $('#modal-customer').modal('hide');
@@ -407,8 +404,6 @@ $('#form-product').on('submit', function(e) {
 $('#button-save').on('click', function() {
     var element = this;
 
-    console.log($('#form-order, #form-customer, #form-product, #form-return-reason, #form-opened, #form-return-action, #form-comment, #input-return-id').serialize());
-
     $.ajax({
         url: 'index.php?route=sale/returns.save&user_token={{ user_token }}',
         type: 'post',
@@ -429,52 +424,27 @@ $('#button-save').on('click', function() {
             $('.invalid-feedback').removeClass('d-block');
 
             // Check for errors
-            if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (typeof json['error'] == 'object') {
-                keys = [
-                    'order_id',
-                    'date_ordered'
-                ];
-
-                if (json['error']['order']) {
-                    $('#input-order-info').addClass('is-invalid');
-
-                }
-
-                keys = [
-                    'firstname',
-                    'lastname',
-                    'email',
-                    'telephone'
-                ];
-
-                if (json['error']['customer']) {
-                    $('#input-customer-info').addClass('is-invalid');
-                }
-
-
-                if (json['error']['product']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-product-info').addClass('is-invalid');
-
-                    delete json['error']['product'];
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
+
+                // Highlight any invalid fields
+                $('.is-invalid').parents('form').each(function(index, element) {
+                    $($(element).attr('data-oc-target')).addClass('is-invalid');
+                });
             }
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                if (json['order_id']) {
-                    $('#order-id-value').val(json['order_id']);
+                if (json['return_id']) {
+                    $('#input-return-id').val(json['return_id']);
                 }
             }
         },

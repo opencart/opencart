@@ -18,16 +18,16 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
             <div class="input-group">
-              <div class="form-control rounded-start" style="min-height: 64px;">
+              <section class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_invoice }}</strong>
                   <br/>
                   {% if not invoice_no %}
-                    <span id="invoice-value">{{ text_tbc }}</span>
+                    <span id="output-invoice">{{ text_tbc }}</span>
                   {% else %}
-                    <span id="invoice-value">{{ invoice_prefix }}{{ invoice_no }}</span>
+                    <span id="output-invoice">{{ invoice_prefix }}{{ invoice_no }}</span>
                   {% endif %}
                 </div>
-              </div>
+              </section>
               {% if not invoice_no %}
                 <button type="button" id="button-invoice" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               {% else %}
@@ -37,16 +37,16 @@
           </div>
           <div class="col mb-3">
             <div class="input-group">
-              <div id="input-customer-info" class="form-control rounded-start" style="min-height: 64px;">
+              <section id="section-customer" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
-                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    <div id="output-customer"><a href="{{ customer_edit }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
                   {% else %}
-                    <div id="customer-value">{{ firstname }} {{ lastname }}</div>
+                    <div id="output-customer">{{ firstname }} {{ lastname }}</div>
                   {% endif %}
                 </div>
-              </div>
+              </section>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -66,11 +66,9 @@
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
-              </select>
-              <label for="input-store">{{ entry_store }}</label>
+              </select> <label for="input-store">{{ entry_store }}</label>
             </div>
           </div>
-
           <div class="col mb-3">
             <div class="form-floating">
               <select id="input-language" class="form-select">
@@ -81,7 +79,6 @@
               <label for="input-language">{{ entry_language }}</label>
             </div>
           </div>
-
           <div class="col">
             <div class="form-floating">
               <select id="input-currency" class="form-select">
@@ -92,7 +89,6 @@
             </div>
           </div>
         </div>
-
         <form id="form-cart">
           <table class="table table-bordered">
             <thead>
@@ -179,10 +175,10 @@
         <div class="row">
           <div class="col-md mb-3">
             <div class="input-group">
-              <div id="input-payment-address-info" class="form-control rounded-start" style="min-height: 128px;">
+              <section id="section-payment-address" class="form-control rounded-start" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
-                  <div id="payment-address-value">
+                  <div id="output-payment-address">
                     {{ payment_firstname }} {{ payment_lastname }}
                     <br/>
                     {% if payment_company %}
@@ -214,16 +210,16 @@
                     {% endif %}
                   </div>
                 </div>
-              </div>
+              </section>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
           <div id="shipping-address" class="col mb-3{% if not shipping_method_code %} d-none{% endif %}">
             <div class="input-group">
-              <div id="input-shipping-address-info" class="form-control rounded-start" style="min-height: 128px;">
+              <section id="section-shipping-address" class="form-control rounded-start" style="min-height: 128px;">
                 <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
-                  <div id="shipping-address-value">
+                  <div id="output-shipping-address">
                     {{ shipping_firstname }} {{ shipping_lastname }}
                     <br/>
                     {% if shipping_company %}
@@ -255,7 +251,7 @@
                     {% endif %}
                   </div>
                 </div>
-              </div>
+              </section>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -263,12 +259,12 @@
         <div class="row">
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
-              <div id="input-shipping-method-info" class="form-control rounded-start" style="min-height: 64px;">
+              <section id="section-shipping-method" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
-                  <div id="shipping-method-value">{{ shipping_method_name }}</div>
+                  <div id="output-shipping-method">{{ shipping_method_name }}</div>
                 </div>
-              </div>
+              </section>
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -277,7 +273,7 @@
               <div id="input-payment-method-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_payment_method }}</strong>
                   <br/>
-                  <div id="payment-method-value">{{ payment_method_name }}</div>
+                  <div id="output-payment-method">{{ payment_method_name }}</div>
                 </div>
               </div>
               <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -294,7 +290,7 @@
                 <div class="form-control rounded-start">
                   <div class="lead p-0"><strong>{{ text_reward }}</strong>
                     <br/>
-                    <div id="point-value">{{ points }}</div>
+                    <div id="output-point">{{ points }}</div>
                   </div>
                 </div>
                 {% if not reward_total %}
@@ -309,11 +305,7 @@
                 <div id="input-affiliate-info" class="form-control rounded-start" style="min-height: 64px;">
                   <div class="lead"><strong>{{ text_affiliate }}</strong>
                     <br/>
-                    {% if affiliate_id %}
-                      <div id="affiliate-value"><a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
-                    {% else %}
-                      <div id="affiliate-value">&nbsp;</div>
-                    {% endif %}
+                    <div id="output-affiliate">{% if affiliate_id %}<a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a>{% endif %}</div>
                   </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -324,11 +316,7 @@
                 <div class="form-control rounded-start">
                   <div class="lead"><strong>{{ text_commission }}</strong>
                     <br/>
-                    {% if commission %}
-                      <div id="commission-value">{{ commission }}</div>
-                    {% else %}
-                      <div id="commission-value">&nbsp;</div>
-                    {% endif %}
+                    <div id="output-commission">{{ commission }}</div>
                   </div>
                 </div>
                 {% if not commission_total %}
@@ -347,7 +335,7 @@
               <div class="form-control rounded-start" style="min-height: 100px;">
                 <div class="lead"><strong>{{ text_comment }}</strong>
                   <br/>
-                  <span id="comment-value">{{ comment }}</span>
+                  <div id="output-comment">{{ comment }}</div>
                 </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -477,7 +465,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-customer">
+        <form id="form-customer" data-oc-target="#section-customer">
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
@@ -558,16 +546,14 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -628,14 +614,12 @@
       <div class="modal-body">
         <form id="form-product-add">
           <div class="mb-3">
-            <label for="input-product" class="form-label">{{ entry_product }}</label>
-            <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
+            <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
             <input type="hidden" name="product_id" value="" id="input-product-id"/>
           </div>
           <div class="mb-3">
-            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-            <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+            <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
           </div>
           <div id="option"></div>
           <div id="subscription"></div>
@@ -656,53 +640,43 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-payment-address">
+        <form id="form-payment-address" data-oc-target="#section-payment-address">
           <div class="mb-3">
-            <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
-            <select name="payment_address_id" id="input-payment-address" class="form-select">
+            <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address_id" id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.postcode }}, {{ address.zone }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
-
           <div class="mb-3 required">
-            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="payment_firstname" value="{{ payment_firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="payment_firstname" value="{{ payment_firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
             <div id="error-payment-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="payment_lastname" value="{{ payment_lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="payment_lastname" value="{{ payment_lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
             <div id="error-payment-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
-            <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+            <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
-            <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+            <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
             <div id="error-payment-address-1" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
-            <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+            <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
-            <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+            <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
             <div id="error-payment-city" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
-            <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+            <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
             <div id="error-payment-postcode" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-            <select name="payment_country_id" id="input-payment-country" class="form-select">
+            <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="payment_country_id" id="input-payment-country" class="form-select">
               <option value="0">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == payment_country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -711,8 +685,7 @@
             <div id="error-payment-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-            <select name="payment_zone_id" id="input-payment-zone" class="form-select">
+            <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="payment_zone_id" id="input-payment-zone" class="form-select">
               <option value="">{{ text_select }}</option>
               {% for zone in payment_zones %}
                 <option value="{{ zone.zone_id }}"{% if zone.zone_id == payment_zone_id %} selected{% endif %}>{{ zone.name }}</option>
@@ -765,16 +738,14 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <textarea name="payment_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="payment_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -832,7 +803,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-shipping-address">
+        <form id="form-shipping-address" data-oc-target="section-shipping-address">
           <div class="mb-3">
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address_id" id="input-shipping-address" class="form-select">
               <option value="0">{{ text_none }}</option>
@@ -877,8 +848,7 @@
             <div id="error-shipping-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-            <select name="shipping_zone_id" id="input-shipping-zone" class="form-select">
+            <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label> <select name="shipping_zone_id" id="input-shipping-zone" class="form-select">
               <option value="">{{ text_select }}</option>
               {% for zone in shipping_zones %}
                 <option value="{{ zone.zone_id }}"{% if zone.zone_id == shipping_zone_id %} selected{% endif %}>{{ zone.name }}</option>
@@ -931,16 +901,14 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -960,24 +928,21 @@
 
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="date" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="time" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <input type="datetime-local" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -1003,11 +968,8 @@
       <div class="modal-body">
         <p>{{ text_shipping }}</p>
         <div id="shipping-methods"></div>
-        <form id="form-shipping-method">
-          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/>
-          <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/>
-          <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/>
-          <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
+        <form id="form-shipping-method" data-oc-target="#section-shipping-method">
+          <input type="hidden" name="shipping_method[name]" value="{{ shipping_method_name }}" id="input-shipping-method-name"/> <input type="hidden" name="shipping_method[code]" value="{{ shipping_method_code }}" id="input-shipping-method-code"/> <input type="hidden" name="shipping_method[cost]" value="{{ shipping_method_cost }}" id="input-shipping-method-cost"/> <input type="hidden" name="shipping_method[tax_class_id]" value="{{ shipping_method_tax_class_id }}" id="input-shipping-method-tax-class"/>
           <div class="text-end">
             <button type="submit" id="button-shipping-method" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
           </div>
@@ -1027,9 +989,8 @@
       <div class="modal-body">
         <p>{{ text_payment }}</p>
         <div id="payment-methods"></div>
-        <form id="form-payment-method">
-          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/>
-          <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
+        <form id="form-payment-method" data-oc-target="#section-payment-method">
+          <input type="hidden" name="payment_method[name]" value="{{ payment_method_name }}" id="input-payment-method-name"/> <input type="hidden" name="payment_method[code]" value="{{ payment_method_code }}" id="input-payment-method-code"/>
           <div class="text-end">
             <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
           </div>
@@ -1047,7 +1008,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-affiliate">
+        <form id="form-affiliate" data-oc-target="#section-affiliate">
           <div class="mb-3">
             <label for="input-affiliate" class="form-label">{{ entry_affiliate }}</label> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/> <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/>
             <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
@@ -1069,7 +1030,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment">
+        <form id="form-comment" data-oc-target="#section-comment">
           <div class="mb-3">
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
@@ -1119,7 +1080,7 @@ $(document).on('click', '#button-invoice', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#invoice-value').html(json['invoice_no']);
+                $('#output-invoice').html(json['invoice_no']);
 
                 $('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>');
             }
@@ -1267,7 +1228,7 @@ $('#form-customer').on('submit', function(e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+                $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1708,7 +1669,7 @@ $('#form-payment-address').on('submit', function(e) {
                 address += $('#input-payment-zone option:selected').text() + '<br/>';
                 address += $('#input-payment-country option:selected').text();
 
-                $('#payment-address-value').html(address);
+                $('#output-payment-address').html(address);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1889,7 +1850,7 @@ $('#form-shipping-address').on('submit', function(e) {
                 address += $('#input-shipping-zone option:selected').text() + '<br/>';
                 address += $('#input-shipping-country option:selected').text();
 
-                $('#shipping-address-value').html(address);
+                $('#output-shipping-address').html(address);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2084,7 +2045,7 @@ $('#form-shipping-method').on('submit', function(e) {
             if (json['success']) {
                 $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#shipping-method-value').html($('#input-shipping-method-name').val());
+                $('#output-shipping-method').html($('#input-shipping-method-name').val());
 
                 cart_render(json['products'], json['totals'], json['shipping_required']);
             }
@@ -2221,7 +2182,7 @@ $('#form-payment-method').on('submit', function(e) {
             if (json['success']) {
                 $('#modal-payment-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method-value').html($('#input-payment-method-name').val());
+                $('#output-payment-method').html($('#input-payment-method-name').val());
 
                 cart_render(json['products'], json['totals'], json['shipping_required']);
             }
@@ -2235,7 +2196,7 @@ $('#form-payment-method').on('submit', function(e) {
 $('#form-comment').on('submit', function(e) {
     e.preventDefault();
 
-    $('#comment-value').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+    $('#output-comment').html($('#input-comment').val().replace(/<[^>]*>?/gm, '').replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 });
 
 $('#button-refresh').on('click', function() {
@@ -2305,83 +2266,40 @@ $('#button-confirm').on('click', function() {
             }
 
             if (typeof json['error'] == 'object') {
-                if (json['error']['customer']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-customer-info').addClass('is-invalid');
-
-                    delete json['error']['customer'];
-                }
-
-                if (json['error']['product']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-product-info').addClass('is-invalid');
-
-                    delete json['error']['product'];
-                }
-
-                if (json['error']['payment_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-address-info').addClass('is-invalid');
-
-                    delete json['error']['payment_address'];
-                }
-
-                if (json['error']['shipping_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-address-info').addClass('is-invalid');
-
-                    delete json['error']['shipping_address'];
-                }
-
-                if (json['error']['shipping_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-method-info').addClass('is-invalid');
-
-                    delete json['error']['shipping_method'];
-                }
-
-                if (json['error']['payment_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-method-info').addClass('is-invalid');
-
-                    delete json['error']['payment_method'];
-                }
-
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
+
+                // Highlight any invalid fields
+                $('.is-invalid').parents('form').each(function(index, element) {
+                    $($(element).attr('data-oc-target')).addClass('is-invalid');
+                });
             }
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (json['order_id']) {
-                    $('#order-id-value').val(json['order_id']);
+                    $('#input-order-id').val(json['order_id']);
                 }
 
                 if (json['points']) {
-                    $('#point-value').html(json['points']);
+                    $('#output-point').html(json['points']);
                     $('#button-reward-add').prop('disabled', false);
                     $('#button-reward-remove').prop('disabled', false);
                 } else {
-                    $('#point-value').html(0);
+                    $('#output-point').html(0);
                     $('#button-reward-add').prop('disabled', true);
                     $('#button-reward-remove').prop('disabled', true);
                 }
 
                 if (json['commission']) {
-                    $('#commission-value').html(json['commission']);
+                    $('#output-commission').html(json['commission']);
                     $('#button-commission-add').prop('disabled', false);
                     $('#button-commission-remove').prop('disabled', false);
                 } else {
-                    $('#commission-value').html('&nbsp;');
+                    $('#output-commission').html('&nbsp;');
                     $('#button-commission-add').prop('disabled', true);
                     $('#button-commission-remove').prop('disabled', true);
                 }
@@ -2598,9 +2516,9 @@ $('#form-affiliate').on('submit', function(e) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if ($('#input-affiliate-id').val()) {
-                    $('#affiliate-value').html('<a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
+                    $('#output-affiliate').html('<a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
                 } else {
-                    $('#affiliate-value').html('');
+                    $('#output-affiliate').html('');
                 }
             }
         },

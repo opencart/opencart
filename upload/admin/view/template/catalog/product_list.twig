@@ -18,12 +18,10 @@
             <tr{% if not product.variant %} class="table-warning"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ product.product_id }}" class="form-check-input"/></td>
               <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
-              <td>{{ product.name }}
-                <br/>
-                {% if product.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
+              <td>{{ product.name }}{% if product.status %}
+                 <small class="fs-6 text-success bg-opacity-50"><i class="fa-solid fa-circle"></i></small>
                 {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
+                  <small class="fs-6 text-danger bg-opacity-50"><i class="fa-solid fa-circle"></i></small>
                 {% endif %}</td>
               <td class="d-none d-lg-table-cell">{{ product.model }}</td>
               <td class="text-end">

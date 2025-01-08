@@ -1,11 +1,11 @@
 <div class="input-group">
-  <div id="input-reward-info" class="form-control" style="min-height: 64px;">
+  <section id="section-reward" class="form-control" style="min-height: 64px;">
     <div class="lead">
       <strong>{{ text_reward }}</strong>
       <br/>
-      <div id="reward-value">{{ reward }}</div>
+      <div id="output-reward">{{ reward }}</div>
     </div>
-  </div>
+  </section>
   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-reward" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
 </div>
 <div id="modal-reward" class="modal">
@@ -16,7 +16,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-reward">
+        <form id="form-reward" data-oc-target="section-reward">
           <div class="mb-3">
             <label for="input-reward" class="form-label">{{ entry_reward }}</label>
             <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
@@ -54,14 +54,13 @@ $('#form-reward').on('submit', function(e) {
             if (json['error']) {
                 $('#form-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-reward-info').addClass('is-invalid');
                 $('#input-reward').addClass('is-invalid');
             }
 
             if (json['success']) {
                 $('#form-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#reward-value').html($('#input-reward').val());
+                $('#output-reward').html($('#input-reward').val());
 
                 cart_render(json['products'], json['totals'], json['shipping_required']);
             }

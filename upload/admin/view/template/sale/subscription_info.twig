@@ -210,7 +210,7 @@
               <div class="form-control border rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
-                  <span id="shipping-method-value">{{ shipping_method_name }}</span>
+                  <div id="output-shipping-method">{{ shipping_method_name }}</div>
                 </div>
               </div>
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -221,7 +221,7 @@
               <div class="form-control border rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_payment_method }}</strong>
                   <br/>
-                  <span id="payment-method-value">{{ payment_method_name }}</span>
+                  <div id="output-payment-method">{{ payment_method_name }}</div>
                 </div>
               </div>
               <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
@@ -861,7 +861,7 @@ $('#form-shipping-method').on('submit', function(e) {
         $('#input-shipping-method-tax-class').val(shipping_method[code]['tax_class_id']);
     }
 
-    $('#shipping-method-value').html($('#input-shipping-method-name').val());
+    $('#output-shipping-method').html($('#input-shipping-method-name').val());
 
     $('#modal-shipping-method').modal('hide');
 });
@@ -955,7 +955,7 @@ $('#form-payment-method').on('submit', function(e) {
         $('#input-payment-method-code').val(payment_method[code]['code']);
     }
 
-    $('#payment-method-value').html($('#input-payment-method-name').val());
+    $('#output-payment-method').html($('#input-payment-method-name').val());
 
     $('#modal-payment-method').modal('hide');
 });
@@ -1015,44 +1015,7 @@ $('#button-confirm').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
-            // Check for errors
-            if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (typeof json['error'] == 'object') {
-                if (json['error']['customer']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['customer'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-customer-info').addClass('is-invalid');
-
-                    delete json['error']['customer'];
-                }
-
-                if (json['error']['product']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['product'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-product-info').addClass('is-invalid');
-
-                    delete json['error']['product'];
-                }
-
-                if (json['error']['payment_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-payment-address-info').addClass('is-invalid');
-
-                    delete json['error']['payment_address'];
-                }
-
-                if (json['error']['shipping_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-address-info').addClass('is-invalid');
-
-                    delete json['error']['shipping_address'];
-                }
-
+            if (typeof json['error']) {
                 if (json['error']['shipping_method']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 

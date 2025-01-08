@@ -17,7 +17,13 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $weight_class_id = $this->model_localisation_weight_class->addWeightClass($data);
+	 * $weight_class_data = [
+	 *     'value' => 0.00000000
+	 * ];
+	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
+	 * $weight_class_id = $this->model_localisation_weight_class->addWeightClass($weight_class_data);
 	 */
 	public function addWeightClass(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "weight_class` SET `value` = '" . (float)$data['value'] . "'");
@@ -43,7 +49,13 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_weight_class->editWeightClass($weight_class_id, $data);
+	 * $weight_class_data = [
+	 *     'value' => 0.00000000
+	 * ];
+	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
+	 * $this->model_localisation_weight_class->editWeightClass($weight_class_id, $weight_class_data);
 	 */
 	public function editWeightClass(int $weight_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "weight_class` SET `value` = '" . (float)$data['value'] . "' WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
@@ -66,6 +78,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
 	 * $this->model_localisation_weight_class->deleteWeightClass($weight_class_id);
 	 */
 	public function deleteWeightClass(int $weight_class_id): void {
@@ -85,7 +99,16 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_weight_class->getWeightClasses();
+	 * $filter_data = [
+	 *     'sort'  => 'title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
+	 * $results = $this->model_localisation_weight_class->getWeightClasses($filter_data);
 	 */
 	public function getWeightClasses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -144,6 +167,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
 	 * $weight_class_info = $this->model_localisation_weight_class->getWeightClass($weight_class_id);
 	 */
 	public function getWeightClass(int $weight_class_id): array {
@@ -158,6 +183,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @return int total number of weight class records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/weight_class');
 	 *
 	 * $weight_class_total = $this->model_localisation_weight_class->getTotalWeightClasses();
 	 */
@@ -178,7 +205,16 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_weight_class->addDescription($weight_class_id, $language_id, $data);
+	 * $weight_class_data['weight_class_description'] = [
+	 *     'weight_class_id' => 1,
+	 *     'language_id'     => 1,
+	 *     'title'           => 'Weight Class Title',
+	 *     'unit'            => 'kg'
+	 * ];
+	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
+	 * $this->model_localisation_weight_class->addDescription($weight_class_id, $language_id, $weight_class_data);
 	 */
 	public function addDescription(int $weight_class_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "weight_class_description` SET `weight_class_id` = '" . (int)$weight_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `unit` = '" . $this->db->escape($data['unit']) . "'");
@@ -192,6 +228,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/weight_class');
 	 *
 	 * $this->model_localisation_weight_class->deleteDescriptions($weight_class_id);
 	 */
@@ -208,6 +246,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
 	 * $this->model_localisation_weight_class->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -222,6 +262,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> description records that have weight class ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/weight_class');
 	 *
 	 * $weight_class_description = $this->model_localisation_weight_class->getDescriptions($weight_class_id);
 	 */
@@ -246,6 +288,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
 	 * $results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -262,6 +306,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/weight_class');
 	 *
 	 * $results = $this->model_localisation_weight_class->getDescriptionsByUnit($unit);
 	 */

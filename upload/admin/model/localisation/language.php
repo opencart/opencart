@@ -17,7 +17,18 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $language_id = $this->model_localisation_language->addLanguage($data);
+	 * $language_data = [
+	 *     'name'       => 'Language Name',
+	 *     'code'       => 'Language Code',
+	 *     'locale'     => 'Language Locale',
+	 *     'extension'  => '',
+	 *     'sort_order' => 0,
+	 *     'status'     => 0
+	 * ];
+	 *
+	 * $this->load->model('localisation/language');
+	 *
+	 * $language_id = $this->model_localisation_language->addLanguage($language_data);
 	 */
 	public function addLanguage(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -258,7 +269,18 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_language->editLanguage($language_id, $data);
+	 * $language_data = [
+	 *     'name'       => 'Language Name',
+	 *     'code'       => 'Language Code',
+	 *     'locale'     => 'Language Locale',
+	 *     'extension'  => '',
+	 *     'sort_order' => 0,
+	 *     'status'     => 0
+	 * ];
+	 *
+	 * $this->load->model('localisation/language');
+	 *
+	 * $this->model_localisation_language->editLanguage($language_id, $language_data);
 	 */
 	public function editLanguage(int $language_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `language_id` = '" . (int)$language_id . "'");
@@ -274,6 +296,8 @@ class Language extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/language');
 	 *
 	 * $this->model_localisation_language->deleteLanguage($language_id);
 	 */
@@ -400,6 +424,8 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/language');
+	 *
 	 * $language_info = $this->model_localisation_language->getLanguage($language_id);
 	 */
 	public function getLanguage(int $language_id): array {
@@ -430,6 +456,8 @@ class Language extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/language');
 	 *
 	 * $language_info = $this->model_localisation_language->getLanguageByCode($code);
 	 */
@@ -462,7 +490,16 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $languages = $this->model_localisation_language->getLanguages();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/language');
+	 *
+	 * $languages = $this->model_localisation_language->getLanguages($filter_data);
 	 */
 	public function getLanguages(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
@@ -533,6 +570,8 @@ class Language extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/language');
+	 *
 	 * $results = $this->model_localisation_language->getLanguagesByExtension($extension);
 	 */
 	public function getLanguagesByExtension(string $extension): array {
@@ -547,6 +586,8 @@ class Language extends \Opencart\System\Engine\Model {
 	 * @return int total number of language records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/language');
 	 *
 	 * $language_total = $this->model_localisation_language->getTotalLanguages();
 	 */

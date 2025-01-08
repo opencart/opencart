@@ -17,7 +17,16 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $zone_id = $this->model_localisation_zone->addZone($data);
+	 * $zone_data = [
+	 *     'name'       => 'Zone Name',
+	 *     'code'       => 'Zone Code',
+	 *     'country_id' => 1,
+	 *     'status'     => 0
+	 * ];
+	 *
+	 * $this->load->model('localisation/zone');
+	 *
+	 * $zone_id = $this->model_localisation_zone->addZone($zone_data);
 	 */
 	public function addZone(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -37,7 +46,16 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_zone->editZone($zone_id, $data);
+	 * $zone_data = [
+	 *     'name'       => 'Zone Name',
+	 *     'code'       => 'Zone Code',
+	 *     'country_id' => 1,
+	 *     'status'     => 1
+	 * ];
+	 *
+	 * $this->load->model('localisation/zone');
+	 *
+	 * $this->model_localisation_zone->editZone($zone_id, $zone_data);
 	 */
 	public function editZone(int $zone_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `zone_id` = '" . (int)$zone_id . "'");
@@ -53,6 +71,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/zone');
 	 *
 	 * $this->model_localisation_zone->deleteZone($zone_id);
 	 */
@@ -71,6 +91,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/zone');
+	 *
 	 * $zone_info = $this->model_localisation_zone->getZone($zone_id);
 	 */
 	public function getZone(int $zone_id): array {
@@ -88,7 +110,19 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_zone->getZones();
+	 * $filter_data = [
+	 *     'filter_name'    => 'Zone Name',
+	 *     'filter_country' => 'Country Name',
+	 *     'filter_code'    => 'Zone Code',
+	 *     'sort'           => 'c.name',
+	 *     'order'          => 'DESC',
+	 *     'start'          => 0,
+	 *     'limit'          => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/zone');
+	 *
+	 * $results = $this->model_localisation_zone->getZones($filter_data);
 	 */
 	public function getZones(array $data = []): array {
 		$sql = "SELECT *, `z`.`name`, `z`.`status`, `c`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
@@ -155,6 +189,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/zone');
+	 *
 	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
 	public function getZonesByCountryId(int $country_id): array {
@@ -183,6 +219,18 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @return int total number of zone records
 	 *
 	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_name'    => 'Zone Name',
+	 *     'filter_country' => 'Country Name',
+	 *     'filter_code'    => 'Zone Code',
+	 *     'sort'           => 'c.name',
+	 *     'order'          => 'DESC',
+	 *     'start'          => 0,
+	 *     'limit'          => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/zone');
 	 *
 	 * $zone_total = $this->model_localisation_zone->getTotalZones();
 	 */
@@ -224,6 +272,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @return int total number of zone records that have country ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/zone');
 	 *
 	 * $zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
 	 */

@@ -33,6 +33,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'commenter'         => 0
 	 * ];
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $customer_id = $this->model_customer_customer->addCustomer($customer_data);
 	 */
 	public function addCustomer(array $data): int {
@@ -67,6 +69,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'commenter'         => 0
 	 * ];
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->editCustomer($customer_id, $customer_data);
 	 */
 	public function editCustomer(int $customer_id, array $data): void {
@@ -87,6 +91,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->editToken($customer_id, $token);
 	 */
 	public function editToken(int $customer_id, string $token): void {
@@ -103,6 +109,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->editCommenter($customer_id, $status);
 	 */
 	public function editCommenter(int $customer_id, bool $status): void {
@@ -117,6 +125,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteCustomer($customer_id);
 	 */
@@ -153,6 +163,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $customer_info = $this->model_customer_customer->getCustomer($customer_id);
 	 */
 	public function getCustomer(int $customer_id): array {
@@ -173,6 +185,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $customer_info = $this->model_customer_customer->getCustomerByEmail($email);
 	 */
@@ -208,6 +222,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'start'                    => 0,
 	 *     'limit'                    => 10
 	 * ];
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $results = $this->model_customer_customer->getCustomers($filter_data);
 	 */
@@ -313,6 +329,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'limit'                    => 10
 	 * ];
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
 	 */
 	public function getTotalCustomers(array $data = []): int {
@@ -370,6 +388,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $customer_total = $this->model_customer_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
 	 */
 	public function getTotalCustomersByCustomerGroupId(int $customer_group_id): int {
@@ -390,6 +410,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteActivities($customer_id);
 	 */
@@ -420,6 +442,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'custom_field' => [],
 	 *     'default'      => 0
 	 * ];
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->addAddress($customer_id, $address_data);
 	 */
@@ -460,6 +484,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'default'      => 0
 	 * ];
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->editAddress($customer_id, $address_id, $address_data);
 	 */
 	public function editAddress(int $customer_id, int $address_id, array $data): void {
@@ -479,6 +505,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteAddresses($customer_id, $address_id);
 	 */
@@ -500,6 +528,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> address record that has address ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $address_info = $this->model_customer_customer->getAddress($address_id);
 	 */
@@ -571,6 +601,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $results = $this->model_customer_customer->getAddresses($customer_id);
 	 */
 	public function getAddresses(int $customer_id): array {
@@ -638,6 +670,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $address_total = $this->model_customer_customer->getTotalAddresses($customer_id);
 	 */
 	public function getTotalAddresses(int $customer_id): int {
@@ -655,6 +689,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
 	 */
 	public function getTotalAddressesByCountryId(int $country_id): int {
@@ -671,6 +707,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return int total number of address records that have zone ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $address_total = $this->model_customer_customer->getTotalAddressesByZoneId($zone_id);
 	 */
@@ -690,6 +728,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->addHistory($customer_id, $comment);
 	 */
 	public function addHistory(int $customer_id, string $comment): void {
@@ -704,6 +744,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteHistories($customer_id);
 	 */
@@ -721,6 +763,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> history records that have customer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $results = $this->model_customer_customer->getHistories($customer_id, $start, $limit);
 	 */
@@ -747,6 +791,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $history_total = $this->model_customer_customer->getTotalHistories($customer_id);
 	 */
 	public function getTotalHistories(int $customer_id): int {
@@ -764,6 +810,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->deleteWishlists($customer_id);
 	 */
 	public function deleteWishlists(int $customer_id): void {
@@ -779,6 +827,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->deleteWishlistByStoreId($store_id);
 	 */
 	public function deleteWishlistByStoreId(int $store_id): void {
@@ -793,6 +843,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteWishlistByProductId($product_id);
 	 */
@@ -812,6 +864,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->addTransaction($customer_id, (string)$description, (float)$amount);
 	 */
 	public function addTransaction(int $customer_id, string $description = '', float $amount = 0, int $order_id = 0): void {
@@ -827,6 +881,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->deleteTransactions($customer_id);
 	 */
 	public function deleteTransactions(int $customer_id): void {
@@ -841,6 +897,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteTransactionByOrderId($order_id);
 	 */
@@ -858,6 +916,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> transaction records that have customer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $results = $this->model_customer_customer->getTransactions($customer_id, $start, $limit);
 	 */
@@ -884,6 +944,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
 	 */
 	public function getTotalTransactions(int $customer_id): int {
@@ -901,6 +963,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $transaction_total = $this->model_customer_customer->getTransactionTotal($customer_id);
 	 */
 	public function getTransactionTotal(int $customer_id): float {
@@ -917,6 +981,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return int total number of transaction records that have order ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $transaction_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 	 */
@@ -938,6 +1004,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->addReward($customer_id, (string)$description, (int)$points, (int)$order_id);
 	 */
 	public function addReward(int $customer_id, string $description = '', int $points = 0, int $order_id = 0): void {
@@ -953,6 +1021,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->deleteRewards($customer_id);
 	 */
 	public function deleteRewards(int $customer_id): void {
@@ -967,6 +1037,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteRewardsByOrderId($order_id);
 	 */
@@ -984,6 +1056,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> reward records that have customer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $results = $this->model_customer_customer->getRewards($customer_id, $start, $limit);
 	 */
@@ -1010,6 +1084,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $reward_total = $this->model_customer_customer->getTotalRewards($customer_id);
 	 */
 	public function getTotalRewards(int $customer_id): int {
@@ -1026,6 +1102,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return int
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $reward_total = $this->model_customer_customer->getRewardTotal($customer_id);
 	 */
@@ -1044,6 +1122,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 	 */
 	public function getTotalRewardsByOrderId(int $order_id): int {
@@ -1061,6 +1141,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_customer_customer->deleteIps($customer_id);
 	 */
 	public function deleteIps(int $customer_id): void {
@@ -1077,6 +1159,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> ip records that have customer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $results = $this->model_customer_customer->getIps($customer_id, $start, $limit);
 	 */
@@ -1102,6 +1186,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $ip_total = $this->model_customer_customer->getTotalIps($customer_id);
 	 */
 	public function getTotalIps(int $customer_id): int {
@@ -1118,6 +1204,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return int
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $customer_total = $this->model_customer_customer->getTotalCustomersByIp($result['ip']);
 	 */
@@ -1136,6 +1224,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $login_info = $this->model_customer_customer->getTotalLoginAttempts($email);
 	 */
 	public function getTotalLoginAttempts(string $email): array {
@@ -1152,6 +1242,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteLoginAttempts($email);
 	 */
@@ -1175,6 +1267,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'user_agent' => ''
 	 * ];
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_account_customer->addAuthorize($customer_id, $customer_authorize_data);
 	 */
 	public function addAuthorize(int $customer_id, array $data): void {
@@ -1190,6 +1284,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_account_customer->editAuthorizeStatus($customer_authorize_id, $status);
 	 */
@@ -1207,6 +1303,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $this->model_account_customer->editAuthorizeTotal($customer_authorize_id, $total);
 	 */
 	public function editAuthorizeTotal(int $customer_authorize_id, int $total): void {
@@ -1221,6 +1319,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_account_customer->resetAuthorizes($customer_id);
 	 */
@@ -1237,6 +1337,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $this->model_customer_customer->deleteAuthorizes($customer_id, $customer_authorize_id);
 	 */
@@ -1260,6 +1362,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer');
+	 *
 	 * $login_info = $this->model_account_customer->getAuthorizeByToken($customer_id, $token);
 	 */
 	public function getAuthorizeByToken(int $customer_id, string $token): array {
@@ -1278,6 +1382,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> authorize records that have customer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $results = $this->model_customer_customer->getAuthorizes($customer_id, $start, $limit);
 	 */
@@ -1307,6 +1413,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @return int total number of authorize records that have customer ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer');
 	 *
 	 * $authorize_total = $this->model_customer_customer->getTotalAuthorizes($customer_id);
 	 */

@@ -24,6 +24,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'date_modified' => '2021-01-31'
 	 * ];
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $article_id = $this->model_cms_article->addArticle($article_data);
 	 */
 	public function addArticle(array $data): int {
@@ -83,6 +85,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'date_modified' => '2021-01-31'
 	 * ];
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->editArticle($article_id, $article_data);
 	 */
 	public function editArticle(int $article_id, array $data): void {
@@ -139,6 +143,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->editRating($article_id, $rating);
 	 */
 	public function editRating(int $article_id, int $rating): void {
@@ -153,6 +159,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $this->model_cms_article->deleteArticle($article_id);
 	 */
@@ -181,6 +189,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $article_info = $this->model_cms_article->getArticle($article_id);
 	 */
 	public function getArticle(int $article_id): array {
@@ -204,6 +214,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $results = $this->model_cms_article->getArticles($filter_data);
 	 */
@@ -276,6 +288,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'limit' => 10
 	 * ];
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $article_total = $this->model_cms_article->getTotalArticles($filter_data);
 	 */
 	public function getTotalArticles(array $data = []): int {
@@ -311,6 +325,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'meta_keyword'     => 'Meta Keyword'
 	 * ];
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->addDescription($article_id, $language_id, $article_data);
 	 */
 	public function addDescription(int $article_id, int $language_id, array $data): void {
@@ -325,6 +341,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $this->model_cms_article->deleteDescriptions($article_id);
 	 */
@@ -341,6 +359,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -355,6 +375,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> description records that have article ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $results = $this->model_cms_article->getDescriptions($article_id);
 	 */
@@ -379,6 +401,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $article_description = $this->model_cms_article->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -397,6 +421,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->addStore($article_id, $store_id);
 	 */
 	public function addStore(int $article_id, int $store_id): void {
@@ -412,6 +438,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->deleteStores($article_id);
 	 */
 	public function deleteStores(int $article_id): void {
@@ -426,6 +454,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> store records that have article ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $article_store = $this->model_cms_article->getStores($article_id);
 	 */
@@ -452,6 +482,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->addLayout($article_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $article_id, int $store_id, int $layout_id): void {
@@ -466,6 +498,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $this->model_cms_article->deleteLayouts($article_id);
 	 */
@@ -482,6 +516,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->deleteLayoutsByLayoutId($layout_id);
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
@@ -496,6 +532,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, int> layout records that have article ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $article_layout = $this->model_cms_article->getLayouts($article_id);
 	 */
@@ -520,6 +558,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $layout_total = $this->model_cms_article->getTotalLayoutsByLayoutId($layout_id);
 	 */
 	public function getTotalLayoutsByLayoutId(int $layout_id): int {
@@ -537,6 +577,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $this->model_cms_article->editCommentStatus($article_comment_id, $status);
 	 */
@@ -557,6 +599,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->editCommentRating($article_id, $article_comment_id, $rating);
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
@@ -571,6 +615,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $this->model_cms_article->deleteComment($article_comment_id);
 	 */
@@ -589,6 +635,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+	 *
 	 * $this->model_cms_article->deleteCommentsByArticleId($article_id);
 	 */
 	public function deleteCommentsByArticleId(int $article_id): void {
@@ -605,6 +653,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> comment record that has article comment ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $comment_info = $this->model_cms_article->getComment($article_comment_id);
 	 */
@@ -623,6 +673,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> rating records that have article ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $results = $this->model_cms_article->getRatings($article_id, $article_comment_id);
 	 */
@@ -659,6 +711,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'start'            => 0,
 	 *     'limit'            => 10
 	 * ];
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $results = $this->model_cms_article->getComments($filter_data);
 	 */
@@ -729,6 +783,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'start'            => 0,
 	 *     'limit'            => 10
 	 * ];
+	 *
+	 * $this->load->model('cms/article');
 	 *
 	 * $comment_total = $this->model_cms_article->getTotalComments($filter_data);
 	 */

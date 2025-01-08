@@ -17,7 +17,13 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $length_class_id = $this->model_localisation_length_class->addLengthClass($data);
+	 * $length_class_data = [
+	 *     'value' => 0.00000000
+	 * ];
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $length_class_id = $this->model_localisation_length_class->addLengthClass($length_class_data);
 	 */
 	public function addLengthClass(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "'");
@@ -43,7 +49,13 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_length_class->editLengthClass($length_class_id, $data);
+	 * $length_class_data = [
+	 *     'value' => 0.00000000
+	 * ];
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $this->model_localisation_length_class->editLengthClass($length_class_id, $length_class_data);
 	 */
 	public function editLengthClass(int $length_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "' WHERE `length_class_id` = '" . (int)$length_class_id . "'");
@@ -66,6 +78,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/length_class');
+	 *
 	 * $this->model_localisation_length_class->deleteLengthClass($length_class_id);
 	 */
 	public function deleteLengthClass(int $length_class_id): void {
@@ -85,6 +99,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/length_class');
+	 *
 	 * $this->model_localisation_length_class->deleteLengthClassesByLanguageId($language_id);
 	 */
 	public function deleteLengthClassesByLanguageId(int $language_id): void {
@@ -102,7 +118,16 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $length_classes = $this->model_localisation_length_class->getLengthClasses();
+	 * $filter_data = [
+	 *     'sort'  => 'title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $length_classes = $this->model_localisation_length_class->getLengthClasses($filter_data);
 	 */
 	public function getLengthClasses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -161,6 +186,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/length_class');
+	 *
 	 * $length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
 	 */
 	public function getLengthClass(int $length_class_id): array {
@@ -180,7 +207,16 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_length_class->addDescription($length_class_id, $language_id, $data);
+	 * $length_class_data['length_class_description'] = [
+	 *     'length_class_id' => 1,
+	 *     'language_id'     => 1,
+	 *     'title'           => 'Length Class Title',
+	 *     'unit'            => 'cm'
+	 * ];
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $this->model_localisation_length_class->addDescription($length_class_id, $language_id, $length_class_data);
 	 */
 	public function addDescription(int $length_class_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class_description` SET `length_class_id` = '" . (int)$length_class_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `unit` = '" . $this->db->escape($data['unit']) . "'");
@@ -194,6 +230,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/length_class');
 	 *
 	 * $this->model_localisation_length_class->deleteDescriptions($length_class_id);
 	 */
@@ -210,6 +248,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/length_class');
+	 *
 	 * $this->model_localisation_length_class->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
@@ -224,6 +264,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> description records that have length class ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/length_class');
 	 *
 	 * $length_class_description = $this->model_localisation_length_class->getDescriptions($length_class_id);
 	 */
@@ -248,6 +290,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/length_class');
+	 *
 	 * $results = $this->model_localisation_length_class->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -265,6 +309,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/length_class');
+	 *
 	 * $length_class_info = $this->model_localisation_length_class->getDescriptionByUnit($unit);
 	 */
 	public function getDescriptionByUnit(string $unit): array {
@@ -279,6 +325,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * @return int total number of length class records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/length_class');
 	 *
 	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 	 */

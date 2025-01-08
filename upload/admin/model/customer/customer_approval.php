@@ -17,6 +17,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer_approval');
+	 *
 	 * $this->model_customer_customer_approval->deleteApprovalsByCustomerId($customer_id);
 	 */
 	public function deleteApprovalsByCustomerId(int $customer_id): void {
@@ -42,6 +44,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *     'start'                    => 0,
 	 *     'limit'                    => 10
 	 * ];
+	 *
+	 * $this->load->model('customer/customer_approval');
 	 *
 	 * $results = $this->model_customer_customer_approval->getCustomerApprovals($filter_data);
 	 */
@@ -100,6 +104,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer_approval');
+	 *
 	 * $customer_approval_info = $this->model_customer_customer_approval->getCustomerApproval($customer_approval_id);
 	 */
 	public function getCustomerApproval(int $customer_approval_id): array {
@@ -127,6 +133,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *     'start'                    => 0,
 	 *     'limit'                    => 10
 	 * ];
+	 *
+	 * $this->load->model('customer/customer_approval');
 	 *
 	 * $customer_approval_total = $this->model_customer_customer_approval->getTotalCustomerApprovals($filter_data);
 	 */
@@ -177,6 +185,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer_approval');
+	 *
 	 * $this->model_customer_customer_approval->approveCustomer($customer_id);
 	 */
 	public function approveCustomer(int $customer_id): void {
@@ -193,6 +203,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/customer_approval');
+	 *
 	 * $this->model_customer_customer_approval->denyCustomer($customer_id);
 	 */
 	public function denyCustomer(int $customer_id): void {
@@ -207,6 +219,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer_approval');
 	 *
 	 * $this->model_customer_customer_approval->approveAffiliate($customer_id);
 	 */
@@ -223,6 +237,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/customer_approval');
 	 *
 	 * $this->model_customer_customer_approval->denyAffiliate($customer_id);
 	 */

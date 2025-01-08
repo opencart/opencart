@@ -17,7 +17,13 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $return_action_id = $this->model_localisation_return_action->addReturnAction($data);
+	 * $return_action_data['return_action'][1] = [
+	 *     'name' => 'Return Action Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_action');
+	 *
+	 * $return_action_id = $this->model_localisation_return_action->addReturnAction($return_action_data);
 	 */
 	public function addReturnAction(array $data): ?int {
 		$return_action_id = 0;
@@ -47,7 +53,13 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_return_action->editReturnAction($return_action_id, $data);
+	 * $return_action_data['return_action'][1] = [
+	 *     'name' => 'Return Action Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_action');
+	 *
+	 * $this->model_localisation_return_action->editReturnAction($return_action_id, $return_action_data);
 	 */
 	public function editReturnAction(int $return_action_id, array $data): void {
 		$this->deleteReturnAction($return_action_id);
@@ -68,6 +80,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/return_action');
+	 *
 	 * $this->model_localisation_return_action->deleteReturnAction($return_action_id);
 	 */
 	public function deleteReturnAction(int $return_action_id): void {
@@ -84,6 +98,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_action');
 	 *
 	 * $this->model_localisation_return_action->deleteReturnActionsByLanguageId($language_id);
 	 */
@@ -102,6 +118,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/return_action');
+	 *
 	 * $return_action_info = $this->model_localisation_return_action->getReturnAction($return_action_id);
 	 */
 	public function getReturnAction(int $return_action_id): array {
@@ -119,7 +137,16 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_return_action->getReturnActions();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_action');
+	 *
+	 * $results = $this->model_localisation_return_action->getReturnActions($filter_data);
 	 */
 	public function getReturnActions(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -168,7 +195,15 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_return_action->addDescription($return_action_id, $language_id, $data);
+	 * $return_action_data = [
+	 *     'return_action_id' => 1,
+	 *     'language_id'      => 1,
+	 *     'name'             => 'Return Action Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/return_action');
+	 *
+	 * $this->model_localisation_return_action->addDescription($return_action_id, $language_id, $return_action_data);
 	 */
 	public function addDescription(int $return_action_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `return_action_id` = '" . (int)$return_action_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -182,6 +217,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have return action ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_action');
 	 *
 	 * $return_action = $this->model_localisation_return_action->getDescriptions($return_action_id);
 	 */
@@ -206,6 +243,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/return_action');
+	 *
 	 * $results = $this->model_localisation_return_action->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -220,6 +259,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * @return int total number of return action records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/return_action');
 	 *
 	 * $return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
 	 */

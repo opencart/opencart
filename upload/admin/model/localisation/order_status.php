@@ -17,7 +17,13 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $order_status_id = $this->model_localisation_order_status->addOrderStatus($data);
+	 * $order_status_data['order_status'][1] = [
+	 *     'name'        => 'Order Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/order_status');
+	 *
+	 * $order_status_id = $this->model_localisation_order_status->addOrderStatus($order_status_data);
 	 */
 	public function addOrderStatus(array $data): ?int {
 		$order_status_id = 0;
@@ -47,7 +53,13 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_order_status->editOrderStatus($order_status_id, $data);
+	 * $order_status_data['order_status'][1] = [
+	 *     'name'        => 'Order Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/order_status');
+	 *
+	 * $this->model_localisation_order_status->editOrderStatus($order_status_id, $order_status_data);
 	 */
 	public function editOrderStatus(int $order_status_id, array $data): void {
 		$this->deleteOrderStatus($order_status_id);
@@ -68,6 +80,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/order_status');
+	 *
 	 * $this->model_localisation_order_status->deleteOrderStatus($order_status_id);
 	 */
 	public function deleteOrderStatus(int $order_status_id): void {
@@ -84,6 +98,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/order_status');
 	 *
 	 * $this->model_localisation_order_status->deleteOrderStatusesByLanguageId($language_id);
 	 */
@@ -102,6 +118,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/order_status');
+	 *
 	 * $order_status_info = $this->model_localisation_order_status->getOrderStatus($order_status_id);
 	 */
 	public function getOrderStatus(int $order_status_id): array {
@@ -119,7 +137,16 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_localisation_order_status->getOrderStatuses();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/order_status');
+	 *
+	 * $results = $this->model_localisation_order_status->getOrderStatuses($filter_data);
 	 */
 	public function getOrderStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
@@ -168,7 +195,13 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_localisation_order_status->addDescription($order_status_id, $language_id, $data);
+	 * $order_status_data = [
+	 *     'name' => 'Order Status Name'
+	 * ];
+	 *
+	 * $this->load->model('localisation/order_status');
+	 *
+	 * $this->model_localisation_order_status->addDescription($order_status_id, $language_id, $order_status_data);
 	 */
 	public function addDescription(int $order_status_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `order_status_id` = '" . (int)$order_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
@@ -182,6 +215,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, string>> description records that have order status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/order_status');
 	 *
 	 * $order_status = $this->model_localisation_order_status->getDescriptions($order_status_id);
 	 */
@@ -206,6 +241,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('localisation/order_status');
+	 *
 	 * $results = $this->model_localisation_order_status->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
@@ -220,6 +257,8 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 * @return int total number of order status records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('localisation/order_status');
 	 *
 	 * $order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
 	 */

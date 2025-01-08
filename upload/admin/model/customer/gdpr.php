@@ -18,6 +18,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/gdpr');
+	 *
 	 * $this->model_customer_gdpr->editStatus($gdpr_id, $status);
 	 */
 	public function editStatus(int $gdpr_id, int $status): void {
@@ -33,6 +35,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/gdpr');
+	 *
 	 * $this->model_customer_gdpr->deleteGdpr($gdpr_id);
 	 */
 	public function deleteGdpr(int $gdpr_id): void {
@@ -47,6 +51,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/gdpr');
 	 *
 	 * $this->model_customer_gdpr->deleteGdprsByStoreId($store_id);
 	 */
@@ -72,6 +78,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *     'start'            => 0,
 	 *     'limit'            => 10
 	 * ];
+	 *
+	 * $this->load->model('customer/gdpr');
 	 *
 	 * $results = $this->model_customer_gdpr->getGdprs($filter_data);
 	 */
@@ -132,6 +140,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('customer/gdpr');
+	 *
 	 * $gdpr_info = $this->model_customer_gdpr->getGdpr($gdpr_id);
 	 */
 	public function getGdpr(int $gdpr_id): array {
@@ -158,6 +168,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *     'start'            => 0,
 	 *     'limit'            => 10
 	 * ];
+	 *
+	 * $this->load->model('customer/gdpr');
 	 *
 	 * $gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);
 	 */
@@ -201,6 +213,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> expire records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('customer/gdpr');
 	 *
 	 * $results = $this->model_customer_gdpr->getExpires();
 	 */

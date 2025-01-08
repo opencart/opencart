@@ -23,6 +23,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *     'value' => ''
 	 * ];
 	 *
+	 * $this->load->model('design/translation');
+	 *
 	 * $this->model_design_translation->addTranslation($translation_data);
 	 */
 	public function addTranslation(array $data): void {
@@ -45,6 +47,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *     'value' => ''
 	 * ];
 	 *
+	 * $this->load->model('design/translation');
+	 *
 	 * $this->model_design_translation->editTranslation($translation_id, $translation_data);
 	 */
 	public function editTranslation(int $translation_id, array $data): void {
@@ -59,6 +63,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/translation');
 	 *
 	 * $this->model_design_translation->deleteTranslation($translation_id);
 	 */
@@ -75,6 +81,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/translation');
+	 *
 	 * $this->model_design_translation->deleteTranslationsByStoreId($store_id);
 	 */
 	public function deleteTranslationsByStoreId(int $store_id): void {
@@ -90,6 +98,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/translation');
+	 *
 	 * $this->model_design_translation->deleteTranslationsByLanguageId($language_id);
 	 */
 	public function deleteTranslationsByLanguageId(int $language_id): void {
@@ -104,6 +114,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> translation record that has translation ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/translation');
 	 *
 	 * $translation_info = $this->model_design_translation->getTranslation($translation_id);
 	 */
@@ -128,6 +140,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('design/translation');
 	 *
 	 * $results = $this->model_design_translation->getTranslations($filter_data);
 	 */
@@ -177,6 +191,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * @return int total number of translation records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/translation');
 	 *
 	 * $translation_total = $this->model_design_translation->getTotalTranslations();
 	 */

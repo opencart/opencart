@@ -22,6 +22,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *     'status' => 0
 	 * ];
 	 *
+	 * $this->load->model('design/banner');
+	 *
 	 * $banner_id = $this->model_design_banner->addBanner($banner_data);
 	 */
 	public function addBanner(array $data): int {
@@ -55,6 +57,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *     'status' => 1
 	 * ];
 	 *
+	 * $this->load->model('design/banner');
+	 *
 	 * $this->model_design_banner->editBanner($banner_id, $banner_data);
 	 */
 	public function editBanner(int $banner_id, array $data): void {
@@ -80,6 +84,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/banner');
+	 *
 	 * $this->model_design_banner->deleteBanner($banner_id);
 	 */
 	public function deleteBanner(int $banner_id): void {
@@ -96,6 +102,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> banner record that has banner ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/banner');
 	 *
 	 * $banner_info = $this->model_design_banner->getBanner($banner_id);
 	 */
@@ -120,6 +128,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('design/banner');
 	 *
 	 * $results = $this->model_design_banner->getBanners($filter_data);
 	 */
@@ -167,6 +177,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/banner');
+	 *
 	 * $banner_total = $this->model_design_banner->getTotalBanners();
 	 */
 	public function getTotalBanners(): int {
@@ -193,6 +205,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *     'sort_order' => 0
 	 * ];
 	 *
+	 * $this->load->model('design/banner');
+	 *
 	 * $this->model_design_banner->addImage($banner_id, $language_id, $banner_image_data);
 	 */
 	public function addImage(int $banner_id, int $language_id, array $data): void {
@@ -207,6 +221,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/banner');
 	 *
 	 * $this->model_design_banner->deleteImages($banner_id);
 	 */
@@ -223,6 +239,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/banner');
+	 *
 	 * $this->model_design_banner->deleteImagesByLanguageId($language_id);
 	 */
 	public function deleteImagesByLanguageId(int $language_id): void {
@@ -237,6 +255,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<int, array<string, mixed>>> image records that have banner ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/banner');
 	 *
 	 * $banner_images = $this->model_design_banner->getImages($banner_id);
 	 */
@@ -260,6 +280,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> image records that have language ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/banner');
 	 *
 	 * $results = $this->model_design_banner->getImagesByLanguageId($language_id);
 	 */

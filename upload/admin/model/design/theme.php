@@ -23,6 +23,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *     'status' => 0
 	 * ];
 	 *
+	 * $this->load->model('design/theme');
+	 *
 	 * $theme_id = $this->model_design_theme->addTheme($theme_data);
 	 */
 	public function addTheme(array $data): int {
@@ -47,6 +49,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *     'status' => 1
 	 * ];
 	 *
+	 * $this->load->model('design/theme');
+	 *
 	 * $this->model_design_theme->editTheme($theme_id, $theme_data);
 	 */
 	public function editTheme(int $theme_id, array $data): void {
@@ -61,6 +65,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/theme');
 	 *
 	 * $this->model_design_theme->deleteTheme($theme_id);
 	 */
@@ -77,6 +83,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/theme');
+	 *
 	 * $this->model_design_theme->deleteThemesByStoreId($store_id);
 	 */
 	public function deleteThemesByStoreId(int $store_id): void {
@@ -91,6 +99,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> theme record that has theme ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/theme');
 	 *
 	 * $theme_info = $this->model_design_theme->getTheme($theme_id);
 	 */
@@ -109,6 +119,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> theme records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/theme');
 	 *
 	 * $results = $this->model_design_theme->getThemes();
 	 */
@@ -132,6 +144,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	 * @return int total number of theme records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/theme');
 	 *
 	 * $theme_total = $this->model_design_theme->getTotalThemes();
 	 */

@@ -21,6 +21,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *     'name' => 'Layout Name'
 	 * ];
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $layout_id = $this->model_design_layout->addLayout($layout_data);
 	 */
 	public function addLayout(array $data): int {
@@ -57,6 +59,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *     'name' => 'Layout Name'
 	 * ];
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $this->model_design_layout->editLayout($layout_id, $layout_data);
 	 */
 	public function editLayout(int $layout_id, array $data): void {
@@ -87,6 +91,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $this->model_design_layout->deleteLayout($layout_id);
 	 */
@@ -131,6 +137,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $layout_info = $this->model_design_layout->getLayout($layout_id);
 	 */
 	public function getLayout(int $layout_id): array {
@@ -154,6 +162,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $results = $this->model_design_layout->getLayouts($filter_data);
 	 */
@@ -205,6 +215,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *     'limit' => 10
 	 * ];
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $layout_total = $this->model_design_layout->getTotalLayouts($filter_data);
 	 */
 	public function getTotalLayouts(): int {
@@ -228,6 +240,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *     'route'    => ''
 	 * ];
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $this->model_design_layout->addRoute($layout_id, $layout_route_data);
 	 */
 	public function addRoute(int $layout_id, array $data): void {
@@ -242,6 +256,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $this->model_design_layout->deleteRoutes($layout_id);
 	 */
@@ -258,6 +274,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $this->model_design_layout->deleteRoutesByLayoutId($layout_id);
 	 */
 	public function deleteRoutesByLayoutId(int $layout_id): void {
@@ -273,6 +291,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $this->model_design_layout->deleteRoutesByStoreId($store_id);
 	 */
 	public function deleteRoutesByStoreId(int $store_id): void {
@@ -287,6 +307,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> route records that have layout ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $layout_routes = $this->model_design_layout->getRoutes($layout_id);
 	 */
@@ -304,6 +326,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> route records that have store ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $results = $this->model_design_layout->getRoutesByStoreId($store_id);
 	 */
@@ -329,6 +353,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *     'sort_order' => 0
 	 * ];
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $this->model_design_layout->addModule($layout_id, $layout_module_data);
 	 */
 	public function addModule(int $layout_id, array $data): void {
@@ -343,6 +369,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $this->model_design_layout->deleteModules($layout_id);
 	 */
@@ -359,6 +387,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('design/layout');
+	 *
 	 * $this->model_design_layout->deleteModulesByCode($code);
 	 */
 	public function deleteModulesByCode(string $code): void {
@@ -373,6 +403,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> module records that have layout ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('design/layout');
 	 *
 	 * $layout_modules = $this->model_design_layout->getModules($layout_id);
 	 */

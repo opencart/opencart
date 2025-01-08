@@ -17,7 +17,12 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $user_group_id = $this->model_user_user_group->addUserGroup($data);
+	 * $user_group_data = [
+	 *     'name'       => 'User Group Name',
+	 *     'permission' => ''
+	 * ];
+	 *
+	 * $user_group_id = $this->model_user_user_group->addUserGroup($user_group_data);
 	 */
 	public function addUserGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_group` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `permission` = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
@@ -35,7 +40,12 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_user_user_group->editUserGroup($user_group_id, $data);
+	 * $user_group_data = [
+	 *     'name'       => 'User Group Name',
+	 *     'permission' => ''
+	 * ];
+	 *
+	 * $this->model_user_user_group->editUserGroup($user_group_id, $user_group_data);
 	 */
 	public function editUserGroup(int $user_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `permission` = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "' WHERE `user_group_id` = '" . (int)$user_group_id . "'");
@@ -85,7 +95,14 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_user_user_group->getUserGroups();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 *	];
+	 *
+	 * $results = $this->model_user_user_group->getUserGroups($filter_data);
 	 */
 	public function getUserGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user_group` ORDER BY `name`";

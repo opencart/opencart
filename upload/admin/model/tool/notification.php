@@ -17,7 +17,13 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $notification_id = $this->model_tool_notification->addNotification($data);
+	 * $notification_data = [
+	 *     'title'  => 'Notification Title',
+	 *     'text'   => 'Notification Text',
+	 *     'status' => 0
+	 * ];
+	 *
+	 * $notification_id = $this->model_tool_notification->addNotification($notification_data);
 	 */
 	public function addNotification(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "notification` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `text` = '" . $this->db->escape((string)$data['text']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
@@ -82,7 +88,13 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_tool_notification->getNotifications();
+	 * $filter_data = [
+	 *     'start'  => 0,
+	 *     'limit'  => 5,
+	 *     'status' => 1
+	 * ];
+	 *
+	 * $results = $this->model_tool_notification->getNotifications($filter_data);
 	 */
 	public function getNotifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "notification`";
@@ -118,6 +130,12 @@ class Notification extends \Opencart\System\Engine\Model {
 	 * @return int total number of notification records
 	 *
 	 * @example
+	 *
+	 * $filter_data = [
+	 *     'start'  => 0,
+	 *     'limit'  => 5,
+	 *     'status' => 1
+	 * ];
 	 *
 	 * $notification_total = $this->model_tool_notification->getTotalNotifications();
 	 */

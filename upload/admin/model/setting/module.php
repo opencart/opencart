@@ -18,7 +18,13 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $module_id = $this->model_setting_module->addModule($code, $data);
+	 * $module_data = [
+	 *     'name'    => 'Module Name',
+	 *     'code'    => 'Module Code',
+	 *     'setting' => []
+	 * ];
+	 *
+	 * $module_id = $this->model_setting_module->addModule($code, $module_data);
 	 */
 	public function addModule(string $code, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "'");
@@ -38,7 +44,13 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_setting_module->editModule($module_id, $data);
+	 * $module_data = [
+	 *     'name'    => 'Module Name',
+	 *     'code'    => 'Module Code',
+	 *     'setting' => []
+	 * ];
+	 *
+	 * $this->model_setting_module->editModule($module_id, $module_data);
 	 */
 	public function editModule(int $module_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "' WHERE `module_id` = '" . (int)$module_id . "'");

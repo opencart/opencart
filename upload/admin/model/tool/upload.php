@@ -86,7 +86,17 @@ class Upload extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_tool_upload->getUploads($data);
+	 * $filter_data = [
+	 *     'filter_name'      => 'Upload Name',
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'sort'             => 'date_added',
+	 *     'order'            => 'DESC',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
+	 *
+	 * $results = $this->model_tool_upload->getUploads($filter_data);
 	 */
 	public function getUploads(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "upload`";
@@ -156,6 +166,16 @@ class Upload extends \Opencart\System\Engine\Model {
 	 * @return int total number of upload records
 	 *
 	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_name'      => 'Upload Name',
+	 *     'filter_date_from' => '2021-01-01',
+	 *     'filter_date_to'   => '2021-01-31',
+	 *     'sort'             => 'date_added',
+	 *     'order'            => 'DESC',
+	 *     'start'            => 0,
+	 *     'limit'            => 10
+	 * ];
 	 *
 	 * $upload_total = $this->model_tool_upload->getTotalUploads();
 	 */

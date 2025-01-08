@@ -17,7 +17,13 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $api_id = $this->model_user_api->addApi($data);
+	 * $api_data = [
+	 *     'username' => 'Api Username',
+	 *     'key'      => '',
+	 *     'status'   => 0
+	 * ];
+	 *
+	 * $api_id = $this->model_user_api->addApi($api_data);
 	 */
 	public function addApi(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -45,7 +51,13 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_user_api->editApi($api_id, $data);
+	 * $api_data = [
+	 *     'username' => 'Api Username',
+	 *     'key'      => '',
+	 *     'status'   => 1
+	 * ];
+	 *
+	 * $this->model_user_api->editApi($api_id, $api_data);
 	 */
 	public function editApi(int $api_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `api_id` = '" . (int)$api_id . "'");
@@ -104,7 +116,14 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_user_api->getApis();
+	 * $filter_data = [
+	 *     'sort'  => 'username',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_user_api->getApis($filter_data);
 	 */
 	public function getApis(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";

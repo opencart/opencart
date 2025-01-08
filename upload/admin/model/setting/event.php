@@ -17,7 +17,16 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $event_id = $this->model_setting_event->addEvent($data);
+	 * $event_data = [
+	 *     'code'        => 'Event Code',
+	 *     'description' => 'Event Description',
+	 *     'trigger'     => ' Event Trigger',
+	 *     'action'      => 'Event Action',
+	 *     'status'      => 0,
+	 *     'sort_order'  => 0
+	 * ];
+	 *
+	 * $event_id = $this->model_setting_event->addEvent($event_data);
 	 */
 	public function addEvent(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($data['code']) . "', `description` = '" . $this->db->escape($data['description']) . "', `trigger` = '" . $this->db->escape($data['trigger']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -130,7 +139,14 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_setting_event->getEvents();
+	 * $filter_data = [
+	 *     'sort'  => 'code',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_setting_event->getEvents($filter_data);
 	 */
 	public function getEvents(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";

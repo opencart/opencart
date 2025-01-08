@@ -21,8 +21,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'store_id'          => 1,
 	 *     'language_id'       => 1,
 	 *     'customer_group_id' => 1,
-	 *     'firstname'         => 'Customer Firstname',
-	 *     'lastname'          => 'Customer Lastname',
+	 *     'firstname'         => 'John',
+	 *     'lastname'          => 'Doe',
 	 *     'email'             => 'Customer Email',
 	 *     'telephone'         => 'Customer Telephone',
 	 *     'custom_field'      => [],
@@ -57,8 +57,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'store_id'          => 1,
 	 *     'language_id'       => 1,
 	 *     'customer_group_id' => 1,
-	 *     'firstname'         => 'Customer Firstname',
-	 *     'lastname'          => 'Customer Lastname',
+	 *     'firstname'         => 'John',
+	 *     'lastname'          => 'Doe',
 	 *     'email'             => 'Customer Email',
 	 *     'telephone'         => 'Customer Telephone',
 	 *     'custom_field'      => [],
@@ -210,7 +210,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_name'              => 'Customer Name',
+	 *     'filter_name'              => 'John Doe',
 	 *     'filter_email'             => 'Customer Email',
 	 *     'filter_customer_group_id' => 1,
 	 *     'filter_status'            => 1,
@@ -316,7 +316,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_name'              => 'Customer Name',
+	 *     'filter_name'              => 'John Doe',
 	 *     'filter_email'             => 'Customer Email',
 	 *     'filter_customer_group_id' => 1,
 	 *     'filter_status'            => 1,
@@ -430,8 +430,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $address_data = [
-	 *     'firstname'    => 'Customer First Name',
-	 *     'lastname'     => 'Customer Last Name',
+	 *     'firstname'    => 'John',
+	 *     'lastname'     => 'Doe',
 	 *     'company'      => '',
 	 *     'address_1'    => '',
 	 *     'address_2'    => '',
@@ -471,8 +471,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $address_data = [
-	 *     'firstname'    => 'Customer First Name',
-	 *     'lastname'     => 'Customer Last Name',
+	 *     'firstname'    => 'John',
+	 *     'lastname'     => 'Doe',
 	 *     'company'      => '',
 	 *     'address_1'    => '',
 	 *     'address_2'    => '',

@@ -704,7 +704,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_keyword'   => 'Keyword',
 	 *     'filter_article'   => 'Article Name',
-	 *     'filter_customer'  => 'Customer Name',
+	 *     'filter_customer'  => 'John Doe',
 	 *     'filter_status'    => 1,
 	 *     'filter_date_from' => '2021-01-01',
 	 *     'filter_date_to'   => '2021-01-31',
@@ -776,7 +776,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_keyword'   => 'Keyword',
 	 *     'filter_article'   => 'Article Name',
-	 *     'filter_customer'  => 'Customer Name',
+	 *     'filter_customer'  => 'John Doe',
 	 *     'filter_status'    => 1,
 	 *     'filter_date_from' => '2021-01-01',
 	 *     'filter_date_to'   => '2021-01-31',

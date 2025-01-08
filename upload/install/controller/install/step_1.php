@@ -27,7 +27,6 @@ class Step1 extends \Opencart\System\Engine\Controller {
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['language'] = $this->load->controller('common/language');
 
 		$this->response->setOutput($this->load->view('install/step_1', $data));
 	}

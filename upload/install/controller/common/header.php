@@ -21,6 +21,8 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();
 
+		$data['language'] = $this->load->controller('common/language');
+
 		return $this->load->view('common/header', $data);
 	}
 }

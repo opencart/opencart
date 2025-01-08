@@ -108,9 +108,10 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('install/step_1', 'language=' . $this->config->get('language_code'));
 
+		$data['language'] = $this->config->get('language_code');
+
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['language'] = $this->load->controller('common/language');
 
 		$this->response->setOutput($this->load->view('install/step_2', $data));
 	}

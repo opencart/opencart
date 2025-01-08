@@ -2,7 +2,6 @@
 <div id="content">
   <div class="page-header">
     <div class="container">
-      <div class="float-end">{{ language }}</div>
       <h1>{{ heading_title }}</h1>
     </div>
   </div>
@@ -85,13 +84,16 @@
                   <div class="col-md-8 order-md-1">
                     <div class="row">
                       <div class="mb-3">
-                        <label for="input-db-ssl-key" class="form-label">{{ entry_db_ssl_key }}</label> <textarea name="db_ssl_key" placeholder="{{ entry_db_ssl_key }}" id="input-db-ssl-key" rows="5" class="form-control">{{ db_ssl_key }}</textarea>
+                        <label for="input-db-ssl-key" class="form-label">{{ entry_db_ssl_key }}</label>
+                        <textarea name="db_ssl_key" placeholder="{{ entry_db_ssl_key }}" id="input-db-ssl-key" rows="5" class="form-control">{{ db_ssl_key }}</textarea>
                       </div>
                       <div class="mb-3">
-                        <label for="input-db-ssl-cert" class="form-label">{{ entry_db_ssl_cert }}</label> <textarea name="db_ssl_cert" placeholder="{{ entry_db_ssl_cert }}" id="input-db-ssl-cert" rows="5" class="form-control">{{ db_ssl_cert }}</textarea>
+                        <label for="input-db-ssl-cert" class="form-label">{{ entry_db_ssl_cert }}</label>
+                        <textarea name="db_ssl_cert" placeholder="{{ entry_db_ssl_cert }}" id="input-db-ssl-cert" rows="5" class="form-control">{{ db_ssl_cert }}</textarea>
                       </div>
                       <div class="mb-3">
-                        <label for="input-db-ssl-ca" class="form-label">{{ entry_db_ssl_ca }}</label> <textarea name="db_ssl_ca" placeholder="{{ entry_db_ssl_ca }}" id="input-db-ssl-ca" rows="5" class="form-control">{{ db_ssl_ca }}</textarea>
+                        <label for="input-db-ssl-ca" class="form-label">{{ entry_db_ssl_ca }}</label>
+                        <textarea name="db_ssl_ca" placeholder="{{ entry_db_ssl_ca }}" id="input-db-ssl-ca" rows="5" class="form-control">{{ db_ssl_ca }}</textarea>
                       </div>
                     </div>
                   </div>
@@ -105,16 +107,19 @@
               <div class="col-md-8">
                 <div class="row mb-3">
                   <div class="col-12 col-md-6 required">
-                    <label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="username" value="admin" id="input-username" class="form-control"/>
+                    <label for="input-username" class="form-label">{{ entry_username }}</label>
+                    <input type="text" name="username" value="admin" id="input-username" class="form-control"/>
                     <div id="error-username" class="invalid-feedback"></div>
                   </div>
                   <div class="col-12 col-md-6 required">
-                    <label for="input-password" class="form-label">{{ entry_password }}</label> <input type="text" name="password" value="" id="input-password" class="form-control"/>
+                    <label for="input-password" class="form-label">{{ entry_password }}</label>
+                    <input type="text" name="password" value="" id="input-password" class="form-control"/>
                     <div id="error-password" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="required">
-                  <label for="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="" id="input-email" class="form-control"/>
+                  <label for="input-email" class="form-label">{{ entry_email }}</label>
+                  <input type="text" name="email" value="" id="input-email" class="form-control"/>
                   <div id="error-email" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -152,7 +157,7 @@ $('#form-step-3').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=install/step_3.save&language={{ language_code }}',
+        url: 'index.php?route=install/step_3.save&language={{ language }}',
         type: 'post',
         data: $('#form-step-3').serialize(),
         dataType: 'json',

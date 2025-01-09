@@ -1956,10 +1956,10 @@ VALUES (28, 0),
 --
 
 INSERT INTO `oc_return_action` (`return_action_id`, `language_id`, `name`)
-VALUES (1, 1, 'Waiting for return'),
-       (2, 1, 'Credit Issued'),
-       (3, 1, 'Replacement Sent'),
-       (4, 1, 'Refunded');
+VALUES (1, 1, 'En attente du retour'),
+       (2, 1, 'Crédit émis'),
+       (3, 1, 'Remplacement envoyé'),
+       (4, 1, 'Remboursé');
 
 -----------------------------------------------------------
 
@@ -1968,11 +1968,11 @@ VALUES (1, 1, 'Waiting for return'),
 --
 
 INSERT INTO `oc_return_reason` (`return_reason_id`, `language_id`, `name`)
-VALUES (1, 1, 'Dead On Arrival'),
-       (2, 1, 'Received Wrong Item'),
-       (3, 1, 'Order Error'),
-       (4, 1, 'Faulty, please supply details'),
-       (5, 1, 'Other, please supply details');
+VALUES (1, 1, 'Défectueux à l''arrivée'),
+       (2, 1, 'Article incorrect reçu'),
+       (3, 1, 'Erreur de commande'),
+       (4, 1, 'Défaut, veuillez fournir des détails'),
+       (5, 1, 'Autre, veuillez fournir des détails');
 
 -----------------------------------------------------------
 
@@ -1981,9 +1981,9 @@ VALUES (1, 1, 'Dead On Arrival'),
 --
 
 INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`)
-VALUES (1, 1, 'Pending'),
-       (3, 1, 'Complete'),
-       (2, 1, 'Awaiting Products');
+VALUES (1, 1, 'En attente'),
+       (3, 1, 'Terminé'),
+       (2, 1, 'En attente de produits');
 
 -----------------------------------------------------------
 
@@ -2317,10 +2317,10 @@ VALUES (1, 'order_sale', 0),
 --
 
 INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`)
-VALUES (7, 1, 'In Stock'),
-       (8, 1, 'Pre-Order'),
-       (5, 1, 'Out Of Stock'),
-       (6, 1, '2-3 Days');
+VALUES (7, 1, 'En stock'),
+       (8, 1, 'Précommande'),
+       (5, 1, 'En rupture de stock'),
+       (6, 1, '2-3 jours');
 
 -----------------------------------------------------------
 
@@ -2340,9 +2340,9 @@ VALUES (1, 'day', 0, 1, 1, 0),
 --
 
 INSERT INTO `oc_subscription_plan_description` (`subscription_plan_id`, `language_id`, `name`)
-VALUES (1, 1, 'Daily'),
-       (2, 1, 'Weekly'),
-       (3, 1, 'Monthly');
+VALUES (1, 1, 'Quotidien'),
+       (2, 1, 'Hebdomadaire'),
+       (3, 1, 'Mensuel');
 
 -----------------------------------------------------------
 

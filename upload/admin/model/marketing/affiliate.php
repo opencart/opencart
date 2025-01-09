@@ -70,7 +70,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *     'bank_account_name'   => 'Bank Account Name',
 	 *     'bank_account_number' => '',
 	 *     'custom_field'        => [],
-	 *     'status'              => 0
+	 *     'status'              => 1
 	 * ];
 	 *
 	 * $this->load->model('marketing/affiliate');
@@ -174,7 +174,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_name'           => 'Customer Name',
+	 *     'filter_name'           => 'John Doe',
 	 *     'filter_tracking'       => '',
 	 *     'filter_payment_method' => '',
 	 *     'filter_commission'     => 0.00,
@@ -281,7 +281,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_name'           => 'Customer Name',
+	 *     'filter_name'           => 'John Doe',
 	 *     'filter_tracking'       => '',
 	 *     'filter_payment_method' => '',
 	 *     'filter_commission'     => 0.00,

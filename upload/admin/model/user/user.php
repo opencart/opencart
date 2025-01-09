@@ -17,7 +17,18 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $user_id = $this->model_user_user->addUser($data);
+	 * $user_data = [
+	 *     'username'      => 'Username',
+	 *     'user_group_id' => 1,
+	 *     'password'      => '',
+	 *     'firstname'     => 'John',
+	 *     'lastname'      => 'Doe',
+	 *     'email'         => 'User Email',
+	 *     'image'         => 'user_image',
+	 *     'status'        => 0
+	 * ];
+	 *
+	 * $user_id = $this->model_user_user->addUser($user_data);
 	 */
 	public function addUser(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `user_group_id` = '" . (int)$data['user_group_id'] . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_added` = NOW()");
@@ -35,7 +46,18 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_user_user->editUser($user_id, $data);
+	 * $user_data = [
+	 *     'username'      => 'Username',
+	 *     'user_group_id' => 1,
+	 *     'password'      => '',
+	 *     'firstname'     => 'John',
+	 *     'lastname'      => 'Doe',
+	 *     'email'         => 'User Email',
+	 *     'image'         => 'user_image',
+	 *     'status'        => 1
+	 * ];
+	 *
+	 * $this->model_user_user->editUser($user_id, $user_data);
 	 */
 	public function editUser(int $user_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `user_group_id` = '" . (int)$data['user_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `user_id` = '" . (int)$user_id . "'");
@@ -172,7 +194,20 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_user_user->getUsers();
+	 * $filter_data = [
+	 *     'filter_username'      => 'Username',
+	 *     'filter_name'          => 'User Name',
+	 *     'filter_email'         => 'User Email',
+	 *     'filter_user_group_id' => 1,
+	 *     'filter_status'        => 1,
+	 *     'filter_ip'            => '',
+	 *     'sort'                 => 'username',
+	 *     'order'                => 'DESC',
+	 *     'start'                => 0,
+	 *     'limit'                => 10
+	 * ];
+	 *
+	 * $results = $this->model_user_user->getUsers($filter_data);
 	 */
 	public function getUsers(array $data = []): array {
 		$sql = "SELECT *, CONCAT(`u`.`firstname`, ' ', `u`.`lastname`) AS `name`, (SELECT `ug`.`name` FROM `" . DB_PREFIX . "user_group` `ug` WHERE `ug`.`user_group_id` = `u`.`user_group_id`) AS `user_group` FROM `" . DB_PREFIX . "user` `u`";
@@ -255,7 +290,20 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $user_total = $this->model_user_user->getTotalUsers();
+	 * $filter_data = [
+	 *     'filter_username'      => 'Username',
+	 *     'filter_name'          => 'User Name',
+	 *     'filter_email'         => 'User Email',
+	 *     'filter_user_group_id' => 1,
+	 *     'filter_status'        => 1,
+	 *     'filter_ip'            => '',
+	 *     'sort'                 => 'username',
+	 *     'order'                => 'DESC',
+	 *     'start'                => 0,
+	 *     'limit'                => 10
+	 * ];
+	 *
+	 * $user_total = $this->model_user_user->getTotalUsers($filter_data);
 	 */
 	public function getTotalUsers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` `u` ";
@@ -339,7 +387,12 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_user_user->addLogin($user_id, $data);
+	 * $user_login_data = [
+	 *     'ip'         => '',
+	 *     'user_agent' => ''
+	 * ];
+	 *
+	 * $this->model_user_user->addLogin($user_id, $user_login_data);
 	 */
 	public function addLogin(int $user_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
@@ -422,7 +475,13 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_user_user->addAuthorize($user_id, $data);
+	 * $user_authorize_data = [
+	 *     'token'      => '',
+	 *     'ip'         => '',
+	 *     'user_agent' => ''
+	 * ];
+	 *
+	 * $this->model_user_user->addAuthorize($user_id, $user_authorize_data);
 	 */
 	public function addAuthorize(int $user_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_authorize` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");

@@ -18,7 +18,7 @@ class Online extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_customer' => 'Customer Name',
+	 *     'filter_customer' => 'John Doe',
 	 *     'filter_ip'       => '',
 	 *     'start'           => 0,
 	 *     'limit'           => 10
@@ -72,7 +72,7 @@ class Online extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_customer' => 'Customer Name',
+	 *     'filter_customer' => 'John Doe',
 	 *     'filter_ip'       => '',
 	 *     'start'           => 0,
 	 *     'limit'           => 10

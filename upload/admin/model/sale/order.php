@@ -145,7 +145,23 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_sale_order->getOrders();
+	 * $filter_data = [
+	 *     'filter_order_id'        => 1,
+	 *     'filter_customer_id'     => 1,
+	 *     'filter_customer'        => 'John Doe',
+	 *     'filter_store_id'        => 1,
+	 *     'filter_order_status'    => 'Pending',
+	 *     'filter_order_status_id' => 1,
+	 *     'filter_total'           => 0.0000,
+	 *     'filter_date_from'       => '2021-01-01',
+	 *     'filter_date_to'         => '2021-01-31',
+	 *     'sort'                   => 'o.order_id',
+	 *     'order'                  => 'DESC',
+	 *     'start'                  => 0,
+	 *     'limit'                  => 10
+	 * ];
+	 *
+	 * $results = $this->model_sale_order->getOrders($filter_data);
 	 */
 	public function getOrders(array $data = []): array {
 		$sql = "SELECT `o`.`order_id`, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status`, `o`.`store_name`, `o`.`custom_field`, `o`.`payment_method`, `o`.`payment_custom_field`, `o`.`shipping_method`, `o`.`shipping_custom_field`, `o`.`total`, `o`.`currency_code`, `o`.`currency_value`, `o`.`date_added`, `o`.`date_modified` FROM `" . DB_PREFIX . "order` `o`";
@@ -261,7 +277,23 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $order_total = $this->model_sale_order->getTotalOrders();
+	 * $filter_data = [
+	 *     'filter_order_id'        => 1,
+	 *     'filter_customer_id'     => 1,
+	 *     'filter_customer'        => 'John Doe',
+	 *     'filter_store_id'        => 1,
+	 *     'filter_order_status'    => 'Pending',
+	 *     'filter_order_status_id' => 1,
+	 *     'filter_total'           => 0.0000,
+	 *     'filter_date_from'       => '2021-01-01',
+	 *     'filter_date_to'         => '2021-01-31',
+	 *     'sort'                   => 'o.order_id',
+	 *     'order'                  => 'DESC',
+	 *     'start'                  => 0,
+	 *     'limit'                  => 10
+	 * ];
+	 *
+	 * $order_total = $this->model_sale_order->getTotalOrders($filter_data);
 	 */
 	public function getTotalOrders(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order`";
@@ -681,7 +713,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $sale_total = $this->model_sale_order->getTotalSales();
+	 * $sale_total = $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge(1, 3)]);
 	 */
 	public function getTotalSales(array $data = []): float {
 		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order`";
@@ -899,6 +931,14 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int total number of email by product ordered records
 	 *
 	 * @example
+	 *
+	 * $products = [
+	 *		1,
+	 *		2,
+	 *		3,
+	 *		4,
+	 *		5
+	 *	];
 	 *
 	 * $email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($products);
 	 */

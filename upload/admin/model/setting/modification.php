@@ -17,7 +17,19 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_setting_modification->addModification($data);
+	 * $modification_data = [
+	 *     'extension_download_id' => 1,
+	 *     'name'                  => 'Modification Name',
+	 *     'description'           => 'Modification Description',
+	 *     'code'                  => 'Modification Code',
+	 *     'author'                => 'Modification Author',
+	 *     'version'               => '1.00',
+	 *     'link'                  => '',
+	 *     'xml'                   => '',
+	 *     'status'                => 0
+	 * ];
+	 *
+	 * $this->model_setting_modification->addModification($$modification_data);
 	 */
 	public function addModification(array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "modification` SET `extension_install_id` = '" . (int)$data['extension_install_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `code` = '" . $this->db->escape($data['code']) . "', `author` = '" . $this->db->escape($data['author']) . "', `version` = '" . $this->db->escape($data['version']) . "', `link` = '" . $this->db->escape($data['link']) . "', `xml` = '" . $this->db->escape($data['xml']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
@@ -95,7 +107,14 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_setting_modification->getModifications();
+	 * $filter_data = [
+	 *     'sort'  => 'name',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_setting_modification->getModifications($filter_data);
 	 */
 	public function getModifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "modification`";

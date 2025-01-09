@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Cart
  *
- * @example $cart_model = $this->model_checkout_cart;
- *
- * Can be called from $this->load->model('checkout/cart');
+ * Can be called using $this->load->model('checkout/cart');
  *
  * @package Opencart\Catalog\Model\Checkout
  */
@@ -14,6 +12,12 @@ class Cart extends \Opencart\System\Engine\Model {
 	 * Get Products
 	 *
 	 * @return array<int, array<string, mixed>> product records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('checkout/cart');
+	 *
+	 * $cart = $this->model_checkout_cart->getProducts();
 	 */
 	public function getProducts(): array {
 		$this->load->language('checkout/cart');

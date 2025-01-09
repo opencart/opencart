@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Localisation;
  *
  * @example $subscription_status_model = $this->model_localisation_subscription_status;
  *
- * Can be called from $this->load->model('localisation/subscription_status');
+ * Can be called using $this->load->model('localisation/subscription_status');
  *
  * @package Opencart\Catalog\Model\Localisation
  */

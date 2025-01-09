@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Setting;
  *
  * @example $api_model = $this->model_setting_api;
  *
- * Can be called from $this->load->model('setting/api');
+ * Can be called using $this->load->model('setting/api');
  *
  * @package Opencart\Catalog\Model\Setting
  */

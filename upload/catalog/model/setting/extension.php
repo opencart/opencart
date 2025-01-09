@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Setting;
  *
  * @example $extension_model = $this->model_setting_extension;
  *
- * Can be called from $this->load->model('setting/extension');
+ * Can be called using $this->load->model('setting/extension');
  *
  * @package Opencart\Catalog\Model\Setting
  */

@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Returns
  *
- * @example $returns_model = $this->model_account_returns;
- *
- * Can be called from $this->load->model('account/returns');
+ * Can be called using $this->load->model('account/returns');
  *
  * @package Opencart\Catalog\Model\Account
  */
@@ -16,6 +14,12 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/returns');
+	 *
+	 * $this->model_account_return->addReturn($data);
 	 */
 	public function addReturn(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape($data['email']) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "', `product` = '" . $this->db->escape($data['product']) . "', `model` = '" . $this->db->escape($data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_status_id` = '" . (int)$this->config->get('config_return_status_id') . "', `comment` = '" . $this->db->escape($data['comment']) . "', `date_ordered` = '" . $this->db->escape($data['date_ordered']) . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -29,6 +33,12 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed> return record that has return ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/returns');
+	 *
+	 * $return_info = $this->model_account_return->getReturn($return_id);
 	 */
 	public function getReturn(int $return_id): array {
 		$query = $this->db->query("SELECT *, (SELECT `rr`.`name` FROM `" . DB_PREFIX . "return_reason` `rr` WHERE `rr`.`return_reason_id` = `r`.`return_reason_id` AND `rr`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `reason`, (SELECT `ra`.`name` FROM `" . DB_PREFIX . "return_action` `ra` WHERE `ra`.`return_action_id` = `r`.`return_action_id` AND `ra`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `action`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `status`, `r`.`comment`, `r`.`date_ordered`, `r`.`date_added`, `r`.`date_modified` FROM `" . DB_PREFIX . "return` `r` WHERE `r`.`return_id` = '" . (int)$return_id . "' AND `r`.`customer_id` = '" . $this->customer->getId() . "'");
@@ -43,6 +53,12 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> return records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/returns');
+	 *
+	 * $results = $this->model_account_returns->getReturns();
 	 */
 	public function getReturns(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
@@ -62,6 +78,12 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * Get Total Returns
 	 *
 	 * @return int total number of return records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/returns');
+	 *
+	 * $return_total = $this->model_account_returns->getTotalReturns();
 	 */
 	public function getTotalReturns(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `customer_id` = '" . $this->customer->getId() . "'");
@@ -75,6 +97,12 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<int, array<string, mixed>> history records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/returns');
+	 *
+	 * $results = $this->model_account_returns->getHistories($return_id);
 	 */
 	public function getHistories(int $return_id): array {
 		$query = $this->db->query("SELECT `rh`.`date_added`, `rs`.`name` AS `status`, `rh`.`comment` FROM `" . DB_PREFIX . "return_history` `rh` LEFT JOIN `" . DB_PREFIX . "return_status` `rs` ON (`rh`.`return_status_id` = `rs`.`return_status_id`) WHERE `rh`.`return_id` = '" . (int)$return_id . "' AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `rh`.`date_added` ASC");
@@ -88,6 +116,12 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return int total number of history records that have return ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/returns');
+	 *
+	 * $history_total = $this->model_account_returns->getTotalHistories($return_id);
 	 */
 	public function getTotalHistories(int $return_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_history` WHERE `return_id` = '" . (int)$return_id . "'");

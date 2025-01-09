@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Product
  *
- * @example $product_model = $this->model_catalog_product;
- *
- * Can be called from $this->load->model('catalog/product');
+ * Can be called using $this->load->model('catalog/product');
  *
  * @package Opencart\Catalog\Model\Catalog
  */
@@ -38,6 +36,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data       array of data
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->editQuantity($product_id, $quantity);
 	 */
 	public function editQuantity(int $product_id, int $quantity): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = '" . (int)$quantity . "' WHERE `product_id` = '" . (int)$product_id . "'");
@@ -49,6 +53,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<string, mixed> product record that has product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_info = $this->model_catalog_product->getProduct($product_id);
 	 */
 	public function getProduct(int $product_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, `pd`.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p2s`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -74,6 +84,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> product records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $products = $this->model_catalog_product->getProducts();
 	 */
 	public function getProducts(array $data = []): array {
 		$sql = "SELECT DISTINCT *, `pd`.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'];
@@ -241,6 +257,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of product records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_total = $this->model_catalog_product->getTotalProducts();
 	 */
 	public function getTotalProducts(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total`";
@@ -356,6 +378,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> category records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $categories = $this->model_catalog_product->getCategories($product_id);
 	 */
 	public function getCategories(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -370,6 +398,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<string, mixed> category record that has product ID, category ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $categories = $this->model_catalog_product->getCategoriesByCategoryId($product_id, $category_id);
 	 */
 	public function getCategoriesByCategoryId(int $product_id, int $category_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "' AND `category_id` = '" . (int)$category_id . "'");
@@ -384,6 +418,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return int total number of product category records that have product ID, category ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $category_total = $this->model_catalog_product->getTotalCategoriesByCategoryId($product_id, $category_id);
 	 */
 	public function getTotalCategoriesByCategoryId(int $product_id, int $category_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -397,6 +437,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> attribute records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $attribute_groups = $this->model_catalog_product->getAttributes($product_id);
 	 */
 	public function getAttributes(int $product_id): array {
 		$product_attribute_group_data = [];
@@ -421,6 +467,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $quantity
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->editOptionQuantity($product_id, $product_option_id, $product_option_value_id, $quantity);
 	 */
 	public function editOptionQuantity(int $product_id, int $product_option_id, int $product_option_value_id, int $quantity): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = '" . (int)$quantity . "' WHERE `product_id` = '" . (int)$product_id . "' AND `product_option_id` = '" . (int)$product_option_id . "' AND `product_option_value_id` = '" . (int)$product_option_value_id . "'");
@@ -433,6 +485,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_option_id primary key of the product option record
 	 *
 	 * @return array<string, mixed> option record that has product ID, product option ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_option = $this->model_catalog_product->getOption($product_id, $product_option_id);
 	 */
 	public function getOption(int $product_id, int $product_option_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`po`.`option_id` = `o`.`option_id`) LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `po`.`product_id` = '" . (int)$product_id . "' AND `po`.`product_option_id` = '" . (int)$product_option_id . "' AND `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -446,6 +504,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> option records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_options = $this->model_catalog_product->getOptions($product_id);
 	 */
 	public function getOptions(int $product_id): array {
 		$product_option_data = [];
@@ -466,6 +530,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_option_value_id primary key of the product option value record
 	 *
 	 * @return array<string, mixed> option value record that has product ID, product option value ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_option_value_info = $this->model_catalog_product->getOptionValue($product_id, $product_option_value_id);
 	 */
 	public function getOptionValue(int $product_id, int $product_option_value_id): array {
 		$query = $this->db->query("SELECT `pov`.`option_value_id`, `ovd`.`name`, `pov`.`quantity`, `pov`.`subtract`, `pov`.`price`, `pov`.`price_prefix`, `pov`.`points`, `pov`.`points_prefix`, `pov`.`weight`, `pov`.`weight_prefix` FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -480,6 +550,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_option_id primary key of the product option record
 	 *
 	 * @return array<string, mixed> option value records that have product ID, product option ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_option_values = $this->model_catalog_product->getOptionValues($product_id, $product_option_id);
 	 */
 	public function getOptionValues(int $product_id, int $product_option_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_id` = '" . (int)$product_option_id . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `ov`.`sort_order`");
@@ -493,6 +569,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> discount records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $discounts = $this->model_catalog_product->getDiscounts($product_id);
 	 */
 	public function getDiscounts(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` > '1' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` ASC, `priority` ASC, `price` ASC");
@@ -506,6 +588,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> image records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $results = $this->model_catalog_product->getImages($product_id);
 	 */
 	public function getImages(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_image` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `sort_order` ASC");
@@ -520,6 +608,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed> subscription record that has product ID, subscription plan ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_subscription_info = $this->model_catalog_product->getSubscription($product_id, $subscription_plan_id);
 	 */
 	public function getSubscription(int $product_id, int $subscription_plan_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` `ps` LEFT JOIN `" . DB_PREFIX . "subscription_plan` `sp` ON (`ps`.`subscription_plan_id` = `sp`.`subscription_plan_id`) WHERE `ps`.`product_id` = '" . (int)$product_id . "' AND `ps`.`subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `sp`.`status` = '1'");
@@ -533,6 +627,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> subscription records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
 	 */
 	public function getSubscriptions(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` `ps` LEFT JOIN `" . DB_PREFIX . "subscription_plan` `sp` ON (`ps`.`subscription_plan_id` = `sp`.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `ps`.`product_id` = '" . (int)$product_id . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `sp`.`status` = '1' ORDER BY `sp`.`sort_order` ASC");
@@ -546,6 +646,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return int layout record that has product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $layout_id = $this->model_catalog_product->getLayoutId($product_id);
 	 */
 	public function getLayoutId(int $product_id): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");
@@ -563,6 +669,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> related records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $results = $this->model_catalog_product->getRelated($product_id);
 	 */
 	public function getRelated(int $product_id): array {
 		$sql = "SELECT DISTINCT *, `pd`.`name` AS `name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_related` `pr` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `pr`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "') LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pr`.`related_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pr`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
@@ -588,6 +700,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> special records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $results = $this->model_catalog_product->getSpecials();
 	 */
 	public function getSpecials(array $data = []): array {
 		$sql = "SELECT *, `p`.`price`, `ps`.`price` as `special`, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM (SELECT DISTINCT * FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` = '1' AND `special` = '1' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) GROUP BY `product_id` ORDER BY `priority` ASC) `ps` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`ps`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()";
@@ -649,6 +767,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Get Total Specials
 	 *
 	 * @return int total number of special records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $special_total = $this->model_catalog_product->getTotalSpecials();
 	 */
 	public function getTotalSpecials(): int {
 		$query = $this->db->query("SELECT COUNT(`ps`.`product_id`) AS `total` FROM (SELECT DISTINCT * FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` = '1' AND `special` = '1' AND ((`date_end` = '0000-00-00' OR `date_end` > NOW()) AND (`date_start` = '0000-00-00' OR `date_start` < NOW())) GROUP BY `product_id`) `ps` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`ps`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()");
@@ -668,6 +792,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * @param string $country
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->addReport($product_id, $ip, $country);
 	 */
 	public function addReport(int $product_id, string $ip, string $country = ''): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_report` SET `product_id` = '" . (int)$product_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `ip` = '" . $this->db->escape($ip) . "', `country` = '" . $this->db->escape($country) . "', `date_added` = NOW()");

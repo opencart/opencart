@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Marketing;
  *
  * @example $coupon_model = $this->model_marketing_coupon;
  *
- * Can be called from $this->load->model('marketing/coupon');
+ * Can be called using $this->load->model('marketing/coupon');
  *
  * @package Opencart\Catalog\Model\Marketing
  */

@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Tool;
  *
  * @example $image_model = $this->model_tool_image;
  *
- * Can be called from $this->load->model('tool/image');
+ * Can be called using $this->load->model('tool/image');
  *
  * @package Opencart\Catalog\Model\Tool
  */

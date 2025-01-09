@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Localisation;
  *
  * @example $currency_model = $this->model_localisation_currency;
  *
- * Can be called from $this->load->model('localisation/currency');
+ * Can be called using $this->load->model('localisation/currency');
  *
  * @package Opencart\Catalog\Model\Localisation
  */

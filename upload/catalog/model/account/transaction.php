@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Transaction
  *
- * @example $transaction_model = $this->model_account_transaction;
- *
- * Can be called from $this->load->model('account/transaction');
+ * Can be called using $this->load->model('account/transaction');
  *
  * @package Opencart\Catalog\Model\Account
  */
@@ -19,6 +17,10 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param float  $amount
 	 *
 	 * @return void
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $this->model_account_transaction->addTransaction($customer_id, $order_id, $description, $amount);
 	 */
 	public function addTransaction(int $customer_id, int $order_id, string $description, float $amount): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
@@ -31,6 +33,12 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param int $order_id    primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $this->model_account_transaction->deleteTransaction($customer_id, $order_id);
 	 */
 	public function deleteTransaction(int $customer_id, int $order_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
@@ -48,6 +56,12 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $this->model_account_transaction->deleteTransactionByOrderId($order_id);
 	 */
 	public function deleteTransactionByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "' AND `amount` < 0");
@@ -60,6 +74,12 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return array<int, array<string, mixed>> transaction records that have customer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $results = $this->model_account_transaction->getTransactions($customer_id, $data);
 	 */
 	public function getTransactions(int $customer_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
@@ -105,6 +125,12 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of transaction records that have customer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $transaction_total = $this->model_account_transaction->getTotalTransactions($customer_id);
 	 */
 	public function getTotalTransactions(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -118,6 +144,12 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int total number of transaction records that have order ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $transaction_total = $this->model_account_transaction->getTotalTransactionsByOrderId($order_id);
 	 */
 	public function getTotalTransactionsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -131,6 +163,12 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return float
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/transaction');
+	 *
+	 * $transaction_total = $this->model_account_transaction->getTransactionTotal($customer_id);
 	 */
 	public function getTransactionTotal(int $customer_id): float {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "' GROUP BY `customer_id`");

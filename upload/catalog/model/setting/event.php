@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Setting;
  *
  * @example $event_model = $this->model_setting_event;
  *
- * Can be called from $this->load->model('setting/event');
+ * Can be called using $this->load->model('setting/event');
  *
  * @package Opencart\Catalog\Model\Setting
  */

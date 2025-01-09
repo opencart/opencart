@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Marketing;
  *
  * @example $marketing_model = $this->model_marketing_marketing;
  *
- * Can be called from $this->load->model('marketing/marketing');
+ * Can be called using $this->load->model('marketing/marketing');
  *
  * @package Opencart\Catalog\Model\Marketing
  */

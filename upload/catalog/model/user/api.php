@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\User;
  *
  * @example $user_model = $this->model_user_api;
  *
- * Can be called from $this->load->model('user/api');
+ * Can be called using $this->load->model('user/api');
  *
  * @package Opencart\Catalog\Model\User
  */

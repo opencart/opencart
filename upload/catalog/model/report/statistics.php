@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Report;
  *
  * @example $statistics_model = $this->model_report_statistics;
  *
- * Can be called from $this->load->model('report/statistics');
+ * Can be called using $this->load->model('report/statistics');
  *
  * @package Opencart\Catalog\Model\Report
  */

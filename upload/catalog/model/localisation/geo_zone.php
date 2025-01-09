@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Localisation;
  *
  * @example $geo_zone_model = $this->model_localisation_geo_zone;
  *
- * Can be called from $this->load->model('localisation/geo_zone');
+ * Can be called using $this->load->model('localisation/geo_zone');
  *
  * @package Opencart\Catalog\Model\Localisation
  */

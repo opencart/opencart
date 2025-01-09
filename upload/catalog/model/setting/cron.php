@@ -5,7 +5,7 @@ namespace Opencart\Catalog\Model\Setting;
  *
  * @example $cron_model = $this->model_setting_cron;
  *
- * Can be called from $this->load->model('setting/cron');
+ * Can be called using $this->load->model('setting/cron');
  *
  * @package Opencart\Catalog\Model\Setting
  */

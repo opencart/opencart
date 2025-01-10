@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Tool;
 /**
  * Class Image
  *
- * @example $image_model = $this->model_tool_image;
- *
  * Can be called using $this->load->model('tool/image');
  *
  * @package Opencart\Catalog\Model\Tool

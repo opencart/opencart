@@ -3,8 +3,6 @@ namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Language
  *
- * @example $language_model = $this->model_localisation_language;
- *
  * Can be called using $this->load->model('localisation/language');
  *
  * @package Opencart\Catalog\Model\Localisation
@@ -21,6 +19,12 @@ class Language extends \Opencart\System\Engine\Model {
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed> language record that has language ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/language');
+	 *
+	 * $language_info = $this->model_localisation_language->getLanguage($language_id);
 	 */
 	public function getLanguage(int $language_id): array {
 		if (isset($this->data[$language_id])) {
@@ -54,6 +58,12 @@ class Language extends \Opencart\System\Engine\Model {
 	 * @param string $code
 	 *
 	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/language');
+	 *
+	 * $language_info = $this->model_localisation_language->getLanguageByCode($code);
 	 */
 	public function getLanguageByCode(string $code): array {
 		if (isset($this->data[$code])) {
@@ -85,6 +95,12 @@ class Language extends \Opencart\System\Engine\Model {
 	 * Get Languages
 	 *
 	 * @return array<string, array<string, mixed>> language record
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/language');
+	 *
+	 * $languages = $this->model_localisation_language->getLanguages();
 	 */
 	public function getLanguages(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`";

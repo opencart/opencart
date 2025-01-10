@@ -48,6 +48,10 @@ class Weight {
 	 * @param int   $to
 	 *
 	 * @return float
+	 *
+	 * @example
+	 *
+	 * $weight = $this->weight->convert($value, $from, $to);
 	 */
 	public function convert(float $value, int $from, int $to): float {
 		if ($from == $to) {
@@ -78,6 +82,10 @@ class Weight {
 	 * @param string $thousand_point
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $weight = $this->weight->format($value, $weight_class_id, $decimal_point, $thousand_point);
 	 */
 	public function format(float $value, int $weight_class_id, string $decimal_point = '.', string $thousand_point = ','): string {
 		if (isset($this->weights[$weight_class_id])) {
@@ -93,6 +101,10 @@ class Weight {
 	 * @param int $weight_class_id primary key of the weight class record
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $unit = $this->weight->getUnit($weight_class_id);
 	 */
 	public function getUnit(int $weight_class_id): string {
 		if (isset($this->weights[$weight_class_id])) {

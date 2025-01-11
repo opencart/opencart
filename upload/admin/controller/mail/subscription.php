@@ -62,7 +62,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				// The charge() method handles the subscription statuses in the cron/subscription
 				// controller from the catalog whereas an extension needs to return the active subscription status
 				if ($history_total && $subscription['subscription_status_id'] == $subscription_status_id) {
-					// Subscription Statuses
+					// Subscription Status
 					$this->load->model('localisation/subscription_status');
 
 					$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_status_id);
@@ -72,7 +72,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$customer_payment_info = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $subscription['customer_id'], 'filter_customer_payment_id' => $subscription['customer_payment_id']]);
 
 						if ($customer_payment_info) {
-							// Customers
+							// Customer
 							$this->load->model('customer/customer');
 
 							// Since the customer payment is integrated into the customer/customer page,
@@ -80,7 +80,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							$customer_info = $this->model_customer_customer->getCustomer($subscription['customer_id']);
 
 							if ($customer_info) {
-								// Settings
+								// Setting
 								$this->load->model('setting/setting');
 
 								// Store
@@ -98,7 +98,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 									$alert_email = $this->config->get('config_mail_alert_email');
 								}
 
-								// Languages
+								// Language
 								$this->load->model('localisation/language');
 
 								$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
@@ -112,7 +112,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 									$data['subscription_status'] = $subscription_status_info['name'];
 
-									// Languages
+									// Language
 									$this->load->model('localisation/language');
 
 									$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
@@ -236,7 +236,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$transaction_total = $this->model_customer_customer->getTotalTransactionsByOrderId($subscription['order_id']);
 
 				if ($transaction_total) {
-					// Orders
+					// Order
 					$this->load->model('sale/order');
 
 					$order_info = $this->model_sale_order->getOrder($order_id);

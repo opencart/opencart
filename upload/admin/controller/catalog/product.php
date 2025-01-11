@@ -853,7 +853,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['manufacturer'] = '';
 		}
 
-		// Categories
+		// Category
 		$this->load->model('catalog/category');
 
 		if ($product_id) {
@@ -872,7 +872,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Filters
+		// Filter
 		$this->load->model('catalog/filter');
 
 		if (!empty($product_info)) {
@@ -913,7 +913,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_store'] = [0];
 		}
 
-		// Downloads
+		// Download
 		$this->load->model('catalog/download');
 
 		if ($product_id) {
@@ -949,7 +949,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Attributes
+		// Attribute
 		$this->load->model('catalog/attribute');
 
 		if ($product_id) {
@@ -972,7 +972,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-		// Options
+		// Option
 		$this->load->model('catalog/option');
 
 		if ($product_id) {
@@ -1060,7 +1060,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Subscriptions
+		// Subscription
 		$this->load->model('catalog/subscription_plan');
 
 		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
@@ -1151,7 +1151,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_seo_url'] = [];
 		}
 
-		// Layouts
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();

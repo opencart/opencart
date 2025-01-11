@@ -237,7 +237,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * $article_data = [
 	 *     'parent_id' => 0,
-	 *     'author'    => '',
+	 *     'author'    => 'Author Name',
 	 *     'comment'   => '',
 	 *     'ip'        => '',
 	 *     'status'    => 0

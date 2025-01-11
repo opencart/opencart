@@ -23,7 +23,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *   'customer_id'      => 1,
 	 *   'firstname'        => 'John',
 	 *   'lastname'         => 'Doe',
-	 *   'email'            => ''
+	 *   'email'            => 'demo@opencart.com'
 	 *   'telephone'        => '1234567890',
 	 *   'product'          => 'Product Name',
 	 *   'model'            => 'Product Model',
@@ -61,7 +61,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *   'customer_id'      => 1,
 	 *   'firstname'        => 'John',
 	 *   'lastname'         => 'Doe',
-	 *   'email'            => ''
+	 *   'email'            => 'demo@opencart.com'
 	 *   'telephone'        => '1234567890',
 	 *   'product'          => 'Product Name',
 	 *   'model'            => 'Product Model',

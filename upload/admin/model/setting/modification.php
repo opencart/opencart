@@ -22,7 +22,7 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *     'name'                  => 'Modification Name',
 	 *     'description'           => 'Modification Description',
 	 *     'code'                  => 'Modification Code',
-	 *     'author'                => 'Modification Author',
+	 *     'author'                => 'Author Name',
 	 *     'version'               => '1.00',
 	 *     'link'                  => '',
 	 *     'xml'                   => '',

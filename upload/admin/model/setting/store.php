@@ -17,7 +17,12 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $store_id = $this->model_setting_store->addStore($data);
+	 * $store_data = [
+	 *     'name' => 'Store Name',
+	 *     'url'  => ''
+	 * ];
+	 *
+	 * $store_id = $this->model_setting_store->addStore($store_data);
 	 */
 	public function addStore(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "store` SET `name` = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "'");
@@ -56,7 +61,12 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_setting_store->editStore($store_id, $data);
+	 * $store_data = [
+	 *     'name' => 'Store Name',
+	 *     'url'  => ''
+	 * ];
+	 *
+	 * $this->model_setting_store->editStore($store_id, $store_data);
 	 */
 	public function editStore(int $store_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "store` SET `name` = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "' WHERE `store_id` = '" . (int)$store_id . "'");

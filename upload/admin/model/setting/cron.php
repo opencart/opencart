@@ -133,7 +133,14 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_setting_cron->getCrons();
+	 * $filter_data = [
+	 *     'sort'  => 'code',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_setting_cron->getCrons($filter_data);
 	 */
 	public function getCrons(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";

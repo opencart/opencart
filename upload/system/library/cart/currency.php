@@ -51,6 +51,10 @@ class Currency {
 	 * @param bool   $format
 	 *
 	 * @return float|string
+	 *
+	 * @example
+	 *
+	 * $currency = $this->currency->format($number, $currency, $value, $format);
 	 */
 	public function format(float $number, string $currency, float $value = 0, bool $format = true) {
 		if (!isset($this->currencies[$currency])) {
@@ -96,6 +100,10 @@ class Currency {
 	 * @param string $to
 	 *
 	 * @return float
+	 *
+	 * @example
+	 *
+	 * $currency = $this->currency->convert($value, $from, $to);
 	 */
 	public function convert(float $value, string $from, string $to): float {
 		if (isset($this->currencies[$from])) {
@@ -119,6 +127,10 @@ class Currency {
 	 * @param string $currency
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $currency_id = $this->currency->getId($currency);
 	 */
 	public function getId(string $currency): int {
 		if (isset($this->currencies[$currency])) {
@@ -134,6 +146,10 @@ class Currency {
 	 * @param string $currency
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $symbol_left = $this->currency->getSymbolLeft($currency);
 	 */
 	public function getSymbolLeft(string $currency): string {
 		if (isset($this->currencies[$currency])) {
@@ -149,6 +165,10 @@ class Currency {
 	 * @param string $currency
 	 *
 	 * @return string
+	 *
+	 * @example
+	 *
+	 * $symbol_right = $this->currency->getSymbolRight($currency);
 	 */
 	public function getSymbolRight(string $currency): string {
 		if (isset($this->currencies[$currency])) {
@@ -164,6 +184,10 @@ class Currency {
 	 * @param string $currency
 	 *
 	 * @return int
+	 *
+	 * @example
+	 *
+	 * $decimal_place = $this->currency->getDecimalPlace($currency);
 	 */
 	public function getDecimalPlace(string $currency): int {
 		if (isset($this->currencies[$currency])) {
@@ -179,6 +203,10 @@ class Currency {
 	 * @param string $currency
 	 *
 	 * @return float
+	 *
+	 * @example
+	 *
+	 * $value = $this->currency->getValue($currency);
 	 */
 	public function getValue(string $currency): float {
 		if (isset($this->currencies[$currency])) {
@@ -194,6 +222,8 @@ class Currency {
 	 * @param string $currency
 	 *
 	 * @return bool
+	 *
+	 * $currency = $this->currency->has($currency);
 	 */
 	public function has(string $currency): bool {
 		return isset($this->currencies[$currency]);

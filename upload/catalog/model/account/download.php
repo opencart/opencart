@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Download
  *
- * @example $download_model = $this->model_account_download;
- *
- * Can be called from $this->load->model('account/download');
+ * Can be called using $this->load->model('account/download');
  *
  * @package Opencart\Catalog\Model\Account
  */
@@ -16,6 +14,12 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<string, mixed> download record that has download ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/download');
+	 *
+	 * $download_info = $this->model_account_download->getDownload($download_id);
 	 */
 	public function getDownload(int $download_id): array {
 		$implode = [];
@@ -42,6 +46,12 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> download records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/download');
+	 *
+	 * $results = $this->model_account_download->getDownloads();
 	 */
 	public function getDownloads(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
@@ -73,6 +83,12 @@ class Download extends \Opencart\System\Engine\Model {
 	 * Get Total Downloads
 	 *
 	 * @return int total number of download records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/download');
+	 *
+	 * $download_total = $this->model_account_download->getTotalDownloads();
 	 */
 	public function getTotalDownloads(): int {
 		$implode = [];
@@ -100,6 +116,12 @@ class Download extends \Opencart\System\Engine\Model {
 	 * @param string $country
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/download');
+	 *
+	 * $this->model_account_download->addReport($download_id, $ip, $country);
 	 */
 	public function addReport(int $download_id, string $ip, string $country = ''): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "download_report` SET `download_id` = '" . (int)$download_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `ip` = '" . $this->db->escape($ip) . "', `country` = '" . $this->db->escape($country) . "', `date_added` = NOW()");

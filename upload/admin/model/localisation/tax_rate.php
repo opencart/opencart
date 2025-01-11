@@ -18,7 +18,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $tax_rate_data = [
-	 *     'name'        => 'Tax Rate Title',
+	 *     'name'        => 'Tax Rate Name',
 	 *     'rate'        => 'Tax Rate',
 	 *     'type'        => 'F',
 	 *     'geo_zone_id' => 1
@@ -53,7 +53,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $tax_rate_data = [
-	 *     'name'        => 'Tax Rate Title',
+	 *     'name'        => 'Tax Rate Name',
 	 *     'rate'        => 'Tax Rate',
 	 *     'type'        => 'F',
 	 *     'geo_zone_id' => 1

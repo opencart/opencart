@@ -2542,7 +2542,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Get Subscription
 	 *
 	 * @param int $product_id           primary key of the product record
-	 * @param int $subscription_plan_id primary key of the product subscription plan record
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 * @param int $customer_group_id    primary key of the customer group record
 	 *
 	 * @return array<string, mixed> subscription record that has product ID, subscription plan ID, customer group ID
@@ -2598,7 +2598,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions By Subscription Plan ID
 	 *
-	 * @param int $subscription_plan_id primary key of the product subscription plan record
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return int total number of subscription records that have subscription plan ID
 	 *

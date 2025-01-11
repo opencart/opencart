@@ -128,7 +128,19 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->model_setting_extension->addInstall($data);
+	 * $extension_install_data = [
+	 *     'extension_id'          => 1,
+	 *     'extension_download_id' => 1,
+	 *     'name'                  => 'Extension Install Name',
+	 *     'description'           => 'Extension Install Description',
+	 *     'code'                  => 'Extension Install Code',
+	 *     'version'               => '1.00',
+	 *     'author'                => 'Extension Install Author',
+	 *     'link'                  => '',
+	 *     'status'                => 0
+	 * ];
+	 *
+	 * $this->model_setting_extension->addInstall($extension_install_data);
 	 */
 	public function addInstall(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
@@ -227,7 +239,15 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_setting_extension->getInstalls();
+	 * $filter_data = [
+	 *     'filter_extension_download_id' => 1,
+	 *     'sort'                         => 'name',
+	 *     'order'                        => 'DESC',
+	 *     'start'                        => 0,
+	 *     'limit'                        => 10
+	 * ];
+	 *
+	 * $results = $this->model_setting_extension->getInstalls($filter_data);
 	 */
 	public function getInstalls(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
@@ -280,7 +300,15 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $extension_total = $this->model_setting_extension->getTotalInstalls($data);
+	 * $filter_data = [
+	 *     'filter_extension_download_id' => 1,
+	 *     'sort'                         => 'name',
+	 *     'order'                        => 'DESC',
+	 *     'start'                        => 0,
+	 *     'limit'                        => 10
+	 * ];
+	 *
+	 * $extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 	 */
 	public function getTotalInstalls(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";

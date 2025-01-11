@@ -132,7 +132,20 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_sale_subscription->getSubscriptions($data);
+	 * $filter_data = [
+	 *     'filter_subscription_id'        => 1,
+	 *     'filter_order_id'               => 1,
+	 *     'filter_customer'               => 'John Doe',
+	 *     'filter_subscription_status_id' => 1,
+	 *     'filter_date_from'              => '2021-01-01',
+	 *     'filter_date_to'                => '2021-01-31',
+	 *     'order'                         => 's.subscription_id',
+	 *     'sort'                          => 'DESC',
+	 *     'start'                         => 0,
+	 *     'limit'                         => 10
+	 * ];
+	 *
+	 * $results = $this->model_sale_subscription->getSubscriptions($filter_data);
 	 */
 	public function getSubscriptions(array $data): array {
 		$sql = "SELECT `s`.`subscription_id`, `s`.*, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, (SELECT `ss`.`name` FROM `" . DB_PREFIX . "subscription_status` `ss` WHERE `ss`.`subscription_status_id` = `s`.`subscription_status_id` AND `ss`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `subscription_status` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`s`.`customer_id` = `c`.`customer_id`)";
@@ -230,7 +243,20 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($data);
+	 * $filter_data = [
+	 *     'filter_subscription_id'        => 1,
+	 *     'filter_order_id'               => 1,
+	 *     'filter_customer'               => 'John Doe',
+	 *     'filter_subscription_status_id' => 1,
+	 *     'filter_date_from'              => '2021-01-01',
+	 *     'filter_date_to'                => '2021-01-31',
+	 *     'order'                         => 's.subscription_id',
+	 *     'sort'                          => 'DESC',
+	 *     'start'                         => 0,
+	 *     'limit'                         => 10
+	 * ];
+	 *
+	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
 	 */
 	public function getTotalSubscriptions(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";

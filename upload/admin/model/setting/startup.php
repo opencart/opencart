@@ -17,7 +17,15 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $startup_id = $this->model_setting_startup->addStartup($data);
+	 * $startup_data = [
+	 *     'code'        => 'Startup Code',
+	 *     'description' => 'Startup Description',
+	 *     'action'      => 'Startup Action',
+	 *     'status'      => 0,
+	 *     'sort_order'  => 0
+	 * ];
+	 *
+	 * $startup_id = $this->model_setting_startup->addStartup($startup_data);
 	 */
 	public function addStartup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "startup` SET `code` = '" . $this->db->escape($data['code']) . "', `description` = '" . $this->db->escape($data['description']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -114,7 +122,14 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $results = $this->model_setting_startup->getStartups();
+	 * $filter_data = [
+	 *     'sort'  => 'code',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $results = $this->model_setting_startup->getStartups($filter_data);
 	 */
 	public function getStartups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "startup`";

@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Address
  *
- * @example $address_model = $this->model_account_address;
- *
- * Can be called from $this->load->model('account/address');
+ * Can be called using $this->load->model('account/address');
  *
  * @package Opencart\Catalog\Model\Account
  */
@@ -17,6 +15,26 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return int returns the primary key of the new address record
+	 *
+	 * @example
+	 *
+	 * $address_data = [
+	 *     'firstname'    => 'John',
+	 *     'lastname'     => 'Doe',
+	 *     'company'      => '',
+	 *     'address_1'    => '',
+	 *     'address_2'    => '',
+	 *     'postcode'     => '',
+	 *     'city'         => '',
+	 *     'zone_id'      => 1,
+	 *     'country_id'   => 1,
+	 *     'custom_field' => [],
+	 *     'default'      => 0
+	 * ];
+	 *
+	 * $this->load->model('account/address');
+	 *
+	 * $this->model_account_address->addAddress($customer_id, $address_data);
 	 */
 	public function addAddress(int $customer_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "address` SET `customer_id` = '" . (int)$customer_id . "', `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `company` = '" . $this->db->escape($data['company']) . "', `address_1` = '" . $this->db->escape($data['address_1']) . "', `address_2` = '" . $this->db->escape($data['address_2']) . "', `postcode` = '" . $this->db->escape($data['postcode']) . "', `city` = '" . $this->db->escape($data['city']) . "', `zone_id` = '" . (int)$data['zone_id'] . "', `country_id` = '" . (int)$data['country_id'] . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "', `default` = '" . (isset($data['default']) ? (int)$data['default'] : 0) . "'");
@@ -38,6 +56,26 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $address_data = [
+	 *     'firstname'    => 'John',
+	 *     'lastname'     => 'Doe',
+	 *     'company'      => '',
+	 *     'address_1'    => '',
+	 *     'address_2'    => '',
+	 *     'postcode'     => '',
+	 *     'city'         => '',
+	 *     'zone_id'      => 1,
+	 *     'country_id'   => 1,
+	 *     'custom_field' => [],
+	 *     'default'      => 0
+	 * ];
+	 *
+	 * $this->load->model('account/address');
+	 *
+	 * $this->model_account_address->addAddress($customer_id, $address_id, $address_data);
 	 */
 	public function editAddress(int $customer_id, int $address_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `company` = '" . $this->db->escape($data['company']) . "', `address_1` = '" . $this->db->escape($data['address_1']) . "', `address_2` = '" . $this->db->escape($data['address_2']) . "', `postcode` = '" . $this->db->escape($data['postcode']) . "', `city` = '" . $this->db->escape($data['city']) . "', `zone_id` = '" . (int)$data['zone_id'] . "', `country_id` = '" . (int)$data['country_id'] . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "', `default` = '" . (isset($data['default']) ? (int)$data['default'] : 0) . "' WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$customer_id . "'");
@@ -54,6 +92,12 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param int $address_id  primary key of the address record
 	 *
 	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/address');
+	 *
+	 * $this->model_account_address->deleteAddress($customer_id, $address_id);
 	 */
 	public function deleteAddress(int $customer_id, int $address_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
@@ -72,6 +116,12 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param int $address_id  primary key of the address record
 	 *
 	 * @return array<string, mixed> address record that has customer ID, address ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/address');
+	 *
+	 * $address_info = $this->model_account_address->getAddress($customer_id, $address_id);
 	 */
 	public function getAddress(int $customer_id, int $address_id): array {
 		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$customer_id . "'");
@@ -138,6 +188,12 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<int, array<string, mixed>> address records that have customer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/address');
+	 *
+	 * $results = $this->model_account_address->getAddresses($customer_id);
 	 */
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
@@ -201,6 +257,12 @@ class Address extends \Opencart\System\Engine\Model {
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of address records that have customer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/address');
+	 *
+	 * $address_total = $this->model_account_address->getTotalAddresses($customer_id);
 	 */
 	public function getTotalAddresses(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");

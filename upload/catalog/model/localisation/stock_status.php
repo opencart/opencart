@@ -3,9 +3,7 @@ namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class Stock Status
  *
- * @example $stock_status_model = $this->model_localisation_stock_status;
- *
- * Can be called from $this->load->model('localisation/stock_status');
+ * Can be called using $this->load->model('localisation/stock_status');
  *
  * @package Opencart\Catalog\Model\Localisation
  */
@@ -16,6 +14,12 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return array<string, mixed> stock status record that has stock status ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/stock_status');
+	 *
+	 * $stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);
 	 */
 	public function getStockStatus(int $stock_status_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
@@ -29,6 +33,12 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> stock status records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/stock_status');
+	 *
+	 * $stock_statuses = $this->model_localisation_stock_status->getStockStatuses();
 	 */
 	public function getStockStatuses(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";

@@ -1015,7 +1015,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards
 	 *
-	 * @param int $customer_id primary key of the order record
+	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 *

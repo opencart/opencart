@@ -560,7 +560,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Products
 		$data['subscription_products'] = [];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Upload
 		$this->load->model('tool/upload');
 
 		$products = $this->model_sale_subscription->getProducts($subscription_id);

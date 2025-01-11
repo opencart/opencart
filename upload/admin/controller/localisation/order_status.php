@@ -288,7 +288,10 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Order
 		$this->load->model('sale/order');
 
 		foreach ($selected as $order_status_id) {

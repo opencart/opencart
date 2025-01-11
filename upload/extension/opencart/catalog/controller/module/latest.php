@@ -20,7 +20,10 @@ class Latest extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		// Latest
 		$this->load->model('extension/opencart/module/latest');
+
+		// Image
 		$this->load->model('tool/image');
 
 		$results = $this->model_extension_opencart_module_latest->getLatest($setting['limit']);

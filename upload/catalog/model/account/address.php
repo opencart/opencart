@@ -198,8 +198,13 @@ class Address extends \Opencart\System\Engine\Model {
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
 
+		// Country
 		$this->load->model('localisation/country');
+
+		// Address Format
 		$this->load->model('localisation/address_format');
+
+		// Zone
 		$this->load->model('localisation/zone');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");

@@ -136,7 +136,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'limit'            => $this->config->get('config_pagination_admin')
 		];
 
+		// GDPR
 		$this->load->model('customer/gdpr');
+
+		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_customer_gdpr->getGdprs($filter_data);

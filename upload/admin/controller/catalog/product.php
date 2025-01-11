@@ -336,7 +336,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination_admin')
 		];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Image
 		$this->load->model('tool/image');
 
 		$results = $this->model_catalog_product->getProducts($filter_data);
@@ -1366,7 +1369,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['reports'] = [];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_product->getReports($product_id, ($page - 1) * $limit, $limit);
@@ -1439,8 +1445,13 @@ class Product extends \Opencart\System\Engine\Controller {
 			'limit'        => $limit
 		];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Option
 		$this->load->model('catalog/option');
+
+		// Subscription Plan
 		$this->load->model('catalog/subscription_plan');
 
 		$results = $this->model_catalog_product->getProducts($filter_data);

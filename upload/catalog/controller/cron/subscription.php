@@ -28,15 +28,25 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'limit'                         => 10
 		];
 
+		// Subscription
 		$this->load->model('checkout/subscription');
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Language
 		$this->load->model('localisation/language');
+
+		// Currency
 		$this->load->model('localisation/currency');
 
+		// Order
 		$this->load->model('checkout/order');
 
+		// Customer
 		$this->load->model('account/customer');
+
+		// Address
 		$this->load->model('account/address');
 
 		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);

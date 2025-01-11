@@ -138,7 +138,10 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		// Product Viewed
 		$this->load->model('extension/opencart/report/product_viewed');
+
+		// Product
 		$this->load->model('catalog/product');
 
 		$total = $this->model_extension_opencart_report_product_viewed->getTotal();

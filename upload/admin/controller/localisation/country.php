@@ -419,9 +419,16 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Customer
 		$this->load->model('customer/customer');
+
+		// Zone
 		$this->load->model('localisation/zone');
+
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		foreach ($selected as $country_id) {

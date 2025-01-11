@@ -332,7 +332,10 @@ class Order extends \Opencart\System\Engine\Model {
 		if ($order_query->num_rows) {
 			$order_data = $order_query->row;
 
+			// Country
 			$this->load->model('localisation/country');
+
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$order_data['custom_field'] = json_decode($order_query->row['custom_field'], true);

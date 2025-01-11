@@ -20,7 +20,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		// Bestseller
 		$this->load->model('extension/opencart/module/bestseller');
+
+		// Image
 		$this->load->model('tool/image');
 
 		$results = $this->model_extension_opencart_module_bestseller->getBestSellers($setting['limit']);

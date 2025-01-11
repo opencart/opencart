@@ -102,7 +102,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$price_status = false;
 		}
 
+		// Image
 		$this->load->model('tool/image');
+
+		// Upload
 		$this->load->model('tool/upload');
 
 		$data['products'] = [];

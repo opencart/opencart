@@ -399,8 +399,13 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Customer
 		$this->load->model('customer/customer');
+
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		foreach ($selected as $zone_id) {

@@ -398,8 +398,13 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['reports'] = [];
 
+		// Download
 		$this->load->model('catalog/download');
+
+		// Customer
 		$this->load->model('customer/customer');
+
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_download->getReports($download_id, ($page - 1) * $limit, $limit);

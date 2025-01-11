@@ -178,7 +178,10 @@ class Search extends \Opencart\System\Engine\Controller {
 				'limit'               => $limit
 			];
 
+			// Product
 			$this->load->model('catalog/product');
+
+			// Image
 			$this->load->model('tool/image');
 
 			$results = $this->model_catalog_product->getProducts($filter_data);

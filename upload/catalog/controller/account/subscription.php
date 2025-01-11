@@ -55,8 +55,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['subscriptions'] = [];
 
+		// Subscription
 		$this->load->model('account/subscription');
+
+		// Currency
 		$this->load->model('localisation/currency');
+
+		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
 		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * $limit, $limit);

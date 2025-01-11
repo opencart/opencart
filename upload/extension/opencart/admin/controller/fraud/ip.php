@@ -129,6 +129,8 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$data['ips'] = [];
 
 		$this->load->model('extension/opencart/fraud/ip');
+
+		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_extension_opencart_fraud_ip->getIps(($page - 1) * $limit, $limit);

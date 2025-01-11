@@ -705,8 +705,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Products
 		$data['order_products'] = [];
 
+		// Order
 		$this->load->model('sale/order');
+
+		// Subscription
 		$this->load->model('sale/subscription');
+
+		// Upload
 		$this->load->model('tool/upload');
 
 		$products = $this->model_sale_order->getProducts($order_id);
@@ -1273,9 +1278,16 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['jquery'] = 'view/javascript/jquery/jquery-3.7.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
+		// Order
 		$this->load->model('sale/order');
+
+		// Subscription
 		$this->load->model('sale/subscription');
+
+		// Setting
 		$this->load->model('setting/setting');
+
+		// Upload
 		$this->load->model('tool/upload');
 
 		$data['orders'] = [];
@@ -1512,10 +1524,19 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['jquery'] = 'view/javascript/jquery/jquery-3.7.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
+		// Order
 		$this->load->model('sale/order');
+
+		// Product
 		$this->load->model('catalog/product');
+
+		// Setting
 		$this->load->model('setting/setting');
+
+		// Upload
 		$this->load->model('tool/upload');
+
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		$data['orders'] = [];

@@ -288,7 +288,10 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		foreach ($selected as $subscription_status_id) {

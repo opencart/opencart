@@ -70,16 +70,23 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Transactions
 	 *
-	 * @param int                  $customer_id primary key of the order record
+	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of filters
 	 *
 	 * @return array<int, array<string, mixed>> transaction records that have customer ID
 	 *
 	 * @example
 	 *
+	 * $filter_data = [
+	 *     'sort'  => 'date_added',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
 	 * $this->load->model('account/transaction');
 	 *
-	 * $results = $this->model_account_transaction->getTransactions($customer_id, $data);
+	 * $results = $this->model_account_transaction->getTransactions($customer_id, $filter_data);
 	 */
 	public function getTransactions(int $customer_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";

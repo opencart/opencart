@@ -79,9 +79,16 @@ class Reward extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $filter_data = [
+	 *     'sort'  => 'date_added',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
 	 * $this->load->model('account/reward');
 	 *
-	 * $results = $this->model_account_reward->getRewards($customer_id, $data);
+	 * $results = $this->model_account_reward->getRewards($customer_id, $filter_data);
 	 */
 	public function getRewards(int $customer_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'";

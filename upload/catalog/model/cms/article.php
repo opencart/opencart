@@ -235,9 +235,17 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $article_data = [
+	 *     'parent_id' => 0,
+	 *     'author'    => '',
+	 *     'comment'   => '',
+	 *     'ip'        => '',
+	 *     'status'    => 0
+	 * ];
+	 *
 	 * $this->load->model('cms/article');
 	 *
-	 * $this->model_cms_article->addComment($article_id, $data);
+	 * $this->model_cms_article->addComment($article_id, $article_data);
 	 */
 	public function addComment(int $article_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `author` = '" . $this->db->escape($data['author']) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `ip` = '" . $this->db->escape(oc_get_ip()) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
@@ -295,9 +303,17 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $filter_data = [
+	 *     'parent_id' => 0,
+	 *     'sort'      => 'date_added',
+	 *     'order'     => 'DESC',
+	 *     'start'     => 0,
+	 *     'limit'     => 10
+	 * ];
+	 *
 	 * $this->load->model('cms/article');
 	 *
-	 * $results = $this->model_cms_article->getComments($article_id, $data);
+	 * $results = $this->model_cms_article->getComments($article_id, $filter_data);
 	 */
 	public function getComments(int $article_id, array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";
@@ -366,9 +382,17 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $filter_data = [
+	 *     'parent_id' => 0,
+	 *     'sort'      => 'date_added',
+	 *     'order'     => 'DESC',
+	 *     'start'     => 0,
+	 *     'limit'     => 10
+	 * ];
+	 *
 	 * $this->load->model('cms/article');
 	 *
-	 * $comment_total = $this->model_cms_article->getTotalComments($article_id, $data);
+	 * $comment_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 	 */
 	public function getTotalComments(int $article_id, array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'";

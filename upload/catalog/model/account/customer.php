@@ -493,9 +493,16 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $authorize_data = [
+	 *     'customer_id' => 1,
+	 *     'token'       => '',
+	 *     'ip'          => '',
+	 *     'user_agent'  => ''
+	 * ];
+	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer->addAuthorize($customer_id, $data);
+	 * $this->model_account_customer->addAuthorize($customer_id, $authorize_data);
 	 */
 	public function addAuthorize(int $customer_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_authorize` SET `customer_id` = '" . (int)$customer_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");

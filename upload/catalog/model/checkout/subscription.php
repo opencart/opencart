@@ -368,9 +368,20 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $subscription_product_data = [
+	 *     'order_id'         => 1,
+	 *     'order_product_id' => 1,
+	 *     'product_id'       => 1,
+	 *     'name'             => 'Product Name',
+	 *     'model'            => 'Product Model',
+	 *     'quantity'         => 1,
+	 *     'trial_price'      => 0.0000,
+	 *     'price'            => 0.0000
+	 * ];
+	 *
 	 * $this->load->model('checkout/subscription');
 	 *
-	 * $this->model_checkout_subscription->addProduct($subscription_id, $data);
+	 * $this->model_checkout_subscription->addProduct($subscription_id, $subscription_product_data);
 	 */
 	public function addProduct(int $subscription_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_product` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$data['order_id'] . "', `order_product_id` = '" . (int)$data['order_product_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `model` = '" . $this->db->escape($data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `price` = '" . (float)$data['price'] . "'");
@@ -455,9 +466,17 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $subscription_option_data = [
+	 *     'product_option_id'       => 1,
+	 *     'product_option_value_id' => 1,
+	 *     'name'                    => 'Option Name',
+	 *     'value'                   => 'Option Value',
+	 *     'type'                    => 'radio'
+	 * ];
+	 *
 	 * $this->load->model('checkout/subscription');
 	 *
-	 * $this->model_checkout_subscription->addOtion($subscription_id, $subscription_product_id, $data);
+	 * $this->model_checkout_subscription->addOtion($subscription_id, $subscription_product_id, $subscription_option_data);
 	 */
 	public function addOption(int $subscription_id, int $subscription_product_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_option` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_product_id` = '" . (int)$subscription_product_id . "', `product_option_id` = '" . (int)$data['product_option_id'] . "', `product_option_value_id` = '" . (int)$data['product_option_value_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `value` = '" . $this->db->escape($data['value']) . "', `type` = '" . $this->db->escape($data['type']) . "'");

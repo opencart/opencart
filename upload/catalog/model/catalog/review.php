@@ -18,9 +18,17 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $review_data = [
+	 *     'author'      => '',
+	 *     'customer_id' => 1,
+	 *     'product_id'  => 1,
+	 *     'text'        => '',
+	 *     'rating'      => 4
+	 * ];
+	 *
 	 * $this->load->model('catalog/review');
 	 *
-	 * $this->model_catalog_review->addReview($product_id, $data);
+	 * $this->model_catalog_review->addReview($product_id, $review_data);
 	 */
 	public function addReview(int $product_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape($data['author']) . "', `customer_id` = '" . (int)$this->customer->getId() . "', `product_id` = '" . (int)$product_id . "', `text` = '" . $this->db->escape($data['text']) . "', `rating` = '" . (int)$data['rating'] . "', `date_added` = NOW(), `date_modified` = NOW()");

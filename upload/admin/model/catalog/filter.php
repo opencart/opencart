@@ -214,7 +214,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters By Filter Group ID
 	 *
-	 * @param int $filter_group_id primary key of the filter record
+	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return int total number of filter records that have filter group ID
 	 *

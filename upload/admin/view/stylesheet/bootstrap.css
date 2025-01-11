@@ -10636,33 +10636,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-.breadcrumb {
-  display: inline-block;
-}
-.breadcrumb-item a {
-  color: #6c757d;
-}
-.breadcrumb-item:last-child a {
-  color: #1e91cf;
-}
-.breadcrumb-item {
-  text-shadow: 0 1px #fff;
-  font-size: 0.9231rem;
-  display: inline-block;
-}
-.breadcrumb-item + .breadcrumb-item {
-  padding-left: var(--bs-breadcrumb-item-padding-x);
-}
-.breadcrumb-item + .breadcrumb-item::before {
-  font-family: "Font Awesome 6 Free";
-  font-weight: 600;
-  font-size: 0.7692rem;
-  color: #ced4da;
-  float: none;
-}
-.card-header {
-  font-size: 0.9375rem;
-}
 .btn-primary {
   --bs-btn-border-color: #1872a2;
   --bs-btn-hover-border-color: #0b3349;

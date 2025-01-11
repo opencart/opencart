@@ -32,7 +32,7 @@
               <td class="text-end text-nowrap">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
               <td class="text-end">
-                <form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
+                <form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart">
                   <input type="hidden" name="key" value="{{ product.cart_id }}">
                   <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
                 </form>

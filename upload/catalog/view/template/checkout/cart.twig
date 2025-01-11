@@ -53,7 +53,7 @@ $('#shopping-cart').on('submit', '#cart form', function(e) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}', {}, function() {
-                    $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
+                    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
                 });
             }
         },
@@ -63,7 +63,7 @@ $('#shopping-cart').on('submit', '#cart form', function(e) {
     });
 });
 
-$('#shopping-cart').on('click', '#cart .btn-danger', function(e) {
+$('#shopping-cart').on('click', '.btn-danger', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -101,10 +101,10 @@ $('#shopping-cart').on('click', '#cart .btn-danger', function(e) {
 });
 
 $('#shopping-cart').observe(function(e) {
-    $('#header-cart').load('index.php?route=common/cart.info&language={{ language }}');
+    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
 });
 
-$('#header-cart').on('submit', 'form', function(e) {
+$('#cart').on('submit', 'form', function(e) {
     window.setTimeout(function() {
         $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
     }, 3000);

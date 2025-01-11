@@ -44,40 +44,8 @@ $breadcrumb-item-padding:   .3rem;
 $breadcrumb-divider-color:  $gray-400;
 $breadcrumb-divider:        "\f105";
 
-
-
 @import "scss/bootstrap";
 
-
-
-// Custom OpenCart styles
-.breadcrumb {
-  display: inline-block;
-}
-.breadcrumb-item a {
-  color: #{$gray-600};
-}
-.breadcrumb-item:last-child a {
-  color: #{$blue};
-}
-.breadcrumb-item {
-  text-shadow: 0 1px #{$white};
-  font-size: .9231rem;
-  display: inline-block;
-  + .breadcrumb-item {
-    padding-left: var(--#{$prefix}breadcrumb-item-padding-x);
-    &::before {
-      font-family: "Font Awesome 6 Free";
-      font-weight: 600;
-      font-size: .7692rem;
-      color: #{$gray-400};
-      float: none;
-    }
-  }
-}
-.card-header {
-  font-size: 0.9375rem;
-}
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
     --#{$prefix}btn-border-color: #{darken($value, 10)};

@@ -17,7 +17,7 @@
           <tr>
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}"/></a>{% endif %}</td>
             <td><a href="{{ product.href }}">{{ product.name }}</a>
-              <form id="form-product-{{ product_row }}" action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#header-cart">
+              <form id="form-product-{{ product_row }}" action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
                 <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
                 <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
               </form>

@@ -340,6 +340,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $return_total = $this->model_sale_returns->getTotalReturnsByReturnReasonId($return_reason_id);
 	 */
 	public function getTotalReturnsByReturnReasonId(int $return_reason_id): int {
@@ -398,6 +400,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_returns->deleteHistories($return_id);
 	 */
 	public function deleteHistories(int $return_id): void {
@@ -414,6 +418,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> history records that have return ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $results = $this->model_sale_returns->getHistories($return_id, $start, $limit);
 	 */
@@ -440,6 +446,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $history_total = $this->model_sale_returns->getTotalHistories($return_id);
 	 */
 	public function getTotalHistories(int $return_id): int {
@@ -456,6 +464,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * @return int total number of history records that have return status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId($return_status_id);
 	 */

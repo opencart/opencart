@@ -25,6 +25,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *     'sort_order'  => 0
 	 * ];
 	 *
+	 * $this->load->model('setting/startup');
+	 *
 	 * $startup_id = $this->model_setting_startup->addStartup($startup_data);
 	 */
 	public function addStartup(array $data): int {
@@ -42,6 +44,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/startup');
+	 *
 	 * $this->model_setting_startup->deleteStartup($startup_id);
 	 */
 	public function deleteStartup(int $startup_id): void {
@@ -56,6 +60,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/startup');
 	 *
 	 * $this->model_setting_startup->deleteStartupByCode($code);
 	 */
@@ -73,6 +79,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/startup');
+	 *
 	 * $this->model_setting_startup->editStatus($startup_id, $status);
 	 */
 	public function editStatus(int $startup_id, bool $status): void {
@@ -87,6 +95,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> startup record that has startup ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/startup');
 	 *
 	 * $startup_info = $this->model_setting_startup->getStartup($startup_id);
 	 */
@@ -104,6 +114,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/startup');
 	 *
 	 * $startup_info = $this->model_setting_startup->getStartupByCode($code);
 	 */
@@ -128,6 +140,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('setting/startup');
 	 *
 	 * $results = $this->model_setting_startup->getStartups($filter_data);
 	 */
@@ -177,6 +191,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	 * @return int total number of startup records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/startup');
 	 *
 	 * $startup_total = $this->model_setting_startup->getTotalStartups();
 	 */

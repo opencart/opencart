@@ -17,6 +17,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $this->model_sale_order->deleteOrder($order_id);
 	 */
 	public function deleteOrder(int $order_id): void {
@@ -35,6 +37,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> order record that has order ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $order_info = $this->model_sale_order->getOrder($order_id);
 	 */
@@ -160,6 +164,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'start'                  => 0,
 	 *     'limit'                  => 10
 	 * ];
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $results = $this->model_sale_order->getOrders($filter_data);
 	 */
@@ -293,6 +299,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'limit'                  => 10
 	 * ];
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $order_total = $this->model_sale_order->getTotalOrders($filter_data);
 	 */
 	public function getTotalOrders(array $data = []): int {
@@ -365,6 +373,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id, $start, $limit);
 	 */
 	public function getOrdersBySubscriptionId(int $subscription_id, int $start = 0, int $limit = 20): array {
@@ -390,6 +400,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
 	 */
 	public function getTotalOrdersByLanguageId(int $language_id): int {
@@ -406,6 +418,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int total number of order records that have currency ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersByCurrencyId($currency_id);
 	 */
@@ -424,6 +438,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersBySubscriptionId($subscription_id);
 	 */
 	public function getTotalOrdersBySubscriptionId(int $subscription_id): int {
@@ -440,6 +456,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int total number of order records that have store ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
 	 */
@@ -458,6 +476,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersByOrderStatusId($order_status_id);
 	 */
 	public function getTotalOrdersByOrderStatusId(int $order_status_id): int {
@@ -472,6 +492,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int total number of order processing status records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersByProcessingStatus();
 	 */
@@ -499,6 +521,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int total number of order complete status records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $order_total = $this->model_sale_order->getTotalOrdersByCompleteStatus();
 	 */
@@ -529,6 +553,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $this->model_sale_order->deleteProducts($order_id);
 	 */
 	public function deleteProducts(int $order_id): void {
@@ -548,6 +574,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $order_product = $this->model_sale_order->getProduct($order_id, $order_product_id);
 	 */
 	public function getProduct(int $order_id, int $order_product_id): array {
@@ -564,6 +592,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> product records that have order ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $products = $this->model_sale_order->getProducts($order_id);
 	 */
@@ -582,6 +612,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $product_total = $this->model_sale_order->getTotalProductsByProductId($product_id);
 	 */
 	public function getTotalProductsByProductId(int $product_id): int {
@@ -599,6 +631,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $this->model_sale_order->deleteOptions($ordder_id);
 	 */
 	public function deleteOptions(int $order_id): void {
@@ -614,6 +648,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> option records that have order ID, order product ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $options = $this->model_sale_order->getOptions($order_id, $order_product_id);
 	 */
@@ -632,6 +668,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $this->model_sale_order->deleteSubscription($order_id);
 	 */
 	public function deleteSubscription(int $order_id): void {
@@ -648,6 +686,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $subscription_info = $this->model_sale_order->getSubscription($order_id, $order_product_id);
 	 */
 	public function getSubscription(int $order_id, int $order_product_id): array {
@@ -663,6 +703,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $this->model_sale_order->deleteTotals($order_id);
 	 */
 	public function deleteTotals(int $order_id): void {
@@ -677,6 +719,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> total records that have order ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $totals = $this->model_sale_order->getTotals($order_id);
 	 */
@@ -696,6 +740,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $order_totals = $this->model_sale_order->getTotalsByCode($order_id, $code);
 	 */
 	public function getTotalsByCode(int $order_id, $code): array {
@@ -712,6 +758,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return float total number of sale records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $sale_total = $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge(1, 3)]);
 	 */
@@ -783,6 +831,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
 	 */
 	public function createInvoiceNo(int $order_id): string {
@@ -814,6 +864,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $points = $this->model_sale_order->getRewardTotal($order_id);
 	 */
 	public function getRewardTotal(int $order_id): int {
@@ -831,6 +883,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $this->model_sale_order->deleteHistories($order_id);
 	 */
 	public function deleteHistories(int $order_id): void {
@@ -847,6 +901,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> history records that have order ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $results = $this->model_sale_order->getHistories($order_id, $start, $limit);
 	 */
@@ -873,6 +929,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/order');
+	 *
 	 * $history_total = $this->model_sale_order->getTotalHistories($order_id);
 	 */
 	public function getTotalHistories(int $order_id): int {
@@ -889,6 +947,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return int total number of history records that have order status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $order_total = $this->model_sale_order->getTotalHistoriesByOrderStatusId($order_status_id);
 	 */
@@ -908,6 +968,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $results = $this->model_sale_order->getEmailsByProductsOrdered($products, $start, $limit);
 	 */
@@ -933,12 +995,14 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $products = [
-	 *		1,
-	 *		2,
-	 *		3,
-	 *		4,
-	 *		5
-	 *	];
+	 *     1,
+	 *     2,
+	 *     3,
+	 *     4,
+	 *     5
+	 * ];
+	 *
+	 * $this->load->model('sale/order');
 	 *
 	 * $email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($products);
 	 */

@@ -29,6 +29,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *     'status'                => 0
 	 * ];
 	 *
+	 * $this->load->model('setting/modification');
+	 *
 	 * $this->model_setting_modification->addModification($$modification_data);
 	 */
 	public function addModification(array $data): void {
@@ -44,6 +46,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/modification');
+	 *
 	 * $this->model_setting_modification->deleteModification($modification_id);
 	 */
 	public function deleteModification(int $modification_id): void {
@@ -58,6 +62,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/modification');
 	 *
 	 * $this->model_setting_modification->deleteModificationsByExtensionInstallId($extension_install_id);
 	 */
@@ -75,6 +81,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/modification');
+	 *
 	 * $this->model_setting_modification->editStatus($modification_id, $status);
 	 */
 	public function editStatus(int $modification_id, bool $status): void {
@@ -89,6 +97,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> modification record that has modification ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/modification');
 	 *
 	 * $modification_info = $this->model_setting_modification->getModification($modification_id);
 	 */
@@ -113,6 +123,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('setting/modification');
 	 *
 	 * $results = $this->model_setting_modification->getModifications($filter_data);
 	 */
@@ -164,6 +176,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/modification');
+	 *
 	 * $modification_total = $this->model_setting_modification->getTotalModifications();
 	 */
 	public function getTotalModifications(): int {
@@ -180,6 +194,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/modification');
 	 *
 	 * $modification_info = $this->model_setting_modification->getModificationByCode($code);
 	 */

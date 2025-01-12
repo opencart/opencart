@@ -150,7 +150,7 @@ button:focus {
   background: #eee;
 }
 #cart .dropdown-menu li {
-  min-width: 427px;
+  min-width: 300px;
 }
 @media (max-width: 768px) {
   #cart .dropdown-menu li {
@@ -341,6 +341,7 @@ footer h5 {
 }
 .product-thumb .button-group button {
   flex: 33%;
+  flex-direction: row;
   border-radius: 0;
   border: none;
   border-top: 1px solid var(--bs-border-color);
@@ -378,18 +379,18 @@ footer h5 {
     border-left: 1px solid #ddd;
   }
 }
-.product-thumb .rating .fa-stack {
+.rating .fa-stack {
   width: 20px;
 }
-.product-thumb .rating .fa-star {
+.rating .fa-star {
   color: #999;
   font-size: 15px;
 }
-.product-thumb .rating .fa-star {
+.rating .fa-star {
   color: #FC0;
   font-size: 15px;
 }
-.product-thumb .rating .fa-star + .fa-star {
+.rating .fa-star + .fa-star {
   color: #E69500;
 }
 /* product list */

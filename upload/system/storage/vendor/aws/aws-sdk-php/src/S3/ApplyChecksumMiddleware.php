@@ -3,6 +3,7 @@ namespace Aws\S3;
 
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Aws\MetricsBuilder;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
@@ -82,6 +83,12 @@ class ApplyChecksumMiddleware
                     . implode(", ", $supportedAlgorithms) . "."
                 );
             }
+
+            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                'request_checksum',
+                $requestedAlgorithm
+            );
+
             return $next($command, $request);
         }
 
@@ -94,6 +101,9 @@ class ApplyChecksumMiddleware
                 //S3Express doesn't support MD5; default to crc32 instead
                 if ($this->isS3Express($command)) {
                     $request = $this->addAlgorithmHeader('crc32', $request, $body);
+                    $command->getMetricsBuilder()->append(
+                        MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32
+                    );
                 } elseif (!$request->hasHeader('Content-MD5')) {
                     // Set the content MD5 header for operations that require it.
                     $request = $request->withHeader(
@@ -110,6 +120,9 @@ class ApplyChecksumMiddleware
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
                 $command['ContentSHA256']
+            );
+            $command->getMetricsBuilder()->append(
+                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA256
             );
         }
 

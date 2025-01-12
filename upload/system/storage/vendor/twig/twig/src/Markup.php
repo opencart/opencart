@@ -19,7 +19,7 @@ namespace Twig;
 class Markup implements \Countable, \JsonSerializable, \Stringable
 {
     private $content;
-    private $charset;
+    private ?string $charset;
 
     public function __construct($content, $charset)
     {
@@ -30,6 +30,11 @@ class Markup implements \Countable, \JsonSerializable, \Stringable
     public function __toString()
     {
         return $this->content;
+    }
+
+    public function getCharset(): string
+    {
+        return $this->charset;
     }
 
     /**

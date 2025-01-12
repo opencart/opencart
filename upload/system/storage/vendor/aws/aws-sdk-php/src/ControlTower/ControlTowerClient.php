@@ -47,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result resetEnabledBaseline(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resetEnabledBaselineAsync(array $args = [])
+ * @method \Aws\Result resetEnabledControl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resetEnabledControlAsync(array $args = [])
  * @method \Aws\Result resetLandingZone(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resetLandingZoneAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

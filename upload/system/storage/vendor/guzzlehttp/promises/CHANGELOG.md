@@ -1,6 +1,20 @@
 # CHANGELOG
 
 
+## 2.0.4 - 2024-10-17
+
+### Fixed
+
+- Once settled, don't allow further rejection of additional promises
+
+
+## 2.0.3 - 2024-07-18
+
+### Changed
+
+- PHP 8.4 support
+
+
 ## 2.0.2 - 2023-12-03
 
 ### Changed

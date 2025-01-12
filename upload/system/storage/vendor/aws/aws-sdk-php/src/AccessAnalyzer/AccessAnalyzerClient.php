@@ -69,6 +69,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateAnalyzer(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAnalyzerAsync(array $args = [])
  * @method \Aws\Result updateArchiveRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateArchiveRuleAsync(array $args = [])
  * @method \Aws\Result updateFindings(array $args = [])

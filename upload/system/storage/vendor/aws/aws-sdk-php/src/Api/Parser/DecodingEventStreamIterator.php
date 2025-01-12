@@ -192,6 +192,9 @@ class DecodingEventStreamIterator implements Iterator
         return $this->key;
     }
 
+    /**
+     * @return void
+     */
     #[\ReturnTypeWillChange]
     public function next()
     {
@@ -202,6 +205,9 @@ class DecodingEventStreamIterator implements Iterator
         }
     }
 
+    /**
+     * @return void
+     */
     #[\ReturnTypeWillChange]
     public function rewind()
     {

@@ -12,8 +12,10 @@
 namespace Twig\Extension;
 
 use Twig\ExpressionParser;
-use Twig\Node\Expression\AbstractExpression;
+use Twig\Node\Expression\Binary\AbstractBinary;
+use Twig\Node\Expression\Unary\AbstractUnary;
 use Twig\NodeVisitor\NodeVisitorInterface;
+use Twig\OperatorPrecedenceChange;
 use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -67,8 +69,8 @@ interface ExtensionInterface
      * @return array<array> First array of unary operators, second array of binary operators
      *
      * @psalm-return array{
-     *     array<string, array{precedence: int, class: class-string<AbstractExpression>}>,
-     *     array<string, array{precedence: int, class?: class-string<AbstractExpression>, associativity: ExpressionParser::OPERATOR_*}>
+     *     array<string, array{precedence: int, precedence_change?: OperatorPrecedenceChange, class: class-string<AbstractUnary>}>,
+     *     array<string, array{precedence: int, precedence_change?: OperatorPrecedenceChange, class?: class-string<AbstractBinary>, associativity: ExpressionParser::OPERATOR_*}>
      * }
      */
     public function getOperators();

@@ -39,8 +39,8 @@
         "aws/aws-php-sns-message-validator": "~1.0",
         "nette/neon": "^2.3",
         "andrewsville/php-token-reflection": "^1.4",
-        "psr/cache": "^1.0",
-        "psr/simple-cache": "^1.0",
+        "psr/cache": "^1.0 || ^2.0 || ^3.0",
+        "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
         "paragonie/random_compat": ">= 2",
         "sebastian/comparator": "^1.2.3 || ^4.0",
         "yoast/phpunit-polyfills": "^1.0",
@@ -72,4 +72,3 @@
         }
     }
 }
-

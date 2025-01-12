@@ -58,7 +58,7 @@ class S3SignatureV4 extends SignatureV4
         CredentialsInterface $credentials,
         RequestInterface $request,
         $signingService,
-        SigningConfigAWS $signingConfig = null
+        ?SigningConfigAWS $signingConfig = null
     ){
         $this->verifyCRTLoaded();
         $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);

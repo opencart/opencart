@@ -20,7 +20,7 @@ class JsonRpcParser extends AbstractParser
      * @param Service    $api    Service description
      * @param JsonParser $parser JSON body builder
      */
-    public function __construct(Service $api, JsonParser $parser = null)
+    public function __construct(Service $api, ?JsonParser $parser = null)
     {
         parent::__construct($api);
         $this->parser = $parser ?: new JsonParser();

@@ -127,6 +127,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listFleetsAsync(array $args = [])
  * @method \Aws\Result listJobMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobMembersAsync(array $args = [])
+ * @method \Aws\Result listJobParameterDefinitions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listJobParameterDefinitionsAsync(array $args = [])
  * @method \Aws\Result listJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result listLicenseEndpoints(array $args = [])

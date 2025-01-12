@@ -287,7 +287,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         return function (callable $handler) use (&$errors) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request = null
+                ?RequestInterface $request = null
             ) use ($handler, &$errors) {
                 return $handler($command, $request)->then(
                     function (ResultInterface $result) use ($command) {

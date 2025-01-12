@@ -141,6 +141,8 @@ use GuzzleHttp\Promise\PromiseInterface;
  * @method \GuzzleHttp\Promise\Promise listAccessPointsAsync(array $args = [])
  * @method \Aws\Result listAccessPointsForObjectLambda(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAccessPointsForObjectLambdaAsync(array $args = [])
+ * @method \Aws\Result listCallerAccessGrants(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCallerAccessGrantsAsync(array $args = [])
  * @method \Aws\Result listJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result listMultiRegionAccessPoints(array $args = [])

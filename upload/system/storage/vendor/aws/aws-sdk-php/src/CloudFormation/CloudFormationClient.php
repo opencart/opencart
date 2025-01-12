@@ -104,6 +104,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listExportsAsync(array $args = [])
  * @method \Aws\Result listGeneratedTemplates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listGeneratedTemplatesAsync(array $args = [])
+ * @method \Aws\Result listHookResults(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listHookResultsAsync(array $args = [])
  * @method \Aws\Result listImports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImportsAsync(array $args = [])
  * @method \Aws\Result listResourceScanRelatedResources(array $args = [])

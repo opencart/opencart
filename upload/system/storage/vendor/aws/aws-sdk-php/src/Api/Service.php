@@ -114,7 +114,7 @@ class Service extends AbstractModel
      * @return callable
      * @throws \UnexpectedValueException
      */
-    public static function createErrorParser($protocol, Service $api = null)
+    public static function createErrorParser($protocol, ?Service $api = null)
     {
         static $mapping = [
             'json'      => ErrorParser\JsonRpcErrorParser::class,
@@ -219,7 +219,7 @@ class Service extends AbstractModel
      */
     public function getServiceName()
     {
-        return $this->definition['metadata']['serviceIdentifier'];
+        return $this->definition['metadata']['serviceIdentifier'] ?? null;
     }
 
     /**

@@ -14,11 +14,13 @@ namespace Twig\Node\Expression\Test;
 use Twig\Attribute\FirstClassTwigCallableReady;
 use Twig\Compiler;
 use Twig\Error\SyntaxError;
+use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Expression\BlockReferenceExpression;
 use Twig\Node\Expression\ConstantExpression;
 use Twig\Node\Expression\FunctionExpression;
 use Twig\Node\Expression\GetAttrExpression;
+use Twig\Node\Expression\MacroReferenceExpression;
 use Twig\Node\Expression\MethodCallExpression;
 use Twig\Node\Expression\NameExpression;
 use Twig\Node\Expression\TestExpression;
@@ -37,15 +39,24 @@ use Twig\TwigTest;
  */
 class DefinedTest extends TestExpression
 {
+    /**
+     * @param AbstractExpression $node
+     */
     #[FirstClassTwigCallableReady]
     public function __construct(Node $node, TwigTest|string $name, ?Node $arguments, int $lineno)
     {
+        if (!$node instanceof AbstractExpression) {
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($node));
+        }
+
         if ($node instanceof NameExpression) {
             $node->setAttribute('is_defined_test', true);
         } elseif ($node instanceof GetAttrExpression) {
             $node->setAttribute('is_defined_test', true);
             $this->changeIgnoreStrictCheck($node);
         } elseif ($node instanceof BlockReferenceExpression) {
+            $node->setAttribute('is_defined_test', true);
+        } elseif ($node instanceof MacroReferenceExpression) {
             $node->setAttribute('is_defined_test', true);
         } elseif ($node instanceof FunctionExpression && 'constant' === $node->getAttribute('name')) {
             $node->setAttribute('is_defined_test', true);

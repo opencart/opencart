@@ -110,7 +110,7 @@ class StreamWrapper
     public static function register(
         S3ClientInterface $client,
         $protocol = 's3',
-        CacheInterface $cache = null,
+        ?CacheInterface $cache = null,
         $v2Existence = false
     ) {
         self::$useV2Existence = $v2Existence;

@@ -16,6 +16,7 @@ class Credentials extends AwsCredentialIdentity implements
     private $token;
     private $expires;
     private $accountId;
+    private $source;
 
     /**
      * Constructs a new BasicAWSCredentials object, with the specified AWS
@@ -26,13 +27,21 @@ class Credentials extends AwsCredentialIdentity implements
      * @param string $token   Security token to use
      * @param int    $expires UNIX timestamp for when credentials expire
      */
-    public function __construct($key, $secret, $token = null, $expires = null, $accountId = null)
+    public function __construct(
+        $key,
+        $secret,
+        $token = null,
+        $expires = null,
+        $accountId = null,
+        $source = CredentialSources::STATIC
+    )
     {
         $this->key = trim((string) $key);
         $this->secret = trim((string) $secret);
         $this->token = $token;
         $this->expires = $expires;
         $this->accountId = $accountId;
+        $this->source = $source ?? CredentialSources::STATIC;
     }
 
     public static function __set_state(array $state)
@@ -42,7 +51,8 @@ class Credentials extends AwsCredentialIdentity implements
             $state['secret'],
             $state['token'],
             $state['expires'],
-            $state['accountId']
+            $state['accountId'],
+            $state['source'] ?? null
         );
     }
 
@@ -76,6 +86,11 @@ class Credentials extends AwsCredentialIdentity implements
         return $this->accountId;
     }
 
+    public function getSource()
+    {
+        return $this->source;
+    }
+
     public function toArray()
     {
         return [
@@ -83,7 +98,8 @@ class Credentials extends AwsCredentialIdentity implements
             'secret'  => $this->secret,
             'token'   => $this->token,
             'expires' => $this->expires,
-            'accountId' =>  $this->accountId
+            'accountId' =>  $this->accountId,
+            'source' => $this->source
         ];
     }
 
@@ -110,7 +126,8 @@ class Credentials extends AwsCredentialIdentity implements
         $this->secret = $data['secret'];
         $this->token = $data['token'];
         $this->expires = $data['expires'];
-        $this->accountId = $data['accountId'];
+        $this->accountId = $data['accountId'] ?? null;
+        $this->source = $data['source'] ?? null;
     }
 
     /**

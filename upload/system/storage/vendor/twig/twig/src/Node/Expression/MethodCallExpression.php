@@ -17,6 +17,8 @@ class MethodCallExpression extends AbstractExpression
 {
     public function __construct(AbstractExpression $node, string $method, ArrayExpression $arguments, int $lineno)
     {
+        trigger_deprecation('twig/twig', '3.15', 'The "%s" class is deprecated, use "%s" instead.', __CLASS__, MacroReferenceExpression::class);
+
         parent::__construct(['node' => $node, 'arguments' => $arguments], ['method' => $method, 'safe' => false, 'is_defined_test' => false], $lineno);
 
         if ($node instanceof NameExpression) {
@@ -43,21 +45,9 @@ class MethodCallExpression extends AbstractExpression
             ->repr($this->getNode('node')->getAttribute('name'))
             ->raw('], ')
             ->repr($this->getAttribute('method'))
-            ->raw(', [')
-        ;
-        $first = true;
-        /** @var ArrayExpression */
-        $args = $this->getNode('arguments');
-        foreach ($args->getKeyValuePairs() as $pair) {
-            if (!$first) {
-                $compiler->raw(', ');
-            }
-            $first = false;
-
-            $compiler->subcompile($pair['value']);
-        }
-        $compiler
-            ->raw('], ')
+            ->raw(', ')
+            ->subcompile($this->getNode('arguments'))
+            ->raw(', ')
             ->repr($this->getTemplateLine())
             ->raw(', $context, $this->getSourceContext())');
     }

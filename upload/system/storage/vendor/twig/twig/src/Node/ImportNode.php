@@ -15,6 +15,7 @@ use Twig\Attribute\YieldReady;
 use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\NameExpression;
+use Twig\Node\Expression\Variable\AssignTemplateVariable;
 
 /**
  * Represents an import node.
@@ -24,37 +25,24 @@ use Twig\Node\Expression\NameExpression;
 #[YieldReady]
 class ImportNode extends Node
 {
-    /**
-     * @param bool $global
-     */
-    public function __construct(AbstractExpression $expr, AbstractExpression $var, int $lineno, $global = true)
+    public function __construct(AbstractExpression $expr, AbstractExpression|AssignTemplateVariable $var, int $lineno)
     {
-        if (null === $global || is_string($global)) {
-            trigger_deprecation('twig/twig', '3.12', 'Passing a tag to %s() is deprecated.', __METHOD__);
-            $global = func_num_args() > 4 ? func_get_arg(4) : true;
-        } elseif (!is_bool($global)) {
-            throw new \TypeError(\sprintf('Argument 4 passed to "%s()" must be a boolean, "%s" given.', __METHOD__, get_debug_type($global)));
+        if (\func_num_args() > 3) {
+            trigger_deprecation('twig/twig', '3.15', \sprintf('Passing more than 3 arguments to "%s()" is deprecated.', __METHOD__));
         }
 
-        parent::__construct(['expr' => $expr, 'var' => $var], ['global' => $global], $lineno);
+        if (!$var instanceof AssignTemplateVariable) {
+            trigger_deprecation('twig/twig', '3.15', \sprintf('Passing a "%s" instance as the second argument of "%s" is deprecated, pass a "%s" instead.', $var::class, __CLASS__, AssignTemplateVariable::class));
+
+            $var = new AssignTemplateVariable($var->getAttribute('name'), $lineno);
+        }
+
+        parent::__construct(['expr' => $expr, 'var' => $var], [], $lineno);
     }
 
     public function compile(Compiler $compiler): void
     {
-        $compiler
-            ->addDebugInfo($this)
-            ->write('$macros[')
-            ->repr($this->getNode('var')->getAttribute('name'))
-            ->raw('] = ')
-        ;
-
-        if ($this->getAttribute('global')) {
-            $compiler
-                ->raw('$this->macros[')
-                ->repr($this->getNode('var')->getAttribute('name'))
-                ->raw('] = ')
-            ;
-        }
+        $compiler->subcompile($this->getNode('var'));
 
         if ($this->getNode('expr') instanceof NameExpression && '_self' === $this->getNode('expr')->getAttribute('name')) {
             $compiler->raw('$this');

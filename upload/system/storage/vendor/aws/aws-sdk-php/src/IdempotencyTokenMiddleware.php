@@ -37,7 +37,7 @@ class IdempotencyTokenMiddleware
      */
     public static function wrap(
         Service $service,
-        callable $bytesGenerator = null
+        ?callable $bytesGenerator = null
     ) {
         return function (callable $handler) use ($service, $bytesGenerator) {
             return new self($handler, $service, $bytesGenerator);
@@ -47,7 +47,7 @@ class IdempotencyTokenMiddleware
     public function __construct(
         callable $nextHandler,
         Service $service,
-        callable $bytesGenerator = null
+        ?callable $bytesGenerator = null
     ) {
         $this->bytesGenerator = $bytesGenerator
             ?: $this->findCompatibleRandomSource();
@@ -57,7 +57,7 @@ class IdempotencyTokenMiddleware
 
     public function __invoke(
         CommandInterface $command,
-        RequestInterface $request = null
+        ?RequestInterface $request = null
     ) {
         $handler = $this->nextHandler;
         if ($this->bytesGenerator) {

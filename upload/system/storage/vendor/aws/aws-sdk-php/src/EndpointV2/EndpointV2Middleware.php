@@ -5,6 +5,7 @@ use Aws\Api\Operation;
 use Aws\Api\Service;
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\CommandInterface;
+use Aws\MetricsBuilder;
 use Closure;
 use GuzzleHttp\Promise\Promise;
 use function JmesPath\search;
@@ -77,7 +78,7 @@ class EndpointV2Middleware
         EndpointProviderV2 $endpointProvider,
         Service $api,
         array $args,
-        callable $credentialProvider = null
+        ?callable $credentialProvider = null
     )
     {
         $this->nextHandler = $nextHandler;
@@ -98,8 +99,10 @@ class EndpointV2Middleware
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
+        if (!empty($providerArgs[self::ACCOUNT_ID_PARAM])) {
+            $command->getMetricsBuilder()->append(MetricsBuilder::RESOLVED_ACCOUNT_ID);
+        }
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
-
         if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
                 $authSchemes,

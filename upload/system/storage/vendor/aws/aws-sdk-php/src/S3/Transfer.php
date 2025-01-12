@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
+use Aws\MetricsBuilder;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
@@ -139,6 +140,10 @@ class Transfer implements PromisorInterface
         // Handle "add_content_md5" option.
         $this->addContentMD5 = isset($options['add_content_md5'])
             && $options['add_content_md5'] === true;
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $this->client->getHandlerList(),
+            MetricsBuilder::S3_TRANSFER
+        );
     }
 
     /**

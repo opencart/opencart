@@ -37,7 +37,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     public function __construct(
         $profileName,
         $configFilePath = null,
-        SSOOIDCClient $ssoOidcClient = null
+        ?SSOOIDCClient $ssoOidcClient = null
     ) {
         $this->profileName = $this->resolveProfileName($profileName);
         $this->configFilePath =  $this->resolveConfigFile($configFilePath);

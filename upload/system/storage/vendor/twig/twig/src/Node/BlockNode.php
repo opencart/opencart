@@ -32,14 +32,17 @@ class BlockNode extends Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(\sprintf("public function block_%s(\$context, array \$blocks = [])\n", $this->getAttribute('name')), "{\n")
+            ->write("/**\n")
+            ->write(" * @return iterable<null|scalar|\Stringable>\n")
+            ->write(" */\n")
+            ->write(\sprintf("public function block_%s(array \$context, array \$blocks = []): iterable\n", $this->getAttribute('name')), "{\n")
             ->indent()
             ->write("\$macros = \$this->macros;\n")
         ;
 
         $compiler
             ->subcompile($this->getNode('body'))
-            ->write("return; yield '';\n") // needed when body doesn't yield anything
+            ->write("yield from [];\n")
             ->outdent()
             ->write("}\n\n")
         ;

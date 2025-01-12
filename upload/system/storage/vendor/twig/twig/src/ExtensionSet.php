@@ -15,7 +15,6 @@ use Twig\Error\RuntimeError;
 use Twig\Extension\ExtensionInterface;
 use Twig\Extension\GlobalsInterface;
 use Twig\Extension\StagingExtension;
-use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\Binary\AbstractBinary;
 use Twig\Node\Expression\Unary\AbstractUnary;
 use Twig\NodeVisitor\NodeVisitorInterface;
@@ -46,11 +45,11 @@ final class ExtensionSet
     private $functions;
     /** @var array<string, TwigFunction> */
     private $dynamicFunctions;
-    /** @var array<string, array{precedence: int, class: class-string<AbstractExpression>}> */
+    /** @var array<string, array{precedence: int, precedence_change?: OperatorPrecedenceChange, class: class-string<AbstractUnary>}> */
     private $unaryOperators;
-    /** @var array<string, array{precedence: int, class?: class-string<AbstractExpression>, associativity: ExpressionParser::OPERATOR_*}> */
+    /** @var array<string, array{precedence: int, precedence_change?: OperatorPrecedenceChange, class?: class-string<AbstractBinary>, associativity: ExpressionParser::OPERATOR_*}> */
     private $binaryOperators;
-    /** @var array<string, mixed> */
+    /** @var array<string, mixed>|null */
     private $globals;
     private $functionCallbacks = [];
     private $filterCallbacks = [];
@@ -329,12 +328,7 @@ final class ExtensionSet
                 continue;
             }
 
-            $extGlobals = $extension->getGlobals();
-            if (!\is_array($extGlobals)) {
-                throw new \UnexpectedValueException(\sprintf('"%s::getGlobals()" must return an array of globals.', \get_class($extension)));
-            }
-
-            $globals = array_merge($globals, $extGlobals);
+            $globals = array_merge($globals, $extension->getGlobals());
         }
 
         if ($this->initialized) {
@@ -342,6 +336,11 @@ final class ExtensionSet
         }
 
         return $globals;
+    }
+
+    public function resetGlobals(): void
+    {
+        $this->globals = null;
     }
 
     public function addTest(TwigTest $test): void
@@ -387,7 +386,7 @@ final class ExtensionSet
     }
 
     /**
-     * @return array<string, array{precedence: int, class: class-string<AbstractExpression>}>
+     * @return array<string, array{precedence: int, precedence_change?: OperatorPrecedenceChange, class: class-string<AbstractUnary>}>
      */
     public function getUnaryOperators(): array
     {
@@ -399,7 +398,7 @@ final class ExtensionSet
     }
 
     /**
-     * @return array<string, array{precedence: int, class?: class-string<AbstractExpression>, associativity: ExpressionParser::OPERATOR_*}>
+     * @return array<string, array{precedence: int, precedence_change?: OperatorPrecedenceChange, class?: class-string<AbstractBinary>, associativity: ExpressionParser::OPERATOR_*}>
      */
     public function getBinaryOperators(): array
     {
@@ -474,7 +473,7 @@ final class ExtensionSet
         // operators
         if ($operators = $extension->getOperators()) {
             if (!\is_array($operators)) {
-                throw new \InvalidArgumentException(\sprintf('"%s::getOperators()" must return an array with operators, got "%s".', \get_class($extension), \is_object($operators) ? \get_class($operators) : \gettype($operators).(\is_resource($operators) ? '' : '#'.$operators)));
+                throw new \InvalidArgumentException(\sprintf('"%s::getOperators()" must return an array with operators, got "%s".', \get_class($extension), get_debug_type($operators).(\is_resource($operators) ? '' : '#'.$operators)));
             }
 
             if (2 !== \count($operators)) {

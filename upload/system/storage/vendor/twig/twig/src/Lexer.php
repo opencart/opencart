@@ -44,10 +44,19 @@ class Lexer
     public const STATE_INTERPOLATION = 4;
 
     public const REGEX_NAME = '/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/A';
-    public const REGEX_NUMBER = '/[0-9]+(?:\.[0-9]+)?([Ee][\+\-][0-9]+)?/A';
     public const REGEX_STRING = '/"([^#"\\\\]*(?:\\\\.[^#"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'/As';
+
+    public const REGEX_NUMBER = '/(?(DEFINE)
+        (?<LNUM>[0-9]+(_[0-9]+)*)               # Integers (with underscores)   123_456
+        (?<FRAC>\.(?&LNUM))                     # Fractional part               .456
+        (?<EXPONENT>[eE][+-]?(?&LNUM))          # Exponent part                 E+10
+        (?<DNUM>(?&LNUM)(?:(?&FRAC))?)          # Decimal number                123_456.456
+    )(?:(?&DNUM)(?:(?&EXPONENT))?)              #                               123_456.456E+10
+    /Ax';
+    
     public const REGEX_DQ_STRING_DELIM = '/"/A';
     public const REGEX_DQ_STRING_PART = '/[^#"\\\\]*(?:(?:\\\\.|#(?!\{))[^#"\\\\]*)*/As';
+    public const REGEX_INLINE_COMMENT = '/#[^\n]*/A';
     public const PUNCTUATION = '()[]{}?:.,|';
 
     private const SPECIAL_CHARS = [
@@ -217,7 +226,7 @@ class Lexer
 
         $this->pushToken(Token::EOF_TYPE);
 
-        if (!empty($this->brackets)) {
+        if ($this->brackets) {
             [$expect, $lineno] = array_pop($this->brackets);
             throw new SyntaxError(\sprintf('Unclosed "%s".', $expect), $lineno, $this->source);
         }
@@ -292,7 +301,7 @@ class Lexer
 
     private function lexBlock(): void
     {
-        if (empty($this->brackets) && preg_match($this->regexes['lex_block'], $this->code, $match, 0, $this->cursor)) {
+        if (!$this->brackets && preg_match($this->regexes['lex_block'], $this->code, $match, 0, $this->cursor)) {
             $this->pushToken(Token::BLOCK_END_TYPE);
             $this->moveCursor($match[0]);
             $this->popState();
@@ -303,7 +312,7 @@ class Lexer
 
     private function lexVar(): void
     {
-        if (empty($this->brackets) && preg_match($this->regexes['lex_var'], $this->code, $match, 0, $this->cursor)) {
+        if (!$this->brackets && preg_match($this->regexes['lex_var'], $this->code, $match, 0, $this->cursor)) {
             $this->pushToken(Token::VAR_END_TYPE);
             $this->moveCursor($match[0]);
             $this->popState();
@@ -345,11 +354,7 @@ class Lexer
         }
         // numbers
         elseif (preg_match(self::REGEX_NUMBER, $this->code, $match, 0, $this->cursor)) {
-            $number = (float) $match[0];  // floats
-            if (ctype_digit($match[0]) && $number <= \PHP_INT_MAX) {
-                $number = (int) $match[0]; // integers lower than the maximum
-            }
-            $this->pushToken(Token::NUMBER_TYPE, $number);
+            $this->pushToken(Token::NUMBER_TYPE, 0 + str_replace('_', '', $match[0]));
             $this->moveCursor($match[0]);
         }
         // punctuation
@@ -360,7 +365,7 @@ class Lexer
             }
             // closing bracket
             elseif (str_contains(')]}', $this->code[$this->cursor])) {
-                if (empty($this->brackets)) {
+                if (!$this->brackets) {
                     throw new SyntaxError(\sprintf('Unexpected "%s".', $this->code[$this->cursor]), $this->lineno, $this->source);
                 }
 
@@ -382,6 +387,10 @@ class Lexer
         elseif (preg_match(self::REGEX_DQ_STRING_DELIM, $this->code, $match, 0, $this->cursor)) {
             $this->brackets[] = ['"', $this->lineno];
             $this->pushState(self::STATE_STRING);
+            $this->moveCursor($match[0]);
+        }
+        // inline comment
+        elseif (preg_match(self::REGEX_INLINE_COMMENT, $this->code, $match, 0, $this->cursor)) {
             $this->moveCursor($match[0]);
         }
         // unlexable
@@ -418,7 +427,7 @@ class Lexer
                 $result .= $nextChar;
             } elseif ("'" === $nextChar || '"' === $nextChar) {
                 if ($nextChar !== $quoteType) {
-                    trigger_deprecation('twig/twig', '3.12', 'Character "%s" at position %d should not be escaped; the "\" character is ignored in Twig v3 but will not be in v4. Please remove the extra "\" character.', $nextChar, $i + 1);
+                    trigger_deprecation('twig/twig', '3.12', 'Character "%s" should not be escaped; the "\" character is ignored in Twig 3 but will not be in Twig 4. Please remove the extra "\" character at position %d in "%s" at line %d.', $nextChar, $i + 1, $this->source->getName(), $this->lineno);
                 }
                 $result .= $nextChar;
             } elseif ('#' === $nextChar && $i + 1 < $length && '{' === $str[$i + 1]) {
@@ -437,7 +446,7 @@ class Lexer
                 }
                 $result .= \chr(octdec($octal));
             } else {
-                trigger_deprecation('twig/twig', '3.12', 'Character "%s" at position %d should not be escaped; the "\" character is ignored in Twig v3 but will not be in v4. Please remove the extra "\" character.', $nextChar, $i + 1);
+                trigger_deprecation('twig/twig', '3.12', 'Character "%s" should not be escaped; the "\" character is ignored in Twig 3 but will not be in Twig 4. Please remove the extra "\" character at position %d in "%s" at line %d.', $nextChar, $i + 1, $this->source->getName(), $this->lineno);
                 $result .= $nextChar;
             }
 

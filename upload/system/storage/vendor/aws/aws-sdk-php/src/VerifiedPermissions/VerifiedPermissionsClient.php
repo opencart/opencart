@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Verified Permissions** service.
+ * @method \Aws\Result batchGetPolicy(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetPolicyAsync(array $args = [])
  * @method \Aws\Result batchIsAuthorized(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchIsAuthorizedAsync(array $args = [])
  * @method \Aws\Result batchIsAuthorizedWithToken(array $args = [])

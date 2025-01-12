@@ -11,8 +11,9 @@
 
 namespace Twig\TokenParser;
 
-use Twig\Node\Expression\TempNameExpression;
+use Twig\Node\Expression\Variable\LocalVariable;
 use Twig\Node\Node;
+use Twig\Node\Nodes;
 use Twig\Node\PrintNode;
 use Twig\Node\SetNode;
 use Twig\Token;
@@ -31,21 +32,17 @@ final class ApplyTokenParser extends AbstractTokenParser
     public function parse(Token $token): Node
     {
         $lineno = $token->getLine();
-        $name = $this->parser->getVarName();
-
-        $ref = new TempNameExpression($name, $lineno);
-        $ref->setAttribute('always_defined', true);
-
+        $ref = new LocalVariable(null, $lineno);
         $filter = $this->parser->getExpressionParser()->parseFilterExpressionRaw($ref);
 
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
         $body = $this->parser->subparse([$this, 'decideApplyEnd'], true);
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 
-        return new Node([
+        return new Nodes([
             new SetNode(true, $ref, $body, $lineno),
             new PrintNode($filter, $lineno),
-        ], [], $lineno);
+        ], $lineno);
     }
 
     public function decideApplyEnd(Token $token): bool

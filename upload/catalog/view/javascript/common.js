@@ -383,18 +383,6 @@ $(document).ready(function() {
         $('#form-currency').submit();
     });
 
-    // Menu
-    $('#menu .dropdown-menu').each(function() {
-        var menu = $('#menu').offset();
-        var dropdown = $(this).parent().offset();
-
-        var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
-
-        if (i > 0) {
-            $(this).css('margin-left', '-' + (i + 10) + 'px');
-        }
-    });
-
     // Product List
     $('#button-list').on('click', function() {
         var element = this;

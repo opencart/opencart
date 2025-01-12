@@ -218,14 +218,48 @@ button:focus {
 }
 
 #menu .dropdown-menu {
-  padding-bottom: 0;
-  margin-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-#menu .dropdown-inner ul li a {
-  min-width: 160px;
+#menu .dropdown-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+#menu .dropdown-inner ul {
+  width: 100%;
+  min-width: 200px;
+}
+
+@media (min-width: 960px) {
+  #menu .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  #menu .dropdown-inner {
+    flex-direction: row;
+  }
+
+  #menu .nav-item + .nav-item + .nav-item .dropdown-column-3 {
+    left: -200px;
+  }
+
+  #menu .nav-item + .nav-item + .nav-item .dropdown-column-4 {
+    left: -400px;
+  }
+
+  #menu .nav-item + .nav-item + .nav-item + .nav-item .dropdown-column-2 {
+    left: -200px;
+  }
+
+  #menu .nav-item + .nav-item + .nav-item + .nav-item .dropdown-column-3 {
+    left: -400px;
+  }
+
+  #menu .nav-item + .nav-item + .nav-item + .nav-item .dropdown-column-4 {
+    left: -600px;
+  }
 }
 
 #category {
@@ -241,17 +275,6 @@ button:focus {
   color: #fff;
   border-color: #fff;
   font-size: 0.9em;
-}
-
-@media (min-width: 720px) {
-  #menu .dropdown-inner {
-    display: flex;
-    flex-direction: row;
-  }
-
-  #menu .dropdown:hover .dropdown-menu {
-    display: block;
-  }
 }
 
 /* default boostrap changes */
@@ -293,29 +316,29 @@ footer {
   background-color: #303030;
   border-top: 1px solid #ddd;
   color: #e2e2e2;
+}
 
-  hr {
-    border-top: none;
-    border-bottom: 1px solid #666;
-  }
+footer hr {
+  border-top: none;
+  border-bottom: 1px solid #666;
+}
 
-  a {
-    color: #ccc;
-    text-decoration: none;
+footer a {
+  color: #ccc;
+  text-decoration: none;
+}
 
-    &:hover {
-      color: #fff;
-    }
-  }
+footer a:hover {
+  color: #fff;
+}
 
-  h5 {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    font-weight: bold;
-    color: #fff;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
+footer h5 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* breadcrumb */
@@ -501,10 +524,6 @@ footer {
 }
 
 /* Theme Custom CSS */
-#information-contact .card {
-  margin-bottom: 20px;
-}
-
 #cookie {
   position: fixed;
   bottom: 0;

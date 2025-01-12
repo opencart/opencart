@@ -179,13 +179,39 @@ button:focus {
   background-color: rgba(0, 0, 0, 0.1);
 }
 #menu .dropdown-menu {
-  padding-bottom: 0;
-  margin-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-#menu .dropdown-inner ul li a {
-  min-width: 160px;
+#menu .dropdown-inner {
+  display: flex;
+  flex-direction: column;
+}
+#menu .dropdown-inner ul {
+  width: 100%;
+  min-width: 200px;
+}
+@media (min-width: 960px) {
+  #menu .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  #menu .dropdown-inner {
+    flex-direction: row;
+  }
+  #menu .nav-item + .nav-item + .nav-item .dropdown-column-3 {
+    left: -200px;
+  }
+  #menu .nav-item + .nav-item + .nav-item .dropdown-column-4 {
+    left: -400px;
+  }
+  #menu .nav-item + .nav-item + .nav-item + .nav-item .dropdown-column-2 {
+    left: -200px;
+  }
+  #menu .nav-item + .nav-item + .nav-item + .nav-item .dropdown-column-3 {
+    left: -400px;
+  }
+  #menu .nav-item + .nav-item + .nav-item + .nav-item .dropdown-column-4 {
+    left: -600px;
+  }
 }
 #category {
   float: left;
@@ -199,15 +225,6 @@ button:focus {
   color: #fff;
   border-color: #fff;
   font-size: 0.9em;
-}
-@media (min-width: 720px) {
-  #menu .dropdown-inner {
-    display: flex;
-    flex-direction: row;
-  }
-  #menu .dropdown:hover .dropdown-menu {
-    display: block;
-  }
 }
 /* default boostrap changes */
 div.required .col-form-label:before, div.required .form-label:before {
@@ -410,9 +427,6 @@ footer h5 {
   padding: 15px;
 }
 /* Theme Custom CSS */
-#information-contact .card {
-  margin-bottom: 20px;
-}
 #cookie {
   position: fixed;
   bottom: 0;

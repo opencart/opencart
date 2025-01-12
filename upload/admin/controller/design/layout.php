@@ -230,7 +230,10 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['layout_routes'] = [];
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
+
+		// Module
 		$this->load->model('setting/module');
 
 		$data['extensions'] = [];
@@ -359,10 +362,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Product
 		$this->load->model('catalog/product');
+
+		// Category
 		$this->load->model('catalog/category');
+
+		// Manufacturer
 		$this->load->model('catalog/manufacturer');
+
+		// Information
 		$this->load->model('catalog/information');
 
 		foreach ($selected as $layout_id) {

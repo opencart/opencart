@@ -18,7 +18,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$data['blogs'] = [];
 
+		// Blog
 		$this->load->model('extension/opencart/module/blog');
+
+		// Image
 		$this->load->model('tool/image');
 
 		$filter_data = [

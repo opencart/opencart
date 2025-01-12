@@ -407,7 +407,10 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->language('catalog/option');
 
+			// Option
 			$this->load->model('catalog/option');
+
+			// Image
 			$this->load->model('tool/image');
 
 			$filter_data = [

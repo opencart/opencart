@@ -32,7 +32,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['child_id'] = 0;
 		}
 
+		// Category
 		$this->load->model('catalog/category');
+
+		// Product
 		$this->load->model('catalog/product');
 
 		$data['categories'] = [];

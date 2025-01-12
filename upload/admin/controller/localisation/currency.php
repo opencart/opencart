@@ -376,8 +376,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Currency
 		$this->load->model('localisation/currency');
+
+		// Store
 		$this->load->model('setting/store');
+
+		// Order
 		$this->load->model('sale/order');
 
 		foreach ($selected as $currency_id) {

@@ -97,7 +97,10 @@ class Online extends \Opencart\System\Engine\Controller {
 			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
+		// Online
 		$this->load->model('report/online');
+
+		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_report_online->getOnline($filter_data);

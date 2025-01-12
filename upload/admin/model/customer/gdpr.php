@@ -70,7 +70,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_email'     => 'Customer Email',
+	 *     'filter_email'     => 'demo@opencart.com',
 	 *     'filter_action'    => 'export',
 	 *     'filter_status'    => 1,
 	 *     'filter_date_from' => '2021-01-01',
@@ -160,7 +160,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_email'     => 'Customer Email',
+	 *     'filter_email'     => 'demo@opencart.com',
 	 *     'filter_action'    => 'export',
 	 *     'filter_status'    => 1,
 	 *     'filter_date_from' => '2021-01-01',

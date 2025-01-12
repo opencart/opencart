@@ -20,7 +20,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
+		// Cart
 		$this->load->model('checkout/cart');
+
+		// Image
 		$this->load->model('tool/image');
 
 		// Display prices

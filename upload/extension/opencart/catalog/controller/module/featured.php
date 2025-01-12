@@ -20,7 +20,10 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Image
 		$this->load->model('tool/image');
 
 		if (!empty($setting['product'])) {

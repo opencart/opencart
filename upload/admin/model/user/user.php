@@ -23,7 +23,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'password'      => '',
 	 *     'firstname'     => 'John',
 	 *     'lastname'      => 'Doe',
-	 *     'email'         => 'User Email',
+	 *     'email'         => 'demo@opencart.com',
 	 *     'image'         => 'user_image',
 	 *     'status'        => 0
 	 * ];
@@ -52,7 +52,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'password'      => '',
 	 *     'firstname'     => 'John',
 	 *     'lastname'      => 'Doe',
-	 *     'email'         => 'User Email',
+	 *     'email'         => 'demo@opencart.com',
 	 *     'image'         => 'user_image',
 	 *     'status'        => 1
 	 * ];
@@ -197,7 +197,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_username'      => 'Username',
 	 *     'filter_name'          => 'User Name',
-	 *     'filter_email'         => 'User Email',
+	 *     'filter_email'         => 'demo@opencart.com',
 	 *     'filter_user_group_id' => 1,
 	 *     'filter_status'        => 1,
 	 *     'filter_ip'            => '',
@@ -293,7 +293,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_username'      => 'Username',
 	 *     'filter_name'          => 'User Name',
-	 *     'filter_email'         => 'User Email',
+	 *     'filter_email'         => 'demo@opencart.com',
 	 *     'filter_user_group_id' => 1,
 	 *     'filter_status'        => 1,
 	 *     'filter_ip'            => '',

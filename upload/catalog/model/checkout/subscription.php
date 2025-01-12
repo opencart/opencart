@@ -18,29 +18,35 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $subscription_data = [
-	 *   'order_id'             => $order_info['order_id'],
-	 *   'store_id'             => $order_info['store_id'],
-	 *   'customer_id'          => $order_info['customer_id'],
-	 *   'payment_address_id'   => $order_info['payment_address_id'],
-	 *   'payment_method'       => $order_info['payment_method'],
-	 *   'shipping_address_id'  => $order_info['shipping_address_id'],
-	 *   'shipping_method'      => $order_info['shipping_method'],
-	 *   'subscription_plan_id' => $order_subscription_info['subscription_plan_id'],
-	 *   'trial_price'          => $order_subscription_info['trial_price'],
-	 *   'trial_frequency'      => $order_subscription_info['trial_frequency'],
-	 *   'trial_cycle'          => $order_subscription_info['trial_cycle'],
-	 *   'trial_duration'       => $order_subscription_info['trial_duration'],
-	 *   'trial_status'         => $order_subscription_info['trial_status'],
-	 *   'price'                => $order_subscription_info['price'],
-	 *   'frequency'            => $order_subscription_info['frequency'],
-	 *   'cycle'                => $order_subscription_info['cycle'],
-	 *   'duration'             => $order_subscription_info['duration'],
-	 *   'comment'              => $order_info['comment'],
-	 *   'affiliate_id'         => $order_info['affiliate_id'],
-	 *   'marketing_id'         => $order_info['marketing_id'],
-	 *   'tracking'             => $order_info['tracking'],
-	 *   'language_id'          => $order_info['language_id'],
-	 *   'currency_id'          => $order_info['currency_id']
+	 *     'order_id'           => 1,
+	 *     'store_id'           => 1,
+	 *     'customer_id'        => 1,
+	 *     'payment_address_id' => 1,
+	 *     'payment_method'     => [
+	 *         'name' => 'Payment Name',
+	 *         'code' => 'Payment Code'
+	 *     ],
+	 *     'shipping_address_id' => 1,
+	 *     'shipping_method'     => [
+	 *         'name' => 'Shipping Name',
+	 *         'code' => 'Shipping Code'
+	 *     ],
+	 *     'subscription_plan_id' => 1,
+	 *     'trial_price'          => 0.0000,
+	 *     'trial_frequency'      => 'month',
+	 *     'trial_cycle'          => 5,
+	 *     'trial_duration'       => 1,
+	 *     'trial_status'         => 1,
+	 *     'price'                => 0.0000,
+	 *     'frequency'            => 'month',
+	 *     'cycle'                => 5,
+	 *     'duration'             => 1,
+	 *     'comment'              => '',
+	 *     'affiliate_id'         => 1,
+	 *     'marketing_id'         => 1,
+	 *     'tracking'             => '',
+	 *     'language_id'          => 1,
+	 *     'currency_id'          => 1
 	 * ];
 	 *
 	 * $this->load->model('checkout/subscription');
@@ -87,29 +93,35 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $subscription_data = [
-	 *   'order_id'             => $order_info['order_id'],
-	 *   'store_id'             => $order_info['store_id'],
-	 *   'customer_id'          => $order_info['customer_id'],
-	 *   'payment_address_id'   => $order_info['payment_address_id'],
-	 *   'payment_method'       => $order_info['payment_method'],
-	 *   'shipping_address_id'  => $order_info['shipping_address_id'],
-	 *   'shipping_method'      => $order_info['shipping_method'],
-	 *   'subscription_plan_id' => $order_subscription_info['subscription_plan_id'],
-	 *   'trial_price'          => $order_subscription_info['trial_price'],
-	 *   'trial_frequency'      => $order_subscription_info['trial_frequency'],
-	 *   'trial_cycle'          => $order_subscription_info['trial_cycle'],
-	 *   'trial_duration'       => $order_subscription_info['trial_duration'],
-	 *   'trial_status'         => $order_subscription_info['trial_status'],
-	 *   'price'                => $order_subscription_info['price'],
-	 *   'frequency'            => $order_subscription_info['frequency'],
-	 *   'cycle'                => $order_subscription_info['cycle'],
-	 *   'duration'             => $order_subscription_info['duration'],
-	 *   'comment'              => $order_info['comment'],
-	 *   'affiliate_id'         => $order_info['affiliate_id'],
-	 *   'marketing_id'         => $order_info['marketing_id'],
-	 *   'tracking'             => $order_info['tracking'],
-	 *   'language_id'          => $order_info['language_id'],
-	 *   'currency_id'          => $order_info['currency_id']
+	 *     'order_id'           => 1,
+	 *     'store_id'           => 1,
+	 *     'customer_id'        => 1,
+	 *     'payment_address_id' => 1,
+	 *     'payment_method'     => [
+	 *         'name' => 'Payment Name',
+	 *         'code' => 'Payment Code'
+	 *     ],
+	 *     'shipping_address_id' => 1,
+	 *     'shipping_method'     => [
+	 *         'name' => 'Shipping Name',
+	 *         'code' => 'Shipping Code'
+	 *     ],
+	 *     'subscription_plan_id' => 1,
+	 *     'trial_price'          => 0.0000,
+	 *     'trial_frequency'      => 'month',
+	 *     'trial_cycle'          => 5,
+	 *     'trial_duration'       => 1,
+	 *     'trial_status'         => 1,
+	 *     'price'                => 0.0000,
+	 *     'frequency'            => 'month',
+	 *     'cycle'                => 5,
+	 *     'duration'             => 1,
+	 *     'comment'              => '',
+	 *     'affiliate_id'         => 1,
+	 *     'marketing_id'         => 1,
+	 *     'tracking'             => '',
+	 *     'language_id'          => 1,
+	 *     'currency_id'          => 1
 	 * ];
 	 *
 	 * $this->load->model('checkout/subscription');

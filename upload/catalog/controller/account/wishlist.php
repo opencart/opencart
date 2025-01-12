@@ -83,9 +83,16 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		// Wishlist
 		$this->load->model('account/wishlist');
+
+		// Product
 		$this->load->model('catalog/product');
+
+		// Image
 		$this->load->model('tool/image');
+
+		// Stock Status
 		$this->load->model('localisation/stock_status');
 
 		$results = $this->model_account_wishlist->getWishlist($this->customer->getId());

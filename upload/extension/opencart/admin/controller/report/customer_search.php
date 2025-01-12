@@ -152,7 +152,10 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
+		// Customer
 		$this->load->model('extension/opencart/report/customer');
+
+		// Category
 		$this->load->model('catalog/category');
 
 		$search_total = $this->model_extension_opencart_report_customer->getTotalCustomerSearches($filter_data);

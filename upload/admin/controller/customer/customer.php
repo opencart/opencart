@@ -1284,7 +1284,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['ips'] = [];
 
+		// Customer
 		$this->load->model('customer/customer');
+
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_customer_customer->getIps($customer_id, ($page - 1) * $limit, $limit);

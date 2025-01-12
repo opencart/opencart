@@ -59,9 +59,16 @@ class Compare extends \Opencart\System\Engine\Controller {
 
 		$data['attribute_groups'] = [];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Manufacturer
 		$this->load->model('catalog/manufacturer');
+
+		// Stock Status
 		$this->load->model('localisation/stock_status');
+
+		// Image
 		$this->load->model('tool/image');
 
 		foreach ($this->session->data['compare'] as $key => $product_id) {

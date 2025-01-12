@@ -125,6 +125,8 @@ class Ddos extends \Opencart\System\Engine\Controller {
 		$data['ips'] = [];
 
 		$this->load->model('extension/opencart/fraud/ddos');
+
+		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_extension_opencart_fraud_ddos->getDdos(($page - 1) * $limit, $limit);

@@ -103,7 +103,10 @@ class Chart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Customer
 		$this->load->model('extension/opencart/report/customer');
+
+		// Sale
 		$this->load->model('extension/opencart/report/sale');
 
 		$json['order'] = [];

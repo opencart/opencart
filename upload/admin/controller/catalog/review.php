@@ -553,7 +553,10 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Product
 			$this->load->model('catalog/product');
+
+			// Review
 			$this->load->model('catalog/review');
 
 			$limit = 10;

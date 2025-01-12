@@ -235,7 +235,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
+		// SEO URL
 		$this->load->model('design/seo_url');
+
+		// Language
 		$this->load->model('localisation/language');
 
 		$results = $this->model_design_seo_url->getSeoUrls($filter_data);

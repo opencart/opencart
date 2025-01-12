@@ -560,7 +560,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Products
 		$data['subscription_products'] = [];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Upload
 		$this->load->model('tool/upload');
 
 		$products = $this->model_sale_subscription->getProducts($subscription_id);
@@ -643,11 +646,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		// Countries
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		// Zone
 		$this->load->model('localisation/zone');
 
 		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);

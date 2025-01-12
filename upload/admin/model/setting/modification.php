@@ -18,15 +18,15 @@ class Modification extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $modification_data = [
-	 *     'extension_download_id' => 1,
-	 *     'name'                  => 'Modification Name',
-	 *     'description'           => 'Modification Description',
-	 *     'code'                  => 'Modification Code',
-	 *     'author'                => 'Author Name',
-	 *     'version'               => '1.00',
-	 *     'link'                  => '',
-	 *     'xml'                   => '',
-	 *     'status'                => 0
+	 *     'extension_install_id' => 1,
+	 *     'name'                 => 'Modification Name',
+	 *     'description'          => 'Modification Description',
+	 *     'code'                 => 'Modification Code',
+	 *     'author'               => 'Author Name',
+	 *     'version'              => '1.00',
+	 *     'link'                 => '',
+	 *     'xml'                  => '',
+	 *     'status'               => 0
 	 * ];
 	 *
 	 * $this->load->model('setting/modification');

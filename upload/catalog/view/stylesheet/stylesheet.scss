@@ -184,7 +184,7 @@ button:focus {
 }
 
 #cart .dropdown-menu li {
-  min-width: 427px;
+  min-width: 300px;
 }
 
 @media (max-width: 768px) {
@@ -418,6 +418,7 @@ footer h5 {
 
 .product-thumb .button-group button {
   flex: 33%;
+  flex-direction: row;
   border-radius: 0;
   border: none;
   border-top: 1px solid var(--bs-border-color);

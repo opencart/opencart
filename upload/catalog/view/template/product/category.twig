@@ -34,7 +34,13 @@
           </div>
         {% else %}
           <div class="row row-cols-sm-2 row-cols-lg-4">
-            {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+            {% set total = category.children|length %}
+            {% if total > 20 %}
+              {% set batch = (total / 4)|round(0, 'ceil') %}
+            {% else %}
+              {% set batch = 5 %}
+            {% endif %}
+            {% for category in categories|batch(batch) %}
               <div class="col">
                 <ul>
                   {% for child in category %}

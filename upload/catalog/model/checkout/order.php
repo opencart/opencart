@@ -28,7 +28,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'firstname'              => 'John',
 	 *     'lastname'               => 'Doe',
 	 *     'email'                  => 'demo@opencart.com',
-	 *     'telephone'              => '123456789',
+	 *     'telephone'              => '1234567890',
 	 *     'custom_field'           => [],
 	 *     'payment_address_id'     => 1,
 	 *     'payment_firstname'      => 'John',
@@ -45,8 +45,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'payment_address_format' => '',
 	 *     'payment_custom_field'   => [],
 	 *     'payment_method'         => [
-	 *         'name' => '',
-	 *         'code' => ''
+	 *         'name' => 'Payment Name',
+	 *         'code' => 'Payment Code'
 	 *      ],
 	 *      'shipping_address_id'     => 1,
 	 *      'shipping_firstname'      => 'John',
@@ -63,8 +63,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *      'shipping_address_format' => '',
 	 *      'shipping_custom_field'   => [],
 	 *      'shipping_method'         => [
-	 *          'name' => '',
-	 *          'code' => ''
+	 *          'name' => 'Shipping Name',
+	 *          'code' => 'Shipping Code'
 	 *      ],
 	 *      'comment'         => '',
 	 *      'total'           => '0.0000',
@@ -130,7 +130,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'firstname'              => 'John',
 	 *     'lastname'               => 'Doe',
 	 *     'email'                  => 'demo@opencart.com',
-	 *     'telephone'              => '123456789',
+	 *     'telephone'              => '1234567890',
 	 *     'custom_field'           => [],
 	 *     'payment_address_id'     => 1,
 	 *     'payment_firstname'      => 'John',
@@ -147,8 +147,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'payment_address_format' => '',
 	 *     'payment_custom_field'   => [],
 	 *     'payment_method'         => [
-	 *         'name' => '',
-	 *         'code' => ''
+	 *         'name' => 'Payment Name',
+	 *         'code' => 'Payment Code'
 	 *      ],
 	 *      'shipping_address_id'     => 1,
 	 *      'shipping_firstname'      => 'John',
@@ -165,8 +165,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *      'shipping_address_format' => '',
 	 *      'shipping_custom_field'   => [],
 	 *      'shipping_method'         => [
-	 *          'name' => '',
-	 *          'code' => ''
+	 *          'name' => 'Shipping Name',
+	 *          'code' => 'Shipping Code'
 	 *      ],
 	 *      'comment'         => '',
 	 *      'total'           => '0.0000',
@@ -332,7 +332,10 @@ class Order extends \Opencart\System\Engine\Model {
 		if ($order_query->num_rows) {
 			$order_data = $order_query->row;
 
+			// Country
 			$this->load->model('localisation/country');
+
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$order_data['custom_field'] = json_decode($order_query->row['custom_field'], true);

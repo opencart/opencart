@@ -88,7 +88,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Order
 			$this->load->model('sale/order');
 
 			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge((array)$this->config->get('config_complete_status'), (array)$this->config->get('config_processing_status')))]));
@@ -115,7 +118,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Order
 			$this->load->model('sale/order');
 
 			$this->model_report_statistics->editValue('order_processing', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $this->config->get('config_processing_status'))]));
@@ -142,7 +148,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Order
 			$this->load->model('sale/order');
 
 			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', (array)$this->config->get('config_complete_status'))]));
@@ -169,7 +178,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Order Status
 			$this->load->model('localisation/order_status');
 
 			$order_status_data = [];
@@ -208,7 +220,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Returns
 			$this->load->model('sale/returns');
 
 			$this->model_report_statistics->editValue('return', $this->model_sale_returns->getTotalReturns(['filter_return_status_id' => $this->config->get('config_return_status_id')]));
@@ -235,7 +250,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Product
 			$this->load->model('catalog/product');
 
 			$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(['filter_quantity' => 0]));
@@ -262,7 +280,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Statistics
 			$this->load->model('report/statistics');
+
+			// Review
 			$this->load->model('catalog/review');
 
 			$this->model_report_statistics->editValue('review', $this->model_catalog_review->getTotalReviewsAwaitingApproval());

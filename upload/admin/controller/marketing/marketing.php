@@ -498,8 +498,13 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['reports'] = [];
 
+		// Marketing
 		$this->load->model('marketing/marketing');
+
+		// Customer
 		$this->load->model('customer/customer');
+
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_marketing_marketing->getReports($marketing_id, ($page - 1) * $limit, $limit);

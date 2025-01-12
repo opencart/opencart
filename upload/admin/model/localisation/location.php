@@ -21,7 +21,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 *     'name'      => 'Location Name',
 	 *     'address'   => '',
 	 *     'geocode'   => '',
-	 *     'telephone' => '',
+	 *     'telephone' => '1234567890',
 	 *     'image'     => 'location_image',
 	 *     'comment'   => ''
 	 * ];
@@ -50,7 +50,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 *     'name'      => 'Location Name',
 	 *     'address'   => '',
 	 *     'geocode'   => '',
-	 *     'telephone' => '',
+	 *     'telephone' => '1234567890',
 	 *     'image'     => 'location_image',
 	 *     'comment'   => ''
 	 * ];

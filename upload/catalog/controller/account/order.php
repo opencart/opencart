@@ -55,7 +55,10 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['orders'] = [];
 
+		// Order
 		$this->load->model('account/order');
+
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$results = $this->model_account_order->getOrders(($page - 1) * $limit, $limit);
@@ -269,8 +272,13 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['shipping_method'] = '';
 			}
 
+			// Subscription
 			$this->load->model('account/subscription');
+
+			// Product
 			$this->load->model('catalog/product');
+
+			// Upload
 			$this->load->model('tool/upload');
 
 			// Products

@@ -135,7 +135,7 @@ class Extension extends \Opencart\System\Engine\Model {
 	 *     'description'           => 'Extension Install Description',
 	 *     'code'                  => 'Extension Install Code',
 	 *     'version'               => '1.00',
-	 *     'author'                => 'Extension Install Author',
+	 *     'author'                => 'Author Name',
 	 *     'link'                  => '',
 	 *     'status'                => 0
 	 * ];

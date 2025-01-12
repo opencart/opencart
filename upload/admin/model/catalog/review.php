@@ -18,7 +18,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $review_data = [
-	 *     'author'     => 'Review Author Name',
+	 *     'author'     => 'Author Name',
 	 *     'product_id' => 1,
 	 *     'text'       => 'Review Text',
 	 *     'rating'     => 4,
@@ -56,7 +56,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $review_data = [
-	 *     'author'     => 'Review Author Name',
+	 *     'author'     => 'Author Name',
 	 *     'product_id' => 1,
 	 *     'text'       => 'Review Text',
 	 *     'rating'     => 4,

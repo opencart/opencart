@@ -243,7 +243,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Article
 			$this->load->model('cms/article');
+
+			// Customer
 			$this->load->model('customer/customer');
 
 			foreach ($selected as $article_comment_id) {
@@ -301,7 +304,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Article
 			$this->load->model('cms/article');
+
+			// Customer
 			$this->load->model('customer/customer');
 
 			foreach ($selected as $article_comment_id) {

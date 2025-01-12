@@ -32,7 +32,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['topics'] = [];
 
+		// Topic
 		$this->load->model('cms/topic');
+
+		// Article
 		$this->load->model('cms/article');
 
 		$topics = $this->model_cms_topic->getTopics();

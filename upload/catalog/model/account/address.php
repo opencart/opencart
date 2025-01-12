@@ -22,8 +22,8 @@ class Address extends \Opencart\System\Engine\Model {
 	 *     'firstname'    => 'John',
 	 *     'lastname'     => 'Doe',
 	 *     'company'      => '',
-	 *     'address_1'    => '',
-	 *     'address_2'    => '',
+	 *     'address_1'    => 'Address 1',
+	 *     'address_2'    => 'Address 2',
 	 *     'postcode'     => '',
 	 *     'city'         => '',
 	 *     'zone_id'      => 1,
@@ -63,8 +63,8 @@ class Address extends \Opencart\System\Engine\Model {
 	 *     'firstname'    => 'John',
 	 *     'lastname'     => 'Doe',
 	 *     'company'      => '',
-	 *     'address_1'    => '',
-	 *     'address_2'    => '',
+	 *     'address_1'    => 'Address 1',
+	 *     'address_2'    => 'Address 2',
 	 *     'postcode'     => '',
 	 *     'city'         => '',
 	 *     'zone_id'      => 1,
@@ -198,8 +198,13 @@ class Address extends \Opencart\System\Engine\Model {
 	public function getAddresses(int $customer_id): array {
 		$address_data = [];
 
+		// Country
 		$this->load->model('localisation/country');
+
+		// Address Format
 		$this->load->model('localisation/address_format');
+
+		// Zone
 		$this->load->model('localisation/zone');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");

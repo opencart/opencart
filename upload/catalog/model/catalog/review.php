@@ -19,7 +19,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $review_data = [
-	 *     'author'      => '',
+	 *     'author'      => 'Author Name',
 	 *     'customer_id' => 1,
 	 *     'product_id'  => 1,
 	 *     'text'        => '',

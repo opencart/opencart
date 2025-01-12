@@ -204,7 +204,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$data['reports'] = [];
 
+		// Bestseller
 		$this->load->model('extension/opencart/module/bestseller');
+
+		// Product
 		$this->load->model('catalog/product');
 
 		$results = $this->model_extension_opencart_module_bestseller->getReports(($page - 1) * $limit, $limit);
@@ -260,8 +263,13 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Bestseller
 			$this->load->model('extension/opencart/module/bestseller');
+
+			// Product
 			$this->load->model('catalog/product');
+
+			// Order
 			$this->load->model('sale/order');
 
 			$total = $this->model_catalog_product->getTotalProducts();

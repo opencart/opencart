@@ -36,7 +36,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_data = [
 	 *     'filter_customer'          => 'John Doe',
-	 *     'filter_email'             => 'Customer Email',
+	 *     'filter_email'             => 'demo@opencart.com',
 	 *     'filter_customer_group_id' => 1,
 	 *     'filter_type'              => 'customer',
 	 *     'filter_date_from'         => '2021-01-01',
@@ -125,7 +125,7 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_data = [
 	 *     'filter_customer'          => 'John Doe',
-	 *     'filter_email'             => 'Customer Email',
+	 *     'filter_email'             => 'demo@opencart.com',
 	 *     'filter_customer_group_id' => 1,
 	 *     'filter_type'              => 'customer',
 	 *     'filter_date_from'         => '2021-01-01',

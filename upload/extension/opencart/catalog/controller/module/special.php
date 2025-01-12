@@ -27,7 +27,10 @@ class Special extends \Opencart\System\Engine\Controller {
 			'limit' => $setting['limit']
 		];
 
+		// Product
 		$this->load->model('catalog/product');
+
+		// Image
 		$this->load->model('tool/image');
 
 		$results = $this->model_catalog_product->getSpecials($filter_data);

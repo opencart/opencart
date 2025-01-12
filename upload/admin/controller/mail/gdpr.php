@@ -145,7 +145,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Order Addresses
+		// Order
 		$this->load->model('sale/order');
 
 		$results = $this->model_sale_order->getOrders(['filter_email' => $gdpr_info['email']]);

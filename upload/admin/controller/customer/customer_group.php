@@ -303,7 +303,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Customer
 		$this->load->model('customer/customer');
 
 		foreach ($selected as $customer_group_id) {

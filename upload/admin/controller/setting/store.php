@@ -730,7 +730,10 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
+
+			// Store
 			$this->load->model('setting/store');
 
 			if (!$this->request->post['store_id']) {
@@ -770,7 +773,10 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Order
 		$this->load->model('sale/order');
+
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		foreach ($selected as $store_id) {
@@ -792,7 +798,10 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Store
 			$this->load->model('setting/store');
+
+			// Setting
 			$this->load->model('setting/setting');
 
 			foreach ($selected as $store_id) {

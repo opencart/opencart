@@ -2168,6 +2168,23 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Downloads By Download ID
+	 *
+	 * @param int $download_id primary key of the download record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->deleteDownloadsByDownloadId($download_id);
+	 */
+	public function deleteDownloadsByDownloadId(int $download_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_download` WHERE `download_id` = '" . (int)$download_id . "'");
+	}
+
+	/**
 	 * Get Downloads
 	 *
 	 * @param int $product_id primary key of the product record

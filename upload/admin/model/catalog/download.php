@@ -85,6 +85,10 @@ class Download extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_download->deleteDescriptions($download_id);
 		$this->model_catalog_download->deleteReports($download_id);
+
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->deleteDownloadsByDownloadId($download_id);
 	}
 
 	/**

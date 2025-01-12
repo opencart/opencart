@@ -510,7 +510,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('sale/subscription');
 	 *
-	 * $subscription_total = $this->model_sale_subscription->getTotalHistories($subscription_id);
+	 * $history_total = $this->model_sale_subscription->getTotalHistories($subscription_id);
 	 */
 	public function getTotalHistories(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_id` = '" . (int)$subscription_id . "'");

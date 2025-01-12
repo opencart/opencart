@@ -20,7 +20,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 * $event_data = [
 	 *     'code'        => 'Event Code',
 	 *     'description' => 'Event Description',
-	 *     'trigger'     => ' Event Trigger',
+	 *     'trigger'     => 'Event Trigger',
 	 *     'action'      => 'Event Action',
 	 *     'status'      => 0,
 	 *     'sort_order'  => 0

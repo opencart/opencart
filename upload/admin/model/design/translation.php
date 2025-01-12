@@ -18,9 +18,11 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $translation_data = [
-	 *     'route' => '',
-	 *     'key'   => '',
-	 *     'value' => ''
+	 *     'store_id'    => 1,
+	 *     'language_id' => 1,
+	 *     'route'       => '',
+	 *     'key'         => '',
+	 *     'value'       => ''
 	 * ];
 	 *
 	 * $this->load->model('design/translation');
@@ -42,9 +44,11 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $translation_data = [
-	 *     'route' => '',
-	 *     'key'   => '',
-	 *     'value' => ''
+	 *     'store_id'    => 1,
+	 *     'language_id' => 1,
+	 *     'route'       => '',
+	 *     'key'         => '',
+	 *     'value'       => ''
 	 * ];
 	 *
 	 * $this->load->model('design/translation');

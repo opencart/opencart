@@ -71,17 +71,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $customer_data = [
-	 *     'store_id'     => 1,
-	 *     'language_id'  => 1,
 	 *     'firstname'    => 'John',
 	 *     'lastname'     => 'Doe',
 	 *     'email'        => 'demo@opencart.com',
 	 *     'telephone'    => '123467890',
-	 *     'custom_field' => [],
-	 *     'password'     => '',
-	 *     'newsletter'   => 0,
-	 *     'ip'           => '',
-	 *     'status'       => 1
+	 *     'custom_field' => []
 	 * ];
 	 *
 	 * $this->load->model('account/customer');

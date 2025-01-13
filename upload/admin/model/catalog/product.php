@@ -2195,7 +2195,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/product');
 	 *
-	 * $product_downloads = $this->model_catalog_product->getDownloads($product_id);
+	 * $product_download = $this->model_catalog_product->getDownloads($product_id);
 	 */
 	public function getDownloads(int $product_id): array {
 		$product_download_data = [];

@@ -24,6 +24,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 *     'setting' => []
 	 * ];
 	 *
+	 * $this->load->model('setting/module');
+	 *
 	 * $module_id = $this->model_setting_module->addModule($code, $module_data);
 	 */
 	public function addModule(string $code, array $data): int {
@@ -50,6 +52,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 *     'setting' => []
 	 * ];
 	 *
+	 * $this->load->model('setting/module');
+	 *
 	 * $this->model_setting_module->editModule($module_id, $module_data);
 	 */
 	public function editModule(int $module_id, array $data): void {
@@ -65,6 +69,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/module');
+	 *
 	 * $this->model_setting_module->deleteModule($module_id);
 	 */
 	public function deleteModule(int $module_id): void {
@@ -79,6 +85,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/module');
 	 *
 	 * $this->model_setting_module->deleteModulesByCode($code);
 	 */
@@ -100,6 +108,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/module');
+	 *
 	 * $module_info = $this->model_setting_module->getModule($module_id);
 	 */
 	public function getModule(int $module_id): array {
@@ -119,6 +129,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/module');
+	 *
 	 * $modules = $this->model_setting_module->getModules();
 	 */
 	public function getModules(): array {
@@ -135,6 +147,8 @@ class Module extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/module');
 	 *
 	 * $modules = $this->model_setting_module->getModulesByCode($code);
 	 */

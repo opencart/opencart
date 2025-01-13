@@ -15,6 +15,8 @@ class Backup extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('tool/backup');
+	 *
 	 * $tables = $this->model_tool_backup->getTables();
 	 */
 	public function getTables(): array {
@@ -41,6 +43,8 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('tool/backup');
 	 *
 	 * $records = $this->model_tool_backup->getRecords($table, $start, $limit);
 	 */
@@ -70,6 +74,8 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * @return int
 	 *
 	 * @example
+	 *
+	 * $this->load->model('tool/backup');
 	 *
 	 * $record_total = $this->model_tool_backup->getTotalRecords($table);
 	 */

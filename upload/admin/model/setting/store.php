@@ -22,6 +22,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *     'url'  => ''
 	 * ];
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $store_id = $this->model_setting_store->addStore($store_data);
 	 */
 	public function addStore(array $data): int {
@@ -66,6 +68,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *     'url'  => ''
 	 * ];
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $this->model_setting_store->editStore($store_id, $store_data);
 	 */
 	public function editStore(int $store_id, array $data): void {
@@ -82,6 +86,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $this->model_setting_store->deleteStore($store_id);
 	 */
@@ -149,6 +155,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $store_info = $this->model_setting_store->getStore($store_id);
 	 */
 	public function getStore(int $store_id): array {
@@ -165,6 +173,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> store records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $results = $this->model_setting_store->getStores();
 	 */
@@ -198,6 +208,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return \Opencart\System\Engine\Registry
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
 	 */
@@ -321,6 +333,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $store_total = $this->model_setting_store->getTotalStores();
 	 */
 	public function getTotalStores(): int {
@@ -337,6 +351,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return int total number of store records that have layout ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByLayoutId($layout_id);
 	 */
@@ -355,6 +371,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByLanguage($language);
 	 */
 	public function getTotalStoresByLanguage(string $language): int {
@@ -371,6 +389,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return int
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByCurrency($currency);
 	 */
@@ -389,6 +409,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
 	 */
 	public function getTotalStoresByCountryId(int $country_id): int {
@@ -405,6 +427,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return int total number of store records that have zone ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByZoneId($zone_id);
 	 */
@@ -423,6 +447,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/store');
+	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
 	 */
 	public function getTotalStoresByCustomerGroupId(int $customer_group_id): int {
@@ -439,6 +465,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return int total number of store records that have information ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);
 	 */
@@ -458,6 +486,8 @@ class Store extends \Opencart\System\Engine\Model {
 	 * @return int total number of store records that have order status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/store');
 	 *
 	 * $store_total = $this->model_setting_store->getTotalStoresByOrderStatusId($order_status_id);
 	 */

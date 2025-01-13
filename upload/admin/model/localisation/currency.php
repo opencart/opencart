@@ -20,7 +20,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	 * $currency_data = [
 	 *     'title'         => 'Currency Title',
 	 *     'code'          => 'Currency Code',
-	 *     'symbol_left'   => '',
+	 *     'symbol_left'   => '$',
 	 *     'symbol_right'  => '',
 	 *     'decimal_place' => 2,
 	 *     'value'         => 0.00000000,
@@ -52,7 +52,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	 * $currency_data = [
 	 *     'title'         => 'Currency Title',
 	 *     'code'          => 'Currency Code',
-	 *     'symbol_left'   => '',
+	 *     'symbol_left'   => '$',
 	 *     'symbol_right'  => '',
 	 *     'decimal_place' => 2,
 	 *     'value'         => 0.00000000,

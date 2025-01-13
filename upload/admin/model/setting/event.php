@@ -20,11 +20,13 @@ class Event extends \Opencart\System\Engine\Model {
 	 * $event_data = [
 	 *     'code'        => 'Event Code',
 	 *     'description' => 'Event Description',
-	 *     'trigger'     => ' Event Trigger',
+	 *     'trigger'     => 'Event Trigger',
 	 *     'action'      => 'Event Action',
 	 *     'status'      => 0,
 	 *     'sort_order'  => 0
 	 * ];
+	 *
+	 * $this->load->model('setting/event');
 	 *
 	 * $event_id = $this->model_setting_event->addEvent($event_data);
 	 */
@@ -43,6 +45,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/event');
+	 *
 	 * $this->model_setting_event->deleteEvent($event_id);
 	 */
 	public function deleteEvent(int $event_id): void {
@@ -57,6 +61,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/event');
 	 *
 	 * $this->model_setting_event->deleteEventByCode($code);
 	 */
@@ -74,6 +80,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/event');
+	 *
 	 * $this->model_setting_event->editStatus($event_id, $status);
 	 */
 	public function editStatus(int $event_id, bool $status): void {
@@ -90,6 +98,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/event');
+	 *
 	 * $this->model_setting_event->editStatusByCode($code, $status);
 	 */
 	public function editStatusByCode(string $code, bool $status): void {
@@ -104,6 +114,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> event record that has event ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/event');
 	 *
 	 * $event_info = $this->model_setting_event->getEvent($event_id);
 	 */
@@ -121,6 +133,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/event');
 	 *
 	 * $event_info = $this->model_setting_event->getEventByCode($code);
 	 */
@@ -145,6 +159,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('setting/event');
 	 *
 	 * $results = $this->model_setting_event->getEvents($filter_data);
 	 */
@@ -195,6 +211,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 * @return int total number of event records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/event');
 	 *
 	 * $event_total = $this->model_setting_event->getTotalEvents();
 	 */

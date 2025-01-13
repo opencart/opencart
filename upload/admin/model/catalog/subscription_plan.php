@@ -157,7 +157,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/subscription_plan');
 	 *
-	 * $subscription_plans = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
+	 * $subscription_plan = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
 	 */
 	public function getSubscriptionPlans(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";

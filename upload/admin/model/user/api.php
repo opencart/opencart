@@ -23,6 +23,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *     'status'   => 0
 	 * ];
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $api_id = $this->model_user_api->addApi($api_data);
 	 */
 	public function addApi(array $data): int {
@@ -57,6 +59,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *     'status'   => 1
 	 * ];
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $this->model_user_api->editApi($api_id, $api_data);
 	 */
 	public function editApi(int $api_id, array $data): void {
@@ -82,6 +86,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $this->model_user_api->deleteApi($api_id);
 	 */
 	public function deleteApi(int $api_id): void {
@@ -98,6 +104,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> api record that has api ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/api');
 	 *
 	 * $api_info = $this->model_user_api->getApi($api_id);
 	 */
@@ -122,6 +130,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('user/api');
 	 *
 	 * $results = $this->model_user_api->getApis($filter_data);
 	 */
@@ -171,6 +181,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $api_total = $this->model_user_api->getTotalApis();
 	 */
 	public function getTotalApis(): int {
@@ -189,6 +201,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $this->model_user_api->addIp($api_id, $ip);
 	 */
 	public function addIp(int $api_id, string $ip): void {
@@ -204,6 +218,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $this->model_user_api->deleteIps($api_id);
 	 */
 	public function deleteIps(int $api_id): void {
@@ -218,6 +234,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 * @return array<int, string> IP records that have api id
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/api');
 	 *
 	 * $results = $this->model_user_api->getIps($api_id);
 	 */
@@ -244,6 +262,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/api');
+	 *
 	 * $results = $this->model_user_api->getHistories($api_id, $start, $limit);
 	 */
 	public function getHistories(int $api_id, int $start = 0, int $limit = 10): array {
@@ -268,6 +288,8 @@ class Api extends \Opencart\System\Engine\Model {
 	 * @return int total number of history records that have api ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/api');
 	 *
 	 * $history_total = $this->model_user_api->getTotalHistories($api_id);
 	 */

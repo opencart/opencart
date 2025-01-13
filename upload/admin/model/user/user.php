@@ -28,6 +28,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'status'        => 0
 	 * ];
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $user_id = $this->model_user_user->addUser($user_data);
 	 */
 	public function addUser(array $data): int {
@@ -57,6 +59,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'status'        => 1
 	 * ];
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->editUser($user_id, $user_data);
 	 */
 	public function editUser(int $user_id, array $data): void {
@@ -77,6 +81,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->editPassword($user_id, $password);
 	 */
 	public function editPassword(int $user_id, $password): void {
@@ -93,6 +99,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->editCode($email, $code);
 	 */
 	public function editCode(string $email, string $code): void {
@@ -107,6 +115,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $this->model_user_user->deleteUser($user_id);
 	 */
@@ -126,6 +136,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $user_info = $this->model_user_user->getUser($user_id);
 	 */
 	public function getUser(int $user_id): array {
@@ -142,6 +154,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $user_info = $this->model_user_user->getUserByUsername($username);
 	 */
@@ -160,6 +174,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $user_info = $this->model_user_user->getUserByEmail($email);
 	 */
 	public function getUserByEmail(string $email): array {
@@ -176,6 +192,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $user_info = $this->model_user_user->getUserByCode($code);
 	 */
@@ -206,6 +224,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'start'                => 0,
 	 *     'limit'                => 10
 	 * ];
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $results = $this->model_user_user->getUsers($filter_data);
 	 */
@@ -303,6 +323,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'limit'                => 10
 	 * ];
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $user_total = $this->model_user_user->getTotalUsers($filter_data);
 	 */
 	public function getTotalUsers(array $data = []): int {
@@ -352,6 +374,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
 	 */
 	public function getTotalUsersByGroupId(int $user_group_id): int {
@@ -368,6 +392,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return int
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $user_total = $this->model_user_user->getTotalusersByEmail($email);
 	 */
@@ -392,6 +418,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'user_agent' => ''
 	 * ];
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->addLogin($user_id, $user_login_data);
 	 */
 	public function addLogin(int $user_id, array $data): void {
@@ -406,6 +434,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $this->model_user_user->deleteLogins($user_id);
 	 */
@@ -423,6 +453,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> login records that have user ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $results = $this->model_user_user->getLogins($user_id, $start, $limit);
 	 */
@@ -453,6 +485,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $login_total = $this->model_user_user->getTotalLogins($user_id);
 	 */
 	public function getTotalLogins(int $user_id): int {
@@ -481,6 +515,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *     'user_agent' => ''
 	 * ];
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->addAuthorize($user_id, $user_authorize_data);
 	 */
 	public function addAuthorize(int $user_id, array $data): void {
@@ -496,6 +532,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $this->model_user_user->editAuthorizeStatus($user_authorize_id, $status);
 	 */
@@ -513,6 +551,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->editAuthorizeTotal($user_authorize_id, $total);
 	 */
 	public function editAuthorizeTotal(int $user_authorize_id, int $total): void {
@@ -529,6 +569,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $this->model_user_user->editAuthorizeTotalByUserId($user_id, $total);
 	 */
 	public function editAuthorizeTotalByUserId(int $user_id, int $total): void {
@@ -544,6 +586,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $this->model_user_user->deleteAuthorizes($user_id, $user_authorize_id);
 	 */
@@ -566,6 +610,8 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('user/user');
+	 *
 	 * $authorize_info = $this->model_user_user->getAuthorize($user_authorize_id);
 	 */
 	public function getAuthorize(int $user_authorize_id): array {
@@ -583,6 +629,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> authorize record that has user ID, token
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $authorize_info = $this->model_user_user->getAuthorizeByToken($user_id, $token);
 	 */
@@ -602,6 +650,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> authorize records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $results = $this->model_user_user->getAuthorizes($user_id, $start, $limit);
 	 */
@@ -631,6 +681,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * @return int total number of authorize records that have user ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('user/user');
 	 *
 	 * $authorize_total = $this->model_user_user->getTotalAuthorizes($user_id);
 	 */

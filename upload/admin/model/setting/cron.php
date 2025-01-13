@@ -21,6 +21,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/cron');
+	 *
 	 * $cron_id = $this->model_setting_cron->addCron($code, $description, $cycle, $action, $status);
 	 */
 	public function addCron(string $code, string $description, string $cycle, string $action, bool $status): int {
@@ -38,6 +40,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/cron');
+	 *
 	 * $this->model_setting_cron->deleteCron($cron_id);
 	 */
 	public function deleteCron(int $cron_id): void {
@@ -53,6 +57,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/cron');
+	 *
 	 * $this->model_setting_cron->deleteCronByCode($code);
 	 */
 	public function deleteCronByCode(string $code): void {
@@ -67,6 +73,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/cron');
 	 *
 	 * $this->model_setting_cron->editCron($cron_id);
 	 */
@@ -84,6 +92,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/cron');
+	 *
 	 * $this->model_setting_cron->editStatus($cron_id, $status);
 	 */
 	public function editStatus(int $cron_id, bool $status): void {
@@ -98,6 +108,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> cron record that has cron ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/cron');
 	 *
 	 * $cron_info = $this->model_setting_cron->getCron($cron_id);
 	 */
@@ -115,6 +127,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/cron');
 	 *
 	 * $cron_info = $this->model_setting_cron->getCronByCode($code);
 	 */
@@ -139,6 +153,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
+	 *
+	 * $this->load->model('setting/cron');
 	 *
 	 * $results = $this->model_setting_cron->getCrons($filter_data);
 	 */
@@ -189,6 +205,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * @return int total number of cron records
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/cron');
 	 *
 	 * $cron_total = $this->model_setting_cron->getTotalCrons();
 	 */

@@ -339,7 +339,7 @@ footer h5 {
   bottom: 0;
 }
 .product-thumb .button button {
-  width: 33.3%;
+  width: 33.33%;
   border: none;
   border-top: 1px solid var(--bs-border-color);
   background-color: var(--bs-tertiary-bg);

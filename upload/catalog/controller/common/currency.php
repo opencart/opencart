@@ -32,9 +32,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['title'] = $data['currencies'][$result['code']]['title'];
-		$data['symbol_left'] = $data['currencies'][$result['code']]['symbol_left'];
-		$data['symbol_right'] = $data['currencies'][$result['code']]['symbol_right'];
+		$code = $this->session->data['currency'];
+		$data['title'] = $data['currencies'][$code]['title'];
+		$data['symbol_left'] = $data['currencies'][$code]['symbol_left'];
+		$data['symbol_right'] = $data['currencies'][$code]['symbol_right'];
 
 		$url_data = $this->request->get;
 

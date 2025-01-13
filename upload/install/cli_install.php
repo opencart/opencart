@@ -10,6 +10,7 @@
 //                               --email       email@example.com
 //                               --password    password
 //                               --http_server http://localhost/opencart/
+//                               --language    en-gb
 //                               --db_driver   mysqli
 //                               --db_hostname localhost
 //                               --db_username root
@@ -24,7 +25,7 @@
 //
 // Example:
 //
-// php c://xampp/htdocs/opencart-master/upload/install/cli_install.php install --username admin --password mexico --email email@example.com --http_server http://localhost/opencart-master/upload/ --db_driver mysqli --db_hostname localhost --db_username root --db_database opencart-master --db_port 3306 --db_prefix oc_
+// php c://xampp/htdocs/opencart-master/upload/install/cli_install.php install --username admin --password mexico --email email@example.com --http_server http://localhost/opencart-master/upload/ --language en-gb --db_driver mysqli --db_hostname localhost --db_username root --db_database opencart-master --db_port 3306 --db_prefix oc_
 //
 
 namespace Install;
@@ -136,6 +137,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Options
 		$option = [
 			'username'    => 'admin',
+			'language'    => 'en-gb',
 			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_password' => '',
@@ -253,6 +255,13 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: E-Mail Address does not appear to be valid!' . "\n";
 		}
 
+		// Make sure there is a SQL file to load sample data
+		$file = DIR_APPLICATION . 'opencart-' . basename($option['language']) . '.sql';
+
+		if (!is_file($file)) {
+			$error .= 'ERROR: Install language not available!' . "\n";
+		}
+
 		// If not cloud then we validate the password
 		if ($option['db_password']) {
 			if (!oc_validate_length(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), 5, 20)) {
@@ -263,9 +272,6 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		if ($error) {
 			return $error;
 		}
-
-		// Make sure there is a SQL file to load sample data
-		$file = DIR_APPLICATION . 'opencart.sql';
 
 		if (!is_file($file)) {
 			return 'ERROR: Could not load SQL file: ' . $file;

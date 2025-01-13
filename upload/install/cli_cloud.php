@@ -173,7 +173,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		}
 
 		// Make sure there is a SQL file to load sample data
-		$file = DIR_OPENCART . 'install/opencart.sql';
+		$file = DIR_OPENCART . 'install/opencart-en-gb.sql';
 
 		if (!is_file($file)) {
 			return 'ERROR: Could not load SQL file: ' . $file;

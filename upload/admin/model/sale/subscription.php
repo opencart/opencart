@@ -17,6 +17,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->deleteSubscription($subscription_id);
 	 */
 	public function deleteSubscription(int $subscription_id): void {
@@ -37,6 +39,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->editRemaining($subscription_id, $remaining);
 	 */
 	public function editRemaining(int $subscription_id, int $remaining): void {
@@ -53,6 +57,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->editDateNext($subscription_id, $date_next);
 	 */
 	public function editDateNext(int $subscription_id, string $date_next): void {
@@ -68,6 +74,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->deleteSubscriptionByCustomerPaymentId($customer_payment_id);
 	 */
 	public function deleteSubscriptionByCustomerPaymentId(int $customer_payment_id): void {
@@ -82,6 +90,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> subscription record that has subscription ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
 	 */
@@ -107,6 +117,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> subscription record that has order ID, order product ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $order_product_id);
 	 */
@@ -144,6 +156,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *     'start'                         => 0,
 	 *     'limit'                         => 10
 	 * ];
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $results = $this->model_sale_subscription->getSubscriptions($filter_data);
 	 */
@@ -256,6 +270,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *     'limit'                         => 10
 	 * ];
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
 	 */
 	public function getTotalSubscriptions(array $data = []): int {
@@ -309,6 +325,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptionsByStoreId($store_id);
 	 */
 	public function getTotalSubscriptionsByStoreId(int $store_id): int {
@@ -325,6 +343,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return int total number of subscription records that have subscription status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptionsBySubscriptionStatusId($subscription_status_id);
 	 */
@@ -343,6 +363,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->deleteProducts($subscription_id);
 	 */
 	public function deleteProducts(int $subscription_id): void {
@@ -357,6 +379,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> product records that have subscription ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $products = $this->model_sale_subscription->getProducts($subscription_id);
 	 */
@@ -378,6 +402,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $options = $this->model_sale_subscription->getOptions($subscription_id, $subscription_product_id);
 	 */
 	public function getOptions(int $subscription_id, int $subscription_product_id): array {
@@ -396,7 +422,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
-	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $this->model_sale_subscription->deleteOptions($subscription_id);
 	 */
@@ -416,6 +443,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->addHistory($subscription_id, $subscription_status_id, $comment, $notify);
 	 */
 	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {
@@ -433,6 +462,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->deleteHistories($subscription_id);
 	 */
 	public function deleteHistories(int $subscription_id): void {
@@ -449,6 +480,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> history records that have subscription ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $results = $this->model_sale_subscription->getHistories($subscription_id, $start, $limit);
 	 */
@@ -475,7 +508,9 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $subscription_total = $this->model_sale_subscription->getTotalHistories($subscription_id);
+	 * $this->load->model('sale/subscription');
+	 *
+	 * $history_total = $this->model_sale_subscription->getTotalHistories($subscription_id);
 	 */
 	public function getTotalHistories(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
@@ -491,6 +526,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return int total number of history records that have subscription status ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $history_total = $this->model_sale_subscription->getTotalHistoriesBySubscriptionStatusId($subscription_status_id);
 	 */
@@ -509,6 +546,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('sale/subscription');
+	 *
 	 * $this->model_sale_subscription->deleteLogs($subscription_id);
 	 */
 	public function deleteLogs(int $subscription_id): void {
@@ -525,6 +564,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> log records that have subscription ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $results = $this->model_sale_subscription->getLogs($subscription_id, $start, $limit);
 	 */
@@ -550,6 +591,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return int total number of log records that have subscription ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
 	 *
 	 * $subscription_total = $this->model_sale_subscription->getTotalLogs($subscription_id);
 	 */

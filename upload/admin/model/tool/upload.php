@@ -18,6 +18,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('tool/upload');
+	 *
 	 * $code = $this->model_tool_upload->addUpload($name, $filename);
 	 */
 	public function addUpload(string $name, string $filename): string {
@@ -37,6 +39,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('tool/upload');
+	 *
 	 * $this->model_tool_upload->deleteUpload($upload_id);
 	 */
 	public function deleteUpload(int $upload_id): void {
@@ -51,6 +55,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> upload record that has upload ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('tool/upload');
 	 *
 	 * $upload_info = $this->model_tool_upload->getUpload($upload_id);
 	 */
@@ -68,6 +74,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('tool/upload');
 	 *
 	 * $upload_info = $this->model_tool_upload->getUploadByCode($code);
 	 */
@@ -95,6 +103,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	 *     'start'            => 0,
 	 *     'limit'            => 10
 	 * ];
+	 *
+	 * $this->load->model('tool/upload');
 	 *
 	 * $results = $this->model_tool_upload->getUploads($filter_data);
 	 */
@@ -176,6 +186,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	 *     'start'            => 0,
 	 *     'limit'            => 10
 	 * ];
+	 *
+	 * $this->load->model('tool/upload');
 	 *
 	 * $upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
 	 */

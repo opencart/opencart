@@ -18,8 +18,6 @@ class Search extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $search_data = [
-	 *     'store_id'     => 1,
-	 *     'language_id'  => 1,
 	 *     'customer_id'  => 1,
 	 *     'keyword'      => '',
 	 *     'category_id'  => 1,

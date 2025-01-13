@@ -17,6 +17,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/setting');
+	 *
 	 * $results = $this->model_setting_setting->getSettings($store_id);
 	 */
 	public function getSettings(int $store_id = 0): array {
@@ -34,6 +36,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed>
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/setting');
 	 *
 	 * $setting_info = $this->model_setting_setting->getSetting($code, $store_id);
 	 */
@@ -64,6 +68,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/setting');
+	 *
 	 * $this->model_setting_setting->editSetting($code, $data, $store_id);
 	 */
 	public function editSetting(string $code, array $data, int $store_id = 0): void {
@@ -86,6 +92,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/setting');
+	 *
 	 * $this->model_setting_setting->deleteSetting($code, $store_id);
 	 */
 	public function deleteSetting(string $code, int $store_id = 0): void {
@@ -100,6 +108,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/setting');
 	 *
 	 * $this->model_setting_setting->deleteSettingsByCode($code);
 	 */
@@ -116,6 +126,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('setting/setting');
+	 *
 	 * $this->model_setting_setting->deleteSettingsByStoreId($store_id);
 	 */
 	public function deleteSettingsByStoreId(int $store_id): void {
@@ -131,6 +143,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return string
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/setting');
 	 *
 	 * $value = $this->model_setting_setting->getValue($key, $store_id);
 	 */
@@ -155,6 +169,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 *
+	 * $this->load->model('setting/setting');
 	 *
 	 * $this->model_setting_setting->editValue($code, $key, $value, $store_id);
 	 */

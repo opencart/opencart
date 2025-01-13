@@ -23,6 +23,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *     'status' => 0
 	 * ];
 	 *
+	 * $this->load->model('tool/notification');
+	 *
 	 * $notification_id = $this->model_tool_notification->addNotification($notification_data);
 	 */
 	public function addNotification(array $data): int {
@@ -41,6 +43,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('tool/notification');
+	 *
 	 * $this->model_tool_notification->editStatus($notification_id, $status);
 	 */
 	public function editStatus(int $notification_id, bool $status): void {
@@ -56,6 +60,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('tool/notification');
+	 *
 	 * $this->model_tool_notification->deleteNotification($notification_id);
 	 */
 	public function deleteNotification(int $notification_id): void {
@@ -70,6 +76,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	 * @return array<string, mixed> notification record that has notification ID
 	 *
 	 * @example
+	 *
+	 * $this->load->model('tool/notification');
 	 *
 	 * $notification_info = $this->model_tool_notification->getNotification($notification_id);
 	 */
@@ -93,6 +101,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *     'limit'  => 5,
 	 *     'status' => 1
 	 * ];
+	 *
+	 * $this->load->model('tool/notification');
 	 *
 	 * $results = $this->model_tool_notification->getNotifications($filter_data);
 	 */
@@ -136,6 +146,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	 *     'limit'  => 5,
 	 *     'status' => 1
 	 * ];
+	 *
+	 * $this->load->model('tool/notification');
 	 *
 	 * $notification_total = $this->model_tool_notification->getTotalNotifications();
 	 */

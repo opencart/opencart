@@ -23,6 +23,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 *     'geocode'   => '',
 	 *     'telephone' => '1234567890',
 	 *     'image'     => 'location_image',
+	 *     'open'      => '',
 	 *     'comment'   => ''
 	 * ];
 	 *
@@ -52,6 +53,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 *     'geocode'   => '',
 	 *     'telephone' => '1234567890',
 	 *     'image'     => 'location_image',
+	 *     'open'      => '',
 	 *     'comment'   => ''
 	 * ];
 	 *

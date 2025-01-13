@@ -21,6 +21,8 @@ class Image extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('tool/image');
+	 *
 	 * $placeholder = $this->model_tool_image->resize($filename, $width, $height);
 	 */
 	public function resize(string $filename, int $width, int $height): string {

@@ -4069,14 +4069,29 @@ textarea.form-control-lg {
   --bs-breadcrumb-divider-color: #ced4da;
   --bs-breadcrumb-item-padding-x: 0.5rem;
   --bs-breadcrumb-item-active-color: var(--bs-secondary-color);
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-block;
+  flex-wrap: nowrap;
   padding: var(--bs-breadcrumb-padding-y) var(--bs-breadcrumb-padding-x);
   margin-bottom: var(--bs-breadcrumb-margin-bottom);
   font-size: var(--bs-breadcrumb-font-size);
   list-style: none;
   background-color: var(--bs-breadcrumb-bg);
   border-radius: var(--bs-breadcrumb-border-radius);
+}
+/* OpenCart Start */
+.breadcrumb-item a {
+  color: #999999;
+}
+.breadcrumb-item:last-child a {
+  color: #1e91cf;
+}
+/* OpenCart End */
+.breadcrumb-item {
+  /* OpenCart Start */
+  text-shadow: 0 1px #fff;
+  font-size: 0.9231rem;
+  display: inline-block;
+  /* OpenCart End */
 }
 .breadcrumb-item + .breadcrumb-item {
   padding-left: var(--bs-breadcrumb-item-padding-x);
@@ -4086,6 +4101,13 @@ textarea.form-control-lg {
   padding-right: var(--bs-breadcrumb-item-padding-x);
   color: var(--bs-breadcrumb-divider-color);
   content: var(--bs-breadcrumb-divider, "") /* rtl: var(--bs-breadcrumb-divider, "") */;
+  /* OpenCart Start */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 600;
+  font-size: 0.7692rem;
+  color: #BBBBBB;
+  float: none;
+  /* OpenCart End */
 }
 .breadcrumb-item.active {
   color: var(--bs-breadcrumb-item-active-color);

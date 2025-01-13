@@ -767,10 +767,6 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($products as $product) {
 			$product_data = [];
 
-			// We need to convert JSON strings back into an array so they can be re-encoded to a string to go back into the database.
-			$product['override'] = (array)json_decode($product['override'], true);
-			$product['variant'] = (array)json_decode($product['variant'], true);
-
 			// We use the override to override the master product values
 			if ($product['override']) {
 				$override = $product['override'];

@@ -318,10 +318,6 @@ footer h5 {
   border: 1px solid #ddd;
   position: relative;
   height: 100%;
-  padding-bottom: 40px;
-}
-.product-thumb h4 {
-  font-weight: bold;
 }
 .product-thumb .image {
   text-align: center;
@@ -332,17 +328,19 @@ footer h5 {
 }
 .product-thumb .description {
   padding: 15px;
+  margin-bottom: 45px;
 }
-.product-thumb .button-group {
+.product-thumb .description h4 {
+  font-weight: bold;
+}
+.product-thumb .button {
   display: flex;
   position: absolute;
-  bottom: -40px;
   width: 100%;
+  bottom: 0;
 }
-.product-thumb .button-group button {
-  flex: 33%;
-  flex-direction: row;
-  border-radius: 0;
+.product-thumb .button button {
+  width: 33.3%;
   border: none;
   border-top: 1px solid var(--bs-border-color);
   background-color: var(--bs-tertiary-bg);
@@ -350,33 +348,32 @@ footer h5 {
   line-height: 38px;
   text-align: center;
 }
-.product-thumb .button-group button:hover {
+.product-thumb .button button:hover {
   color: var(--bs-gray-600);
   background-color: #ddd;
   text-decoration: none;
   cursor: pointer;
 }
-.product-thumb .button-group button + button {
-  border-left: 1px solid #ddd;
+.product-thumb .button button + button {
+  border-left: 1px solid var(--bs-border-color);
 }
 @media (min-width: 960px) {
   .product-list .product-thumb {
     display: flex;
   }
-  .product-thumb .image {
+  .product-list .product-thumb .image {
     flex-direction: column;
     margin-bottom: 0px;
   }
-  .product-thumb .content {
+  .product-list .product-thumb .content {
     flex-direction: column;
     flex: 75%;
     position: relative;
   }
-  .product-thumb .button-group {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
+  .product-list .product-thumb .button {
     border-left: 1px solid #ddd;
+    width: calc(100% -  15px);
+    margin-left: 15px;
   }
 }
 .rating .fa-stack {

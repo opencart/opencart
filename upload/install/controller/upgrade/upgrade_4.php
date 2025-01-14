@@ -52,7 +52,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 
 			// Add missing keys and values
 			$missing = [];
-			
+
 			if (!isset($settings['config_description'])) {
 				if (isset($settings['config_meta_title'])) {
 					$meta_title = $settings['config_meta_title'];

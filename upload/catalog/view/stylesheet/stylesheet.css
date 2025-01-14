@@ -304,8 +304,8 @@ footer h5 {
   position: absolute;
   top: -3px;
   right: -5px;
-  width: 26px;
-  height: 26px;
+  width: 29px;
+  height: 29px;
   border-right: 1px solid var(--bs-border-color);
   border-bottom: 1px solid var(--bs-border-color);
   transform: rotate(-45deg);

@@ -351,4 +351,36 @@ class Location extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	 * Generate
+	 *
+	 * @return void
+	 */
+	public function generate(): void {
+		$this->load->language('localisation/location');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'localisation/location')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$file = DIR_CATALOG . 'view/data/localisation/location.json';
+
+			$this->load->model('localisation/location');
+
+			$output = json_encode($this->model_localisation_location->getLocations());
+
+			if (file_put_contents($file, $output)) {
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_file');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

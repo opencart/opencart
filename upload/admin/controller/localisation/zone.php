@@ -445,4 +445,68 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function generate() {
+		$this->load->language('localisation/zone');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'localisation/zone')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (is_writable()) {
+
+		}
+
+		if (!$json) {
+			$limit = 1;
+
+			$country_data = [
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			$this->load->model('localisation/country');
+			$this->load->model('localisation/zone');
+
+			$results = $this->model_localisation_country->getCountries($country_data);
+
+			foreach ($results as $result) {
+				$file = DIR_SYSTEM . 'country.' . $result['country_id'] . '.json';
+
+				$output = json_encode($this->model_localisation_zone->getZonesByCountryId($result['country_id']));
+
+				if (!file_put_contents($file, $output)) {
+					$json['error'] = $this->language->get('error_file');
+				}
+			}
+		}
+
+		if (!$json) {
+			$country_total = $this->model_localisation_country->getTotalCountries();
+
+			$start = ($page - 1) * $limit;
+			$end = ($start + $limit > $country_total) ? $country_total : ($start + $limit);
+
+			if (($page * $limit) >= $country_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $country_total);
+
+				$json['next'] = $this->url->link('localisation/zone.generate', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+
+				$json['next'] = '';
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

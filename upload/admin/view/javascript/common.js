@@ -40,16 +40,6 @@ $(document).ready(function() {
         $('.tooltip').remove();
     });
 
-    $(document).on('click', '[data-bs-toggle=\'pagination\'] a', function(e) {
-        e.preventDefault();
-
-        var element = this;
-
-        //[data-bs-target='pagination']
-
-        $('#history').load(this.href);
-    });
-
     // Alert Fade
     $('#alert').observe(function() {
         window.setTimeout(function() {
@@ -293,6 +283,12 @@ $(document).on('click', '[data-oc-toggle=\'download\']', function(e) {
     if (value != '') {
         location = 'index.php?route=tool/upload.download&user_token=' + getURLVar('user_token') + '&code=' + value;
     }
+});
+
+$(document).on('click', '[data-oc-toggle=\'pagination\'] a', function(e) {
+    e.preventDefault();
+
+    $($(this).parent().attr('data-oc-target')).load(this.href);
 });
 
 $(document).on('click', '[data-oc-toggle=\'clear\']', function() {

@@ -173,7 +173,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 				$output .= 'TRUNCATE TABLE `' . $this->db->escape($table) . '`;' . "\n\n";
 			}
 
-			$results = $this->model_tool_backup->getRecords($table, ($page - 1) * 200, 200);
+			$limit = 200;
+
+			$results = $this->model_tool_backup->getRecords($table, ($page - 1) * $limit, $limit);
 
 			foreach ($results as $result) {
 				$fields = '';
@@ -207,7 +209,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
-			if (($page * 200) >= $record_total) {
+			if (($page * $limit) >= $record_total) {
 				$output .= "\n";
 
 				if (isset($backup[$position + 1])) {
@@ -231,12 +233,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			if (!$table) {
 				$json['success'] = $this->language->get('text_success');
-			} elseif (($page * 200) >= $record_total) {
-				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $record_total);
+			} elseif (($page * $limit) >= $record_total) {
+				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * $limit, $record_total);
 
 				$json['next'] = $this->url->link('tool/backup.backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=1', true);
 			} else {
-				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $page * 200);
+				$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * $limit, $page * $limit);
 
 				$json['next'] = $this->url->link('tool/backup.backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=' . ($page + 1), true);
 			}

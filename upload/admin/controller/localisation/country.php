@@ -476,6 +476,38 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Generate
+	 *
+	 * @return void
+	 */
+	public function generate() {
+		$this->load->language('localisation/country');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'localisation/country')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/country');
+
+			$output = json_encode($this->model_localisation_country->getCountries());
+
+			$file = DIR_CATALOG . 'view/data/country.json';
+
+			if (file_put_contents($file, $output)) {
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_file');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Country
 	 *
 	 * @return void
@@ -496,16 +528,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		if ($country_info) {
 			$this->load->model('localisation/zone');
 
-			$json = [
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format_id' => $country_info['address_format_id'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($country_id),
-				'status'            => $country_info['status']
-			];
+			$json = ['zone' => $this->model_localisation_zone->getZonesByCountryId($country_id)] + $country_info;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

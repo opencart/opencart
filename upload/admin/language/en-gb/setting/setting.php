@@ -268,10 +268,10 @@ $_['help_compression']                    = 'GZIP for more efficient transfer to
 // Error
 $_['error_warning']                       = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']                    = 'Warning: You do not have permission to modify settings!';
-$_['error_meta_title']                    = 'Title must be between 3 and 32 characters!';
+$_['error_meta_title']                    = 'Title must be between 1 and 64 characters!';
 $_['error_name']                          = 'Store Name must be between 3 and 32 characters!';
 $_['error_owner']                         = 'Store Owner must be between 3 and 64 characters!';
-$_['error_address']                       = 'Store Address must be between 10 and 256 characters!';
+$_['error_address']                       = 'Store Address must be between 3 and 256 characters!';
 $_['error_email']                         = 'E-Mail Address does not appear to be valid!';
 $_['error_product_description_length']    = 'Product description length required!';
 $_['error_pagination']                    = 'Pagination required!';

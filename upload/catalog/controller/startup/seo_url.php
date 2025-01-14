@@ -84,6 +84,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		parse_str($url_info['query'], $query);
 
+		$language_id = $this->config->get('config_language_id');
+
 		// Start changing the URL query into a path
 		$paths = [];
 
@@ -105,12 +107,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			$index = $key . '=' . $value;
 
-			if (!isset($this->data[$index])) {
-				$this->data[$index] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
+			if (!isset($this->data[$language_id][$index])) {
+				$this->data[$language_id][$index] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
 			}
 
-			if ($this->data[$index]) {
-				$paths[] = $this->data[$index];
+			if ($this->data[$language_id][$index]) {
+				$paths[] = $this->data[$language_id][$index];
 
 				unset($query[$key]);
 			}

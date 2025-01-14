@@ -53,12 +53,44 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			// Add missing keys and values
 			$missing = [];
 
-			$missing[] = [
-				'key'        => 'config_meta_title',
-				'value'      => $settings['config_name'],
-				'code'       => 'config',
-				'serialized' => 0
-			];
+			if (!isset($settings['config_description'])) {
+				if (isset($settings['config_meta_title'])) {
+					$meta_title = $settings['config_meta_title'];
+				} else {
+					$meta_title = $settings['config_name'];
+				}
+
+				if (isset($settings['config_meta_description'])) {
+					$meta_description = $settings['config_meta_description'];
+				} else {
+					$meta_description = '';
+				}
+
+				if (isset($settings['config_meta_keyword'])) {
+					$meta_keyword = $settings['config_meta_keyword'];
+				} else {
+					$meta_keyword = '';
+				}
+
+				$description_data = [];
+
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
+
+				foreach ($query->rows as $language) {
+					$description_data[$language['language_id']] = [
+						'meta_title'       => $meta_title,
+						'meta_description' => $meta_description,
+						'meta_keyword'     => $meta_keyword
+					];
+				}
+
+				$missing[] = [
+					'key'        => 'config_description',
+					'value'      => $description_data,
+					'code'       => 'config',
+					'serialized' => 1
+				];
+			}
 
 			// Add config_theme if missing and still using config_template
 			if (isset($settings['config_template'])) {
@@ -356,6 +388,9 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 
 			// Remove some setting keys
 			$remove = [
+				'config_meta_title',
+				'config_meta_description',
+				'config_meta_keywords',
 				'config_template',
 				'config_limit_admin',
 				'config_smtp_host',

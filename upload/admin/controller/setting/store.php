@@ -172,22 +172,10 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_url'] = '';
 		}
 
-		if (isset($store_info['config_meta_title'])) {
-			$data['config_meta_title'] = $store_info['config_meta_title'];
+		if (isset($store_info['config_description'])) {
+			$data['config_description'] = $store_info['config_description'];
 		} else {
-			$data['config_meta_title'] = '';
-		}
-
-		if (isset($store_info['config_meta_description'])) {
-			$data['config_meta_description'] = $store_info['config_meta_description'];
-		} else {
-			$data['config_meta_description'] = '';
-		}
-
-		if (isset($store_info['config_meta_keyword'])) {
-			$data['config_meta_keyword'] = $store_info['config_meta_keyword'];
-		} else {
-			$data['config_meta_keyword'] = '';
+			$data['config_description'] = [];
 		}
 
 		$data['themes'] = [];
@@ -645,8 +633,10 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['url'] = $this->language->get('error_url');
 		}
 
-		if (!$this->request->post['config_meta_title']) {
-			$json['error']['meta_title'] = $this->language->get('error_meta_title');
+		foreach ($this->request->post['config_description'] as $language_id => $value) {
+			if (!oc_validate_length($value['meta_title'], 1, 64)) {
+				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
+			}
 		}
 
 		if (!$this->request->post['config_name']) {

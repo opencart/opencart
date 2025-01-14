@@ -46,10 +46,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		$this->load->model('localisation/zone');
-
-		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
-
 		// Custom Fields
 		$data['custom_fields'] = [];
 

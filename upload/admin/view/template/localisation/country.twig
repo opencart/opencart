@@ -92,10 +92,10 @@ $('#button-generate').on('click', function() {
         url: 'index.php?route=localisation/country.generate&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true);
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false);
+            $(element).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();

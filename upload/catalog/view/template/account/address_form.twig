@@ -74,9 +74,6 @@
             <div class="col-sm-10">
               <select name="zone_id" id="input-zone" class="form-select">
                 <option value="">{{ text_select }}</option>
-                {% for zone in zones %}
-                  <option value="{{ zone.zone_id }}"{% if zone.zone_id == zone_id %} selected{% endif %}>{{ zone.name }}</option>
-                {% endfor %}
               </select>
               <div id="error-zone" class="invalid-feedback"></div>
             </div>
@@ -227,7 +224,7 @@ $('#input-country').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
+        url: 'catalog/view/data/localisation/country.' + this.value + '.json',
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
@@ -238,6 +235,8 @@ $('#input-country').on('change', function() {
             $('#input-zone').prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             if (json['postcode_required'] == '1') {
                 $('#input-postcode').parent().parent().addClass('required');
             } else {
@@ -267,5 +266,7 @@ $('#input-country').on('change', function() {
         }
     });
 });
+
+$('#input-country').trigger('change');
 //--></script>
 {{ footer }}

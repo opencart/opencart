@@ -255,10 +255,6 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['zone_id'] = 0;
 		}
 
-		$this->load->model('localisation/zone');
-
-		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
-
 		// Custom fields
 		$data['custom_fields'] = [];
 

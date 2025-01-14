@@ -183,6 +183,10 @@ class Country extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
 		}
 
+		if (isset($data['filter_status'])) {
+			$implode[] = "`status` = '" . (bool)$data['filter_status'] . "'";
+		}
+
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
@@ -270,6 +274,10 @@ class Country extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_iso_code_3'])) {
 			$implode[] = "LCASE(`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+		}
+
+		if (isset($data['filter_status'])) {
+			$implode[] = "`status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {

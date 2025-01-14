@@ -96,10 +96,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		$this->load->model('localisation/zone');
-
-		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
-
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
 			$data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
@@ -139,14 +135,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['shipping_custom_field'] = [];
-		}
-
-		$this->load->model('localisation/zone');
-
-		if ($data['payment_country_id'] == $data['shipping_country_id']) {
-			$data['shipping_zones'] = $data['payment_zones'];
-		} else {
-			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
 		// Custom Fields

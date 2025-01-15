@@ -422,7 +422,7 @@ $('#input-customer').autocomplete({
     },
     'select': function(item) {
         if (item) {
-            $('#input-customer').val(item['label']);
+            $('#input-customer').val(decodeHTMLEntities(item['label']));
             $('#input-customer-id').val(item['value']);
             $('#input-customer-group').val(item['customer_group_id']);
 
@@ -431,7 +431,7 @@ $('#input-customer').autocomplete({
             for (i in item['address']) {
                 var address = item['address'][i];
 
-                html += '<option value="' + address['address_id'] + '">' + address['firstname'] + ' ' + address['lastname'] + ', ' + (address['company'] ? address['company'] + ', ' : '') + address['address_1'] + ', ' + address['city'] + ', ' + address['country'] + '</option>';
+                html += '<option value="' + address['address_id'] + '">' + decodeHTMLEntities(address['firstname'] + ' ' + address['lastname'] + ', ' + (address['company'] ? address['company'] + ', ' : '') + address['address_1'] + ', ' + address['city'] + ', ' + address['country']) + '</option>';
             }
 
             $('#input-payment-address').html(html);
@@ -472,7 +472,7 @@ $('#input-product').autocomplete({
     },
     'select': function(item) {
         $('#input-product-id').val(item['value']);
-        $('#input-product').val(item['label']);
+        $('#input-product').val(decodeHTMLEntities(item['label']));
 
         if (item['option'] != '') {
             html = '<fieldset class="mb-0">';

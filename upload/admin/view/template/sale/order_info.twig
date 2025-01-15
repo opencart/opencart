@@ -1136,9 +1136,9 @@ $('#input-customer').autocomplete({
 
         $('#input-customer-id').val(item['value']);
         $('#input-customer-group').val(item['customer_group_id']);
-        $('#input-firstname').val(item['firstname']);
-        $('#input-lastname').val(item['lastname']);
-        $('#input-email').val(item['email']);
+        $('#input-firstname').val(decodeHTMLEntities(item['firstname']));
+        $('#input-lastname').val(decodeHTMLEntities(item['lastname']));
+        $('#input-email').val(decodeHTMLEntities(item['email']));
         $('#input-telephone').val(item['telephone']);
 
         for (i in item.custom_field) {
@@ -1156,7 +1156,7 @@ $('#input-customer').autocomplete({
         html = '<option value="0">{{ text_none|escape('js') }}</option>';
 
         for (i in item['address']) {
-            html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + (item['address'][i]['company'] ? item['address'][i]['company'] + ', ' : '') + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
+            html += '<option value="' + item['address'][i]['address_id'] + '">' + decodeHTMLEntities(item['address'][i]['firstname']) + ' ' + decodeHTMLEntities(item['address'][i]['lastname']) + ', ' + (item['address'][i]['company'] ? decodeHTMLEntities(item['address'][i]['company']) + ', ' : '') + decodeHTMLEntities(item['address'][i]['address_1']) + ', ' + decodeHTMLEntities(item['address'][i]['city']) + ', ' + decodeHTMLEntities(item['address'][i]['country']) + '</option>';
         }
 
         $('#input-payment-address').html(html);
@@ -1267,7 +1267,7 @@ $('#input-product').autocomplete({
     },
     'select': function(item) {
         $('#input-product-id').val(item['value']);
-        $('#input-product').val(item['label']);
+        $('#input-product').val(decodeHTMLEntities(item['label']));
 
         if (item['option'] != '') {
             html = '<fieldset class="mb-0">';
@@ -2487,7 +2487,7 @@ $('#input-affiliate').autocomplete({
     },
     'select': function(item) {
         $('#input-affiliate-id').val(item['value']);
-        $('#input-affiliate').val(item['label']);
+        $('#input-affiliate').val(decodeHTMLEntities(item['label']));
     }
 });
 

@@ -174,7 +174,7 @@ $('#input-name').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-name').val(item['label']);
+        $('#input-name').val(decodeHTMLEntities(item['label']));
     }
 });
 
@@ -194,7 +194,7 @@ $('#input-model').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-model').val(item['label']);
+        $('#input-model').val(decodeHTMLEntities(item['label']));
     }
 });
 
@@ -220,7 +220,7 @@ $('#input-category').autocomplete({
     },
     'select': function(item) {
         if (item['value']) {
-            $('#input-category').val(item['label']);
+            $('#input-category').val(decodeHTMLEntities(item['label']));
             $('#input-category-id').val(item['value']);
         } else {
             $('#input-category').val('');
@@ -251,7 +251,7 @@ $('#input-manufacturer').autocomplete({
     },
     'select': function(item) {
         if (item['value']) {
-            $('#input-manufacturer').val(item['label']);
+            $('#input-manufacturer').val(decodeHTMLEntities(item['label']));
             $('#input-manufacturer-id').val(item['value']);
         } else {
             $('#input-manufacturer').val('');

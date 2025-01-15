@@ -80,6 +80,14 @@ $(document).ready(function() {
     }(jQuery);
 });
 
+function decodeHTMLEntities(html) {
+    var d = document.createElement('div');
+
+    d.innerHTML = html;
+
+    return d.textContent;
+}
+
 // Observe
 +function($) {
     $.fn.observe = function(callback) {

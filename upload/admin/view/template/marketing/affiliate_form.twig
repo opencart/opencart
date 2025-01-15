@@ -354,7 +354,7 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-customer').val(item['label']);
+        $('#input-customer').val(decodeHTMLEntities(item['label']));
         $('#input-customer-id').val(item['value']);
         $('#input-customer-group').val(item['customer_group_id']);
 

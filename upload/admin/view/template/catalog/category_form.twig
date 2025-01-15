@@ -227,11 +227,7 @@ $('#input-parent').autocomplete({
         });
     },
     'select': function(item) {
-        var d = document.createElement('div');
-
-        d.innerHTML = item['label'];
-
-        $('#input-parent').val(d.innerText);
+        $('#input-parent').val(decodeHTMLEntities(item['label']));
         $('#input-parent-id').val(item['value']);
     }
 });

@@ -1371,7 +1371,7 @@ $('#input-manufacturer').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-manufacturer').val(item['label']);
+        $('#input-manufacturer').val(decodeHTMLEntities(item['label']));
         $('#input-manufacturer-id').val(item['value']);
     }
 });
@@ -1530,7 +1530,7 @@ var attributeautocomplete = function(attribute_row) {
             });
         },
         'select': function(item) {
-            $('#input-attribute-' + attribute_row).val(item['label']);
+            $('#input-attribute-' + attribute_row).val(decodeHTMLEntities(item['label']));
             $('#input-attribute-id-' + attribute_row).val(item['value']);
         }
     });
@@ -1592,7 +1592,7 @@ $('#input-option').autocomplete({
         html = '<fieldset id="option-row-' + option_row + '">';
         html += '  <legend class="float-none">' + item['label'] + '</legend>';
         html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
-        html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
+        html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + decodeHTMLEntities(item['label']) + '" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
 

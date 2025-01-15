@@ -172,7 +172,7 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-customer').val(item['label']);
+        $('#input-customer').val(decodeHTMLEntities(item['label']));
     }
 });
 
@@ -192,7 +192,7 @@ $('#input-email').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-email').val(item['label']);
+        $('#input-email').val(decodeHTMLEntities(item['label']));
     }
 });
 //--></script>

@@ -152,7 +152,7 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-customer').val(item['label']);
+        $('#input-customer').val(decodeHTMLEntities(item['label']));
     }
 });
 
@@ -172,7 +172,7 @@ $('#input-product').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-product').val(item['label']);
+        $('#input-product').val(decodeHTMLEntities(item['label']));
     }
 });
 
@@ -192,7 +192,7 @@ $('#input-model').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-model').val(item['label']);
+        $('#input-model').val(decodeHTMLEntities(item['label']));
     }
 });
 //--></script>

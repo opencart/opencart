@@ -133,7 +133,7 @@ $('#input-name').autocomplete({
     },
     'select': function(item) {
         if (item['value']) {
-            $('#input-name').val(item['label']);
+            $('#input-name').val(decodeHTMLEntities(item['label']));
         } else {
             $('#input-name').val('');
         }

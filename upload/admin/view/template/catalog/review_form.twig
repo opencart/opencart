@@ -103,7 +103,7 @@ $('#input-product').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-product').val(item['label']);
+        $('#input-product').val(decodeHTMLEntities(item['label']));
         $('#input-product-id').val(item['value']);
     }
 });

@@ -351,12 +351,12 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-customer').val(item['label']);
+        $('#input-customer').val(decodeHTMLEntities(item['label']));
         $('#input-customer-id').val(item['value']);
-        $('#input-firstname').val(item['firstname']);
-        $('#input-lastname').val(item['lastname']);
-        $('#input-email').val(item['email']);
-        $('#input-telephone').val(item['telephone']);
+        $('#input-firstname').val(decodeHTMLEntities(item['firstname']));
+        $('#input-lastname').val(decodeHTMLEntities(item['lastname']));
+        $('#input-email').val(decodeHTMLEntities(item['email']));
+        $('#input-telephone').val(decodeHTMLEntities(item['telephone']));
     }
 });
 
@@ -368,7 +368,7 @@ $('#form-customer').on('submit', function(e) {
     if (customer_id) {
         $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + customer_id + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
     } else {
-        $('#output-customer').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
+        $('#output-customer').html(decodeHTMLEntities($('#input-firstname').val() + ' ' + $('#input-lastname').val()));
     }
 
     $('#modal-customer').modal('hide');

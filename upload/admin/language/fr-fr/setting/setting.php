@@ -251,10 +251,10 @@ $_['help_compression']                    = 'GZIP pour un transfert plus efficac
 // Error
 $_['error_warning']                       = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                    = 'Attention: Vous n\'avez pas la permission de modifier les paramètres!';
-$_['error_meta_title']                    = 'Le titre doit comporter entre 3 et 32 caractères!';
+$_['error_meta_title']                    = 'Le titre doit comporter entre 1 et 64 caractères!';
 $_['error_name']                          = 'Le nom de la boutique doit comporter entre 3 et 32 caractères!';
 $_['error_owner']                         = 'Le propriétaire de la boutique doit comporter entre 3 et 64 caractères!';
-$_['error_address']                       = 'L\'adresse de la boutique doit comporter entre 10 et 256 caractères!';
+$_['error_address']                       = 'L\'adresse de la boutique doit comporter entre 3 et 256 caractères!';
 $_['error_email']                         = 'L\'adresse e-mail semble invalide!';
 $_['error_telephone']                     = 'Le téléphone doit comporter entre 3 et 32 caractères!';
 $_['error_product_description_length']    = 'La longueur de la description du produit est requise!';

@@ -13,6 +13,7 @@ $_['text_required']          = 'Required Settings';
 $_['text_extension']         = 'Extension Settings';
 $_['text_db']                = 'Database';
 $_['text_version']           = 'PHP Version';
+$_['text_open_basedir']      = 'open_basedir';
 $_['text_global']            = 'Register Globals';
 $_['text_magic']             = 'Magic Quotes GPC';
 $_['text_file_upload']       = 'File Uploads';
@@ -33,6 +34,7 @@ $_['text_missing']           = 'Missing';
 
 // Error
 $_['error_version']          = 'Warning: You need to use PHP 8.0 or above for OpenCart to work!';
+$_['error_open_basedir']     = 'Warning: open_basedir needs to allow access to %s';
 $_['error_file_upload']      = 'Warning: file_uploads needs to be enabled!';
 $_['error_session']          = 'Warning: OpenCart will not work with session.auto_start enabled!';
 $_['error_db']               = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';

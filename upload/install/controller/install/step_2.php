@@ -35,6 +35,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['text_on'] = $this->language->get('text_on');
 		$data['text_off'] = $this->language->get('text_off');
 		$data['text_version'] = $this->language->get('text_version');
+		$data['text_open_basedir'] = $this->language->get('text_open_basedir');
 		$data['text_global'] = $this->language->get('text_global');
 		$data['text_magic'] = $this->language->get('text_magic');
 		$data['text_file_upload'] = $this->language->get('text_file_upload');
@@ -58,6 +59,30 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		$data['php_version'] = PHP_VERSION;
 		$data['version'] = version_compare(PHP_VERSION, '8.0', '>=');
+
+		$open_basedir = str_replace('\\', '/', ini_get('open_basedir')) . '/';
+
+		$directory = rtrim(DIR_OPENCART, '/');
+
+		$required = substr($directory, 0, strrpos($directory, '/')) . '/';
+
+		if ($open_basedir) {
+			$data['open_basedir'] = false;
+
+			$directories = explode(',', $open_basedir, 1);
+
+			foreach ($directories as $directory) {
+				if (str_starts_with($directory, $required)) {
+					$data['open_basedir'] = true;
+				}
+			}
+		} else {
+			$data['open_basedir'] = true;
+		}
+
+		$data['open_basedir_current'] = $open_basedir;
+		$data['open_basedir_required'] = $required;
+
 		$data['register_globals'] = ini_get('register_globals');
 		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
 		$data['file_uploads'] = ini_get('file_uploads');
@@ -126,6 +151,26 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		if (version_compare(PHP_VERSION, '8.0', '<')) {
 			$json['error'] = $this->language->get('error_version');
+		}
+
+		$open_basedir = str_replace('\\', '/', ini_get('open_basedir'));
+
+		$directory = rtrim(DIR_OPENCART, '/');
+
+		$required = substr($directory, 0, strrpos($directory, '/')) . '/';
+
+		if ($open_basedir) {
+			$data['open_basedir'] = false;
+
+			$directories = explode(',', $open_basedir);
+
+			foreach ($directories as $directory) {
+				if (str_starts_with($directory, $required)) {
+					$data['open_basedir'] = true;
+				}
+			}
+
+			$json['error'] = sprintf($this->language->get('error_open_basedir'), $required);
 		}
 
 		if (!ini_get('file_uploads')) {

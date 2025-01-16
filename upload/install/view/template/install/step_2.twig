@@ -33,6 +33,35 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
+                <tr{% if open_basedir %} class="table-danger"{% endif %}>
+                  <td>{{ text_open_basedir }}</td>
+                  <td>{% if not open_basedir %}
+                    <span class="text-success">{{ open_basedir_current }}</span>
+                  {% else %}
+                    <span class="text-danger"> {{ open_basedir_current }}</span>
+                    {% endif %}</td>
+                  <td>{{ open_basedir_required }}</td>
+                  <td class="text-center">{% if not open_basedir %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if magic_quotes_gpc %} class="table-danger"{% endif %}>
+                  <td>{{ text_magic }}</td>
+                  <td>{% if magic_quotes_gpc %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_off }}</td>
+                  <td class="text-center">
+                    {% if not error_magic_quotes_gpc %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
                 <tr{% if register_globals %} class="table-danger"{% endif %}>
                   <td>{{ text_global }}</td>
                   <td>{% if register_globals %}

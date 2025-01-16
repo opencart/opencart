@@ -77,21 +77,6 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
-                <tr{% if magic_quotes_gpc %} class="table-danger"{% endif %}>
-                  <td>{{ text_magic }}</td>
-                  <td>{% if magic_quotes_gpc %}
-                      {{ text_on }}
-                    {% else %}
-                      {{ text_off }}
-                    {% endif %}</td>
-                  <td>{{ text_off }}</td>
-                  <td class="text-center">
-                    {% if not error_magic_quotes_gpc %}
-                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
-                    {% else %}
-                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
-                    {% endif %}</td>
-                </tr>
                 <tr{% if not file_uploads %} class="table-danger"{% endif %}>
                   <td>{{ text_file_upload }}</td>
                   <td>{% if file_uploads %}

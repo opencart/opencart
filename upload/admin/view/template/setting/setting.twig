@@ -285,7 +285,6 @@
                   </div>
                 </div>
               </fieldset>
-
               <fieldset>
                 <legend>{{ text_measurement }}</legend>
                 <div class="row mb-3">
@@ -310,17 +309,12 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-option" class="tab-pane">
-
               <div class="accordion" id="accordion-option">
-
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-product">{{ text_product }}</button></h2>
-
                   <div id="collapse-product" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
-
                       <div class="row mt-2 mb-3 required">
                         <label for="input-product-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
                         <div class="col-sm-10">
@@ -486,7 +480,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-tax">{{ text_tax }}</button></h2>
                   <div id="collapse-tax" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
@@ -524,7 +517,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-account">{{ text_account }}</button></h2>
                   <div id="collapse-account" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
@@ -616,23 +608,6 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">{{ entry_customer_2fa }}</label>
-                        <div class="col-sm-10">
-                          <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_customer_2fa" value="0"/> <input type="checkbox" name="config_customer_2fa" value="1" id="input-customer-2fa" class="form-check-input"{% if config_customer_2fa %} checked{% endif %}/>
-                          </div>
-                          <div class="form-text">{{ help_customer_2fa }}</div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
-                          <div class="form-text">{{ help_login_attempts }}</div>
-                          <div id="error-login-attempts" class="invalid-feedback"></div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
                         <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
                         <div class="col-sm-10">
                           <select name="config_account_id" id="input-account" class="form-select">
@@ -644,6 +619,56 @@
                           <div class="form-text">{{ help_account }}</div>
                         </div>
                       </div>
+                      <fieldset>
+                        <legend>{{ text_security }}</legend>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label">{{ entry_2fa }}</label>
+                          <div class="col-sm-10">
+                            <div class="form-check form-switch form-switch-lg">
+                              <input type="hidden" name="config_2fa" value="0"/>
+                              <input type="checkbox" name="config_2fa" value="1" id="input-2fa" class="form-check-input"{% if config_2fa %} checked{% endif %}/>
+                            </div>
+                            <div class="form-text">{{ help_2fa }}</div
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
+                            <div class="form-text">{{ help_login_attempts }}</div>
+                            <div id="error-login-attempts" class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label">{{ entry_password }}</label>
+                          <div class="col-sm-10">
+                            <div class="form-control" style="overflow: auto;">
+                              <div class="form-check">
+                                <input type="checkbox" name="config_password_uppercase" value="1" id="input-password-uppercase" class="form-check-input"{% if config_password_uppercase %} checked{% endif %}/>
+                                <label for="input-password-uppercase" class="form-check-label">{{ text_password_uppercase }}</label>
+                              </div>
+                              <div class="form-check">
+                                <input type="checkbox" name="config_password_lowercase" value="1" id="input-password-lowercase" class="form-check-input"{% if config_password_lowercase %} checked{% endif %}/>
+                                <label for="input-password-lowercase" class="form-check-label">{{ text_password_lowercase }}</label>
+                              </div>
+                              <div class="form-check">
+                                <input type="checkbox" name="config_password_number" value="1" id="input-password-number" class="form-check-input"{% if config_password_number %} checked{% endif %}/>
+                                <label for="input-password-number" class="form-check-label">{{ text_password_number }}</label>
+                              </div>
+                              <div class="form-check">
+                                <input type="checkbox" name="config_password_symbol" value="1" id="input-password-symbol" class="form-check-input"{% if config_password_symbol %} checked{% endif %}/>
+                                <label for="input-password-symbol" class="form-check-label">{{ text_password_symbol }}</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-password-length" class="col-sm-2 col-form-label">{{ entry_password_length }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="config_password_length" value="{{ config_password_length }}" placeholder="{{ entry_password_length }}" id="input-password-length" class="form-control"/>
+                          </div>
+                        </div>
+                      </fieldset>
                     </div>
                   </div>
                 </div>
@@ -1390,16 +1415,47 @@
                   <label class="col-sm-2 col-form-label">{{ entry_user_2fa }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="config_user_2fa" value="0"/> <input type="checkbox" name="config_user_2fa" value="1" id="input-user-2fa" class="form-check-input"{% if config_user_2fa %} checked{% endif %}/>
+                      <input type="hidden" name="config_user_2fa" value="0"/>
+                      <input type="checkbox" name="config_user_2fa" value="1" id="input-user-2fa" class="form-check-input"{% if config_user_2fa %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_user_2fa }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_password }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-control" style="overflow: auto;">
+                      <div class="form-check">
+                        <input type="checkbox" name="config_user_password_uppercase" value="1" id="input-user-password-uppercase" class="form-check-input"{% if config_user_password_uppercase %} checked{% endif %}/>
+                        <label for="input-user-password-uppercase" class="form-check-label">{{ text_password_uppercase }}</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="checkbox" name="config_user_password_lowercase" value="1" id="input-user-password-lowercase" class="form-check-input"{% if config_user_password_lowercase %} checked{% endif %}/>
+                        <label for="input-user-password-lowercase" class="form-check-label">{{ text_password_lowercase }}</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="checkbox" name="config_user_password_number" value="1" id="input-user-password-number" class="form-check-input"{% if config_user_password_number %} checked{% endif %}/>
+                        <label for="input-user-password-number" class="form-check-label">{{ text_password_number }}</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="checkbox" name="config_user_password_symbol" value="1" id="input-user-password-symbol" class="form-check-input"{% if config_user_password_symbol %} checked{% endif %}/>
+                        <label for="input-user-password-symbol" class="form-check-label">{{ text_password_symbol }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-user-password-length" class="col-sm-2 col-form-label">{{ entry_password_length }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_user_password_length" value="{{ config_user_password_length }}" placeholder="{{ entry_password_length }}" id="input-user-password-length" class="form-control"/>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="config_shared" value="0"/> <input type="checkbox" name="config_shared" value="1" id="input-shared" class="form-check-input"{% if config_shared %} checked{% endif %}/>
+                      <input type="hidden" name="config_shared" value="0"/>
+                      <input type="checkbox" name="config_shared" value="1" id="input-shared" class="form-check-input"{% if config_shared %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_shared }}</div>
                   </div>
@@ -1438,7 +1494,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_error_display }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="config_error_display" value="0"/> <input type="checkbox" name="config_error_display" value="1" id="input-error-display" class="form-check-input"{% if config_error_display %} checked{% endif %}/>
+                      <input type="hidden" name="config_error_display" value="0"/>
+                      <input type="checkbox" name="config_error_display" value="1" id="input-error-display" class="form-check-input"{% if config_error_display %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
@@ -1446,7 +1503,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_error_log }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="config_error_log" value="0"/> <input type="checkbox" name="config_error_log" value="1" id="input-error-log" class="form-check-input"{% if config_error_log %} checked{% endif %}/>
+                      <input type="hidden" name="config_error_log" value="0"/>
+                      <input type="checkbox" name="config_error_log" value="1" id="input-error-log" class="form-check-input"{% if config_error_log %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>

@@ -556,7 +556,23 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->post['user_id']))) {
-			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), 6, 40)) {
+			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_user_password_length'), 40)) {
+				$json['error']['password'] = $this->language->get('error_password');
+			}
+
+			if ($this->config->get('config_user_password_uppercase') && !preg_match('/[A-Z]/', $this->request->post['password'])) {
+				$json['error']['password'] = $this->language->get('error_password');
+			}
+
+			if ($this->config->get('config_user_password_lowercase') && !preg_match('/[a-z]/', $this->request->post['password'])) {
+				$json['error']['password'] = $this->language->get('error_password');
+			}
+
+			if ($this->config->get('config_user_password_number') && !preg_match('/[0-9]/', $this->request->post['password'])) {
+				$json['error']['password'] = $this->language->get('error_password');
+			}
+
+			if ($this->config->get('config_user_password_symbol') && !preg_match('/[^a-zA-Z0-9]/', $this->request->post['password'])) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

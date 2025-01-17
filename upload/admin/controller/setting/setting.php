@@ -210,8 +210,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_customer_price'] = $this->config->get('config_customer_price');
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
-		$data['config_customer_2fa'] = $this->config->get('config_customer_2fa');
+		$data['config_2fa'] = $this->config->get('config_2fa');
 		$data['config_login_attempts'] = $this->config->get('config_login_attempts');
+		$data['config_password_uppercase'] = $this->config->get('config_password_uppercase');
+		$data['config_password_lowercase'] = $this->config->get('config_password_lowercase');
+		$data['config_password_number'] = $this->config->get('config_password_number');
+		$data['config_password_symbol'] = $this->config->get('config_password_symbol');
+		$data['config_password_length'] = $this->config->get('config_password_length');
 
 		$this->load->model('catalog/information');
 
@@ -443,6 +448,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		// Security
 		$data['config_user_2fa'] = $this->config->get('config_user_2fa');
+		$data['config_user_password_uppercase'] = $this->config->get('config_user_password_uppercase');
+		$data['config_user_password_lowercase'] = $this->config->get('config_user_password_lowercase');
+		$data['config_user_password_number'] = $this->config->get('config_user_password_number');
+		$data['config_user_password_symbol'] = $this->config->get('config_user_password_symbol');
+		$data['config_user_password_length'] = $this->config->get('config_user_password_length');
+
 		$data['config_shared'] = $this->config->get('config_shared');
 
 		// Uploads

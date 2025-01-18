@@ -20,6 +20,11 @@ $_['entry_confirm']      = 'Confirm';
 // Error
 $_['error_email']        = 'E-Mail Address does not appear to be valid!';
 $_['error_not_found']    = 'Warning: The E-Mail Address was not found in our records!';
-$_['error_password']     = 'Password must be between 6 and 20 characters!';
+$_['error_password']           = 'Password must contain a %s and be between %d and 20 characters!';
+$_['error_password_uppercase'] = 'uppercase';
+$_['error_password_lowercase'] = 'lowercase';
+$_['error_password_number']    = 'number';
+$_['error_password_symbol']    = 'symbol';
+$_['error_password_length']    = 'Password must be between %d and 20 characters!';
 $_['error_confirm']      = 'Password and password confirmation do not match!';
 $_['error_code']         = 'Password reset code is invalid or was used previously!';

@@ -127,24 +127,32 @@ class Profile extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password']) {
-			if (!oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_user_password_length'), 40)) {
-				$json['error']['password'] = $this->language->get('error_password');
+			$password = html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8');
+
+			if (!oc_validate_length($password, $this->config->get('config_user_password_length'), 40)) {
+				$json['error']['password'] = sprintf($this->language->get('error_password_length'), $this->config->get('config_user_password_length'));
 			}
 
-			if ($this->config->get('config_user_password_uppercase') && !preg_match('/[A-Z]/', $this->request->post['password'])) {
-				$json['error']['password'] = $this->language->get('error_password');
+			$required = [];
+
+			if ($this->config->get('config_user_password_uppercase') && !preg_match('/[A-Z]/', $password)) {
+				$required[] = $this->language->get('error_password_uppercase');
 			}
 
-			if ($this->config->get('config_user_password_lowercase') && !preg_match('/[a-z]/', $this->request->post['password'])) {
-				$json['error']['password'] = $this->language->get('error_password');
+			if ($this->config->get('config_user_password_lowercase') && !preg_match('/[a-z]/', $password)) {
+				$required[] = $this->language->get('error_password_lowercase');
 			}
 
-			if ($this->config->get('config_user_password_number') && !preg_match('/[0-9]/', $this->request->post['password'])) {
-				$json['error']['password'] = $this->language->get('error_password');
+			if ($this->config->get('config_user_password_number') && !preg_match('/[0-9]/', $password)) {
+				$required[] = $this->language->get('error_password_number');
 			}
 
-			if ($this->config->get('config_user_password_symbol') && !preg_match('/[^a-zA-Z0-9]/', $this->request->post['password'])) {
-				$json['error']['password'] = $this->language->get('error_password');
+			if ($this->config->get('config_user_password_symbol') && !preg_match('/[^a-zA-Z0-9]/', $password)) {
+				$required[] = $this->language->get('error_password_symbol');
+			}
+
+			if ($required) {
+				$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), $this->config->get('config_user_password_length'));
 			}
 
 			if ($this->request->post['password'] != $this->request->post['confirm']) {

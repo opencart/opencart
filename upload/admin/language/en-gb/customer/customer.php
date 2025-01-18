@@ -104,9 +104,17 @@ $_['error_firstname']       = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']        = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']           = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']       = 'Telephone must be between 3 and 32 characters!';
-$_['error_password']        = 'Password must be between 6 and 20 characters!';
+$_['error_password']        = 'Password must be between %d and 20 characters!';
 
-$_['error_password_uppercase']  = 'at least 1 uppercase character!';
+$_['error_password']        = 'Password must have at least a uppercase character, a lowercase character, a number, a symbol character and be between %d and 20 characters!';
+
+
+$_['error_password_uppercase'] = 'a uppercase character';
+$_['error_password_lowercase'] = 'a lowercase character';
+$_['error_password_number']    = 'a number';
+$_['error_password_symbol']    = 'a symbol character';
+$_['error_password_length']    = 'Password must be between %d and 20 characters!';
+
 
 
 

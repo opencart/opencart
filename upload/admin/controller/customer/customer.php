@@ -721,7 +721,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
-			$error = '';
+			$password = [];
 
 			if ($this->config->get('config_password_uppercase') && !preg_match('/[A-Z]/', $this->request->post['password'])) {
 				$error .= $this->language->get('error_password_uppercase');
@@ -740,7 +740,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($error) {
-				$json['error']['password'] = $error;
+				$json['error']['password'] = sprintf($this->language->get('error_password'), implode(',', $error));
 			}
 
 			if ($this->request->post['password'] != $this->request->post['confirm']) {

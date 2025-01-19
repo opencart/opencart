@@ -513,6 +513,10 @@ div.required .col-form-label:not(span):before, div.required .form-label:before, 
     margin-left: 4px;
 }
 
+.table thead th, .table td {
+    vertical-align: middle;
+}
+
 .table a.asc:after {
     font-family: 'Font Awesome 6 Free';
     font-weight: 600;

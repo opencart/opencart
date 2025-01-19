@@ -50,7 +50,7 @@
               </ul>
             </td>
             <td>
-              <form method="post" data-oc-target="#shopping-cart">
+              <form method="post" data-oc-toggle="ajax" data-oc-target="#shopping-cart">
                 <div class="input-group">
                   <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>
                   <input type="hidden" name="key" value="{{ product.cart_id }}"/>

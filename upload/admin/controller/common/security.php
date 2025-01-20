@@ -35,7 +35,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * getList
+	 * Get List
 	 *
 	 * @return string
 	 */
@@ -83,7 +83,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$data['storage_delete'] = '';
 		}
 
-		// Check admin directory ia renamed
+		// Check admin directory is renamed
 		$path = DIR_OPENCART . 'admin/';
 
 		if (DIR_APPLICATION == $path) {
@@ -359,7 +359,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['name'])) {
-			$name = preg_replace('[^a-zA-Z0-9]', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+			$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = 'admin';
 		}
@@ -399,7 +399,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// 1.  // 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
+			// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
 			$files = [];
 
 			// Make path into an array
@@ -410,7 +410,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$next = array_shift($directory);
 
 				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
+					// If directory, add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;
 					}
@@ -425,7 +425,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				mkdir($base_new, 0777);
 			}
 
-			// 3. split the file copies into chunks.
+			// 3. Split the file copies into chunks.
 			$total = count($files);
 			$limit = 200;
 

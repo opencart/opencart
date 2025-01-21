@@ -23,5 +23,6 @@ $_['error_password_uppercase'] = 'uppercase';
 $_['error_password_lowercase'] = 'lowercase';
 $_['error_password_number']    = 'number';
 $_['error_password_symbol']    = 'symbol';
-$_['error_password_length']    = 'Password must be between %d and 20 characters!';
+$_['error_password_length']    = 'Password must be between %d and 40 characters!';
 $_['error_confirm']            = 'Password and password confirmation do not match!';
+

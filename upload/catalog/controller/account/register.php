@@ -133,7 +133,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			'telephone',
 			'custom_field',
 			'password',
-			'confirm',
 			'agree'
 		];
 

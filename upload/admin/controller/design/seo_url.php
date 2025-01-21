@@ -528,9 +528,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!$this->request->post['seo_url_id']) {
-				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($this->request->post['key'], $this->request->post['value'], $this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id'], $this->request->post['sort_order']);
+				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($this->request->post['key'], $this->request->post['value'], $this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id'], (int)$this->request->post['sort_order']);
 			} else {
-				$this->model_design_seo_url->editSeoUrl($this->request->post['seo_url_id'], $this->request->post['key'], $this->request->post['value'], $this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id'], $this->request->post['sort_order']);
+				$this->model_design_seo_url->editSeoUrl($this->request->post['seo_url_id'], $this->request->post['key'], $this->request->post['value'], $this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id'], (int)$this->request->post['sort_order']);
 			}
 
 			$json['success'] = $this->language->get('text_success');

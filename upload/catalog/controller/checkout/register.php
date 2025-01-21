@@ -389,11 +389,39 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// If account register password required
-			if ($this->request->post['account'] && !oc_validate_length(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'), 6, 40)) {
-				$json['error']['password'] = $this->language->get('error_password');
-			}
-
 			if ($this->request->post['account']) {
+				$password = html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8');
+
+				if (!oc_validate_length($password, $this->config->get('config_password_length'), 40)) {
+					$json['error']['password'] = sprintf($this->language->get('error_password_length'), $this->config->get('config_password_length'));
+				}
+
+				$required = [];
+
+				if ($this->config->get('config_password_uppercase') && !preg_match('/[A-Z]/', $password)) {
+					$required[] = $this->language->get('error_password_uppercase');
+				}
+
+				if ($this->config->get('config_password_lowercase') && !preg_match('/[a-z]/', $password)) {
+					$required[] = $this->language->get('error_password_lowercase');
+				}
+
+				if ($this->config->get('config_password_number') && !preg_match('/[0-9]/', $password)) {
+					$required[] = $this->language->get('error_password_number');
+				}
+
+				if ($this->config->get('config_password_symbol') && !preg_match('/[^a-zA-Z0-9]/', $password)) {
+					$required[] = $this->language->get('error_password_symbol');
+				}
+
+				if ($required) {
+					$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), $this->config->get('config_password_length'));
+				}
+
+				if ($this->request->post['confirm'] != $this->request->post['password']) {
+					$json['error']['confirm'] = $this->language->get('error_confirm');
+				}
+
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));
@@ -628,7 +656,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// If everything good login
 			if (!$customer_group_info['approval']) {
 				if ($this->request->post['account']) {
-					$this->customer->login($this->request->post['email'], $this->request->post['password']);
+					$this->customer->login($this->request->post['email'], $password);
 
 					// Create customer token
 					$this->session->data['customer_token'] = oc_token(26);

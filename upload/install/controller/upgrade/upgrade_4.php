@@ -349,6 +349,13 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				'serialized' => 1
 			];
 
+			$missing[] = [
+				'key'        => 'config_password_length',
+				'value'      => 6,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
 			// Add missing keys and serialized values
 			foreach ($missing as $setting) {
 				$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = '" . $this->db->escape($setting['key']) . "'");

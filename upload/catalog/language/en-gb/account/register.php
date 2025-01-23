@@ -19,7 +19,6 @@ $_['entry_email']              = 'E-Mail';
 $_['entry_telephone']          = 'Telephone';
 $_['entry_newsletter']         = 'Subscribe';
 $_['entry_password']           = 'Password';
-$_['entry_confirm']            = 'Password Confirm';
 
 // Error
 $_['error_token']              = 'Warning: Register token invalid!';
@@ -31,10 +30,10 @@ $_['error_email']              = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']          = 'Telephone must be between 3 and 32 characters!';
 $_['error_custom_field']       = '%s required!';
 $_['error_regex']              = '%s is not a valid input!';
-$_['error_password']           = 'Password must contain a %s and be between %d and 20 characters!';
+$_['error_password']           = 'Password must contain a %s and be between %d and 40 characters!';
 $_['error_password_uppercase'] = 'uppercase';
 $_['error_password_lowercase'] = 'lowercase';
 $_['error_password_number']    = 'number';
 $_['error_password_symbol']    = 'symbol';
-$_['error_password_length']    = 'Password must be between %d and 20 characters!';
+$_['error_password_length']    = 'Password must be between %d and 40 characters!';
 $_['error_agree']              = 'Warning: You must agree to the %s!';

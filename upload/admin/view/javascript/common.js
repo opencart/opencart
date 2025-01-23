@@ -47,7 +47,7 @@ $(document).ready(function() {
 
         //[data-bs-target='pagination']
 
-        $('#history').load(this.href);
+        $(this.target).load(this.href);
     });
 
     // Alert Fade

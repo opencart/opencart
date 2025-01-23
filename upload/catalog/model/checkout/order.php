@@ -191,7 +191,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 */
 	public function editOrder(int $order_id, array $data): void {
 		// 1. Void the order first
-		$this->addHistory($order_id, $this->config->get('config_void_status_id'));
+		$this->addHistory($order_id, (int)$this->config->get('config_void_status_id'));
 
 		$order_info = $this->getOrder($order_id);
 
@@ -294,7 +294,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteOrder(int $order_id): void {
 		// Void the order first so it restocks products
-		$this->model_checkout_order->addHistory($order_id, $this->config->get('config_void_status_id'));
+		$this->model_checkout_order->addHistory($order_id, (int)$this->config->get('config_void_status_id'));
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
 

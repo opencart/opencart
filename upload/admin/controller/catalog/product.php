@@ -1055,7 +1055,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					'product_option_value' => $product_option_value_data,
 					'name'                 => $option_info['name'],
 					'type'                 => $option_info['type'],
-					'value'                => $data['variant'][$product_option['product_option_id']] ? $product_option['value'] : ''
+					'value'                => !empty($data['variant'][$product_option['product_option_id']]) ? $product_option['value'] : ''
 				] + $product_option;
 			}
 		}

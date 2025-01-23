@@ -418,10 +418,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), $this->config->get('config_password_length'));
 				}
 
-				if ($this->request->post['confirm'] != $this->request->post['password']) {
-					$json['error']['confirm'] = $this->language->get('error_confirm');
-				}
-
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));

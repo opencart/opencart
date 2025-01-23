@@ -254,7 +254,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'customer_ban_ip',
 				'customer_field',
 				'customer_payment',
-				'modification',
 				'order_field',
 				'order_custom_field',
 				'url_alias'

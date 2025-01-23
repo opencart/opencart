@@ -94,12 +94,12 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$country = $country_info['name'];
 				$iso_code_2 = $country_info['iso_code_2'];
 				$iso_code_3 = $country_info['iso_code_3'];
-				$address_format = $country_info['address_format'];
+				$address_format_id = $country_info['address_format_id'];
 			} else {
 				$country = '';
 				$iso_code_2 = '';
 				$iso_code_3 = '';
-				$address_format = '';
+				$address_format_id = '';
 			}
 
 			$this->load->model('localisation/zone');

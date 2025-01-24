@@ -408,6 +408,16 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
 
+			foreach ($product_data['product_option'] as $po => $product_option) {
+				$product_data['product_option'][$po]['product_option_id'] = 0;
+
+				if (!empty($product_option['product_option_value'])) {
+					foreach ($product_option['product_option_value'] as $pov => $product_option_value) {
+						$product_data['product_option'][$po]['product_option_value'][$pov]['product_option_value_id'] = 0;
+					}
+				}
+			}
+
 			$new_product_id = $this->model_catalog_product->addProduct($product_data);
 		}
 

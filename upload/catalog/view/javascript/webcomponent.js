@@ -7,3 +7,8 @@ jQuery.fn.extend({
 const $ = jQuery;
 
 import './webcomponent/country.js';
+import './webcomponent/currency.js';
+import './webcomponent/form.js';
+import './webcomponent/language.js';
+import './webcomponent/modal.js';
+import './webcomponent/zone.js';

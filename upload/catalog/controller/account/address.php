@@ -245,10 +245,6 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
 
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {

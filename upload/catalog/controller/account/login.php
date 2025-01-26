@@ -138,7 +138,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if(!$json) {
+		if (!$json) {
 			// Check if customer has been approved.
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 

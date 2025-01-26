@@ -6,6 +6,7 @@ jQuery.fn.extend({
 
 const $ = jQuery;
 
+//import 'bootstrap/scss/bootstrap';
 import './webcomponent/country.js';
 import './webcomponent/currency.js';
 import './webcomponent/form.js';

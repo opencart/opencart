@@ -1,6 +1,3 @@
-import stylesheet from '../../stylesheet/stylesheet.css' with { type: 'css' };
-import fontawesome from '../../stylesheet/fonts/fontawesome/css/all.min.css' with { type: 'css' };
-
 class Country extends HTMLElement {
     element;
 
@@ -16,8 +13,18 @@ class Country extends HTMLElement {
             mode: 'open'
         });
 
-        this.shadowRoot.adoptedStyleSheets.push(stylesheet);
-        this.shadowRoot.adoptedStyleSheets.push(fontawesome);
+        // Add the default stylesheets to the shadow root.
+        [...document.styleSheets].map((stylesheet) => {
+            let promise = import(stylesheet.href, {
+                with: {
+                    type: 'css'
+                }
+            });
+
+            promise.then((stylesheet) => {
+                this.shadow.adoptedStyleSheets.push(stylesheet.default);
+            });
+        });
 
         // Set the attribute name and value
         this.data.name = $(this).attr('name');
@@ -65,17 +72,6 @@ class Country extends HTMLElement {
         this.shadow.innerHTML = func(this.data);
 
         console.log(this.shadow)//.adoptedStyleSheets
-
-        // Add style sheet.
-       // let link = document.createElement('link');
-
-        //link.setAttribute('rel', 'stylesheet');
-       // link.setAttribute('href', './catalog/view/stylesheet/stylesheet.css');
-
-       // this.shadow.appendChild(link);
-
-        //console.log(this.shadow)//.adoptedStyleSheets
-
     }
 }
 

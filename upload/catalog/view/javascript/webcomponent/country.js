@@ -1,3 +1,6 @@
+import stylesheet from '../../stylesheet/stylesheet.css' with { type: 'css' };
+import fontawesome from '../../stylesheet/fonts/fontawesome/css/all.min.css' with { type: 'css' };
+
 class Country extends HTMLElement {
     element;
 
@@ -12,6 +15,9 @@ class Country extends HTMLElement {
         this.shadow = this.attachShadow({
             mode: 'open'
         });
+
+        this.shadowRoot.adoptedStyleSheets.push(stylesheet);
+        this.shadowRoot.adoptedStyleSheets.push(fontawesome);
 
         // Set the attribute name and value
         this.data.name = $(this).attr('name');
@@ -34,22 +40,42 @@ class Country extends HTMLElement {
         }).then(this.success.bind(this));
     }
 
-    success(json) {
-        let html = json.map((country) => {
-            let html = '<option value="' + country.country_id + '"';
+    success(countries) {
+        let html = countries.map((country) => {
+            let code = '<option value="' + country.country_id + '"';
 
             if (country.country_id == this.data.value) {
-                html += ' selected';
+                code += ' selected';
             }
 
-            return html + '>' + country.name + '</option>';
+            return code + '>' + country.name + '</option>';
         }).join('');
 
         $(this.element).html(html);
     }
 
     render() {
-       this.shadow.innerHTML = '<select name="' + this.data.name + '" id="input-country" class="form-select"></select>';
+        let template = '<select name="${data.name}" id="input-country" class="form-select"></select>';
+
+        let code = 'console.log(data);' + "\n";
+        code += 'return `' + template + '`;';
+
+        let func = new Function('data', code);
+
+        this.shadow.innerHTML = func(this.data);
+
+        console.log(this.shadow)//.adoptedStyleSheets
+
+        // Add style sheet.
+       // let link = document.createElement('link');
+
+        //link.setAttribute('rel', 'stylesheet');
+       // link.setAttribute('href', './catalog/view/stylesheet/stylesheet.css');
+
+       // this.shadow.appendChild(link);
+
+        //console.log(this.shadow)//.adoptedStyleSheets
+
     }
 }
 

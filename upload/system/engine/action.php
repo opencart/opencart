@@ -14,6 +14,11 @@ namespace Opencart\System\Engine;
  *
  * Allows the stored action to be passed around and be executed by the framework and events.
  *
+ * @example
+ *
+ * $action = new \Opencart\System\Engine\Action('catalog/attribute/addAttribute');
+ * $output = $action->execute($registry, [$attribute_id]);
+ *
  * @package Opencart\System\Engine
  */
 class Action {
@@ -62,6 +67,8 @@ class Action {
 
 	/**
 	 * Execute
+	 *
+	 * Executes a stored action
 	 *
 	 * @param \Opencart\System\Engine\Registry $registry
 	 * @param array<mixed>                     $args

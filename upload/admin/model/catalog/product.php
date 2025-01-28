@@ -392,6 +392,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			$product_data['sku'] = '';
 			$product_data['upc'] = '';
+			$product_data['rating'] = '0';
 			$product_data['status'] = '0';
 
 			$product_data['product_attribute'] = $this->model_catalog_product->getAttributes($product_id);

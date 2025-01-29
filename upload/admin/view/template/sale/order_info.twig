@@ -1747,6 +1747,8 @@ $('#input-shipping-address').on('change', function() {
 
             if (json['error']) {
                 $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#form-shipping-address').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             // Reset all fields

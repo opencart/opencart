@@ -1,9 +1,11 @@
-class Country extends HTMLElement {
+class XCountry extends HTMLElement {
     element;
 
     data = [{
         name: '',
-        value: 0
+        value: 0,
+        countries: []
+
     }];
 
     constructor() {
@@ -15,64 +17,103 @@ class Country extends HTMLElement {
 
         // Add the default stylesheets to the shadow root.
         [...document.styleSheets].map((stylesheet) => {
-            let promise = import(stylesheet.href, {
-                with: {
-                    type: 'css'
-                }
-            });
 
-            promise.then((stylesheet) => {
-                this.shadow.adoptedStyleSheets.push(stylesheet.default);
-            });
+           var css = new CSSStyleSheet()
+           css.replaceSync('@import url(' + stylesheet.href + ')')
+           this.shadow.adoptedStyleSheets = [css];
+
+/*
+           //console.log(stylesheet);
+
+           let rules = stylesheet.cssRules;
+
+           console.log(rules);
+
+           rules.map((rule) => {
+
+               let sheet = new CSSStyleSheet();
+
+               sheet.insertRule(rule);
+
+               console.log(sheet);
+           });
+*/
         });
+
+       //
+        console.log(this.shadow.adoptedStyleSheets);
 
         // Set the attribute name and value
         this.data.name = $(this).attr('name');
         this.data.value = $(this).attr('value');
+
+        //let countries = JSON.parse(localStorage.getItem('countries'));
+        //JSON.stringify(model)
+        //if (countries) {
+        //  this.data.countries = countries;
+        //}
     }
 
     connectedCallback() {
-        this.render();
+        this.shadow.innerHTML = `<select name="${this.data.name}" id="input-country" class="form-select"></select>`;
 
         // Set the select element as the element we want to work on.
         this.element = $(this.shadow).find('select');
 
-        // Get the countries from the json file.
-        this.load('catalog/view/data/localisation/country.json');
-    }
+        let countries = () => {
+            let success = (countries) => {
+                console.log(countries);
 
-    async load(file) {
-        return await fetch(file).then((response) => {
-            return response.json();
-        }).then(this.success.bind(this));
-    }
+                let html = countries.map((country) => {
+                    let code = '<option value="' + country.country_id + '"';
 
-    success(countries) {
-        let html = countries.map((country) => {
-            let code = '<option value="' + country.country_id + '"';
+                    if (country.country_id == this.data.value) {
+                        code += ' selected';
+                    }
 
-            if (country.country_id == this.data.value) {
-                code += ' selected';
+                    return code + '>' + country.name + '</option>';
+                }).join('');
+
+                $(this.element).html(html);
             }
 
-            return code + '>' + country.name + '</option>';
-        }).join('');
+            $.ajax({
+                url:  'catalog/view/data/localisation/country.json',
+                success: success.bind(this)
+            });
+        }
 
-        $(this.element).html(html);
+       // coutries('catalog/view/data/localisation/country.json');
+
+        let coutries = () => {
+
+            $.ajax({
+                url: 'catalog/view/data/localisation/country.' + this.data.value + '.json',
+                success: this.success.bind(this),
+            });
+        }
+
+        $(this.element).on('change', this.onchange.bind(this));
+
+        // Get the countries from the json file.
+       // this.load('catalog/view/data/localisation/country.json');
     }
 
     render() {
-        let template = '<select name="${data.name}" id="input-country" class="form-select"></select>';
+        let template = '';
 
         let code = 'console.log(data);' + "\n";
         code += 'return `' + template + '`;';
+        //let func = new Function('data', code);
+        //func(this.data);
+    }
 
-        let func = new Function('data', code);
-
-        this.shadow.innerHTML = func(this.data);
-
-        console.log(this.shadow)//.adoptedStyleSheets
+    onchange(e) {
+        //$.ajax({
+        //    url: 'catalog/view/data/localisation/country.' + this.data.value + '.json',
+        //    success: this.success.bind(this),
+        //});
     }
 }
 
-customElements.define('x-country', Country);
+customElements.define('x-country', XCountry);

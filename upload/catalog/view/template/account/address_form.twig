@@ -8,7 +8,9 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ text_address }}</h1>
-      <form id="form-address" action="{{ save }}" method="post" data-oc-toggle="ajax">
+
+      <x-form id="form-address" action="{{ save }}" method="post">
+
         <fieldset>
           <div class="row mb-3 required">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
@@ -60,7 +62,7 @@
           <div class="row mb-3 required">
             <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
             <div class="col-sm-10">
-              <x-country name="country_id" value="{{ country_id }}">
+              <x-country name="country_id" value="{{ country_id }}" data-target="#input-zone">
                 <option value="0">{{ text_select }}</option>
               </x-country>
               <div id="error-country" class="invalid-feedback"></div>
@@ -69,11 +71,9 @@
           <div class="row mb-3 required">
             <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
             <div class="col-sm-10">
-
-              <select name="zone_id" id="input-zone" class="form-select">
+              <x-zone name="zone_id" value="{{ zone_id }}" data-bs-target="">
                 <option value="">{{ text_select }}</option>
-              </select>
-
+              </x-zone>
               <div id="error-zone" class="invalid-feedback"></div>
             </div>
           </div>
@@ -214,7 +214,7 @@
             <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
-      </form>
+      </x-form>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

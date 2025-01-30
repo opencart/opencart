@@ -55,7 +55,7 @@
         </fieldset>
         <fieldset>
           <legend>{{ text_history }}</legend>
-          <div class="alert alert-info"><i class="fa-solid fa-circle-exclamation"></i> {{ text_import }}</div>
+          <x-alert-info>{{ text_import }}</x-alert-info>
           <div id="history">{{ history }}</div>
         </fieldset>
       </div>
@@ -244,11 +244,11 @@ $('#button-upload').on('click', function() {
                     $('.alert-dismissible').remove();
 
                     if (json['error']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
                     }
 
                     if (json['success']) {
-                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                         $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
                     }
@@ -279,11 +279,11 @@ $('#history').on('click', '.btn-danger', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
             }

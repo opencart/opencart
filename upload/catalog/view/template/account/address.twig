@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> {{ success }}</div>
+    <x-alert-success class="alert-dismissible">{{ success }}</x-alert-success>
   {% endif %}
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
@@ -44,11 +44,11 @@ $('#address').on('click', '.btn-danger', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#address').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#address').before('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#address').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#address').before('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#address').load('index.php?route=account/address.list&language={{ language }}&customer_token={{ customer_token }}');
             }

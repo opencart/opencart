@@ -663,12 +663,12 @@ $('#form-product-add').on('submit', function(e) {
             $('.invalid-feedback').removeClass('d-block');
 
             if (typeof json['error'] == 'string') {
-                $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-product-add').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
-                    $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#form-product-add').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                 }
 
                 for (key in json['error']) {
@@ -678,7 +678,7 @@ $('#form-product-add').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-product-add').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 html = '<tr>';
 
@@ -791,12 +791,12 @@ $('#button-shipping-methods').on('click', function() {
             $('.invalid-feedback').removeClass('d-block');
 
             if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                 }
 
                 for (key in json['error']) {
@@ -832,7 +832,7 @@ $('#button-shipping-methods').on('click', function() {
                             k++;
                         }
                     } else {
-                        html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
+                        html += '<x-alert-danger>' + json['shipping_methods'][i]['error'] + '</x-alert-danger>';
                     }
                 }
 
@@ -888,12 +888,12 @@ $('#button-payment-methods').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                 }
 
                 for (key in json['error']) {
@@ -928,7 +928,7 @@ $('#button-payment-methods').on('click', function() {
                             k++;
                         }
                     } else {
-                        html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
+                        html += '<x-alert-danger>' + json['payment_methods'][i]['error'] + '</x-alert-danger>';
                     }
                 }
 
@@ -978,7 +978,7 @@ $('#button-refresh').on('click', function() {
 
             if (json['error']) {
                 if (typeof json['error'] == 'string') {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
                 }
 
                 for (key in json['error']) {
@@ -1017,7 +1017,7 @@ $('#button-confirm').on('click', function() {
 
             if (typeof json['error']) {
                 if (json['error']['shipping_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['shipping_method'] + '</x-alert-danger>');
 
                     $('#input-shipping-method-info').addClass('is-invalid');
 
@@ -1025,7 +1025,7 @@ $('#button-confirm').on('click', function() {
                 }
 
                 if (json['error']['payment_method']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['payment_method'] + '</x-alert-danger>');
 
                     $('#input-payment-method-info').addClass('is-invalid');
 
@@ -1039,7 +1039,7 @@ $('#button-confirm').on('click', function() {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 if (json['subscription_id']) {
                     $('#input-subscription-id').val(json['subscription_id']);
@@ -1077,11 +1077,11 @@ $('#form-history').on('submit', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#history').load('index.php?route=sale/subscription.history&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
 

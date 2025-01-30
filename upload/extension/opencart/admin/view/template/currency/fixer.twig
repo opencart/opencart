@@ -16,8 +16,8 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
-      <div class="card-body">
-        <div class="alert alert-info"><i class="fa-solid fa-circle-exclamation"></i> {{ text_signup }}</div>
+      <x-alert-info class="card-body">
+        <x-alert-info>{{ text_signup }}</x-alert-info>
         <form id="form-currency" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <div class="row mb-3 required">
             <label for="entry-api" class="col-sm-2 col-form-label">{{ entry_api }}</label>

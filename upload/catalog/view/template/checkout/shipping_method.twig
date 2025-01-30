@@ -72,7 +72,7 @@ $('#button-shipping-methods').on('click', function() {
                                 html += '</div>';
                             }
                         } else {
-                            html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
+                            html += '<x-alert-danger>' + json['shipping_methods'][i]['error'] + '</x-alert-danger>';
                         }
                     }
 
@@ -123,11 +123,11 @@ $(document).on('submit', '#form-shipping-method', function(e) {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                     $('#modal-shipping').modal('hide');
 

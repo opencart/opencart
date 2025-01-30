@@ -223,7 +223,7 @@
                 <div id="error-quantity" class="form-text"></div>
               </div>
               {% if minimum > 1 %}
-                <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum }}</div>
+                <x-alert-warning>{{ text_minimum }}</x-alert-warning>
               {% endif %}
             </form>
           </div>
@@ -321,7 +321,7 @@ $('#form-product').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
             }

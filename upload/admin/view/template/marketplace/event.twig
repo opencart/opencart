@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
+    <x-alert-info>{{ text_event }}</x-alert-info>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
       <div id="event" class="card-body">{{ list }}</div>
@@ -48,11 +48,11 @@ $('#event').on('click', '.btn-success, .btn-danger', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#event').load($('#form-event').attr('data-oc-load'));
             }

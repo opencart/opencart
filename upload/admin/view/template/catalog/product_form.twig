@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     {% if master_id %}
-      <div class="alert alert-warning"><i class="fa-solid fa-circle-exclamation"></i> {{ text_variant }}</div>
+      <x-alert-warning>{{ text_variant }}</x-alert-warning>
     {% endif %}
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
@@ -1270,9 +1270,8 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-seo" class="tab-pane">
-              <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_keyword }}</div>
+              <x-alert-info>{{ text_keyword }}</x-alert-info>
               <div id="product-seo" class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>

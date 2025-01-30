@@ -16,8 +16,8 @@
       </ol>
     </div>
   </div>
-  <div class="container-fluid">
-    <div class="alert alert-warning"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</div>
+  <div class="container-fluid">9
+    <x-alert-warning>{{ text_info }}</x-alert-warning>
     <div class="row">
       <div id="filter-gdpr" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
         <div class="card">
@@ -98,11 +98,11 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#gdpr').load($('#form-gdpr').attr('data-oc-load'));
             }

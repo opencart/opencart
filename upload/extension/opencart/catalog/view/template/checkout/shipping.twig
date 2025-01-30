@@ -60,7 +60,7 @@
 
               if (json['error']) {
                   if (json['error']['warning']) {
-                      $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                      $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                   }
 
                   for (key in json['error']) {
@@ -103,7 +103,7 @@
                               html += '</div>';
                           }
                       } else {
-                          html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_methods'][i]['error'] + '</div>';
+                          html += '<x-alert-danger class="alert-dismissible">' + json['shipping_methods'][i]['error'] + '</x-alert-danger>';
                       }
                   }
 
@@ -148,11 +148,11 @@
               $('.alert-dismissible').remove();
 
               if (json['error']) {
-                  $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                  $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
               }
 
               if (json['success']) {
-                  $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                  $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                   $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
 

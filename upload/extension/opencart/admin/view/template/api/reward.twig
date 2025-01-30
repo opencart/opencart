@@ -52,13 +52,13 @@ $('#form-reward').on('submit', function(e) {
             $('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {
-                $('#form-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-reward').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
 
                 $('#input-reward').addClass('is-invalid');
             }
 
             if (json['success']) {
-                $('#form-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-reward').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#output-reward').html($('#input-reward').val());
 

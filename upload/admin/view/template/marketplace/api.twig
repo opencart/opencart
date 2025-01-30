@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <form id="form-api">
-          <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_signup }}</div>
+          <x-alert-info>{{ text_signup }}</x-alert-info>
           <div class="mb-3">
             <label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
             <div id="error-username" class="invalid-feedback"></div>
@@ -47,7 +47,7 @@ $('#form-api').on('submit', function(e) {
 
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#modal-api .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#modal-api .modal-body').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                 }
 
                 for (key in json['error']) {
@@ -57,7 +57,7 @@ $('#form-api').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#modal-api .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-api .modal-body').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 window.location.reload();
             }

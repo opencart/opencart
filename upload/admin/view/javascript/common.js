@@ -40,15 +40,6 @@ $(document).ready(function() {
         $('.tooltip').remove();
     });
 
-    // Alert Fade
-    $('#alert').observe(function() {
-        window.setTimeout(function() {
-            $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
-                $(this).remove();
-            });
-        }, 3000);
-    });
-
     // Button
     +function($) {
         $.fn.button = function(state) {
@@ -170,12 +161,12 @@ $(document).on('submit', 'form', function(e) {
                 }
 
                 if (typeof json['error'] == 'string') {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
                 }
 
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                     }
 
                     for (key in json['error']) {
@@ -185,7 +176,7 @@ $(document).on('submit', 'form', function(e) {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                     // Refresh
                     var url = $(form).attr('data-oc-load');
@@ -501,7 +492,7 @@ $(document).ready(function() {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

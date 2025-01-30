@@ -272,7 +272,7 @@ $('#form-step-2').on('submit', function(e) {
             }
 
             if (json['error']) {
-                $('#form-step-2').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-step-2').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

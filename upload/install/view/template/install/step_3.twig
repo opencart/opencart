@@ -14,13 +14,13 @@
             <legend>{{ text_db_connection }}</legend>
             <div class="row">
               <div class="col-md-4 order-md-2">
-                <div class="alert alert-info">
+                <x-alert-info>
                   <p>{{ text_help }}</p>
                   <ul class="text-info">
                     <li><strong><a href="https://docs.cpanel.net/cpanel/databases/mysql-databases/" target="_blank">{{ text_cpanel }}</a></strong></li>
                     <li><strong><a href="https://support.plesk.com/hc/en-us/articles/12377341716759-How-to-create-a-database-in-Plesk" target="_blank">{{ text_plesk }}</a></strong></li>
                   </ul>
-                </div>
+                </x-alert-info>
               </div>
               <div class="col-md-8 order-md-1">
                 <div class="row">
@@ -79,7 +79,7 @@
                 <legend>{{ text_db_advanced }}</legend>
                 <div class="row">
                   <div class="col-md-4 order-md-2">
-                    <div class="alert alert-info">{{ text_db_ssl }}</div>
+                    <x-alert-info>{{ text_db_ssl }}</x-alert-info>
                   </div>
                   <div class="col-md-8 order-md-1">
                     <div class="row">
@@ -180,7 +180,7 @@ $('#form-step-3').on('submit', function(e) {
 
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#form-step-3').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#form-step-3').prepend('<x-alert-danger class="alert-dismissible">' + json['error']['warning'] + '</x-alert-danger>');
                 }
 
                 for (key in json['error']) {

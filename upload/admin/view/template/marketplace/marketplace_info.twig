@@ -20,7 +20,7 @@
   </div>
   <div id="marketplace-extension-info" class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}</div>
+      <x-alert-danger>{{ error_warning }}</x-alert-danger>
     {% endif %}
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ name }}</div>
@@ -221,13 +221,13 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-purchase .modal-body').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
                 $('#modal-purchase').modal('hide');
 
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
@@ -259,11 +259,11 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
+                $('#download').before('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger></div>');
             }
 
             if (json['success']) {
-                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#download').before('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -290,11 +290,11 @@ $('#tab-download').on('click', '.dropdown-item', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
+                $('#download').before('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger></div>');
             }
 
             if (json['success']) {
-                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#download').before('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
@@ -331,11 +331,11 @@ $('#button-comment').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $('#comment').load('index.php?route=marketplace/marketplace.comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
@@ -402,11 +402,11 @@ $('#comment').on('click', '.btn-primary', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $(element).parents('.reply-input-box').before('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $(element).parents('.reply-input-box').before('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
 
                 $(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
 

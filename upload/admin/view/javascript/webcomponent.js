@@ -6,7 +6,8 @@ jQuery.fn.extend({
 
 const $ = jQuery;
 
-import './webcomponent/country.js';
+import './webcomponent/alert.js';
+//import './webcomponent/country.js';
 //import './webcomponent/currency.js';
 //import './webcomponent/form.js';
 //import './webcomponent/language.js';

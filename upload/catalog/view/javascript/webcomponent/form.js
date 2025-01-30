@@ -3,9 +3,7 @@ class XForm extends HTMLElement {
 
     data = [{
         name: '',
-        value: 0,
-        countries: []
-
+        action: 0,
     }];
 
     constructor() {
@@ -15,63 +13,26 @@ class XForm extends HTMLElement {
             mode: 'open'
         });
 
-        //
-        console.log(this.shadow.adoptedStyleSheets);
+        //form-address
+        //action="{{ save }}" method="post"
+
+        //console.log(this.shadow.adoptedStyleSheets);
 
         // Set the attribute name and value
-        this.data.name = $(this).attr('name');
-        this.data.value = $(this).attr('value');
-
-        //let countries = JSON.parse(localStorage.getItem('countries'));
-        //JSON.stringify(model)
-        //if (countries) {
-        //  this.data.countries = countries;
-        //}
+        this.data.action = $(this).attr('action');
+        this.data.method = $(this).attr('method');
     }
 
     connectedCallback() {
-        this.shadow.innerHTML = `<form name="${this.data.name}" id="input-country" class="form-select"></form>`;
+        this.shadow.innerHTML = `<form action="${this.data.action}">${this.innerHTML}</form>`;
 
         // Set the select element as the element we want to work on.
-        this.element = $(this.shadow).find('select');
+        this.element = $(this.shadow).find('form');
 
-        let countries = () => {
-            let success = (countries) => {
-                console.log(countries);
-
-                let html = countries.map((country) => {
-                    let code = '<option value="' + country.country_id + '"';
-
-                    if (country.country_id == this.data.value) {
-                        code += ' selected';
-                    }
-
-                    return code + '>' + country.name + '</option>';
-                }).join('');
-
-                $(this.element).html(html);
-            }
-
-            $.ajax({
-                url:  'catalog/view/data/localisation/country.json',
-                success: success.bind(this)
-            });
-        }
-
-        // coutries('catalog/view/data/localisation/country.json');
-
-        let coutries = () => {
-
-            $.ajax({
-                url: 'catalog/view/data/localisation/country.' + this.data.value + '.json',
-                success: this.success.bind(this),
-            });
-        }
-
-        $(this.element).on('change', this.onchange.bind(this));
+        $(this.element).on('submit', this.onsubmit.bind(this));
 
         // Get the countries from the json file.
-        // this.load('catalog/view/data/localisation/country.json');
+        //this.load('catalog/view/data/localisation/country.json');
     }
 
     render() {
@@ -83,7 +44,7 @@ class XForm extends HTMLElement {
         //func(this.data);
     }
 
-    onchange(e) {
+    onsubmit(e) {
         //$.ajax({
         //    url: 'catalog/view/data/localisation/country.' + this.data.value + '.json',
         //    success: this.success.bind(this),

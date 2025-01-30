@@ -41,7 +41,7 @@
           </div>
           <fieldset>
             <legend>{{ text_code }}</legend>
-            <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_twig }}</div>
+            <x-alert-info>{{ text_twig }}</x-alert-info>
             <div class="input-group input-group-lg mb-3">
               <div class="input-group-text">{{ entry_route }}</div>
               <select name="route" id="input-route" class="form-select">
@@ -101,11 +101,11 @@ $('#input-route').on('change', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
             }
 
             var codemirror = $('.CodeMirror')[0].CodeMirror;

@@ -1,6 +1,6 @@
 {% if languages|length > 1 %}
-  <div id="language" class="dropdown mt-1">
-    <div data-bs-toggle="dropdown" class="dropdown-toggle"><img src="{{ image }}" alt="{{ name }}" title="{{ name }}"> <span class="d-none d-md-inline">{{ text_language }}</span> <i class="fa-solid fa-caret-down"></i></div>
+  <div id="language" class="dropdown">
+    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><img src="{{ image }}" alt="{{ name }}" title="{{ name }}"> <span class="d-none d-md-inline">{{ text_language }}</span> <i class="fa-solid fa-caret-down"></i></a>
     <ul class="dropdown-menu">
       {% for language in languages %}
         <li><a href="{{ language.href }}" class="dropdown-item"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>

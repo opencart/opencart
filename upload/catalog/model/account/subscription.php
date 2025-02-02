@@ -145,7 +145,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * Get Subscription Products
 	 *
 	 * @param int $subscription_id primary key of the subscription record
-	 * @param int $address_id      primary key of the address record
 	 *
 	 * @return array<int, array<string, mixed>> subscription records that have subscription ID
 	 *

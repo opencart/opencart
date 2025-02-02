@@ -125,6 +125,8 @@ $_['button_resend']                 = 'Renvoyer';
 $_['button_calculate']              = 'Calculer les Paiements';
 $_['button_csv']                    = 'Télécharger CSV';
 $_['button_complete']               = 'Paiements Terminés';
+
+// Tabs
 $_['tab_address']                   = 'Adresses';
 $_['tab_additional']                = 'Supplémentaire';
 $_['tab_attribute']                 = 'Attribut';

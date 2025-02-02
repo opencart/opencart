@@ -25,6 +25,10 @@ $_['entry_name']             = 'Extension Name';
 $_['entry_description']      = 'Description';
 $_['entry_code']             = 'Code';
 
+// Button
+$_['button_install']         = 'Unzip';
+$_['button_uninstall']       = 'Delete files';
+
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
 $_['error_install']          = 'Warning: Could not find install.json!';

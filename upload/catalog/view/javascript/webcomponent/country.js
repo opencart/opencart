@@ -1,39 +1,114 @@
-//import
+const element = {};
+
+const template = `<select name="${name}" id="input-country" class="form-select"></select>`;
+
+const data = [{
+    name: '',
+    value: 0,
+    country: [],
+    countries: []
+}];
+
+const model = {
+    getCountries: async () => {
+        const countries = [];
+
+        let promise = fetch('catalog/view/data/localisation/country.json');
+
+        promise.then((response) => response.json()).then((country) => {
+            countries[country.county_id] = country;
+
+            console.log(countries);
+
+
+        });
+
+        console.log(countries);
+
+        return countries;
+    },
+    getCountry: () => {
+        let promise = fetch('catalog/view/data/localisation/country.' + data.value + '.json');
+
+        promise.then((response) => response.json()).then(this.onchange);
+    }
+};
+
+const loader = {
+    controller: (path, data = []) => {
+
+    },
+    model: async (path) => {
+        await fetch(path).then((response) => {
+            return response.json();
+        }).then((test) => data.countries = test);
+    },
+    view: (path, data = []) => {
+
+    },
+    language: (path) => {
+
+    }
+};
+
+//loader.model('catalog/view/data/localisation/country.json');
+
+let countries = await model.getCountries();
+
+console.log(countries);
+
+const render = ((string, data) => {
+    let code = 'console.log(data);' + "\n";
+
+    code += 'with (data) {' + "\n";
+    code += '  return `' + string + '`;' + "\n";
+    code += '}';
+
+    let func = new Function('data', code);
+
+    return func(data);
+});
+
+const event = {
+    onconnect: () => {
+        let promise = fetch('catalog/view/data/localisation/country.json');
+
+        promise.then((response) => {
+            data.countries = response.json();
+        }).then(this.compile);
+    },
+    compile:() => {
+
+    },
+    onchange: (e) => {
+        this.element
+
+
+        let promise = fetch('catalog/view/data/localisation/country.' + this.data.value + '.json');
+
+        promise.then((response) => response.json()).then(this.onchange);
+    },
+    updateZone: (e) => {
+
+    }
+};
+
 class XCountry extends HTMLElement {
-    element;
-
-    data = [{
-        name: '',
-        value: 0,
-        countries: []
-    }];
-
-    event = [{
-        onconnect: () => {
-            let promise = fetch('catalog/view/data/localisation/country.json');
-
-            promise.then((response) => {
-                this.data.countries = response.json();
-            }).then(this.onchange);
-        },
-        onchange: (e) => {
-            let promise = fetch('catalog/view/data/localisation/country.' + this.data.value + '.json');
-
-            promise.then((response) => response.json()).then(this.onchange);
-        }
-    }];
-
     constructor() {
         super();
 
-        this.shadow = this.attachShadow({
+        const shadow = this.attachShadow({
             mode: 'open'
         });
 
-        this.shadow.innerHTML = `<select name="${this.data.name}" id="input-country" class="form-select"></select>`;
+        shadow.innerHTML = render(template, data);
 
+        //element = $(shadow).find('select');
+
+        //let countries = model.getCountries();
+        //console.log(countries);
         // Set the select element as the element we want to work on.
-        this.element = $(this.shadow).find('select');
+
 
         // Add the default stylesheets to the shadow root.
         //[...document.styleSheets].map((stylesheet) => {
@@ -50,12 +125,12 @@ class XCountry extends HTMLElement {
         //}
 
         // Set the attribute name and value
-        this.data.name = $(this).attr('name');
-        this.data.value = $(this).attr('value');
+        data.name = $(this).attr('name');
+        data.value = $(this).attr('value');
     }
 
     connectedCallback() {
-        $(this.element).on('change', this.event.onchange);
+        $(this.element).on('change', event.onchange);
     }
 
     render() {

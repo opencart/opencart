@@ -338,7 +338,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
-	 * @return array<int, array<string, string>> description records that have information ID
+	 * @return array<int, array<string, string>> description records that have language ID
 	 *
 	 * @example
 	 *

@@ -275,7 +275,7 @@ class Language extends \Opencart\System\Engine\Model {
 	 *     'locale'     => 'Language Locale',
 	 *     'extension'  => '',
 	 *     'sort_order' => 0,
-	 *     'status'     => 0
+	 *     'status'     => 1
 	 * ];
 	 *
 	 * $this->load->model('localisation/language');

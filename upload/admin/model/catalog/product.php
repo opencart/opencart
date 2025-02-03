@@ -2605,7 +2605,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions By Subscription Plan ID
 	 *
-	 * @param int $subscription_plan_id primary key of the product subscription plan record
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
 	 *

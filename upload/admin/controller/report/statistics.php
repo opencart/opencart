@@ -256,7 +256,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			// Product
 			$this->load->model('catalog/product');
 
-			$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(['filter_quantity' => 0]));
+			$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(['filter_quantity_to' => 0]));
 
 			$json['success'] = $this->language->get('text_success');
 		}

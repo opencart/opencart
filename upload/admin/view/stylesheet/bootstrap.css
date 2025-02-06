@@ -4331,7 +4331,6 @@ textarea.form-control-lg {
   border-radius: var(--bs-progress-border-radius);
 }
 .progress-bar {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

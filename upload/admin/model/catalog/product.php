@@ -392,6 +392,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			$product_data['sku'] = '';
 			$product_data['upc'] = '';
+			$product_data['rating'] = '0';
 			$product_data['status'] = '0';
 
 			$product_data['product_attribute'] = $this->model_catalog_product->getAttributes($product_id);
@@ -407,6 +408,16 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_related'] = $this->model_catalog_product->getRelated($product_id);
 			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
+
+			foreach ($product_data['product_option'] as $po => $product_option) {
+				$product_data['product_option'][$po]['product_option_id'] = 0;
+
+				if (!empty($product_option['product_option_value'])) {
+					foreach ($product_option['product_option_value'] as $pov => $product_option_value) {
+						$product_data['product_option'][$po]['product_option_value'][$pov]['product_option_value_id'] = 0;
+					}
+				}
+			}
 
 			$new_product_id = $this->model_catalog_product->addProduct($product_data);
 		}
@@ -1577,7 +1588,7 @@ class Product extends \Opencart\System\Engine\Model {
 	public function getAttributes(int $product_id): array {
 		$product_attribute_data = [];
 
-		$product_attribute_query = $this->db->query("SELECT `attribute_id` FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' GROUP BY `attribute_id`");
+		$product_attribute_query = $this->db->query("SELECT `pa`.`attribute_id` FROM `" . DB_PREFIX . "product_attribute` `pa` LEFT JOIN `" . DB_PREFIX . "attribute` a ON (`a`.`attribute_id` = `pa`.`attribute_id`) LEFT JOIN `" . DB_PREFIX . "attribute_group` `ag` ON (`ag`.`attribute_group_id` = `a`.`attribute_group_id`) WHERE `pa`.`product_id` = '" . (int)$product_id . "' GROUP BY `pa`.`attribute_id` ORDER BY `ag`.`sort_order` ASC, `a`.`sort_order` ASC");
 
 		foreach ($product_attribute_query->rows as $product_attribute) {
 			$product_attribute_description_data = [];
@@ -2594,7 +2605,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions By Subscription Plan ID
 	 *
-	 * @param int $subscription_plan_id primary key of the product subscription plan record
+	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
 	 *

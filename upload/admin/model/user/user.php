@@ -467,7 +467,7 @@ class User extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		if ($query->num_rows) {
 			return $query->rows;

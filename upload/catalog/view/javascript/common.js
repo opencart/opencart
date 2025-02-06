@@ -383,6 +383,15 @@ $(document).ready(function() {
         $('#form-currency').submit();
     });
 
+    // Language
+    $('#form-language .dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        $('#form-language input[name=\'code\']').val($(this).attr('href'));
+
+        $('#form-language').submit();
+    });
+
     // Product List
     $('#button-list').on('click', function() {
         var element = this;

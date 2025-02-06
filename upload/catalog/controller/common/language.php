@@ -36,7 +36,6 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$code = $data['code'];
 
-		$data['code'] = $code;
 		$data['name'] = $data['languages'][$code]['name'];
 		$data['image'] = $data['languages'][$code]['image'];
 

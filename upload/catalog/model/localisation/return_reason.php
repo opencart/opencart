@@ -13,7 +13,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>>
+	 * @return array<int, array<string, mixed>> return reason records
 	 *
 	 * @example
 	 *

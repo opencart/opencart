@@ -74,7 +74,7 @@
               </div>
               <div class="text-end">
                 <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="reset" id="button-reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>
@@ -96,6 +96,12 @@ $('#product').on('click', 'thead a, .pagination a', function(e) {
     $('#product').load(this.href);
 });
 
+$('#button-reset').on('click', function() {
+    window.history.pushState({}, null, 'index.php?route=catalog/product&user_token={{ user_token }}');
+
+    $('#product').load('index.php?route=catalog/product.list&user_token={{ user_token }}');
+});
+
 $('#button-filter').on('click', function() {
     var url = '';
 
@@ -115,7 +121,7 @@ $('#button-filter').on('click', function() {
 
     if (filter_category_id) {
         url += '&filter_category_id=' + filter_category_id;
-	}
+	  }
 
     var filter_manufacturer_id = $('#input-manufacturer-id').val();
 

@@ -761,7 +761,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('sale/order');
 	 *
-	 * $sale_total = $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge(1, 3)]);
+	 * $sale_total = $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge(1, 3))]);
 	 */
 	public function getTotalSales(array $data = []): float {
 		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order`";

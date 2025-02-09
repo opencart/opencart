@@ -33,6 +33,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$code = $this->session->data['currency'];
+
 		$data['title'] = $data['currencies'][$code]['title'];
 		$data['symbol_left'] = $data['currencies'][$code]['symbol_left'];
 		$data['symbol_right'] = $data['currencies'][$code]['symbol_right'];
@@ -65,31 +66,57 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		if (isset($this->request->post['code'])) {
+		$this->load->language('common/currency');
+
+		$json = [];
+
+		$keys = [
+			'code',
+			'redirect'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['code']);
+
+		if (!$currency_info) {
+			$json['error'] = $this->language->get('error_currency');
+		}
+
+		if (!$json) {
 			$this->session->data['currency'] = $this->request->post['code'];
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+
+			$option = [
+				'expires'  => time() + 60 * 60 * 24 * 30,
+				'path'     => '/',
+				'SameSite' => 'Lax'
+			];
+
+			setcookie('currency', $this->session->data['currency'], $option);
+
+			if ($this->request->post['redirect']) {
+				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			} else {
+				$redirect = '';
+			}
+
+			if (str_starts_with($redirect, $this->config->get('config_url'))) {
+				$json['redirect'] = $redirect;
+			} else {
+				$json['redirect'] = $this->url->link($this->config->get('action_default'), 'language=' . $this->config->get('config_language'), true);
+			}
 		}
 
-		$option = [
-			'expires'  => time() + 60 * 60 * 24 * 30,
-			'path'     => '/',
-			'SameSite' => 'Lax'
-		];
-
-		setcookie('currency', $this->session->data['currency'], $option);
-
-		if (isset($this->request->post['redirect'])) {
-			$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
-		} else {
-			$redirect = '';
-		}
-
-		if ($redirect && str_starts_with($redirect, $this->config->get('config_url'))) {
-			$this->response->redirect($redirect);
-		} else {
-			$this->response->redirect($this->url->link($this->config->get('action_default'), 'language=' . $this->config->get('config_language')));
-		}
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -94,7 +94,7 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Languages
 	 *
-	 * @return array<string, array<string, mixed>> language record
+	 * @return array<string, array<string, mixed>> language records
 	 *
 	 * @example
 	 *

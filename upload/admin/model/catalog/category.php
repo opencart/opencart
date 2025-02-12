@@ -122,172 +122,124 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_category->editCategory($category_id, $category_data);
 	 */
 	public function editCategory(int $category_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
 
-		$this->model_catalog_category->deleteDescriptions($category_id);
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
 
-		foreach ($data['category_description'] as $language_id => $category_description) {
-			$this->model_catalog_category->addDescription($category_id, $language_id, $category_description);
+		foreach ($data['category_description'] as $language_id => $value) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `category_id` = '" . (int)$category_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		// Old path
-		$path_old = $this->model_catalog_category->getPath($category_id);
+		$path_old = $this->getPath($category_id);
 
-		// Delete the category paths
-		$this->model_catalog_category->deletePaths($category_id);
+		// MySQL Hierarchical Data Closure Table Pattern
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
 
-		// Delete paths
-		$results = $this->model_catalog_category->getPathsByPathId($category_id);
+		if ($query->rows) {
+			foreach ($query->rows as $category_path) {
+				// Delete the path below the current one
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_path['category_id'] . "' AND `level` < '" . (int)$category_path['level'] . "'");
 
-		foreach ($results as $result) {
-			// Delete old paths
-			$this->model_catalog_category->deletePathsByLevel($result['category_id'], $result['level']);
+				$paths = [];
+
+				// Get the nodes new parents
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$data['parent_id'] . "' ORDER BY `level` ASC");
+
+				foreach ($query->rows as $result) {
+					$paths[] = $result['path_id'];
+				}
+
+				// Get whats left of the nodes current path
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_path['category_id'] . "' ORDER BY `level` ASC");
+
+				foreach ($query->rows as $result) {
+					$paths[] = $result['path_id'];
+				}
+
+				// Combine the paths with a new level
+				$level = 0;
+
+				foreach ($paths as $path_id) {
+					$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_path['category_id'] . "', `path_id` = '" . (int)$path_id . "', `level` = '" . (int)$level . "'");
+
+					$level++;
+				}
+			}
+		} else {
+			// Delete the path below the current one
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "'");
+
+			// Fix for records with no paths
+			$level = 0;
+
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$data['parent_id'] . "' ORDER BY `level` ASC");
+
+			foreach ($query->rows as $result) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
+
+				$level++;
+			}
+
+			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)$level . "'");
 		}
 
-		$paths = [];
-
-		// Build new path
-		$results = $this->model_catalog_category->getPaths($data['parent_id']);
-
-		foreach ($results as $result) {
-			$paths[] = $result['path_id'];
-		}
-
-		// Get what's left of the nodes current path
-		$results = $this->model_catalog_category->getPaths($category_id);
-
-		foreach ($results as $result) {
-			$paths[] = $result['path_id'];
-		}
-
-		// Combine the paths with a new level
-		$level = 0;
-
-		foreach ($paths as $path_id) {
-			$this->model_catalog_category->addPath($category_id, $path_id, $level);
-
-			$level++;
-		}
-
-		$this->model_catalog_category->addPath($category_id, $category_id, $level);
-
-		// Filters
-		$this->model_catalog_category->deleteFilters($category_id);
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_filter` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		if (isset($data['category_filter'])) {
 			foreach ($data['category_filter'] as $filter_id) {
-				$this->model_catalog_category->addFilter($category_id, $filter_id);
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_filter` SET `category_id` = '" . (int)$category_id . "', `filter_id` = '" . (int)$filter_id . "'");
 			}
 		}
 
-		// Stores
-		$this->model_catalog_category->deleteStores($category_id);
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		if (isset($data['category_store'])) {
 			foreach ($data['category_store'] as $store_id) {
-				$this->model_catalog_category->addStore($category_id, $store_id);
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "'");
 			}
 		}
 
 		// Seo urls on categories need to be done differently to they include the full keyword path
-		$seo_urls = [];
+		$path_parent = $this->getPath($data['parent_id']);
 
-		$value = '';
+		if (!$path_parent) {
+			$path_new = $category_id;
+		} else {
+			$path_new = $path_parent . '_' . $category_id;
+		}
+
+		// Get old data to so we know what to replace
+		$seo_url_data = $this->getSeoUrls($category_id);
+
+		// Delete the old path
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($path_old) . "'");
 
 		$this->load->model('design/seo_url');
 
-		foreach ($paths as $path_id) {
-			// Get all sub paths
-			if (!$value) {
-				$value = $path_id;
-			} else {
-				$value = $value . '_' . $path_id;
-			}
-
-			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $value);
-
-			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $value);
-
-			foreach ($results as $store_id => $language) {
-				foreach ($language as $language_id => $keyword) {
-					$pos = strrpos($keyword, '/');
-
-					if ($pos !== false) {
-						$keyword = substr($keyword, $pos + 1);
-					}
-
-					$seo_urls[$store_id][$language_id][$path_id] = $keyword;
-				}
-			}
-		}
-
-		// Delete the old path
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
-
-		// Current SEO URL
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$seo_urls[$store_id][$language_id][$category_id] = $keyword;
-			}
-		}
+				$parent_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path_parent, $store_id, $language_id);
 
-		// All sub paths
-		$filter_data = [
-			'filter_key'   => 'path',
-			'filter_value' => $path_old . '\_%'
-		];
+				if ($parent_info) {
+					$keyword = $parent_info['keyword'] . '/' . $keyword;
+				}
 
-		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value` = '" . $this->db->escape($path_new) . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 
-		// Delete the old SEO URL paths
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old . '\_%');
-
-		foreach ($results as $result) {
-			$keyword = $result['keyword'];
-
-			$pos = strrpos($keyword, '/');
-
-			if ($pos !== false) {
-				$keyword = substr($keyword, $pos + 1);
-			}
-
-			$seo_urls[$result['store_id']][$result['language_id']][substr($result['value'], strrpos($result['value'], '_') + 1)] = $keyword;
-		}
-
-		// Get all sub paths
-		foreach ($seo_urls as $store_id => $language) {
-			foreach ($language as $language_id => $path) {
-				$value = '';
-
-				$string = '';
-
-				foreach ($path as $path_id => $keyword) {
-					// Get all sub paths
-					if (!$value) {
-						$value = $path_id;
-					} else {
-						$value = $value . '_' . $path_id;
-					}
-
-					if (!$string) {
-						$string = $keyword;
-					} else {
-						$string = $string . '/' . $keyword;
-					}
-
-					$this->model_design_seo_url->addSeoUrl('path', $value, $string, $store_id, $language_id);
+				// Update sub category seo urls
+				if (isset($seo_url_data[$store_id][$language_id])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (oc_strlen($seo_url_data[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '\_%') . "'");
 				}
 			}
 		}
 
 		// Layouts
-		$this->model_catalog_category->deleteLayouts($category_id);
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		if (isset($data['category_layout'])) {
 			foreach ($data['category_layout'] as $store_id => $layout_id) {
-				if ($layout_id) {
-					$this->model_catalog_category->addLayout($category_id, $store_id, $layout_id);
-				}
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_layout` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 			}
 		}
 	}

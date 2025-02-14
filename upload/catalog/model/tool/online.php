@@ -12,7 +12,7 @@ class Online extends \Opencart\System\Engine\Model {
 	 * Add Online
 	 *
 	 * @param string $ip
-	 * @param int    $customer_id
+	 * @param int    $customer_id primary key of the customer record
 	 * @param string $url
 	 * @param string $referer
 	 *

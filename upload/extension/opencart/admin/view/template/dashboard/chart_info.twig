@@ -57,12 +57,17 @@ $('#range a').on('click', function(e) {
                 $('.tooltip').remove();
 
                 if (item) {
-                    $('<div id="tooltip" class="tooltip top show"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+                    var element = document.querySelector("#chart-sale");
+                    var rect = element.getBoundingClientRect();
+                    var elementTop = rect.top + window.scrollY;
+                    var elementLeft = rect.left + window.scrollX;
+
+                    $('<div id="tooltip" class="tooltip top show"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('#chart-sale');
 
                     $('#tooltip').css({
                         position: 'absolute',
-                        left: item.pageX - ($('#tooltip').outerWidth() / 2),
-                        top: item.pageY - $('#tooltip').outerHeight(),
+                        top: (elementTop - item.pageY) + 50,
+                        left: (item.pageX - elementLeft),
                         pointer: 'cursor'
                     }).fadeIn('slow');
 

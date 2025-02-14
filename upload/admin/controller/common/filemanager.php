@@ -74,20 +74,11 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'.ico',
-			'.jpg',
-			'.jpeg',
-			'.png',
-			'.gif',
-			'.webp',
-			'.svg',
-			'.JPG',
-			'.JPEG',
-			'.PNG',
-			'.GIF',
-			'.SVG'
-		];
+	    $allowed = [];
+        foreach(explode("\r\n", $this->config->get('config_file_ext_allowed')) as $key => $extension){
+            $allowed[] = '.' . \strtolower($extension);
+            $allowed[] = '.' . \strtoupper($extension);
+        }
 
 		$data['directories'] = [];
 		$data['images'] = [];
@@ -300,37 +291,16 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
+					
 					// Allowed file extension types
-					$allowed = [
-						'ico',
-						'jpg',
-						'jpeg',
-						'png',
-						'gif',
-						'webp',
-						'svg',
-						'JPG',
-						'JPEG',
-						'PNG',
-						'GIF',
-						'SVG'
-					];
+                    $allowed = explode("\r\n", \strtolower($this->config->get('config_file_ext_allowed')));
 
-					if (!in_array(substr($filename, strrpos($filename, '.') + 1), $allowed)) {
+					if (!in_array(\strtolower(substr($filename, strrpos($filename, '.') + 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_file_type');
 					}
 
 					// Allowed file mime types
-					$allowed = [
-						'image/x-icon',
-						'image/jpeg',
-						'image/pjpeg',
-						'image/png',
-						'image/x-png',
-						'image/gif',
-						'image/webp',
-						'image/svg+xml'
-					];
+					$allowed = explode("\r\n", $this->config->get('config_file_mime_allowed'));
 
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_file_type');

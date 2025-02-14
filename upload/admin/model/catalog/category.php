@@ -130,19 +130,22 @@ class Category extends \Opencart\System\Engine\Model {
 			$this->model_catalog_category->addDescription($category_id, $language_id, $category_description);
 		}
 
-		// Old path
+		// Path
 		$path_old = $this->model_catalog_category->getPath($category_id);
+
+		$path_parent = '';
+
+		if (!empty($data['parent_id'])) {
+			$path_parent = $this->model_catalog_category->getPath($data['parent_id']);
+		}
+
+		$path_new = $path_parent ? implode('_', [$path_parent, $category_id]) : $category_id;
 
 		// Delete the category paths
 		$this->model_catalog_category->deletePaths($category_id);
 
 		// Delete paths
 		$results = $this->model_catalog_category->getPathsByPathId($category_id);
-
-		foreach ($results as $result) {
-			// Delete old paths
-			$this->model_catalog_category->deletePathsByLevel($result['category_id'], $result['level']);
-		}
 
 		$paths = [];
 
@@ -171,6 +174,70 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_category->addPath($category_id, $category_id, $level);
 
+		// Clean an build new path for childs
+		$this->model_catalog_category->repairCategories($category_id);
+
+		// Seo urls on categories need to be done differently to they include the full keyword path
+		$seo_urls = [];
+
+		$this->load->model('design/seo_url');
+
+		// Get parent category path and keywords
+		$keywords_parent = [];
+
+		if (!empty($data['parent_id'])) {
+			$keywords_parent = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_parent);
+		}
+
+		// Build new category path and keywords based on parent
+		foreach ($data['category_seo_url'] as $store_id => $language) {
+			foreach ($language as $language_id => $keyword) {
+				if ($path_parent) {
+					$keyword = implode('/', [$keywords_parent[$store_id][$language_id], $keyword]);
+				}
+
+				$seo_urls[$store_id][$language_id][$path_new] = $keyword;
+			}
+		}
+
+		// Build new child paths and keywords based on new category path and seo_url
+		$keywords_old = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $path_old);
+
+		$filter_data = [
+			'filter_key'   => 'path',
+			'filter_value' => $path_old . '\_%'
+		];
+
+		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
+
+		foreach ($results as $result) {
+			// Replace path with new parents
+			$path = implode('_', [$path_new, substr($result['value'], strlen($path_old) + 1)]);
+
+			// Replace keyword with new parents
+			$keyword = implode('/', [
+				$seo_urls[$store_id][$language_id][$path_new], oc_substr($result['keyword'],
+				oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1)
+			]);
+
+			$seo_urls[$result['store_id']][$result['language_id']][$path] = $keyword;
+
+			// Delete old childs keywords from oc_seo_url table
+			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $result['value']);
+		}
+
+		// Delete old category keywords from oc_seo_url table
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
+
+		// Insert new keywords tree into oc_seo_url table
+		foreach ($seo_urls as $store_id => $language) {
+			foreach ($language as $language_id => $paths) {
+				foreach ($paths as $value => $keyword) {
+					$this->model_design_seo_url->addSeoUrl('path', $value, $keyword, $store_id, $language_id);
+				}
+			}
+		}
+
 		// Filters
 		$this->model_catalog_category->deleteFilters($category_id);
 
@@ -186,97 +253,6 @@ class Category extends \Opencart\System\Engine\Model {
 		if (isset($data['category_store'])) {
 			foreach ($data['category_store'] as $store_id) {
 				$this->model_catalog_category->addStore($category_id, $store_id);
-			}
-		}
-
-		// Seo urls on categories need to be done differently to they include the full keyword path
-		$seo_urls = [];
-
-		$value = '';
-
-		$this->load->model('design/seo_url');
-
-		foreach ($paths as $path_id) {
-			// Get all sub paths
-			if (!$value) {
-				$value = $path_id;
-			} else {
-				$value = $value . '_' . $path_id;
-			}
-
-			$results = $this->model_design_seo_url->getSeoUrlsByKeyValue('path', $value);
-
-			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $value);
-
-			foreach ($results as $store_id => $language) {
-				foreach ($language as $language_id => $keyword) {
-					$pos = strrpos($keyword, '/');
-
-					if ($pos !== false) {
-						$keyword = substr($keyword, $pos + 1);
-					}
-
-					$seo_urls[$store_id][$language_id][$path_id] = $keyword;
-				}
-			}
-		}
-
-		// Delete the old path
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
-
-		// Current SEO URL
-		foreach ($data['category_seo_url'] as $store_id => $language) {
-			foreach ($language as $language_id => $keyword) {
-				$seo_urls[$store_id][$language_id][$category_id] = $keyword;
-			}
-		}
-
-		// All sub paths
-		$filter_data = [
-			'filter_key'   => 'path',
-			'filter_value' => $path_old . '\_%'
-		];
-
-		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
-
-		// Delete the old SEO URL paths
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old . '\_%');
-
-		foreach ($results as $result) {
-			$keyword = $result['keyword'];
-
-			$pos = strrpos($keyword, '/');
-
-			if ($pos !== false) {
-				$keyword = substr($keyword, $pos + 1);
-			}
-
-			$seo_urls[$result['store_id']][$result['language_id']][substr($result['value'], strrpos($result['value'], '_') + 1)] = $keyword;
-		}
-
-		// Get all sub paths
-		foreach ($seo_urls as $store_id => $language) {
-			foreach ($language as $language_id => $path) {
-				$value = '';
-
-				$string = '';
-
-				foreach ($path as $path_id => $keyword) {
-					// Get all sub paths
-					if (!$value) {
-						$value = $path_id;
-					} else {
-						$value = $value . '_' . $path_id;
-					}
-
-					if (!$string) {
-						$string = $keyword;
-					} else {
-						$string = $string . '/' . $keyword;
-					}
-
-					$this->model_design_seo_url->addSeoUrl('path', $value, $string, $store_id, $language_id);
-				}
 			}
 		}
 
@@ -359,10 +335,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_category->repairCategories();
 	 */
 	public function repairCategories(int $parent_id = 0): void {
-		$categories = $this->model_catalog_category->getCategories(['filter_parent_id' => $parent_id]);
-
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
+		
 		// Delete the path below the current one
-		foreach ($categories as $category) {
+		foreach ($query->rows as $category) {
 			// Delete the path below the current one
 			$this->model_catalog_category->deletePaths($category['category_id']);
 

@@ -335,10 +335,10 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_category->repairCategories();
 	 */
 	public function repairCategories(int $parent_id = 0): void {
-		$categories = $this->model_catalog_category->getCategories(['filter_parent_id' => $parent_id]);
-
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
+		
 		// Delete the path below the current one
-		foreach ($categories as $category) {
+		foreach ($query->rows as $category) {
 			// Delete the path below the current one
 			$this->model_catalog_category->deletePaths($category['category_id']);
 

@@ -1,45 +1,60 @@
-class XAlert extends HTMLElement {
-    constructor() {
-        super();
+import { WebComponent } from './../webcomponent.js';
 
-        this.shadow = this.attachShadow({
-            mode: 'open'
-        });
-    }
+class XAlert extends WebComponent {
+    data = {
+        icon: '',
+        type: '',
+        message: ''
+    };
 
-    connectedCallback() {
-        this.shadow.innerHTML = this.template;
+    event = {
+        connected: async () => {
+            this.data.type = this.dataset.type;
+            this.data.message = this.innerHTML;
 
-        if ($(this).hasClass('alert-dismissible')) {
-            window.setTimeout(function() {
-                $(this).fadeTo(3000, 0, function() {
-                    $(this).remove();
-                });
-            }, 3000);
+            switch (this.dataset.type) {
+                case 'success':
+                    this.data.icon = 'fa-circle-check';
+                    break;
+                case 'danger':
+                    this.data.icon = 'fa-circle-exclamation';
+                    break;
+                case 'warning':
+                    this.data.icon = 'fa-circle-info';
+                    break;
+                case 'info':
+                    this.data.icon = 'fa-circle-info';
+                    break;
+            }
+
+            this.addStylesheet('bootstrap.css');
+            this.addStylesheet('fontawesome.css');
+
+            this.shadow.innerHTML = await this.render('alert.html', this.data);
+
+            // Get the alert element
+            let alert = this.shadow.querySelector('.alert');
+
+            if (alert.classList.contains('alert-dismissible')) {
+                window.setTimeout(this.event.timeout, 3000);
+            }
+        },
+        timeout: (e) => {
+            this.style.opacity = 1;
+
+            const fade = () => {
+                if (this.style.opacity > 0) {
+                    this.style.opacity -= 0.10;
+                } else {
+                    window.clearInterval(this._timer);
+
+                    this.remove();
+                }
+            }
+
+            this._timer = window.setInterval(fade.bind(this), 60);
         }
     }
 }
 
-class XAlertSuccess extends XAlert {
-    template = '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + this.innerHTML + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
-}
-
-customElements.define('x-alert-success', XAlertSuccess);
-
-class XAlertDanger extends XAlert {
-    template = '<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + this.innerHTML + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
-}
-
-customElements.define('x-alert-danger', XAlertDanger);
-
-class XAlertWarning extends XAlert {
-    template = '<div class="alert alert-warning alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + this.innerHTML + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
-}
-
-customElements.define('x-alert-warning', XAlertWarning);
-
-class XAlertInfo extends XAlert {
-    template = '<div class="alert alert-info alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + this.innerHTML + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
-}
-
-customElements.define('x-alert-info', XAlertInfo);
+customElements.define('x-alert', XAlert);

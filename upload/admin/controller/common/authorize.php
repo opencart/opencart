@@ -59,7 +59,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$this->model_user_user->addAuthorize($this->user->getId(), $authorize_data);
 
-			setcookie('authorize', $token, time() + 60 * 60);
+			setcookie('authorize', $token, time() + 60 * 60 * 24 * 365);
 		}
 
 		$data['action'] = $this->url->link('common/authorize.validate', 'user_token=' . $this->session->data['user_token']);

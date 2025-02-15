@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\catalog\controller\startup;
+namespace Opencart\Catalog\controller\startup;
 /**
  * Class Authorize
  *
- * @package Opencart\Admin\Controller\Startup
+ * @package Opencart\Catalog\Controller\Startup
  */
 class Authorize extends \Opencart\System\Engine\Controller {
 	/**
@@ -39,9 +39,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		];
 
 		if ($this->config->get('config_2fa') && !in_array($route, $ignore)) {
-			$this->load->model('user/user');
+			$this->load->model('account/customer');
 
-			$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
+			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
 			if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
 				return new \Opencart\System\Engine\Action('common/authorize');

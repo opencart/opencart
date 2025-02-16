@@ -75,7 +75,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 	    $allowed = [];
-        foreach(explode("\r\n", $this->config->get('config_file_ext_allowed')) as $key => $extension){
+        foreach (explode("\r\n", $this->config->get('config_file_ext_allowed')) as $key => $extension) {
             $allowed[] = '.' . \strtolower($extension);
             $allowed[] = '.' . \strtoupper($extension);
         }

@@ -589,14 +589,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
 				$data['custom_fields'][] = [
-					'custom_field_id'    => $custom_field['custom_field_id'],
 					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-					'name'               => $custom_field['name'],
-					'value'              => $custom_field['value'],
-					'type'               => $custom_field['type'],
-					'location'           => $custom_field['location'],
-					'sort_order'         => $custom_field['sort_order']
-				];
+					'value'              => ['value'],
+				] + $custom_field;
 			}
 		}
 
@@ -921,14 +916,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['payment_methods'][] = [
-				'customer_payment_id' => $result['customer_payment_id'],
-				'name'                => $result['name'],
-				'image'               => $image,
-				'type'                => $result['type'],
-				'status'              => $result['status'],
-				'date_expire'         => date($this->language->get('date_format_short'), strtotime($result['date_expire'])),
-				'delete'              => $this->url->link('customer/customer.deletePayment', 'user_token=' . $this->session->data['user_token'] . '&customer_payment_id=' . $result['customer_payment_id'])
-			];
+				'image'       => $image,
+				'date_expire' => date($this->language->get('date_format_short'), strtotime($result['date_expire'])),
+				'delete'      => $this->url->link('customer/customer.deletePayment', 'user_token=' . $this->session->data['user_token'] . '&customer_payment_id=' . $result['customer_payment_id'])
+			] + $result;
 		}
 
 		$payment_total = $this->model_sale_subscription->getTotalSubscriptions(['filter_customer_id' => $customer_id]);
@@ -1018,7 +1009,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['histories'][] = [
 				'comment'    => nl2br($result['comment']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
+			] + $result;
 		}
 
 		$history_total = $this->model_customer_customer->getTotalHistories($customer_id);
@@ -1113,9 +1104,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['transactions'][] = [
 				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-				'description' => $result['description'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
+			] + $result;
 		}
 
 		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
@@ -1212,11 +1202,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_customer_customer->getRewards($customer_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['rewards'][] = [
-				'points'      => $result['points'],
-				'description' => $result['description'],
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
+			$data['rewards'][] = ['date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
 		}
 
 		$data['balance'] = $this->model_customer_customer->getRewardTotal($customer_id);
@@ -1328,13 +1314,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['ips'][] = [
-				'ip'         => $result['ip'],
 				'account'    => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'store'      => $store,
-				'country'    => $result['country'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'])
-			];
+			] + $result;
 		}
 
 		$ip_total = $this->model_customer_customer->getTotalIps($customer_id);
@@ -1390,14 +1374,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['authorizes'][] = [
-				'token'      => $result['token'],
-				'ip'         => $result['ip'],
-				'user_agent' => $result['user_agent'],
-				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'total'      => $result['total'],
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'delete'     => $this->url->link('customer/customer.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])
-			];
+				'status'      => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'date_expire' => $result['date_expire'] ? date($this->language->get('date_format_short'), strtotime($result['date_expire'])) : '',
+				'delete'      => $this->url->link('customer/customer.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])
+			] + $result;
 		}
 
 		$authorize_total = $this->model_customer_customer->getTotalAuthorizes($customer_id);
@@ -1494,17 +1475,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			foreach ($results as $result) {
 				$json[] = [
-					'customer_id'       => $result['customer_id'],
-					'customer_group_id' => $result['customer_group_id'],
-					'name'              => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'customer_group'    => $result['customer_group'],
-					'firstname'         => $result['firstname'],
-					'lastname'          => $result['lastname'],
-					'email'             => $result['email'],
-					'telephone'         => $result['telephone'],
-					'custom_field'      => $result['custom_field'],
-					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
-				];
+					'name'    => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'address' => $this->model_customer_customer->getAddresses($result['customer_id'])
+				] + $result;
 			}
 		}
 

@@ -20,7 +20,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
@@ -103,7 +103,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$return_id = 0;
 		}
 
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
@@ -463,6 +463,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 	public function history(): void {
 		$this->load->language('account/return');
 
+		if (!$this->load->controller('account/login.validate')) {
+			$this->session->data['redirect'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+		}
+
 		$this->response->setOutput($this->getHistory());
 	}
 
@@ -471,7 +477,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function getHistory(): string {
+	protected function getHistory(): string {
 		if (isset($this->request->get['return_id'])) {
 			$return_id = (int)$this->request->get['return_id'];
 		} else {
@@ -486,7 +492,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+		if (!$this->load->controller('account/login.validate')) {
 			return '';
 		}
 

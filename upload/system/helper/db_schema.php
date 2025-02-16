@@ -2058,6 +2058,10 @@ function oc_db_schema() {
 			[
 				'name' => 'date_added',
 				'type' => 'datetime'
+			],
+			[
+				'name' => 'date_expire',
+				'type' => 'datetime'
 			]
 		],
 		'primary' => [
@@ -7304,6 +7308,10 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'date_added',
+				'type' => 'datetime'
+			],
+			[
+				'name' => 'date_expire',
 				'type' => 'datetime'
 			]
 		],

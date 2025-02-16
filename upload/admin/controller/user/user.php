@@ -682,14 +682,11 @@ class User extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['authorizes'][] = [
-				'token'      => $result['token'],
-				'ip'         => $result['ip'],
-				'user_agent' => $result['user_agent'],
-				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'total'      => $result['total'],
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'delete'     => $this->url->link('user/user.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])
-			];
+				'status'      => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'date_expire' => $result['date_expire'] ? date($this->language->get('date_format_short'), strtotime($result['date_expire'])) : '',
+				'delete'      => $this->url->link('user/user.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])
+			] + $result;
 		}
 
 		$authorize_total = $this->model_user_user->getTotalAuthorizes($user_id);
@@ -795,11 +792,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$results = $this->model_user_user->getLogins($user_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['logins'][] = [
-				'ip'         => $result['ip'],
-				'user_agent' => $result['user_agent'],
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
-			];
+			$data['logins'][] = ['date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))] + $result;
 		}
 
 		$login_total = $this->model_user_user->getTotalLogins($user_id);
@@ -856,16 +849,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$results = $this->model_user_user->getUsers($filter_data);
 
 			foreach ($results as $result) {
-				$json[] = [
-					'user_id'       => $result['user_id'],
-					'user_group_id' => $result['user_group_id'],
-					'username'      => $result['username'],
-					'name'          => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'user_group'    => $result['user_group'],
-					'firstname'     => $result['firstname'],
-					'lastname'      => $result['lastname'],
-					'email'         => $result['email']
-				];
+				$json[] = ['name' => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))] + $result;
 			}
 		}
 

@@ -14,7 +14,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/wishlist');
 
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
@@ -69,6 +69,12 @@ class WishList extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('account/wishlist');
 
+		if (!$this->load->controller('account/login.validate')) {
+			$this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+		}
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -77,7 +83,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function getList(): string {
+	protected function getList(): string {
 		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
 		$data['cart_add'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
 

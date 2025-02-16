@@ -216,7 +216,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 			// Replace keyword with new parents
 			$keyword = implode('/', [
-				$seo_urls[$store_id][$language_id][$path_new], oc_substr($result['keyword'],
+				$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr($result['keyword'],
 				oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1)
 			]);
 
@@ -336,7 +336,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 */
 	public function repairCategories(int $parent_id = 0): void {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
-		
+
 		// Delete the path below the current one
 		foreach ($query->rows as $category) {
 			// Delete the path below the current one

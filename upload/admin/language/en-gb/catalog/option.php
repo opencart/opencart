@@ -18,6 +18,7 @@ $_['text_file']          = 'File';
 $_['text_date']          = 'Date';
 $_['text_datetime']      = 'Date &amp; Time';
 $_['text_time']          = 'Time';
+$_['text_regex']         = 'Regex';
 $_['text_option']        = 'Option';
 $_['text_value']         = 'Option Values';
 
@@ -33,6 +34,9 @@ $_['entry_validation']   = 'Validation';
 $_['entry_option_value'] = 'Option Value Name';
 $_['entry_image']        = 'Image';
 $_['entry_sort_order']   = 'Sort Order';
+
+// Help
+$_['help_regex']         = 'Use regex. E.g: /[^a-zA-Z0-9_-]/';
 
 // Error
 $_['error_warning']      = 'Warning: Please check the form carefully for errors!';

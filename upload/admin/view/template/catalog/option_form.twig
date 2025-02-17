@@ -126,10 +126,15 @@
 $('#input-type').on('change', function() {
     if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
         $('#option-value').parent().show();
-        $('#display-validation').hide();
     } else {
         $('#option-value').parent().hide();
+    }
+
+    if (this.value == 'text' || this.value == 'textarea') {
         $('#display-validation').show();
+    } else {
+        $('#display-validation').hide();
+        $('#input-validation').val('');
     }
 });
 

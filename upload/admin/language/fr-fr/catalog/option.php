@@ -18,6 +18,7 @@ $_['text_file']          = 'Fichier';
 $_['text_date']          = 'Date';
 $_['text_datetime']      = 'Date &amp; Heure';
 $_['text_time']          = 'Heure';
+$_['text_regex']         = 'Regex';
 $_['text_option']        = 'Option';
 $_['text_value']         = 'Valeurs de l\'Option';
 
@@ -33,6 +34,9 @@ $_['entry_validation']   = 'Validation';
 $_['entry_option_value'] = 'Nom de la Valeur de l\'Option';
 $_['entry_image']        = 'Image';
 $_['entry_sort_order']   = 'Ordre de Tri';
+
+// Help
+$_['help_regex']         = 'Utilisez regex. Exemple: [^a-zA-Z0-9_-]';
 
 // Error
 $_['error_warning']      = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';

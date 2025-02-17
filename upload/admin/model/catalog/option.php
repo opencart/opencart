@@ -19,6 +19,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * $option_data = [
 	 *     'type'       => 'radio',
+	 *     'validation' => '',
 	 *     'sort_order' => 0
 	 * ];
 	 *
@@ -27,7 +28,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * $option_id = $this->model_catalog_option->addOption($option_data);
 	 */
 	public function addOption(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$option_id = $this->db->getLastId();
 
@@ -56,6 +57,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * $option_data = [
 	 *     'type'       => 'radio',
+	 *     'validation' => '',
 	 *     'sort_order' => 0
 	 * ];
 	 *
@@ -64,7 +66,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_option->editOption($option_id, $option_data);
 	 */
 	public function editOption(int $option_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `option_id` = '" . (int)$option_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `validation` = '" . $this->db->escape((string)$data['validation']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `option_id` = '" . (int)$option_id . "'");
 
 		$this->model_catalog_option->deleteDescriptions($option_id);
 

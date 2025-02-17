@@ -29,6 +29,7 @@ $_['column_action']      = 'Action';
 // Entry
 $_['entry_name']         = 'Nom de l\'Option';
 $_['entry_type']         = 'Type';
+$_['entry_validation']   = 'Validation';
 $_['entry_option_value'] = 'Nom de la Valeur de l\'Option';
 $_['entry_image']        = 'Image';
 $_['entry_sort_order']   = 'Ordre de Tri';

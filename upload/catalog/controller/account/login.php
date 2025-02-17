@@ -291,26 +291,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			return false;
 		}
 
-		if ($this->config->get('config_2fa')) {
-			if (isset($this->request->cookie['authorize'])) {
-				$token = (string)$this->request->cookie['authorize'];
-			} else {
-				$token = '';
-			}
-
-			$this->load->model('account/customer');
-
-			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
-
-			if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
-				return false;
-			}
-
-			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 }

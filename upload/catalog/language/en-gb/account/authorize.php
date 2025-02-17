@@ -14,6 +14,9 @@ $_['text_resend']   = 'Success: An email has been sent to your email account wit
 // Entry
 $_['entry_code']    = 'Security Code';
 
+// Button
+$_['button_resend'] = 'Resend';
+
 // Error
 $_['error_warning'] = 'You have exceeded the allowed number of security code attempts!';
 $_['error_code']    = 'Security code does not match!';

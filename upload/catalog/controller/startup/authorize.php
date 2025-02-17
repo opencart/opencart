@@ -32,7 +32,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		$ignore = [
-			'common/logout',
+			'account/logout',
 			'account/authorize'
 		];
 

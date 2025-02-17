@@ -35,7 +35,8 @@ $_['action_pre_action']  = [
 	'startup/event',
 	'startup/sass',
 	'startup/api',
-	'startup/maintenance'
+	'startup/maintenance',
+	'startup/authorize'
 ];
 
 // Action Events

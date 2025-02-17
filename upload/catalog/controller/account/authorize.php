@@ -41,7 +41,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/customer');
 
-		$login_info = $this->model_account_customer->getAuthorizeByToken($this->user->getId(), $token);
+		$login_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
 		if (!$login_info) {
 			// Create a token that can be stored as a cookie and will be used to identify device is safe.
@@ -89,7 +89,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/authorize', $data));
+		$this->response->setOutput($this->load->view('account/authorize', $data));
 	}
 
 	/**
@@ -192,7 +192,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/authorize_unlock', $data));
+		$this->response->setOutput($this->load->view('account/authorize_unlock', $data));
 	}
 
 	/**

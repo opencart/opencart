@@ -738,7 +738,7 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_user_user->deleteAuthorize($authorize_info['user_id'], $user_authorize_id);
+			$this->model_user_user->deleteAuthorizes($authorize_info['user_id'], $user_authorize_id);
 
 			// If the token is still present, then we enforce the user to log out automatically.
 			if ($authorize_info['token'] == $token) {

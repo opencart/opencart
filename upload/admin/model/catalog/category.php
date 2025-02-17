@@ -223,11 +223,11 @@ class Category extends \Opencart\System\Engine\Model {
 			$seo_urls[$result['store_id']][$result['language_id']][$path] = $keyword;
 
 			// Delete old childs keywords from oc_seo_url table
-			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $result['value']);
+			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $result['value']));
 		}
 
 		// Delete old category keywords from oc_seo_url table
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $path_old));
 
 		// Insert new keywords tree into oc_seo_url table
 		foreach ($seo_urls as $store_id => $language) {
@@ -304,8 +304,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$path = $this->model_catalog_category->getPath($category_id);
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path);
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path . '_%');
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $path));
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $path . '_%'));
 
 		// Delete connected paths
 		$results = $this->model_catalog_category->getPathsByPathId($category_id);

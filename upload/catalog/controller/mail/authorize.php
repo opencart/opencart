@@ -3,10 +3,9 @@ namespace Opencart\Catalog\Controller\Mail;
 /**
  * Class Authorize
  *
- * @package Opencart\Admin\Controller\Mail
+ * @package Opencart\Catalog\Controller\Mail
  */
 class Authorize extends \Opencart\System\Engine\Controller {
-	// admin/model/user/user/editCode/after
 	/**
 	 * Index
 	 *
@@ -17,6 +16,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @throws \Exception
 	 *
 	 * @return void
+	 *
+	 * catalog/model/account/customer/editCode/after
 	 */
 	public function index(&$route, &$args, &$output): void {
 		if (isset($this->request->get['route'])) {
@@ -25,7 +26,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
-		$email = $this->user->getEmail();
+		$email = $this->customer->getEmail();
 
 		if (isset($this->session->data['code'])) {
 			$code = $this->session->data['code'];
@@ -33,10 +34,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize.send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ($email && $code && ($route == 'account/authorize.send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$this->load->language('mail/authorize');
 
-			$data['username'] = $this->user->getUsername();
 			$data['code'] = $code;
 			$data['ip'] = oc_get_ip();
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -62,8 +62,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// admin/model/user/user/editCode/after
-
 	/**
 	 * Reset
 	 *
@@ -74,6 +72,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @throws \Exception
 	 *
 	 * @return void
+	 *
+	 * catalog/model/account/customer/editCode/after
 	 */
 	public function reset(&$route, &$args, &$output): void {
 		if (isset($this->request->get['route'])) {
@@ -94,11 +94,10 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ($email && $code && ($route == 'account/authorize.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$this->load->language('mail/authorize_reset');
 
-			$data['username'] = $this->user->getUsername();
-			$data['reset'] = $this->url->link('common/authorize.reset', 'email=' . $email . '&code=' . $code, true);
+			$data['reset'] = $this->url->link('account/authorize.reset', 'email=' . $email . '&code=' . $code, true);
 			$data['ip'] = oc_get_ip();
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 

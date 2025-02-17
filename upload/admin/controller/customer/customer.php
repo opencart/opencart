@@ -1376,7 +1376,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['authorizes'][] = [
 				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_expire' => $result['date_expire'] ? date($this->language->get('date_format_short'), strtotime($result['date_expire'])) : '',
-				'delete'      => $this->url->link('customer/customer.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])
+				'delete'      => $this->url->link('customer/customer.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&customer_authorize_id=' . $result['customer_authorize_id'])
 			] + $result;
 		}
 
@@ -1512,10 +1512,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);
 
 		foreach ($custom_fields as $custom_field) {
-			$json[] = [
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
-			];
+			$json[] = ['required' => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true] + $custom_field;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

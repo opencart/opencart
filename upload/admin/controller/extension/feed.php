@@ -58,18 +58,18 @@ class Feed extends \Opencart\System\Engine\Controller {
 
 				$extension = substr($path, 0, strpos($path, '/'));
 
-				$code = basename($result, '.php');
+				$code = basename(c, '.php');
 
 				$this->load->language('extension/' . $extension . '/feed/' . $code, $code);
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
-					'status'    => $this->config->get('feed_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'status'    => $this->config->get('feed_' . $code . '_status'),
 					'install'   => $this->url->link('extension/feed.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/feed.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/feed/' . $code, 'user_token=' . $this->session->data['user_token'])
-				];
+				] + $result;
 			}
 		}
 

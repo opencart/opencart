@@ -16,7 +16,11 @@
           <tr>
             <td><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ authorize.ip }}</a></td>
             <td>{{ authorize.user_agent }}</td>
-            <td>{{ authorize.status }}</td>
+            <td>{% if authorize.status %}
+                <small class="text-success">{{ text_enabled }}</small>
+              {% else %}
+                <small class="text-danger">{{ text_disabled }}</small>
+              {% endif %}</td>
             <td>{{ authorize.date_added }}</td>
             <td>{{ authorize.date_expire }}</td>
             <td class="text-end"><a href="{{ authorize.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a></td>

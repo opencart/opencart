@@ -59,12 +59,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title') . ($code == $this->config->get('config_currency') ? $this->language->get('text_default') : ''),
-					'status'    => $this->config->get('currency_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'status'    => $this->config->get('currency_' . $code . '_status'),
 					'install'   => $this->url->link('extension/currency.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/currency.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/currency/' . $code, 'user_token=' . $this->session->data['user_token'])
-				];
+				] + $result;
 			}
 		}
 

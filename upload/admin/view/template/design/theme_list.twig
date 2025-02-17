@@ -18,7 +18,11 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ theme.theme_id }}" class="form-check-input"/></td>
               <td>{{ theme.route }}</td>
               <td>{{ theme.store }}</td>
-              <td>{{ theme.status }}</td>
+              <td>{% if theme.status %}
+                <small class="text-success">{{ text_enabled }}</small>
+              {% else %}
+                <small class="text-danger">{{ text_disabled }}</small>
+                {% endif %}</td>
               <td>{{ theme.date_added }}</td>
               <td class="text-end text-nowrap"><a href="{{ theme.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a> <button type="button" value="{{ theme.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>

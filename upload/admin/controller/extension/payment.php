@@ -68,7 +68,7 @@ class Payment extends \Opencart\System\Engine\Controller {
 				$data['extensions'][] = [
 					'name'       => $this->language->get($code . '_heading_title'),
 					'link'       => $link,
-					'status'     => $this->config->get('payment_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'status'     => $this->config->get('payment_' . $code . '_status'),
 					'sort_order' => $this->config->get('payment_' . $code . '_sort_order'),
 					'install'    => $this->url->link('extension/payment.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall'  => $this->url->link('extension/payment.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),

@@ -60,12 +60,12 @@ class Other extends \Opencart\System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
-					'status'    => $this->config->get('other_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'status'    => $this->config->get('other_' . $code . '_status'),
 					'install'   => $this->url->link('extension/other.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/other.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/other/' . $code, 'user_token=' . $this->session->data['user_token'])
-				];
+				] + $result;
 			}
 		}
 

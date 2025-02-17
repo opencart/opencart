@@ -74,16 +74,16 @@ class Module extends \Opencart\System\Engine\Controller {
 
 					$module_data[] = [
 						'name'   => $module['name'],
-						'status' => (bool)$setting_info['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+						'status' => (bool)$setting_info['status'],
 						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
 						'delete' => $this->url->link('extension/module.delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
-					];
+					] + $module;
 				}
 
 				if ($module_data) {
-					$status = '';
+					$status = false;
 				} else {
-					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					$status = $this->config->get('module_' . $code . '_status');
 				}
 
 				$data['extensions'][] = [
@@ -94,7 +94,7 @@ class Module extends \Opencart\System\Engine\Controller {
 					'uninstall' => $this->url->link('extension/module.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'])
-				];
+				] + $result;
 			}
 		}
 

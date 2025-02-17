@@ -25,7 +25,11 @@
               {% for store in extension.store %}
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
-                  <td>{{ store.status }}</td>
+                  <td>{% if store.status %}
+                      <small class="text-success">{{ text_enabled }}</small>
+                    {% else %}
+                      <small class="text-danger">{{ text_disabled }}</small>
+                    {% endif %}</td>
                   <td class="text-end text-nowrap"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
                 </tr>
               {% endfor %}

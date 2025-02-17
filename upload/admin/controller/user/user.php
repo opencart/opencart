@@ -682,7 +682,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['authorizes'][] = [
-				'status'      => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'status'      => $result['status'],
 				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_expire' => $result['date_expire'] ? date($this->language->get('date_format_short'), strtotime($result['date_expire'])) : '',
 				'delete'      => $this->url->link('user/user.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])

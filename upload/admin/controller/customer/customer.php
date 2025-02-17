@@ -1202,7 +1202,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_customer_customer->getRewards($customer_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['rewards'][] = ['date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
+			$data['rewards'][] = ['date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
 		}
 
 		$data['balance'] = $this->model_customer_customer->getRewardTotal($customer_id);
@@ -1374,7 +1374,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['authorizes'][] = [
-				'status'      => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_expire' => $result['date_expire'] ? date($this->language->get('date_format_short'), strtotime($result['date_expire'])) : '',
 				'delete'      => $this->url->link('customer/customer.deleteAuthorize', 'user_token=' . $this->session->data['user_token'] . '&user_authorize_id=' . $result['user_authorize_id'])

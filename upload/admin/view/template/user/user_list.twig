@@ -18,11 +18,10 @@
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ user.user_id }}" class="form-check-input"/></td>
               <td>{{ user.username }}
-                <br/>
                 {% if user.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
+                  <span class="badge text-bg-success">{{ text_enabled }}</span>
                 {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
+                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
               <td>{{ user.name }}</td>
               <td>{{ user.email }}</td>

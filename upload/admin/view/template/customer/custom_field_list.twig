@@ -19,9 +19,9 @@
               <td>{{ custom_field.name }}
               <br/>
               {% if custom_field.status %}
-                <small class="text-success">{{ text_enabled }}</small>
+                <span class="badge text-bg-success">{{ text_enabled }}</span>
               {% else %}
-                <small class="text-danger">{{ text_disabled }}</small>
+                <span class="badge text-bg-danger">{{ text_disabled }}</span>
               {% endif %}</td>
               <td>{{ custom_field.location }}</td>
               <td>{{ custom_field.type }}</td>

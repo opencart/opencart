@@ -1257,66 +1257,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Authorize
-	 *
-	 * @param int                  $customer_id primary key of the customer record
-	 * @param array<string, mixed> $data        array of data
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $customer_authorize_data = [
-	 *     'token'      => '',
-	 *     'ip'         => '',
-	 *     'user_agent' => ''
-	 * ];
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_account_customer->addAuthorize($customer_id, $customer_authorize_data);
-	 */
-	public function addAuthorize(int $customer_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_authorize` SET `customer_id` = '" . (int)$customer_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
-	}
-
-	/**
-	 * Edit Authorize Status
-	 *
-	 * @param int  $customer_authorize_id primary key of the customer authorize record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_account_customer->editAuthorizeStatus($customer_authorize_id, $status);
-	 */
-	public function editAuthorizeStatus(int $customer_authorize_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `status` = '" . (bool)$status . "' WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
-	}
-
-	/**
-	 * Edit Authorize Total
-	 *
-	 * @param int $customer_authorize_id primary key of the customer authorize record
-	 * @param int $total
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_account_customer->editAuthorizeTotal($customer_authorize_id, $total);
-	 */
-	public function editAuthorizeTotal(int $customer_authorize_id, int $total): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '" . (int)$total . "' WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
-	}
-
-	/**
 	 * Reset Authorizes
 	 *
 	 * @param int $customer_id primary key of the customer record
@@ -1355,6 +1295,25 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query($sql);
+	}
+
+	/**
+	 * Get Authorize
+	 *
+	 * @param int $user_authorize_id primary key of the user authorize record
+	 *
+	 * @return array<string, mixed> authorize record that has user authorize ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('user/user');
+	 *
+	 * $authorize_info = $this->model_user_user->getAuthorize($user_authorize_id);
+	 */
+	public function getAuthorize(int $customer_authorize_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_authorize_id` = '" . (int)$customer_authorize_id . "'");
+
+		return $query->row;
 	}
 
 	/**

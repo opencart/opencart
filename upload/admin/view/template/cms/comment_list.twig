@@ -14,9 +14,9 @@
             <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
               <p>
                 {% if comment.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
+                  <span class="badge text-bg-success">{{ text_enabled }}</span>
                 {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
+                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
                 {% endif %}
                 {% if comment.customer_edit %}
                   <small> - {{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>

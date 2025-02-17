@@ -1420,17 +1420,15 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('user/user');
+		$this->load->model('customer/customer');
 
-		$authorize_info = $this->model_user_user->getAuthorize($customer_authorize_id);
+		$authorize_info = $this->model_customer_customer->getAuthorize($customer_authorize_id);
 
 		if (!$authorize_info) {
 			$json['error'] = $this->language->get('error_authorize');
 		}
 
 		if (!$json) {
-			$this->load->model('customer/customer');
-
 			$this->model_customer_customer->deleteAuthorizes($authorize_info['customer_id'], $customer_authorize_id);
 
 			$json['success'] = $this->language->get('text_success');

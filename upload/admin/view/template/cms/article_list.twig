@@ -17,11 +17,10 @@
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ article.article_id }}" class="form-check-input"/></td>
               <td>{{ article.name }}
-                <br/>
                 {% if article.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
+                  <span class="badge text-bg-success">{{ text_enabled }}</span>
                 {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
+                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
               <td>{{ article.author }}</td>
               <td class="text-end">{{ article.rating }}</td>

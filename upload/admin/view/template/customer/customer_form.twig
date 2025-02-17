@@ -699,7 +699,7 @@ $('#authorize').on('click', '.pagination a', function(e) {
     $('#authorize').load(this.href);
 });
 
-$('#authorize').on('click', '.btn', function(e) {
+$('#authorize').on('click', 'a', function(e) {
     e.preventDefault();
 
     var element = this;

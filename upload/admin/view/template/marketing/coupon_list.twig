@@ -20,9 +20,9 @@
               <td>{{ coupon.name }}
                 <br/>
                 {% if coupon.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
+                  <span class="badge text-bg-success">{{ text_enabled }}</span>
                 {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
+                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
               <td>{{ coupon.code }}</td>
               <td class="text-end">{{ coupon.discount }}</td>

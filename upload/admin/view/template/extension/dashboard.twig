@@ -19,9 +19,9 @@
               <td>{{ extension.name }}</td>
               <td class="text-end">{{ extension.width }}</td>
               <td>{% if extension.status %}
-                  <small class="text-success">{{ text_enabled }}</small>
+                  <span class="badge text-bg-success">{{ text_enabled }}</span>
                 {% else %}
-                  <small class="text-danger">{{ text_disabled }}</small>
+                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
               <td class="text-end">{{ extension.sort_order }}</td>
               <td class="text-end text-nowrap">{% if extension.installed %}

@@ -232,6 +232,12 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($option_info)) {
+			$data['validation'] = $option_info['validation'];
+		} else {
+			$data['validation'] = '';
+		}
+
+		if (!empty($option_info)) {
 			$data['sort_order'] = $option_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';

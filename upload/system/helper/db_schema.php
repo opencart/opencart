@@ -3960,6 +3960,10 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
+				'name' => 'validation',
+				'type' => 'varchar(255)'
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)'
 			]

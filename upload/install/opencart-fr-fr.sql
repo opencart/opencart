@@ -1719,7 +1719,7 @@ Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Hauteur : 21,3 pouces (54,3 
         '', 'Apple Cinema 30', '', ''),
        (30, 1, 'Canon EOS 5D',
         '&lt;p&gt;\r\n	Le matériel de presse de Canon pour l''EOS 5D déclare qu''il ''définit une nouvelle catégorie de reflex numériques'', et bien que nous ne soyons généralement pas trop préoccupés par le discours marketing, cette déclaration est clairement assez précise. L''EOS 5D est différent de tout reflex numérique précédent en ce qu''il combine un capteur plein format (taille 35 mm) de haute résolution (12,8 mégapixels) avec un boîtier relativement compact (légèrement plus grand que l''EOS 20D, bien qu''en main, il semble nettement plus ''massif''). L''EOS 5D est destiné à se positionner entre l''EOS 20D et les reflex numériques professionnels EOS-1D. Une différence importante par rapport à ces derniers est que l''EOS 5D n''a pas de joints d''étanchéité environnementaux. Bien que Canon ne fasse pas spécifiquement référence à l''EOS 5D comme à un reflex numérique ''professionnel'', il séduira évidemment les professionnels qui souhaitent un reflex numérique de haute qualité dans un boîtier plus léger que l''EOS-1D. Il attirera sans aucun doute également les propriétaires actuels de l''EOS 20D (espérons simplement qu''ils n''ont pas acheté trop d''objectifs EF-S...). äë&lt;/p&gt;\r\n',
-        '', 'sdf', '', '');
+        '', 'Canon EOS 5D', '', '');
 
 -----------------------------------------------------------
 

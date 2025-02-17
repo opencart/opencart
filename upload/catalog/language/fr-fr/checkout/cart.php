@@ -33,5 +33,6 @@ $_['column_total']               = 'Total';
 $_['error_stock']                = 'Les produits marqués avec *** ne sont pas disponibles en quantité souhaitée ou ne sont pas en stock!';
 $_['error_minimum']              = 'Le montant minimum de commande pour %s est de %s!';
 $_['error_required']             = '%s requis!';
+$_['error_regex']                = '%s n\'est pas une entrée valide!';
 $_['error_product']              = 'Attention: Le produit est introuvable!';
 $_['error_subscription']         = 'Veuillez sélectionner un plan d\'abonnement!';

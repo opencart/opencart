@@ -216,18 +216,18 @@ class Category extends \Opencart\System\Engine\Model {
 
 			// Replace keyword with new parents
 			$keyword = implode('/', [
-				$seo_urls[$store_id][$language_id][$path_new], oc_substr($result['keyword'],
+				$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr($result['keyword'],
 				oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1)
 			]);
 
 			$seo_urls[$result['store_id']][$result['language_id']][$path] = $keyword;
 
 			// Delete old childs keywords from oc_seo_url table
-			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $result['value']);
+			$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $result['value']));
 		}
 
 		// Delete old category keywords from oc_seo_url table
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path_old);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $path_old));
 
 		// Insert new keywords tree into oc_seo_url table
 		foreach ($seo_urls as $store_id => $language) {
@@ -304,8 +304,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$path = $this->model_catalog_category->getPath($category_id);
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path);
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', $path . '_%');
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $path));
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('path', str_replace('_', '\_', $path . '_%'));
 
 		// Delete connected paths
 		$results = $this->model_catalog_category->getPathsByPathId($category_id);
@@ -336,7 +336,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 */
 	public function repairCategories(int $parent_id = 0): void {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
-		
+
 		// Delete the path below the current one
 		foreach ($query->rows as $category) {
 			// Delete the path below the current one
@@ -391,7 +391,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_category->getCategories();
 	 */
 	public function getCategories(array $data = []): array {
-		$sql = "SELECT `cp`.`category_id` AS `category_id`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' > ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT `cp`.`category_id` AS `category_id`, `c1`.`image`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' > ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd2`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";

@@ -4,9 +4,10 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th class="text-center col-1">{{ column_image }}</th>
           <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
           <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
-          <th class="text-end">{{ column_action }}</th>
+          <th class="text-end col-1">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -14,6 +15,7 @@
           {% for manufacturer in manufacturers %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ manufacturer.manufacturer_id }}" class="form-check-input"/></td>
+              <td class="text-center"><img src="{{ manufacturer.image }}" alt="{{ manufacturer.name }}" class="img-thumbnail"/></td>
               <td>{{ manufacturer.name }}</td>
               <td class="text-end">{{ manufacturer.sort_order }}</td>
               <td class="text-end"><a href="{{ manufacturer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>

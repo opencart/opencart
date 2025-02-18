@@ -68,7 +68,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 					];
 
 					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-					$mail->setTo($args[0]);
+					$mail->setTo($email);
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender($store_name);
 					$mail->setSubject($subject);

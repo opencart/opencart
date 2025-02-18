@@ -261,15 +261,23 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$filter_data = [
+			'attribute_id'          => 0,
+			'attribute_group_id'    => 0,
+			'attribute_description' => []
+		];
+
+		$post_info = oc_filter_data($this->request->post, $filter_data);
+
 		if (!$this->user->hasPermission('modify', 'catalog/attribute')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['attribute_group_id']) {
+		if (!$post_info['attribute_group_id']) {
 			$json['error']['attribute_group'] = $this->language->get('error_attribute_group');
 		}
 
-		foreach ($this->request->post['attribute_description'] as $language_id => $value) {
+		foreach ($post_info['attribute_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -282,10 +290,10 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/attribute');
 
-			if (!$this->request->post['attribute_id']) {
-				$json['attribute_id'] = $this->model_catalog_attribute->addAttribute($this->request->post);
+			if (!$post_info['attribute_id']) {
+				$json['attribute_id'] = $this->model_catalog_attribute->addAttribute($post_info);
 			} else {
-				$this->model_catalog_attribute->editAttribute($this->request->post['attribute_id'], $this->request->post);
+				$this->model_catalog_attribute->editAttribute($post_info['attribute_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

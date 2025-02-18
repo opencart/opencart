@@ -462,19 +462,30 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['author'], 3, 64)) {
+		$filter_data = [
+			'review_id'  => 0,
+			'author'     => '',
+			'product_id' => 0,
+			'text'       => '',
+			'rating'     => 0,
+			'status'	 => 0
+		];
+
+		$post_info = oc_filter_data($this->request->post, $filter_data);
+
+		if (!oc_validate_length($post_info['author'], 3, 64)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if (!$this->request->post['product_id']) {
+		if (!$post_info['product_id']) {
 			$json['error']['product'] = $this->language->get('error_product');
 		}
 
-		if (oc_strlen($this->request->post['text']) < 1) {
+		if (oc_strlen($post_info['text']) < 1) {
 			$json['error']['text'] = $this->language->get('error_text');
 		}
 
-		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
+		if (!isset($post_info['rating']) || $post_info['rating'] < 0 || $post_info['rating'] > 5) {
 			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 
@@ -485,10 +496,10 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/review');
 
-			if (!$this->request->post['review_id']) {
-				$json['review_id'] = $this->model_catalog_review->addReview($this->request->post);
+			if (!$post_info['review_id']) {
+				$json['review_id'] = $this->model_catalog_review->addReview($post_info);
 			} else {
-				$this->model_catalog_review->editReview($this->request->post['review_id'], $this->request->post);
+				$this->model_catalog_review->editReview($post_info['review_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -509,7 +520,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

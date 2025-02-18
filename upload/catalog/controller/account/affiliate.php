@@ -188,37 +188,33 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
-		$keys = [
-			'payment_method',
-			'cheque',
-			'paypal',
-			'bank_account_name',
-			'bank_account_number',
-			'agree'
+		$filter_data = [
+			'payment_method'      => '',
+			'cheque'              => '',
+			'paypal'              => '',
+			'bank_account_name'   => '',
+			'bank_account_number' => '',
+			'agree'               => 0
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		if (!$json) {
 			// Payment validation
-			if (empty($this->request->post['payment_method'])) {
+			if (empty($post_info['payment_method'])) {
 				$json['error']['payment_method'] = $this->language->get('error_payment_method');
 			}
 
-			if ($this->request->post['payment_method'] == 'cheque' && !$this->request->post['cheque']) {
+			if ($post_info['payment_method'] == 'cheque' && !$post_info['cheque']) {
 				$json['error']['cheque'] = $this->language->get('error_cheque');
-			} elseif ($this->request->post['payment_method'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+			} elseif ($post_info['payment_method'] == 'paypal' && ((oc_strlen($post_info['paypal']) > 96) || !filter_var($post_info['paypal'], FILTER_VALIDATE_EMAIL))) {
 				$json['error']['paypal'] = $this->language->get('error_paypal');
-			} elseif ($this->request->post['payment_method'] == 'bank') {
-				if ($this->request->post['bank_account_name'] == '') {
+			} elseif ($post_info['payment_method'] == 'bank') {
+				if ($post_info['bank_account_name'] == '') {
 					$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 				}
 
-				if ($this->request->post['bank_account_number'] == '') {
+				if ($post_info['bank_account_number'] == '') {
 					$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
 				}
 			}
@@ -230,9 +226,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'affiliate') {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
@@ -248,7 +244,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_affiliate_id'));
 
-				if ($information_info && !$this->request->post['agree']) {
+				if ($information_info && !$post_info['agree']) {
 					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 				}
 			}
@@ -256,9 +252,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!$affiliate_info) {
-				$this->model_account_affiliate->addAffiliate($this->customer->getId(), $this->request->post);
+				$this->model_account_affiliate->addAffiliate($this->customer->getId(), $post_info);
 			} else {
-				$this->model_account_affiliate->editAffiliate($this->customer->getId(), $this->request->post);
+				$this->model_account_affiliate->editAffiliate($this->customer->getId(), $post_info);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');

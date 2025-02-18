@@ -267,37 +267,46 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$filter_data = [
+			'download_id'          => 0,
+			'download_description' => [],
+			'filename'             => '',
+			'mask'                 => ''
+		];
+
+		$post_info = oc_filter_data($this->request->post, $filter_data);
+
 		if (!$this->user->hasPermission('modify', 'catalog/download')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['download_description'] as $language_id => $value) {
+		foreach ($post_info['download_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if (!oc_validate_length($this->request->post['filename'], 3, 128)) {
+		if (!oc_validate_length($post_info['filename'], 3, 128)) {
 			$json['error']['filename'] = $this->language->get('error_filename');
 		}
 
-		if (substr(str_replace('\\', '/', realpath(DIR_DOWNLOAD . $this->request->post['filename'])), 0, strlen(DIR_DOWNLOAD)) != DIR_DOWNLOAD) {
+		if (substr(str_replace('\\', '/', realpath(DIR_DOWNLOAD . $post_info['filename'])), 0, strlen(DIR_DOWNLOAD)) != DIR_DOWNLOAD) {
 			$json['error']['filename'] = $this->language->get('error_directory');
 		}
 
-		if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
+		if (!is_file(DIR_DOWNLOAD . $post_info['filename'])) {
 			$json['error']['filename'] = $this->language->get('error_exists');
 		}
 
-		if (!oc_validate_filename($this->request->post['filename'])) {
+		if (!oc_validate_filename($post_info['filename'])) {
 			$json['error']['filename'] = $this->language->get('error_filename_character');
 		}
 
-		if (!oc_validate_length($this->request->post['mask'], 3, 128)) {
+		if (!oc_validate_length($post_info['mask'], 3, 128)) {
 			$json['error']['mask'] = $this->language->get('error_mask');
 		}
 
-		if (!oc_validate_filename($this->request->post['mask'])) {
+		if (!oc_validate_filename($post_info['mask'])) {
 			$json['error']['mask'] = $this->language->get('error_mask_character');
 		}
 
@@ -308,10 +317,10 @@ class Download extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/download');
 
-			if (!$this->request->post['download_id']) {
-				$json['download_id'] = $this->model_catalog_download->addDownload($this->request->post);
+			if (!$post_info['download_id']) {
+				$json['download_id'] = $this->model_catalog_download->addDownload($post_info);
 			} else {
-				$this->model_catalog_download->editDownload($this->request->post['download_id'], $this->request->post);
+				$this->model_catalog_download->editDownload($post_info['download_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

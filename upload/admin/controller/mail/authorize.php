@@ -20,12 +20,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * admin/model/user/user/editCode/after
 	 */
 	public function index(&$route, &$args, &$output): void {
-		if (isset($this->request->get['route'])) {
-			$route = (string)$this->request->get['route'];
-		} else {
-			$route = '';
-		}
-
 		$email = $this->user->getEmail();
 
 		if (isset($this->session->data['code'])) {
@@ -34,7 +28,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize.send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ($email && $code && ((string)$this->request->get['route'] == 'common/authorize.send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$this->load->language('mail/authorize');
 
 			$data['username'] = $this->user->getUsername();
@@ -77,12 +71,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * admin/model/user/user/editCode/after
 	 */
 	public function reset(&$route, &$args, &$output): void {
-		if (isset($this->request->get['route'])) {
-			$route = $this->request->get['route'];
-		} else {
-			$route = '';
-		}
-
 		if (isset($args[0])) {
 			$email = (string)$args[0];
 		} else {
@@ -95,7 +83,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ($email && $code && ($this->request->get['route'] == 'common/authorize.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$this->load->language('mail/authorize_reset');
 
 			$data['username'] = $this->user->getUsername();

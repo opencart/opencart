@@ -72,7 +72,9 @@ $('#button-send').on('click', function(e) {
     });
 });
 
-$('#button-send').trigger('click');
+$(document).ready(function() {
+    $('#button-send').trigger('click');
+});
 //--></script>
 {{ footer }}
 

@@ -315,52 +315,48 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$keys = [
-				'firstname',
-				'lastname',
-				'address_1',
-				'address_2',
-				'city',
-				'postcode',
-				'country_id',
-				'zone_id'
+			$filter_data = [
+				'firstname'  => '',
+				'lastname'   => '',
+				'address_1'  => '',
+				'address_2'  => '',
+				'city'       => '',
+				'postcode'   => '',
+				'country_id' => 0,
+				'zone_id'    => 0
 			];
 
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
-				}
-			}
+			$post_info = oc_filter_data($filter_data, $this->request->post);
 
-			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
-			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+			if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if (!oc_validate_length($this->request->post['address_1'], 3, 128)) {
+			if (!oc_validate_length($post_info['address_1'], 3, 128)) {
 				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}
 
-			if (!oc_validate_length($this->request->post['city'], 2, 128)) {
+			if (!oc_validate_length($post_info['city'], 2, 128)) {
 				$json['error']['city'] = $this->language->get('error_city');
 			}
 
 			$this->load->model('localisation/country');
 
-			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
+			$country_info = $this->model_localisation_country->getCountry($post_info['country_id']);
 
-			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['postcode'], 2, 10)) {
+			if ($country_info && $country_info['postcode_required'] && !oc_validate_length($post_info['postcode'], 2, 10)) {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if (!$country_info || $this->request->post['country_id'] == '') {
+			if (!$country_info || $post_info['country_id'] == '') {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if ($this->request->post['zone_id'] == '') {
+			if ($post_info['zone_id'] == '') {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
@@ -371,15 +367,15 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address') {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
 			}
 
-			if (isset($this->request->get['address_id']) && ($this->customer->getAddressId() == $this->request->get['address_id']) && !$this->request->post['default']) {
+			if (isset($this->request->get['address_id']) && ($this->customer->getAddressId() == $this->request->get['address_id']) && !$post_info['default']) {
 				$json['error']['warning'] = $this->language->get('error_default');
 			}
 		}
@@ -389,7 +385,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			// Add Address
 			if (!isset($this->request->get['address_id'])) {
-				$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+				$this->model_account_address->addAddress($this->customer->getId(), $post_info);
 
 				$this->session->data['success'] = $this->language->get('text_add');
 
@@ -398,7 +394,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			// Edit Address
 			if (isset($this->request->get['address_id'])) {
-				$this->model_account_address->editAddress($this->customer->getId(), $this->request->get['address_id'], $this->request->post);
+				$this->model_account_address->editAddress($this->customer->getId(), $this->request->get['address_id'], $post_info);
 
 				// If address is in session update it.
 				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == $this->request->get['address_id'])) {

@@ -109,17 +109,13 @@ class Login extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Stop any undefined index messages.
-		$keys = [
-			'email',
-			'password',
-			'redirect'
+		$filter_data = [
+			'email'    => '',
+			'password' => '',
+			'redirect' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		$this->customer->logout();
 
@@ -131,7 +127,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			// Check how many login attempts have been made.
 			$this->load->model('account/customer');
 
-			$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
+			$login_info = $this->model_account_customer->getLoginAttempts($post_info['email']);
 
 			if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 				$json['error']['warning'] = $this->language->get('error_attempts');
@@ -140,14 +136,14 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Check if customer has been approved.
-			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+			$customer_info = $this->model_account_customer->getCustomerByEmail($post_info['email']);
 
 			if ($customer_info && !$customer_info['status']) {
 				$json['error']['warning'] = $this->language->get('error_approved');
-			} elseif (!$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
+			} elseif (!$this->customer->login($post_info['email'], html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8'))) {
 				$json['error']['warning'] = $this->language->get('error_login');
 
-				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
+				$this->model_account_customer->addLoginAttempt($post_info['email']);
 			}
 		}
 
@@ -186,10 +182,10 @@ class Login extends \Opencart\System\Engine\Controller {
 			// Create customer token
 			$this->session->data['customer_token'] = oc_token(26);
 
-			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+			$this->model_account_customer->deleteLoginAttempts($post_info['email']);
 
-			if (isset($this->request->post['redirect'])) {
-				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			if (isset($post_info['redirect'])) {
+				$redirect = urldecode(html_entity_decode($post_info['redirect'], ENT_QUOTES, 'UTF-8'));
 			} else {
 				$redirect = '';
 			}

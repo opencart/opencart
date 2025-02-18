@@ -6,16 +6,18 @@
  *
  * @return string
  */
-function oc_filter_data(string $data, array $filter = []): string {
+function oc_filter_data(array $filter = [], array $data = []): array {
 	$output_data = [];
 
 	foreach ($filter as $key => $value) {
 		if (!isset($data[$key]) || gettype($data[$key]) != gettype($value)) {
 			if (!is_array($value)) {
-				$output_data[] = $value;
+				$output_data[$key] = $value;
 			} else {
-				$output_data[] = oc_filter_data($value, $data[$key]);
+				$output_data[$key] = oc_filter_data($value, $data[$key]);
 			}
+		} else {
+			$output_data[$key] = $data[$key];
 		}
 	}
 

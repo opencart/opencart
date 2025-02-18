@@ -64,7 +64,7 @@ class Fraud extends \Opencart\System\Engine\Controller {
 					'uninstall' => $this->url->link('extension/fraud.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/fraud/' . $code, 'user_token=' . $this->session->data['user_token'])
-				] + $result;
+				];
 			}
 		}
 

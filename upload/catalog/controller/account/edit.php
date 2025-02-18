@@ -106,38 +106,34 @@ class Edit extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$keys = [
-				'firstname',
-				'lastname',
-				'email',
-				'telephone'
+			$filter_data = [
+				'firstname' => '',
+				'lastname'  => '',
+				'email'     => '',
+				'telephone' => ''
 			];
 
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
-				}
-			}
+			$post_info = oc_filter_data($filter_data, $this->request->post);
 
-			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
-			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+			if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if (!oc_validate_email($this->request->post['email'])) {
+			if (!oc_validate_email($post_info['email'])) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
 			$this->load->model('account/customer');
 
-			if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+			if (($this->customer->getEmail() != $post_info['email']) && $this->model_account_customer->getTotalCustomersByEmail($post_info['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
-			if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+			if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
@@ -148,9 +144,9 @@ class Edit extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif ($custom_field['type'] == 'text' && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+					} elseif ($custom_field['type'] == 'text' && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
@@ -159,7 +155,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Update customer in db
-			$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
+			$this->model_account_customer->editCustomer($this->customer->getId(), $post_info);
 
 			$json['success'] = $this->language->get('text_success');
 
@@ -167,11 +163,11 @@ class Edit extends \Opencart\System\Engine\Controller {
 			$this->session->data['customer'] = [
 				'customer_id'       => $this->customer->getId(),
 				'customer_group_id' => $this->customer->getGroupId(),
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => $this->request->post['custom_field'] ?? []
+				'firstname'         => $post_info['firstname'],
+				'lastname'          => $post_info['lastname'],
+				'email'             => $post_info['email'],
+				'telephone'         => $post_info['telephone'],
+				'custom_field'      => $post_info['custom_field'] ?? []
 			];
 
 			unset($this->session->data['shipping_method']);

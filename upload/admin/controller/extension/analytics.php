@@ -89,7 +89,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 					'uninstall' => $this->url->link('extension/analytics.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'store'     => $store_data
-				] + $result;
+				];
 			}
 		}
 

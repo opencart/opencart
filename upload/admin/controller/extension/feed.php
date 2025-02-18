@@ -69,7 +69,7 @@ class Feed extends \Opencart\System\Engine\Controller {
 					'uninstall' => $this->url->link('extension/feed.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/feed/' . $code, 'user_token=' . $this->session->data['user_token'])
-				] + $result;
+				];
 			}
 		}
 

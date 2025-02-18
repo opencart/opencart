@@ -64,7 +64,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 					'uninstall' => $this->url->link('extension/marketplace.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/marketplace/' . $code, 'user_token=' . $this->session->data['user_token'])
-				] + $result;
+				];
 			}
 		}
 

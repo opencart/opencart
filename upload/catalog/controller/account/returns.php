@@ -335,53 +335,49 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$keys = [
-				'order_id',
-				'firstname',
-				'lastname',
-				'email',
-				'telephone',
-				'product',
-				'model',
-				'reason',
-				'agree'
+			$filter_data = [
+				'order_id'  => 0,
+				'firstname' => '',
+				'lastname'  => '',
+				'email'     => '',
+				'telephone' => '',
+				'product'   => '',
+				'model'     => '',
+				'reason'    => 0,
+				'agree'     => 0
 			];
 
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
-				}
-			}
+			$post_info = oc_filter_data($filter_data, $this->request->post);
 
-			if (!$this->request->post['order_id']) {
+			if (!$post_info['order_id']) {
 				$json['error']['order_id'] = $this->language->get('error_order_id');
 			}
 
-			if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
-			if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+			if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if (!oc_validate_email($this->request->post['email'])) {
+			if (!oc_validate_email($post_info['email'])) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
-			if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+			if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			if (!oc_validate_length($this->request->post['product'], 1, 255)) {
+			if (!oc_validate_length($post_info['product'], 1, 255)) {
 				$json['error']['product'] = $this->language->get('error_product');
 			}
 
-			if (!oc_validate_length($this->request->post['model'], 1, 64)) {
+			if (!oc_validate_length($post_info['model'], 1, 64)) {
 				$json['error']['model'] = $this->language->get('error_model');
 			}
 
-			if (empty($this->request->post['return_reason_id'])) {
+			if (empty($post_info['return_reason_id'])) {
 				$json['error']['reason'] = $this->language->get('error_reason');
 			}
 
@@ -403,7 +399,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_return_id'));
 
-				if ($information_info && !isset($this->request->post['agree'])) {
+				if ($information_info && !isset($post_info['agree'])) {
 					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 				}
 			}
@@ -412,7 +408,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/returns');
 
-			$this->model_account_returns->addReturn($this->request->post);
+			$this->model_account_returns->addReturn($post_info);
 
 			$json['redirect'] = $this->url->link('account/returns.success', 'language=' . $this->config->get('config_language'), true);
 		}

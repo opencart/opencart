@@ -55,11 +55,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				'user_agent' => $this->request->server['HTTP_USER_AGENT']
 			];
 
-			$this->load->model('user/user');
-
 			$this->model_user_user->addAuthorize($this->user->getId(), $authorize_data);
 
-			setcookie('authorize', $token, time() + 60 * 60 * 24 * 365);
+			setcookie('authorize', $token, time() + 60 * 60 * 24 * 90);
 		}
 
 		$data['action'] = $this->url->link('common/authorize.validate', 'user_token=' . $this->session->data['user_token']);
@@ -67,7 +65,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Set the code to be emailed
 		$this->session->data['code'] = oc_token(4);
 
-		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login' && $this->request->get['route'] != 'common/authorize') {
+		if ($this->request->get['route'] != 'common/login' && $this->request->get['route'] != 'common/authorize') {
 			$args = $this->request->get;
 
 			$route = $args['route'];

@@ -210,8 +210,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// We grab the files from the extension template directory
 		$data['extensions'] = [];
 
-		$files = [];
-
 		$extensions = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
 
 		foreach ($extensions as $extension) {
@@ -220,6 +218,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$path = DIR_EXTENSION . $extension . '/catalog/view/template';
 
 			$directory = [$path];
+
+			$files = [];
 
 			while (count($directory) != 0) {
 				$next = array_shift($directory);

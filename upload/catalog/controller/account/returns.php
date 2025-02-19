@@ -336,15 +336,15 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$filter_data = [
-				'order_id'  => 0,
-				'firstname' => '',
-				'lastname'  => '',
-				'email'     => '',
-				'telephone' => '',
-				'product'   => '',
-				'model'     => '',
-				'reason'    => 0,
-				'agree'     => 0
+				'order_id'         => 0,
+				'firstname'        => '',
+				'lastname'         => '',
+				'email'            => '',
+				'telephone'        => '',
+				'product'          => '',
+				'model'            => '',
+				'return_reason_id' => 0,
+				'agree'            => 0
 			];
 
 			$post_info = oc_filter_data($filter_data, $this->request->post);

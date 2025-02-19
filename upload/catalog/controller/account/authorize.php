@@ -14,7 +14,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/authorize');
 
-		if (!$this->load->controller('account/login.validate')) {
+		if (!$this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
@@ -50,7 +50,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Set the code to be emailed
 		$this->session->data['code'] = oc_token(4);
 
-		if ($this->request->get['route'] != 'account/login' && $this->request->get['route'] != 'account/authorize') {
+		if (isset($this->request->get['route']) && $this->request->get['route'] != 'account/login' && $this->request->get['route'] != 'account/authorize') {
 			$args = $this->request->get;
 
 			$route = $args['route'];
@@ -87,7 +87,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$json['success'] = $this->language->get('text_resend');
+		if (!$this->customer->isLogged()) {
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
+			$json['success'] = $this->language->get('text_resend');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -103,9 +109,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->load->controller('account/login.validate')) {
-			$this->customer->logout();
-
+		if (!$this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 

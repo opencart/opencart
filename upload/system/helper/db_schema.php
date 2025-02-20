@@ -1053,7 +1053,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'override',
-				'type' => 'tinyint(1)'
+				'type' => 'text'
 			],
 			[
 				'name' => 'price',

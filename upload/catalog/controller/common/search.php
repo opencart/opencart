@@ -39,6 +39,6 @@ class Search extends \Opencart\System\Engine\Controller {
 			$search = '';
 		}
 
-		$this->response->redirect($this->url->link('product/search', 'search=' . $search, true));
+		$this->response->redirect($this->url->link('product/search', 'language=' . $this->config->get('config_language') . '&search=' . $search, true));
 	}
 }

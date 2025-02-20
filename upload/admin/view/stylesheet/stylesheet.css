@@ -269,7 +269,7 @@ a {
 /* Navigation */
 #navigation {
     text-transform: uppercase;
-    padding: 15px 15px 15px 15px;
+    padding: 22px 15px 15px 15px;
     color: #FFFFFF;
     background: #19222E;
     display: block;
@@ -884,4 +884,5 @@ div.required .col-form-label:not(span):before, div.required .form-label:before, 
 
 td {
     position: relative;
+	vertical-align: middle;
 }

@@ -100,8 +100,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		if ($query->num_rows) {
 			return [
-				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '',
-				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : ''
+				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : [],
+				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : []
 			] + $query->row;
 		}
 
@@ -127,8 +127,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		if ($query->num_rows) {
 			return [
-				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '',
-				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : ''
+				'payment_method'  => $query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : [],
+				'shipping_method' => $query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : []
 			] + $query->row;
 		}
 

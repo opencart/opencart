@@ -74,11 +74,11 @@ class Order extends \Opencart\System\Engine\Model {
 				'payment_zone_code'   => $payment_zone_code,
 				'payment_iso_code_2'  => $payment_iso_code_2,
 				'payment_iso_code_3'  => $payment_iso_code_3,
-				'payment_method'      => $order_query->row['payment_method'] ? json_decode($order_query->row['payment_method'], true) : '',
+				'payment_method'      => $order_query->row['payment_method'] ? json_decode($order_query->row['payment_method'], true) : [],
 				'shipping_zone_code'  => $shipping_zone_code,
 				'shipping_iso_code_2' => $shipping_iso_code_2,
 				'shipping_iso_code_3' => $shipping_iso_code_3,
-				'shipping_method'     => $order_query->row['shipping_method'] ? json_decode($order_query->row['shipping_method'], true) : ''
+				'shipping_method'     => $order_query->row['shipping_method'] ? json_decode($order_query->row['shipping_method'], true) : []
 			] + $order_query->row;
 		} else {
 			return [];

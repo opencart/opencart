@@ -120,17 +120,17 @@ class Order extends \Opencart\System\Engine\Model {
 
 			return [
 				'products'              => $this->getProducts($order_id),
-				'custom_field'          => json_decode($order_query->row['custom_field'], true),
+				'custom_field'          => $order_query->row['custom_field'] ? json_decode($order_query->row['custom_field'], true) : [],
 				'payment_zone_code'     => $payment_zone_code,
 				'payment_iso_code_2'    => $payment_iso_code_2,
 				'payment_iso_code_3'    => $payment_iso_code_3,
-				'payment_custom_field'  => json_decode($order_query->row['payment_custom_field'], true),
-				'payment_method'        => json_decode($order_query->row['payment_method'], true),
+				'payment_custom_field'  => $order_query->row['payment_custom_field'] ? json_decode($order_query->row['payment_custom_field'], true) : [],
+				'payment_method'        => $order_query->row['payment_method'] ? json_decode($order_query->row['payment_method'], true) : [],
 				'shipping_zone_code'    => $shipping_zone_code,
 				'shipping_iso_code_2'   => $shipping_iso_code_2,
 				'shipping_iso_code_3'   => $shipping_iso_code_3,
-				'shipping_custom_field' => json_decode($order_query->row['shipping_custom_field'], true),
-				'shipping_method'       => json_decode($order_query->row['shipping_method'], true),
+				'shipping_custom_field' => $order_query->row['shipping_custom_field'] ? json_decode($order_query->row['shipping_custom_field'], true) : [],
+				'shipping_method'       => $order_query->row['shipping_method'] ? json_decode($order_query->row['shipping_method'], true) : [],
 				'reward'                => $reward,
 				'affiliate'             => $affiliate,
 				'language_code'         => $language_code
@@ -263,11 +263,11 @@ class Order extends \Opencart\System\Engine\Model {
 
 		foreach ($query->rows as $key => $result) {
 			$order_data[$key] = [
-				'custom_field'          => json_decode($result['custom_field'], true),
-				'payment_custom_field'  => json_decode($result['payment_custom_field'], true),
-				'payment_method'        => json_decode($result['payment_method'], true),
-				'shipping_custom_field' => json_decode($result['shipping_custom_field'], true),
-				'shipping_method'       => json_decode($result['shipping_method'], true)
+				'custom_field'          => $result['custom_field'] ? json_decode($result['custom_field'], true) : [],
+				'payment_custom_field'  => $result['payment_custom_field'] ? json_decode($result['payment_custom_field'], true) : [],
+				'payment_method'        => $result['payment_method'] ? json_decode($result['payment_method'], true) : [],
+				'shipping_custom_field' => $result['shipping_custom_field'] ? json_decode($result['shipping_custom_field'], true) : [],
+				'shipping_method'       => $result['shipping_method'] ? json_decode($result['shipping_method'], true) : []
 			] + $result;
 		}
 

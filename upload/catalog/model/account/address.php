@@ -175,7 +175,7 @@ class Address extends \Opencart\System\Engine\Model {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => json_decode($address_query->row['custom_field'], true)
+				'custom_field'   => $address_query->row['custom_field'] ? json_decode($address_query->row['custom_field'], true) : []
 			] + $address_query->row;
 		} else {
 			return [];
@@ -249,7 +249,7 @@ class Address extends \Opencart\System\Engine\Model {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => json_decode($result['custom_field'], true)
+				'custom_field'   => $result['custom_field'] ? json_decode($result['custom_field'], true) : []
 			] + $result;
 		}
 

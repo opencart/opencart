@@ -113,13 +113,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
-		} else {
-			$token = '';
-		}
-
 		if (!$json) {
+			if (isset($this->request->cookie['authorize'])) {
+				$token = $this->request->cookie['authorize'];
+			} else {
+				$token = '';
+			}
+
 			$this->load->model('account/customer');
 
 			$authorize_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
@@ -140,6 +140,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// On success we need to reset the attempts and status.
 			$this->model_account_customer->editAuthorizeStatus($authorize_info['customer_authorize_id'], true);
 			$this->model_account_customer->editAuthorizeTotal($authorize_info['customer_authorize_id'], 0);
 

@@ -951,8 +951,8 @@ class Product extends \Opencart\System\Engine\Model {
 		if ($query->num_rows) {
 			$product_data = $query->row;
 
-			$product_data['variant'] = json_decode($product_data['variant'], true);
-			$product_data['override'] = json_decode($product_data['override'], true);
+			$product_data['variant'] = $product_data['variant'] ? json_decode($product_data['variant'], true) : [];
+			$product_data['override'] = $product_data['override'] ? json_decode($product_data['override'], true) : [];
 		}
 
 		return $product_data;
@@ -1070,8 +1070,8 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $key => $result) {
 			$product_data[$key] = $result;
 
-			$product_data[$key]['variant'] = json_decode($result['variant'], true);
-			$product_data[$key]['override'] = json_decode($result['override'], true);
+			$product_data[$key]['variant'] = $result['variant'] ? json_decode($result['variant'], true) : [];
+			$product_data[$key]['override'] = $result['override'] ? json_decode($result['override'], true) : [];
 		}
 
 		return $product_data;

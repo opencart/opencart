@@ -90,7 +90,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 
 		return [
 			'name'       => $query->row['name'],
-			'permission' => json_decode($query->row['permission'], true)
+			'permission' => $query->row['permission'] ? json_decode($query->row['permission'], true) : []
 		];
 	}
 
@@ -176,7 +176,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 		$user_group_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
 		if ($user_group_query->num_rows) {
-			$data = json_decode($user_group_query->row['permission'], true);
+			$data = $user_group_query->row['permission'] ? json_decode($user_group_query->row['permission'], true) : [];
 
 			$data[$type][] = $route;
 
@@ -203,7 +203,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 		$user_group_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
 		if ($user_group_query->num_rows) {
-			$data = json_decode($user_group_query->row['permission'], true);
+			$data = $user_group_query->row['permission'] ? json_decode($user_group_query->row['permission'], true) : [];
 
 			if (isset($data[$type])) {
 				$data[$type] = array_diff($data[$type], [$route]);

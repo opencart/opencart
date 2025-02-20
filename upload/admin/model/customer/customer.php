@@ -171,7 +171,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($query->num_rows) {
-			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
+			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
 		} else {
 			return [];
 		}
@@ -194,7 +194,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		if ($query->num_rows) {
-			return ['custom_field' => json_decode($query->row['custom_field'], true)] + $query->row;
+			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
 		} else {
 			return [];
 		}
@@ -300,7 +300,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$customer_data[] = $result + ['custom_field' => json_decode($result['custom_field'], true)];
+			$customer_data[] = $result + ['custom_field' => $result['custom_field'] ? json_decode($result['custom_field'], true) : []];
 		}
 
 		return $customer_data;
@@ -585,7 +585,7 @@ class Customer extends \Opencart\System\Engine\Model {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => json_decode($address_query->row['custom_field'], true)
+				'custom_field'   => $address_query->row['custom_field'] ? json_decode($address_query->row['custom_field'], true) : []
 			] + $address_query->row;
 		}
 
@@ -659,7 +659,7 @@ class Customer extends \Opencart\System\Engine\Model {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => json_decode($result['custom_field'], true)
+				'custom_field'   => $result['custom_field'] ? json_decode($result['custom_field'], true) : []
 			] + $result;
 		}
 

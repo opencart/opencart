@@ -50,7 +50,7 @@ class Setting extends \Opencart\System\Engine\Model {
 			if (!$result['serialized']) {
 				$setting_data[$result['key']] = $result['value'];
 			} else {
-				$setting_data[$result['key']] = json_decode($result['value'], true);
+				$setting_data[$result['key']] = $result['value'] ? json_decode($result['value'], true) : [];
 			}
 		}
 

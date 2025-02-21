@@ -32,8 +32,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		$ignore = [
-			'account/logout',
-			'account/authorize'
+			'account/authorize',
+			'account/logout'
 		];
 
 		if ($this->config->get('config_2fa') && $this->customer->isLogged() && !in_array($route, $ignore)) {
@@ -41,12 +41,12 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
-			if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
-				return new \Opencart\System\Engine\Action('account/authorize');
-			}
-
 			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
 				return new \Opencart\System\Engine\Action('account/authorize.unlock');
+			}
+
+			if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
+				return new \Opencart\System\Engine\Action('account/authorize');
 			}
 		}
 

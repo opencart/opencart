@@ -1422,6 +1422,13 @@
                   </div>
                 </div>
                 <div class="row mb-3">
+                  <label for="input-2fa-expire" class="col-sm-2 col-form-label">{{ entry_2fa_expire }}</label>
+                  <div class="col-sm-10">
+                    <input type="number" name="config_2fa_expire" value="{{ config_2fa_expire }}" id="input-2fa-expire" class="form-control"/>
+                    <div class="form-text">{{ help_2fa_expire }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_password }}</label>
                   <div class="col-sm-10">
                     <div class="form-control" style="overflow: auto;">

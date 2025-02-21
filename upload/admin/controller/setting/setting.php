@@ -448,6 +448,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		// Security
 		$data['config_user_2fa'] = $this->config->get('config_user_2fa');
+		$data['config_2fa_expire'] = $this->config->get('config_2fa_expire');
 		$data['config_user_password_uppercase'] = $this->config->get('config_user_password_uppercase');
 		$data['config_user_password_lowercase'] = $this->config->get('config_user_password_lowercase');
 		$data['config_user_password_number'] = $this->config->get('config_user_password_number');

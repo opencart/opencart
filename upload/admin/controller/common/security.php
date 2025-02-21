@@ -256,7 +256,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			if (!is_dir($base_new)) {
 				mkdir($base_new, 0777);
 			}
-			
+
 			$total = count($files);
 			$limit = 200;
 

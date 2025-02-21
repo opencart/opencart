@@ -18,37 +18,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
-		} else {
-			$token = '';
-		}
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('account/customer');
-
-		$login_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
-
-		if (!$login_info) {
-			// Create a token that can be stored as a cookie and will be used to identify device is safe.
-			$token = oc_token(32);
-
-			$authorize_data = [
-				'token'      => $token,
-				'ip'         => oc_get_ip(),
-				'user_agent' => $this->request->server['HTTP_USER_AGENT']
-			];
-
-			$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
-
-			setcookie('authorize', $token, time() + 60 * 60 * 24 * 90);
-		}
-
 		$data['action'] = $this->url->link('account/authorize.save', 'customer_token=' . $this->session->data['customer_token']);
-
-		// Set the code to be emailed
-		$this->session->data['code'] = oc_token(4);
 
 		if (isset($this->request->get['route']) && $this->request->get['route'] != 'account/login' && $this->request->get['route'] != 'account/authorize') {
 			$args = $this->request->get;
@@ -92,7 +64,41 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			if (isset($this->request->cookie['authorize'])) {
+				$token = $this->request->cookie['authorize'];
+			} else {
+				$token = '';
+			}
+
+			$this->load->model('account/customer');
+
+			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
+				$json['error'] = $this->language->get('error_warning');
+			}
+		}
+
+		if (!$json) {
 			$json['success'] = $this->language->get('text_resend');
+
+			// Set the code to be emailed
+			$this->session->data['code'] = oc_token(4);
+
+			if (!$token_info) {
+				// Create a token that can be stored as a cookie and will be used to identify device is safe.
+				$token = oc_token(32);
+
+				$authorize_data = [
+					'token'      => $token,
+					'ip'         => oc_get_ip(),
+					'user_agent' => $this->request->server['HTTP_USER_AGENT']
+				];
+
+				$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
+
+				setcookie('authorize', $token, time() + 60 * 60 * 24 * 90);
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

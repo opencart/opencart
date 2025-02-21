@@ -261,17 +261,18 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$filter_data = [
-			'attribute_id'          => 0,
-			'attribute_group_id'    => 0,
-			'attribute_description' => []
-		];
-
-		$post_info = oc_filter_data($this->request->post, $filter_data);
-
 		if (!$this->user->hasPermission('modify', 'catalog/attribute')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
+
+		$filter_data = [
+			'attribute_id'          => 0,
+			'attribute_group_id'    => 0,
+			'attribute_description' => [],
+			'sort_order'            => 0
+		];
+
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		if (!$post_info['attribute_group_id']) {
 			$json['error']['attribute_group'] = $this->language->get('error_attribute_group');

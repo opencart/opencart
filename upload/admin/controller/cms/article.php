@@ -332,7 +332,16 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['article_description'] as $language_id => $value) {
+		$filter_data = [
+			'article_id'          => 0,
+			'article_description' => [],
+			'author'			  => '',
+			'article_seo_url'     => []
+		];
+
+		$post_info = oc_filter_data($this->request->post, $filter_data);
+
+		foreach ($post_info['article_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -342,14 +351,14 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!oc_validate_length($this->request->post['author'], 3, 64)) {
+		if (!oc_validate_length($post_info['author'], 3, 64)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if ($this->request->post['article_seo_url']) {
+		if ($post_info['article_seo_url']) {
 			$this->load->model('design/seo_url');
 
-			foreach ($this->request->post['article_seo_url'] as $store_id => $language) {
+			foreach ($post_info['article_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!oc_validate_length($keyword, 1, 64)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
@@ -375,10 +384,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('cms/article');
 
-			if (!$this->request->post['article_id']) {
-				$json['article_id'] = $this->model_cms_article->addArticle($this->request->post);
+			if (!$post_info['article_id']) {
+				$json['article_id'] = $this->model_cms_article->addArticle($post_info);
 			} else {
-				$this->model_cms_article->editArticle($this->request->post['article_id'], $this->request->post);
+				$this->model_cms_article->editArticle($post_info['article_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

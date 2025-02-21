@@ -1151,6 +1151,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_seo_url'] = [];
 		}
 
+
 		// Layout
 		$this->load->model('design/layout');
 
@@ -1187,7 +1188,59 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['product_description'] as $language_id => $value) {
+		$filter_data = [
+			'product_id'           => 0,
+			'master_id'            => 0,
+			'model'                => '',
+			'sku'                  => '',
+			'upc'                  => '',
+			'ean'                  => '',
+			'jan'                  => '',
+			'isbn'                 => '',
+			'mpn'                  => '',
+			'location'             => '',
+			'variant'              => '',
+			'override'             => '',
+			'quantity'             => 0,
+			'stock_status_id'      => 0,
+			'image'                => '',
+			'manufacturer_id'      => 0,
+			'shipping'             => 0,
+			'price'                => 0,
+			'points'               => 0,
+			'tax_class_id'         => 0,
+			'date_available'       => 0,
+			'weight'               => 0,
+			'weight_class_id'      => 0,
+			'length'               => 0,
+			'width'                => 0,
+			'height'               => 0,
+			'length_class_id'      => 0,
+			'subtract'             => 0,
+			'minimum'              => 0,
+			'rating'               => 0,
+			'sort_order'           => 0,
+			'status'               => 0,
+			'product_attribute'    => [],
+			'product_description'  => [],
+			'product_discount'     => [],
+			'product_filter'       => [],
+			'product_image'        => [],
+			'product_option'       => [],
+			'product_option_value' => [],
+			'product_related'      => [],
+			'product_reward'       => [],
+			'product_subscription' => [],
+			'product_to_category'  => [],
+			'product_to_download'  => [],
+			'product_layout'       => [],
+		    'product_store'        => [],
+			'product_seo_url'      => []
+		];
+
+		$post_info = oc_filter_data($filter_data, $this->request->post);
+
+		foreach ($post_info['product_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -1197,26 +1250,26 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!oc_validate_length($this->request->post['model'], 1, 64)) {
+		if (!oc_validate_length($post_info['model'], 1, 64)) {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
 		$this->load->model('catalog/product');
 
-		if ($this->request->post['master_id']) {
-			$product_options = $this->model_catalog_product->getOptions($this->request->post['master_id']);
+		if ($post_info['master_id']) {
+			$product_options = $this->model_catalog_product->getOptions($post_info['master_id']);
 
 			foreach ($product_options as $product_option) {
-				if (isset($this->request->post['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {
+				if (isset($post_info['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($post_info['variant'][$product_option['product_option_id']])) {
 					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
 		}
 
-		if ($this->request->post['product_seo_url']) {
+		if ($post_info['product_seo_url']) {
 			$this->load->model('design/seo_url');
 
-			foreach ($this->request->post['product_seo_url'] as $store_id => $language) {
+			foreach ($post_info['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!oc_validate_length($keyword, 1, 64)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
@@ -1228,7 +1281,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id);
 
-					if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($this->request->post['product_id']) || $seo_url_info['value'] != (int)$this->request->post['product_id'])) {
+					if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($post_info['product_id']) || $seo_url_info['value'] != (int)$post_info['product_id'])) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_exists');
 					}
 				}
@@ -1240,25 +1293,25 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!$this->request->post['product_id']) {
-				if (!$this->request->post['master_id']) {
+			if (!$post_info['product_id']) {
+				if (!$post_info['master_id']) {
 					// Normal product add
-					$json['product_id'] = $this->model_catalog_product->addProduct($this->request->post);
+					$json['product_id'] = $this->model_catalog_product->addProduct($post_info);
 				} else {
 					// Variant product add
-					$json['product_id'] = $this->model_catalog_product->addVariant($this->request->post['master_id'], $this->request->post);
+					$json['product_id'] = $this->model_catalog_product->addVariant($post_info['master_id'], $post_info);
 				}
 			} else {
 				if (!$this->request->post['master_id']) {
 					// Normal product edit
-					$this->model_catalog_product->editProduct($this->request->post['product_id'], $this->request->post);
+					$this->model_catalog_product->editProduct($post_info['product_id'], $post_info);
 				} else {
 					// Variant product edit
-					$this->model_catalog_product->editVariant($this->request->post['master_id'], $this->request->post['product_id'], $this->request->post);
+					$this->model_catalog_product->editVariant($post_info['master_id'], $post_info['product_id'], $post_info);
 				}
 
 				// Variant products edit if master product is edited
-				$this->model_catalog_product->editVariants($this->request->post['product_id'], $this->request->post);
+				$this->model_catalog_product->editVariants($post_info['product_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

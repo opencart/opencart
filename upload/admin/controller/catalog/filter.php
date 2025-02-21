@@ -267,13 +267,21 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['filter_description'] as $language_id => $value) {
+		$filter_data = [
+			'filter_id'          => 0,
+			'filter_description' => [],
+			'filter_group_id'    => 0
+		];
+
+		$post_info = oc_filter_data($this->request->post, $filter_data);
+
+		foreach ($post_info['filter_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if (empty($this->request->post['filter_group_id'])) {
+		if (empty($post_info['filter_group_id'])) {
 			$json['error']['filter_group'] = $this->language->get('error_filter_group');
 		}
 
@@ -284,10 +292,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/filter');
 
-			if (!$this->request->post['filter_id']) {
-				$json['filter_id'] = $this->model_catalog_filter->addFilter($this->request->post);
+			if (!$post_info['filter_id']) {
+				$json['filter_id'] = $this->model_catalog_filter->addFilter($post_info);
 			} else {
-				$this->model_catalog_filter->editFilter($this->request->post['filter_id'], $this->request->post);
+				$this->model_catalog_filter->editFilter($post_info['filter_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -312,6 +312,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		}
+
 		$filter_data = [
 			'manufacturer_id'      => 0,
 			'name'                 => '',
@@ -319,10 +323,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		];
 
 		$post_info = oc_filter_data($this->request->post, $filter_data);
-
-		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['error']['warning'] = $this->language->get('error_permission');
-		}
 
 		if (!oc_validate_length($post_info['name'], 1, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');

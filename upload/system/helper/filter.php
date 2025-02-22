@@ -1,10 +1,11 @@
 <?php
 /**
- * Filter Keyword
+ * Filter Data
  *
- * @param string $string
+ * @param array<string, mixed> $filter array of filter
+ * @param array<string, mixed> $data   array of data
  *
- * @return string
+ * @return array<string, mixed>
  */
 function oc_filter_data(array $filter = [], array $data = []): array {
 	$output_data = [];

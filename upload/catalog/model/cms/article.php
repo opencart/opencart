@@ -213,6 +213,8 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $this->load->model('cms/article');
+     *
 	 * $layout_id = $this->model_cms_article->getLayoutId($article_id);
 	 */
 	public function getLayoutId(int $article_id): int {

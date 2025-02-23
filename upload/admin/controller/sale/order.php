@@ -1977,6 +1977,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * Autocomplete
+	 *
+	 * @return void
+	 */
 	public function autocomplete(): void {
 		$this->load->language('sale/order');
 

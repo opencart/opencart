@@ -471,7 +471,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'status'	 => 0
 		];
 
-		$post_info = oc_filter_data($this->request->post, $filter_data);
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		if (!oc_validate_length($post_info['author'], 3, 64)) {
 			$json['error']['author'] = $this->language->get('error_author');

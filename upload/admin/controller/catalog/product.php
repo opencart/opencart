@@ -1231,8 +1231,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			'product_related'      => [],
 			'product_reward'       => [],
 			'product_subscription' => [],
-			'product_to_category'  => [],
-			'product_to_download'  => [],
+			'product_category'     => [],
+			'product_download'     => [],
 			'product_layout'       => [],
 		    'product_store'        => [],
 			'product_seo_url'      => []

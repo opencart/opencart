@@ -322,7 +322,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'manufacturer_seo_url' => []
 		];
 
-		$post_info = oc_filter_data($this->request->post, $filter_data);
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		if (!oc_validate_length($post_info['name'], 1, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');

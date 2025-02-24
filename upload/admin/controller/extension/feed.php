@@ -58,7 +58,7 @@ class Feed extends \Opencart\System\Engine\Controller {
 
 				$extension = substr($path, 0, strpos($path, '/'));
 
-				$code = basename(c, '.php');
+				$code = basename($result, '.php');
 
 				$this->load->language('extension/' . $extension . '/feed/' . $code, $code);
 

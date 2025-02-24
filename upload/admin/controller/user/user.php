@@ -519,7 +519,7 @@ class User extends \Opencart\System\Engine\Controller {
 			'password'      => ''
 		];
 
-		$post_info = oc_filter_data($this->request->post, $filter_data);
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		if (!$this->user->hasPermission('modify', 'user/user')) {
 			$json['error']['warning'] = $this->language->get('error_permission');

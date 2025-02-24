@@ -262,7 +262,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			'sort_order'			   => 0
 		];
 
-		$post_info = oc_filter_data($this->request->post, $filter_data);
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		foreach ($post_info['filter_group_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 64)) {

@@ -19,7 +19,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * catalog/model/account/customer/editCode/after
 	 */
-	public function index(&$route, &$args, &$output): void {
+	public function index(string &$route, array &$args, &$output): void {
 		$email = $this->customer->getEmail();
 
 		if (isset($this->session->data['code'])) {

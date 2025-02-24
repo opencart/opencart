@@ -59,7 +59,7 @@ function oc_strrpos(string $string, string $needle, int $offset = 0) {
  * @param string $string
  * @param int    $offset
  * @param ?int   $length
- * 
+ *
  * @return string
  */
 function oc_substr(string $string, int $offset, ?int $length = null): string {
@@ -68,7 +68,7 @@ function oc_substr(string $string, int $offset, ?int $length = null): string {
 
 /**
  * @param string $string
- * 
+ *
  * @return string
  */
 function oc_strtoupper(string $string): string {
@@ -77,14 +77,14 @@ function oc_strtoupper(string $string): string {
 
 /**
  * @param string $string
- * 
+ *
  * @return string
  */
 function oc_strtolower(string $string): string {
 	return mb_strtolower($string);
 }
 
-/** 
+/**
  * Other
  *
  * @param int $length
@@ -96,7 +96,7 @@ function oc_token(int $length = 32): string {
 }
 
 // Pre PHP8 compatibility
-/** 
+/*
  * @param string $string
  * @param string $find
  *
@@ -114,7 +114,7 @@ if (!function_exists('str_starts_with')) {
 	}
 }
 
-/** 
+/*
  * @param string $string
  * @param string $find
  *
@@ -126,7 +126,7 @@ if (!function_exists('str_ends_with')) {
 	}
 }
 
-/** 
+/*
  * @param string $string
  * @param string $find
  *

@@ -335,7 +335,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'article_id'          => 0,
 			'article_description' => [],
-			'author'			  => '',
+			'author'              => '',
 			'article_seo_url'     => []
 		];
 

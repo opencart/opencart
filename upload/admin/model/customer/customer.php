@@ -1300,7 +1300,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize
 	 *
-	 * @param int $user_authorize_id primary key of the user authorize record
+	 * @param int $customer_authorize_id
+	 * @param int $user_authorize_id     primary key of the user authorize record
 	 *
 	 * @return array<string, mixed> authorize record that has user authorize ID
 	 *

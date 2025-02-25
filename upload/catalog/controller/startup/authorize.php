@@ -32,8 +32,16 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		// Block access to 2fa if not active or logged in
-		if ($route == 'account/authorize' && (!$this->config->get('config_2fa') || !$this->customer->isLogged())) {
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+		if ($route == 'account/authorize') {
+			// 1. Make se the customer is logged in.
+			if (!$this->customer->isLogged()) {
+				$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+			}
+
+			// 2. Make sure 2fa is enabled.
+			if (!$this->config->get('config_2fa')) {
+				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'), true));
+			}
 		}
 
 		if ($this->config->get('config_2fa') && $this->customer->isLogged()) {

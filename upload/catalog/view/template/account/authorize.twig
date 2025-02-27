@@ -8,6 +8,12 @@
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
+            {% if success %}
+              <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+            {% endif %}
+            {% if error_warning %}
+              <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+            {% endif %}
             <form id="form-authorize" action="{{ action }}" method="post" data-oc-toggle="ajax">
               <p>{{ text_security }}</p>
               <p>{{ text_code }}</p>
@@ -15,7 +21,7 @@
                 <label for="input-code" class="form-label">{{ entry_code }}</label>
                 <div class="input-group">
                   <input type="text" name="code" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_resend }}</button>
+                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_send }}</button>
                 </div>
                 <div id="error-code" class="invalid-feedback"></div>
               </div>
@@ -37,7 +43,7 @@ $('#button-send').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=account/authorize.send&customer_token={{ customer_token }}',
+        url: 'index.php?route=account/authorize.send&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $('#button-send').button('loading');
@@ -64,10 +70,6 @@ $('#button-send').on('click', function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
-
-$(document).ready(function() {
-    $('#button-send').trigger('click');
 });
 //--></script>
 {{ footer }}

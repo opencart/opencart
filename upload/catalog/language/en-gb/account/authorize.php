@@ -15,7 +15,7 @@ $_['text_resend']   = 'Success: An email has been sent to your email account wit
 $_['entry_code']    = 'Security Code';
 
 // Button
-$_['button_resend'] = 'Resend';
+$_['button_send']   = 'Send';
 $_['button_reset']  = 'Reset';
 
 // Error

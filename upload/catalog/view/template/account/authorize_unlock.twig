@@ -23,7 +23,7 @@ $('#button-reset').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=account/authorize.confirm&user_token={{ user_token }}',
+        url: 'index.php?route=account/authorize.confirm&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $('#button-reset').button('loading');

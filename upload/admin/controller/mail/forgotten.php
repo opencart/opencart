@@ -32,8 +32,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$type = '';
 		}
 
-		if (isset($args[1])) {
-			$code = (string)$args[1];
+		if (isset($args[2])) {
+			$code = (string)$args[2];
 		} else {
 			$code = '';
 		}

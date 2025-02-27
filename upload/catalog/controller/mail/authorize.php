@@ -26,8 +26,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$customer_id = '';
 		}
 
-		if (isset($args[2])) {
-			$code = (string)$args[2];
+		if (isset($args[1])) {
+			$code = (string)$args[1];
 		} else {
 			$code = '';
 		}
@@ -81,7 +81,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];
 		} else {
-			$customer_id = '';
+			$customer_id = 0;
 		}
 
 		if (isset($args[1])) {

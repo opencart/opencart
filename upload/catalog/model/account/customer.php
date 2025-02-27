@@ -101,7 +101,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $this->model_account_customer->editPassword($email, $password);
 	 */
 	public function editPassword(string $email, string $password): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `password` = '" . $this->db->escape(password_hash(html_entity_decode($password, ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `code` = '' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `password` = '" . $this->db->escape(password_hash(html_entity_decode($password, ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 	}
 
 	/**
@@ -584,7 +584,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $token_info = $this->model_account_customer->getTokenByCode($code);
 	 */
 	public function getTokenByCode(string $code): array {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `date_added` < DATE_ADD(NOW(), INTERVAL 10 MINUTE)");
+		//$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE DATE_ADD(`date_added`, INTERVAL 10 MINUTE) > NOW()");
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_token` `ct` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ct`.`customer_id` = `c`.`customer_id`) WHERE `ct`.`code` = '" . $this->db->escape($code) . "'");
 

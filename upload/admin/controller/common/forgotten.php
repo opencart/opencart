@@ -58,26 +58,20 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
-		$keys = ['email'];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = oc_filter_data(['email' => ''], $this->request->post);
 
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
+		$user_info = $this->model_user_user->getUserByEmail($post_info['email']);
 
 		if (!$user_info) {
 			$json['error'] = $this->language->get('error_email');
 		}
 
 		if (!$json) {
-			$this->model_user_user->editCode($this->request->post['email'], oc_token(40));
-
 			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->model_user_user->addToken($user_info['customer_id'], 'password', oc_token(40));
 
 			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
@@ -112,9 +106,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUserByEmail($email);
+		$user_info = $this->model_user_user->getTokenByCode($code);
 
-		if (!$user_info || !$user_info['code'] || $user_info['code'] !== $code) {
+		if (!$user_info || !$user_info['email'] || $user_info['email'] !== $email || $user_info['type'] != 'password') {
 			$this->model_user_user->editCode($email, '');
 
 			$this->session->data['error'] = $this->language->get('error_code');
@@ -136,7 +130,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/forgotten.reset')
 		];
 
-		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+		$this->session->data['reset_token'] = oc_token(26);
 
 		$data['reset'] = $this->url->link('common/forgotten.password', 'email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
 		$data['back'] = $this->url->link('common/login');

@@ -78,7 +78,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_sent');
 
 			$this->model_account_customer->addToken($customer_info['customer_id'], 'password', oc_token(40));
 
@@ -196,11 +196,11 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$customer_info = $this->model_account_customer->getTokenByCode($code);
 
-			if (!$customer_info || !$customer_info['email'] || $customer_info['email'] !== $email || $customer_info['type'] !== 'password') {
+			if (!$customer_info || !$customer_info['email'] || $customer_info['email'] !== $email || $customer_info['type'] != 'password') {
+				$this->session->data['error'] = $this->language->get('error_code');
+
 				// Reset token
 				$this->model_account_customer->deleteTokenByCode($code);
-
-				$this->session->data['error'] = $this->language->get('error_code');
 
 				$json['redirect'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'), true);
 			}
@@ -208,8 +208,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$filter_data = [
-				'password',
-				'confirm'
+				'password' => '',
+				'confirm'  => ''
 			];
 
 			$post_info = oc_filter_data($filter_data, $this->request->post);

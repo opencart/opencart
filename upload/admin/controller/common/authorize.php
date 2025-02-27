@@ -210,7 +210,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Create reset code
 		$this->load->model('user/user');
 
-		$this->model_user_user->editCode($this->user->getEmail(), oc_token(32));
+		$this->model_user_user->addToken($this->user->getId(), 'authorize', oc_token(32));
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -2429,10 +2429,6 @@ function oc_db_schema() {
 			[
 				'name' => 'date_added',
 				'type' => 'datetime'
-			],
-			[
-				'name' => 'date_expire',
-				'type' => 'datetime'
 			]
 		],
 		'primary' => [
@@ -7575,6 +7571,46 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'user_login_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'user_id',
+				'table' => 'user',
+				'field' => 'user_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'user_token',
+		'field' => [
+			[
+				'name'           => 'user_token_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'user_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'text'
+			],
+			[
+				'name' => 'type',
+				'type' => 'varchar(10)'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'user_token_id'
 		],
 		'foreign' => [
 			[

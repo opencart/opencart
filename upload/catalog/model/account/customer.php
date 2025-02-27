@@ -105,42 +105,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Code
-	 *
-	 * @param string $email
-	 * @param string $code
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $this->model_account_customer->editCode($email, $code);
-	 */
-	public function editCode(string $email, string $code): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
-	}
-
-	/**
-	 * Edit Token
-	 *
-	 * @param string $email
-	 * @param string $token
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $this->model_account_customer->editToken($email, $token);
-	 */
-	public function editToken(string $email, string $token): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
-	}
-
-	/**
 	 * Edit Newsletter
 	 *
 	 * @param int  $customer_id primary key of the customer record
@@ -254,54 +218,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		if ($query->num_rows) {
-			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
-		} else {
-			return [];
-		}
-	}
-
-	/**
-	 * Get Customer By Code
-	 *
-	 * @param string $code
-	 *
-	 * @return array<string, mixed>
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $customer_info = $this->model_account_customer->getCustomerByCode($code);
-	 */
-	public function getCustomerByCode(string $code): array {
-		$query = $this->db->query("SELECT `customer_id`, `firstname`, `lastname`, `email` FROM `" . DB_PREFIX . "customer` WHERE `code` = '" . $this->db->escape($code) . "' AND `code` != ''");
-
-		if ($query->num_rows) {
-			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
-		} else {
-			return [];
-		}
-	}
-
-	/**
-	 * Get Customer By Token
-	 *
-	 * @param string $token
-	 *
-	 * @return array<string, mixed>
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $customer_info = $this->model_account_customer->getCustomerByToken($token);
-	 */
-	public function getCustomerByToken(string $token): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `token` = '" . $this->db->escape($token) . "' AND `token` != ''");
-
-		if ($query->num_rows) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '' WHERE `customer_id` = '" . (int)$query->row['customer_id'] . "'");
-
 			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
 		} else {
 			return [];
@@ -562,6 +478,19 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query($sql);
 	}
 
+	/**
+	 * Delete Customer Authorizes
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->deleteAuthorizes($customer_id);
+	 */
 	public function deleteAuthorizeByToken(int $customer_id, string $token): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 	}
@@ -620,5 +549,62 @@ class Customer extends \Opencart\System\Engine\Model {
 	 */
 	public function resetAuthorizes(int $customer_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * Add Token
+	 *
+	 * @param int    $customer_id primary key of the customer record
+	 * @param string $type
+	 * @param string $code
+     *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $authorize_total = $this->model_account_customer->addToken($customer_id, $code);
+	 */
+	public function addToken(int $customer_id, string $type, string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "' AND `type` = '" . $this->db->escape($type) . "'");
+
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_token` SET `customer_id` = '" . (int)$customer_id . "', `code` = '" . $this->db->escape($code) . "', `type` = '" . $this->db->escape($type) . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Get Token By Code
+	 *
+	 * @param string $code
+	 *
+	 * @return array<string, mixed> token record that has customer ID, code
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $token_info = $this->model_account_customer->getTokenByCode($code);
+	 */
+	public function getTokenByCode(string $code): array {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `date_added` < DATE_ADD(NOW(), INTERVAL 10 MINUTE)");
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_token` `ct` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ct`.`customer_id` = `c`.`customer_id`) WHERE `ct`.`code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Delete Token
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->deleteToken($customer_id);
+	 */
+	public function deleteTokenByCode(string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 }

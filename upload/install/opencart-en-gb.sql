@@ -836,7 +836,7 @@ INSERT INTO `oc_event` (`code`, `description`, `trigger`, `action`, `status`)
 VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.', 'catalog/model/account/customer.addCustomer/after', 'event/activity.addCustomer', 1),
        ('activity_customer_edit', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.editCustomer/after', 'event/activity.editCustomer', 1),
        ('activity_customer_password', 'Adds edit password entry in the activity log.', 'catalog/model/account/customer.editPassword/after', 'event/activity.editPassword', 1),
-       ('activity_customer_forgotten', 'Adds forgotten password entry in the activity log.', 'catalog/model/account/customer.editCode/after', 'event/activity.forgotten', 1),
+       ('activity_customer_forgotten', 'Adds forgotten password entry in the activity log.', 'catalog/model/account/customer.addToken/after', 'event/activity.forgotten', 1),
        ('activity_customer_login', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.deleteLoginAttempts/after', 'event/activity.login', 1),
        ('activity_customer_transaction', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.addTransaction/after', 'event/activity.addTransaction', 1),
        ('activity_address_add', 'Adds new address entry in the activity log.', 'catalog/model/account/address.addAddress/after', 'event/activity.addAddress', 1),
@@ -849,9 +849,9 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('mail_customer_add', 'Sends mail to newly registered customers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register', 1),
        ('mail_customer_alert', 'Sends alert mail to store owner when a new customer registers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register.alert', 1),
        ('mail_customer_transaction', 'Sends mail to the customer when their transaction balance is updated.', 'catalog/model/account/customer.addTransaction/after', 'mail/transaction', 1),
-       ('mail_customer_forgotten', 'Sends mail to customers who have forgotten their password.', 'catalog/model/account/customer.editCode/after', 'mail/forgotten', 1),
+       ('mail_customer_forgotten', 'Sends mail to customers who have forgotten their password.', 'catalog/model/account/customer.addToken/after', 'mail/forgotten', 1),
        ('mail_customer_authorize', 'Sends mail login code to customers email to authorize login from a new device.', 'catalog/controller/account/authorize.send/after', 'mail/authorize', 1),
-       ('mail_customer_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'catalog/model/account/customer.editCode/after', 'mail/authorize.reset', 1),
+       ('mail_customer_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'catalog/model/account/customer.addToken/after', 'mail/authorize.reset', 1),
        ('mail_affiliate_add', 'Sends mail to newly registered affiliates.', 'catalog/model/account/affiliate.addAffiliate/after', 'mail/affiliate', 1),
        ('mail_affiliate_alert', 'Sends mail to new customers.', 'catalog/model/account/affiliate.addAffiliate/after', 'mail/affiliate.alert', 1),
        ('mail_order', 'Sends mail to customer when they make an order.', 'catalog/model/checkout/order.addHistory/before', 'mail/order', 1),
@@ -875,9 +875,9 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('admin_mail_customer_transaction', 'Sends mail to the customer when their transaction balance is updated.', 'admin/model/customer/customer.addTransaction/after', 'mail/transaction', 1),
        ('admin_mail_reward', 'Sends mail to the customer when their reward balance is updated.', 'admin/model/customer/customer.addReward/after', 'mail/reward', 1),
        ('admin_mail_return', 'Sends mail to customer when their return status is changed.', 'admin/model/sale/returns.addHistory/after', 'mail/returns', 1),
-       ('admin_mail_user_forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.editCode/after', 'mail/forgotten', 1),
+       ('admin_mail_user_forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.addToken/after', 'mail/forgotten', 1),
        ('admin_mail_user_authorize', 'Sends mail login code to users email to authorize login from a new device.', 'admin/controller/common/authorize.send/after', 'mail/authorize', 1),
-       ('admin_mail_user_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.editCode/after', 'mail/authorize.reset', 1);
+       ('admin_mail_user_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1);
 
 -----------------------------------------------------------
 

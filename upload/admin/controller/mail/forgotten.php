@@ -9,7 +9,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * admin/model/user/user/editCode/after
+	 * admin/model/user/user.addToken/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -20,16 +20,16 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		if (isset($this->request->get['route'])) {
-			$route = (string)$this->request->get['route'];
+		if (isset($args[0])) {
+			$user_id = (int)$args[0];
 		} else {
-			$route = '';
+			$user_id = 0;
 		}
 
-		if (isset($args[0])) {
-			$email = urldecode((string)$args[0]);
+		if (isset($args[1])) {
+			$type = (string)$args[1];
 		} else {
-			$email = '';
+			$type = '';
 		}
 
 		if (isset($args[1])) {
@@ -38,7 +38,11 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/forgotten.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		$this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($user_id);
+
+		if ($type == 'password' && $user_info) {
 			$this->load->language('mail/forgotten');
 
 			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -47,7 +51,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $store_name);
 
-			$data['reset'] = $this->url->link('common/forgotten.reset', 'email=' . $email . '&code=' . $code, true);
+			$data['reset'] = $this->url->link('common/forgotten.reset', 'email=' . $user_info['email'] . '&code=' . $code, true);
 			$data['ip'] = oc_get_ip();
 
 			$data['store'] = $store_name;
@@ -64,7 +68,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 				];
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($email);
+				$mail->setTo($user_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($store_name);
 				$mail->setSubject($subject);

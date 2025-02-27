@@ -41,7 +41,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			$events[] = [
 				'code'    => 'activity_customer_forgotten',
-				'trigger' => 'catalog/model/account/customer.editCode/after',
+				'trigger' => 'catalog/model/account/customer.addToken/after',
 				'action'  => 'event/activity.forgotten'
 			];
 
@@ -107,7 +107,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			$events[] = [
 				'code'    => 'mail_forgotten',
-				'trigger' => 'catalog/model/account/customer.editCode/after',
+				'trigger' => 'catalog/model/account/customer.addToken/after',
 				'action'  => 'mail/forgotten'
 			];
 
@@ -209,7 +209,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			$events[] = [
 				'code'    => 'admin_mail_forgotten',
-				'trigger' => 'admin/model/user/user.editCode/after',
+				'trigger' => 'admin/model/user/user.addToken/after',
 				'action'  => 'mail/forgotten'
 			];
 

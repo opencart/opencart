@@ -695,4 +695,63 @@ class User extends \Opencart\System\Engine\Model {
 			return 0;
 		}
 	}
+
+	/**
+	 * Add Token
+	 *
+	 * @param int    $user_id primary key of the user record
+	 * @param string $type
+     * @param string $codev
+	 *
+	 * @return int total number of authorize records that have user ID, token
+	 *
+	 * @example
+	 *
+	 * $this->load->model('user/user');
+	 *
+	 * $authorize_total = $this->model_user_user->addToken($user_id, $code, $type);
+	 */
+	public function addToken(int $user_id, string $type, string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_token` WHERE `user_id` = '" . (int)$user_id . "' AND `type` = '" . $this->db->escape($type) . "'");
+
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_token` SET `user_id` = '" . (int)$user_id . "', `code` = '" . $this->db->escape($code) . "', `type` = '" . $this->db->escape($type) . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Get Token By Code
+	 *
+	 * @param string $code
+	 *
+	 * @return array<string, mixed> token record that has user ID, code
+	 *
+	 * @example
+	 *
+	 * $this->load->model('user/user');
+	 *
+	 * $token_info = $this->model_user_user->getTokenByCode($user_id, $code);
+	 */
+	public function getTokenByCode(string $code): array {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_token` WHERE `date_added` < DATE_ADD(NOW(), INTERVAL 10 MINUTE)");
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_token` `ut` LEFT JOIN `" . DB_PREFIX . "user` `u` ON (`ut`.`user_id` = `u`.`user_id`) WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Delete Token
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->deleteToken($customer_id);
+	 */
+	public function deleteTokenByCode(string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_token` WHERE `code` = '" . $this->db->escape($code) . "'");
+	}
 }

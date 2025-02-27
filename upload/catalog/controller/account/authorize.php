@@ -252,7 +252,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_link');
 
 			// Create reset code
-			$this->model_account_customer->editCode($this->customer->getEmail(), oc_token(32));
+			$this->model_account_customer->addToken($this->customer->getId(), 'authorize', oc_token(32));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

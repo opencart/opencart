@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_subject']  = '%s - Affiliate Commission';
-$_['text_received'] = 'Congratulations! You have received a commission payment from the %s affiliate program';
-$_['text_amount']   = 'You have received:';
-$_['text_total']    = 'Your total amount of commission is now:';
+$_['text_subject']  = '%s - Partnerprovision';
+$_['text_received'] = 'Herzlichen Glückwunsch! Sie haben eine Provisionszahlung vom %s -Partnerprogramm erhalten';
+$_['text_amount']   = 'Sie haben erhalten:';
+$_['text_total']    = 'Ihre Gesamtprovision beträgt nun:';

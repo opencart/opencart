@@ -3,40 +3,40 @@
 $_['heading_title']            = 'Downloads';
 
 // Text
-$_['text_success']             = 'Success: You have modified downloads!';
-$_['text_list']                = 'Download List';
-$_['text_add']                 = 'Add Download';
-$_['text_edit']                = 'Edit Download';
-$_['text_upload']              = 'Your file was successfully uploaded!';
-$_['text_report']              = 'Reports';
+$_['text_success']             = 'Erfolg: Sie haben Downloads geändert!';
+$_['text_list']                = 'Liste herunterladen';
+$_['text_add']                 = 'Download hinzufügen';
+$_['text_edit']                = 'Bearbeiten Herunterladen';
+$_['text_upload']              = 'Ihre Datei wurde erfolgreich hochgeladen!';
+$_['text_report']              = 'Berichte';
 
 // Column
-$_['column_name']              = 'Download Name';
+$_['column_name']              = 'Downloadname';
 $_['column_ip']                = 'IP';
-$_['column_account']           = 'Accounts';
-$_['column_store']             = 'Store';
-$_['column_country']           = 'Country';
-$_['column_date_added']        = 'Date Added';
-$_['column_action']            = 'Action';
+$_['column_account']           = 'Konten';
+$_['column_store']             = 'Speichern';
+$_['column_country']           = 'Land';
+$_['column_date_added']        = 'Datum hinzugefügt';
+$_['column_action']            = 'Aktion';
 
 // Entry
-$_['entry_name']               = 'Download Name';
-$_['entry_filename']           = 'Filename';
-$_['entry_mask']               = 'Mask';
+$_['entry_name']               = 'Downloadname';
+$_['entry_filename']           = 'Dateiname';
+$_['entry_mask']               = 'Maske';
 
 // Help
-$_['help_filename']            = 'You can upload via the upload button or use FTP to upload to the download directory and enter the details below.';
-$_['help_mask']                = 'It is recommended that the filename and the mask are different to stop people trying to directly link to your downloads.';
+$_['help_filename']            = 'Sie können über die Schaltfläche „Hochladen“ hochladen oder per FTP in das Download-Verzeichnis hochladen und die Details unten eingeben.';
+$_['help_mask']                = 'Es wird empfohlen, dass Dateiname und Maske unterschiedlich sind, um zu verhindern, dass Benutzer versuchen, eine direkte Verknüpfung mit Ihren Downloads herzustellen.';
 
 // Error
-$_['error_warning']            = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']         = 'Warning: You do not have permission to modify downloads!';
-$_['error_name']               = 'Download Name must be between 3 and 64 characters!';
-$_['error_filename']           = 'Filename must be between 3 and 128 characters!';
-$_['error_filename_character'] = 'Filename can only use characters a-Z, 0-9, - and _!';
-$_['error_directory']          = 'Downloads need to be within the storage/download directory!';
-$_['error_exists']             = 'File does not exist!';
-$_['error_mask']               = 'Mask must be between 3 and 128 characters!';
-$_['error_mask_character']     = 'Mask can only use characters a-Z, 0-9, - and _!';
-$_['error_file_type']          = 'Invalid file type!';
-$_['error_product']            = 'Warning: This download cannot be deleted as it is currently assigned to %s products!';
+$_['error_warning']            = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']         = 'Achtung: Sie sind nicht berechtigt, Downloads zu ändern!';
+$_['error_name']               = 'Der Downloadname muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_filename']           = 'Der Dateiname muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_filename_character'] = 'Der Dateiname darf nur die Zeichen aZ, 0-9, - und _ enthalten!';
+$_['error_directory']          = 'Downloads müssen sich im Speicher-/Download-Verzeichnis befinden!';
+$_['error_exists']             = 'Datei existiert nicht!';
+$_['error_mask']               = 'Die Maske muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_mask_character']     = 'Die Maske darf nur die Zeichen aZ, 0-9, - und _ enthalten!';
+$_['error_file_type']          = 'Ungültiger Dateityp!';
+$_['error_product']            = 'Achtung: Dieser Download kann nicht gelöscht werden, da er aktuell %s Produkten zugeordnet ist!';

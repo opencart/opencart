@@ -3,14 +3,14 @@
 $_['heading_title']    = 'Feeds';
 
 // Text
-$_['text_success']     = 'Success: You have modified feeds!';
-$_['text_list']        = 'Feed List';
+$_['text_success']     = 'Erfolg: Sie haben Feeds geändert!';
+$_['text_list']        = 'Feedliste';
 
 // Column
-$_['column_name']      = 'Product Feed Name';
+$_['column_name']      = 'Produkt-Feedname';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Action';
+$_['column_action']    = 'Aktion';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify feeds!';
-$_['error_extension']  = 'Warning: Extension does not exist!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Feeds zu ändern!';
+$_['error_extension']  = 'Achtung: Erweiterung existiert nicht!';

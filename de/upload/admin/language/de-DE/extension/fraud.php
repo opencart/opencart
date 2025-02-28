@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']    = 'Anti-Fraud';
+$_['heading_title']    = 'Betrugsbekämpfung';
 
 // Text
-$_['text_success']     = 'Success: You have modified anti-fraud!';
-$_['text_list']        = 'Anti-Fraud List';
+$_['text_success']     = 'Erfolg: Sie haben den Betrugsschutz geändert!';
+$_['text_list']        = 'Betrugsschutzliste';
 
 // Column
-$_['column_name']      = 'Anti-Fraud Name';
+$_['column_name']      = 'Name zur Betrugsbekämpfung';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Action';
+$_['column_action']    = 'Aktion';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify anti-fraud!';
-$_['error_extension']  = 'Warning: Extension does not exist!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, den Betrugsschutz zu ändern!';
+$_['error_extension']  = 'Achtung: Erweiterung existiert nicht!';

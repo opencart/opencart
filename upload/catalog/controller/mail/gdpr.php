@@ -82,10 +82,12 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/gdpr/editStatus/after
+
 
 	/**
 	 * Remove
+	 *
+	 * catalog/model/account/gdpr/editStatus/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

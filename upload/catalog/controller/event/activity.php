@@ -122,7 +122,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Forgotten
 	 *
-	 * catalog/model/account/customer/editCode/after
+	 * catalog/model/account/customer/addToken/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

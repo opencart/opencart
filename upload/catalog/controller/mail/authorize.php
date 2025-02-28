@@ -17,7 +17,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 *
-	 * catalog/model/account/customer.addToken/after
+	 * catalog/model/account/authorize.send/after
 	 */
 	public function index(&$route, &$args, &$output): void {
 		if (isset($args[0])) {
@@ -26,8 +26,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$customer_id = '';
 		}
 
-		if (isset($args[1])) {
-			$code = (string)$args[1];
+		if (isset($this->session->data['code'])) {
+			$code = (string)$this->session->data['code'];
 		} else {
 			$code = '';
 		}

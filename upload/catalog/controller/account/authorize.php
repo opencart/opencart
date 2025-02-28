@@ -120,10 +120,10 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_resend');
-
 			// Set the code to be emailed
 			$this->session->data['code'] = oc_token(6);
+
+			$json['success'] = $this->language->get('text_resend');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -305,7 +305,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if ($customer_info && $customer_info['code'] && $code && $customer_info['code'] === $code) {
 			$this->model_account_customer->resetAuthorizes($customer_info['customer_id']);
 
-			$this->model_account_customer->editCode($email, '');
+			// Reset token
+			$this->model_account_customer->deleteTokenByCode($code);
 
 			$this->session->data['success'] = $this->language->get('text_unlocked');
 
@@ -313,7 +314,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		} else {
 			$this->customer->logout();
 
-			$this->model_account_customer->editCode($email, '');
+			// Reset token
+			$this->model_account_customer->deleteTokenByCode($code);
 
 			$this->session->data['error'] = $this->language->get('error_reset');
 

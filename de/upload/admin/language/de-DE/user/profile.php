@@ -1,34 +1,34 @@
 <?php
 // Heading
-$_['heading_title']            = 'Profile';
+$_['heading_title']            = 'Profil';
 
 // Text
-$_['text_success']             = 'Success: You have modified your profile!';
-$_['text_edit']                = 'Edit Your Profile';
-$_['text_user']                = 'Users Details';
-$_['text_password']            = 'Password';
+$_['text_success']             = 'Erfolg: Sie haben Ihr Profil geändert!';
+$_['text_edit']                = 'Bearbeiten Sie Ihr Profil';
+$_['text_user']                = 'Benutzerdetails';
+$_['text_password']            = 'Passwort';
 
 // Entry
-$_['entry_username']           = 'Username';
-$_['entry_password']           = 'Password';
-$_['entry_confirm']            = 'Confirm';
-$_['entry_firstname']          = 'First Name';
-$_['entry_lastname']           = 'Last Name';
+$_['entry_username']           = 'Benutzername';
+$_['entry_password']           = 'Passwort';
+$_['entry_confirm']            = 'Bestätigen';
+$_['entry_firstname']          = 'Vorname';
+$_['entry_lastname']           = 'Nachname';
 $_['entry_email']              = 'E-Mail';
-$_['entry_image']              = 'Image';
+$_['entry_image']              = 'Bild';
 
 // Error
-$_['error_permission']         = 'Warning: You do not have permission to modify your profile!';
-$_['error_username_exists']    = 'Warning: Username is already in use!';
-$_['error_username']           = 'Username must be between 3 and 20 characters!';
-$_['error_firstname']          = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']           = 'Last Name must be between 1 and 32 characters!';
-$_['error_email']              = 'E-Mail Address does not appear to be valid!';
-$_['error_email_exists']       = 'Warning: E-Mail Address is already registered!';
-$_['error_password']           = 'Password must contain a %s and be between %d and 20 characters!';
-$_['error_password_uppercase'] = 'uppercase';
-$_['error_password_lowercase'] = 'lowercase';
-$_['error_password_number']    = 'number';
-$_['error_password_symbol']    = 'symbol';
-$_['error_password_length']    = 'Password must be between %d and 20 characters!';
-$_['error_confirm']            = 'Password and password confirmation do not match!';
+$_['error_permission']         = 'Achtung: Sie haben keine Berechtigung, Ihr Profil zu ändern!';
+$_['error_username_exists']    = 'Achtung: Der Benutzername wird bereits verwendet!';
+$_['error_username']           = 'Der Benutzername muss zwischen 3 und 20 Zeichen lang sein!';
+$_['error_firstname']          = 'Der Vorname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_lastname']           = 'Der Nachname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_email']              = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_email_exists']       = 'Achtung: E-Mail-Adresse ist bereits registriert!';
+$_['error_password']           = 'Das Passwort muss eine %s enthalten und zwischen %d und 20 Zeichen lang sein!';
+$_['error_password_uppercase'] = 'Großbuchstaben';
+$_['error_password_lowercase'] = 'Kleinbuchstaben';
+$_['error_password_number']    = 'Nummer';
+$_['error_password_symbol']    = 'Symbol';
+$_['error_password_length']    = 'Das Passwort muss zwischen %d und 20 Zeichen lang sein!';
+$_['error_confirm']            = 'Passwort und Passwortbestätigung stimmen nicht überein!';

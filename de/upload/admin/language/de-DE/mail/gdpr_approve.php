@@ -1,11 +1,11 @@
 <?php
 // Text
-$_['text_subject'] = '%s - GDPR request approved!';
-$_['text_request'] = 'Account Deletion Request';
-$_['text_hello']   = 'Hello <strong>%s</strong>,';
-$_['text_user']    = 'User';
-$_['text_gdpr']    = 'Your GDPR data deletion request has been approved and will be deleted in <strong>%s Days</strong>.';
-$_['text_q']       = 'Q. Why do we not delete your data straight away?';
-$_['text_a']       = 'A. Account deletion requests will process after <strong>%s days</strong> so any refunds, chargebacks or fraud detection can be processed.';
-$_['text_delete']  = 'You will receive a email informing you when your account has been deleted.';
-$_['text_thanks']  = 'Thanks,';
+$_['text_subject'] = '%s – DSGVO-Anfrage genehmigt!';
+$_['text_request'] = 'Antrag auf Kontolöschung';
+$_['text_hello']   = 'Hallo <strong>%s</strong>,';
+$_['text_user']    = 'Benutzer';
+$_['text_gdpr']    = 'Ihr Antrag auf Löschung von DSGVO-Daten wurde genehmigt und wird in <strong>%s Tagen</strong>gelöscht.';
+$_['text_q']       = 'F. Warum löschen wir Ihre Daten nicht sofort?';
+$_['text_a']       = 'A. Anfragen zur Kontolöschung werden nach <strong>%s Tagen</strong> bearbeitet, sodass eventuelle Rückerstattungen, Rückbuchungen oder Betrugserkennungen verarbeitet werden können.';
+$_['text_delete']  = 'Sie werden per E-Mail darüber informiert, wenn Ihr Konto gelöscht wurde.';
+$_['text_thanks']  = 'Danke,';

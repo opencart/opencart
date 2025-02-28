@@ -1,22 +1,22 @@
 <?php
 // Heading
-$_['heading_title']            = 'Change Password';
+$_['heading_title']            = 'Kennwort ändern';
 
 // Text
-$_['text_account']             = 'Account';
-$_['text_password']            = 'Your Password';
-$_['text_success']             = 'Success: Your password has been successfully updated.';
+$_['text_account']             = 'Konto';
+$_['text_password']            = 'Ihr Passwort';
+$_['text_success']             = 'Erfolg: Ihr Passwort wurde erfolgreich aktualisiert.';
 
 // Entry
-$_['entry_password']           = 'Password';
-$_['entry_confirm']            = 'Password Confirm';
+$_['entry_password']           = 'Passwort';
+$_['entry_confirm']            = 'Passwort bestätigen';
 
 // Error
-$_['error_token']              = 'Warning: Password token invalid!';
-$_['error_password']           = 'Password must contain a %s and be between %d and 40 characters!';
-$_['error_password_uppercase'] = 'uppercase';
-$_['error_password_lowercase'] = 'lowercase';
-$_['error_password_number']    = 'number';
-$_['error_password_symbol']    = 'symbol';
-$_['error_password_length']    = 'Password must be between %d and 40 characters!';
-$_['error_confirm']            = 'Password confirmation does not match password!';
+$_['error_token']              = 'Achtung: Passwort-Token ungültig!';
+$_['error_password']           = 'Das Passwort muss eine %s enthalten und zwischen %d und 40 Zeichen lang sein!';
+$_['error_password_uppercase'] = 'Großbuchstaben';
+$_['error_password_lowercase'] = 'Kleinbuchstaben';
+$_['error_password_number']    = 'Nummer';
+$_['error_password_symbol']    = 'Symbol';
+$_['error_password_length']    = 'Das Passwort muss zwischen %d und 40 Zeichen lang sein!';
+$_['error_confirm']            = 'Passwortbestätigung stimmt nicht mit dem Passwort überein!';

@@ -1,4 +1,4 @@
 <?php
 // Text
-$_['text_category']  = 'Categories';
-$_['text_all']       = 'Show All';
+$_['text_category']  = 'Kategorien';
+$_['text_all']       = 'Alles zeigen';

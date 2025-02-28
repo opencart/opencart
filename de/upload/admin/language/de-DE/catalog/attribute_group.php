@@ -1,25 +1,25 @@
 <?php
 // Heading
-$_['heading_title']     = 'Attribute Groups';
+$_['heading_title']     = 'Attributgruppen';
 
 // Text
-$_['text_success']      = 'Success: You have modified attribute groups!';
-$_['text_list']         = 'Attribute Group List';
-$_['text_add']          = 'Add Attribute Group';
-$_['text_edit']         = 'Edit Attribute Group';
+$_['text_success']      = 'Erfolg: Sie haben Attributgruppen geändert!';
+$_['text_list']         = 'Attributgruppenliste';
+$_['text_add']          = 'Attributgruppe hinzufügen';
+$_['text_edit']         = 'Attributgruppe bearbeiten';
 
 // Column
-$_['column_name']       = 'Attribute Group Name';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_name']       = 'Attributgruppenname';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_name']        = 'Attribute Group Name';
-$_['entry_sort_order']  = 'Sort Order';
+$_['entry_name']        = 'Attributgruppenname';
+$_['entry_sort_order']  = 'Sortierreihenfolge';
 
 // Error
-$_['error_warning']     = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']  = 'Warning: You do not have permission to modify attribute groups!';
-$_['error_name']        = 'Attribute Group Name must be between 1 and 64 characters!';
-$_['error_attribute']   = 'Warning: This attribute group cannot be deleted as it is currently assigned to %s attributes!';
-$_['error_product']     = 'Warning: This attribute group cannot be deleted as it is currently assigned to %s products!';
+$_['error_warning']     = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']  = 'Achtung: Sie haben keine Berechtigung, Attributgruppen zu ändern!';
+$_['error_name']        = 'Der Attributgruppenname muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_attribute']   = 'Achtung: Diese Attributgruppe kann nicht gelöscht werden, da ihr aktuell %s Attribute zugewiesen sind!';
+$_['error_product']     = 'Achtung: Diese Attributgruppe kann nicht gelöscht werden, da sie aktuell %s Produkten zugeordnet ist!';

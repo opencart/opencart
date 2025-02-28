@@ -15,7 +15,7 @@ $_['column_sort_order']      = 'Sort Order';
 $_['column_action']          = 'Action';
 
 // Entry
-$_['entry_name']             = 'Attribute Name';
+$_['entry_name']             = 'Name';
 $_['entry_attribute_group']  = 'Attribute Group';
 $_['entry_sort_order']       = 'Sort Order';
 

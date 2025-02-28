@@ -1,22 +1,22 @@
 <?php
 // Heading
-$_['heading_title']    = 'Return Statuses';
+$_['heading_title']    = 'Rückgabestatus';
 
 // Text
-$_['text_success']     = 'Success: You have modified return statuses!';
-$_['text_list']        = 'Return Status List';
-$_['text_add']         = 'Add Return Status';
-$_['text_edit']        = 'Edit Return Status';
+$_['text_success']     = 'Erfolg: Sie haben den Rückgabestatus geändert!';
+$_['text_list']        = 'Liste der Rückgabestatus';
+$_['text_add']         = 'Rückgabestatus hinzufügen';
+$_['text_edit']        = 'Retourenstatus bearbeiten';
 
 // Column
-$_['column_name']      = 'Return Status Name';
-$_['column_action']    = 'Action';
+$_['column_name']      = 'Name des Rückgabestatus';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'Return Status Name';
+$_['entry_name']       = 'Name des Rückgabestatus';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify return statuses!';
-$_['error_name']       = 'Return Status Name must be between 3 and 32 characters!';
-$_['error_default']    = 'Warning: This return status cannot be deleted as it is currently assigned as the default return status!';
-$_['error_return']     = 'Warning: This return status cannot be deleted as it is currently assigned to %s returns!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Rückgabestatus zu ändern!';
+$_['error_name']       = 'Der Name des Rücksendestatus muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_default']    = 'Achtung: Dieser Rücksendestatus kann nicht gelöscht werden, da er aktuell als Standard-Rücksendestatus zugewiesen ist!';
+$_['error_return']     = 'Achtung: Dieser Retourenstatus kann nicht gelöscht werden, da er aktuell %s Retouren zugeordnet ist!';

@@ -1,21 +1,21 @@
 <?php
 // Heading
-$_['heading_title']    = 'Return Reasons';
+$_['heading_title']    = 'Rückgabegründe';
 
 // Text
-$_['text_success']     = 'Success: You have modified return reasons!';
-$_['text_list']        = 'Return Reason List';
-$_['text_add']         = 'Add Return Reason';
-$_['text_edit']        = 'Edit Return Reason';
+$_['text_success']     = 'Erfolg: Sie haben die Rücksendegründe geändert!';
+$_['text_list']        = 'Liste der Rückgabegründe';
+$_['text_add']         = 'Rücksendegrund hinzufügen';
+$_['text_edit']        = 'Rückgabegrund bearbeiten';
 
 // Column
-$_['column_name']      = 'Return Reason Name';
-$_['column_action']    = 'Action';
+$_['column_name']      = 'Name des Rückgabegrunds';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'Return Reason Name';
+$_['entry_name']       = 'Name des Rückgabegrunds';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify return reasons!';
-$_['error_name']       = 'Return Reason Name must be between 3 and 128 characters!';
-$_['error_return']     = 'Warning: This return reason cannot be deleted as it is currently assigned to %s returned products!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Rücksendegründe zu ändern!';
+$_['error_name']       = 'Der Name des Rücksendegrundes muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_return']     = 'Achtung: Dieser Rücksendegrund kann nicht gelöscht werden, da er aktuell %s zurückgesendeten Produkten zugeordnet ist!';

@@ -1,47 +1,47 @@
 <?php
 // Heading
-$_['heading_title']           = 'Categories';
+$_['heading_title']           = 'Kategorien';
 
 // Text
-$_['text_success']            = 'Success: You have modified categories!';
-$_['text_list']               = 'Category List';
-$_['text_add']                = 'Add Category';
-$_['text_edit']               = 'Edit Category';
+$_['text_success']            = 'Erfolg: Sie haben Kategorien geändert!';
+$_['text_list']               = 'Kategorienliste';
+$_['text_add']                = 'Kategorie hinzufügen';
+$_['text_edit']               = 'Kategorie bearbeiten';
 $_['text_filter']             = 'Filter';
-$_['text_default']            = 'Default';
-$_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['text_default']            = 'Standard';
+$_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL weltweit eindeutig ist.';
 
 // Column
-$_['column_image']            = 'Image';
-$_['column_name']             = 'Category Name';
-$_['column_sort_order']       = 'Sort Order';
-$_['column_action']           = 'Action';
+$_['column_image']            = 'Bild';
+$_['column_name']             = 'Kategoriename';
+$_['column_sort_order']       = 'Sortierreihenfolge';
+$_['column_action']           = 'Aktion';
 
 // Entry
-$_['entry_name']              = 'Category Name';
-$_['entry_description']       = 'Description';
-$_['entry_meta_title']        = 'Meta Tag Title';
-$_['entry_meta_keyword']      = 'Meta Tag Keywords';
-$_['entry_meta_description']  = 'Meta Tag Description';
-$_['entry_store']             = 'Stores';
-$_['entry_keyword']           = 'Keyword';
-$_['entry_parent']            = 'Parent';
-$_['entry_filter']            = 'Filters';
-$_['entry_image']             = 'Image';
-$_['entry_sort_order']        = 'Sort Order';
+$_['entry_name']              = 'Kategoriename';
+$_['entry_description']       = 'Beschreibung';
+$_['entry_meta_title']        = 'Meta-Tag-Titel';
+$_['entry_meta_keyword']      = 'Meta-Tag-Schlüsselwörter';
+$_['entry_meta_description']  = 'Meta-Tag-Beschreibung';
+$_['entry_store']             = 'Geschäfte';
+$_['entry_keyword']           = 'Stichwort';
+$_['entry_parent']            = 'Elternteil';
+$_['entry_filter']            = 'Filter';
+$_['entry_image']             = 'Bild';
+$_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_status']            = 'Status';
-$_['entry_layout']            = 'Layout Override';
+$_['entry_layout']            = 'Layoutüberschreibung';
 
 // Help
-$_['help_parent']             = '(Autocomplete)';
-$_['help_filter']             = '(Autocomplete)';
+$_['help_parent']             = '(Autovervollständigung)';
+$_['help_filter']             = '(Autovervollständigung)';
 
 // Error
-$_['error_warning']           = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']        = 'Warning: You do not have permission to modify categories!';
-$_['error_name']              = 'Category Name must be between 1 and 255 characters!';
-$_['error_meta_title']        = 'Meta Title must be greater than 1 and less than 255 characters!';
-$_['error_parent']            = 'The parent category you have chosen is a child of the current one!';
-$_['error_keyword']           = 'SEO URL must be between 1 and 64 characters!';
-$_['error_keyword_exists']    = 'SEO URL must be unique!';
-$_['error_keyword_character'] = 'Keyword can only use characters a-z, 0-9, - and _!';
+$_['error_warning']           = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']        = 'Achtung: Sie sind nicht berechtigt, Kategorien zu ändern!';
+$_['error_name']              = 'Der Kategoriename muss zwischen 1 und 255 Zeichen lang sein!';
+$_['error_meta_title']        = 'Der Meta-Titel muss größer als 1 und kleiner als 255 Zeichen sein!';
+$_['error_parent']            = 'Die von Ihnen gewählte übergeordnete Kategorie ist ein untergeordnetes Element der aktuellen Kategorie.';
+$_['error_keyword']           = 'Die SEO-URL muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_keyword_exists']    = 'SEO-URL muss eindeutig sein!';
+$_['error_keyword_character'] = 'Das Schlüsselwort darf nur die Zeichen az, 0-9, - und _ enthalten!';

@@ -1,3 +1,3 @@
 <?php
 // Heading
-$_['heading_title'] = 'Blog';
+$_['heading_title'] = 'Der Blog';

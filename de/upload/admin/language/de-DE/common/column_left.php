@@ -3,7 +3,7 @@
 $_['text_address_format']      = 'Address Format';
 $_['text_affiliate']           = 'Affiliate';
 $_['text_api']                 = 'API';
-$_['text_attribute']           = 'Attributes';
+$_['text_attribute']           = 'Eigenschaften';
 $_['text_attribute_group']     = 'Attribute Groups';
 $_['text_antifraud']           = 'Anti-Fraud';
 $_['text_antispam']            = 'Anti-Spam';

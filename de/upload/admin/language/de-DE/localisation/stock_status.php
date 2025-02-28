@@ -1,21 +1,21 @@
 <?php
 // Heading
-$_['heading_title']    = 'Stock Statuses';
+$_['heading_title']    = 'Lagerstatus';
 
 // Text
-$_['text_success']     = 'Success: You have modified stock statuses!';
-$_['text_list']        = 'Stock Status List';
-$_['text_add']         = 'Add Stock Status';
-$_['text_edit']        = 'Edit Stock Status';
+$_['text_success']     = 'Erfolg: Sie haben Lagerstatus geändert!';
+$_['text_list']        = 'Lagerstatusliste';
+$_['text_add']         = 'Bestandsstatus hinzufügen';
+$_['text_edit']        = 'Lagerstatus bearbeiten';
 
 // Column
-$_['column_name']      = 'Stock Status Name';
-$_['column_action']    = 'Action';
+$_['column_name']      = 'Bestandsstatus Name';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'Stock Status Name';
+$_['entry_name']       = 'Bestandsstatus Name';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify stock statuses!';
-$_['error_name']       = 'Stock Status Name must be between 3 and 32 characters!';
-$_['error_product']    = 'Warning: This stock status cannot be deleted as it is currently assigned to %s products!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Lagerbestände zu ändern!';
+$_['error_name']       = 'Der Lagerstatusname muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_product']    = 'Achtung: Dieser Lagerstatus kann nicht gelöscht werden, da er aktuell %s Produkten zugeordnet ist!';

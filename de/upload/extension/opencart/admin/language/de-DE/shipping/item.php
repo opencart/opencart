@@ -1,18 +1,18 @@
 <?php
 // Heading
-$_['heading_title']    = 'Per Item';
+$_['heading_title']    = 'Pro Artikel';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified shipping per item rates!';
-$_['text_edit']        = 'Edit Per Item Shipping';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben die Versandkosten pro Artikel geändert!';
+$_['text_edit']        = 'Versand pro Artikel bearbeiten';
 
 // Entry
-$_['entry_cost']       = 'Cost';
-$_['entry_tax_class']  = 'Tax Class';
-$_['entry_geo_zone']   = 'Geo Zone';
+$_['entry_cost']       = 'Kosten';
+$_['entry_tax_class']  = 'Steuerklasse';
+$_['entry_geo_zone']   = 'Geozone';
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify shipping per item rates!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, die Versandkosten pro Artikel zu ändern!';

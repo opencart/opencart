@@ -1,10 +1,10 @@
 <?php
 // Text
-$_['text_success']   = 'Success: Your coupon discount has been applied!';
+$_['text_success']   = 'Erfolg: Ihr Gutscheinrabatt wurde angewendet!';
 
 // Error
-$_['error_customer'] = 'Warning: Customer details required!';
-$_['error_product']  = 'Warning: Products required!';
-$_['error_coupon']   = 'Warning: Coupon is either invalid, expired or reached its usage limit!';
-$_['error_status']   = 'Warning: Coupons are not enabled on this store!';
-$_['error_confirm']  = 'Warning: Please check the coupon form carefully for errors!';
+$_['error_customer'] = 'Achtung: Kundendaten erforderlich!';
+$_['error_product']  = 'Achtung: Produkte erforderlich!';
+$_['error_coupon']   = 'Achtung: Der Gutschein ist entweder ungültig, abgelaufen oder hat sein Einlöselimit erreicht!';
+$_['error_status']   = 'Achtung: Gutscheine sind in diesem Shop nicht möglich!';
+$_['error_confirm']  = 'Achtung: Bitte prüfen Sie das Gutscheinformular sorgfältig auf Fehler!';

@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']    = 'Currency Rates';
+$_['heading_title']    = 'Währungskurse';
 
 // Text
-$_['text_success']     = 'Success: You have modified currencies rates!';
-$_['text_list']        = 'Currency Rate List';
+$_['text_success']     = 'Erfolg: Sie haben die Wechselkurse geändert!';
+$_['text_list']        = 'Währungskursliste';
 
 // Column
-$_['column_name']      = 'Currency Rate Name';
+$_['column_name']      = 'Währungskursname';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Action';
+$_['column_action']    = 'Aktion';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify currencies rates!';
-$_['error_extension']  = 'Warning: Extension does not exist!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Währungskurse zu ändern!';
+$_['error_extension']  = 'Achtung: Erweiterung existiert nicht!';

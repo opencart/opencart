@@ -1,18 +1,18 @@
 <?php
 // Heading
-$_['heading_title']     = 'Dashboard';
+$_['heading_title']     = 'Armaturenbrett';
 
 // Text
-$_['text_success']      = 'Success: You have modified dashboards!';
-$_['text_list']         = 'Dashboard List';
+$_['text_success']      = 'Erfolg: Sie haben Dashboards geändert!';
+$_['text_list']         = 'Dashboard-Liste';
 
 // Column
-$_['column_name']       = 'Dashboard Name';
-$_['column_width']      = 'Width';
+$_['column_name']       = 'Dashboard-Name';
+$_['column_width']      = 'Breite';
 $_['column_status']     = 'Status';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify dashboards!';
-$_['error_extension']   = 'Warning: Extension does not exist!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Dashboards zu ändern!';
+$_['error_extension']   = 'Achtung: Erweiterung existiert nicht!';

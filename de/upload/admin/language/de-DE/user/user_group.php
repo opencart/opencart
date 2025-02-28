@@ -1,25 +1,25 @@
 <?php
 // Heading
-$_['heading_title']    = 'User Groups';
+$_['heading_title']    = 'Benutzergruppen';
 
 // Text
-$_['text_success']     = 'Success: You have modified user groups!';
-$_['text_list']        = 'User Group';
-$_['text_add']         = 'Add User Group';
-$_['text_edit']        = 'Edit User Group';
-$_['text_access']      = 'Access';
-$_['text_modify']      = 'Modify';
+$_['text_success']     = 'Erfolg: Sie haben Benutzergruppen geändert!';
+$_['text_list']        = 'Benutzergruppe';
+$_['text_add']         = 'Benutzergruppe hinzufügen';
+$_['text_edit']        = 'Benutzergruppe bearbeiten';
+$_['text_access']      = 'Zugang';
+$_['text_modify']      = 'Ändern';
 
 // Column
-$_['column_name']      = 'User Group Name';
-$_['column_action']    = 'Action';
+$_['column_name']      = 'Benutzergruppenname';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'User Group Name';
-$_['entry_permission'] = 'Permissions';
-$_['entry_extension']  = 'Extensions';
+$_['entry_name']       = 'Benutzergruppenname';
+$_['entry_permission'] = 'Berechtigungen';
+$_['entry_extension']  = 'Erweiterungen';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify user groups!';
-$_['error_name']       = 'User Group Name must be between 3 and 64 characters!';
-$_['error_user']       = 'Warning: This user group cannot be deleted as it is currently assigned to %s users!';
+$_['error_permission'] = 'Achtung: Sie haben keine Berechtigung Benutzergruppen zu ändern!';
+$_['error_name']       = 'Der Benutzergruppenname muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_user']       = 'Achtung: Diese Benutzergruppe kann nicht gelöscht werden, da sie aktuell %s Benutzern zugewiesen ist!';

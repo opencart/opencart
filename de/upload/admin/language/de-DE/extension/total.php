@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']     = 'Order Totals';
+$_['heading_title']     = 'Bestellsummen';
 
 // Text
-$_['text_success']      = 'Success: You have modified totals!';
+$_['text_success']      = 'Erfolg: Sie haben die Summen geändert!';
 
 // Column
-$_['column_name']       = 'Order Totals';
+$_['column_name']       = 'Bestellsummen';
 $_['column_status']     = 'Status';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify totals!';
-$_['error_extension']   = 'Warning: Extension does not exist!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Summen zu ändern!';
+$_['error_extension']   = 'Achtung: Erweiterung existiert nicht!';

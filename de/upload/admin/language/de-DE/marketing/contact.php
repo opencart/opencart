@@ -3,35 +3,35 @@
 $_['heading_title']        = 'Mail';
 
 // Text
-$_['text_mail']            = 'Send e-mail\'s to customers';
-$_['text_success']         = 'Your message has been successfully sent!';
-$_['text_sent']            = 'Your message has been successfully sent to %s to %s of %s recipients!';
-$_['text_default']         = 'Default';
-$_['text_newsletter']      = 'All Newsletter Subscribers';
-$_['text_customer_all']    = 'All Customers';
-$_['text_customer_group']  = 'Customer Group';
-$_['text_customer']        = 'Customers';
-$_['text_affiliate_all']   = 'All Affiliates';
-$_['text_affiliate']       = 'Affiliates';
-$_['text_product']         = 'Products';
+$_['text_mail']            = 'Senden Sie E-Mails an Kunden';
+$_['text_success']         = 'Ihre Nachricht wurde erfolgreich gesendet!';
+$_['text_sent']            = 'Ihre Nachricht wurde erfolgreich an %s bis %s von %s Empfängern gesendet!';
+$_['text_default']         = 'Standard';
+$_['text_newsletter']      = 'Alle Newsletter-Abonnenten';
+$_['text_customer_all']    = 'Alle Kunden';
+$_['text_customer_group']  = 'Kundengruppe';
+$_['text_customer']        = 'Kunden';
+$_['text_affiliate_all']   = 'Alle Partner';
+$_['text_affiliate']       = 'Mitgliedsorganisationen';
+$_['text_product']         = 'Produkte';
 
 // Entry
-$_['entry_store']          = 'From';
-$_['entry_to']             = 'To';
-$_['entry_customer_group'] = 'Customer Group';
-$_['entry_customer']       = 'Customer';
-$_['entry_affiliate']      = 'Affiliate';
-$_['entry_product']        = 'Products';
-$_['entry_subject']        = 'Subject';
-$_['entry_message']        = 'Message';
+$_['entry_store']          = 'Aus';
+$_['entry_to']             = 'Zu';
+$_['entry_customer_group'] = 'Kundengruppe';
+$_['entry_customer']       = 'Kunde';
+$_['entry_affiliate']      = 'Partnerprogramm';
+$_['entry_product']        = 'Produkte';
+$_['entry_subject']        = 'Thema';
+$_['entry_message']        = 'Nachricht';
 
 // Help
-$_['help_customer']        = '(Autocomplete)';
-$_['help_affiliate']       = '(Autocomplete)';
-$_['help_product']         = 'Send only to customers who have ordered products in the list. (Autocomplete)';
+$_['help_customer']        = '(Autovervollständigung)';
+$_['help_affiliate']       = '(Autovervollständigung)';
+$_['help_product']         = 'Nur an Kunden senden, die Produkte aus der Liste bestellt haben. (Autovervollständigung)';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to send E-Mails!';
-$_['error_subject']        = 'E-Mail Subject required!';
-$_['error_message']        = 'E-Mail Message required!';
-$_['error_email']          = 'No E-Mail recipients!';
+$_['error_permission']     = 'Achtung: Sie besitzen keine Berechtigung E-Mails zu versenden!';
+$_['error_subject']        = 'E-Mail-Betreff erforderlich!';
+$_['error_message']        = 'E-Mail-Nachricht erforderlich!';
+$_['error_email']          = 'Keine E-Mail Empfänger!';

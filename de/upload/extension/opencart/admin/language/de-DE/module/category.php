@@ -1,14 +1,14 @@
 <?php
 // Heading
-$_['heading_title']    = 'Category';
+$_['heading_title']    = 'Kategorie';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified category module!';
-$_['text_edit']        = 'Edit Category Module';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben das Kategorienmodul geändert!';
+$_['text_edit']        = 'Modul „Kategorie bearbeiten“';
 
 // Entry
 $_['entry_status']     = 'Status';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify category module!';
+$_['error_permission'] = 'Achtung: Sie haben keine Berechtigung, das Kategoriemodul zu ändern!';

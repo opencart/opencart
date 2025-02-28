@@ -1,27 +1,27 @@
 <?php
 // Heading
-$_['heading_title']          = 'Attributes';
+$_['heading_title']          = 'Eigenschaften';
 
 // Text
-$_['text_success']           = 'Success: You have modified attributes!';
-$_['text_list']              = 'Attribute List';
-$_['text_add']               = 'Add Attribute';
-$_['text_edit']              = 'Edit Attribute';
+$_['text_success']           = 'Erfolg: Sie haben Attribute geändert!';
+$_['text_list']              = 'Attributliste';
+$_['text_add']               = 'Attribut hinzufügen';
+$_['text_edit']              = 'Attribut bearbeiten';
 
 // Column
-$_['column_name']            = 'Attribute Name';
-$_['column_attribute_group'] = 'Attribute Group';
-$_['column_sort_order']      = 'Sort Order';
-$_['column_action']          = 'Action';
+$_['column_name']            = 'Attributname';
+$_['column_attribute_group'] = 'Attributgruppe';
+$_['column_sort_order']      = 'Sortierreihenfolge';
+$_['column_action']          = 'Aktion';
 
 // Entry
-$_['entry_name']             = 'Attribute Name';
-$_['entry_attribute_group']  = 'Attribute Group';
-$_['entry_sort_order']       = 'Sort Order';
+$_['entry_name']             = 'Attributname';
+$_['entry_attribute_group']  = 'Attributgruppe';
+$_['entry_sort_order']       = 'Sortierreihenfolge';
 
 // Error
-$_['error_warning']          = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']       = 'Warning: You do not have permission to modify attributes!';
-$_['error_attribute_group']  = 'Attribute Group required!';
-$_['error_name']             = 'Attribute Name must be between 1 and 64 characters!';
-$_['error_product']          = 'Warning: This attribute cannot be deleted as it is currently assigned to %s products!';
+$_['error_warning']          = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Attribute zu ändern!';
+$_['error_attribute_group']  = 'Attributgruppe erforderlich!';
+$_['error_name']             = 'Der Attributname muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_product']          = 'Achtung: Dieses Attribut kann nicht gelöscht werden, da es aktuell %s Produkten zugewiesen ist!';

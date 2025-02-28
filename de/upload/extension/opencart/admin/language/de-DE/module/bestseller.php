@@ -1,33 +1,33 @@
 <?php
 // Heading
-$_['heading_title']    = 'Best Sellers';
+$_['heading_title']    = 'Bestseller';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified best sellers module!';
-$_['text_next']        = 'Success: You have modified %s best sellers out of %s!';
-$_['text_edit']        = 'Edit Best Sellers Module';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben das Bestseller-Modul geändert!';
+$_['text_next']        = 'Erfolg: Sie haben %s von %sBestsellern geändert!';
+$_['text_edit']        = 'Bestseller-Modul bearbeiten';
 $_['text_horizontal']  = 'Horizontal';
-$_['text_vertical']    = 'Vertical';
-$_['text_report']      = 'Reports';
+$_['text_vertical']    = 'Vertikal';
+$_['text_report']      = 'Berichte';
 
 // Column
-$_['column_product']   = 'Product';
-$_['column_total']     = 'Total';
+$_['column_product']   = 'Produkt';
+$_['column_total']     = 'Gesamt';
 
 // Entry
-$_['entry_name']       = 'Module Name';
-$_['entry_axis']       = 'Axis';
+$_['entry_name']       = 'Modulname';
+$_['entry_axis']       = 'Achse';
 $_['entry_limit']      = 'Limit';
-$_['entry_width']      = 'Image Width';
-$_['entry_height']     = 'Image Height';
+$_['entry_width']      = 'Bildbreite';
+$_['entry_height']     = 'Bildhöhe';
 $_['entry_status']     = 'Status';
 
 // Button
-$_['button_sync']      = 'Generate Best Sellers List';
+$_['button_sync']      = 'Bestsellerliste erstellen';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify best sellers module!';
-$_['error_name']       = 'Module Name must be between 3 and 64 characters!';
-$_['error_width']      = 'Width required!';
-$_['error_height']     = 'Height required!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, das Bestseller-Modul zu ändern!';
+$_['error_name']       = 'Der Modulname muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_width']      = 'Breite erforderlich!';
+$_['error_height']     = 'Körpergröße erforderlich!';

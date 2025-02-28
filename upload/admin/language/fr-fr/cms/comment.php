@@ -21,6 +21,10 @@ $_['entry_customer']    = 'Client';
 $_['entry_status']      = 'Statut';
 $_['entry_date_added']  = 'Date d\'ajout';
 
+// Button
+$_['button_spam']       = 'Spam';
+$_['button_rating']     = 'Synchroniser les Évaluations des Produits';
+
 // Error
 $_['error_warning']     = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
 $_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier les commentaires des articles!';

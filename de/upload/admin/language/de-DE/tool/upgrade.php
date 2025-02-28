@@ -1,30 +1,30 @@
 <?php
 // Heading
-$_['heading_title']        = 'Upgrade';
+$_['heading_title']        = 'Aktualisierung';
 
 // Text
-$_['text_success']         = 'Success: You are using the latest version %s!';
-$_['text_upgrade']         = 'Check Latest Version';
-$_['text_information']     = 'Version Information';
-$_['text_current_version'] = 'Current Version';
-$_['text_latest_version']  = 'Latest Version';
-$_['text_date_added']      = 'Release Date';
-$_['text_change']          = 'Change Log';
-$_['text_status']          = 'Upgrade Status';
-$_['text_ready']           = 'Click the upgrade button to upgrade to the latest version...';
-$_['text_download']        = 'Downloading latest...';
-$_['text_install']         = 'Copying files...';
-$_['text_patch']           = 'Applying patches...';
+$_['text_success']         = 'Erfolg: Sie verwenden die neueste Version %s!';
+$_['text_upgrade']         = 'Überprüfen Sie die neueste Version';
+$_['text_information']     = 'Versionsinformationen';
+$_['text_current_version'] = 'Aktuelle Version';
+$_['text_latest_version']  = 'Neuste Version';
+$_['text_date_added']      = 'Veröffentlichungsdatum';
+$_['text_change']          = 'Änderungsprotokoll';
+$_['text_status']          = 'Upgrade-Status';
+$_['text_ready']           = 'Klicken Sie auf die Schaltfläche „Upgrade“, um auf die neueste Version zu aktualisieren ...';
+$_['text_download']        = 'Das Neueste wird heruntergeladen...';
+$_['text_install']         = 'Dateien werden kopiert...';
+$_['text_patch']           = 'Patches anwenden...';
 
 // Button
-$_['button_upgrade']       = 'Upgrade';
+$_['button_upgrade']       = 'Aktualisierung';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify upgrades!';
-$_['error_connection']     = 'Could not connect to the upgrade server!';
-$_['error_version']        = 'Version is lower than the current version!';
-$_['error_download']       = 'Upgrade could not be downloaded!';
-$_['error_file']           = 'Upgrade file could not be found!';
-$_['error_directory']      = 'Could not create directory %s!';
-$_['error_copy']           = 'Could not copy file %s to %s!';
-$_['error_unzip']          = 'Zip file could not be opened!';
+$_['error_permission']     = 'Achtung: Sie sind nicht berechtigt, Upgrades zu ändern!';
+$_['error_connection']     = 'Verbindung zum Upgrade-Server konnte nicht hergestellt werden!';
+$_['error_version']        = 'Version ist niedriger als die aktuelle Version!';
+$_['error_download']       = 'Upgrade konnte nicht heruntergeladen werden!';
+$_['error_file']           = 'Upgrade-Datei konnte nicht gefunden werden!';
+$_['error_directory']      = 'Verzeichnis %skonnte nicht erstellt werden!';
+$_['error_copy']           = 'Datei %s konnte nicht nach %skopiert werden!';
+$_['error_unzip']          = 'Zip-Datei konnte nicht geöffnet werden!';

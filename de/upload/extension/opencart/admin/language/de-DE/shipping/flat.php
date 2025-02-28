@@ -1,18 +1,18 @@
 <?php
 // Heading
-$_['heading_title']    = 'Flat Rate';
+$_['heading_title']    = 'Pauschale';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified flat rate shipping!';
-$_['text_edit']        = 'Edit Flat Rate Shipping';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben den Pauschalversand geändert!';
+$_['text_edit']        = 'Versandkostenpauschale bearbeiten';
 
 // Entry
-$_['entry_cost']       = 'Cost';
-$_['entry_tax_class']  = 'Tax Class';
-$_['entry_geo_zone']   = 'Geo Zone';
+$_['entry_cost']       = 'Kosten';
+$_['entry_tax_class']  = 'Steuerklasse';
+$_['entry_geo_zone']   = 'Geozone';
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify flat rate shipping!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, die Versandkostenpauschale zu ändern!';

@@ -1,2 +1,2 @@
 <?php
-$_['text_related'] = 'Related Products';
+$_['text_related'] = 'Verwandte Produkte';

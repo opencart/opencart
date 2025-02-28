@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Free Shipping';
+$_['heading_title']    = 'Kostenloser Versand';
 
 // Text
-$_['text_description'] = 'Free Shipping';
+$_['text_description'] = 'Kostenloser Versand';

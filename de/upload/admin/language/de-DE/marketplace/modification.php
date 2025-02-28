@@ -1,26 +1,26 @@
 <?php
 // Heading
-$_['heading_title']     = 'Modifications';
+$_['heading_title']     = 'Änderungen';
 
 // Text
-$_['text_success']      = 'Success: You have modified modifications!';
-$_['text_refresh']      = 'Whenever you enable / disable or delete a modification you need to click the refresh button to rebuild your modification cache!';
-$_['text_list']         = 'Modification List';
-$_['text_info']         = 'Modification Information';
+$_['text_success']      = 'Erfolg: Sie haben Modifikationen geändert!';
+$_['text_refresh']      = 'Wenn Sie eine Änderung aktivieren/deaktivieren oder löschen, müssen Sie auf die Schaltfläche „Aktualisieren“ klicken, um Ihren Änderungscache neu zu erstellen!';
+$_['text_list']         = 'Änderungsliste';
+$_['text_info']         = 'Änderungsinformationen';
 
 // Column
-$_['column_name']       = 'Modification Name';
-$_['column_author']     = 'Author';
+$_['column_name']       = 'Änderungsname';
+$_['column_author']     = 'Autor';
 $_['column_version']    = 'Version';
 $_['column_status']     = 'Status';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
+$_['column_date_added'] = 'Datum hinzugefügt';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_name']        = 'Modification Name';
-$_['entry_description'] = 'Description';
+$_['entry_name']        = 'Änderungsname';
+$_['entry_description'] = 'Beschreibung';
 $_['entry_code']        = 'Code';
 $_['entry_xml']         = 'XML';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify modifications!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Änderungen vorzunehmen!';

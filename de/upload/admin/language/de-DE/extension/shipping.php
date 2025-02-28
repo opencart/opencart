@@ -1,17 +1,17 @@
 <?php
 // Heading
-$_['heading_title']     = 'Shipping';
+$_['heading_title']     = 'Versand';
 
 // Text
-$_['text_success']      = 'Success: You have modified shipping!';
-$_['text_list']         = 'Shipping List';
+$_['text_success']      = 'Erfolg: Sie haben den Versand geändert!';
+$_['text_list']         = 'Versandliste';
 
 // Column
-$_['column_name']       = 'Shipping Method';
+$_['column_name']       = 'Versandart';
 $_['column_status']     = 'Status';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify shipping!';
-$_['error_extension']   = 'Warning: Extension does not exist!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, den Versand zu ändern!';
+$_['error_extension']   = 'Achtung: Erweiterung existiert nicht!';

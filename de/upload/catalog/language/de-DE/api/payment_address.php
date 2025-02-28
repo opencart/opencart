@@ -1,14 +1,14 @@
 <?php
 // Text
-$_['text_success']       = 'Success: Payment address has been set!';
+$_['text_success']       = 'Erfolg: Zahlungsadresse wurde festgelegt!';
 
 // Error
-$_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
-$_['error_address_1']    = 'Address 1 must be between 3 and 128 characters!';
-$_['error_city']         = 'City must be between 3 and 128 characters!';
-$_['error_postcode']     = 'Postcode must be between 2 and 10 characters for this country!';
-$_['error_country']      = 'Please select a country!';
-$_['error_zone']         = 'Please select a region / state!';
-$_['error_custom_field'] = '%s required!';
-$_['error_regex']        = '%s is not a valid input!';
+$_['error_firstname']    = 'Der Vorname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_lastname']     = 'Der Nachname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_address_1']    = 'Adresse 1 muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_city']         = 'Die Stadt muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_postcode']     = 'Die Postleitzahl muss für dieses Land zwischen 2 und 10 Zeichen lang sein!';
+$_['error_country']      = 'Bitte wählen Sie ein Land!';
+$_['error_zone']         = 'Bitte wählen Sie eine Region / ein Bundesland!';
+$_['error_custom_field'] = '%s erforderlich!';
+$_['error_regex']        = '%s ist keine gültige Eingabe!';

@@ -1,26 +1,26 @@
 <?php
 // Heading
-$_['heading_title']               = 'Installation complete';
+$_['heading_title']               = 'Installation abgeschlossen';
 
 // Text
-$_['text_step_4']                 = 'Ready to start selling!';
-$_['text_catalog']                = 'Go to your Online Shop';
-$_['text_admin']                  = 'Login to your Administration';
-$_['text_extension']              = 'Visit the extensions store';
-$_['text_mail']                   = 'Join the mailing list';
-$_['text_mail_description']       = 'Stay informed of OpenCart updates and events.';
-$_['text_facebook']               = 'Like us on Facebook';
-$_['text_facebook_description']   = 'Tell us how much you like OpenCart!';
-$_['text_facebook_visit']         = 'Visit our Facebook page';
-$_['text_forum']                  = 'Community forums';
-$_['text_forum_description']      = 'Get help from other OpenCart users';
-$_['text_forum_visit']            = 'Visit our forums';
-$_['text_commercial']             = 'Commercial support';
-$_['text_commercial_description'] = 'Development services from OpenCart partners';
-$_['text_commercial_visit']       = 'Visit our partner page';
+$_['text_step_4']                 = 'Bereit zum Verkaufen!';
+$_['text_catalog']                = 'Gehen Sie zu Ihrem Online-Shop';
+$_['text_admin']                  = 'Melden Sie sich bei Ihrer Administration an';
+$_['text_extension']              = 'Besuchen Sie den Extensions Store';
+$_['text_mail']                   = 'Mailingliste abonnieren';
+$_['text_mail_description']       = 'Bleiben Sie über OpenCart-Updates und -Events auf dem Laufenden.';
+$_['text_facebook']               = 'Like uns auf Facebook';
+$_['text_facebook_description']   = 'Sagen Sie uns, wie sehr Ihnen OpenCart gefällt!';
+$_['text_facebook_visit']         = 'Besuchen Sie unsere Facebook-Seite';
+$_['text_forum']                  = 'Community-Foren';
+$_['text_forum_description']      = 'Holen Sie sich Hilfe von anderen OpenCart-Benutzern';
+$_['text_forum_visit']            = 'Besuchen Sie unsere Foren';
+$_['text_commercial']             = 'Kommerzielle Unterstützung';
+$_['text_commercial_description'] = 'Entwicklungsservices von OpenCart-Partnern';
+$_['text_commercial_visit']       = 'Besuchen Sie unsere Partnerseite';
 
 // Button
-$_['button_mail']                 = 'Join here';
+$_['button_mail']                 = 'Hier anmelden';
 
 // Error
-$_['error_warning']               = 'Don\'t forget to delete your installation directory!';
+$_['error_warning']               = 'Vergessen Sie nicht, Ihr Installationsverzeichnis zu löschen!';

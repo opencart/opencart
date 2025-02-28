@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_title'] = 'License agreement';
+$_['heading_title'] = 'Lizenzvereinbarung';
 
 // Text
-$_['text_step_1']   = 'Please read the OpenCart licence agreement';
+$_['text_step_1']   = 'Bitte lesen Sie die OpenCart-Lizenzvereinbarung';
 $_['text_terms']    = '<h3>GNU GENERAL PUBLIC LICENSE</h3>
 <p>Version 3, 29 June 2007</p>
 <p>Copyright &copy; 2007 Free Software Foundation, Inc. &lt;http://fsf.org/&gt;</p>

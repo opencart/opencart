@@ -13,6 +13,7 @@ $_['text_required']          = 'Paramètres requis';
 $_['text_extension']         = 'Paramètres d\'extension';
 $_['text_db']                = 'Base de données';
 $_['text_version']           = 'Version PHP';
+$_['text_open_basedir']      = 'open_basedir';
 $_['text_global']            = 'Enregistrement des variables globales';
 $_['text_magic']             = 'Guillemets Magiques GPC';
 $_['text_file_upload']       = 'Téléchargement de fichiers';
@@ -33,6 +34,7 @@ $_['text_missing']           = 'Manquant';
 
 // Erreur
 $_['error_version']          = 'Attention : Vous devez utiliser PHP 8.0 ou une version supérieure pour qu\'OpenCart fonctionne !';
+$_['error_open_basedir']     = 'Attention : open_basedir doit permettre l\'accès à %s';
 $_['error_file_upload']      = 'Attention : file_uploads doit être activé !';
 $_['error_session']          = 'Attention : OpenCart ne fonctionnera pas avec session.auto_start activé !';
 $_['error_db']               = 'Attention : Une extension de base de données doit être chargée dans le php.ini pour qu\'OpenCart fonctionne !';

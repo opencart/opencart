@@ -14,6 +14,8 @@ $_['text_password']         = 'Mot de Passe';
 $_['text_other']            = 'Autre';
 $_['text_balance']          = 'Solde';
 $_['text_address']          = 'Adresse';
+$_['text_address_add']      = 'Ajouter une Addresse';
+$_['text_address_edit']     = 'Editer une Addresse';
 $_['text_payment_method']   = 'Méthodes de Paiement';
 $_['text_history']          = 'Historique';
 $_['text_history_add']      = 'Ajouter un Historique';
@@ -22,6 +24,7 @@ $_['text_transaction_add']  = 'Ajouter une Transaction';
 $_['text_reward']           = 'Points de Récompense';
 $_['text_reward_add']       = 'Ajouter des Points de Récompense';
 $_['text_ip']               = 'IP';
+$_['text_authorize']        = 'Historique d\'Autorisation';
 $_['text_option']           = 'Options';
 $_['text_login']            = 'Connexion au Magasin';
 $_['text_unlock']           = 'Déverrouiller le Compte';
@@ -45,10 +48,13 @@ $_['column_payment_method'] = 'Nom de Paiement';
 $_['column_image']          = 'Image';
 $_['column_type']           = 'Type';
 $_['column_date_expire']    = 'Date d\'Expiration';
+$_['column_user_agent']     = 'Agent utilisateur';
+$_['column_address']        = 'Addresse';
 $_['column_action']         = 'Action';
 
 // Entry
 $_['entry_store']           = 'Magasin';
+$_['entry_language']        = 'Langage';
 $_['entry_customer_group']  = 'Groupe de Clients';
 $_['entry_firstname']       = 'Prénom';
 $_['entry_lastname']        = 'Nom';
@@ -57,6 +63,7 @@ $_['entry_telephone']       = 'Téléphone';
 $_['entry_newsletter']      = 'Newsletter';
 $_['entry_status']          = 'Statut';
 $_['entry_safe']            = 'Sécurisé';
+$_['entry_commenter']       = 'Commenter';
 $_['entry_password']        = 'Mot de Passe';
 $_['entry_confirm']         = 'Confirmer';
 $_['entry_company']         = 'Entreprise';
@@ -76,11 +83,15 @@ $_['entry_ip']              = 'IP';
 $_['entry_date_from']       = 'Date de Début';
 $_['entry_date_to']         = 'Date de Fin';
 
+// Tab
+$_['tab_authorize']         = 'Autorisation';
+
 // Button
 $_['button_order']          = 'Commandes';
 
 // Help
 $_['help_safe']             = 'Définir à vrai pour éviter que ce client soit bloqué par le système anti-fraude.';
+$_['help_commenter']        = 'Choisissez d\'activer cette option pour permettre la prévention de détection du système anti-spam pour ce client.';
 $_['help_points']           = 'Utilisez un signe moins pour supprimer des points.';
 
 // Error
@@ -94,6 +105,11 @@ $_['error_lastname']        = 'Le nom doit contenir entre 1 et 32 caractères!';
 $_['error_email']           = 'L\'adresse e-mail ne semble pas être valide!';
 $_['error_telephone']       = 'Le téléphone doit contenir entre 3 et 32 caractères!';
 $_['error_password']        = 'Le mot de passe doit contenir entre 4 et 20 caractères!';
+$_['error_password_uppercase'] = 'majuscule';
+$_['error_password_lowercase'] = 'minuscule';
+$_['error_password_number']    = 'numéro';
+$_['error_password_symbol']    = 'symbole';
+$_['error_password_length']    = 'Le mot de passe doit contenir entre %d et 40 caractères!';
 $_['error_confirm']         = 'Le mot de passe et la confirmation du mot de passe ne correspondent pas!';
 $_['error_address_1']       = 'L\'adresse 1 doit contenir entre 3 et 128 caractères!';
 $_['error_city']            = 'La ville doit contenir entre 2 et 128 caractères!';

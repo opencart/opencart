@@ -1,14 +1,14 @@
 <?php
 // Text
-$_['text_subject']  = '%s - GDPR Export/Deletion Request!';
-$_['text_export']   = 'Export Data Request';
-$_['text_remove']   = 'Account Deletion Request';
-$_['text_gdpr']     = 'A GDPR request from this email address, To confirm this action please click on the link below:';
-$_['text_ip']       = 'The IP used to make this request was:';
-$_['text_contact']  = 'If you did not make this request please contact the store owner here:';
-$_['text_thanks']   = 'Thanks,';
-$_['text_ignore']   = 'If you did not created this request, please ignore this email.';
+$_['text_subject']  = '%s - DSGVO-Export-/Löschanfrage!';
+$_['text_export']   = 'Datenexportanforderung';
+$_['text_remove']   = 'Antrag auf Kontolöschung';
+$_['text_gdpr']     = 'Eine DSGVO-Anfrage von dieser E-Mail-Adresse. Um diese Aktion zu bestätigen, klicken Sie bitte auf den folgenden Link:';
+$_['text_ip']       = 'Die für diese Anfrage verwendete IP-Adresse war:';
+$_['text_contact']  = 'Wenn Sie diese Anfrage nicht gestellt haben, wenden Sie sich bitte hier an den Ladenbesitzer:';
+$_['text_thanks']   = 'Danke,';
+$_['text_ignore']   = 'Wenn Sie diese Anfrage nicht erstellt haben, ignorieren Sie diese E-Mail bitte.';
 
 // Buttons
-$_['button_export'] = 'I confirm export my data';
-$_['button_remove'] = 'I confirm delete my account';
+$_['button_export'] = 'Ich bestätige den Export meiner Daten';
+$_['button_remove'] = 'Ich bestätige die Löschung meines Kontos';

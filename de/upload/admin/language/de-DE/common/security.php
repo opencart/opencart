@@ -1,47 +1,47 @@
 <?php
 // Heading
-$_['heading_title']                   = 'Important Security Notification!';
+$_['heading_title']                   = 'Wichtiger Sicherheitshinweis!';
 
 // Text
-$_['text_install']                    = 'Delete installation directory';
-$_['text_install_description']        = 'Your installation directory needs deleting!';
-$_['text_install_success']            = 'Success: Install directory has been deleted!';
-$_['text_storage']                    = 'Move storage directory';
-$_['text_storage_description']        = 'It is very important that you move the storage directory outside of the web directory (e.g. public_html, www or htdocs).';
-$_['text_storage_move']               = 'Moving %s to %s of %s storage files';
-$_['text_storage_success']            = 'Success: Storage directory has been moved!';
-$_['text_storage_delete']             = 'Delete previous storage directory';
-$_['text_storage_delete_description'] = 'Your previous storage directory needs deleting!';
-$_['text_storage_delete_success']     = 'Success: Previous storage directory has been deleted!';
-$_['text_admin']                      = 'Move admin directory';
-$_['text_admin_description']          = 'Please type in a new admin directory name in the field below.';
-$_['text_admin_move']                 = 'Moving %s to %s of %s admin files';
-$_['text_admin_success']              = 'Success: Admin directory has been moved!';
-$_['text_admin_delete']               = 'Delete previous admin directory';
-$_['text_admin_delete_description']   = 'Your previous admin directory needs deleting!';
-$_['text_admin_delete_success']       = 'Success: Previous admin directory has been deleted!';
-$_['text_path']                       = 'Path';
+$_['text_install']                    = 'Installationsverzeichnis löschen';
+$_['text_install_description']        = 'Ihr Installationsverzeichnis muss gelöscht werden!';
+$_['text_install_success']            = 'Erfolg: Installationsverzeichnis wurde gelöscht!';
+$_['text_storage']                    = 'Speicherverzeichnis verschieben';
+$_['text_storage_description']        = 'Es ist sehr wichtig, dass Sie das Speicherverzeichnis außerhalb des Webverzeichnisses verschieben (z. B. public_html, www oder htdocs).';
+$_['text_storage_move']               = 'Verschieben von %s nach %s von %s Speicherdateien';
+$_['text_storage_success']            = 'Erfolg: Speicherverzeichnis wurde verschoben!';
+$_['text_storage_delete']             = 'Bisheriges Speicherverzeichnis löschen';
+$_['text_storage_delete_description'] = 'Ihr bisheriges Speicherverzeichnis muss gelöscht werden!';
+$_['text_storage_delete_success']     = 'Erfolg: Vorheriges Speicherverzeichnis wurde gelöscht!';
+$_['text_admin']                      = 'Administratorverzeichnis verschieben';
+$_['text_admin_description']          = 'Bitte geben Sie in das Feld unten einen neuen Administratorverzeichnisnamen ein.';
+$_['text_admin_move']                 = 'Verschieben von %s nach %s von %s Admin-Dateien';
+$_['text_admin_success']              = 'Erfolg: Admin-Verzeichnis wurde verschoben!';
+$_['text_admin_delete']               = 'Vorheriges Admin-Verzeichnis löschen';
+$_['text_admin_delete_description']   = 'Ihr vorheriges Administratorverzeichnis muss gelöscht werden!';
+$_['text_admin_delete_success']       = 'Erfolg: Vorheriges Admin-Verzeichnis wurde gelöscht!';
+$_['text_path']                       = 'Weg';
 
 // Entry
-$_['entry_path']                      = 'Path';
-$_['entry_path_current']              = 'Current Path';
-$_['entry_path_new']                  = 'New Path';
-$_['entry_name']                      = 'Directory Name';
+$_['entry_path']                      = 'Weg';
+$_['entry_path_current']              = 'Aktueller Pfad';
+$_['entry_path_new']                  = 'Neuer Pfad';
+$_['entry_name']                      = 'Verzeichnisname';
 
 // Buttons
-$_['button_move']                     = 'Move';
+$_['button_move']                     = 'Bewegen';
 
 // Help
-$_['help_storage']                    = 'Storage directory name must begin with storage. e.g. `storage_`.';
+$_['help_storage']                    = 'Der Name des Speicherverzeichnisses muss mit „Storage“ beginnen, z. B. „storage_“.';
 
 // Error
-$_['error_permission']                = 'Warning: You do not have permission to modify security!';
-$_['error_install']                   = 'Warning: Install directory does not exist!';
-$_['error_storage']                   = 'Warning: Storage directory does not exist!';
-$_['error_storage_root']              = 'Warning: Storage directory must be outside the web root!';
-$_['error_storage_name']              = 'Warning: Storage directory name must start with `storage`! e.g. `storage_`.';
-$_['error_admin']                     = 'Warning: Admin directory does not exist!';
-$_['error_admin_allowed']             = 'Warning: This admin directory name can not be used!';
-$_['error_admin_exists']              = 'Warning: Admin directory already exists!';
-$_['error_writable']                  = 'Warning: config.php and admin/config.php need to be made writable!';
-$_['error_remove']                    = 'Warning: Directory does not exist to remove!';
+$_['error_permission']                = 'Achtung: Sie sind nicht berechtigt, die Sicherheit zu ändern!';
+$_['error_install']                   = 'Achtung: Installationsverzeichnis existiert nicht!';
+$_['error_storage']                   = 'Achtung: Speicherverzeichnis existiert nicht!';
+$_['error_storage_root']              = 'Achtung: Das Speicherverzeichnis muss außerhalb des Web-Roots liegen!';
+$_['error_storage_name']              = 'Warnung: Der Name des Speicherverzeichnisses muss mit „storage“ beginnen! zB „storage_“.';
+$_['error_admin']                     = 'Achtung: Admin-Verzeichnis existiert nicht!';
+$_['error_admin_allowed']             = 'Achtung: Dieser Admin-Verzeichnisname kann nicht verwendet werden!';
+$_['error_admin_exists']              = 'Achtung: Admin-Verzeichnis existiert bereits!';
+$_['error_writable']                  = 'Achtung: config.php und admin/config.php müssen beschreibbar gemacht werden!';
+$_['error_remove']                    = 'Warnung: Das zu löschende Verzeichnis existiert nicht!';

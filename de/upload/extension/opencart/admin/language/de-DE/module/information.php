@@ -3,12 +3,12 @@
 $_['heading_title']    = 'Information';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified information module!';
-$_['text_edit']        = 'Edit Information Module';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben das Informationsmodul geändert!';
+$_['text_edit']        = 'Informationsmodul bearbeiten';
 
 // Entry
 $_['entry_status']     = 'Status';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify information module!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, das Informationsmodul zu ändern!';

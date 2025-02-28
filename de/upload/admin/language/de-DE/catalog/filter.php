@@ -1,26 +1,26 @@
 <?php
 // Heading
-$_['heading_title']       = 'Filters';
+$_['heading_title']       = 'Filter';
 
 // Text
-$_['text_success']        = 'Success: You have modified filters!';
-$_['text_list']           = 'Filter List';
-$_['text_add']            = 'Add Filter';
-$_['text_edit']           = 'Edit Filter';
+$_['text_success']        = 'Erfolg: Sie haben die Filter geändert!';
+$_['text_list']           = 'Liste filtern';
+$_['text_add']            = 'Filter hinzufügen';
+$_['text_edit']           = 'Filter bearbeiten';
 
 // Column
-$_['column_name']         = 'Filter Name';
-$_['column_filter_group'] = 'Filter Group';
-$_['column_sort_order']   = 'Sort Order';
-$_['column_action']       = 'Action';
+$_['column_name']         = 'Filtername';
+$_['column_filter_group'] = 'Filtergruppe';
+$_['column_sort_order']   = 'Sortierreihenfolge';
+$_['column_action']       = 'Aktion';
 
 // Entry
-$_['entry_name']          = 'Filter Name';
-$_['entry_filter_group']  = 'Filter Group';
-$_['entry_sort_order']    = 'Sort Order';
+$_['entry_name']          = 'Filtername';
+$_['entry_filter_group']  = 'Filtergruppe';
+$_['entry_sort_order']    = 'Sortierreihenfolge';
 
 // Error
-$_['error_warning']       = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']    = 'Warning: You do not have permission to modify filters!';
-$_['error_name']          = 'Filter Name must be between 1 and 64 characters!';
-$_['error_filter_group']  = 'Filter Group required!';
+$_['error_warning']       = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']    = 'Achtung: Sie sind nicht berechtigt, Filter zu ändern!';
+$_['error_name']          = 'Der Filtername muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_filter_group']  = 'Filtergruppe erforderlich!';

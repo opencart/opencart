@@ -1,22 +1,22 @@
 <?php
 // Heading
-$_['heading_title']    = 'Products Viewed Report';
+$_['heading_title']    = 'Bericht „Angezeigte Produkte“';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_edit']        = 'Edit Products Viewed Report';
-$_['text_success']     = 'Success: You have reset the products viewed report!';
-$_['text_progress']    = 'Progressed %s of %s!';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_edit']        = 'Bericht „Angesehene Produkte“ bearbeiten';
+$_['text_success']     = 'Erfolg: Sie haben den Bericht „Angezeigte Produkte“ zurückgesetzt!';
+$_['text_progress']    = '%s von %sfortgeschritten!';
 
 // Column
-$_['column_name']      = 'Product Name';
-$_['column_model']     = 'Model';
-$_['column_viewed']    = 'Viewed';
-$_['column_percent']   = 'Percent';
+$_['column_name']      = 'Produktname';
+$_['column_model']     = 'Modell';
+$_['column_viewed']    = 'Angesehen';
+$_['column_percent']   = 'Prozent';
 
 // Entry
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify products viewed report!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, den Bericht „Angezeigte Produkte“ zu ändern!';

@@ -1,30 +1,30 @@
 <?php
 // Heading
-$_['heading_title']    = 'Weight Classes';
+$_['heading_title']    = 'Gewichtsklassen';
 
 // Text
-$_['text_success']     = 'Success: You have modified weight classes!';
-$_['text_list']        = 'Weight Class List';
-$_['text_add']         = 'Add Weight Class';
-$_['text_edit']        = 'Edit Weight Class';
+$_['text_success']     = 'Erfolg: Du hast die Gewichtsklassen verändert!';
+$_['text_list']        = 'Gewichtsklassenliste';
+$_['text_add']         = 'Gewichtsklasse hinzufügen';
+$_['text_edit']        = 'Gewichtsklasse bearbeiten';
 
 // Column
-$_['column_title']     = 'Weight Title';
-$_['column_unit']      = 'Weight Unit';
-$_['column_value']     = 'Value';
-$_['column_action']    = 'Action';
+$_['column_title']     = 'Gewicht Titel';
+$_['column_unit']      = 'Gewichtseinheit';
+$_['column_value']     = 'Wert';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_title']      = 'Weight Title';
-$_['entry_unit']       = 'Weight Unit';
-$_['entry_value']      = 'Value';
+$_['entry_title']      = 'Gewicht Titel';
+$_['entry_unit']       = 'Gewichtseinheit';
+$_['entry_value']      = 'Wert';
 
 // Help
-$_['help_value']       = 'The value of your default weight in the current weight unit. Set to 1 for your default weight.';
+$_['help_value']       = 'Der Wert Ihres Standardgewichts in der aktuellen Gewichtseinheit. Setzen Sie den Wert für Ihr Standardgewicht auf 1.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify weight classes!';
-$_['error_title']      = 'Weight Title must be between 3 and 32 characters!';
-$_['error_unit']       = 'Weight Unit must be between 1 and 4 characters!';
-$_['error_default']    = 'Warning: This weight class cannot be deleted as it is currently assigned as the default store weight class!';
-$_['error_product']    = 'Warning: This weight class cannot be deleted as it is currently assigned to %s products!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt Gewichtsklassen zu ändern!';
+$_['error_title']      = 'Der Gewichtstitel muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_unit']       = 'Die Gewichtseinheit muss zwischen 1 und 4 Zeichen lang sein!';
+$_['error_default']    = 'Achtung: Diese Gewichtsklasse kann nicht gelöscht werden, da sie aktuell als Standardgewichtsklasse des Geschäfts zugewiesen ist!';
+$_['error_product']    = 'Achtung: Diese Gewichtsklasse kann nicht gelöscht werden, da sie aktuell %s Produkten zugeordnet ist!';

@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_language'] = 'Language';
+$_['text_language'] = 'Sprache';
 
 // Error
-$_['error_language'] = 'Warning: Language is not available!';
+$_['error_language'] = 'Achtung: Sprache ist nicht verfügbar!';

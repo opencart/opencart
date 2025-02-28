@@ -1,21 +1,21 @@
 <?php
 // Heading
-$_['heading_title']    = 'Handling Fee';
+$_['heading_title']    = 'Bearbeitungsgebühr';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified handling fee total!';
-$_['text_edit']        = 'Edit Handling Fee Total';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben die Gesamtbearbeitungsgebühr geändert!';
+$_['text_edit']        = 'Bearbeitungsgebühr insgesamt bearbeiten';
 
 // Entry
-$_['entry_total']      = 'Order Total';
-$_['entry_fee']        = 'Fee';
-$_['entry_tax_class']  = 'Tax Class';
+$_['entry_total']      = 'Gesamtbetrag der Bestellung';
+$_['entry_fee']        = 'Gebühr';
+$_['entry_tax_class']  = 'Steuerklasse';
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Help
-$_['help_total']       = 'The checkout total the order must reach before this order total becomes active.';
+$_['help_total']       = 'Der Gesamtbetrag an der Kasse, den die Bestellung erreichen muss, bevor dieser Gesamtbetrag aktiv wird.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify handling fee total!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, den Gesamtbetrag der Bearbeitungsgebühr zu ändern!';

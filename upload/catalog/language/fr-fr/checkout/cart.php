@@ -8,9 +8,7 @@ $_['text_edit']                  = 'Succès: Vous avez modifié votre panier d\'
 $_['text_remove']                = 'Succès: Vous avez retiré un article de votre panier d\'achat!';
 $_['text_login']                 = 'Attention: Vous devez <a href="%s">vous connecter</a> ou <a href="%s">créer un compte</a> pour voir les prix!';
 $_['text_no_results']            = 'Votre panier est vide!';
-$_['text_next']                  = 'Que souhaitez-vous faire ensuite?';
-$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompense que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre livraison.';
-$_['text_points']                = 'Points de récompense';
+$_['text_model']                 = 'Modèle';
 $_['text_subscription']          = 'Abonnement';
 $_['text_subscription_trial']    = '%s tous les %d %s(s) pour %d paiement(s), puis ';
 $_['text_subscription_duration'] = '%s tous les %d %s(s) pour %d paiement(s)';
@@ -20,11 +18,13 @@ $_['text_week']                  = 'semaine';
 $_['text_semi_month']            = 'demi-mois';
 $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
+$_['text_points']                = 'Points de récompense';
+$_['text_next']                  = 'Que souhaitez-vous faire ensuite?';
+$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompense que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre livraison.';
 
 // Colonne
 $_['column_image']               = 'Image';
 $_['column_name']                = 'Nom du produit';
-$_['column_model']               = 'Modèle';
 $_['column_quantity']            = 'Quantité';
 $_['column_price']               = 'Prix unitaire';
 $_['column_total']               = 'Total';

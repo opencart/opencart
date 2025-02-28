@@ -1,3 +1,3 @@
 files:
-  - source: upload/admin/language/en-gb/**/
-    translation: upload/admin/language/%locale%/**/%file_name%.%file_extension%
+  - source: '**/language/en-gb/**/'
+    translation: '**/language/%locale%/**/%file_name%.%file_extension%'

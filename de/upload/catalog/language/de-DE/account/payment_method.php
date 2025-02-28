@@ -1,7 +1,7 @@
 <?php
 // Heading
-$_['heading_title']   = 'Payment Methods';
+$_['heading_title']   = 'Zahlungsarten';
 
 // Text
-$_['text_account']    = 'Account';
-$_['text_no_results'] = 'You have no payment methods in your account.';
+$_['text_account']    = 'Konto';
+$_['text_no_results'] = 'Sie haben keine Zahlungsmethoden in Ihrem Konto.';

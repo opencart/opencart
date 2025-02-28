@@ -1,22 +1,22 @@
 <?php
 // Heading
-$_['heading_title']     = 'Events';
+$_['heading_title']     = 'Veranstaltungen';
 
 // Text
-$_['text_success']      = 'Success: You have modified events!';
-$_['text_list']         = 'Event List';
-$_['text_event']        = 'Events are used by extensions to override the default functionality of your store. If you have issues you can disable or enable the events here.';
-$_['text_info']         = 'Event Information';
+$_['text_success']      = 'Erfolg: Sie haben Ereignisse geändert!';
+$_['text_list']         = 'Veranstaltungsliste';
+$_['text_event']        = 'Ereignisse werden von Erweiterungen verwendet, um die Standardfunktionalität Ihres Shops zu überschreiben. Wenn Sie Probleme haben, können Sie die Ereignisse hier deaktivieren oder aktivieren.';
+$_['text_info']         = 'Informationen zur Veranstaltung';
 
 // Column
-$_['column_code']       = 'Event Code';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_code']       = 'Ereigniscode';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_description'] = 'Description';
-$_['entry_trigger']     = 'Trigger';
-$_['entry_action']      = 'Action';
+$_['entry_description'] = 'Beschreibung';
+$_['entry_trigger']     = 'Auslösen';
+$_['entry_action']      = 'Aktion';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify the events!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, die Ereignisse zu ändern!';

@@ -1,3 +1,3 @@
 <?php
 // Heading
-$_['heading_title'] = 'Featured';
+$_['heading_title'] = 'Empfohlen';

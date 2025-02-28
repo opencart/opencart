@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_success']    = 'Success: Affiliate commission will be applied to this order!';
-$_['text_remove']     = 'Success: Your affiliate commission has been removed!';
+$_['text_success']    = 'Erfolgreich: Auf diese Bestellung wird eine Affiliate-Provision angewendet!';
+$_['text_remove']     = 'Erfolg: Ihre Affiliate-Provision wurde entfernt!';
 
 // Error
-$_['error_affiliate'] = 'Warning: Affiliate could not be found!';
-$_['error_order']     = 'Warning: Sub-Total needs to be above 0 for commission to be applied!';
+$_['error_affiliate'] = 'Achtung: Partner konnte nicht gefunden werden!';
+$_['error_order']     = 'Achtung: Die Zwischensumme muss über 0 liegen, damit eine Provision angewendet wird!';

@@ -1,28 +1,28 @@
 <?php
 // Heading
-$_['heading_title']          = 'Developer Options';
+$_['heading_title']          = 'Entwickleroptionen';
 
 // Text
-$_['text_developer_success'] = 'Success: You have modified developer settings!';
-$_['text_cache_success']     = 'Success: You have cleared the cache!';
-$_['text_theme_success']     = 'Success: You have cleared the theme cache!';
-$_['text_sass_success']      = 'Success: You have cleared the SASS cache!';
-$_['text_vendor_success']    = 'Success: You have cleared the vendor cache!';
-$_['text_theme']             = 'Theme';
+$_['text_developer_success'] = 'Erfolg: Sie haben die Entwicklereinstellungen geändert!';
+$_['text_cache_success']     = 'Erfolg: Sie haben den Cache geleert!';
+$_['text_theme_success']     = 'Erfolg: Sie haben den Theme-Cache geleert!';
+$_['text_sass_success']      = 'Erfolg: Sie haben den SASS-Cache geleert!';
+$_['text_vendor_success']    = 'Erfolg: Sie haben den Anbieter-Cache geleert!';
+$_['text_theme']             = 'Thema';
 $_['text_sass']              = 'SASS';
-$_['text_cache']             = 'Cache';
-$_['text_vendor']            = 'Vendor';
+$_['text_cache']             = 'Zwischenspeicher';
+$_['text_vendor']            = 'Verkäufer';
 
 // Column
-$_['column_component']       = 'Component';
-$_['column_action']          = 'Action';
+$_['column_component']       = 'Komponente';
+$_['column_action']          = 'Aktion';
 
 // Entry
-$_['entry_cache']            = 'Cache';
+$_['entry_cache']            = 'Zwischenspeicher';
 
 // Buttons
-$_['button_on']              = 'On';
-$_['button_off']             = 'Off';
+$_['button_on']              = 'An';
+$_['button_off']             = 'Aus';
 
 // Error
-$_['error_permission']       = 'Warning: You do not have permission to modify developer settings!';
+$_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Entwicklereinstellungen zu ändern!';

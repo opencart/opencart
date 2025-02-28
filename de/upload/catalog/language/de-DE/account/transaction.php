@@ -1,14 +1,14 @@
 <?php
 // Heading
-$_['heading_title']      = 'Your Transactions';
+$_['heading_title']      = 'Ihre Transaktionen';
 
 // Column
-$_['column_date_added']  = 'Date Added';
-$_['column_description'] = 'Description';
-$_['column_amount']      = 'Amount (%s)';
+$_['column_date_added']  = 'Datum hinzugefügt';
+$_['column_description'] = 'Beschreibung';
+$_['column_amount']      = 'Betrag (%s)';
 
 // Text
-$_['text_account']       = 'Account';
-$_['text_transaction']   = 'Your Transactions';
-$_['text_total']         = 'Your current balance is:';
-$_['text_no_results']    = 'You do not have any transactions!';
+$_['text_account']       = 'Konto';
+$_['text_transaction']   = 'Ihre Transaktionen';
+$_['text_total']         = 'Ihr aktueller Kontostand beträgt:';
+$_['text_no_results']    = 'Sie haben keine Transaktionen!';

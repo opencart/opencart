@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_reward']  = 'Use Reward Points';
+$_['text_reward']  = 'Prämienpunkte einlösen';
 
 // Entry
-$_['entry_reward'] = 'Use Reward Points';
+$_['entry_reward'] = 'Prämienpunkte einlösen';

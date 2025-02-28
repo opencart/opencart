@@ -3,30 +3,30 @@
 $_['heading_title']    = 'Banner';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified banner module!';
-$_['text_edit']        = 'Edit Banner Module';
-$_['text_slide']       = 'Slide';
-$_['text_fade']        = 'Fade';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben das Bannermodul geändert!';
+$_['text_edit']        = 'Bannermodul bearbeiten';
+$_['text_slide']       = 'Gleiten';
+$_['text_fade']        = 'Verblassen';
 
 // Entry
-$_['entry_name']       = 'Module Name';
+$_['entry_name']       = 'Modulname';
 $_['entry_banner']     = 'Banner';
-$_['entry_effect']     = 'Effect';
-$_['entry_items']      = 'Items per Slide';
-$_['entry_controls']   = 'Controls';
-$_['entry_indicators'] = 'Indicators';
-$_['entry_interval']   = 'Interval';
-$_['entry_width']      = 'Width';
-$_['entry_height']     = 'Height';
+$_['entry_effect']     = 'Wirkung';
+$_['entry_items']      = 'Elemente pro Folie';
+$_['entry_controls']   = 'Bedienelemente';
+$_['entry_indicators'] = 'Indikatoren';
+$_['entry_interval']   = 'Intervall';
+$_['entry_width']      = 'Breite';
+$_['entry_height']     = 'Höhe';
 $_['entry_status']     = 'Status';
 
 // Help
-$_['help_items']       = 'The number of items to show per slide.';
+$_['help_items']       = 'Die Anzahl der pro Folie anzuzeigenden Elemente.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify banner module!';
-$_['error_name']       = 'Module Name must be between 3 and 64 characters!';
-$_['error_interval']   = 'Interval required!';
-$_['error_width']      = 'Width required!';
-$_['error_height']     = 'Height required!';
+$_['error_permission'] = 'Achtung: Sie haben keine Berechtigung, das Bannermodul zu ändern!';
+$_['error_name']       = 'Der Modulname muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_interval']   = 'Intervall erforderlich!';
+$_['error_width']      = 'Breite erforderlich!';
+$_['error_height']     = 'Körpergröße erforderlich!';

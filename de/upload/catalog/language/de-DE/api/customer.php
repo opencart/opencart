@@ -1,13 +1,13 @@
 <?php
 // Text
-$_['text_success']         = 'You have successfully modified customers';
+$_['text_success']         = 'Sie haben Kunden erfolgreich geändert';
 
 // Error
-$_['error_customer']       = 'Warning: Customer could not be found!';
-$_['error_customer_group'] = 'Customer Group does not appear to be valid!';
-$_['error_firstname']      = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']       = 'Last Name must be between 1 and 32 characters!';
-$_['error_email']          = 'E-Mail Address does not appear to be valid!';
-$_['error_telephone']      = 'Telephone must be between 3 and 32 characters!';
-$_['error_custom_field']   = '%s required!';
-$_['error_regex']          = '%s is not a valid input!';
+$_['error_customer']       = 'Achtung: Kunde konnte nicht gefunden werden!';
+$_['error_customer_group'] = 'Kundengruppe scheint nicht gültig zu sein!';
+$_['error_firstname']      = 'Der Vorname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_lastname']       = 'Der Nachname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_email']          = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_telephone']      = 'Die Telefonnummer muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_custom_field']   = '%s erforderlich!';
+$_['error_regex']          = '%s ist keine gültige Eingabe!';

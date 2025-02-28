@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']    = 'OpenCart Marketplace API';
+$_['heading_title']    = 'OpenCart Marketplace-API';
 
 // Text
-$_['text_success']     = 'Success: You have modified your API information!';
-$_['text_signup']      = 'Please enter your OpenCart API information which you can obtain <a href="https://www.opencart.com/index.php?route=account/store" target="_blank" class="alert-link">here</a>.';
+$_['text_success']     = 'Erfolg: Sie haben Ihre API-Informationen geändert!';
+$_['text_signup']      = 'Bitte geben Sie Ihre OpenCart API-Informationen ein, die Sie hier <a href="https://www.opencart.com/index.php?route=account/store" target="_blank" class="alert-link">erhalten können:</a>.';
 
 // Entry
-$_['entry_username']   = 'Username';
-$_['entry_secret']     = 'Secret';
+$_['entry_username']   = 'Benutzername';
+$_['entry_secret']     = 'Geheimnis';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify marketplace API!';
-$_['error_username']   = 'Username required!';
-$_['error_secret']     = 'Secret required!';
+$_['error_permission'] = 'Warnung: Sie sind nicht berechtigt, die Marktplatz-API zu ändern!';
+$_['error_username']   = 'Benutzername erforderlich!';
+$_['error_secret']     = 'Geheimhaltung erforderlich!';

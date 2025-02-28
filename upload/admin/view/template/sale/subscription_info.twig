@@ -97,8 +97,8 @@
               <tr>
                 <th>{{ column_product }}</th>
                 <th class="text-end">{{ column_quantity }}</th>
-                <th class="text-end">{{ column_trial_price }}</th>
                 <th class="text-end">{{ column_price }}</th>
+                <th class="text-end">{{ column_total }}</th>
                 <th class="text-end" style="width: 1px;">{{ column_action }}</th>
               </tr>
             </thead>
@@ -729,6 +729,7 @@ $('#form-product-add').on('submit', function(e) {
                         html += '    <input type="hidden" name="product[' + subscription_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
                         html += '  </td>';
                         html += '  <td class="text-end">' + product['quantity'] + '</td>';
+                        html += '  <td class="text-end">' + product['price_text'] + '</td>';
                         html += '  <td class="text-end">' + product['total_text'] + '</td>';
                         html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
                         html += '</tr>';
@@ -1015,7 +1016,7 @@ $('#button-confirm').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
-            if (typeof json['error']) {
+            if (json['error']) {
                 if (json['error']['shipping_method']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 

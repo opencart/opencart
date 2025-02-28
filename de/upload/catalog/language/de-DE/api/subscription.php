@@ -1,14 +1,14 @@
 <?php
 // Text
-$_['text_success']           = 'Success: You have modified subscriptions!';
+$_['text_success']           = 'Erfolg: Sie haben Abonnements geändert!';
 
 // Error
-$_['error_customer']         = 'Warning: Customer details required!';
-$_['error_payment_address']  = 'Warning: Payment address required!';
-$_['error_payment_method']   = 'Warning: Payment method required!';
-$_['error_shipping_address'] = 'Warning: Shipping address required!';
-$_['error_shipping_method']  = 'Warning: Shipping method required!';
-$_['error_product']          = 'Warning: Products required!';
-$_['error_stock']            = 'Warning: Products marked with *** are not available in the desired quantity or not in stock!';
-$_['error_minimum']          = 'Warning: Minimum order amount for %s is %s!';
-$_['error_call']             = 'API call not found';
+$_['error_customer']         = 'Achtung: Kundendaten erforderlich!';
+$_['error_payment_address']  = 'Achtung: Zahlungsadresse erforderlich!';
+$_['error_payment_method']   = 'Achtung: Zahlungsmethode erforderlich!';
+$_['error_shipping_address'] = 'Achtung: Lieferadresse erforderlich!';
+$_['error_shipping_method']  = 'Achtung: Versandart erforderlich!';
+$_['error_product']          = 'Achtung: Produkte erforderlich!';
+$_['error_stock']            = 'Achtung: Mit *** gekennzeichnete Produkte sind nicht in der gewünschten Menge verfügbar bzw. nicht auf Lager!';
+$_['error_minimum']          = 'Achtung: Mindestbestellmenge für %s ist %s!';
+$_['error_call']             = 'API-Aufruf nicht gefunden';

@@ -31,7 +31,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 			$language = new \Opencart\System\Library\Language($code);
 			$language->addPath(DIR_LANGUAGE);
-			$language->load($code);
+			$language->load('default');
 
 			$data['languages'][] = [
 				'text' => $language->get('text_name'),

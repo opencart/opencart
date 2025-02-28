@@ -1,25 +1,23 @@
 <?php
-// Titre
-$_['heading_title']   = 'Blog';
+// Heading
+$_['heading_title']        = 'Blog';
 
-// Texte
-$_['text_blog']       = 'Blog';
-$_['text_comments']   = '%s commentaires';
-$_['text_write']      = 'Écrire un commentaire';
-$_['text_login']      = 'Veuillez <a href="%s">vous connecter</a> ou <a href="%s">vous inscrire</a> pour commenter';
-$_['text_no_results'] = 'Il n\'y a pas de commentaires pour cet article.';
-$_['text_queue']      = 'Votre commentaire a été ajouté à notre file d\'attente de modération!';
-$_['text_success']    = 'Merci pour votre commentaire. Il a été soumis au webmaster pour approbation.';
+// Text
+$_['text_refine']          = 'Affiner la recherche';
+$_['text_all']             = 'Tout';
+$_['text_blog']            = 'Blog';
+$_['text_by']              = 'Par';
+$_['text_tags']            = 'Balises:';
+$_['text_comment']         = 'commentaires';
+$_['text_no_results']      = 'Il n\'y a pas d\'article.';
+$_['text_sort']            = 'Trier par';
+$_['text_rating_asc']      = 'Évaluation (Lowest)';
+$_['text_rating_desc']     = 'Évaluation (Highest)';
+$_['text_date_added_asc']  = 'Date Ajoutée (Oldest)';
+$_['text_date_added_desc'] = 'Date Ajoutée (Latest)';
 
-// Entrée
-$_['entry_author']    = 'Votre nom';
-$_['entry_comment']   = 'Commentaire';
+// Entry
+$_['entry_search']         = 'Rechercher';
 
-// Bouton
-$_['button_continue'] = 'Continuer la lecture';
-
-// Erreur
-$_['error_token']     = 'Attention: Le jeton du commentaire est invalide!';
-$_['error_article']   = 'Attention: L\'article est introuvable!';
-$_['error_comment']   = 'Le commentaire doit contenir entre 25 et 1000 caractères!';
-$_['error_guest']     = 'Vous devez vous connecter pour commenter l\'article!';
+// Button
+$_['button_continue']      = 'Poursuivre la lecture';

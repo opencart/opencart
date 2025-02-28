@@ -1,36 +1,36 @@
 <?php
 // Heading
-$_['heading_title']     = 'Upgrade';
+$_['heading_title']     = 'Aktualisierung';
 
 // Text
-$_['text_upgrade']      = 'Prepare for your upgrade';
-$_['text_server']       = 'Check your server is set-up correctly';
-$_['text_steps']        = 'Upgrade Progress';
-$_['text_error']        = 'Post any upgrade script errors problems in the forums';
-$_['text_clear']        = 'After upgrade, clear any cookies in your browser to avoid getting token errors.';
-$_['text_admin']        = 'Please enter admin directory name';
-$_['text_refresh']      = 'Load the admin page & press Ctrl+F5 twice to force the browser to update the css changes.';
-$_['text_user']         = 'Goto Admin -> Users -> User Groups and Edit the Top Adminstrator group. Check All boxes.';
-$_['text_setting']      = 'Goto Admin and Edit the main System Settings. Update all fields and click save, even if nothing changed.';
-$_['text_store']        = 'Load the store front & press Ctrl+F5 twice to force the browser to update the css changes.';
-$_['text_success']      = 'Congratulations! You have successfully upgraded your OpenCart installation!';
-$_['text_patch']        = 'Patch %s has been applied (%s of %s)';
+$_['text_upgrade']      = 'Vorbereiten des Upgrades';
+$_['text_server']       = 'Überprüfen Sie, ob Ihr Server richtig eingerichtet ist';
+$_['text_steps']        = 'Upgrade-Fortschritt';
+$_['text_error']        = 'Posten Sie alle Upgrade-Skript-Fehler und Probleme in den Foren';
+$_['text_clear']        = 'Löschen Sie nach dem Upgrade sämtliche Cookies in Ihrem Browser, um Token-Fehler zu vermeiden.';
+$_['text_admin']        = 'Bitte geben Sie den Administratorverzeichnisnamen ein';
+$_['text_refresh']      = 'Laden Sie die Admin-Seite und drücken Sie zweimal Strg+F5, um den Browser zum Aktualisieren der CSS-Änderungen zu zwingen.';
+$_['text_user']         = 'Gehen Sie zu Admin -> Benutzer -> Benutzergruppen und bearbeiten Sie die Gruppe „Top-Administrator“. Aktivieren Sie alle Kontrollkästchen.';
+$_['text_setting']      = 'Gehen Sie zu Admin und bearbeiten Sie die wichtigsten Systemeinstellungen. Aktualisieren Sie alle Felder und klicken Sie auf Speichern, auch wenn sich nichts geändert hat.';
+$_['text_store']        = 'Laden Sie die Storefront und drücken Sie zweimal Strg+F5, um den Browser zu zwingen, die CSS-Änderungen zu aktualisieren.';
+$_['text_success']      = 'Herzlichen Glückwunsch! Sie haben Ihre OpenCart-Installation erfolgreich aktualisiert!';
+$_['text_patch']        = 'Patch %s wurde angewendet (%s von %s)';
 
 // Entry
-$_['entry_admin']       = 'Admin Name';
-$_['entry_progress']    = 'Progress';
+$_['entry_admin']       = 'Administratorname';
+$_['entry_progress']    = 'Fortschritt';
 
 // Error
-$_['error_admin']       = 'Error: config file %s could not found. Make sure the admin directory is the correct name!';
-$_['error_file']        = 'Error: config file %s not found!';
-$_['error_writable']    = 'Error: config file %s is not writable!';
-$_['error_upgrade']     = 'Error: No upgrade files set!';
-$_['error_server']      = 'Error: HTTP_SERVER constant could not be found!';
-$_['error_catalog']     = 'Error: HTTP_CATALOG constant could not be found!';
-$_['error_db_driver']   = 'Error: DB_DRIVER constant could not be found!';
-$_['error_db_hostname'] = 'Error: DB_HOSTNAME constant could not be found!';
-$_['error_db_username'] = 'Error: DB_USERNAME constant could not be found!';
-$_['error_db_password'] = 'Error: DB_PASSWORD constant could not be found!';
-$_['error_db_database'] = 'Error: DB_DATABASE constant could not be found!';
-$_['error_db_port']     = 'Error: DB_PORT constant could not be found!';
-$_['error_db_prefix']   = 'Error: DB_PREFIX constant could not be found!';
+$_['error_admin']       = 'Fehler: Konfigurationsdatei %s konnte nicht gefunden werden. Stellen Sie sicher, dass das Administratorverzeichnis den richtigen Namen hat!';
+$_['error_file']        = 'Fehler: Konfigurationsdatei %s nicht gefunden!';
+$_['error_writable']    = 'Fehler: Konfigurationsdatei %s ist nicht beschreibbar!';
+$_['error_upgrade']     = 'Fehler: Keine Upgrade-Dateien festgelegt!';
+$_['error_server']      = 'Fehler: HTTP_SERVER-Konstante konnte nicht gefunden werden!';
+$_['error_catalog']     = 'Fehler: HTTP_CATALOG-Konstante konnte nicht gefunden werden!';
+$_['error_db_driver']   = 'Fehler: DB_DRIVER-Konstante konnte nicht gefunden werden!';
+$_['error_db_hostname'] = 'Fehler: DB_HOSTNAME-Konstante konnte nicht gefunden werden!';
+$_['error_db_username'] = 'Fehler: DB_USERNAME-Konstante konnte nicht gefunden werden!';
+$_['error_db_password'] = 'Fehler: DB_PASSWORD-Konstante konnte nicht gefunden werden!';
+$_['error_db_database'] = 'Fehler: DB_DATABASE-Konstante konnte nicht gefunden werden!';
+$_['error_db_port']     = 'Fehler: DB_PORT-Konstante konnte nicht gefunden werden!';
+$_['error_db_prefix']   = 'Fehler: DB_PREFIX-Konstante konnte nicht gefunden werden!';

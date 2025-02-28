@@ -1,11 +1,3 @@
 files:
-  - source: upload/admin/language/en-gb/
-    translation: upload/admin/language/%locale%/
-  - source: upload/catalog/language/en-gb/
-    translation: upload/catalog/language/%locale%/
-  - source: upload/install/language/en-gb/
-    translation: upload/install/language/%locale%/
-  - source: upload/extension/opencart/admin/language/en-gb/
-    translation: upload/extension/opencart/admin/language/%locale%/
-  - source: upload/extension/opencart/catalog/language/en-gb/
-    translation: upload/extension/opencart/catalog/language/%locale%/
+  - source: upload/admin/language/en-gb/**/
+    translation: upload/admin/language/%locale%/**/%file_name%.%file_extension%

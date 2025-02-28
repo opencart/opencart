@@ -32,7 +32,7 @@ $_['text_no_subscription']        = 'Aucun abonnement trouvé!';
 // Column
 $_['column_subscription_id']      = 'ID d\'abonnement';
 $_['column_product']              = 'Produit';
-$_['column_product_total']        = 'Non. of Products';
+$_['column_product_total']        = 'Non. de Products';
 $_['column_description']          = 'Description';
 $_['column_order_id']             = 'ID de commande';
 $_['column_status']               = 'Statut';

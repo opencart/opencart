@@ -1,17 +1,17 @@
 <?php
 // Heading
-$_['heading_title']     = 'Reports';
+$_['heading_title']     = 'Berichte';
 
 // Text
-$_['text_success']      = 'Success: You have modified reports!';
-$_['text_list']         = 'Reports List';
+$_['text_success']      = 'Erfolg: Sie haben Berichte geändert!';
+$_['text_list']         = 'Berichtsliste';
 
 // Column
-$_['column_name']       = 'Report Name';
+$_['column_name']       = 'Berichtsname';
 $_['column_status']     = 'Status';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify reports!';
-$_['error_extension']   = 'Warning: Extension does not exist!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Berichte zu ändern!';
+$_['error_extension']   = 'Achtung: Erweiterung existiert nicht!';

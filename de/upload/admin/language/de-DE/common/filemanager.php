@@ -1,23 +1,23 @@
 <?php
 // Heading
-$_['heading_title']    = 'Image Manager';
+$_['heading_title']    = 'Bildmanager';
 
 // Text
-$_['text_uploaded']    = 'Success: Your file has been uploaded!';
-$_['text_directory']   = 'Success: Directory created!';
-$_['text_delete']      = 'Success: Your file or directory has been deleted!';
+$_['text_uploaded']    = 'Erfolg: Ihre Datei wurde hochgeladen!';
+$_['text_directory']   = 'Erfolg: Verzeichnis erstellt!';
+$_['text_delete']      = 'Erfolg: Ihre Datei oder Ihr Verzeichnis wurde gelöscht!';
 
 // Entry
-$_['entry_search']     = 'Search..';
-$_['entry_folder']     = 'Folder Name';
+$_['entry_search']     = 'Suchen..';
+$_['entry_folder']     = 'Ordnername';
 
 // Error
-$_['error_permission'] = 'Warning: Permission Denied!';
-$_['error_filename']   = 'Warning: Filename must be between 3 and 255!';
-$_['error_folder']     = 'Warning: Folder name must be between 3 and 255!';
-$_['error_exists']     = 'Warning: A file or directory with the same name already exists!';
-$_['error_directory']  = 'Warning: Directory does not exist!';
-$_['error_filesize']   = 'Warning: Incorrect file size!';
-$_['error_file_type']  = 'Warning: Incorrect file type!';
-$_['error_upload']     = 'Warning: File could not be uploaded for an unknown reason!';
-$_['error_delete']     = 'Warning: You cannot delete this directory!';
+$_['error_permission'] = 'Warnung: Berechtigung verweigert!';
+$_['error_filename']   = 'Achtung: Der Dateiname muss zwischen 3 und 255 liegen!';
+$_['error_folder']     = 'Achtung: Der Ordnername muss zwischen 3 und 255 liegen!';
+$_['error_exists']     = 'Achtung: Eine Datei oder ein Verzeichnis mit gleichem Namen existiert bereits!';
+$_['error_directory']  = 'Achtung: Verzeichnis existiert nicht!';
+$_['error_filesize']   = 'Achtung: Falsche Dateigröße!';
+$_['error_file_type']  = 'Achtung: Falscher Dateityp!';
+$_['error_upload']     = 'Achtung: Datei konnte aus unbekanntem Grund nicht hochgeladen werden!';
+$_['error_delete']     = 'Achtung: Sie können dieses Verzeichnis nicht löschen!';

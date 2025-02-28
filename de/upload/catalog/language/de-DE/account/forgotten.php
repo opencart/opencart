@@ -1,31 +1,31 @@
 <?php
 // Heading
-$_['heading_title']            = 'Forgot Your Password?';
-$_['heading_reset']            = 'Reset your password';
+$_['heading_title']            = 'Passwort vergessen?';
+$_['heading_reset']            = 'Setzen Sie Ihr Passwort zurück';
 
 // Text
-$_['text_account']             = 'Account';
-$_['text_forgotten']           = 'Forgotten Password';
-$_['text_your_email']          = 'Your E-Mail Address';
-$_['text_email']               = 'Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.';
-$_['text_password']            = 'Enter the new password you wish to use.';
-$_['text_success']             = 'An email with a confirmation link has been sent to your email address!';
-$_['text_reset']               = 'Success: Your password has been successfully updated.';
+$_['text_account']             = 'Konto';
+$_['text_forgotten']           = 'Passwort vergessen';
+$_['text_your_email']          = 'Ihre E-Mail-Adresse';
+$_['text_email']               = 'Geben Sie die mit Ihrem Konto verknüpfte E-Mail-Adresse ein. Klicken Sie auf „Senden“, um einen Link zum Zurücksetzen des Passworts per E-Mail zu erhalten.';
+$_['text_password']            = 'Geben Sie das neue Passwort ein, das Sie verwenden möchten.';
+$_['text_success']             = 'Eine E-Mail mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet!';
+$_['text_reset']               = 'Erfolg: Ihr Passwort wurde erfolgreich aktualisiert.';
 
 // Entry
-$_['entry_email']              = 'E-Mail Address';
-$_['entry_new_password']       = 'New Password';
-$_['entry_password']           = 'Password';
-$_['entry_confirm']            = 'Confirm';
+$_['entry_email']              = 'E-Mail-Adresse';
+$_['entry_new_password']       = 'Neues Passwort';
+$_['entry_password']           = 'Passwort';
+$_['entry_confirm']            = 'Bestätigen';
 
 // Error
-$_['error_email']              = 'E-Mail Address does not appear to be valid!';
-$_['error_not_found']          = 'Warning: The E-Mail Address was not found in our records!';
-$_['error_password']           = 'Password must contain a %s and be between %d and 20 characters!';
-$_['error_password_uppercase'] = 'uppercase';
-$_['error_password_lowercase'] = 'lowercase';
-$_['error_password_number']    = 'number';
-$_['error_password_symbol']    = 'symbol';
-$_['error_password_length']    = 'Password must be between %d and 20 characters!';
-$_['error_confirm']            = 'Password and password confirmation do not match!';
-$_['error_code']               = 'Password reset code is invalid or was used previously!';
+$_['error_email']              = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_not_found']          = 'Achtung: Die E-Mail-Adresse wurde in unseren Aufzeichnungen nicht gefunden!';
+$_['error_password']           = 'Das Passwort muss eine %s enthalten und zwischen %d und 20 Zeichen lang sein!';
+$_['error_password_uppercase'] = 'Großbuchstaben';
+$_['error_password_lowercase'] = 'Kleinbuchstaben';
+$_['error_password_number']    = 'Nummer';
+$_['error_password_symbol']    = 'Symbol';
+$_['error_password_length']    = 'Das Passwort muss zwischen %d und 20 Zeichen lang sein!';
+$_['error_confirm']            = 'Passwort und Passwortbestätigung stimmen nicht überein!';
+$_['error_code']               = 'Der Code zum Zurücksetzen des Passworts ist ungültig oder wurde bereits zuvor verwendet!';

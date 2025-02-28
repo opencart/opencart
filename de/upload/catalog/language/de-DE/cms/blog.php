@@ -1,23 +1,23 @@
 <?php
 // Heading
-$_['heading_title'] = 'Blog';
+$_['heading_title'] = 'Der Blog';
 
 // Text
-$_['text_refine'] = 'Refine Search';
-$_['text_all'] = 'All';
-$_['text_blog'] = 'Blog';
-$_['text_by'] = 'By';
-$_['text_tags'] = 'Tags:';
-$_['text_comment'] = 'comments';
-$_['text_no_results'] = 'There are no articles.';
-$_['text_sort'] = 'Sort By';
-$_['text_rating_asc'] = 'Rating (Lowest)';
-$_['text_rating_desc'] = 'Rating (Highest)';
-$_['text_date_added_asc'] = 'Date Added (Oldest)';
-$_['text_date_added_desc'] = 'Date Added (Latest)';
+$_['text_refine'] = 'Suche verfeinern';
+$_['text_all'] = 'Alle';
+$_['text_blog'] = 'Der Blog';
+$_['text_by'] = 'Von';
+$_['text_tags'] = 'Stichworte:';
+$_['text_comment'] = 'Kommentare';
+$_['text_no_results'] = 'Es sind keine Artikel vorhanden.';
+$_['text_sort'] = 'Sortieren nach';
+$_['text_rating_asc'] = 'Bewertung (niedrigste)';
+$_['text_rating_desc'] = 'Bewertung (Höchste)';
+$_['text_date_added_asc'] = 'Hinzugefügt am (älteste)';
+$_['text_date_added_desc'] = 'Hinzugefügt am (aktuellstes)';
 
 // Entry
-$_['entry_search'] = 'Search';
+$_['entry_search'] = 'Suchen';
 
 // Button
-$_['button_continue'] = 'Continue Reading';
+$_['button_continue'] = 'Weiterlesen';

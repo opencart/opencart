@@ -1,43 +1,43 @@
 <?php
 // Heading
-$_['heading_title']     = 'Reviews';
+$_['heading_title']     = 'Bewertungen';
 
 // Text
-$_['text_success']      = 'Success: You have modified reviews!';
-$_['text_next']         = 'Success: You have modified %s to %s of %s product ratings!';
-$_['text_list']         = 'Review List';
-$_['text_add']          = 'Add Review';
-$_['text_edit']         = 'Edit Review';
+$_['text_success']      = 'Erfolg: Sie haben Bewertungen geändert!';
+$_['text_next']         = 'Erfolg: Sie haben %s bis %s von %s Produktbewertungen geändert!';
+$_['text_list']         = 'Liste überprüfen';
+$_['text_add']          = 'Bewertung hinzufügen';
+$_['text_edit']         = 'Bewertung bearbeiten';
 $_['text_filter']       = 'Filter';
 
 // Column
-$_['column_product']    = 'Product';
-$_['column_author']     = 'Author';
-$_['column_rating']     = 'Rating';
+$_['column_product']    = 'Produkt';
+$_['column_author']     = 'Autor';
+$_['column_rating']     = 'Bewertungen';
 $_['column_status']     = 'Status';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
+$_['column_date_added'] = 'Datum hinzugefügt';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_product']     = 'Product';
-$_['entry_author']      = 'Author';
-$_['entry_rating']      = 'Rating';
+$_['entry_product']     = 'Produkt';
+$_['entry_author']      = 'Autor';
+$_['entry_rating']      = 'Bewertungen';
 $_['entry_status']      = 'Status';
 $_['entry_text']        = 'Text';
-$_['entry_date_added']  = 'Date Added';
-$_['entry_date_from']   = 'Date From';
-$_['entry_date_to']     = 'Date To';
+$_['entry_date_added']  = 'Datum hinzugefügt';
+$_['entry_date_from']   = 'Stammen aus';
+$_['entry_date_to']     = 'Datum bis';
 
 // Help
-$_['help_product']      = '(Autocomplete)';
+$_['help_product']      = '(Autovervollständigung)';
 
 // Button
-$_['button_rating']     = 'Sync Product Ratings';
+$_['button_rating']     = 'Produktbewertungen synchronisieren';
 
 // Error
-$_['error_warning']     = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']  = 'Warning: You do not have permission to modify reviews!';
-$_['error_product']     = 'Product required!';
-$_['error_author']      = 'Author must be between 3 and 64 characters!';
-$_['error_text']        = 'Review Text must be at least 1 character!';
-$_['error_rating']      = 'Review rating required!';
+$_['error_warning']     = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Bewertungen zu ändern!';
+$_['error_product']     = 'Produkt erforderlich!';
+$_['error_author']      = 'Der Autor muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_text']        = 'Der Bewertungstext muss mindestens 1 Zeichen lang sein!';
+$_['error_rating']      = 'Bewertung erforderlich!';

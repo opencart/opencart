@@ -1,18 +1,18 @@
 <?php
 // Text
 $_['text_information']  = 'Information';
-$_['text_blog']         = 'Blog';
-$_['text_service']      = 'Customer Service';
+$_['text_blog']         = 'Der Blog';
+$_['text_service']      = 'Kundendienst';
 $_['text_extra']        = 'Extras';
-$_['text_contact']      = 'Contact Us';
-$_['text_return']       = 'Returns';
-$_['text_sitemap']      = 'Site Map';
-$_['text_gdpr']         = 'GDPR';
-$_['text_manufacturer'] = 'Brands';
-$_['text_affiliate']    = 'Affiliate';
-$_['text_special']      = 'Specials';
-$_['text_account']      = 'My Account';
-$_['text_order']        = 'Order History';
-$_['text_wishlist']     = 'Wish List';
+$_['text_contact']      = 'Kontaktieren Sie uns';
+$_['text_return']       = 'Rückgaben';
+$_['text_sitemap']      = 'Sitemap';
+$_['text_gdpr']         = 'DSGVO';
+$_['text_manufacturer'] = 'Marken';
+$_['text_affiliate']    = 'Partnerprogramm';
+$_['text_special']      = 'Besonderheiten';
+$_['text_account']      = 'Mein Konto';
+$_['text_order']        = 'Bestellverlauf';
+$_['text_wishlist']     = 'Wunschliste';
 $_['text_newsletter']   = 'Newsletter';
-$_['text_powered']      = 'Powered By <a href="https://www.opencart.com">OpenCart</a><br/> %s &copy; %s';
+$_['text_powered']      = 'Unterstützt von <a href="https://www.opencart.com">OpenCart</a><br/> %s &copy; %s';

@@ -1,3 +1,3 @@
 <?php
 // Heading
-$_['heading_title'] = 'Free Checkout';
+$_['heading_title'] = 'Kostenlose Kaufabwicklung';

@@ -11,14 +11,15 @@ $_['text_group']        = 'Groupe de Filtres';
 $_['text_value']        = 'Valeurs des Filtres';
 
 // Column
-$_['column_group']      = 'Groupe de Filtres';
+$_['column_name']         = 'Filtre';
+$_['column_filter_group'] = 'Groupe de Filtres';
 $_['column_sort_order'] = 'Ordre de Tri';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_group']       = 'Nom du Groupe de Filtres';
-$_['entry_name']        = 'Nom du Filtre';
-$_['entry_sort_order']  = 'Ordre de Tri';
+$_['entry_name']         = 'Nom du Filtre';
+$_['entry_filter_group'] = 'Nom du Groupe de Filtres';
+$_['entry_sort_order']   = 'Ordre de Tri';
 
 // Error
 $_['error_warning']     = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';

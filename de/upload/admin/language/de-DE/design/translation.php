@@ -1,32 +1,32 @@
 <?php
 // Heading
-$_['heading_title']    = 'Language Editor';
+$_['heading_title']    = 'Spracheneditor';
 
 // Text
-$_['text_success']     = 'Success: You have modified language editor!';
-$_['text_list']        = 'Translation List';
-$_['text_add']         = 'Add Translation';
-$_['text_edit']        = 'Edit Translation';
-$_['text_default']     = 'Default';
-$_['text_store']       = 'Store';
-$_['text_language']    = 'Language';
+$_['text_success']     = 'Erfolg: Sie haben den Spracheditor geändert!';
+$_['text_list']        = 'Übersetzungsliste';
+$_['text_add']         = 'Übersetzung hinzufügen';
+$_['text_edit']        = 'Übersetzung bearbeiten';
+$_['text_default']     = 'Standard';
+$_['text_store']       = 'Speichern';
+$_['text_language']    = 'Sprache';
 
 // Column
-$_['column_store']     = 'Store';
-$_['column_language']  = 'Language';
+$_['column_store']     = 'Speichern';
+$_['column_language']  = 'Sprache';
 $_['column_route']     = 'Route';
-$_['column_key']       = 'Key';
-$_['column_value']     = 'Value';
-$_['column_action']    = 'Action';
+$_['column_key']       = 'Schlüssel';
+$_['column_value']     = 'Wert';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_store']      = 'Store';
-$_['entry_language']   = 'Language';
+$_['entry_store']      = 'Speichern';
+$_['entry_language']   = 'Sprache';
 $_['entry_route']      = 'Route';
-$_['entry_key']        = 'Key';
-$_['entry_default']    = 'Default';
-$_['entry_value']      = 'Value';
+$_['entry_key']        = 'Schlüssel';
+$_['entry_default']    = 'Standard';
+$_['entry_value']      = 'Wert';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify language editor!';
-$_['error_key']        = 'Key must be between 3 and 64 characters!';
+$_['error_permission'] = 'Achtung: Sie haben keine Berechtigung, den Spracheditor zu ändern!';
+$_['error_key']        = 'Der Schlüssel muss zwischen 3 und 64 Zeichen lang sein!';

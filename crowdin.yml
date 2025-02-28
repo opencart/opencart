@@ -1,4 +1,4 @@
- preserve_hierarchy: true
- files:
+preserve_hierarchy: 1
+files:
   - source: '**/language/en-gb/**/'
     translation: '**/language/%locale%/**/%file_name%.%file_extension%'

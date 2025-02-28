@@ -1,52 +1,52 @@
 <?php
 // Heading
-$_['heading_title']              = 'Subscriptions';
+$_['heading_title']              = 'Abonnements';
 
 // Text
-$_['text_account']               = 'Account';
-$_['text_success']               = 'Success: Your subscription has successfully been canceled!';
-$_['text_subscription']          = 'Subscription #%s';
-$_['text_subscription_id']       = 'Subscription ID';
-$_['text_order_id']              = 'Order ID';
-$_['text_shipping_address']      = 'Shipping Address';
-$_['text_shipping_method']       = 'Shipping Method';
-$_['text_payment_address']       = 'Payment Address';
-$_['text_payment_method']        = 'Payment Method';
-$_['text_model']                 = 'Model';
-$_['text_subscription_plan']     = 'Subscription Plan';
-$_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
-$_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
-$_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';
-$_['text_day']                   = 'day';
-$_['text_week']                  = 'week';
-$_['text_semi_month']            = 'half-month';
-$_['text_month']                 = 'month';
-$_['text_year']                  = 'year';
-$_['text_quantity']              = 'Quantity';
-$_['text_date_next']             = 'Date Next';
-$_['text_remaining']             = 'Remaining';
-$_['text_history']               = 'Subscription History';
-$_['text_order']                 = 'Order History';
-$_['text_no_subscription']       = 'No subscriptions found!';
+$_['text_account']               = 'Konto';
+$_['text_success']               = 'Erfolg: Ihr Abonnement wurde erfolgreich gekündigt!';
+$_['text_subscription']          = 'Abonnement-Nr.%s';
+$_['text_subscription_id']       = 'Abonnement-ID';
+$_['text_order_id']              = 'Bestellnummer';
+$_['text_shipping_address']      = 'Lieferadresse';
+$_['text_shipping_method']       = 'Versandart';
+$_['text_payment_address']       = 'Zahlungsadresse';
+$_['text_payment_method']        = 'Zahlungsmethode';
+$_['text_model']                 = 'Modell';
+$_['text_subscription_plan']     = 'Abonnementplan';
+$_['text_subscription_trial']    = '%s alle %d %s(s) für %d Zahlung(en) dann ';
+$_['text_subscription_duration'] = '%s alle %d %s(s) für %d Zahlung(en)';
+$_['text_subscription_cancel']   = '%s alle %d %s(s) bis zum Abbruch';
+$_['text_day']                   = 'Tag';
+$_['text_week']                  = 'Woche';
+$_['text_semi_month']            = 'halber Monat';
+$_['text_month']                 = 'Monat';
+$_['text_year']                  = 'Jahr';
+$_['text_quantity']              = 'Menge';
+$_['text_date_next']             = 'Datum Nächstes';
+$_['text_remaining']             = 'Übrig';
+$_['text_history']               = 'Abonnementverlauf';
+$_['text_order']                 = 'Bestellverlauf';
+$_['text_no_subscription']       = 'Keine Abonnements gefunden!';
 
 // Column
-$_['column_subscription_id']     = 'Subscription ID';
-$_['column_product']             = 'Product';
-$_['column_product_total']       = 'No. of Products';
-$_['column_description']         = 'Description';
-$_['column_order_id']            = 'Order ID';
+$_['column_subscription_id']     = 'Abonnement-ID';
+$_['column_product']             = 'Produkt';
+$_['column_product_total']       = 'Anzahl der Produkte';
+$_['column_description']         = 'Beschreibung';
+$_['column_order_id']            = 'Bestellnummer';
 $_['column_status']              = 'Status';
-$_['column_quantity']            = 'Quantity';
-$_['column_trial_price']         = 'Trial Price';
-$_['column_price']               = 'Price';
-$_['column_total']               = 'Total';
-$_['column_comment']             = 'Comment';
-$_['column_date_added']          = 'Date Added';
+$_['column_quantity']            = 'Menge';
+$_['column_trial_price']         = 'Testpreis';
+$_['column_price']               = 'Preis';
+$_['column_total']               = 'Gesamt';
+$_['column_comment']             = 'Kommentar';
+$_['column_date_added']          = 'Datum hinzugefügt';
 
 // Button
-$_['button_cancel']              = 'Cancel Subscription';
+$_['button_cancel']              = 'Abonnement kündigen';
 
 // Error
-$_['error_subscription']         = 'Subscription could not be found!';
-$_['error_duration']             = 'Subscription can not be canceled until %s more orders!';
-$_['error_canceled']             = 'Subscription already canceled!';
+$_['error_subscription']         = 'Abonnement konnte nicht gefunden werden!';
+$_['error_duration']             = 'Das Abonnement kann erst nach %s weiteren Bestellungen gekündigt werden!';
+$_['error_canceled']             = 'Abonnement bereits gekündigt!';

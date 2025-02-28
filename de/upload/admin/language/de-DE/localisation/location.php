@@ -1,35 +1,35 @@
 <?php
 // Heading
-$_['heading_title']    = 'Store Locations';
+$_['heading_title']    = 'Standorte';
 
 // Text
-$_['text_success']     = 'Success: You have modified store locations!';
-$_['text_list']        = 'Store Location List';
-$_['text_add']         = 'Add Store Location';
-$_['text_edit']        = 'Edit Store Location';
-$_['text_geocode']     = 'Geocode was not successful for the following reason:';
+$_['text_success']     = 'Erfolg: Sie haben die Filialstandorte geändert!';
+$_['text_list']        = 'Filialstandortliste';
+$_['text_add']         = 'Filialstandort hinzufügen';
+$_['text_edit']        = 'Filialstandort bearbeiten';
+$_['text_geocode']     = 'Die Geokodierung war aus folgendem Grund nicht erfolgreich:';
 
 // Column
-$_['column_name']      = 'Store Name';
-$_['column_address']   = 'Address';
-$_['column_action']    = 'Action';
+$_['column_name']      = 'Name des Geschäfts';
+$_['column_address']   = 'Adresse';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'Store Name';
-$_['entry_address']    = 'Address';
-$_['entry_geocode']    = 'Geocode';
-$_['entry_telephone']  = 'Telephone';
-$_['entry_image']      = 'Image';
-$_['entry_open']       = 'Opening Times';
-$_['entry_comment']    = 'Comment';
+$_['entry_name']       = 'Name des Geschäfts';
+$_['entry_address']    = 'Adresse';
+$_['entry_geocode']    = 'Geokodieren';
+$_['entry_telephone']  = 'Telefon';
+$_['entry_image']      = 'Bild';
+$_['entry_open']       = 'Öffnungszeiten';
+$_['entry_comment']    = 'Kommentar';
 
 // Help
-$_['help_geocode']     = 'Please enter your store location geocode manually.';
-$_['help_open']        = 'Fill in your stores opening times.';
-$_['help_comment']     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
+$_['help_geocode']     = 'Bitte geben Sie den Geocode Ihres Filialstandorts manuell ein.';
+$_['help_open']        = 'Geben Sie die Öffnungszeiten Ihres Geschäfts ein.';
+$_['help_comment']     = 'In dieses Feld können Sie besondere Hinweise geben, die Sie dem Kunden mitteilen möchten, z. B.: Das Geschäft akzeptiert keine Schecks.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify store locations!';
-$_['error_name']       = 'Store name must be between 3 and 32 characters!';
-$_['error_address']    = 'Address must be between 3 and 128 characters!';
-$_['error_telephone']  = 'Telephone must be between 3 and 32 characters!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Filialstandorte zu ändern!';
+$_['error_name']       = 'Der Shopname muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_address']    = 'Die Adresse muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_telephone']  = 'Die Telefonnummer muss zwischen 3 und 32 Zeichen lang sein!';

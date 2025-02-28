@@ -3,20 +3,20 @@
 $_['heading_title']        = 'Anti-Spam';
 
 // Text
-$_['text_success']         = 'Success: You have modified anti-spam!';
-$_['text_list']            = 'Anti-Spam List';
-$_['text_add']             = 'Add Anti-Spam';
-$_['text_edit']            = 'Edit Anti-Spam';
+$_['text_success']         = 'Erfolg: Sie haben den Anti-Spam geändert!';
+$_['text_list']            = 'Anti-Spam-Liste';
+$_['text_add']             = 'Anti-Spam hinzufügen';
+$_['text_edit']            = 'Anti-Spam bearbeiten';
 
 // Column
-$_['column_keyword']       = 'Keyword';
-$_['column_action']        = 'Action';
+$_['column_keyword']       = 'Stichwort';
+$_['column_action']        = 'Aktion';
 
 // Entry
-$_['entry_keyword']        = 'Keyword';
+$_['entry_keyword']        = 'Stichwort';
 
 // Error
-$_['error_warning']        = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']     = 'Warning: You do not have permission to modify anti-spam!';
-$_['error_keyword']        = 'Keyword must be between 1 and 64 characters!';
-$_['error_keyword_exists'] = 'Keyword must be unique!';
+$_['error_warning']        = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']     = 'Achtung: Sie sind nicht berechtigt, den Spamschutz zu ändern!';
+$_['error_keyword']        = 'Das Schlüsselwort muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_keyword_exists'] = 'Das Schlüsselwort muss eindeutig sein!';

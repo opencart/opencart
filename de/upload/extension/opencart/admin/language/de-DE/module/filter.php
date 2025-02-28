@@ -3,12 +3,12 @@
 $_['heading_title']    = 'Filter';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified filter module!';
-$_['text_edit']        = 'Edit Filter Module';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben das Filtermodul geändert!';
+$_['text_edit']        = 'Filtermodul bearbeiten';
 
 // Entry
 $_['entry_status']     = 'Status';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify filter module!';
+$_['error_permission'] = 'Achtung: Sie haben keine Berechtigung, das Filtermodul zu ändern!';

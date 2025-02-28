@@ -1,19 +1,19 @@
 <?php
 // Heading
-$_['heading_title']     = 'Startup';
+$_['heading_title']     = 'Start-up';
 
 // Text
-$_['text_success']      = 'Success: You have modified startup!';
-$_['text_list']         = 'Startup List';
-$_['text_info']         = 'Startup Information';
+$_['text_success']      = 'Erfolg: Sie haben den Start geändert!';
+$_['text_list']         = 'Liste der Startups';
+$_['text_info']         = 'Informationen zum Start';
 
 // Column
-$_['column_code']       = 'Startup Code';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_code']       = 'Startcode';
+$_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_description'] = 'Description';
+$_['entry_description'] = 'Beschreibung';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify startup!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, den Start zu ändern!';

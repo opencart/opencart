@@ -1,21 +1,21 @@
 <?php
 // Heading
-$_['heading_title']    = 'Low Order Fee';
+$_['heading_title']    = 'Niedrige Bestellgebühr';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified low order fee total!';
-$_['text_edit']        = 'Edit Low Order Fee Total';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben die niedrige Bestellgebühr insgesamt geändert!';
+$_['text_edit']        = 'Gesamtbetrag der Gebühr für niedrige Bestellungen bearbeiten';
 
 // Entry
-$_['entry_total']      = 'Order Total';
-$_['entry_fee']        = 'Fee';
-$_['entry_tax_class']  = 'Tax Class';
+$_['entry_total']      = 'Gesamtbetrag der Bestellung';
+$_['entry_fee']        = 'Gebühr';
+$_['entry_tax_class']  = 'Steuerklasse';
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Help
-$_['help_total']       = 'The checkout total the order must reach before this order total is deactivated.';
+$_['help_total']       = 'Der Gesamtbetrag an der Kasse, den die Bestellung erreichen muss, bevor dieser Gesamtbetrag deaktiviert wird.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify low order fee total!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, den Gesamtbetrag der Gebühr für niedrige Bestellungen zu ändern!';

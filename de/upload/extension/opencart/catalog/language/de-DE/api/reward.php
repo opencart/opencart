@@ -1,11 +1,11 @@
 <?php
 // Text
-$_['text_success']   = 'Success: Your reward points discount has been applied!';
+$_['text_success']   = 'Erfolg: Ihr Prämienpunkte-Rabatt wurde angewendet!';
 
 // Error
-$_['error_customer'] = 'Warning: Customer details required!';
-$_['error_product']  = 'Warning: Products required!';
-$_['error_points']   = 'Warning: You don\'t have %s reward points!';
-$_['error_maximum']  = 'Warning: The maximum number of points that can be applied is %s!';
-$_['error_status']   = 'Warning: Reward points are not enabled on this store!';
-$_['error_confirm']  = 'Warning: Please check the reward form carefully for errors!';
+$_['error_customer'] = 'Achtung: Kundendaten erforderlich!';
+$_['error_product']  = 'Achtung: Produkte erforderlich!';
+$_['error_points']   = 'Achtung: Sie haben nicht %s Prämienpunkte!';
+$_['error_maximum']  = 'Achtung: Die maximale Punktzahl die vergeben werden kann beträgt %s!';
+$_['error_status']   = 'Achtung: In diesem Shop sind keine Prämienpunkte möglich!';
+$_['error_confirm']  = 'Achtung: Bitte prüfen Sie das Belohnungsformular sorgfältig auf Fehler!';

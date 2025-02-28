@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title'] = 'GDPR Success';
+$_['heading_title'] = 'DSGVO-Erfolg';
 
 // Text
-$_['text_account']  = 'Account';
-$_['text_export']   = 'A request to export your account data has been received.';
-$_['text_remove']   = 'GDPR account deletion requests will process after <strong>%s days</strong> so any chargebacks, refunds or fraud detection can be processed.';
+$_['text_account']  = 'Konto';
+$_['text_export']   = 'Es wurde eine Anfrage zum Exportieren Ihrer Kontodaten empfangen.';
+$_['text_remove']   = 'Anfragen zur Kontolöschung gemäß DSGVO werden nach <strong>%s Tagen</strong> bearbeitet, sodass etwaige Rückbuchungen, Rückerstattungen oder Betrugserkennungen verarbeitet werden können.';

@@ -1,23 +1,23 @@
 <?php
 // Heading
-$_['heading_title']   = 'My Wishlist';
+$_['heading_title']   = 'Meine Wunschliste';
 
 // Text
-$_['text_account']    = 'Account';
-$_['text_wishlist']   = 'Wish List (%s)';
-$_['text_login']      = 'You must <a href="%s">login</a> or <a href="%s">create an account</a> to save <a href="%s">%s</a> to your <a href="%s">wish list</a>!';
-$_['text_success']    = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">wish list</a>!';
-$_['text_remove']     = 'Success: You have removed an item from your wishlist';
-$_['text_no_results'] = 'Your wish list is empty.';
+$_['text_account']    = 'Konto';
+$_['text_wishlist']   = 'Wunschliste (%s)';
+$_['text_login']      = 'Sie müssen sich <a href="%s">anmelden</a> oder <a href="%s">ein Konto erstellen</a> , um <a href="%s">%s</a> auf Ihrer <a href="%s">Wunschliste</a>zu speichern!';
+$_['text_success']    = 'Erfolg: Sie haben <a href="%s">%s</a> zu Ihrer <a href="%s">Wunschliste</a>hinzugefügt!';
+$_['text_remove']     = 'Erfolg: Sie haben einen Artikel aus Ihrer Wunschliste entfernt';
+$_['text_no_results'] = 'Ihr Merkzettel ist leer.';
 
 // Column
-$_['column_image']    = 'Image';
-$_['column_name']     = 'Product Name';
-$_['column_model']    = 'Model';
-$_['column_stock']    = 'Stock';
-$_['column_price']    = 'Unit Price';
-$_['column_action']   = 'Action';
+$_['column_image']    = 'Bild';
+$_['column_name']     = 'Produktname';
+$_['column_model']    = 'Modell';
+$_['column_stock']    = 'Aktie';
+$_['column_price']    = 'Stückpreis';
+$_['column_action']   = 'Aktion';
 
 // Error
-$_['error_product']   = 'Warning: Product could not be found!';
-$_['error_login']     = 'Warning: You must <a href="%s">login</a> or <a href="%s">create an account</a> to remove items from your <a href="%s">wish list</a>!';
+$_['error_product']   = 'Achtung: Produkt konnte nicht gefunden werden!';
+$_['error_login']     = 'Achtung: Sie müssen sich <a href="%s">anmelden</a> oder <a href="%s">ein Konto erstellen</a> , um Artikel aus Ihrer <a href="%s">Wunschliste</a>zu entfernen!';

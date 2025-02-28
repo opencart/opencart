@@ -1,46 +1,46 @@
 <?php
 // Heading
-$_['heading_title']          = 'Extension Installer';
+$_['heading_title']          = 'Erweiterungsinstallationsprogramm';
 
 // Text
-$_['text_upload']            = 'Success: The extension has been uploaded!';
-$_['text_success']           = 'Success: You have modified extensions!';
-$_['text_progress']          = 'Install Progress';
-$_['text_installed']         = 'Installed Extensions';
-$_['text_info']              = 'Extension Information';
-$_['text_install']           = 'Installing files %s to %s of %s';
-$_['text_vendor']            = 'Refresh vendor files';
-$_['text_xml']               = 'Install OCMOD files';
+$_['text_upload']            = 'Erfolg: Die Erweiterung wurde hochgeladen!';
+$_['text_success']           = 'Erfolg: Sie haben Erweiterungen geändert!';
+$_['text_progress']          = 'Installationsfortschritt';
+$_['text_installed']         = 'Installierte Erweiterungen';
+$_['text_info']              = 'Erweiterungsinformationen';
+$_['text_install']           = 'Installieren der Dateien %s bis %s von %s';
+$_['text_vendor']            = 'Lieferantendateien aktualisieren';
+$_['text_xml']               = 'Installieren Sie OCMOD-Dateien';
 
 // Column
-$_['column_image']           = 'Image';
-$_['column_name']            = 'Extension Name';
+$_['column_image']           = 'Bild';
+$_['column_name']            = 'Erweiterungsname';
 $_['column_version']         = 'Version';
-$_['column_date_added']      = 'Date Added';
-$_['column_action']          = 'Action';
+$_['column_date_added']      = 'Datum hinzugefügt';
+$_['column_action']          = 'Aktion';
 
 // Entry
-$_['entry_progress']         = 'Progress';
-$_['entry_name']             = 'Extension Name';
-$_['entry_description']      = 'Description';
+$_['entry_progress']         = 'Fortschritt';
+$_['entry_name']             = 'Erweiterungsname';
+$_['entry_description']      = 'Beschreibung';
 $_['entry_code']             = 'Code';
 
 // Error
-$_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
-$_['error_install']          = 'Warning: Could not find install.json!';
-$_['error_default']          = 'Default extension could not be uninstalled or deleted!';
-$_['error_extension']        = 'Installed extension could not be found!';
-$_['error_installed']        = 'Extension already installed!';
-$_['error_uninstall']        = 'There are %s extensions that need to be uninstalled before this extension can be safely removed!';
-$_['error_name']             = 'Name must be between 3 and 128 characters!';
-$_['error_version']          = 'Version must be between 3 and 128 characters!';
-$_['error_author']           = 'Author must be between 3 and 128 characters!';
-$_['error_link']             = 'Link must be between 3 and 128 characters!';
-$_['error_filename']         = 'Filename must be between 3 and 128 characters!';
-$_['error_file']             = 'Install file %s could not be found!';
-$_['error_file_exists']      = 'File already exist!';
-$_['error_file_type']        = 'Invalid file type!';
-$_['error_directory']        = 'Install directory %s could not be found!';
-$_['error_directory_exists'] = 'Path %s already exists!';
-$_['error_unzip']            = 'Zip file could not be opened!';
-$_['error_upload']           = 'File could not be uploaded!';
+$_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Erweiterungen zu ändern!';
+$_['error_install']          = 'Warnung: install.json konnte nicht gefunden werden!';
+$_['error_default']          = 'Die Standarderweiterung konnte nicht deinstalliert oder gelöscht werden!';
+$_['error_extension']        = 'Installierte Erweiterung konnte nicht gefunden werden!';
+$_['error_installed']        = 'Erweiterung bereits installiert!';
+$_['error_uninstall']        = 'Es gibt %s Erweiterungen, die deinstalliert werden müssen, bevor diese Erweiterung sicher entfernt werden kann!';
+$_['error_name']             = 'Der Name muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_version']          = 'Die Version muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_author']           = 'Der Autor muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_link']             = 'Der Link muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_filename']         = 'Der Dateiname muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_file']             = 'Installationsdatei %s konnte nicht gefunden werden!';
+$_['error_file_exists']      = 'Die Datei ist bereits vorhanden!';
+$_['error_file_type']        = 'Ungültiger Dateityp!';
+$_['error_directory']        = 'Installationsverzeichnis %s konnte nicht gefunden werden!';
+$_['error_directory_exists'] = 'Pfad %s existiert bereits!';
+$_['error_unzip']            = 'Zip-Datei konnte nicht geöffnet werden!';
+$_['error_upload']           = 'Datei konnte nicht hochgeladen werden!';

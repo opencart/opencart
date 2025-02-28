@@ -1,34 +1,34 @@
 <?php
 // Heading
-$_['heading_title']           = 'Manufacturers';
+$_['heading_title']           = 'Hersteller';
 
 // Text
-$_['text_success']            = 'Success: You have modified manufacturers!';
-$_['text_list']               = 'Manufacturer List';
-$_['text_add']                = 'Add Manufacturer';
-$_['text_edit']               = 'Edit Manufacturer';
-$_['text_default']            = 'Default';
-$_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['text_success']            = 'Erfolg: Sie haben den Hersteller gewechselt!';
+$_['text_list']               = 'Herstellerliste';
+$_['text_add']                = 'Hersteller hinzufügen';
+$_['text_edit']               = 'Hersteller bearbeiten';
+$_['text_default']            = 'Standard';
+$_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL weltweit eindeutig ist.';
 
 // Column
-$_['column_image']            = 'Image';
-$_['column_name']             = 'Manufacturer Name';
-$_['column_sort_order']       = 'Sort Order';
-$_['column_action']           = 'Action';
+$_['column_image']            = 'Bild';
+$_['column_name']             = 'Herstellername';
+$_['column_sort_order']       = 'Sortierreihenfolge';
+$_['column_action']           = 'Aktion';
 
 // Entry
-$_['entry_name']              = 'Manufacturer Name';
-$_['entry_store']             = 'Stores';
-$_['entry_keyword']           = 'Keyword';
-$_['entry_image']             = 'Image';
-$_['entry_sort_order']        = 'Sort Order';
-$_['entry_layout']            = 'Layout Override';
+$_['entry_name']              = 'Herstellername';
+$_['entry_store']             = 'Geschäfte';
+$_['entry_keyword']           = 'Stichwort';
+$_['entry_image']             = 'Bild';
+$_['entry_sort_order']        = 'Sortierreihenfolge';
+$_['entry_layout']            = 'Layoutüberschreibung';
 
 // Error
-$_['error_warning']           = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']        = 'Warning: You do not have permission to modify manufacturers!';
-$_['error_name']              = 'Manufacturer Name must be between 1 and 64 characters!';
-$_['error_keyword']           = 'SEO URL must be between 1 and 64 characters!';
-$_['error_keyword_exists']    = 'SEO URL must be unique!';
-$_['error_keyword_character'] = 'Keyword can only use characters a-z, 0-9, - and _!';
-$_['error_product']           = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';
+$_['error_warning']           = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']        = 'Achtung: Sie sind nicht berechtigt, Hersteller zu ändern!';
+$_['error_name']              = 'Der Herstellername muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_keyword']           = 'Die SEO-URL muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_keyword_exists']    = 'SEO-URL muss eindeutig sein!';
+$_['error_keyword_character'] = 'Das Schlüsselwort darf nur die Zeichen az, 0-9, - und _ enthalten!';
+$_['error_product']           = 'Achtung: Dieser Hersteller kann nicht gelöscht werden, da ihm aktuell %s Produkte zugeordnet sind!';

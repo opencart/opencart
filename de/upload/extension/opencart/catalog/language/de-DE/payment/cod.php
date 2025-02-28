@@ -1,7 +1,7 @@
 <?php
 // Heading
-$_['heading_title']        = 'Cash On Delivery';
+$_['heading_title']        = 'Nachnahme';
 
 // Error
-$_['error_order_id']       = 'No order ID in the session!';
-$_['error_payment_method'] = 'Payment method is incorrect!';
+$_['error_order_id']       = 'Keine Bestellnummer in der Sitzung!';
+$_['error_payment_method'] = 'Zahlungsmethode ist falsch!';

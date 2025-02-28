@@ -1,72 +1,72 @@
 <?php
 // Heading
-$_['heading_title']      = 'Returns';
+$_['heading_title']      = 'Rückgaben';
 
 // Text
-$_['text_success']       = 'Success: You have modified returns!';
-$_['text_list']          = 'Return List';
-$_['text_add']           = 'Add Return';
-$_['text_edit']          = 'Return (#%s)';
-$_['text_order_id']      = 'Order ID';
+$_['text_success']       = 'Erfolg: Sie haben die Rendite geändert!';
+$_['text_list']          = 'Rückgabeliste';
+$_['text_add']           = 'Rückgabe hinzufügen';
+$_['text_edit']          = 'Zurück (#%s)';
+$_['text_order_id']      = 'Bestellnummer';
 $_['text_filter']        = 'Filter';
-$_['text_customer']      = 'Customer';
-$_['text_date_added']    = 'Date Added';
-$_['text_return']        = 'Return Item';
-$_['text_product']       = 'Choose Product to return';
-$_['text_opened']        = 'Opened';
-$_['text_unopened']      = 'Unopened';
-$_['text_history']       = 'History';
-$_['text_history_add']   = 'Add History';
+$_['text_customer']      = 'Kunde';
+$_['text_date_added']    = 'Datum hinzugefügt';
+$_['text_return']        = 'Rückläufer';
+$_['text_product']       = 'Wählen Sie das zurückzugebende Produkt aus';
+$_['text_opened']        = 'Geöffnet';
+$_['text_unopened']      = 'Ungeöffnet';
+$_['text_history']       = 'Geschichte';
+$_['text_history_add']   = 'Verlauf hinzufügen';
 
 // Column
-$_['column_return_id']   = 'Return ID';
-$_['column_order_id']    = 'Order ID';
-$_['column_customer']    = 'Customer';
-$_['column_product']     = 'Product';
-$_['column_model']       = 'Model';
-$_['column_quantity']    = 'Quantity';
+$_['column_return_id']   = 'Rücksende-ID';
+$_['column_order_id']    = 'Bestellnummer';
+$_['column_customer']    = 'Kunde';
+$_['column_product']     = 'Produkt';
+$_['column_model']       = 'Modell';
+$_['column_quantity']    = 'Menge';
 $_['column_status']      = 'Status';
-$_['column_date_added']  = 'Date Added';
-$_['column_comment']     = 'Comment';
-$_['column_notify']      = 'Customer Notified';
-$_['column_action']      = 'Action';
+$_['column_date_added']  = 'Datum hinzugefügt';
+$_['column_comment']     = 'Kommentar';
+$_['column_notify']      = 'Kunde benachrichtigt';
+$_['column_action']      = 'Aktion';
 
 // Entry
-$_['entry_customer']     = 'Customer';
-$_['entry_order_id']     = 'Order ID';
-$_['entry_date_ordered'] = 'Order Date';
-$_['entry_firstname']    = 'First Name';
-$_['entry_lastname']     = 'Last Name';
+$_['entry_customer']     = 'Kunde';
+$_['entry_order_id']     = 'Bestellnummer';
+$_['entry_date_ordered'] = 'Bestelldatum';
+$_['entry_firstname']    = 'Vorname';
+$_['entry_lastname']     = 'Nachname';
 $_['entry_email']        = 'E-Mail';
-$_['entry_telephone']    = 'Telephone';
-$_['entry_product']      = 'Product';
-$_['entry_model']        = 'Model';
-$_['entry_quantity']     = 'Quantity';
-$_['entry_opened']       = 'Opened';
-$_['entry_comment']      = 'Comment';
-$_['entry_reason']       = 'Return Reason';
-$_['entry_action']       = 'Return Action';
-$_['entry_status']       = 'Return Status';
-$_['entry_notify']       = 'Notify Customer';
-$_['entry_return_id']    = 'Return ID';
-$_['entry_date_from']    = 'Date From';
-$_['entry_date_to']      = 'Date To';
+$_['entry_telephone']    = 'Telefon';
+$_['entry_product']      = 'Produkt';
+$_['entry_model']        = 'Modell';
+$_['entry_quantity']     = 'Menge';
+$_['entry_opened']       = 'Geöffnet';
+$_['entry_comment']      = 'Kommentar';
+$_['entry_reason']       = 'Rückgabegrund';
+$_['entry_action']       = 'Rückgabeaktion';
+$_['entry_status']       = 'Rückgabestatus';
+$_['entry_notify']       = 'Kunden benachrichtigen';
+$_['entry_return_id']    = 'Rücksende-ID';
+$_['entry_date_from']    = 'Stammen aus';
+$_['entry_date_to']      = 'Datum bis';
 
 // Help
-$_['help_product']       = '(Autocomplete)';
+$_['help_product']       = '(Autovervollständigung)';
 
 // Error
-$_['error_warning']      = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']   = 'Warning: You do not have permission to modify returns!';
-$_['error_order']        = 'Order not found!';
-$_['error_customer']     = 'Customer not found!';
-$_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
-$_['error_email']        = 'E-Mail Address does not appear to be valid!';
-$_['error_telephone']    = 'Telephone must be between 3 and 32 characters!';
-$_['error_product']      = 'Product not found!';
-$_['error_name']         = 'Product Name must be greater than 1 and less than 255 characters!';
-$_['error_model']        = 'Product Model must be greater than 1 and less than 64 characters!';
-$_['error_quantity']     = 'Return quantity must be at least 1!';
-$_['error_reason']       = 'You must select a return reason!';
-$_['error_action']       = 'You must select a return action!';
+$_['error_warning']      = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, Rücksendungen zu ändern!';
+$_['error_order']        = 'Bestellung nicht gefunden!';
+$_['error_customer']     = 'Kunde nicht gefunden!';
+$_['error_firstname']    = 'Der Vorname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_lastname']     = 'Der Nachname muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_email']        = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_telephone']    = 'Die Telefonnummer muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_product']      = 'Produkt nicht gefunden!';
+$_['error_name']         = 'Der Produktname muss größer als 1 und kleiner als 255 Zeichen sein!';
+$_['error_model']        = 'Das Produktmodell muss größer als 1 und kleiner als 64 Zeichen sein!';
+$_['error_quantity']     = 'Rücksendemenge muss mindestens 1 betragen!';
+$_['error_reason']       = 'Sie müssen einen Rücksendegrund auswählen!';
+$_['error_action']       = 'Sie müssen eine Rückgabeaktion auswählen!';

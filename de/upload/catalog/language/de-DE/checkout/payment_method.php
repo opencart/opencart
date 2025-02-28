@@ -1,23 +1,23 @@
 <?php
 // Heading
-$_['heading_title']          = 'Payment Method';
+$_['heading_title']          = 'Zahlungsmethode';
 
 // Text
-$_['text_payment_method']    = 'Payment method options';
-$_['text_payment']           = 'Please select the preferred payment method to use for this order.';
-$_['text_comments']          = 'Add Comments About Your Order';
-$_['text_agree']             = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
-$_['text_success']           = 'Success: You have changed payment method!';
-$_['text_comment']           = 'Success: Comment added!';
+$_['text_payment_method']    = 'Zahlungsmöglichkeiten';
+$_['text_payment']           = 'Bitte wählen Sie die gewünschte Zahlungsmethode für diese Bestellung aus.';
+$_['text_comments']          = 'Fügen Sie Kommentare zu Ihrer Bestellung hinzu';
+$_['text_agree']             = 'Ich habe die <a href="%s" class="modal-link"><b>%s</b></a>gelesen und stimme ihnen zu';
+$_['text_success']           = 'Erfolg: Sie haben die Zahlungsmethode geändert!';
+$_['text_comment']           = 'Erfolg: Kommentar hinzugefügt!';
 
 // Entry
-$_['entry_payment_method']   = 'Choose payment method...';
+$_['entry_payment_method']   = 'Zahlungsmethode wählen...';
 
 // Error
-$_['error_order']            = 'Order not found! Please refresh the page.';
-$_['error_customer']         = 'Customer required!';
-$_['error_payment_address']  = 'Payment address required!';
-$_['error_shipping_address'] = 'Shipping address required!';
-$_['error_shipping_method']  = 'Shipping method required!';
-$_['error_payment_method']   = 'Payment method required!';
-$_['error_no_payment']       = 'No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
+$_['error_order']            = 'Bestellung nicht gefunden! Bitte aktualisieren Sie die Seite.';
+$_['error_customer']         = 'Kunde gesucht!';
+$_['error_payment_address']  = 'Zahlungsadresse erforderlich!';
+$_['error_shipping_address'] = 'Lieferadresse erforderlich!';
+$_['error_shipping_method']  = 'Versandart erforderlich!';
+$_['error_payment_method']   = 'Zahlungsmethode erforderlich!';
+$_['error_no_payment']       = 'Es sind keine Zahlungsoptionen verfügbar. Bitte <a href="%s">kontaktieren Sie uns</a> für Hilfe!';

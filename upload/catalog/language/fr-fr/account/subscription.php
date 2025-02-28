@@ -25,20 +25,20 @@ $_['text_year']                   = 'année';
 $_['text_quantity']               = 'Quantité';
 $_['text_date_next']              = 'Prochaine Date';
 $_['text_remaining']              = 'Restant';
-$_['text_history']                = 'Subscription History';
+$_['text_history']                = 'Historique';
 $_['text_order']                  = 'Historique des commandes';
 $_['text_no_subscription']        = 'Aucun abonnement trouvé!';
 
 // Column
 $_['column_subscription_id']      = 'ID d\'abonnement';
 $_['column_product']              = 'Produit';
-$_['column_product_total']        = 'Non. de Products';
+$_['column_product_total']        = 'Non. de Produits';
 $_['column_description']          = 'Description';
 $_['column_order_id']             = 'ID de commande';
 $_['column_status']               = 'Statut';
-$_['column_quantity']             = 'Quantity';
-$_['column_trial_price']          = 'Trial Price';
-$_['column_price']                = 'Prix d\'Essai';
+$_['column_quantity']             = 'Quantité';
+$_['column_trial_price']          = 'Prix d\'essai';
+$_['column_price']                = 'Prix unitaire';
 $_['column_total']                = 'Total';
 $_['column_comment']              = 'Commentaire';
 $_['column_date_added']           = 'Date d\'ajout';

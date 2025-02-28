@@ -1,18 +1,18 @@
 <?php
 // Heading
-$_['heading_title']     = 'HTML Content';
+$_['heading_title']     = 'HTML-Inhalt';
 
 // Text
-$_['text_extension']    = 'Extensions';
-$_['text_success']      = 'Success: You have modified HTML Content module!';
-$_['text_edit']         = 'Edit HTML Content Module';
+$_['text_extension']    = 'Erweiterungen';
+$_['text_success']      = 'Erfolg: Sie haben das HTML-Inhaltsmodul geändert!';
+$_['text_edit']         = 'Modul „HTML-Inhalt bearbeiten“';
 
 // Entry
-$_['entry_name']        = 'Module Name';
-$_['entry_title']       = 'Heading Title';
-$_['entry_description'] = 'Description';
+$_['entry_name']        = 'Modulname';
+$_['entry_title']       = 'Überschrift Titel';
+$_['entry_description'] = 'Beschreibung';
 $_['entry_status']      = 'Status';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify HTML Content module!';
-$_['error_name']        = 'Module Name must be between 3 and 64 characters!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, das HTML-Inhaltsmodul zu ändern!';
+$_['error_name']        = 'Der Modulname muss zwischen 3 und 64 Zeichen lang sein!';

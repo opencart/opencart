@@ -1,28 +1,28 @@
 <?php
 // Heading
-$_['heading_title']    = 'Banners';
+$_['heading_title']    = 'Banner';
 
 // Text
-$_['text_success']     = 'Success: You have modified banners!';
-$_['text_list']        = 'Banner List';
-$_['text_add']         = 'Add Banner';
-$_['text_edit']        = 'Edit Banner';
-$_['text_default']     = 'Default';
+$_['text_success']     = 'Erfolg: Sie haben Banner geändert!';
+$_['text_list']        = 'Bannerliste';
+$_['text_add']         = 'Banner hinzufügen';
+$_['text_edit']        = 'Banner bearbeiten';
+$_['text_default']     = 'Standard';
 
 // Column
-$_['column_name']      = 'Banner Name';
+$_['column_name']      = 'Bannername';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Action';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'Banner Name';
-$_['entry_title']      = 'Title';
+$_['entry_name']       = 'Bannername';
+$_['entry_title']      = 'Titel';
 $_['entry_link']       = 'Link';
-$_['entry_image']      = 'Image';
+$_['entry_image']      = 'Bild';
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify banners!';
-$_['error_name']       = 'Banner Name must be between 3 and 64 characters!';
-$_['error_title']      = 'Banner Title must be between 2 and 64 characters!';
+$_['error_permission'] = 'Achtung: Sie haben keine Berechtigung, Banner zu ändern!';
+$_['error_name']       = 'Der Bannername muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_title']      = 'Der Bannertitel muss zwischen 2 und 64 Zeichen lang sein!';

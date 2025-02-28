@@ -1,44 +1,44 @@
 <?php
 // Heading
-$_['heading_title']          = 'Configuration';
+$_['heading_title']          = 'Konfiguration';
 
 // Text
-$_['text_step_3']            = 'Enter your database and administration details';
-$_['text_db_connection']     = '1. Please enter your database connection details.';
-$_['text_db_advanced']       = 'Advanced DB Settings';
-$_['text_db_administration'] = '2. Please enter a username and password for the administration.';
+$_['text_step_3']            = 'Geben Sie Ihre Datenbank- und Verwaltungsdetails ein';
+$_['text_db_connection']     = '1. Bitte geben Sie Ihre Datenbankverbindungsdaten ein.';
+$_['text_db_advanced']       = 'Erweiterte DB-Einstellungen';
+$_['text_db_administration'] = '2. Bitte geben Sie einen Benutzernamen und ein Passwort für die Administration ein.';
 $_['text_mysqli']            = 'MySQLi';
 $_['text_pdo']               = 'mPDO';
-$_['text_help']              = 'Information about setting up a databases on different platforms:';
-$_['text_cpanel']            = 'CPanel DB Setup';
-$_['text_plesk']             = 'Plesk DB Setup';
-$_['text_db_ssl']            = 'Certificate inputs should be added as a single line like: "MIIDrzCCApegAwIBAgIQ....=="';
+$_['text_help']              = 'Informationen zum Einrichten einer Datenbank auf verschiedenen Plattformen:';
+$_['text_cpanel']            = 'CPanel DB-Setup';
+$_['text_plesk']             = 'Plesk DB-Setup';
+$_['text_db_ssl']            = 'Zertifikatseingaben sollten als einzelne Zeile hinzugefügt werden, etwa: „MIIDrzCCApegAwIBAgIQ....=="';
 
 // Entry
-$_['entry_db_driver']        = 'DB Driver';
+$_['entry_db_driver']        = 'DB-Treiber';
 $_['entry_db_hostname']      = 'Hostname';
-$_['entry_db_username']      = 'Username';
-$_['entry_db_password']      = 'Password';
-$_['entry_db_database']      = 'Database';
-$_['entry_db_port']          = 'Port';
-$_['entry_db_prefix']        = 'Prefix';
-$_['entry_db_advanced']      = 'Advanced';
-$_['entry_db_ssl_key']       = 'SSL Key';
-$_['entry_db_ssl_cert']      = 'SSL Cert';
-$_['entry_db_ssl_ca']        = 'SSL CA';
-$_['entry_username']         = 'Username';
-$_['entry_password']         = 'Password';
+$_['entry_db_username']      = 'Benutzername';
+$_['entry_db_password']      = 'Passwort';
+$_['entry_db_database']      = 'Datenbank';
+$_['entry_db_port']          = 'Hafen';
+$_['entry_db_prefix']        = 'Präfix';
+$_['entry_db_advanced']      = 'Fortschrittlich';
+$_['entry_db_ssl_key']       = 'SSL-Schlüssel';
+$_['entry_db_ssl_cert']      = 'SSL-Zertifikat';
+$_['entry_db_ssl_ca']        = 'SSL-Zertifizierungsstelle';
+$_['entry_username']         = 'Benutzername';
+$_['entry_password']         = 'Passwort';
 $_['entry_email']            = 'E-Mail';
 
 // Error
-$_['error_db_driver']        = 'Database Driver required!';
-$_['error_db_hostname']      = 'Hostname required!';
-$_['error_db_username']      = 'Username required!';
-$_['error_db_database']      = 'Database Name required!';
-$_['error_db_port']          = 'Database Port required!';
-$_['error_db_prefix']        = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
-$_['error_db_connect']       = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-$_['error_username']         = 'Username required!';
-$_['error_password']         = 'Password required!';
-$_['error_email']            = 'E-Mail Address does not appear to be valid!';
-$_['error_config']           = 'Error: Could not write to config.php please check you have set the correct permissions on: ';
+$_['error_db_driver']        = 'Datenbanktreiber erforderlich!';
+$_['error_db_hostname']      = 'Hostname erforderlich!';
+$_['error_db_username']      = 'Benutzername erforderlich!';
+$_['error_db_database']      = 'Datenbankname erforderlich!';
+$_['error_db_port']          = 'Datenbank-Port erforderlich!';
+$_['error_db_prefix']        = 'Das DB-Präfix darf nur Kleinbuchstaben im Bereich von a bis z, 0 bis 9 und Unterstriche enthalten.';
+$_['error_db_connect']       = 'Fehler: Verbindung zur Datenbank konnte nicht hergestellt werden. Bitte stellen Sie sicher, dass Datenbankserver, Benutzername und Passwort korrekt sind!';
+$_['error_username']         = 'Benutzername erforderlich!';
+$_['error_password']         = 'Passwort erforderlich!';
+$_['error_email']            = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_config']           = 'Fehler: In config.php konnte nicht geschrieben werden. Bitte überprüfen Sie, ob Sie die richtigen Berechtigungen für Folgendes festgelegt haben: ';

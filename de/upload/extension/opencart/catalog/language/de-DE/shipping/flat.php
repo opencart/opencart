@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Flat Rate';
+$_['heading_title']    = 'Pauschale';
 
 // Text
-$_['text_description'] = 'Flat Shipping Rate';
+$_['text_description'] = 'Pauschale Versandkosten';

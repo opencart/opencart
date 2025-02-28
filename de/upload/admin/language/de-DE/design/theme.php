@@ -1,29 +1,29 @@
 <?php
 // Heading
-$_['heading_title']     = 'Theme Editor';
+$_['heading_title']     = 'Themen-Editor';
 
 // Text
-$_['text_success']      = 'Success: You have modified themes!';
-$_['text_add']          = 'Add Theme';
-$_['text_edit']         = 'Edit Theme';
-$_['text_default']      = 'Default';
-$_['text_extension']    = 'Extensions';
-$_['text_code']         = 'Template Code Editor';
-$_['text_twig']         = 'The theme editor uses the template language Twig. You can read about <a href="https://twig.symfony.com/doc/" target="_blank" class="alert-link">Twig syntax here</a>.';
+$_['text_success']      = 'Erfolg: Sie haben Themen geändert!';
+$_['text_add']          = 'Design hinzufügen';
+$_['text_edit']         = 'Design bearbeiten';
+$_['text_default']      = 'Standard';
+$_['text_extension']    = 'Erweiterungen';
+$_['text_code']         = 'Vorlagencode-Editor';
+$_['text_twig']         = 'Der Theme-Editor verwendet die Template-Sprache Twig. Informationen zur <a href="https://twig.symfony.com/doc/" target="_blank" class="alert-link">Twig-Syntax finden Sie hier</a>.';
 
 // Column
-$_['column_store']      = 'Store';
+$_['column_store']      = 'Speichern';
 $_['column_route']      = 'Route';
 $_['column_status']     = 'Status';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
+$_['column_date_added'] = 'Datum hinzugefügt';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_store']       = 'Store';
-$_['entry_route']       = 'Choose Template';
+$_['entry_store']       = 'Speichern';
+$_['entry_route']       = 'Vorlage auswählen';
 $_['entry_code']        = 'Code';
 $_['entry_status']      = 'Status';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify the theme editor!';
-$_['error_file']        = 'Warning: Template file does not exist!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, den Design-Editor zu ändern!';
+$_['error_file']        = 'Achtung: Vorlagendatei existiert nicht!';

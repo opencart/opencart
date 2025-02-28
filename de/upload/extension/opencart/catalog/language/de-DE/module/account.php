@@ -1,22 +1,22 @@
 <?php
 // Heading
-$_['heading_title']       = 'Account';
+$_['heading_title']       = 'Konto';
 
 // Text
-$_['text_register']       = 'Register';
+$_['text_register']       = 'Registrieren';
 $_['text_login']          = 'Login';
-$_['text_logout']         = 'Logout';
-$_['text_forgotten']      = 'Forgotten Password';
-$_['text_account']        = 'My Account';
-$_['text_edit']           = 'Edit Account';
-$_['text_password']       = 'Password';
-$_['text_address']        = 'Address Book';
-$_['text_wishlist']       = 'Wish List';
-$_['text_order']          = 'Order History';
+$_['text_logout']         = 'Ausloggen';
+$_['text_forgotten']      = 'Passwort vergessen';
+$_['text_account']        = 'Mein Konto';
+$_['text_edit']           = 'Konto bearbeiten';
+$_['text_password']       = 'Passwort';
+$_['text_address']        = 'Adressbuch';
+$_['text_wishlist']       = 'Wunschliste';
+$_['text_order']          = 'Bestellverlauf';
 $_['text_download']       = 'Downloads';
-$_['text_reward']         = 'Reward Points';
-$_['text_return']         = 'Returns';
-$_['text_transaction']    = 'Transactions';
+$_['text_reward']         = 'Belohnungspunkte';
+$_['text_return']         = 'Rückgaben';
+$_['text_transaction']    = 'Transaktionen';
 $_['text_newsletter']     = 'Newsletter';
-$_['text_subscription']   = 'Subscriptions';
-$_['text_payment_method'] = 'Payment Methods';
+$_['text_subscription']   = 'Abonnements';
+$_['text_payment_method'] = 'Zahlungsarten';

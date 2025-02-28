@@ -1,21 +1,21 @@
 <?php
 // Heading
-$_['heading_title']    = 'Return Actions';
+$_['heading_title']    = 'Rückgabeaktionen';
 
 // Text
-$_['text_success']     = 'Success: You have modified return actions!';
-$_['text_list']        = 'Return Action List';
-$_['text_add']         = 'Add Return Action';
-$_['text_edit']        = 'Edit Return Action';
+$_['text_success']     = 'Erfolg: Sie haben Rückgabeaktionen geändert!';
+$_['text_list']        = 'Rückgabeaktionsliste';
+$_['text_add']         = 'Rückgabeaktion hinzufügen';
+$_['text_edit']        = 'Rückgabeaktion bearbeiten';
 
 // Column
-$_['column_name']      = 'Return Action Name';
-$_['column_action']    = 'Action';
+$_['column_name']      = 'Name der Rückgabeaktion';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_name']       = 'Return Action Name';
+$_['entry_name']       = 'Name der Rückgabeaktion';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify return actions!';
-$_['error_name']       = 'Return Action Name must be between 3 and 64 characters!';
-$_['error_return']     = 'Warning: This return action cannot be deleted as it is currently assigned to %s returned products!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Rückgabeaktionen zu ändern!';
+$_['error_name']       = 'Der Name der Rücksendeaktion muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_return']     = 'Achtung: Diese Rücksendeaktion kann nicht gelöscht werden, da ihr aktuell %s zurückgesendeten Produkten zugeordnet sind!';

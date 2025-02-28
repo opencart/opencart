@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']      = 'Free Checkout';
+$_['heading_title']      = 'Kostenlose Kaufabwicklung';
 
 // Text
-$_['text_extension']     = 'Extensions';
-$_['text_success']       = 'Success: You have modified free checkout payment module!';
-$_['text_edit']          = 'Edit Free Checkout';
+$_['text_extension']     = 'Erweiterungen';
+$_['text_success']       = 'Erfolg: Sie haben das kostenlose Checkout-Zahlungsmodul geändert!';
+$_['text_edit']          = 'Kostenlose Kasse bearbeiten';
 
 // Entry
-$_['entry_order_status'] = 'Order Status';
+$_['entry_order_status'] = 'Bestellstatus';
 $_['entry_status']       = 'Status';
-$_['entry_sort_order']   = 'Sort Order';
+$_['entry_sort_order']   = 'Sortierreihenfolge';
 
 // Error
-$_['error_permission']   = 'Warning: You do not have permission to modify payment free checkout!';
+$_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, die Zahlung an der kostenlosen Kasse zu ändern!';

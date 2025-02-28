@@ -102,7 +102,30 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$json['success'] = $this->language->get('text_resend');
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
+		} else {
+			$token = '';
+		}
+
+		// 3. If token already exists check its valid
+		$this->load->model('account/customer');
+
+		$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+		if (!$token_info) {
+			$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
+			// If token is valid and total attempts are more than 2, redirect to unlock page.
+		} elseif ($token_info['total'] > 2) {
+			$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
+			// Set the code to be emailed
+			$this->session->data['code'] = oc_token(6);
+
+			$json['success'] = $this->language->get('text_resend');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -113,7 +136,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function validate(): void {
+	public function save(): void {
 		$this->load->language('common/authorize');
 
 		$json = [];

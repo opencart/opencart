@@ -30,7 +30,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if ($pos !== false) {
 			$route = substr($route, 0, $pos);
 		}
-
 		// Block access to 2fa if not active or logged in
 		if ($route == 'account/authorize') {
 			// 1. Make se the customer is logged in.

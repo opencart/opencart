@@ -64,7 +64,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			setcookie('authorize', $token, time() + 60 * 60 * 24 * 90);
 		}
 
-		if (isset($this->request->get['route']) && $this->request->get['route'] != 'account/login' && $this->request->get['route'] != 'account/authorize') {
+		if (isset($this->request->get['route']) && !str_starts_with($this->request->get['route'], 'account/authorize')) {
 			$args = $this->request->get;
 
 			$route = $args['route'];
@@ -277,12 +277,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = (string)$this->request->get['code'];
 		} else {
 			$code = '';
-		}
-
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
-		} else {
-			$token = '';
 		}
 
 		// Check total attempts

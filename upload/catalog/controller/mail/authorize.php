@@ -17,15 +17,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 *
-	 * catalog/model/account/authorize.send/after
+	 * catalog/controller/account/authorize.send/after
 	 */
 	public function index(&$route, &$args, &$output): void {
-		if (isset($args[0])) {
-			$customer_id = (int)$args[0];
-		} else {
-			$customer_id = '';
-		}
-
 		if (isset($this->session->data['code'])) {
 			$code = (string)$this->session->data['code'];
 		} else {
@@ -34,9 +28,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/customer');
 
-		$customer_info = $this->model_account_customer->getCustomer($customer_id);
+		$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
 
-		if ($customer_info) {
+		if ($code && $customer_info) {
 			$this->load->language('mail/authorize');
 
 			$data['code'] = $code;

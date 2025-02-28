@@ -17,13 +17,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 *
-	 * admin/model/user/user/editCode/after
+	 * admin/controller/common/authorize.send/after
 	 */
 	public function index(&$route, &$args, &$output): void {
-		$email = $this->user->getEmail();
-
-
-
 		if (isset($this->session->data['code'])) {
 			$code = $this->session->data['code'];
 		} else {
@@ -32,9 +28,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUser($user_id);
+		$user_info = $this->model_user_user->getUser($this->user->getId());
 
-		if ($user_info) {
+		if ($code && $user_info) {
 			$this->load->language('mail/authorize');
 
 			$data['username'] = $this->user->getUsername();
@@ -53,7 +49,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				];
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($email);
+				$mail->setTo($this->user->getEmail());
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
 				$mail->setSubject($this->language->get('text_subject'));
@@ -74,7 +70,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 *
-	 * admin/model/user/user/editCode/after
+	 * admin/model/user/user.addToken/after
 	 */
 	public function reset(&$route, &$args, &$output): void {
 		if (isset($args[0])) {

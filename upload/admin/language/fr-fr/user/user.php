@@ -12,13 +12,18 @@ $_['text_password']         = 'Mot de passe';
 $_['text_other']            = 'Autre';
 $_['text_login']            = 'Historique des connexions';
 $_['text_authorize']        = 'Historique des autorisations';
+$_['text_filter']           = 'Filtre';
 
 // Column
 $_['column_username']       = 'Nom d\'utilisateur';
+$_['column_name']           = 'Nom';
+$_['column_email']          = 'E-Mail';
+$_['column_user_group']     = 'Groupe d\'utilisateurs';
 $_['column_status']         = 'Statut';
 $_['column_ip']             = 'IP';
 $_['column_user_agent']     = 'Agent utilisateur';
 $_['column_date_added']     = 'Date d\'ajout';
+$_['column_date_expire']    = 'Date d\'expiration';
 $_['column_action']         = 'Action';
 
 // Entry
@@ -31,6 +36,10 @@ $_['entry_lastname']        = 'Nom';
 $_['entry_email']           = 'E-Mail';
 $_['entry_image']           = 'Image';
 $_['entry_status']          = 'Statut';
+$_['entry_name']            = 'Nom';
+$_['entry_ip']              = 'IP';
+$_['entry_date_from']       = 'Date de Début';
+$_['entry_date_to']         = 'Date de Fin';
 
 // Tab
 $_['tab_authorize']         = 'Autoriser';
@@ -47,4 +56,9 @@ $_['error_lastname']        = 'Le nom doit contenir entre 1 et 32 caractères!';
 $_['error_email']           = 'L\'adresse e-mail ne semble pas valide!';
 $_['error_email_exists']    = 'Attention: L\'adresse e-mail est déjà enregistrée!';
 $_['error_password']        = 'Le mot de passe doit contenir entre 6 et 40 caractères!';
+$_['error_password_uppercase'] = 'majuscule';
+$_['error_password_lowercase'] = 'minuscule';
+$_['error_password_number']    = 'numéro';
+$_['error_password_symbol']    = 'symbole';
+$_['error_password_length']    = 'Le mot de passe doit contenir entre %d et 20 caractères!';
 $_['error_confirm']         = 'Le mot de passe et la confirmation ne correspondent pas!';

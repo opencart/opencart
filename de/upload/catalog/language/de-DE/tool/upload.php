@@ -1,9 +1,9 @@
 <?php
 // Text
-$_['text_upload']     = 'Your file was successfully uploaded!';
+$_['text_upload']     = 'Ihre Datei wurde erfolgreich hochgeladen!';
 
 // Error
-$_['error_token']     = 'Warning: upload token invalid!';
-$_['error_filename']  = 'Filename must be between 3 and 64 characters!';
-$_['error_file_type'] = 'Invalid file type!';
-$_['error_upload']    = 'Upload required!';
+$_['error_token']     = 'Achtung: Upload-Token ungültig!';
+$_['error_filename']  = 'Der Dateiname muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_file_type'] = 'Ungültiger Dateityp!';
+$_['error_upload']    = 'Upload erforderlich!';

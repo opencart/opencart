@@ -41,7 +41,7 @@ $_['entry_ip']              = 'IP';
 $_['entry_date_from']       = 'Date de Début';
 $_['entry_date_to']         = 'Date de Fin';
 
-// Tab
+// Tabs
 $_['tab_authorize']         = 'Autoriser';
 $_['tab_login']             = 'Connexion';
 

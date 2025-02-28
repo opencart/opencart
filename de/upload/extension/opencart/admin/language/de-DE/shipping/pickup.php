@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']    = 'Pickup From Store';
+$_['heading_title']    = 'Abholung im Geschäft';
 
 // Text
-$_['text_extension']   = 'Extensions';
-$_['text_success']     = 'Success: You have modified pickup from store!';
-$_['text_edit']        = 'Edit Pickup From Store Shipping';
+$_['text_extension']   = 'Erweiterungen';
+$_['text_success']     = 'Erfolg: Sie haben die Abholung im Geschäft geändert!';
+$_['text_edit']        = 'Abholung im Geschäft bearbeiten – Versand';
 
 // Entry
-$_['entry_geo_zone']   = 'Geo Zone';
+$_['entry_geo_zone']   = 'Geozone';
 $_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify pickup from store!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, die Abholung im Geschäft zu ändern!';

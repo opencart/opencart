@@ -3,16 +3,16 @@
 $_['heading_title']      = 'Downloads';
 
 // Text
-$_['text_account']       = 'Account';
+$_['text_account']       = 'Konto';
 $_['text_downloads']     = 'Downloads';
-$_['text_no_results']    = 'You have not made any previous downloadable orders!';
+$_['text_no_results']    = 'Sie haben noch keine Download-Bestellungen getätigt!';
 
 // Column
-$_['column_order_id']    = 'Order ID';
+$_['column_order_id']    = 'Bestellnummer';
 $_['column_name']        = 'Name';
-$_['column_size']        = 'Size';
-$_['column_date_added']  = 'Date Added';
+$_['column_size']        = 'Größe';
+$_['column_date_added']  = 'Datum hinzugefügt';
 
 // Error
-$_['error_not_found']    = 'Error: Could not find file %s !';
-$_['error_headers_sent'] = 'Error: Headers already sent out!';
+$_['error_not_found']    = 'Fehler: Datei %s konnte nicht gefunden werden!';
+$_['error_headers_sent'] = 'Fehler: Header bereits versendet!';

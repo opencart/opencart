@@ -1,24 +1,24 @@
 <?php
 // Heading
-$_['heading_title']     = 'Latest Orders';
+$_['heading_title']     = 'Neuste Bestellungen';
 
 // Text
-$_['text_extension']    = 'Extensions';
-$_['text_success']      = 'Success: You have modified dashboard recent orders!';
-$_['text_edit']         = 'Edit Dashboard Recent Orders';
+$_['text_extension']    = 'Erweiterungen';
+$_['text_success']      = 'Erfolg: Sie haben die letzten Bestellungen im Dashboard geändert!';
+$_['text_edit']         = 'Dashboard bearbeiten Letzte Bestellungen';
 
 // Column
-$_['column_order_id']   = 'Order ID';
-$_['column_customer']   = 'Customer';
+$_['column_order_id']   = 'Bestellnummer';
+$_['column_customer']   = 'Kunde';
 $_['column_status']     = 'Status';
-$_['column_total']      = 'Total';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
+$_['column_total']      = 'Gesamt';
+$_['column_date_added'] = 'Datum hinzugefügt';
+$_['column_action']     = 'Aktion';
 
 // Entry
 $_['entry_status']      = 'Status';
-$_['entry_sort_order']  = 'Sort Order';
-$_['entry_width']       = 'Width';
+$_['entry_sort_order']  = 'Sortierreihenfolge';
+$_['entry_width']       = 'Breite';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify dashboard recent orders!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, die letzten Bestellungen im Dashboard zu ändern!';

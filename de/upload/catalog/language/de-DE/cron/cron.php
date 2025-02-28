@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']     = 'Success: You have run %s cron job!';
+$_['text_success']     = 'Erfolg: Sie haben den Cron-Job %s ausgeführt!';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify cron jobs!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Cron-Jobs zu ändern!';

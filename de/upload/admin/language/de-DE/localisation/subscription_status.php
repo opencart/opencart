@@ -1,22 +1,22 @@
 <?php
 // Heading
-$_['heading_title']      = 'Subscription Statuses';
+$_['heading_title']      = 'Abonnementstatus';
 
 // Text
-$_['text_success']       = 'Success: You have modified subscription statuses!';
-$_['text_list']          = 'Subscription Status List';
-$_['text_add']           = 'Add Subscription Status';
-$_['text_edit']          = 'Edit Subscription Status';
+$_['text_success']       = 'Erfolg: Sie haben den Abonnementstatus geändert!';
+$_['text_list']          = 'Abonnementstatusliste';
+$_['text_add']           = 'Abonnementstatus hinzufügen';
+$_['text_edit']          = 'Abonnementstatus bearbeiten';
 
 // Column
-$_['column_name']        = 'Subscription Status Name';
-$_['column_action']      = 'Action';
+$_['column_name']        = 'Name des Abonnementstatus';
+$_['column_action']      = 'Aktion';
 
 // Entry
-$_['entry_name']         = 'Subscription Status Name';
+$_['entry_name']         = 'Name des Abonnementstatus';
 
 // Error
-$_['error_permission']   = 'Warning: You do not have permission to modify subscription statuses!';
-$_['error_name']         = 'Subscription Status Name must be between 3 and 32 characters!';
-$_['error_default']      = 'Warning: This subscription status cannot be deleted as it is currently assigned as the default store subscription status!';
-$_['error_subscription'] = 'Warning: This subscription status cannot be deleted as it is currently assigned to %s subscriptions!';
+$_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, den Abonnementstatus zu ändern!';
+$_['error_name']         = 'Der Name des Abonnementstatus muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_default']      = 'Achtung: Dieser Abonnementstatus kann nicht gelöscht werden, da er aktuell als Standard-Store-Abonnementstatus zugewiesen ist!';
+$_['error_subscription'] = 'Achtung: Dieser Abonnementstatus kann nicht gelöscht werden, da er aktuell %s Abonnements zugewiesen ist!';

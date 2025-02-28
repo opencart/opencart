@@ -1,12 +1,12 @@
 <?php
 // Text
-$_['text_subject']   = '%s - GDPR request denied!';
-$_['text_export']    = 'Account Export Data Request';
-$_['text_remove']    = 'Account Deletion Request';
-$_['text_hello']     = 'Hello <strong>%s</strong>,';
-$_['text_user']      = 'User';
-$_['text_contact']   = 'Unfortunately your request has been denied. For more information you can contact the store here:';
-$_['text_thanks']    = 'Thanks,';
+$_['text_subject']   = '%s – DSGVO-Anfrage abgelehnt!';
+$_['text_export']    = 'Datenexportanforderung für Konten';
+$_['text_remove']    = 'Antrag auf Kontolöschung';
+$_['text_hello']     = 'Hallo <strong>%s</strong>,';
+$_['text_user']      = 'Benutzer';
+$_['text_contact']   = 'Leider wurde Ihre Anfrage abgelehnt. Für weitere Informationen können Sie den Shop hier kontaktieren:';
+$_['text_thanks']    = 'Danke,';
 
 // Button
-$_['button_contact'] = 'Contact Us';
+$_['button_contact'] = 'Kontaktieren Sie uns';

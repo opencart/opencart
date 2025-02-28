@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title'] = 'Weight Based Shipping';
+$_['heading_title'] = 'Versand nach Gewicht';
 
 // Text
-$_['text_weight']   = 'Weight:';
+$_['text_weight']   = 'Gewicht:';

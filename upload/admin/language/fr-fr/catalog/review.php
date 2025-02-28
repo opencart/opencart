@@ -24,6 +24,7 @@ $_['entry_author']      = 'Auteur';
 $_['entry_rating']      = 'Évaluation';
 $_['entry_status']      = 'Statut';
 $_['entry_text']        = 'Texte';
+$_['entry_date_added']  = 'Date d\'ajout';
 $_['entry_date_from']   = 'Date de Début';
 $_['entry_date_to']     = 'Date de Fin';
 

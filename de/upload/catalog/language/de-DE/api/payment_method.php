@@ -1,12 +1,12 @@
 <?php
 // Text
-$_['text_success']           = 'Success: Payment method has been set!';
+$_['text_success']           = 'Erfolg: Zahlungsmethode wurde festgelegt!';
 
 // Error
-$_['error_customer']         = 'Warning: Customer details required!';
-$_['error_product']          = 'Warning: Products required!';
-$_['error_shipping_address'] = 'Warning: Shipping address required!';
-$_['error_shipping_method']  = 'Warning: Shipping method required!';
-$_['error_payment_address']  = 'Warning: Payment address required!';
-$_['error_no_payment']       = 'Warning: No payment options are available!';
-$_['error_payment_method']   = 'Warning: Payment method required!';
+$_['error_customer']         = 'Achtung: Kundendaten erforderlich!';
+$_['error_product']          = 'Achtung: Produkte erforderlich!';
+$_['error_shipping_address'] = 'Achtung: Lieferadresse erforderlich!';
+$_['error_shipping_method']  = 'Achtung: Versandart erforderlich!';
+$_['error_payment_address']  = 'Achtung: Zahlungsadresse erforderlich!';
+$_['error_no_payment']       = 'Achtung: Es stehen keine Zahlungsmöglichkeiten zur Verfügung!';
+$_['error_payment_method']   = 'Achtung: Zahlungsmethode erforderlich!';

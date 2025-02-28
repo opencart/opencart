@@ -1,43 +1,43 @@
 <?php
 // Heading
-$_['heading_title']     = 'Marketing Tracking';
+$_['heading_title']     = 'Marketing-Verfolgung';
 
 // Text
-$_['text_success']      = 'Success: You have modified marketing tracking!';
-$_['text_list']         = 'Marketing Tracking List';
-$_['text_add']          = 'Add Marketing Tracking';
-$_['text_edit']         = 'Edit Marketing Tracking';
+$_['text_success']      = 'Erfolg: Sie haben das Marketing-Tracking geändert!';
+$_['text_list']         = 'Marketing-Trackingliste';
+$_['text_add']          = 'Marketing-Tracking hinzufügen';
+$_['text_edit']         = 'Marketing-Tracking bearbeiten';
 $_['text_filter']       = 'Filter';
-$_['text_history']      = 'History';
-$_['text_history_add']  = 'Add History';
-$_['text_report']       = 'Reports';
+$_['text_history']      = 'Geschichte';
+$_['text_history_add']  = 'Verlauf hinzufügen';
+$_['text_report']       = 'Berichte';
 
 // Column
-$_['column_name']       = 'Campaign Name';
+$_['column_name']       = 'Kampagnenname';
 $_['column_code']       = 'Code';
-$_['column_clicks']     = 'Clicks';
-$_['column_orders']     = 'Orders';
+$_['column_clicks']     = 'Klicks';
+$_['column_orders']     = 'Bestellungen';
 $_['column_ip']         = 'IP';
-$_['column_account']    = 'Accounts';
-$_['column_store']      = 'Store';
-$_['column_country']    = 'Country';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
+$_['column_account']    = 'Konten';
+$_['column_store']      = 'Speichern';
+$_['column_country']    = 'Land';
+$_['column_date_added'] = 'Datum hinzugefügt';
+$_['column_action']     = 'Aktion';
 
 // Entry
-$_['entry_name']        = 'Campaign Name';
-$_['entry_description'] = 'Campaign Description';
-$_['entry_code']        = 'Tracking Code';
-$_['entry_example']     = 'Examples';
-$_['entry_date_from']   = 'Date From';
-$_['entry_date_to']     = 'Date To';
+$_['entry_name']        = 'Kampagnenname';
+$_['entry_description'] = 'Kampagnenbeschreibung';
+$_['entry_code']        = 'Tracking-Code';
+$_['entry_example']     = 'Beispiele';
+$_['entry_date_from']   = 'Stammen aus';
+$_['entry_date_to']     = 'Datum bis';
 
 // Help
-$_['help_code']         = 'The tracking code that will be used to track marketing campaigns.';
-$_['help_example']      = 'So the system can track referrals you need to add the tracking code to the end of the URL linking to your site.';
+$_['help_code']         = 'Der Tracking-Code, der zum Verfolgen von Marketingkampagnen verwendet wird.';
+$_['help_example']      = 'Damit das System Verweise verfolgen kann, müssen Sie den Tracking-Code an das Ende der URL anfügen, die auf Ihre Site verweist.';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify marketing tracking!';
-$_['error_name']        = 'Campaign must be between 1 and 32 characters!';
-$_['error_code']        = 'Tracking Code required!';
-$_['error_exists']      = 'Tracking code is being used by another campaign!';
+$_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, das Marketing-Tracking zu ändern!';
+$_['error_name']        = 'Die Kampagne muss zwischen 1 und 32 Zeichen lang sein!';
+$_['error_code']        = 'Tracking-Code erforderlich!';
+$_['error_exists']      = 'Der Tracking-Code wird von einer anderen Kampagne verwendet!';

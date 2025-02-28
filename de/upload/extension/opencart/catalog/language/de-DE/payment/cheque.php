@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_title']    = 'Cheque / Money Order';
+$_['heading_title']    = 'Scheck / Zahlungsanweisung';
 
 // Text
-$_['text_instruction'] = 'Cheque / Money Order Instructions';
-$_['text_payable']     = 'Make Payable To: ';
-$_['text_address']     = 'Send To: ';
-$_['text_payment']     = 'Your order will not ship until we receive payment.';
+$_['text_instruction'] = 'Anweisungen für Schecks/Zahlungsanweisung';
+$_['text_payable']     = 'Zahlbar an: ';
+$_['text_address']     = 'Senden an: ';
+$_['text_payment']     = 'Ihre Bestellung wird erst versendet, wenn wir die Zahlung erhalten haben.';

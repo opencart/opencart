@@ -11,7 +11,7 @@ $_['text_vendor_success']    = 'Succès: Vous avez vidé le cache fournisseur!';
 $_['text_theme']       = 'Thème';
 $_['text_sass']        = 'SASS';
 $_['text_cache']       = 'Cache';
-$_['text_vendor']      = 'Vendor';
+$_['text_vendor']      = 'Fournisseur';
 
 // Column
 $_['column_component'] = 'Composant';

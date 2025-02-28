@@ -1,48 +1,48 @@
 <?php
 // Heading
-$_['heading_title']      = 'Options';
+$_['heading_title']      = 'Optionen';
 
 // Text
-$_['text_success']       = 'Success: You have modified options!';
-$_['text_list']          = 'Option List';
-$_['text_add']           = 'Add Option';
-$_['text_edit']          = 'Edit Option';
-$_['text_choose']        = 'Choose';
-$_['text_select']        = 'Select';
+$_['text_success']       = 'Erfolg: Sie haben die Optionen geändert!';
+$_['text_list']          = 'Optionsliste';
+$_['text_add']           = 'Option hinzufügen';
+$_['text_edit']          = 'Bearbeitungsoption';
+$_['text_choose']        = 'Wählen';
+$_['text_select']        = 'Wählen';
 $_['text_radio']         = 'Radio';
-$_['text_checkbox']      = 'Checkbox';
-$_['text_input']         = 'Input';
+$_['text_checkbox']      = 'Kontrollkästchen';
+$_['text_input']         = 'Eingang';
 $_['text_text']          = 'Text';
-$_['text_textarea']      = 'Textarea';
-$_['text_file']          = 'File';
-$_['text_date']          = 'Date';
-$_['text_datetime']      = 'Date &amp; Time';
-$_['text_time']          = 'Time';
-$_['text_regex']         = 'Regex';
+$_['text_textarea']      = 'Textbereich';
+$_['text_file']          = 'Datei';
+$_['text_date']          = 'Datum';
+$_['text_datetime']      = 'Datum &amp; Uhrzeit';
+$_['text_time']          = 'Zeit';
+$_['text_regex']         = 'Regulärer Ausdruck';
 $_['text_option']        = 'Option';
-$_['text_value']         = 'Option Values';
+$_['text_value']         = 'Optionswerte';
 
 // Column
-$_['column_name']        = 'Option Name';
-$_['column_sort_order']  = 'Sort Order';
-$_['column_action']      = 'Action';
+$_['column_name']        = 'Optionsname';
+$_['column_sort_order']  = 'Sortierreihenfolge';
+$_['column_action']      = 'Aktion';
 
 // Entry
-$_['entry_name']         = 'Option Name';
-$_['entry_type']         = 'Type';
-$_['entry_validation']   = 'Validation';
-$_['entry_option_value'] = 'Option Value Name';
-$_['entry_image']        = 'Image';
-$_['entry_sort_order']   = 'Sort Order';
+$_['entry_name']         = 'Optionsname';
+$_['entry_type']         = 'Typ';
+$_['entry_validation']   = 'Validierung';
+$_['entry_option_value'] = 'Optionswertname';
+$_['entry_image']        = 'Bild';
+$_['entry_sort_order']   = 'Sortierreihenfolge';
 
 // Help
-$_['help_regex']         = 'Use regex. E.g: /[^a-zA-Z0-9_-]/';
+$_['help_regex']         = 'Verwenden Sie reguläre Ausdrücke. Beispiel: /[^a-zA-Z0-9_-]/';
 
 // Error
-$_['error_warning']      = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']   = 'Warning: You do not have permission to modify options!';
-$_['error_name']         = 'Option Name must be between 1 and 128 characters!';
-$_['error_type']         = 'Warning: Option Values required!';
-$_['error_option_value'] = 'Option Value Name must be between 1 and 128 characters!';
-$_['error_value']        = 'Warning: This option value cannot be deleted as it is currently assigned to %s products!';
-$_['error_product']      = 'Warning: This option cannot be deleted as it is currently assigned to %s products!';
+$_['error_warning']      = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, Optionen zu ändern!';
+$_['error_name']         = 'Der Optionsname muss zwischen 1 und 128 Zeichen lang sein!';
+$_['error_type']         = 'Achtung: Optionswerte erforderlich!';
+$_['error_option_value'] = 'Der Optionswertname muss zwischen 1 und 128 Zeichen lang sein!';
+$_['error_value']        = 'Achtung: Dieser Optionswert kann nicht gelöscht werden, da er aktuell %s Produkten zugewiesen ist!';
+$_['error_product']      = 'Achtung: Diese Option kann nicht gelöscht werden, da sie aktuell %s Produkten zugewiesen ist!';

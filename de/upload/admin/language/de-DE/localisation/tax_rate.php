@@ -1,31 +1,31 @@
 <?php
 // Heading
-$_['heading_title']        = 'Tax Rates';
+$_['heading_title']        = 'Steuersätze';
 
 // Text
-$_['text_success']         = 'Success: You have modified tax rates!';
-$_['text_list']            = 'Tax Rate List';
-$_['text_add']             = 'Add Tax Rate';
-$_['text_edit']            = 'Edit Tax Rate';
-$_['text_percent']         = 'Percentage';
-$_['text_amount']          = 'Fixed Amount';
+$_['text_success']         = 'Erfolg: Sie haben die Steuersätze geändert!';
+$_['text_list']            = 'Steuersatzliste';
+$_['text_add']             = 'Steuersatz hinzufügen';
+$_['text_edit']            = 'Steuersatz bearbeiten';
+$_['text_percent']         = 'Prozentsatz';
+$_['text_amount']          = 'Fester Betrag';
 
 // Column
-$_['column_name']          = 'Tax Name';
-$_['column_rate']          = 'Tax Rate';
-$_['column_type']          = 'Type';
-$_['column_geo_zone']      = 'Geo Zone';
-$_['column_action']        = 'Action';
+$_['column_name']          = 'Steuerbezeichnung';
+$_['column_rate']          = 'Steuersatz';
+$_['column_type']          = 'Typ';
+$_['column_geo_zone']      = 'Geozone';
+$_['column_action']        = 'Aktion';
 
 // Entry
-$_['entry_name']           = 'Tax Name';
-$_['entry_rate']           = 'Tax Rate';
-$_['entry_type']           = 'Type';
-$_['entry_customer_group'] = 'Customer Group';
-$_['entry_geo_zone']       = 'Geo Zone';
+$_['entry_name']           = 'Steuerbezeichnung';
+$_['entry_rate']           = 'Steuersatz';
+$_['entry_type']           = 'Typ';
+$_['entry_customer_group'] = 'Kundengruppe';
+$_['entry_geo_zone']       = 'Geozone';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify tax rates!';
-$_['error_tax_rule']       = 'Warning: This tax rate cannot be deleted as it is currently assigned to %s tax classes!';
-$_['error_name']           = 'Tax Name must be between 3 and 32 characters!';
-$_['error_rate']           = 'Tax Rate required!';
+$_['error_permission']     = 'Achtung: Sie sind nicht berechtigt, Steuersätze zu ändern!';
+$_['error_tax_rule']       = 'Achtung: Dieser Steuersatz kann nicht gelöscht werden, da er aktuell %s Steuerklassen zugeordnet ist!';
+$_['error_name']           = 'Der Steuername muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_rate']           = 'Steuersatz erforderlich!';

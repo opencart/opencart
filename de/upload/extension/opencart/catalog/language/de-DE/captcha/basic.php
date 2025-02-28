@@ -3,7 +3,7 @@
 $_['text_captcha']  = 'Captcha';
 
 // Entry
-$_['entry_captcha'] = 'Enter the code in the box below';
+$_['entry_captcha'] = 'Geben Sie den Code in das Feld unten ein';
 
 // Error
-$_['error_captcha'] = 'Verification code does not match the image!';
+$_['error_captcha'] = 'Prüfcode stimmt nicht mit dem Bild überein!';

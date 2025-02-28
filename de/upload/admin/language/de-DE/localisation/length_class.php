@@ -1,30 +1,30 @@
 <?php
 // Heading
-$_['heading_title']    = 'Length Classes';
+$_['heading_title']    = 'Längenklassen';
 
 // Text
-$_['text_success']     = 'Success: You have modified length classes!';
-$_['text_list']        = 'Length Class List';
-$_['text_add']         = 'Add Length Class';
-$_['text_edit']        = 'Edit Length Class';
+$_['text_success']     = 'Erfolg: Sie haben Längenklassen geändert!';
+$_['text_list']        = 'Längenklassenliste';
+$_['text_add']         = 'Längenklasse hinzufügen';
+$_['text_edit']        = 'Längenklasse bearbeiten';
 
 // Column
-$_['column_title']     = 'Length Title';
-$_['column_unit']      = 'Length Unit';
-$_['column_value']     = 'Value';
-$_['column_action']    = 'Action';
+$_['column_title']     = 'Länge Titel';
+$_['column_unit']      = 'Längeneinheit';
+$_['column_value']     = 'Wert';
+$_['column_action']    = 'Aktion';
 
 // Entry
-$_['entry_title']      = 'Length Title';
-$_['entry_unit']       = 'Length Unit';
-$_['entry_value']      = 'Value';
+$_['entry_title']      = 'Länge Titel';
+$_['entry_unit']       = 'Längeneinheit';
+$_['entry_value']      = 'Wert';
 
 // Help
-$_['help_value']       = 'The value of your default length in the current length unit. Set to 1 for your default length.';
+$_['help_value']       = 'Der Wert Ihrer Standardlänge in der aktuellen Längeneinheit. Setzen Sie den Wert für Ihre Standardlänge auf 1.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify length classes!';
-$_['error_title']      = 'Length Title must be between 3 and 32 characters!';
-$_['error_unit']       = 'Length Unit must be between 1 and 4 characters!';
-$_['error_default']    = 'Warning: This length class cannot be deleted as it is currently assigned as the default store length class!';
-$_['error_product']    = 'Warning: This length class cannot be deleted as it is currently assigned to %s products!';
+$_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Längenklassen zu ändern!';
+$_['error_title']      = 'Länge: Der Titel muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_unit']       = 'Die Längeneinheit muss zwischen 1 und 4 Zeichen liegen!';
+$_['error_default']    = 'Achtung: Diese Längenklasse kann nicht gelöscht werden, da sie aktuell als Standard-Store-Längenklasse zugewiesen ist!';
+$_['error_product']    = 'Achtung: Diese Längenklasse kann nicht gelöscht werden, da sie aktuell %s Produkten zugeordnet ist!';

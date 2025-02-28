@@ -1,3 +1,3 @@
 <?php
 // Heading
-$_['heading_title'] = 'Topics';
+$_['heading_title'] = 'Themen';

@@ -38,7 +38,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['confirm'] = $this->url->link('account/forgotten.confirm', 'language=' . $this->config->get('config_language'));
-
 		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -78,7 +77,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['success'] = $this->language->get('text_sent');
+			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->model_account_customer->addToken($customer_info['customer_id'], 'password', oc_token(40));
 
@@ -170,7 +169,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['email'])) {
-			$email = (string)$this->request->get['email'];
+			$email = urldecode((string)$this->request->get['email']);
 		} else {
 			$email = '';
 		}
@@ -248,14 +247,14 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->session->data['success'] = $this->language->get('text_reset');
+
 			$this->model_account_customer->editPassword($customer_info['email'], $post_info['password']);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			unset($this->session->data['reset_token']);
 
 			// Reset token
 			$this->model_account_customer->deleteTokenByCode($code);
-
-			unset($this->session->data['reset_token']);
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}

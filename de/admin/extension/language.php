@@ -9,7 +9,7 @@ $_['text_list']        = 'Sprachenliste';
 // Column
 $_['column_name']      = 'Sprachenname';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Sprachen zu ändern!';

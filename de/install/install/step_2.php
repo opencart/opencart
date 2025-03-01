@@ -46,5 +46,5 @@ $_['error_zip']              = 'Warnung: Damit OpenCart funktioniert, muss die Z
 $_['error_mbstring']         = 'Warnung: Die mbstring-Erweiterung muss geladen werden, damit OpenCart funktioniert!';
 $_['error_catalog_exist']    = 'Warnung: Die Datei config.php existiert nicht. Sie müssen config-dist.php in config.php umbenennen!';
 $_['error_catalog_writable'] = 'Warnung: config.php muss beschreibbar sein, damit OpenCart installiert werden kann!';
-$_['error_admin_exist']      = 'Warnung: admin/config.php existiert nicht. Sie müssen admin/config-dist.php in admin/config.php umbenennen!';
-$_['error_admin_writable']   = 'Achtung: admin/config.php muss beschreibbar sein, damit OpenCart installiert werden kann!';
+$_['error_admin_exist']      = 'Warnung: Die Datei admin/config.php existiert nicht. Sie müssen admin/config-dist.php in admin/config.php umbenennen!';
+$_['error_admin_writable']   = 'Warnung: Die Datei admin/config.php muss beschreibbar sein, damit OpenCart installiert werden kann!';

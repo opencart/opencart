@@ -14,7 +14,7 @@ $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Kundengruppe';
 $_['column_status']         = 'Status';
 $_['column_total']          = 'Gesamt';
-$_['column_action']         = 'Aktion';
+$_['column_action']         = 'Aktionen';
 
 // Entry
 $_['entry_date_start']      = 'Datum Beginn';

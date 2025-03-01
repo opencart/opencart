@@ -9,7 +9,7 @@ $_['text_list']        = 'Andere Liste';
 // Column
 $_['column_name']      = 'Anderer Name';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, andere Erweiterungen zu ändern!';

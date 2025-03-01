@@ -1,14 +1,14 @@
 <?php
 // Heading
 $_['heading_title']     = 'Suchen';
-$_['heading_tag']       = 'Tag - ';
+$_['heading_tag']       = 'Etikett - ';
 
 // Text
-$_['text_search']       = 'Products meeting the search criteria';
-$_['text_keyword']      = 'Keywords';
-$_['text_category']     = 'All Categories';
-$_['text_sub_category'] = 'Search in subcategories';
-$_['text_no_results']   = 'There is no product that matches the search criteria.';
+$_['text_search']       = 'Produkte, die den Suchkriterien entsprechen';
+$_['text_keyword']      = 'Schlagwörter';
+$_['text_category']     = 'Alle Kategorien';
+$_['text_sub_category'] = 'Suche in Unterkategorien';
+$_['text_no_results']   = 'Es gibt kein Produkt, das den Suchkriterien entspricht.';
 $_['text_compare']      = 'Produktvergleich (%s)';
 $_['text_sort']         = 'Sortieren nach';
 $_['text_default']      = 'Standard';
@@ -23,5 +23,5 @@ $_['text_model_desc']   = 'Modell (Z - A)';
 $_['text_limit']        = 'Zeigen';
 
 // Entry
-$_['entry_search']      = 'Search Criteria';
-$_['entry_description'] = 'Search in product descriptions';
+$_['entry_search']      = 'Suchkriterien';
+$_['entry_description'] = 'Suche in Produktbeschreibungen';

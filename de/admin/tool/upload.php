@@ -11,7 +11,7 @@ $_['text_filter']        = 'Filter';
 $_['column_name']        = 'Name hochladen';
 $_['column_code']        = 'Code';
 $_['column_date_added']  = 'Datum hinzugefügt';
-$_['column_action']      = 'Aktion';
+$_['column_action']      = 'Aktionen';
 
 // Entry
 $_['entry_name']         = 'Name hochladen';

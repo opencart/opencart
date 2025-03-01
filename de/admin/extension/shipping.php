@@ -10,7 +10,7 @@ $_['text_list']         = 'Versandliste';
 $_['column_name']       = 'Versandart';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Error
 $_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, den Versand zu ändern!';

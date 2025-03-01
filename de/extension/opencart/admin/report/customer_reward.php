@@ -16,7 +16,7 @@ $_['column_status']         = 'Status';
 $_['column_points']         = 'Belohnungspunkte';
 $_['column_orders']         = 'Anzahl Bestellungen';
 $_['column_total']          = 'Gesamt';
-$_['column_action']         = 'Aktion';
+$_['column_action']         = 'Aktionen';
 
 // Entry
 $_['entry_date_start']      = 'Datum Beginn';

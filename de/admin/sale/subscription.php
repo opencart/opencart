@@ -49,7 +49,7 @@ $_['column_price']               = 'Preis';
 $_['column_amount']              = 'Menge';
 $_['column_code']                = 'Code';
 $_['column_description']         = 'Beschreibung';
-$_['column_action']              = 'Aktion';
+$_['column_action']              = 'Aktionen';
 
 // Entry
 $_['entry_subscription_id']      = 'Abonnement-ID';

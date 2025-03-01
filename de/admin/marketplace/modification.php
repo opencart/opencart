@@ -14,7 +14,7 @@ $_['column_author']     = 'Autor';
 $_['column_version']    = 'Version';
 $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Datum hinzugefügt';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_name']        = 'Änderungsname';

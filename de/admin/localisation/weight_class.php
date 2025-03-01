@@ -12,7 +12,7 @@ $_['text_edit']        = 'Gewichtsklasse bearbeiten';
 $_['column_title']     = 'Gewicht Titel';
 $_['column_unit']      = 'Gewichtseinheit';
 $_['column_value']     = 'Wert';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_title']      = 'Gewicht Titel';

@@ -12,7 +12,7 @@ $_['text_default']     = 'Standard';
 // Column
 $_['column_name']      = 'Bannername';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Bannername';

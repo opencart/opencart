@@ -10,7 +10,7 @@ $_['text_edit']        = 'Lagerstatus bearbeiten';
 
 // Column
 $_['column_name']      = 'Bestandsstatus Name';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Bestandsstatus Name';

@@ -17,7 +17,7 @@ $_['column_keyword']          = 'Stichwort';
 $_['column_sort_order']       = 'Sortierreihenfolge';
 $_['column_store']            = 'Speichern';
 $_['column_language']         = 'Sprache';
-$_['column_action']           = 'Aktion';
+$_['column_action']           = 'Aktionen';
 
 // Entry
 $_['entry_store']             = 'Speichern';

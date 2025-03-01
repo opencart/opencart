@@ -13,7 +13,7 @@ $_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie L
 // Column
 $_['column_name']             = 'Themenname';
 $_['column_sort_order']       = 'Sortierreihenfolge';
-$_['column_action']           = 'Aktion';
+$_['column_action']           = 'Aktionen';
 
 // Entry
 $_['entry_image']             = 'Bild';

@@ -23,11 +23,11 @@ $_['column_email']      = 'E-Mail';
 $_['column_request']    = 'Anfrage';
 $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Datum hinzugefügt';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_email']       = 'E-Mail';
-$_['entry_action']      = 'Aktion';
+$_['entry_action']      = 'Aktionen';
 $_['entry_status']      = 'Status';
 $_['entry_date_from']   = 'Stammen aus';
 $_['entry_date_to']     = 'Datum bis';

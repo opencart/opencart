@@ -16,7 +16,7 @@ $_['column_store']      = 'Speichern';
 $_['column_route']      = 'Route';
 $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Datum hinzugefügt';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_store']       = 'Speichern';

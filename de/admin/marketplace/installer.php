@@ -17,7 +17,7 @@ $_['column_image']           = 'Bild';
 $_['column_name']            = 'Erweiterungsname';
 $_['column_version']         = 'Version';
 $_['column_date_added']      = 'Datum hinzugefügt';
-$_['column_action']          = 'Aktion';
+$_['column_action']          = 'Aktionen';
 
 // Entry
 $_['entry_progress']         = 'Fortschritt';

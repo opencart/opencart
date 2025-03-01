@@ -16,7 +16,7 @@ $_['column_name']     = 'Produktname';
 $_['column_model']    = 'Modell';
 $_['column_stock']    = 'Aktie';
 $_['column_price']    = 'Stückpreis';
-$_['column_action']   = 'Aktion';
+$_['column_action']   = 'Aktionen';
 
 // Error
 $_['error_product']   = 'Achtung: Produkt konnte nicht gefunden werden!';

@@ -13,7 +13,7 @@ $_['column_name']      = 'Gutscheinname';
 $_['column_code']      = 'Code';
 $_['column_orders']    = 'Bestellungen';
 $_['column_total']     = 'Gesamt';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_date_start'] = 'Datum Beginn';

@@ -41,4 +41,4 @@ $_['error_db_connect']       = 'Fehler: Verbindung zur Datenbank konnte nicht he
 $_['error_username']         = 'Benutzername erforderlich!';
 $_['error_password']         = 'Passwort erforderlich!';
 $_['error_email']            = 'E-Mail-Adresse scheint nicht gültig zu sein!';
-$_['error_config']           = 'Fehler: In config.php konnte nicht geschrieben werden. Bitte überprüfen Sie, ob Sie die richtigen Berechtigungen für Folgendes festgelegt haben: ';
+$_['error_config']           = 'Fehler: In die Datei config.php konnte nicht geschrieben werden. Bitte überprüfen Sie, ob Sie die richtigen Berechtigungen für Folgendes festgelegt haben: ';

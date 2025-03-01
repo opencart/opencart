@@ -11,12 +11,12 @@ $_['text_info']         = 'Informationen zur Veranstaltung';
 // Column
 $_['column_code']       = 'Ereigniscode';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_description'] = 'Beschreibung';
 $_['entry_trigger']     = 'Auslösen';
-$_['entry_action']      = 'Aktion';
+$_['entry_action']      = 'Aktionen';
 
 // Error
 $_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, die Ereignisse zu ändern!';

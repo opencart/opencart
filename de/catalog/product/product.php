@@ -1,20 +1,20 @@
 <?php
 // Text
-$_['text_search']                = 'Search';
-$_['text_brand']                 = 'Brand';
-$_['text_manufacturer']          = 'Brand:';
-$_['text_model']                 = 'Product Code:';
-$_['text_reward']                = 'Reward Points:';
-$_['text_points']                = 'Price in reward points:';
-$_['text_stock']                 = 'Availability:';
-$_['text_tax']                   = 'Ex Tax:';
-$_['text_discount']              = ' or more ';
-$_['text_option']                = 'Available Options';
-$_['text_minimum']               = 'This product has a minimum quantity of %s';
-$_['text_reviews']               = '%s reviews';
-$_['text_write']                 = 'Write a review';
-$_['text_login']                 = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
-$_['text_tags']                  = 'Tags:';
+$_['text_search']                = 'Suchen';
+$_['text_brand']                 = 'Marke';
+$_['text_manufacturer']          = 'Marke:';
+$_['text_model']                 = 'Artikel-Nr.:';
+$_['text_reward']                = 'Belohnungspunkte:';
+$_['text_points']                = 'Preis in Prämienpunkten:';
+$_['text_stock']                 = 'Verfügbarkeit:';
+$_['text_tax']                   = 'Ohne Steuern:';
+$_['text_discount']              = ' oder mehr ';
+$_['text_option']                = 'Verfügbare Optionen';
+$_['text_minimum']               = 'Dieses Produkt hat eine Mindestmenge von %s';
+$_['text_reviews']               = '%s Bewertungen';
+$_['text_write']                 = 'Eigene Rezension verfassen';
+$_['text_login']                 = 'Bitte <a href="%s">anmelden</a> oder <a href="%s">registrieren</a> um eine Bewertung abzugeben';
+$_['text_tags']                  = 'Stichworte:';
 $_['text_subscription']          = 'Abonnement';
 $_['text_subscription_duration'] = '%s alle %d %s(s) für %d Zahlung(en)';
 $_['text_subscription_cancel']   = '%s alle %d %s(s) bis zum Abbruch';
@@ -25,10 +25,10 @@ $_['text_month']                 = 'Monat';
 $_['text_year']                  = 'Jahr';
 
 // Entry
-$_['entry_qty']                  = 'Qty';
+$_['entry_qty']                  = 'Menge';
 $_['entry_rating']               = 'Bewertungen';
 
 // Tabs
 $_['tab_description']            = 'Beschreibung';
 $_['tab_attribute']              = 'Spezifikation';
-$_['tab_review']                 = 'Reviews (%s)';
+$_['tab_review']                 = 'Bewertungen (%s)';

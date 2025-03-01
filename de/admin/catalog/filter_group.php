@@ -11,7 +11,7 @@ $_['text_edit']         = 'Filtergruppe bearbeiten';
 // Column
 $_['column_name']       = 'Filtergruppenname';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_name']        = 'Filtergruppenname';

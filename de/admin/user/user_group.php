@@ -12,7 +12,7 @@ $_['text_modify']      = 'Ändern';
 
 // Column
 $_['column_name']      = 'Benutzergruppenname';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Benutzergruppenname';

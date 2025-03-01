@@ -10,7 +10,7 @@ $_['text_info']         = 'Informationen zum Start';
 // Column
 $_['column_code']       = 'Startcode';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_description'] = 'Beschreibung';

@@ -16,12 +16,12 @@ $_['text_success_edit']        = 'Erfolg: Ihr Konto wurde erfolgreich aktualisie
 
 // Entry
 $_['entry_customer_group']     = 'Kontotyp';
-$_['entry_firstname']          = 'First Name';
+$_['entry_firstname']          = 'Vorname';
 $_['entry_lastname']           = 'Nachname';
 $_['entry_email']              = 'E-Mail';
 $_['entry_telephone']          = 'Telefon';
 $_['entry_password']           = 'Passwort';
-$_['entry_company']            = 'Company';
+$_['entry_company']            = 'Unternehmen';
 $_['entry_address_1']          = 'Adresse 1';
 $_['entry_address_2']          = 'Adresse 2';
 $_['entry_postcode']           = 'Postleitzahl';
@@ -52,5 +52,5 @@ $_['error_postcode']           = 'Die Postleitzahl muss zwischen 2 und 10 Zeiche
 $_['error_country']            = 'Bitte wählen Sie ein Land!';
 $_['error_zone']               = 'Bitte wählen Sie eine Region / ein Bundesland!';
 $_['error_agree']              = 'Achtung: Sie müssen den %szustimmen!';
-$_['error_custom_field']       = '%s required!';
-$_['error_regex']              = '%s is not a valid input!';
+$_['error_custom_field']       = '%s erforderlich!';
+$_['error_regex']              = '%s ist keine gültige Eingabe!';

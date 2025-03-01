@@ -10,7 +10,7 @@ $_['text_edit']            = 'Anti-Spam bearbeiten';
 
 // Column
 $_['column_keyword']       = 'Stichwort';
-$_['column_action']        = 'Aktion';
+$_['column_action']        = 'Aktionen';
 
 // Entry
 $_['entry_keyword']        = 'Stichwort';

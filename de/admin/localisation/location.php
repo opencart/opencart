@@ -12,7 +12,7 @@ $_['text_geocode']     = 'Die Geokodierung war aus folgendem Grund nicht erfolgr
 // Column
 $_['column_name']      = 'Name des Geschäfts';
 $_['column_address']   = 'Adresse';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Name des Geschäfts';

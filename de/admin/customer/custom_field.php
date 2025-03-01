@@ -31,7 +31,7 @@ $_['column_location']      = 'Standort';
 $_['column_type']          = 'Typ';
 $_['column_status']        = 'Status';
 $_['column_sort_order']    = 'Sortierreihenfolge';
-$_['column_action']        = 'Aktion';
+$_['column_action']        = 'Aktionen';
 
 // Entry
 $_['entry_name']           = 'Benutzerdefinierter Feldname';

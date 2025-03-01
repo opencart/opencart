@@ -17,7 +17,7 @@ $_['text_date_added']    = 'Datum hinzugefügt';
 $_['text_opened']        = 'Geöffnet';
 $_['text_unopened']      = 'Ungeöffnet';
 $_['text_reason']        = 'Grund für die Rücksendung';
-$_['text_action']        = 'Aktion';
+$_['text_action']        = 'Aktionen';
 $_['text_tbc']           = 'Wird noch bekannt gegeben';
 $_['text_history']       = 'Geschichte';
 $_['text_comment']       = 'Kommentar';
@@ -36,7 +36,7 @@ $_['column_quantity']    = 'Menge';
 $_['column_opened']      = 'Geöffnet';
 $_['column_comment']     = 'Kommentar';
 $_['column_reason']      = 'Grund';
-$_['column_action']      = 'Aktion';
+$_['column_action']      = 'Aktionen';
 
 // Entry
 $_['entry_order_id']     = 'Bestellnummer';

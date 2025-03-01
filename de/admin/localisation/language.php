@@ -12,7 +12,7 @@ $_['text_edit']         = 'Sprache bearbeiten';
 $_['column_name']       = 'Sprachenname';
 $_['column_code']       = 'Code';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_name']        = 'Sprachenname';

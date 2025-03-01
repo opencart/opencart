@@ -60,6 +60,12 @@ $_['text_customer_telephone']    = 'Customer Telephone';
 $_['text_missing']               = 'Missing Orders';
 $_['text_default']               = 'Default';
 $_['text_picklist']              = 'Dispatch Note';
+$_['text_sku']                   = 'SKU';
+$_['text_upc']                   = 'UPC';
+$_['text_ean']                   = 'EAN';
+$_['text_jan']                   = 'JAN';
+$_['text_isbn']                  = 'ISBN';
+$_['text_mpn']                   = 'MPN';
 
 // Column
 $_['column_order_id']            = 'Order ID';

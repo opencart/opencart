@@ -15,7 +15,7 @@ $_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie L
 $_['column_image']            = 'Bild';
 $_['column_name']             = 'Kategoriename';
 $_['column_sort_order']       = 'Sortierreihenfolge';
-$_['column_action']           = 'Aktion';
+$_['column_action']           = 'Aktionen';
 
 // Entry
 $_['entry_name']              = 'Kategoriename';

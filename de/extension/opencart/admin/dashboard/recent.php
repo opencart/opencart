@@ -13,7 +13,7 @@ $_['column_customer']   = 'Kunde';
 $_['column_status']     = 'Status';
 $_['column_total']      = 'Gesamt';
 $_['column_date_added'] = 'Datum hinzugefügt';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_status']      = 'Status';

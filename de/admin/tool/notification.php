@@ -8,7 +8,7 @@ $_['text_list']        = 'Benachrichtigungsliste';
 
 // Column
 $_['column_message']   = 'Nachricht';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Benachrichtigungen zu ändern!';

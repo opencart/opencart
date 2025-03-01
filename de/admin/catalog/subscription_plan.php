@@ -30,7 +30,7 @@ $_['entry_sort_order']       = 'Sortierreihenfolge';
 // Column
 $_['column_name']            = 'Name des Abonnementplans';
 $_['column_sort_order']      = 'Sortierreihenfolge';
-$_['column_action']          = 'Aktion';
+$_['column_action']          = 'Aktionen';
 
 // Help
 $_['help_trial_duration']    = 'Die Dauer gibt an, wie oft der Benutzer eine Zahlung vornimmt.';

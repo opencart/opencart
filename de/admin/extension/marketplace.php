@@ -9,7 +9,7 @@ $_['text_list']        = 'Marktplatzliste';
 // Column
 $_['column_name']      = 'Name des Marktplatzes';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Marktplätze zu ändern!';

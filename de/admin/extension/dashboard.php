@@ -11,7 +11,7 @@ $_['column_name']       = 'Dashboard-Name';
 $_['column_width']      = 'Breite';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Error
 $_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Dashboards zu ändern!';

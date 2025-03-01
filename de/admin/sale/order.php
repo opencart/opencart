@@ -78,7 +78,7 @@ $_['column_notify']              = 'Kunde benachrichtigt';
 $_['column_location']            = 'Standort';
 $_['column_reference']           = 'Referenz';
 $_['column_weight']              = 'Produktgewicht';
-$_['column_action']              = 'Aktion';
+$_['column_action']              = 'Aktionen';
 
 // Entry
 $_['entry_store']                = 'Speichern';

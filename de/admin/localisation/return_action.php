@@ -10,7 +10,7 @@ $_['text_edit']        = 'Rückgabeaktion bearbeiten';
 
 // Column
 $_['column_name']      = 'Name der Rückgabeaktion';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Name der Rückgabeaktion';

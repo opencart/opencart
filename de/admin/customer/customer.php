@@ -50,7 +50,7 @@ $_['column_type']              = 'Typ';
 $_['column_date_expire']       = 'Ablaufdatum';
 $_['column_user_agent']        = 'Benutzeragent';
 $_['column_address']           = 'Adresse';
-$_['column_action']            = 'Aktion';
+$_['column_action']            = 'Aktionen';
 
 // Entry
 $_['entry_store']              = 'Speichern';

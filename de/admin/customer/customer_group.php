@@ -11,7 +11,7 @@ $_['text_edit']         = 'Kundengruppe bearbeiten';
 // Column
 $_['column_name']       = 'Name der Kundengruppe';
 $_['column_sort_order'] = 'Sortierreihenfolge';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_name']        = 'Name der Kundengruppe';

@@ -10,7 +10,7 @@ $_['text_edit']        = 'Rückgabegrund bearbeiten';
 
 // Column
 $_['column_name']      = 'Name des Rückgabegrunds';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Name des Rückgabegrunds';

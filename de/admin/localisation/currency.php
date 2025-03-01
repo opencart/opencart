@@ -15,7 +15,7 @@ $_['column_code']          = 'Code';
 $_['column_value']         = 'Wert';
 $_['column_status']        = 'Status';
 $_['column_date_modified'] = 'Zuletzt aktualisiert';
-$_['column_action']        = 'Aktion';
+$_['column_action']        = 'Aktionen';
 
 // Entry
 $_['entry_title']          = 'Währung Titel';

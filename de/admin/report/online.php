@@ -15,7 +15,7 @@ $_['column_customer']   = 'Kunde';
 $_['column_url']        = 'Zuletzt besuchte Seite';
 $_['column_referer']    = 'Referrer';
 $_['column_date_added'] = 'Letzter Klick';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_ip']          = 'IP';

@@ -14,7 +14,7 @@ $_['text_ip_list']       = 'Liste betrügerischer IP-Adressen';
 $_['column_ip']          = 'IP';
 $_['column_total']       = 'Konten insgesamt';
 $_['column_date_added']  = 'Datum hinzugefügt';
-$_['column_action']      = 'Aktion';
+$_['column_action']      = 'Aktionen';
 
 // Entry
 $_['entry_ip']           = 'IP';

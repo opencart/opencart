@@ -22,7 +22,7 @@ $_['column_order_id']     = 'Bestellnummer';
 $_['column_customer']     = 'Kunde';
 $_['column_amount']       = 'Menge';
 $_['column_date_added']   = 'Datum hinzugefügt';
-$_['column_action']       = 'Aktion';
+$_['column_action']       = 'Aktionen';
 
 // Entry
 $_['entry_name']          = 'Gutscheinname';

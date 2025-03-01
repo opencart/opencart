@@ -1,10 +1,10 @@
 <?php
 // Text
-$_['text_name']       = 'Englisch (Vereinigtes Königreich)';
-$_['text_loading']    = 'Laden...';
+$_['text_name']       = 'Deutsch (Deutschland)';
+$_['text_loading']    = 'Lade...';
 
 // Buttons
-$_['button_continue'] = 'Weitermachen';
+$_['button_continue'] = 'Weiter';
 $_['button_back']     = 'Zurück';
 
 // Error

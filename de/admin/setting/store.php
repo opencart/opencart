@@ -27,7 +27,7 @@ $_['text_currency']                    = 'Währung';
 // Column
 $_['column_name']                      = 'Name des Geschäfts';
 $_['column_url']                       = 'URL speichern';
-$_['column_action']                    = 'Aktion';
+$_['column_action']                    = 'Aktionen';
 
 // Entry
 $_['entry_url']                        = 'URL speichern';

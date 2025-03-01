@@ -18,7 +18,7 @@ $_['text_column_right']   = 'Spalte rechts';
 
 // Column
 $_['column_name']         = 'Layoutname';
-$_['column_action']       = 'Aktion';
+$_['column_action']       = 'Aktionen';
 
 // Entry
 $_['entry_name']          = 'Layoutname';

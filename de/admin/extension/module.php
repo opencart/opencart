@@ -11,7 +11,7 @@ $_['text_list']        = 'Modulliste';
 // Column
 $_['column_name']      = 'Modulname';
 $_['column_status']    = 'Status';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_code']       = 'Modul';

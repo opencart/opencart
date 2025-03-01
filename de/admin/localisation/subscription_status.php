@@ -10,7 +10,7 @@ $_['text_edit']          = 'Abonnementstatus bearbeiten';
 
 // Column
 $_['column_name']        = 'Name des Abonnementstatus';
-$_['column_action']      = 'Aktion';
+$_['column_action']      = 'Aktionen';
 
 // Entry
 $_['entry_name']         = 'Name des Abonnementstatus';

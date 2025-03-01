@@ -38,7 +38,7 @@ $_['column_date_added']         = 'Datum hinzugefügt';
 $_['column_comment']            = 'Kommentar';
 $_['column_description']        = 'Beschreibung';
 $_['column_amount']             = 'Menge';
-$_['column_action']             = 'Aktion';
+$_['column_action']             = 'Aktionen';
 
 // Entry
 $_['entry_customer']            = 'Kunde';

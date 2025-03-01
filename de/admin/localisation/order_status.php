@@ -10,7 +10,7 @@ $_['text_edit']        = 'Bestellstatus bearbeiten';
 
 // Column
 $_['column_name']      = 'Bestellstatusname';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_name']       = 'Bestellstatusname';

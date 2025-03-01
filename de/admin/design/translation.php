@@ -17,7 +17,7 @@ $_['column_language']  = 'Sprache';
 $_['column_route']     = 'Route';
 $_['column_key']       = 'Schlüssel';
 $_['column_value']     = 'Wert';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_store']      = 'Speichern';

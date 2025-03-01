@@ -17,7 +17,7 @@ $_['column_ip']            = 'IP';
 $_['column_call']          = 'Anruf';
 $_['column_date_added']    = 'Datum hinzugefügt';
 $_['column_date_modified'] = 'Änderungsdatum';
-$_['column_action']        = 'Aktion';
+$_['column_action']        = 'Aktionen';
 
 // Entry
 $_['entry_username']       = 'API-Benutzername';

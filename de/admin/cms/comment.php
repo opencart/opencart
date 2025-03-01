@@ -13,7 +13,7 @@ $_['text_rating']      = 'Bewertung:';
 
 // Column
 $_['column_comment']   = 'Kommentar';
-$_['column_action']    = 'Aktion';
+$_['column_action']    = 'Aktionen';
 
 // Entry
 $_['entry_keyword']    = 'Stichwort';

@@ -41,7 +41,7 @@ $_['column_date_added']          = 'Datum hinzugefügt';
 $_['column_quantity']            = 'Menge';
 $_['column_price']               = 'Preis';
 $_['column_comment']             = 'Kommentar';
-$_['column_action']              = 'Aktion';
+$_['column_action']              = 'Aktionen';
 
 // Error
 $_['error_reorder']              = 'Das Produkt, das Sie erneut kaufen möchten, weist einige Probleme auf. Bitte überprüfen Sie die unten angezeigten Fehlermeldungen.';

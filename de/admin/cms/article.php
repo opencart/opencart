@@ -16,7 +16,7 @@ $_['column_name']             = 'Artikelname';
 $_['column_author']           = 'Autor';
 $_['column_rating']           = 'Bewertungen';
 $_['column_date_added']       = 'Datum hinzugefügt';
-$_['column_action']           = 'Aktion';
+$_['column_action']           = 'Aktionen';
 
 // Entry
 $_['entry_image']             = 'Bild';

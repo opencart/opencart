@@ -18,7 +18,7 @@ $_['text_review']           = 'Ausstehende Bewertungen';
 // Column
 $_['column_name']           = 'Statistikname';
 $_['column_value']          = 'Wert';
-$_['column_action']         = 'Aktion';
+$_['column_action']         = 'Aktionen';
 
 // Error
 $_['error_permission']      = 'Achtung: Sie sind nicht berechtigt, Statistiken zu ändern!';

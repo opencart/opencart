@@ -15,7 +15,7 @@ $_['text_vendor']            = 'Verkäufer';
 
 // Column
 $_['column_component']       = 'Komponente';
-$_['column_action']          = 'Aktion';
+$_['column_action']          = 'Aktionen';
 
 // Entry
 $_['entry_cache']            = 'Zwischenspeicher';

@@ -22,7 +22,7 @@ $_['column_account']    = 'Konten';
 $_['column_store']      = 'Speichern';
 $_['column_country']    = 'Land';
 $_['column_date_added'] = 'Datum hinzugefügt';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_name']        = 'Kampagnenname';

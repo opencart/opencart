@@ -15,7 +15,7 @@ $_['text_import']        = 'Bei großen Sicherungsdateien ist es besser, die SQL
 $_['column_filename']    = 'Dateiname';
 $_['column_size']        = 'Größe';
 $_['column_date_added']  = 'Datum hinzugefügt';
-$_['column_action']      = 'Aktion';
+$_['column_action']      = 'Aktionen';
 
 // Entry
 $_['entry_progress']     = 'Fortschritt';

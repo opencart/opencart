@@ -15,7 +15,7 @@ $_['text_store']        = 'Adresse des Geschäfts';
 
 // Column
 $_['column_title']      = 'Bezeichnung der Steuerklasse';
-$_['column_action']     = 'Aktion';
+$_['column_action']     = 'Aktionen';
 
 // Entry
 $_['entry_title']       = 'Bezeichnung der Steuerklasse';

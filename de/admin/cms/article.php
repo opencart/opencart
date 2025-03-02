@@ -9,7 +9,7 @@ $_['text_list']               = 'Artikelliste';
 $_['text_add']                = 'Artikel hinzufügen';
 $_['text_edit']               = 'Artikel bearbeiten';
 $_['text_default']            = 'Standard';
-$_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL weltweit eindeutig ist.';
+$_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL  eindeutig ist.';
 
 // Column
 $_['column_name']             = 'Artikelname';
@@ -28,11 +28,11 @@ $_['entry_meta_keyword']      = 'Meta-Tag-Schlüsselwörter';
 $_['entry_meta_description']  = 'Meta-Tag-Beschreibung';
 $_['entry_topic']             = 'Thema';
 $_['entry_author']            = 'Autor';
-$_['entry_store']             = 'Geschäfte';
+$_['entry_store']             = 'Online-Shop (Store)';
 $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_status']            = 'Status';
-$_['entry_keyword']           = 'Stichwort';
-$_['entry_layout']            = 'Layoutüberschreibung';
+$_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
+$_['entry_layout']            = 'Layout überschreiben';
 
 // Button
 $_['button_rating']           = 'Bewertungen berechnen';

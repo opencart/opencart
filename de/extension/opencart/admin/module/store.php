@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Speichern';
+$_['heading_title']    = 'Online-Shop (Store)';
 
 // Text
 $_['text_extension']   = 'Erweiterungen';

@@ -4,7 +4,7 @@ $_['heading_title']      = 'Meine Kontoinformationen';
 
 // Text
 $_['text_account']       = 'Konto';
-$_['text_edit']          = 'Informationen bearbeiten';
+$_['text_edit']          = 'Information bearbeiten';
 $_['text_your_details']  = 'Ihre persönlichen Daten';
 $_['text_success']       = 'Erfolg: Ihr Konto wurde erfolgreich aktualisiert.';
 

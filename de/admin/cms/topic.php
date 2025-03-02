@@ -8,7 +8,7 @@ $_['text_list']               = 'Themenliste';
 $_['text_add']                = 'Thema hinzufügen';
 $_['text_edit']               = 'Thema bearbeiten';
 $_['text_default']            = 'Standard';
-$_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL weltweit eindeutig ist.';
+$_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL  eindeutig ist.';
 
 // Column
 $_['column_name']             = 'Themenname';
@@ -22,10 +22,10 @@ $_['entry_description']       = 'Beschreibung';
 $_['entry_meta_title']        = 'Meta-Tag-Titel';
 $_['entry_meta_keyword']      = 'Meta-Tag-Schlüsselwörter';
 $_['entry_meta_description']  = 'Meta-Tag-Beschreibung';
-$_['entry_store']             = 'Geschäfte';
+$_['entry_store']             = 'Online-Shop (Store)';
 $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_status']            = 'Status';
-$_['entry_keyword']           = 'Stichwort';
+$_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
 
 // Error
 $_['error_warning']           = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';

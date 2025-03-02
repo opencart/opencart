@@ -3,7 +3,7 @@
 $_['heading_title']          = 'Abonnements';
 
 // Text
-$_['text_success']           = 'Erfolg: Sie haben Abonnementpläne geändert!';
+$_['text_success']           = 'Erfolgreich: Sie haben Abonnements geändert!';
 $_['text_list']              = 'Liste der Abonnementpläne';
 $_['text_add']               = 'Abonnementplan hinzufügen';
 $_['text_edit']              = 'Abonnementplan bearbeiten';

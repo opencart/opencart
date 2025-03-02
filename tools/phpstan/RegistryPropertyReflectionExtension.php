@@ -3,10 +3,10 @@
 namespace Tools\PHPStan;
 
 use Opencart\System\Engine\Registry;
-use PHPStan\Broker\Broker;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\Reflection\PropertyReflection;
+use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
@@ -38,6 +38,8 @@ class RegistryPropertyReflectionExtension implements PropertiesClassReflectionEx
 		'user'       => \Opencart\System\Library\Cart\User::class,
 	];
 
+	public function __construct(private ReflectionProvider $reflectionProvider) {}
+
 	public function hasProperty(ClassReflection $classReflection, string $propertyName): bool {
 		if (!$classReflection->is(Registry::class)) {
 			return false;
@@ -66,14 +68,12 @@ class RegistryPropertyReflectionExtension implements PropertiesClassReflectionEx
 		$classType = $this->convertSnakeToStudly($matches[1]);
 		$commonName = $this->convertSnakeToStudly($matches[2]);
 
-		$broker = Broker::getInstance();
-
 		$type = null;
 		foreach (['Admin', 'Catalog', 'Install'] as $domain) {
-			$className1 = '\\Opencart\\' . $domain . '\\' . $classType . '\\' . $commonName;
-			$className2 = preg_replace('/\\\\(?=[^\\\\]+$)/', '', $className1, 1);
+			$className1 = '\Opencart\\' . $domain . '\\' . $classType . '\\' . $commonName;
+			$className2 = preg_replace('/\\\(?=[^\\\]+$)/', '', $className1, 1);
 			foreach ([$className1, $className2] as $className) {
-				if ($broker->hasClass($className)) {
+				if ($this->reflectionProvider->hasClass($className)) {
 					$found = new ObjectType($className);
 					if ($classType === 'Model') {
 						$found = new GenericObjectType('\Opencart\System\Engine\Proxy', [$found]);

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Attribute Group
+ * 
+ * Can be loaded using $this->load->controller('catalog/attribute_group');
  *
  * @package Opencart\Admin\Controller\Catalog
  */
@@ -256,7 +258,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'attribute_group_id'    => 0,
 			'attribute_description' => [],
-			'sort_order' 		    => 0
+			'sort_order'            => 0
 		];
 
 		$post_info = oc_filter_data($filter_data, $this->request->post);

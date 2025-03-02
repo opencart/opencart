@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Product
+ * 
+ * Can be loaded using $this->load->controller('catalog/product');
  *
  * @package Opencart\Admin\Controller\Catalog
  */
@@ -1151,7 +1153,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_seo_url'] = [];
 		}
 
-
 		// Layout
 		$this->load->model('design/layout');
 
@@ -1234,7 +1235,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'product_category'     => [],
 			'product_download'     => [],
 			'product_layout'       => [],
-		    'product_store'        => [],
+			'product_store'        => [],
 			'product_seo_url'      => []
 		];
 

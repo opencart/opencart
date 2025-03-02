@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Cron;
 /**
  * Class Subscription
+ * 
+ * Can be loaded using $this->load->controller('cron/subscription');
  *
  * @package Opencart\Catalog\Controller\Cron
  */

@@ -2,6 +2,8 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Payment Method
+ * 
+ * Can be loaded using $this->load->controller('api/payment_method');
  *
  * @package Opencart\Catalog\Controller\Api
  */

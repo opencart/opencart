@@ -19,7 +19,6 @@ $_['entry_email']          = 'E-mail';
 $_['entry_telephone']      = 'Téléphone';
 $_['entry_newsletter']     = 'S\'abonner';
 $_['entry_password']       = 'Mot de Passe';
-$_['entry_confirm']        = 'Confirmer le Mot de Passe';
 
 // Error
 $_['error_token']          = 'Attention: Jeton d\'inscription invalide!';
@@ -32,4 +31,9 @@ $_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caract�
 $_['error_custom_field']   = '%s requis!';
 $_['error_regex']          = '%s n\'est pas une entrée valide!';
 $_['error_password']       = 'Le mot de passe doit contenir entre 4 et 20 caractères!';
+$_['error_password_uppercase'] = 'majuscule';
+$_['error_password_lowercase'] = 'minuscule';
+$_['error_password_number']    = 'numéro';
+$_['error_password_symbol']    = 'symbole';
+$_['error_password_length']    = 'Le mot de passe devrait contenir entre %d et 40 caractères!';
 $_['error_agree']          = 'Attention: Vous devez accepter les %s!';

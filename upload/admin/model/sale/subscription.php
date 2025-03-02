@@ -415,7 +415,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
-	 * @param int $subscription_id  primary key of the subscription record
+	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
 	 *

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Review
+ * 
+ * Can be loaded using $this->load->controller('catalog/review');
  *
  * @package Opencart\Admin\Controller\Catalog
  */
@@ -468,7 +470,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'product_id' => 0,
 			'text'       => '',
 			'rating'     => 0,
-			'status'	 => 0
+			'status'     => 0
 		];
 
 		$post_info = oc_filter_data($filter_data, $this->request->post);

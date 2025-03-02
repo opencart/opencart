@@ -4,7 +4,6 @@ $_['heading_title']   = 'Ma Liste de Souhaits';
 
 // Text
 $_['text_account']    = 'Compte';
-$_['text_instock']    = 'En Stock';
 $_['text_wishlist']   = 'Liste de Souhaits (%s)';
 $_['text_login']      = 'Vous devez <a href="%s">vous connecter</a> ou <a href="%s">créer un compte</a> pour sauvegarder <a href="%s">%s</a> dans votre <a href="%s">liste de souhaits</a>!';
 $_['text_success']    = 'Succès: Vous avez ajouté <a href="%s">%s</a> à votre <a href="%s">liste de souhaits</a>!';
@@ -21,3 +20,4 @@ $_['column_action']   = 'Action';
 
 // Error
 $_['error_product']   = 'Attention: Produit introuvable!';
+$_['error_login']     = 'Attention: Vous devez <a href="%s">vous connectez</a> ou <a href="%s">créer un compte</a> pour supprimer les items de votre <a href="%s">liste de souhaits</a>!';

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Customer;
 /**
  * Class Customer
+ * 
+ * Can be loaded using $this->load->controller('customer/customer');
  *
  * @package Opencart\Admin\Controller\Customer
  */
@@ -521,7 +523,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
+		$data['stores'] += $this->model_setting_store->getStores();
 
 		if (!empty($customer_info)) {
 			$data['store_id'] = $customer_info['store_id'];
@@ -1103,8 +1105,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
-				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}
 

@@ -611,7 +611,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Payment Address
 		if (!empty($subscription_info)) {
-			$address_info  = $this->model_customer_customer->getAddress($subscription_info['payment_address_id']);
+			$address_info = $this->model_customer_customer->getAddress($subscription_info['payment_address_id']);
 		} else {
 			$address_info = [];
 		}

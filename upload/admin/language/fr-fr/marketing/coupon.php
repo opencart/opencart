@@ -34,6 +34,7 @@ $_['entry_shipping']      = 'Livraison gratuite';
 $_['entry_total']         = 'Montant total';
 $_['entry_category']      = 'Catégorie';
 $_['entry_product']       = 'Produits';
+$_['entry_date']          = 'Dates';
 $_['entry_date_start']    = 'Date de début';
 $_['entry_date_end']      = 'Date de fin';
 $_['entry_uses_total']    = 'Utilisations par coupon';

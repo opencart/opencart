@@ -426,7 +426,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = $data['stores'] + $this->model_setting_store->getStores();
+		$data['stores'] += $this->model_setting_store->getStores();
 
 		if (!empty($seo_url_info)) {
 			$data['store_id'] = $seo_url_info['store_id'];

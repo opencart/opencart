@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Login
+ * 
+ * Can be loaded using $this->load->controller('account/login');
  *
  * @package Opencart\Catalog\Controller\Account
  */
@@ -286,11 +288,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	function validate(): bool {
-		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
-			return false;
-		}
-
-		return true;
+	public function validate(): bool {
+		return !(!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token'])));
 	}
 }

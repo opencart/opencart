@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Manufacturer
+ * 
+ * Can be loaded using $this->load->controller('catalog/manufacturer');
  *
  * @package Opencart\Admin\Controller\Catalog
  */
@@ -116,22 +118,22 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-        $this->load->model('tool/image');
+		$this->load->model('tool/image');
 
 		$this->load->model('catalog/manufacturer');
 
 		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
-        foreach ($results as $result) {
-            $image = $result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))
-                ? $result['image']
-                : 'no_image.png';
+		foreach ($results as $result) {
+			$image = $result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))
+				? $result['image']
+				: 'no_image.png';
 
-            $data['manufacturers'][] = [
-                    'image' => $this->model_tool_image->resize($image, 40, 40),
-                    'edit'  => $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url),
-                ] + $result;
-        }
+			$data['manufacturers'][] = [
+				'image' => $this->model_tool_image->resize($image, 40, 40),
+				'edit'  => $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url),
+			] + $result;
+		}
 
 		$url = '';
 

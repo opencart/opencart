@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Category
+ * 
+ * Can be loaded using $this->load->controller('catalog/category');
  *
  * @package Opencart\Admin\Controller\Catalog
  */
@@ -162,21 +164,21 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'         => $this->config->get('config_pagination_admin')
 		];
 
-        $this->load->model('tool/image');
+		$this->load->model('tool/image');
 
 		$this->load->model('catalog/category');
 
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
 		foreach ($results as $result) {
-            $image = $result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))
-                ? $result['image']
-                : 'no_image.png';
+			$image = $result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))
+				? $result['image']
+				: 'no_image.png';
 
 			$data['categories'][] = [
-                'image' => $this->model_tool_image->resize($image, 40, 40),
-                'edit' => $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
-                ] + $result;
+				'image' => $this->model_tool_image->resize($image, 40, 40),
+				'edit'  => $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

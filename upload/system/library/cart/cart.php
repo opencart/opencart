@@ -231,10 +231,10 @@ class Cart {
 							$price = $product_discount_query->row['price'] + $option_price;
 						} elseif ($product_discount_query->row['type'] == 'P') {
 							// Percentage
-							$price = $price - ($price * ($product_discount_query->row['price'] / 100));
+							$price -= ($price * ($product_discount_query->row['price'] / 100));
 						} elseif ($product_discount_query->row['type'] == 'S') {
 							// Subtract
-							$price = $price - $product_discount_query->row['price'];
+							$price -= $product_discount_query->row['price'];
 						}
 					}
 

@@ -18,7 +18,7 @@ $_['entry_name']        = 'Filtergruppenname';
 $_['entry_sort_order']  = 'Sortierreihenfolge';
 
 // Error
-$_['error_warning']     = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']     = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']  = 'Achtung: Sie haben keine Berechtigung Filtergruppen zu ändern!';
 $_['error_name']        = 'Der Filtergruppenname muss zwischen 1 und 64 Zeichen lang sein!';
 $_['error_filter']      = 'Achtung: Diese Filtergruppe kann nicht gelöscht werden, da ihr aktuell %s Filter zugewiesen sind!';

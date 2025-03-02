@@ -1613,7 +1613,7 @@ progress {
   --bs-table-active-color: var(--bs-emphasis-color);
   --bs-table-active-bg: rgba(var(--bs-emphasis-color-rgb), 0.1);
   --bs-table-hover-color: var(--bs-emphasis-color);
-  --bs-table-hover-bg: rgba(var(--bs-emphasis-color-rgb), 0.075);
+  --bs-table-hover-bg: rgba(var(--bs-emphasis-color-rgb), 0.03);
   width: 100%;
   margin-bottom: 1rem;
   vertical-align: top;
@@ -1677,7 +1677,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #bdd2dd;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #c2d8e3;
+  --bs-table-hover-bg: #cce2ee;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1690,7 +1690,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #cbccce;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #d1d2d4;
+  --bs-table-hover-bg: #dbdcde;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1703,7 +1703,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #c5d8c5;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #cbdecb;
+  --bs-table-hover-bg: #d4e9d4;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1716,7 +1716,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #c7d9dd;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #ccdfe4;
+  --bs-table-hover-bg: #d6eaef;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1729,7 +1729,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #e4d5c2;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #eadbc7;
+  --bs-table-hover-bg: #f5e6d1;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1742,7 +1742,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #e0c6c2;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #e6ccc8;
+  --bs-table-hover-bg: #f2d5d2;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1755,7 +1755,7 @@ progress {
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #e6e6e6;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #ececec;
+  --bs-table-hover-bg: #f7f7f7;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1768,7 +1768,7 @@ progress {
   --bs-table-striped-color: #fff;
   --bs-table-active-bg: #373b3e;
   --bs-table-active-color: #fff;
-  --bs-table-hover-bg: #323539;
+  --bs-table-hover-bg: #282c2f;
   --bs-table-hover-color: #fff;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);

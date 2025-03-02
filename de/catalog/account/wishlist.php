@@ -12,7 +12,7 @@ $_['text_no_results'] = 'Ihr Merkzettel ist leer.';
 
 // Column
 $_['column_image']    = 'Bild';
-$_['column_name']     = 'Produktname';
+$_['column_name']     = 'Produkt Name';
 $_['column_model']    = 'Modell';
 $_['column_stock']    = 'Aktie';
 $_['column_price']    = 'Stückpreis';

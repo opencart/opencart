@@ -20,8 +20,8 @@ $_['entry_attribute_group']  = 'Groupe d\'Attributs';
 $_['entry_sort_order']       = 'Ordre de Tri';
 
 // Error
-$_['error_warning']          = 'Attention : Veuillez vérifier le formulaire attentivement pour les erreurs!';
-$_['error_permission']       = 'Attention : Vous n\'avez pas l\'autorisation de modifier les groupes d\'attributs!';
+$_['error_warning']          = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
+$_['error_permission']       = 'Attention: Vous n\'avez pas l\'autorisation de modifier les groupes d\'attributs!';
 $_['error_attribute_group']  = 'Le nom du groupe de l\'Attribut est requis!';
 $_['error_name']             = 'Le nom du groupe d\'attributs doit contenir entre 1 et 64 caractères!';
-$_['error_product']          = 'Attention : Ce groupe d\'attributs ne peut pas être supprimé car il est actuellement assigné à %s produits!';
+$_['error_product']          = 'Attention: Ce groupe d\'attributs ne peut pas être supprimé car il est actuellement assigné à %s produits!';

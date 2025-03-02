@@ -50,6 +50,18 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CLIENT_IP'];
 }
 
+// Modification Override
+function modification($filename): string
+{
+    $modification = DIR_EXTENSION . 'ocmod/' . substr($filename, strlen(DIR_OPENCART));
+
+    if (is_file($modification)) {
+        return $modification; // Modified file
+    }
+
+    return $filename; // Default file
+}
+
 // OpenCart Autoloader
 require_once(DIR_SYSTEM . 'engine/autoloader.php');
 

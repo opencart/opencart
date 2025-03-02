@@ -39,7 +39,7 @@ $_['entry_sort_order']   = 'Sortierreihenfolge';
 $_['help_regex']         = 'Verwenden Sie reguläre Ausdrücke. Beispiel: /[^a-zA-Z0-9_-]/';
 
 // Error
-$_['error_warning']      = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']      = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, Optionen zu ändern!';
 $_['error_name']         = 'Der Optionsname muss zwischen 1 und 128 Zeichen lang sein!';
 $_['error_type']         = 'Achtung: Optionswerte erforderlich!';

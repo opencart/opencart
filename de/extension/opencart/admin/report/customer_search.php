@@ -11,7 +11,7 @@ $_['text_guest']        = 'Gast';
 $_['text_customer']     = '<a href="%s">%s</a>';
 
 // Column
-$_['column_keyword']    = 'Stichwort';
+$_['column_keyword']    = 'SEO-URL Kennung (Schlüsselwort)';
 $_['column_products']   = 'Gefundene Produkte';
 $_['column_category']   = 'Kategorie';
 $_['column_customer']   = 'Kunde';
@@ -21,7 +21,7 @@ $_['column_date_added'] = 'Datum hinzugefügt';
 // Entry
 $_['entry_date_start']  = 'Datum Beginn';
 $_['entry_date_end']    = 'Datum Ende';
-$_['entry_keyword']     = 'Stichwort';
+$_['entry_keyword']     = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_customer']    = 'Kunde';
 $_['entry_ip']          = 'IP';
 $_['entry_status']      = 'Status';

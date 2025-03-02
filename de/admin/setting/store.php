@@ -109,7 +109,7 @@ $_['help_stock_checkout']              = 'Ermöglichen Sie Kunden, trotzdem zur 
 $_['help_product_count']               = 'Zeigen Sie die Anzahl der Produkte in den Unterkategorien im Kategoriemenü der Storefront-Kopfzeile an. Seien Sie gewarnt, dies führt bei Stores mit vielen Unterkategorien zu extremen Leistungseinbußen!';
 
 // Error
-$_['error_warning']                    = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']                    = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']                 = 'Achtung: Sie sind nicht berechtigt, Geschäfte zu ändern!';
 $_['error_url']                        = 'Store-URL erforderlich!';
 $_['error_meta_title']                 = 'Der Titel muss zwischen 3 und 32 Zeichen lang sein!';

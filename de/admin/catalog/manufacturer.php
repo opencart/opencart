@@ -25,7 +25,7 @@ $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_layout']            = 'Layoutüberschreibung';
 
 // Error
-$_['error_warning']           = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']           = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']        = 'Achtung: Sie sind nicht berechtigt, Hersteller zu ändern!';
 $_['error_name']              = 'Der Herstellername muss zwischen 1 und 64 Zeichen lang sein!';
 $_['error_keyword']           = 'Die SEO-URL muss zwischen 1 und 64 Zeichen lang sein!';

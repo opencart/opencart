@@ -12,7 +12,7 @@ $_['text_all_status']    = 'Alle Status';
 // Column
 $_['column_date_start']  = 'Datum Beginn';
 $_['column_date_end']    = 'Datum Ende';
-$_['column_name']        = 'Produktname';
+$_['column_name']        = 'Produkt Name';
 $_['column_model']       = 'Modell';
 $_['column_quantity']    = 'Menge';
 $_['column_total']       = 'Gesamt';

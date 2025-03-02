@@ -16,7 +16,7 @@ $_['column_comment']   = 'Kommentar';
 $_['column_action']    = 'Aktionen';
 
 // Entry
-$_['entry_keyword']    = 'Stichwort';
+$_['entry_keyword']    = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_article']    = 'Artikel';
 $_['entry_customer']   = 'Kunde';
 $_['entry_status']     = 'Status';

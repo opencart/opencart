@@ -41,7 +41,7 @@ $_['help_cycle']             = 'Die Abonnementbeträge werden anhand der Häufig
 $_['help_frequency']         = 'Wenn Sie eine Häufigkeit von „Woche“ und einen Zyklus von „2“ verwenden, wird dem Benutzer alle 2 Wochen eine Rechnung gestellt.';
 
 // Error
-$_['error_warning']          = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']          = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Abonnements zu ändern!';
 $_['error_name']             = 'Der Name des Abonnementplans muss länger als 3 und kürzer als 255 Zeichen sein!';
 $_['error_trial_duration']   = 'Die Testdauer muss größer als 0 sein!';

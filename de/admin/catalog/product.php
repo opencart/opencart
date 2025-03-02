@@ -103,7 +103,7 @@ $_['entry_date_start']           = 'Datum Beginn';
 $_['entry_date_end']             = 'Datum Ende';
 $_['entry_priority']             = 'Priorität';
 $_['entry_attribute']            = 'Attribut';
-$_['entry_attribute_group']      = 'Attributgruppe';
+$_['entry_attribute_group']      = 'Eigenschaften-Gruppe';
 $_['entry_image']                = 'Bild';
 $_['entry_text']                 = 'Text';
 $_['entry_required']             = 'Erforderlich';
@@ -137,7 +137,7 @@ $_['help_option']                = '(Autovervollständigung)';
 $_['help_points']                = 'Anzahl der Punkte, die zum Kauf dieses Artikels erforderlich sind. Wenn Sie dieses Produkt nicht mit Punkten kaufen möchten, lassen Sie den Wert auf 0.';
 
 // Error
-$_['error_warning']              = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']              = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']           = 'Achtung: Sie sind nicht berechtigt, Produkte zu ändern!';
 $_['error_name']                 = 'Der Produktname muss größer als 1 und kleiner als 255 Zeichen sein!';
 $_['error_meta_title']           = 'Der Meta-Titel muss größer als 1 und kleiner als 255 Zeichen sein!';

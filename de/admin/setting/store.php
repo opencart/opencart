@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                    = 'Geschäfte';
+$_['heading_title']                    = 'Online-Shop (Store)';
 
 // Text
 $_['text_settings']                    = 'Einstellungen';

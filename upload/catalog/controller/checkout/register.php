@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Register
+ * 
+ * Can be loaded using $this->load->controller('checkout/register');
  *
  * @package Opencart\Catalog\Controller\Checkout
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Filter
+ * 
+ * Can be loaded using $this->load->controller('catalog/filter');
  *
  * @package Opencart\Admin\Controller\Catalog
  */

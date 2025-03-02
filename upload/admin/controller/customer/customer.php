@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Customer;
 /**
  * Class Customer
+ * 
+ * Can be loaded using $this->load->controller('customer/customer');
  *
  * @package Opencart\Admin\Controller\Customer
  */

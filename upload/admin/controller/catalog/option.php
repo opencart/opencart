@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Option
+ * 
+ * Can be loaded using $this->load->controller('catalog/option');
  *
  * @package Opencart\Admin\Controller\Catalog
  */

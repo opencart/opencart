@@ -274,7 +274,7 @@ $_['help_maintenance']                    = 'Verhindert, dass Kunden in Ihrem Sh
 $_['help_compression']                    = 'GZIP für effizientere Übertragung an anfordernde Clients. Der Komprimierungsgrad muss zwischen 0 und 9 liegen.';
 
 // Error
-$_['error_warning']                       = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']                       = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']                    = 'Achtung: Sie sind nicht berechtigt, Einstellungen zu ändern!';
 $_['error_meta_title']                    = 'Der Titel muss zwischen 1 und 64 Zeichen lang sein!';
 $_['error_name']                          = 'Der Shopname muss zwischen 3 und 32 Zeichen lang sein!';

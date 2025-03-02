@@ -8,12 +8,14 @@ $_['text_list']            = 'Liste des APIs';
 $_['text_add']             = 'Ajouter une API';
 $_['text_edit']            = 'Modifier une API';
 $_['text_ip']              = 'Ci-dessous, vous pouvez créer une liste d\'IP autorisées à accéder à l\'API. Votre IP actuelle est %s';
+$_['text_history']         = 'Historique';
 
 // Column
 $_['column_username']      = 'Nom d\'utilisateur API';
 $_['column_status']        = 'Statut';
 $_['column_token']         = 'Jeton';
 $_['column_ip']            = 'IP';
+$_['column_call']          = 'Requête';
 $_['column_date_added']    = 'Date d\'ajout';
 $_['column_date_modified'] = 'Date de modification';
 $_['column_action']        = 'Action';

@@ -56,7 +56,7 @@ $_['entry_date_to']      = 'Datum bis';
 $_['help_product']       = '(Autovervollständigung)';
 
 // Error
-$_['error_warning']      = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']      = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, Rücksendungen zu ändern!';
 $_['error_order']        = 'Bestellung nicht gefunden!';
 $_['error_customer']     = 'Kunde nicht gefunden!';

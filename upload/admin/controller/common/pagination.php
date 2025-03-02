@@ -2,6 +2,17 @@
 namespace Opencart\Admin\Controller\Common;
 /**
  * Class Pagination
+ * 
+ * @example
+ * 
+ * $setting = [
+ *     'total' => 10,
+ *     'page'  => 1,
+ *     'limit' => 10,
+ *     'url'   => ''
+ * ];
+ * 
+ * Can be loaded using $this->load->controller('common/pagination', $setting);
  *
  * @package Opencart\Admin\Controller\Common
  */

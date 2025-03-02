@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Review
+ * 
+ * Can be loaded using $this->load->controller('product/review');
  *
  * @package Opencart\Catalog\Controller\Product
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Attribute Group
+ * 
+ * Can be loaded using $this->load->controller('catalog/attribute_group');
  *
  * @package Opencart\Admin\Controller\Catalog
  */

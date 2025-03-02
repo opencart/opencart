@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Confirm
+ * 
+ * Can be loaded using $this->load->controller('catalog/confirm');
  *
  * @package Opencart\Catalog\Controller\Checkout
  */

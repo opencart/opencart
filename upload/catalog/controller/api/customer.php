@@ -2,6 +2,8 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Customer
+ * 
+ * Can be loaded using $this->load->controller('api/customer');
  *
  * @package Opencart\Catalog\Controller\Api
  */

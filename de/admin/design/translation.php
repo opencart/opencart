@@ -8,11 +8,11 @@ $_['text_list']        = 'Übersetzungsliste';
 $_['text_add']         = 'Übersetzung hinzufügen';
 $_['text_edit']        = 'Übersetzung bearbeiten';
 $_['text_default']     = 'Standard';
-$_['text_store']       = 'Speichern';
+$_['text_store']       = 'Online-Shop (Store)';
 $_['text_language']    = 'Sprache';
 
 // Column
-$_['column_store']     = 'Speichern';
+$_['column_store']     = 'Online-Shop (Store)';
 $_['column_language']  = 'Sprache';
 $_['column_route']     = 'Route';
 $_['column_key']       = 'Schlüssel';
@@ -20,7 +20,7 @@ $_['column_value']     = 'Wert';
 $_['column_action']    = 'Aktionen';
 
 // Entry
-$_['entry_store']      = 'Speichern';
+$_['entry_store']      = 'Online-Shop (Store)';
 $_['entry_language']   = 'Sprache';
 $_['entry_route']      = 'Route';
 $_['entry_key']        = 'Schlüssel';

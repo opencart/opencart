@@ -12,14 +12,14 @@ $_['text_code']         = 'Vorlagencode-Editor';
 $_['text_twig']         = 'Der Theme-Editor verwendet die Template-Sprache Twig. Informationen zur <a href="https://twig.symfony.com/doc/" target="_blank" class="alert-link">Twig-Syntax finden Sie hier</a>.';
 
 // Column
-$_['column_store']      = 'Speichern';
+$_['column_store']      = 'Online-Shop (Store)';
 $_['column_route']      = 'Route';
 $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Datum hinzugefügt';
 $_['column_action']     = 'Aktionen';
 
 // Entry
-$_['entry_store']       = 'Speichern';
+$_['entry_store']       = 'Online-Shop (Store)';
 $_['entry_route']       = 'Vorlage auswählen';
 $_['entry_code']        = 'Code';
 $_['entry_status']      = 'Status';

@@ -3,8 +3,6 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Authorize
  *
- * Can be loaded using $this->load->controller('common/authorize');
- *
  * @package Opencart\Admin\Controller\Common
  */
 class Authorize extends \Opencart\System\Engine\Controller {
@@ -248,7 +246,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/authorize');
 
 		if (isset($this->request->get['email'])) {
-			$email = (string)$this->request->get['email'];
+			$email = (string)urldecode($this->request->get['email']);
 		} else {
 			$email = '';
 		}
@@ -261,9 +259,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUserByEmail($email);
+		$user_info = $this->model_user_user->getTokenByCode($code);
 
-		if ($user_info && $user_info['code'] && $code && $user_info['code'] === $code) {
+		if ($user_info && $user_info['email'] === $email) {
 			$this->model_user_user->editAuthorizeTotalByUserId($user_info['user_id'], 0);
 
 			$this->model_user_user->editCode($email, '');

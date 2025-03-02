@@ -45,6 +45,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
+		// Create form token
 		$this->session->data['register_token'] = oc_token(26);
 
 		$data['register'] = $this->url->link('account/register.register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
@@ -271,11 +272,14 @@ class Register extends \Opencart\System\Engine\Controller {
 				$this->session->data['customer_token'] = oc_token(26);
 			}
 
+			// Remove form token
+			unset($this->session->data['register_token']);
+
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($post_info['email']);
 
+			// Clear old session data
 			unset($this->session->data['guest']);
-			unset($this->session->data['register_token']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

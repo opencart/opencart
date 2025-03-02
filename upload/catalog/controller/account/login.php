@@ -148,6 +148,9 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Remove form token from session
+			unset($this->session->data['login_token']);
+
 			// Add customer details into session
 			$this->session->data['customer'] = [
 				'customer_id'       => $customer_info['customer_id'],
@@ -159,6 +162,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $customer_info['custom_field']
 			];
 
+			// Unset any previous data stored in the session.
 			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

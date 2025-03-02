@@ -30,30 +30,23 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if ($pos !== false) {
 			$route = substr($route, 0, $pos);
 		}
-		// Block access to 2fa if not active or logged in
-		if ($route == 'account/authorize') {
-			// 1. Make se the customer is logged in.
-			if (!$this->customer->isLogged()) {
-				$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
-			}
 
-			// 2. Make sure 2fa is enabled.
-			if (!$this->config->get('config_2fa')) {
-				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'), true));
-			}
+		// Block access to 2fa if not active or logged in
+		if ($route == 'account/authorize' && !$this->config->get('config_2fa')) {
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'), true));
 		}
 
 		if ($this->config->get('config_2fa') && $this->customer->isLogged()) {
-			// Stop direct access when not logged in
+			// If already logged in and token is valid, redirect to account page to stop direct access.
 			$this->load->model('account/customer');
 
 			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
-			// If already logged in and token is valid, redirect to account page.
 			if ($token_info && $token_info['status']) {
 				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . 'customer_token=' . $this->sesssion->data['customer_token'], true));
 			}
 
+			// Don't force redirect to authorize page if already on authorize page.
 			$ignore = [
 				'account/authorize',
 				'account/logout'

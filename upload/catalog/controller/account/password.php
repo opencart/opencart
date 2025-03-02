@@ -71,7 +71,7 @@ class Password extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$filter_data = [
 				'password' => '',
-				'confirm' => ''
+				'confirm'  => ''
 			];
 
 			$post_info = oc_filter_data($filter_data, $this->request->post);

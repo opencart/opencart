@@ -332,11 +332,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			//$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
-
-
-
-
-
 		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		$data['header'] = $this->load->controller('common/header');

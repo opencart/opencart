@@ -90,7 +90,7 @@
                   <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected{% endif %}>{{ return_reason.name }}</option>
                 {% endfor %}
               </select>
-              <label for="input-return-reason">{{ entry_reason }}</label>
+              <label for="input-return-reason">{{ entry_return_reason }}</label>
             </form>
             <div id="error-return-reason" class="invalid-feedback"></div>
           </div>
@@ -110,7 +110,7 @@
                   <option value="{{ return_action.return_action_id }}"{% if return_action.return_action_id == return_action_id %} selected{% endif %}>{{ return_action.name }}</option>
                 {% endfor %}
               </select>
-              <label for="input-return-action">{{ entry_action }}</label>
+              <label for="input-return-action">{{ entry_return_action }}</label>
             </form>
           </div>
         </div>

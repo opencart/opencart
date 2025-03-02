@@ -23,4 +23,5 @@ $_['text_zone']       = 'Region / State';
 $_['text_history']    = 'Login History';
 $_['text_ip']         = 'IP';
 $_['text_date_added'] = 'Date Added';
+$_['text_contact']    = 'For more information you can contact the store owner here:';
 $_['text_thanks']     = 'Thanks,';

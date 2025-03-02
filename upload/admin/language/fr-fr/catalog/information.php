@@ -23,13 +23,9 @@ $_['entry_meta_keyword']      = 'Mots-clés de la Balise Meta';
 $_['entry_meta_description']  = 'Description de la Balise Meta';
 $_['entry_store']             = 'Magasins';
 $_['entry_keyword']           = 'Mot-clé';
-$_['entry_bottom']            = 'Bas';
 $_['entry_status']            = 'Statut';
 $_['entry_sort_order']        = 'Ordre de Tri';
 $_['entry_layout']            = 'Remplacement de la Disposition';
-
-// Help
-$_['help_bottom']             = 'Afficher dans le pied de page.';
 
 // Error
 $_['error_warning']           = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';

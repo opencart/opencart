@@ -22,7 +22,7 @@ $_['column_action']       = 'Aktionen';
 
 // Entry
 $_['entry_name']          = 'Layoutname';
-$_['entry_store']         = 'Speichern';
+$_['entry_store']         = 'Online-Shop (Store)';
 $_['entry_route']         = 'Route';
 $_['entry_module']        = 'Modul';
 

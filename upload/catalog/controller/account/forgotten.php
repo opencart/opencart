@@ -251,6 +251,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_customer->editPassword($customer_info['email'], $post_info['password']);
 
+			// Remove for token
 			unset($this->session->data['reset_token']);
 
 			// Reset token

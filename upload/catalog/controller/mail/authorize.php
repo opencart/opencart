@@ -52,7 +52,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
 				$mail->setSubject($this->language->get('text_subject'));
-				$mail->setText($this->load->view('mail/authorize', $data));
+				$mail->setHtml($this->load->view('mail/authorize', $data));
 				$mail->send();
 			}
 		}
@@ -116,7 +116,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
 				$mail->setSubject($this->language->get('text_subject'));
-				$mail->setText($this->load->view('mail/authorize_reset', $data));
+				$mail->setHtml($this->load->view('mail/authorize_reset', $data));
 				$mail->send();
 			}
 		}

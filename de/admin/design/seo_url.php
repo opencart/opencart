@@ -13,18 +13,18 @@ $_['text_default']            = 'Standard';
 // Column
 $_['column_key']              = 'Schlüssel';
 $_['column_value']            = 'Wert';
-$_['column_keyword']          = 'Stichwort';
+$_['column_keyword']          = 'SEO-URL Kennung (Schlüsselwort)';
 $_['column_sort_order']       = 'Sortierreihenfolge';
-$_['column_store']            = 'Speichern';
+$_['column_store']            = 'Online-Shop (Store)';
 $_['column_language']         = 'Sprache';
 $_['column_action']           = 'Aktionen';
 
 // Entry
-$_['entry_store']             = 'Speichern';
+$_['entry_store']             = 'Online-Shop (Store)';
 $_['entry_language']          = 'Sprache';
 $_['entry_key']               = 'Schlüssel';
 $_['entry_value']             = 'Wert';
-$_['entry_keyword']           = 'Stichwort';
+$_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_sort_order']        = 'Sortierreihenfolge';
 
 // Help

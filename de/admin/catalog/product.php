@@ -3,25 +3,25 @@
 $_['heading_title']              = 'Produkte';
 
 // Text
-$_['text_success']               = 'Erfolg: Sie haben Produkte geändert!';
+$_['text_success']               = 'Erfolgreich: Sie haben Produkte geändert!';
 $_['text_variant']               = 'Bitte beachten Sie, dass Sie die Daten des <a href="%s" target="_blank" class="alert-link">Hauptprodukts</a> überschreiben müssen, da es sich hier um ein Variantenprodukt handelt. Andernfalls werden die Daten beim Speichern durch die Daten des <a href="%s" target="_blank" class="alert-link">Hauptprodukts</a> ersetzt.';
-$_['text_list']                  = 'Produktliste';
-$_['text_add']                   = 'Produkt hinzufügen';
+$_['text_list']                  = 'Produkt Liste';
+$_['text_add']                   = 'Neues Produkt zufügen';
 $_['text_edit']                  = 'Produkt bearbeiten';
-$_['text_variant_add']           = 'Variante hinzufügen';
+$_['text_variant_add']           = 'Variante zufügen';
 $_['text_model']                 = 'Modell';
 $_['text_price']                 = 'Preis';
 $_['text_stock']                 = 'Aktie';
 $_['text_specification']         = 'Spezifikation';
 $_['text_filter']                = 'Filter';
 $_['text_default']               = 'Standard';
-$_['text_keyword']               = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL weltweit eindeutig ist.';
-$_['text_option_add']            = 'Option hinzufügen';
+$_['text_keyword']               = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL  eindeutig ist.';
+$_['text_option_add']            = 'Neue Option zufügen';
 $_['text_option_value']          = 'Optionswert';
-$_['text_select']                = 'Wählen';
+$_['text_select']                = 'Select';
 $_['text_radio']                 = 'Radio';
-$_['text_checkbox']              = 'Kontrollkästchen';
-$_['text_input']                 = 'Eingang';
+$_['text_checkbox']              = 'Checkbox';
+$_['text_input']                 = 'Eingabe';
 $_['text_text']                  = 'Text';
 $_['text_textarea']              = 'Textbereich';
 $_['text_file']                  = 'Datei';
@@ -42,32 +42,32 @@ $_['text_subscription_duration'] = '%s alle %d %s(s) für %d Zahlung(en)';
 $_['text_subscription_cancel']   = '%s alle %d %s(s) bis zum Abbruch';
 $_['text_day']                   = 'Tag';
 $_['text_week']                  = 'Woche';
-$_['text_semi_month']            = 'halber Monat';
+$_['text_semi_month']            = 'Halber Monat';
 $_['text_month']                 = 'Monat';
 $_['text_year']                  = 'Jahr';
 $_['text_report']                = 'Berichte';
 
 // Column
-$_['column_name']                = 'Produktname';
+$_['column_name']                = 'Produkt Name';
 $_['column_model']               = 'Modell';
 $_['column_image']               = 'Bild';
 $_['column_price']               = 'Preis';
 $_['column_quantity']            = 'Menge';
 $_['column_status']              = 'Status';
 $_['column_ip']                  = 'IP';
-$_['column_store']               = 'Speichern';
+$_['column_store']               = 'Online-Shop (Store)';
 $_['column_country']             = 'Land';
 $_['column_date_added']          = 'Datum hinzugefügt';
 $_['column_action']              = 'Aktionen';
 
 // Entry
-$_['entry_name']                 = 'Produktname';
+$_['entry_name']                 = 'Produkt Name';
 $_['entry_description']          = 'Beschreibung';
 $_['entry_meta_title']           = 'Meta-Tag-Titel';
 $_['entry_meta_keyword']         = 'Meta-Tag-Schlüsselwörter';
 $_['entry_meta_description']     = 'Meta-Tag-Beschreibung';
-$_['entry_store']                = 'Geschäfte';
-$_['entry_keyword']              = 'Stichwort';
+$_['entry_store']                = 'Online-Shop (Store)';
+$_['entry_keyword']              = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_model']                = 'Modell';
 $_['entry_sku']                  = 'Artikelnummer';
 $_['entry_upc']                  = 'UPC';
@@ -115,7 +115,7 @@ $_['entry_download']             = 'Downloads';
 $_['entry_related']              = 'Verwandte Produkte';
 $_['entry_tag']                  = 'Produkt Tags';
 $_['entry_reward']               = 'Belohnungspunkte';
-$_['entry_layout']               = 'Layoutüberschreibung';
+$_['entry_layout']               = 'Layout überschreiben';
 $_['entry_subscription']         = 'Abonnementplan';
 
 // Help

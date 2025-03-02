@@ -11,7 +11,6 @@ $_['text_locked']   = 'Your account has been locked!';
 $_['text_reset']    = 'Your account has been locked because of to many incorrect attempts at entering the security code. Click the reset button to receive a reset link via your email account.';
 $_['text_link']     = 'Success: An email with a reset link has been sent your email address!';
 
-
 $_['text_unlocked'] = 'Your account has been unlocked!';
 $_['text_unlock']   = 'Your account has been unlocked. You will have to re-login and repeat the 2FA process again to continue.';
 

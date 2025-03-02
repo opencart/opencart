@@ -9,7 +9,7 @@ $_['text_success']     = 'Erfolg: Sie haben den Bericht â€žAngezeigte Produkteâ€
 $_['text_progress']    = '%s von %sfortgeschritten!';
 
 // Column
-$_['column_name']      = 'Produktname';
+$_['column_name']      = 'Produkt Name';
 $_['column_model']     = 'Modell';
 $_['column_viewed']    = 'Angesehen';
 $_['column_percent']   = 'Prozent';

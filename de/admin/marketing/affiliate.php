@@ -68,7 +68,7 @@ $_['help_tracking']             = 'Der Tracking-Code, der zum Verfolgen von Empf
 $_['help_commission']           = 'Prozentsatz, den der Partner bei jeder Bestellung erhält.';
 
 // Error
-$_['error_warning']             = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']             = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']          = 'Achtung: Sie sind nicht berechtigt, Partner zu ändern!';
 $_['error_customer']            = 'Achtung: Kunde erforderlich!';
 $_['error_already']             = 'Achtung: Kunde ist bereits als Partner registriert!';

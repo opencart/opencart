@@ -1151,7 +1151,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_seo_url'] = [];
 		}
 
-
 		// Layout
 		$this->load->model('design/layout');
 

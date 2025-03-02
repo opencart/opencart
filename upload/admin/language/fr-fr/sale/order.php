@@ -63,6 +63,12 @@ $_['text_customer_telephone']    = 'Téléphone du client';
 $_['text_missing']               = 'Commandes manquantes';
 $_['text_default']               = 'Par défaut';
 $_['text_picklist']              = 'Note d\'expédition';
+$_['text_sku']                   = 'SKU';
+$_['text_upc']                   = 'UPC';
+$_['text_ean']                   = 'EAN';
+$_['text_jan']                   = 'JAN';
+$_['text_isbn']                  = 'ISBN';
+$_['text_mpn']                   = 'MPN';
 
 // Colonne
 $_['column_order_id']            = 'ID de commande';

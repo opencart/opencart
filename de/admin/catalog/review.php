@@ -35,7 +35,7 @@ $_['help_product']      = '(Autovervollständigung)';
 $_['button_rating']     = 'Produktbewertungen synchronisieren';
 
 // Error
-$_['error_warning']     = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']     = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Bewertungen zu ändern!';
 $_['error_product']     = 'Produkt erforderlich!';
 $_['error_author']      = 'Der Autor muss zwischen 3 und 64 Zeichen lang sein!';

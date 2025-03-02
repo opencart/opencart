@@ -9,11 +9,11 @@ $_['text_add']             = 'Anti-Spam hinzufügen';
 $_['text_edit']            = 'Anti-Spam bearbeiten';
 
 // Column
-$_['column_keyword']       = 'Stichwort';
+$_['column_keyword']       = 'SEO-URL Kennung (Schlüsselwort)';
 $_['column_action']        = 'Aktionen';
 
 // Entry
-$_['entry_keyword']        = 'Stichwort';
+$_['entry_keyword']        = 'SEO-URL Kennung (Schlüsselwort)';
 
 // Error
 $_['error_warning']        = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';

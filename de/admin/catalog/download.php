@@ -29,7 +29,7 @@ $_['help_filename']            = 'Sie können über die Schaltfläche „Hochlad
 $_['help_mask']                = 'Es wird empfohlen, dass Dateiname und Maske unterschiedlich sind, um zu verhindern, dass Benutzer versuchen, eine direkte Verknüpfung mit Ihren Downloads herzustellen.';
 
 // Error
-$_['error_warning']            = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']            = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']         = 'Achtung: Sie sind nicht berechtigt, Downloads zu ändern!';
 $_['error_name']               = 'Der Downloadname muss zwischen 3 und 64 Zeichen lang sein!';
 $_['error_filename']           = 'Der Dateiname muss zwischen 3 und 128 Zeichen lang sein!';

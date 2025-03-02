@@ -28,7 +28,7 @@ $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_layout']            = 'Layoutüberschreibung';
 
 // Error
-$_['error_warning']           = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']           = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']        = 'Achtung: Sie sind nicht berechtigt, Informationen zu ändern!';
 $_['error_title']             = 'Der Informationstitel muss zwischen 1 und 64 Zeichen lang sein!';
 $_['error_description']       = 'Die Beschreibung muss mehr als 3 Zeichen lang sein!';

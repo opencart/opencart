@@ -25,4 +25,3 @@ $_['error_password_number']    = 'Nummer';
 $_['error_password_symbol']    = 'Symbol';
 $_['error_password_length']    = 'Das Passwort muss zwischen %d und 40 Zeichen lang sein!';
 $_['error_confirm']            = 'Passwort und Passwortbestätigung stimmen nicht überein!';
-

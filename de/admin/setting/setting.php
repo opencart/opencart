@@ -3,7 +3,7 @@
 $_['heading_title']                       = 'Einstellungen';
 
 // Text
-$_['text_stores']                         = 'Geschäfte';
+$_['text_stores']                         = 'Online-Shop (Store)';
 $_['text_success']                        = 'Erfolg: Sie haben die Einstellungen geändert!';
 $_['text_edit']                           = 'Einstellung bearbeiten';
 $_['text_register']                       = 'Registrieren';

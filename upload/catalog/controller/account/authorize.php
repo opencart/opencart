@@ -22,7 +22,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		// Make se the customer is logged in.
 		if (!$this->customer->isLogged()) {
-			//$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
 		// Check total attempts
@@ -33,13 +33,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if ($token_info && $token_info['total'] > 2) {
 			$this->response->redirect($this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true));
 		}
-
-
-		print_r($token_info);
-		print_r($this->request->cookie);
-		print_r($this->session->data);
-
-
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -145,7 +138,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			// Set the code to be emailed
 			$this->session->data['code'] = oc_token(6);
 
-			$json['success'] = $this->language->get('text_resend');
+			$json['success'] = $this->language->get('text_sent');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -301,6 +294,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Reset
 	 *
+	 * We have to keep the reset method from blocking requests because some email clients will block cross site requests.
+	 *
 	 * @return void
 	 */
 	public function reset(): void {
@@ -318,26 +313,35 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		// Logout customer
+		$this->customer->logout();
+
 		// Check total attempts
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getTokenByCode($code);
 
-		if ($customer_info && $customer_info['email'] === $email) {
+		// Reset token so it cant be used again
+		$this->model_account_customer->deleteTokenByCode($code);
+
+		if ($customer_info && $customer_info['email'] == $email) {
 			$this->model_account_customer->resetAuthorizes($customer_info['customer_id']);
-
-			echo 'works;';
-
-			$this->session->data['success'] = $this->language->get('text_unlocked');
 		} else {
 			$this->session->data['error'] = $this->language->get('error_reset');
+
+			//$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
-		$this->customer->logout();
 
-		// Reset token
-		//$this->model_account_customer->deleteTokenByCode($code);
 
-		$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+
+
+
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('account/authorize_reset', $data));
 	}
 }

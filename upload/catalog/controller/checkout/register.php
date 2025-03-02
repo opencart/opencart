@@ -623,7 +623,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						'custom_field'   => $this->request->post['shipping_custom_field'] ?? []
 					];
 
-					// Add
+					// Add Address to account if account is being created.
 					if ($this->request->post['account']) {
 						if (!$this->config->get('config_checkout_payment_address')) {
 							$shipping_address_data['default'] = 1;

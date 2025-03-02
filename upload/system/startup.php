@@ -63,10 +63,10 @@ function modification($filename): string
 }
 
 // OpenCart Autoloader
-require_once(DIR_SYSTEM . 'engine/autoloader.php');
+require_once(modification(DIR_SYSTEM . 'engine/autoloader.php'));
 
 // Need config to store application values
-require_once(DIR_SYSTEM . 'engine/config.php');
+require_once(modification(DIR_SYSTEM . 'engine/config.php'));
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');

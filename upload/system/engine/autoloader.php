@@ -76,7 +76,7 @@ class Autoloader {
 		}
 
 		if (isset($file) && is_file($file)) {
-			include_once($file);
+			include_once(modification($file));
 
 			return true;
 		} else {

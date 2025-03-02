@@ -11,6 +11,7 @@ $_['text_semi_month']            = 'half-month';
 $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_no_results']            = 'Your shopping cart is empty!';
+$_['text_model']                 = 'Model';
 $_['text_cart']                  = 'View Cart';
 $_['text_checkout']              = 'Checkout';
 

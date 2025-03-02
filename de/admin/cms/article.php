@@ -38,7 +38,7 @@ $_['entry_layout']            = 'Layoutüberschreibung';
 $_['button_rating']           = 'Bewertungen berechnen';
 
 // Error
-$_['error_warning']           = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']           = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']        = 'Achtung: Sie haben keine Berechtigung, Artikel zu ändern!';
 $_['error_name']              = 'Der Artikelname muss zwischen 1 und 255 Zeichen lang sein!';
 $_['error_meta_title']        = 'Der Meta-Titel muss größer als 1 und kleiner als 255 Zeichen sein!';

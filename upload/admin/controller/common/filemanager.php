@@ -74,12 +74,12 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-	    $allowed = [];
-		
-        foreach (explode("\r\n", $this->config->get('config_file_ext_allowed')) as $key => $extension) {
-            $allowed[] = '.' . \strtolower($extension);
-            $allowed[] = '.' . \strtoupper($extension);
-        }
+		$allowed = [];
+
+		foreach (explode("\r\n", $this->config->get('config_file_ext_allowed')) as $key => $extension) {
+			$allowed[] = '.' . \strtolower($extension);
+			$allowed[] = '.' . \strtoupper($extension);
+		}
 
 		$data['directories'] = [];
 		$data['images'] = [];
@@ -292,9 +292,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
-					
 					// Allowed file extension types
-                    $allowed = explode("\r\n", \strtolower($this->config->get('config_file_ext_allowed')));
+					$allowed = explode("\r\n", \strtolower($this->config->get('config_file_ext_allowed')));
 
 					if (!in_array(\strtolower(substr($filename, strrpos($filename, '.') + 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_file_type');

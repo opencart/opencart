@@ -216,8 +216,10 @@ class Category extends \Opencart\System\Engine\Model {
 
 			// Replace keyword with new parents
 			$keyword = implode('/', [
-				$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr($result['keyword'],
-				oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1)
+				$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr(
+					$result['keyword'],
+					oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1
+				)
 			]);
 
 			$seo_urls[$result['store_id']][$result['language_id']][$path] = $keyword;

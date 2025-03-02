@@ -38,7 +38,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['confirm'] = $this->url->link('account/forgotten.confirm', 'language=' . $this->config->get('config_language'));
-
 		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -66,9 +65,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = ['email' => ''];
-
-			$post_info = oc_filter_data($filter_data, $this->request->post);
+			$post_info = oc_filter_data(['email' => ''], $this->request->post);
 
 			$this->load->model('account/customer');
 
@@ -80,9 +77,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_account_customer->editCode($post_info['email'], oc_token(40));
-
 			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->model_account_customer->addToken($customer_info['customer_id'], 'password', oc_token(40));
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
@@ -117,12 +114,12 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/customer');
 
-		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+		$customer_info = $this->model_account_customer->getTokenByCode($code);
 
-		if (!$customer_info || !$customer_info['code'] || $customer_info['code'] !== $code) {
-			$this->model_account_customer->editCode($email, '');
-
+		if (!$customer_info || !$customer_info['email'] || $customer_info['email'] != $email || $customer_info['type'] != 'password') {
 			$this->session->data['error'] = $this->language->get('error_code');
+
+			$this->model_account_customer->deleteTokenByCode($code);
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
@@ -172,7 +169,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['email'])) {
-			$email = (string)$this->request->get['email'];
+			$email = urldecode((string)$this->request->get['email']);
 		} else {
 			$email = '';
 		}
@@ -193,23 +190,25 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		$this->load->model('account/customer');
+		if (!$json) {
+			$this->load->model('account/customer');
 
-		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+			$customer_info = $this->model_account_customer->getTokenByCode($code);
 
-		if (!$customer_info || !$customer_info['code'] || $customer_info['code'] !== $code) {
-			// Reset token
-			$this->model_account_customer->editCode($email, '');
+			if (!$customer_info || !$customer_info['email'] || $customer_info['email'] !== $email || $customer_info['type'] != 'password') {
+				$this->session->data['error'] = $this->language->get('error_code');
 
-			$this->session->data['error'] = $this->language->get('error_code');
+				// Reset token
+				$this->model_account_customer->deleteTokenByCode($code);
 
-			$json['redirect'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'), true);
+				$json['redirect'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'), true);
+			}
 		}
 
 		if (!$json) {
 			$filter_data = [
-				'password',
-				'confirm'
+				'password' => '',
+				'confirm'  => ''
 			];
 
 			$post_info = oc_filter_data($filter_data, $this->request->post);
@@ -248,11 +247,15 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->session->data['success'] = $this->language->get('text_reset');
+
 			$this->model_account_customer->editPassword($customer_info['email'], $post_info['password']);
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
+			// Remove for token
 			unset($this->session->data['reset_token']);
+
+			// Reset token
+			$this->model_account_customer->deleteTokenByCode($code);
 
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}

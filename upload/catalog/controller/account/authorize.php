@@ -14,15 +14,67 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/authorize');
 
+		if (isset($this->request->cookie['customer_authorize'])) {
+			$token = $this->request->cookie['customer_authorize'];
+		} else {
+			$token = '';
+		}
+
+		// Make se the customer is logged in.
 		if (!$this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
+		// Check total attempts
+		$this->load->model('account/customer');
+
+		$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+		if ($token_info && $token_info['total'] > 2) {
+			$this->response->redirect($this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true));
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['action'] = $this->url->link('account/authorize.save', 'customer_token=' . $this->session->data['customer_token']);
+		$data['action'] = $this->url->link('account/authorize.save', 'language=' . $this->config->get('config_language'));
 
-		if (isset($this->request->get['route']) && $this->request->get['route'] != 'account/login' && $this->request->get['route'] != 'account/authorize') {
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
+		if (!$token_info) {
+			// Create a token that can be stored as a cookie and will be used to identify device is safe.
+			$token = oc_token(32);
+
+			$authorize_data = [
+				'token'      => $token,
+				'ip'         => oc_get_ip(),
+				'user_agent' => $this->request->server['HTTP_USER_AGENT']
+			];
+
+			$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
+
+			$option = [
+				'expires'  => time() + 60 * 60 * 24 * 90,
+				//'SameSite' => 'None'
+			];
+
+			setcookie('customer_authorize', $token, $option);
+		}
+
+		if (isset($this->request->get['route']) && !str_starts_with($this->request->get['route'], 'account/authorize')) {
 			$args = $this->request->get;
 
 			$route = $args['route'];
@@ -36,12 +88,12 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				$url .= http_build_query($args);
 			}
 
-			$data['redirect'] = $this->url->link($route, $url, true);
+			$data['redirect'] = $this->url->link($route, $url);
 		} else {
-			$data['redirect'] = $this->url->link('account/account', 'customer_token=' . $this->session->data['customer_token'], true);
+			$data['redirect'] = '';
 		}
 
-		$data['customer_token'] = $this->session->data['customer_token'];
+		$data['language'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -59,46 +111,34 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		if (isset($this->request->cookie['customer_authorize'])) {
+			$token = $this->request->cookie['customer_authorize'];
+		} else {
+			$token = '';
 		}
 
-		if (!$json) {
-			if (isset($this->request->cookie['authorize'])) {
-				$token = $this->request->cookie['authorize'];
-			} else {
-				$token = '';
-			}
-
+		// 1. Make sure the customer is logged in.
+		if ($this->customer->isLogged()) {
+			// 2. If token already exists check its valid
 			$this->load->model('account/customer');
 
 			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
-			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
-				$json['error'] = $this->language->get('error_warning');
+			if (!$token_info) {
+				$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
+				// If token is valid and total attempts are more than 2, redirect to unlock page.
+			} elseif ($token_info['total'] > 2) {
+				$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
 			}
+		} else {
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_resend');
-
 			// Set the code to be emailed
-			$this->session->data['code'] = oc_token(4);
+			$this->session->data['code'] = oc_token(6);
 
-			if (!$token_info) {
-				// Create a token that can be stored as a cookie and will be used to identify device is safe.
-				$token = oc_token(32);
-
-				$authorize_data = [
-					'token'      => $token,
-					'ip'         => oc_get_ip(),
-					'user_agent' => $this->request->server['HTTP_USER_AGENT']
-				];
-
-				$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
-
-				setcookie('authorize', $token, time() + 60 * 60 * 24 * 90);
-			}
+			$json['success'] = $this->language->get('text_sent');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -115,40 +155,46 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->customer->isLogged()) {
+		if (isset($this->request->cookie['customer_authorize'])) {
+			$token = $this->request->cookie['customer_authorize'];
+		} else {
+			$token = '';
+		}
+
+		// Make sure the customer is logged in.
+		if ($this->customer->isLogged()) {
+			// If token already exists check its valid
+			$this->load->model('account/customer');
+
+			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+			if (!$token_info) {
+				$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
+			} elseif ($token_info['total'] > 2) {
+				$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+			} elseif (!isset($this->request->post['code']) || !isset($this->session->data['code']) || $this->request->post['code'] != $this->session->data['code']) {
+				$total = $token_info['total'] + 1;
+
+				if ($total <= 2) {
+					$json['error'] = $this->language->get('error_code');
+				} else {
+					unset($this->session->data['code']);
+
+					$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+				}
+
+				$this->model_account_customer->editAuthorizeTotal($token_info['customer_authorize_id'], $total);
+			}
+		} else {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {
-			if (isset($this->request->cookie['authorize'])) {
-				$token = $this->request->cookie['authorize'];
-			} else {
-				$token = '';
-			}
+			unset($this->session->data['code']);
 
-			$this->load->model('account/customer');
-
-			$authorize_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
-
-			if ($authorize_info) {
-				if (($authorize_info['attempts'] <= 2) && (!isset($this->request->post['code']) || !isset($this->session->data['code']) || ($this->request->post['code'] != $this->session->data['code']))) {
-					$json['error'] = $this->language->get('error_code');
-
-					$this->model_account_customer->editAuthorizeTotal($authorize_info['customer_authorize_id'], $authorize_info['total'] + 1);
-				}
-
-				if ($authorize_info['attempts'] >= 2) {
-					$json['redirect'] = $this->url->link('account/authorize.unlock', 'customer_token=' . $this->session->data['customer_token'], true);
-				}
-			} else {
-				$json['error'] = $this->language->get('error_code');
-			}
-		}
-
-		if (!$json) {
 			// On success we need to reset the attempts and status.
-			$this->model_account_customer->editAuthorizeStatus($authorize_info['customer_authorize_id'], true);
-			$this->model_account_customer->editAuthorizeTotal($authorize_info['customer_authorize_id'], 0);
+			$this->model_account_customer->editAuthorizeStatus($token_info['customer_authorize_id'], true);
+			$this->model_account_customer->editAuthorizeTotal($token_info['customer_authorize_id'], 0);
 
 			if (isset($this->request->post['redirect'])) {
 				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
@@ -158,7 +204,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			// Register the cookie for security.
 			if ($redirect && str_starts_with($redirect, HTTP_SERVER)) {
-				$json['redirect'] = $redirect . '&customer_token=' . $this->session->data['customer_token'];
+				$json['redirect'] = $redirect;
 			} else {
 				$json['redirect'] = $this->url->link('account/account', 'customer_token=' . $this->session->data['customer_token'], true);
 			}
@@ -176,22 +222,28 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	public function unlock(): void {
 		$this->load->language('account/authorize');
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
+		if (isset($this->request->cookie['customer_authorize'])) {
+			$token = $this->request->cookie['customer_authorize'];
 		} else {
 			$token = '';
 		}
 
-		$this->load->model('account/customer');
-
-		$authorize_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
-
-		if ($authorize_info && $authorize_info['status']) {
-			// Redirect if already have a valid token.
-			$this->response->redirect($this->url->link('account/account', 'customer_token=' . $this->session->data['customer_token'], true));
+		if (!$this->customer->isLogged()) {
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
-		$data['customer_token'] = $this->session->data['customer_token'];
+		// Check total attempts
+		$this->load->model('account/customer');
+
+		$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+		if (!$token_info || $token_info['total'] <= 2) {
+			$this->response->redirect($this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true));
+		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -209,12 +261,31 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$json['success'] = $this->language->get('text_link');
+		if (isset($this->request->cookie['customer_authorize'])) {
+			$token = $this->request->cookie['customer_authorize'];
+		} else {
+			$token = '';
+		}
 
-		// Create reset code
-		$this->load->model('account/customer');
+		if ($this->customer->isLogged()) {
+			// Check total attempts
+			$this->load->model('account/customer');
 
-		$this->model_account_customer->editCode($this->customer->getEmail(), oc_token(32));
+			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+			if (!$token_info || $token_info['total'] <= 2) {
+				$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
+			}
+		} else {
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
+			// Create reset code
+			$this->model_account_customer->addToken($this->customer->getId(), 'authorize', oc_token(32));
+
+			$json['success'] = $this->language->get('text_link');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -222,6 +293,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Reset
+	 *
+	 * We have to keep the reset method from blocking requests because some email clients will block cross site requests.
 	 *
 	 * @return void
 	 */
@@ -240,26 +313,35 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		// Logout customer
+		$this->customer->logout();
+
+		// Check total attempts
 		$this->load->model('account/customer');
 
-		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+		$customer_info = $this->model_account_customer->getTokenByCode($code);
 
-		if ($customer_info && $customer_info['code'] && $code && $customer_info['code'] === $code) {
+		// Reset token so it cant be used again
+		$this->model_account_customer->deleteTokenByCode($code);
+
+		if ($customer_info && $customer_info['email'] == $email) {
 			$this->model_account_customer->resetAuthorizes($customer_info['customer_id']);
-
-			$this->model_account_customer->editCode($email, '');
-
-			$this->session->data['success'] = $this->language->get('text_unlocked');
-
-			$this->response->redirect($this->url->link('account/authorize', 'customer_token=' . $this->session->data['customer_token'], true));
 		} else {
-			$this->customer->logout();
-
-			$this->model_account_customer->editCode($email, '');
-
 			$this->session->data['error'] = $this->language->get('error_reset');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			//$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
+
+
+
+
+
+
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('account/authorize_reset', $data));
 	}
 }

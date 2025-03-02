@@ -3,8 +3,6 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Authorize
  *
- * Can be loaded using $this->load->controller('common/authorize');
- *
  * @package Opencart\Admin\Controller\Common
  */
 class Authorize extends \Opencart\System\Engine\Controller {
@@ -102,7 +100,30 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$json['success'] = $this->language->get('text_resend');
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
+		} else {
+			$token = '';
+		}
+
+		// 3. If token already exists check its valid
+		$this->load->model('account/customer');
+
+		$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
+
+		if (!$token_info) {
+			$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
+			// If token is valid and total attempts are more than 2, redirect to unlock page.
+		} elseif ($token_info['total'] > 2) {
+			$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
+			// Set the code to be emailed
+			$this->session->data['code'] = oc_token(6);
+
+			$json['success'] = $this->language->get('text_resend');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -113,7 +134,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function validate(): void {
+	public function save(): void {
 		$this->load->language('common/authorize');
 
 		$json = [];
@@ -210,7 +231,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Create reset code
 		$this->load->model('user/user');
 
-		$this->model_user_user->editCode($this->user->getEmail(), oc_token(32));
+		$this->model_user_user->addToken($this->user->getId(), 'authorize', oc_token(32));
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -225,7 +246,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/authorize');
 
 		if (isset($this->request->get['email'])) {
-			$email = (string)$this->request->get['email'];
+			$email = (string)urldecode($this->request->get['email']);
 		} else {
 			$email = '';
 		}
@@ -238,9 +259,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUserByEmail($email);
+		$user_info = $this->model_user_user->getTokenByCode($code);
 
-		if ($user_info && $user_info['code'] && $code && $user_info['code'] === $code) {
+		if ($user_info && $user_info['email'] === $email) {
 			$this->model_user_user->editAuthorizeTotalByUserId($user_info['user_id'], 0);
 
 			$this->model_user_user->editCode($email, '');

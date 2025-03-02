@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-lock"></i> {{ text_locked }}</div>
           <div class="card-body">
-            <p>{{ text_unlock }}</p>
+            <p>{{ text_reset }}</p>
             <div class="d-grid">
               <button type="button" id="button-reset" class="btn btn-danger btn-lg"><i class="fa-solid fa-unlock"></i> {{ button_reset }}</button>
             </div>
@@ -23,7 +23,7 @@ $('#button-reset').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=account/authorize.confirm&user_token={{ user_token }}',
+        url: 'index.php?route=account/authorize.confirm&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $('#button-reset').button('loading');

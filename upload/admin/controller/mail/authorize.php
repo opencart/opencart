@@ -17,7 +17,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 *
-	 * admin/model/user/user/editCode/after
+	 * admin/controller/common/authorize.send/after
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$email = $this->user->getEmail();
@@ -28,7 +28,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ((string)$this->request->get['route'] == 'common/authorize.send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		$this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+
+		if ($code && $user_info) {
 			$this->load->language('mail/authorize');
 
 			$data['username'] = $this->user->getUsername();
@@ -47,7 +51,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				];
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($email);
+				$mail->setTo($this->user->getEmail());
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
 				$mail->setSubject($this->language->get('text_subject'));
@@ -68,22 +72,32 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 *
-	 * admin/model/user/user/editCode/after
+	 * admin/model/user/user.addToken/after
 	 */
 	public function reset(&$route, &$args, &$output): void {
 		if (isset($args[0])) {
-			$email = (string)$args[0];
+			$user_id = (int)$args[0];
 		} else {
-			$email = '';
+			$user_id = 0;
 		}
 
 		if (isset($args[1])) {
-			$code = (string)$args[1];
+			$type = (string)$args[1];
+		} else {
+			$type = '';
+		}
+
+		if (isset($args[2])) {
+			$code = (string)$args[2];
 		} else {
 			$code = '';
 		}
 
-		if ($email && $code && ($this->request->get['route'] == 'common/authorize.confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		$this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($user_id);
+
+		if ($type == 'authorize' && $user_info) {
 			$this->load->language('mail/authorize_reset');
 
 			$data['username'] = $this->user->getUsername();

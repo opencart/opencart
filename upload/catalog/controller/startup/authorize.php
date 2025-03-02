@@ -31,22 +31,35 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = substr($route, 0, $pos);
 		}
 
-		$ignore = [
-			'account/authorize',
-			'account/logout'
-		];
+		// Block access to 2fa if not active or logged in
+		if ($route == 'account/authorize' && !$this->config->get('config_2fa')) {
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'), true));
+		}
 
-		if ($this->config->get('config_2fa') && $this->customer->isLogged() && !in_array($route, $ignore)) {
+		if ($this->config->get('config_2fa') && $this->customer->isLogged()) {
+			// If already logged in and token is valid, redirect to account page to stop direct access.
 			$this->load->model('account/customer');
 
 			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
-			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
-				return new \Opencart\System\Engine\Action('account/authorize.unlock');
+			if ($token_info && $token_info['status']) {
+				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . 'customer_token=' . $this->sesssion->data['customer_token'], true));
 			}
 
-			if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
-				return new \Opencart\System\Engine\Action('account/authorize');
+			// Don't force redirect to authorize page if already on authorize page.
+			$ignore = [
+				'account/authorize',
+				'account/logout'
+			];
+
+			if (!in_array($route, $ignore)) {
+				if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
+					return new \Opencart\System\Engine\Action('account/authorize.unlock');
+				}
+
+				if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
+					return new \Opencart\System\Engine\Action('account/authorize');
+				}
 			}
 		}
 

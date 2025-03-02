@@ -71,6 +71,9 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 			// Drop Fields
 			$remove = [];
 
+
+
+
 			// custom_field
 			$remove[] = [
 				'table' => 'custom_field',

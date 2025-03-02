@@ -134,7 +134,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'default',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -203,7 +204,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -303,12 +305,14 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'attribute_group_id',
-				'type' => 'int(11)'
+				'name'    => 'attribute_group_id',
+				'type'    => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -372,8 +376,9 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -435,7 +440,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -539,7 +545,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'topic_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'author',
@@ -552,7 +559,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -585,11 +593,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'parent_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'author',
@@ -610,7 +620,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -744,7 +755,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'rating',
@@ -825,11 +837,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -907,7 +921,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -1128,17 +1143,14 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name' => 'column',
-				'type' => 'int(3)'
-			],
-			[
 				'name'    => 'sort_order',
 				'type'    => 'int(3)',
 				'default' => '0'
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -1295,11 +1307,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -1384,7 +1398,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'address_format_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'postcode_required',
@@ -1430,11 +1445,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'logged',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'shipping',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'total',
@@ -1450,15 +1467,18 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'uses_total',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'uses_customer',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -1520,11 +1540,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'order_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'amount',
@@ -1623,7 +1645,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -1668,7 +1691,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'decimal_place',
-				'type' => 'int(1)'
+				'type' => 'int(1)',
+				'default' => '2'
 			],
 			[
 				'name' => 'value',
@@ -1676,7 +1700,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_modified',
@@ -1701,7 +1726,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'customer_group_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'store_id',
@@ -1710,7 +1736,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'language_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'firstname',
@@ -1738,7 +1765,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'newsletter',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -1746,15 +1774,18 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'safe',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'commenter',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'token',
@@ -1916,7 +1947,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -1952,7 +1984,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -2040,8 +2073,9 @@ function oc_db_schema() {
 				'type' => 'varchar(96)'
 			],
 			[
-				'name' => 'total',
-				'type' => 'int(1)'
+				'name'    => 'total',
+				'type'    => 'int(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -2053,7 +2087,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -2089,11 +2124,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'approval',
-				'type' => 'int(1)'
+				'type' => 'int(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -2192,7 +2229,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'total',
-				'type' => 'int(4)'
+				'type' => 'int(4)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -2239,7 +2277,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -2291,7 +2330,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'url',
@@ -2367,6 +2407,46 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'customer_token',
+		'field' => [
+			[
+				'name'           => 'customer_token_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'text'
+			],
+			[
+				'name' => 'type',
+				'type' => 'varchar(10)'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'customer_token_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'customer_transaction',
 		'field' => [
 			[
@@ -2380,7 +2460,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'order_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'description',
@@ -2425,7 +2506,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'language_id',
@@ -2433,7 +2515,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'keyword',
@@ -2503,7 +2586,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'product_id',
@@ -2567,11 +2651,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -2595,7 +2681,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'required',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -2670,7 +2757,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -2804,7 +2892,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -2921,11 +3010,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'extension_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'extension_download_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'name',
@@ -2953,7 +3044,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -3029,7 +3121,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3089,7 +3182,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3147,7 +3241,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'language_id',
@@ -3167,7 +3262,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -3303,11 +3399,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3345,7 +3443,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3400,7 +3499,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3450,7 +3550,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'code',
@@ -3462,7 +3563,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3490,11 +3592,12 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'route',
@@ -3654,7 +3757,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3674,11 +3778,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3716,7 +3822,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3792,7 +3899,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -3870,7 +3978,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -3932,7 +4041,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(11)'
+				'type' => 'tinyint(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -3965,7 +4075,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -4026,7 +4137,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -4156,7 +4268,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'payment_address_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'payment_firstname',
@@ -4192,7 +4305,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'payment_country_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'payment_zone',
@@ -4200,7 +4314,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'payment_zone_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'payment_address_format',
@@ -4252,7 +4367,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'shipping_country_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'shipping_zone',
@@ -4260,7 +4376,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'shipping_zone_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'shipping_address_format',
@@ -4290,7 +4407,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'affiliate_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'commission',
@@ -4298,7 +4416,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'marketing_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'tracking',
@@ -4442,7 +4561,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'order_status_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'notify',
@@ -4564,7 +4684,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'master_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'name',
@@ -4576,7 +4697,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'quantity',
-				'type' => 'int(4)'
+				'type' => 'int(4)',
+				'default' => '1'
 			],
 			[
 				'name'    => 'price',
@@ -4595,7 +4717,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'reward',
-				'type' => 'int(8)'
+				'type' => 'int(8)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -4677,7 +4800,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'trial_status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'price',
@@ -4693,11 +4817,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'cycle',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '1'
 			],
 			[
 				'name' => 'duration',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -4802,7 +4928,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -4890,7 +5017,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'stock_status_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'image',
@@ -4898,7 +5026,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'manufacturer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'shipping',
@@ -4917,7 +5046,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'tax_class_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_available',
@@ -5317,7 +5447,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'required',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -5362,15 +5493,18 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'option_value_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'quantity',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			],
 			[
 				'name' => 'subtract',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'price',
@@ -5382,7 +5516,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'points',
-				'type' => 'int(8)'
+				'type' => 'int(8)',
+				'default' => '0'
 			],
 			[
 				'name' => 'points_prefix',
@@ -5688,11 +5823,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'layout_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -5764,7 +5901,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'viewed',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -5792,11 +5930,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'order_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'firstname',
@@ -5816,7 +5956,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'product_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'product',
@@ -5828,23 +5969,28 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'quantity',
-				'type' => 'int(4)'
+				'type' => 'int(4)',
+				'default' => '0'
 			],
 			[
 				'name' => 'opened',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'return_reason_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'return_action_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'return_status_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'comment',
@@ -5951,7 +6097,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'return_status_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'notify',
@@ -6064,11 +6211,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'product_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'customer_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'author',
@@ -6148,11 +6297,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -6334,11 +6485,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'order_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'customer_id',
@@ -6346,7 +6499,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'payment_address_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'payment_method',
@@ -6354,7 +6508,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'shipping_address_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'shipping_method',
@@ -6362,7 +6517,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'subscription_plan_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_price',
@@ -6378,19 +6534,23 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'trial_cycle',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_duration',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_remaining',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'price',
@@ -6406,15 +6566,18 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'cycle',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			],
 			[
 				'name' => 'duration',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			],
 			[
 				'name' => 'remaining',
-				'type' => 'smallint(6)'
+				'type' => 'smallint(6)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_next',
@@ -6426,7 +6589,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'subscription_status_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'language',
@@ -6502,7 +6666,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'subscription_status_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'notify',
@@ -6560,7 +6725,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -6596,11 +6762,13 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'order_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'order_product_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'product_id',
@@ -6616,7 +6784,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'quantity',
-				'type' => 'int(4)'
+				'type' => 'int(4)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_price',
@@ -6747,15 +6916,18 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'trial_duration',
-				'type' => 'int(10)'
+				'type' => 'int(10)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_cycle',
-				'type' => 'int(10)'
+				'type' => 'int(10)',
+				'default' => '0'
 			],
 			[
 				'name' => 'trial_status',
-				'type' => 'tinyint(4)'
+				'type' => 'tinyint(4)',
+				'default' => '0'
 			],
 			[
 				'name' => 'frequency',
@@ -6763,19 +6935,23 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'duration',
-				'type' => 'int(10)'
+				'type' => 'int(10)',
+				'default' => '0'
 			],
 			[
 				'name' => 'cycle',
-				'type' => 'int(10)'
+				'type' => 'int(10)',
+				'default' => '0'
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -7007,7 +7183,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'route',
@@ -7019,7 +7196,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -7051,7 +7229,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'language_id',
@@ -7137,7 +7316,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'store_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'language_id',
@@ -7157,7 +7337,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'type' => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -7217,7 +7398,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'user_group_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name' => 'username',
@@ -7256,7 +7438,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -7296,7 +7479,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'total',
-				'type' => 'int(1)'
+				'type' => 'int(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'ip',
@@ -7308,7 +7492,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(1)'
+				'type' => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
@@ -7386,6 +7571,46 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'user_login_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'user_id',
+				'table' => 'user',
+				'field' => 'user_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'user_token',
+		'field' => [
+			[
+				'name'           => 'user_token_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'user_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'text'
+			],
+			[
+				'name' => 'type',
+				'type' => 'varchar(10)'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'user_token_id'
 		],
 		'foreign' => [
 			[

@@ -410,6 +410,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_returns->addReturn($post_info);
 
+			// Remove form token
+			unset($this->session->data['return_token']);
+
 			$json['redirect'] = $this->url->link('account/returns.success', 'language=' . $this->config->get('config_language'), true);
 		}
 

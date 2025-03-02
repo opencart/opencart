@@ -259,7 +259,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_group_id'          => 0,
 			'filter_group_description' => [],
-			'sort_order'			   => 0
+			'sort_order'               => 0
 		];
 
 		$post_info = oc_filter_data($filter_data, $this->request->post);

@@ -95,7 +95,7 @@ $_['help_commenter']           = 'Auf „true“ setzen, damit der Kunde nicht v
 $_['help_points']              = 'Mit dem Minus können Punkte entfernt werden';
 
 // Error
-$_['error_warning']            = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']            = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']         = 'Achtung: Sie sind nicht berechtigt, Kunden zu ändern!';
 $_['error_customer']           = 'Achtung: Kunde existiert nicht!';
 $_['error_exists']             = 'Achtung: E-Mail-Adresse ist bereits registriert!';

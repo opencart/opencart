@@ -118,7 +118,7 @@ $_['entry_date_to']              = 'Datum bis';
 $_['help_override']              = 'Wenn die Änderung des Bestellstatus der Kundenbestellung aufgrund einer Betrugsschutzerweiterung blockiert ist, aktivieren Sie die Überschreibung.';
 
 // Error
-$_['error_warning']              = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_warning']              = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']           = 'Achtung: Sie sind nicht berechtigt, Bestellungen zu ändern!';
 $_['error_invoice_no']           = 'Achtung: Rechnungsnummer wurde bereits erstellt!';
 $_['error_order']                = 'Achtung: Bestellung existiert nicht!';

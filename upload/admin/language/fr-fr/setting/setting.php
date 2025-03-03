@@ -54,7 +54,7 @@ $_['text_password_lowercase']             = 'Minuscule';
 $_['text_password_number']                = 'Numéro';
 $_['text_password_symbol']                = 'Symbole';
 
-// Entrées
+// Saisie
 $_['entry_meta_title']                    = 'Titre Meta';
 $_['entry_meta_description']              = 'Description des Balises Meta';
 $_['entry_meta_keyword']                  = 'Mots-clés des Balises Meta';
@@ -197,7 +197,7 @@ $_['entry_error_log']                     = 'Journaliser les Erreurs';
 $_['entry_error_filename']                = 'Nom du Fichier Journal des Erreurs';
 $_['entry_status']                        = 'Statut';
 
-// Help
+// Aide
 $_['help_geocode']                        = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre magasin.';
 $_['help_icon']                           = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
 $_['help_open']                           = 'Indiquez les horaires d\'ouverture de votre magasin.';
@@ -244,11 +244,11 @@ $_['help_checkout_payment_address']       = 'Choisir si les clients doivent four
 $_['help_checkout_shipping_address']      = 'Si aucune adresse de facturation n\'est fournie, utiliser l\'adresse de livraison pour calculer les méthodes de paiement disponibles.';
 $_['help_checkout']                       = 'Oblige les clients à accepter les conditions générales avant de finaliser leur achat.';
 $_['help_order_status']                   = 'Définir le statut de commande par défaut lorsqu\'une commande est traitée.';
-$_['help_processing_status']              = 'Définir le statut de commande nécessaire pour que la commande commence à déduire le stock et activer les coupons, bons et récompenses.';
+$_['help_processing_status']              = 'Définir le statut de commande nécessaire pour que la commande commence à déduire le stock et activer les coupons, les bons, et les récompenses offertes.';
 $_['help_complete_status']                = 'Définir le statut de commande nécessaire pour que les clients puissent accéder à leurs produits téléchargeables et bons cadeaux.';
 $_['help_failed_status']                  = 'Définir le statut de commande nécessaire lorsque la commande a échouée.';
 $_['help_void_status']                    = 'Définir le statut de commande nécessaire lorsque la commande est annulée.';
-$_['help_fraud_status']                   = 'Définir le statut de commande lorsque le client est suspecté de tenter de modifier les détails de paiement de la commande ou d\'utiliser un coupon, un bon cadeau ou des points de récompense déjà utilisés.';
+$_['help_fraud_status']                   = 'Définir le statut de commande lorsque le client est suspecté de tenter de modifier les détails de paiement de la commande ou d\'utiliser un coupon, un bon cadeau, ou des récompenses offertes déjà utilisés.';
 $_['help_subscription']                   = 'Définir le statut d\'abonnement par défaut lorsque le client est suspecté de tenter de modifier les détails de paiement ou d\'utiliser des avantages déjà utilisés.';
 $_['help_api']                            = 'Utilisateur API par défaut que l\'administrateur doit utiliser.';
 $_['help_stock_display']                  = 'Afficher la quantité de stock sur la page produit.';
@@ -284,7 +284,7 @@ $_['help_maintenance']                    = 'Empêche les clients de naviguer su
 $_['help_encryption']                     = 'Fournissez une clé secrète pour chiffrer les informations privées lors du traitement des commandes.';
 $_['help_compression']                    = 'GZIP pour un transfert plus efficace vers les clients demandeurs. Le niveau de compression doit être compris entre 0 et 9.';
 
-// Error
+// Erreur
 $_['error_warning']                       = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                    = 'Attention: Vous n\'avez pas la permission de modifier les paramètres!';
 $_['error_meta_title']                    = 'Le titre doit comporter entre 1 et 64 caractères!';

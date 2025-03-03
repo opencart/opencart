@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']     = 'Modifications';
 
 // Texte
@@ -16,7 +16,7 @@ $_['column_status']     = 'Statut';
 $_['column_date_added'] = 'Date ajoutée';
 $_['column_action']     = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']        = 'Nom de la modification';
 $_['entry_description'] = 'Description';
 $_['entry_code']        = 'Code';

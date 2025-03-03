@@ -1,7 +1,7 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']         = 'Méthodes de Paiement';
 
-// Text
+// Texte
 $_['text_account']          = 'Compte';
 $_['text_no_results']       = 'Vous n\'avez aucune méthode de paiement dans votre compte.';

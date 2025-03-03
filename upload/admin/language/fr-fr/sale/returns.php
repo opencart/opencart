@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']        = 'Retours de Produits';
 
 // Texte
@@ -31,7 +31,7 @@ $_['column_comment']       = 'Commentaire';
 $_['column_notify']        = 'Client Notifié';
 $_['column_action']        = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_customer']       = 'Client';
 $_['entry_order_id']       = 'ID de Commande';
 $_['entry_date_ordered']   = 'Date de Commande';

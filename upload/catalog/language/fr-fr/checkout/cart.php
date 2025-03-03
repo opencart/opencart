@@ -18,9 +18,9 @@ $_['text_week']                  = 'semaine';
 $_['text_semi_month']            = 'demi-mois';
 $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
-$_['text_points']                = 'Points de récompense';
+$_['text_points']                = 'Points';
 $_['text_next']                  = 'Que souhaitez-vous faire ensuite?';
-$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompense que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre livraison.';
+$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de fidélité que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre livraison.';
 
 // Colonne
 $_['column_image']               = 'Image';

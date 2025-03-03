@@ -20,7 +20,7 @@ $_['column_date_added']    = 'Date d’ajout';
 $_['column_date_modified'] = 'Date de modification';
 $_['column_action']        = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_cron']           = 'URL Cron';
 $_['entry_description']    = 'Description';
 

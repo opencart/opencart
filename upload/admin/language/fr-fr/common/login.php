@@ -1,19 +1,19 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']  = 'Administration';
 
-// Text
+// Texte
 $_['text_heading']   = 'Administration';
 $_['text_login']     = 'Veuillez entrer vos identifiants de connexion.';
 $_['text_forgotten'] = 'Mot de passe oublié';
 
-// Entry
+// Saisie
 $_['entry_username'] = 'Nom d\'utilisateur';
 $_['entry_password'] = 'Mot de passe';
 
-// Button
+// Bouton
 $_['button_login']   = 'Connexion';
 
-// Error
+// Erreur
 $_['error_login']    = 'Aucune correspondance pour le nom d\'utilisateur et/ou le mot de passe.';
 $_['error_token']    = 'Session de jeton invalide. Veuillez vous reconnecter.';

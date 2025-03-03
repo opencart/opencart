@@ -15,7 +15,7 @@ $_['text_affiliate_all']   = 'Tous les affiliés';
 $_['text_affiliate']       = 'Affiliés';
 $_['text_product']         = 'Produits';
 
-// Entrée
+// Saisie
 $_['entry_store']          = 'De';
 $_['entry_to']             = 'À';
 $_['entry_customer_group'] = 'Groupe de clients';

@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']              = 'Abonnements';
 
 // Texte
@@ -51,7 +51,7 @@ $_['column_total']               = 'Total';
 $_['column_description']         = 'Description';
 $_['column_action']              = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_subscription_id']      = 'ID d\'Abonnement';
 $_['entry_order_id']             = 'ID de Commande';
 $_['entry_customer']             = 'Client';

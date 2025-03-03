@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']              = 'Commandes';
 
 // Texte
@@ -89,7 +89,7 @@ $_['column_reference']           = 'Référence';
 $_['column_weight']              = 'Poids du produit';
 $_['column_action']              = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_store']                = 'Boutique';
 $_['entry_customer']             = 'Client';
 $_['entry_customer_group']       = 'Groupe de clients';

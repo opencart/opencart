@@ -12,7 +12,7 @@ $_['text_edit']        = 'Modifier un Statut de Stock';
 $_['column_name']      = 'Nom du Statut de Stock';
 $_['column_action']    = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']       = 'Nom du Statut de Stock';
 
 // Erreur

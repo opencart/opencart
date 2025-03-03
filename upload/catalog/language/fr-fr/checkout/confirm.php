@@ -2,7 +2,7 @@
 // Texte
 $_['text_model']        = 'Modèle';
 $_['text_subscription'] = 'Inscription';
-$_['text_points']       = 'Points de Récompense';
+$_['text_points']       = 'Points';
 
 // Colonne
 $_['column_product']    = 'Produit';

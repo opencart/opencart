@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']         = 'Commentaires';
 
 // Texte
@@ -18,11 +18,11 @@ $_['text_success']          = 'Succès: Merci pour votre commentaire!';
 $_['text_queue']            = 'Succès: Votre commentaire a été ajouté à notre file de modération!';
 $_['text_rating']           = 'Succès: Merci pour votre évaluation!';
 
-// Champs
+// Saisie
 $_['entry_author']          = 'Votre nom';
 $_['entry_comment']         = 'Commentaire';
 
-// Boutons
+// Bouton
 $_['button_comment']        = 'Publier le commentaire';
 $_['button_reply']          = 'Publier une réponse';
 $_['button_replies']        = 'Afficher les réponses';

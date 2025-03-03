@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']           = 'Articles';
 
-// Text
+// Texte
 $_['text_success']            = 'Succès: Vous avez modifié les articles!';
 $_['text_next']               = 'Succès: Vous avez modifié les évaluations de %s produit(s) sur %s!';
 $_['text_list']               = 'Liste des Articles';
@@ -11,14 +11,14 @@ $_['text_edit']               = 'Modifier l\'Article';
 $_['text_default']            = 'Par Défaut';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez-les par des - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
-// Column
+// Colonne
 $_['column_name']             = 'Nom de l\'Article';
 $_['column_author']           = 'Auteur';
 $_['column_rating']           = 'Évaluation';
 $_['column_date_added']       = 'Date d\'ajout';
 $_['column_action']           = 'Action';
 
-// Entry
+// Saisie
 $_['entry_image']             = 'Image';
 $_['entry_name']              = 'Nom de l\'Article';
 $_['entry_description']       = 'Description';
@@ -34,10 +34,10 @@ $_['entry_status']            = 'Statut';
 $_['entry_keyword']           = 'Mot-clé';
 $_['entry_layout']            = 'Disposition de Remplacement';
 
-// Button
+// Bouton
 $_['button_rating']           = 'Synchroniser les Évaluations des Produits';
 
-// Error
+// Erreur
 $_['error_warning']           = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
 $_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les articles!';
 $_['error_name']              = 'Le nom de l\'article doit contenir entre 1 et 255 caractères!';

@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']        = 'Blog';
 
-// Text
+// Texte
 $_['text_refine']          = 'Affiner la recherche';
 $_['text_all']             = 'Tout';
 $_['text_blog']            = 'Blog';
@@ -16,8 +16,8 @@ $_['text_rating_desc']     = 'Évaluation (Highest)';
 $_['text_date_added_asc']  = 'Date Ajoutée (Oldest)';
 $_['text_date_added_desc'] = 'Date Ajoutée (Latest)';
 
-// Entry
+// Saisie
 $_['entry_search']         = 'Rechercher';
 
-// Button
+// Bouton
 $_['button_continue']      = 'Continuer la lecture';

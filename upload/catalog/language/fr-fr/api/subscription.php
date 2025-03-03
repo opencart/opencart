@@ -1,8 +1,8 @@
 <?php
-// Text
+// Texte
 $_['text_success']           = 'Succès: Vous avez modifié les abonnements!';
 
-// Error
+// Erreur
 $_['error_customer']         = 'Attention: Les détails du client sont requis!';
 $_['error_payment_address']  = 'Attention: L\'adresse de facturation est requise!';
 $_['error_payment_method']   = 'Attention: La méthode de paiement est requise!';

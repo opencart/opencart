@@ -19,7 +19,7 @@ $_['column_version']         = 'Version';
 $_['column_date_added']      = 'Date d’ajout';
 $_['column_action']          = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_progress']         = 'Progression';
 $_['entry_name']             = 'Nom de l\'extension';
 $_['entry_description']      = 'Description';

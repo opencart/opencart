@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title'] = 'Protégez votre compte';
 
 // Texte
@@ -11,10 +11,10 @@ $_['text_unlocked'] = 'Succès: Votre compte a été déverrouillé!';
 $_['text_link']     = 'Succès: Un e-mail contenant un lien de réinitialisation a été envoyé à votre adresse e-mail!';
 $_['text_resend']   = 'Succès: Un e-mail contenant un code de sécurité a été envoyé à votre adresse e-mail!';
 
-// Champ
+// Saisie
 $_['entry_code']    = 'Code de sécurité';
 
-// Button
+// Bouton
 $_['button_send']   = 'Envoyer';
 $_['button_reset']  = 'Réinitialiser';
 

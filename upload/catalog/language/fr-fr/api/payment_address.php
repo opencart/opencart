@@ -1,8 +1,8 @@
 <?php
-// Text
+// Texte
 $_['text_success']       = 'Succès: L\'adresse de paiement a été définie!';
 
-// Error
+// Erreur
 $_['error_firstname']    = 'Le prénom doit comporter entre 1 et 32 caractères!';
 $_['error_lastname']     = 'Le nom doit comporter entre 1 et 32 caractères!';
 $_['error_address_1']    = 'L\'adresse 1 doit comporter entre 3 et 128 caractères!';

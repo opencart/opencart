@@ -12,7 +12,7 @@ $_['text_open']      = 'Horaires d\'ouverture';
 $_['text_comment']   = 'Commentaires';
 $_['text_message']   = '<p>Votre demande a été envoyée avec succès au propriétaire du magasin!</p>';
 
-// Entrée
+// Saisie
 $_['entry_name']     = 'Votre nom';
 $_['entry_email']    = 'Adresse e-mail';
 $_['entry_enquiry']  = 'Demande';
@@ -20,7 +20,7 @@ $_['entry_enquiry']  = 'Demande';
 // E-mail
 $_['email_subject']  = 'Demande %s';
 
-// Erreurs
+// Erreur
 $_['error_name']     = 'Le nom doit comporter entre 3 et 32 caractères!';
 $_['error_email']    = 'L\'adresse e-mail ne semble pas valide!';
 $_['error_enquiry']  = 'La demande doit comporter entre 10 et 3000 caractères!';

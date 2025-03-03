@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']           = 'Catégories';
 
-// Text
+// Texte
 $_['text_success']            = 'Succès: Vous avez modifié les catégories!';
 $_['text_list']               = 'Liste des Catégories';
 $_['text_add']                = 'Ajouter une Catégorie';
@@ -11,13 +11,13 @@ $_['text_filter']             = 'Filtre';
 $_['text_default']            = 'Par Défaut';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez plutôt les espaces par - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
-// Column
+// Colonne
 $_['column_image']            = 'Image';
 $_['column_name']             = 'Nom de la Catégorie';
 $_['column_sort_order']       = 'Ordre de Tri';
 $_['column_action']           = 'Action';
 
-// Entry
+// Saisie
 $_['entry_name']              = 'Nom de la Catégorie';
 $_['entry_description']       = 'Description';
 $_['entry_meta_title']        = 'Titre de la Balise Meta';
@@ -34,13 +34,13 @@ $_['entry_sort_order']        = 'Ordre de Tri';
 $_['entry_status']            = 'Statut';
 $_['entry_layout']            = 'Remplacement de la Disposition';
 
-// Help
+// Aide
 $_['help_parent']             = '(Autocomplétion)';
 $_['help_filter']             = '(Autocomplétion)';
 $_['help_top']                = 'Afficher dans la barre de menu du haut. Fonctionne uniquement pour les catégories parentes principales.';
 $_['help_column']             = 'Nombre de colonnes à utiliser pour les 3 catégories inférieures. Fonctionne uniquement pour les catégories parentes principales.';
 
-// Error
+// Erreur
 $_['error_warning']           = 'Attention: Veuillez vérifier attentivement le formulaire pour les erreurs!';
 $_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les catégories!';
 $_['error_name']              = 'Le nom de la catégorie doit contenir entre 1 et 255 caractères!';

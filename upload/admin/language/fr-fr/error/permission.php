@@ -1,6 +1,6 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']   = 'Permission Refusée!';
 
-// Text
+// Texte
 $_['text_permission'] = 'Vous n\'avez pas la permission d\'accéder à cette page, veuillez';

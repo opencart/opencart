@@ -17,9 +17,9 @@ $_['text_limit']        = 'Les demandes de suppression de compte seront traitée
 $_['text_success']      = 'Succès: Un e-mail a été envoyé à votre adresse e-mail!';
 $_['text_cancel']		= 'Annuler';
 
-// Entrée
+// Saisie
 $_['entry_email']       = 'E-Mail';
 
-// Erreurs
+// Erreur
 $_['error_email']       = 'L\'adresse e-mail ne semble pas valide!';
 $_['error_action']      = 'Vous devez sélectionner une action RGPD valide!';

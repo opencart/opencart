@@ -1,5 +1,5 @@
 <?php
-// Locale
+// Lieu
 $_['code']                          = 'fr';
 $_['direction']                     = 'ltr';
 $_['date_format_short']             = 'd/m/Y';
@@ -9,7 +9,7 @@ $_['datetime_format']               = 'd/m/Y H:i:s';
 $_['decimal_point']                 = ',';
 $_['thousand_point']                = '.';
 
-// Text
+// Texte
 $_['text_yes']                      = 'Oui';
 $_['text_no']                       = 'Non';
 $_['text_on']                       = 'Activé';
@@ -44,7 +44,7 @@ $_['text_months_ago']               = 'il y a %s mois';
 $_['text_year_ago']                 = 'il y a %s an';
 $_['text_years_ago']                = 'il y a %s ans';
 
-// Button
+// Bouton
 $_['button_add']                    = 'Ajouter Nouveau';
 $_['button_delete']                 = 'Supprimer';
 $_['button_save']                   = 'Enregistrer';
@@ -97,8 +97,8 @@ $_['button_reset']                  = 'Réinitialiser';
 $_['button_generate']               = 'Générer';
 $_['button_voucher_add']            = 'Ajouter un Bon';
 $_['button_view']                   = 'Voir';
-$_['button_reward_add']             = 'Ajouter des Points de Récompense';
-$_['button_reward_remove']          = 'Supprimer des Points de Récompense';
+$_['button_reward_add']             = 'Ajouter des Points de Fidélité';
+$_['button_reward_remove']          = 'Supprimer des Points de Fidélité';
 $_['button_commission_add']         = 'Ajouter une Commission';
 $_['button_commission_remove']      = 'Supprimer une Commission';
 $_['button_credit_add']             = 'Ajouter un Crédit';
@@ -125,6 +125,8 @@ $_['button_resend']                 = 'Renvoyer';
 $_['button_calculate']              = 'Calculer les Paiements';
 $_['button_csv']                    = 'Télécharger CSV';
 $_['button_complete']               = 'Paiements Terminés';
+
+// Onglets
 $_['tab_address']                   = 'Adresses';
 $_['tab_additional']                = 'Supplémentaire';
 $_['tab_attribute']                 = 'Attribut';
@@ -150,13 +152,13 @@ $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
 $_['tab_payment_method']            = 'Méthodes de Paiement';
 $_['tab_product']                   = 'Produits';
-$_['tab_reward']                    = 'Points de Récompense';
+$_['tab_reward']                    = 'Points de Fidélité';
 $_['tab_transaction']               = 'Transactions';
 $_['tab_voucher']                   = 'Bons d\'Achat';
 $_['tab_subscription']              = 'Abonnement';
 $_['tab_report']                    = 'Rapport';
 
-// Error
+// Erreur
 $_['error_exception']               = 'Code d\'Erreur(%s): %s dans %s à la ligne %s';
 $_['error_upload_1']                = 'Avertissement: Le fichier téléversé dépasse la directive upload_max_filesize dans php.ini!';
 $_['error_upload_2']                = 'Avertissement: Le fichier téléversé dépasse la directive MAX_FILE_SIZE spécifiée dans le formulaire HTML!';

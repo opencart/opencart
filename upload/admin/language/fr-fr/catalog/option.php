@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']      = 'Options';
 
-// Text
+// Texte
 $_['text_success']       = 'Succès: Vous avez modifié les options!';
 $_['text_list']          = 'Liste des Options';
 $_['text_add']           = 'Ajouter une Option';
@@ -22,12 +22,12 @@ $_['text_regex']         = 'Regex';
 $_['text_option']        = 'Option';
 $_['text_value']         = 'Valeurs de l\'Option';
 
-// Column
+// Colonne
 $_['column_name']        = 'Nom de l\'Option';
 $_['column_sort_order']  = 'Ordre de Tri';
 $_['column_action']      = 'Action';
 
-// Entry
+// Saisie
 $_['entry_name']         = 'Nom de l\'Option';
 $_['entry_type']         = 'Type';
 $_['entry_validation']   = 'Validation';
@@ -35,10 +35,10 @@ $_['entry_option_value'] = 'Nom de la Valeur de l\'Option';
 $_['entry_image']        = 'Image';
 $_['entry_sort_order']   = 'Ordre de Tri';
 
-// Help
+// Aide
 $_['help_regex']         = 'Utilisez regex. Exemple: [^a-zA-Z0-9_-]';
 
-// Error
+// Erreur
 $_['error_warning']      = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
 $_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier les options!';
 $_['error_name']         = 'Le nom de l\'option doit contenir entre 1 et 128 caractères!';

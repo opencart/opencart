@@ -12,7 +12,7 @@ $_['text_edit']        = 'Modifier une Action de Retour';
 $_['column_name']      = 'Nom de l\'Action de Retour';
 $_['column_action']    = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']       = 'Nom de l\'Action de Retour';
 
 // Erreur

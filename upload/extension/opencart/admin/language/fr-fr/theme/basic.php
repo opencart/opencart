@@ -1,0 +1,14 @@
+<?php
+// Titre
+$_['heading_title']    = 'Theme du Magasin par Défaut';
+
+// Texte
+$_['text_extension']   = 'Extensions';
+$_['text_success']     = 'Succès: Vous avez modifié le Theme du Magasin par Défaut!';
+$_['text_edit']        = 'Modifier le Theme du Magasin par Défaut';
+
+// Saisie
+$_['entry_status']     = 'Statut';
+
+// Erreur
+$_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier le Theme du Magasin par Défaut!';

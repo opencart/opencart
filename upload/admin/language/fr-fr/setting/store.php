@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']                    = 'Boutiques';
 
-// Text
+// Texte
 $_['text_settings']                    = 'Paramètres';
 $_['text_success']                     = 'Succès: Vous avez modifié les boutiques!';
 $_['text_list']                        = 'Liste des boutiques';
@@ -24,12 +24,12 @@ $_['text_region']                      = 'Région';
 $_['text_language']                    = 'Langage';
 $_['text_currency']                    = 'Devise';
 
-// Column
+// Colonne
 $_['column_name']                      = 'Nom de la boutique';
 $_['column_url']                       = 'URL de la boutique';
 $_['column_action']                    = 'Action';
 
-// Entry
+// Saisie
 $_['entry_url']                        = 'URL de la boutique';
 $_['entry_meta_title']                 = 'Titre Meta';
 $_['entry_meta_description']           = 'Description Meta';
@@ -85,7 +85,7 @@ $_['entry_image_location']             = 'Taille d\'image de l\'emplacement (L x
 $_['entry_width']                      = 'Largeur';
 $_['entry_height']                     = 'Hauteur';
 
-// Help
+// Aide
 $_['help_url']                         = 'Incluez l\'URL complète de votre boutique. Assurez-vous d\'ajouter \'/\' à la fin. Exemple: http://www.votredomaine.com/chemin/<br/><br/>N\'utilisez pas de répertoires pour créer une nouvelle boutique. Vous devez toujours pointer un autre domaine ou sous-domaine vers votre hébergement.';
 $_['help_geocode']                     = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre boutique.';
 $_['help_icon']                        = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
@@ -109,7 +109,7 @@ $_['help_stock_display']               = 'Afficher la quantité de stock sur la 
 $_['help_stock_checkout']              = 'Permettre aux clients de finaliser leurs achats même si les produits commandés ne sont pas en stock.';
 $_['help_product_count']               = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les boutiques avec beaucoup de sous-catégories!';
 
-// Error
+// Erreur
 $_['error_warning']                    = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                 = 'Attention: Vous n\'avez pas la permission de modifier les boutiques!';
 $_['error_url']                        = 'L\'URL de la boutique est requise!';

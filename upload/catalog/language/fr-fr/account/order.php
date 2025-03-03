@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']              = 'Commandes';
 
-// Text
+// Texte
 $_['text_account']               = 'Compte';
 $_['text_order']                 = 'Commande n°%s';
 $_['text_invoice_no']            = 'Numéro de facture';
@@ -12,7 +12,7 @@ $_['text_order_status']          = 'Statut de la commande';
 $_['text_shipping_method']       = 'Méthode de livraison';
 $_['text_payment_method']        = 'Méthode de paiement';
 $_['text_model']                 = 'Modèle';
-$_['text_points']                = 'Points de Récompense';
+$_['text_points']                = 'Points de Fidélité';
 $_['text_date_added']            = 'Date d\'ajout';
 $_['text_shipping_address']      = 'Adresse de livraison';
 $_['text_payment_address']       = 'Adresse de facturation';
@@ -33,11 +33,11 @@ $_['text_success']               = 'Succès: Vous avez ajouté <a href="%s">%s</
 $_['text_no_results']            = 'Vous n\'avez passé aucune commande précédente!';
 $_['text_error']                 = 'La commande demandée est introuvable!';
 
-// Column
+// Colonne
 $_['column_order_id']            = 'ID de commande';
 $_['column_customer']            = 'Client';
 $_['column_product']             = 'Nombre de produits';
-$_['column_product_total']       = 'Non. de Products';
+$_['column_product_total']       = 'Nbre. de Products';
 $_['column_name']                = 'Nom du produit';
 $_['column_model']               = 'Modèle';
 $_['column_quantity']            = 'Quantité';
@@ -48,5 +48,5 @@ $_['column_status']              = 'Statut';
 $_['column_comment']             = 'Commentaire';
 $_['column_date_added']          = 'Date d\'ajout';
 
-// Error
+// Erreur
 $_['error_reorder']              = '%s n\'est pas actuellement disponible pour une nouvelle commande.';

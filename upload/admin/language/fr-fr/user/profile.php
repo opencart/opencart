@@ -1,14 +1,14 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']         = 'Profil';
 
-// Text
+// Texte
 $_['text_success']          = 'Succès: Vous avez modifié votre profil!';
 $_['text_edit']             = 'Modifier votre profil';
 $_['text_user']             = 'Détails de l\'utilisateur';
 $_['text_password']         = 'Mot de passe';
 
-// Entry
+// Saisie
 $_['entry_username']        = 'Nom d\'utilisateur';
 $_['entry_password']        = 'Mot de passe';
 $_['entry_confirm']         = 'Confirmer';
@@ -17,7 +17,7 @@ $_['entry_lastname']        = 'Nom';
 $_['entry_email']           = 'E-Mail';
 $_['entry_image']           = 'Image';
 
-// Error
+// Erreur
 $_['error_permission']      = 'Attention: Vous n\'avez pas la permission de modifier votre profil!';
 $_['error_username_exists'] = 'Attention: Le nom d\'utilisateur est déjà utilisé!';
 $_['error_username']        = 'Le nom d\'utilisateur doit contenir entre 3 et 20 caractères!';

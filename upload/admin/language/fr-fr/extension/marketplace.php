@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']    = 'Places de marché';
 
 // Texte

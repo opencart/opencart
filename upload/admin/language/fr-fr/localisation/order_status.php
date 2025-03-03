@@ -12,7 +12,7 @@ $_['text_edit']        = 'Modifier un Statut de Commande';
 $_['column_name']      = 'Nom du Statut de Commande';
 $_['column_action']    = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']       = 'Nom du Statut de Commande';
 
 // Erreur

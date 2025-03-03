@@ -7,7 +7,7 @@ $_['text_address_new']      = 'Je souhaite utiliser une nouvelle adresse';
 $_['text_address_existing'] = 'Je souhaite utiliser une adresse existante';
 $_['text_success']          = 'Succès: Vous avez modifié l\'adresse de facturation!';
 
-// Entrée
+// Saisie
 $_['entry_address']         = 'Choisir une adresse';
 $_['entry_firstname']       = 'Prénom';
 $_['entry_lastname']        = 'Nom';

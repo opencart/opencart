@@ -24,7 +24,7 @@ $_['column_amount']       = 'Montant';
 $_['column_date_added']   = 'Date d’ajout';
 $_['column_action']       = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_name']          = 'Nom du coupon';
 $_['entry_code']          = 'Code';
 $_['entry_type']          = 'Type';

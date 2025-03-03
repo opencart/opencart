@@ -1,25 +1,25 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']          = 'Groupes d\'Attributs';
 
-// Text
+// Texte
 $_['text_success']           = 'Succès: Vous avez modifié les groupes d\'attributs!';
 $_['text_list']              = 'Liste des Groupes d\'Attributs';
 $_['text_add']               = 'Ajouter un Groupe d\'Attributs';
 $_['text_edit']              = 'Modifier le Groupe d\'Attributs';
 
-// Column
+// Colonne
 $_['column_name']            = 'Nom du Groupe d\'Attributs';
 $_['column_attribute_group'] = 'Groupe d\'Attributs';
 $_['column_sort_order']      = 'Ordre de Tri';
 $_['column_action']          = 'Action';
 
-// Entry
+// Saisie
 $_['entry_name']             = 'Nom du Groupe d\'Attributs';
 $_['entry_attribute_group']  = 'Groupe d\'Attributs';
 $_['entry_sort_order']       = 'Ordre de Tri';
 
-// Error
+// Erreur
 $_['error_warning']          = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
 $_['error_permission']       = 'Attention: Vous n\'avez pas l\'autorisation de modifier les groupes d\'attributs!';
 $_['error_attribute_group']  = 'Le nom du groupe de l\'Attribut est requis!';

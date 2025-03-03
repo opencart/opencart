@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Api;
 /**
  * Class Cart
- * 
+ *
  * Can be loaded using $this->load->controller('api/cart');
  *
  * @package Opencart\Catalog\Controller\Api

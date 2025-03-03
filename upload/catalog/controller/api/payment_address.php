@@ -2,7 +2,7 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Payment Address
- * 
+ *
  * Can be loaded using $this->load->controller('api/payment_address');
  *
  * @package Opencart\Catalog\Controller\Api

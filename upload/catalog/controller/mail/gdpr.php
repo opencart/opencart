@@ -82,8 +82,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-
-
 	/**
 	 * Remove
 	 *

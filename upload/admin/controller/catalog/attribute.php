@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Attribute
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/attribute');
  *
  * @package Opencart\Admin\Controller\Catalog

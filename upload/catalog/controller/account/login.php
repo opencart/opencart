@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Login
- * 
+ *
  * Can be loaded using $this->load->controller('account/login');
  *
  * @package Opencart\Catalog\Controller\Account

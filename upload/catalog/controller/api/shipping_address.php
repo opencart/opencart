@@ -2,7 +2,7 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Shipping Address
- * 
+ *
  * Can be loaded using $this->load->controller('api/shipping_address');
  *
  * @package Opencart\Catalog\Controller\Api

@@ -318,7 +318,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$filter_data = [
 				'firstname'  => '',
 				'lastname'   => '',
-				'company'   => '',
+				'company'    => '',
 				'address_1'  => '',
 				'address_2'  => '',
 				'city'       => '',

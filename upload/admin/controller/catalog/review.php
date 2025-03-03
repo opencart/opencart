@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Review
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/review');
  *
  * @package Opencart\Admin\Controller\Catalog

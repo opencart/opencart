@@ -67,7 +67,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
 
 			$option = [
-				'expires'  => time() + 60 * 60 * 24 * 90,
+				'expires' => time() + 60 * 60 * 24 * 90,
 				//'SameSite' => 'None'
 			];
 

@@ -3,7 +3,7 @@
 $_['heading_title']              = 'Abonnements';
 
 // Text
-$_['text_success']               = 'Erfolg: Sie haben Abonnements geändert!';
+$_['text_success']               = 'Erfolgreich: Sie haben Abonnements geändert!';
 $_['text_list']                  = 'Abonnentenliste';
 $_['text_add']                   = 'Abonnement hinzufügen';
 $_['text_edit']                  = 'Abonnement (#%s)';
@@ -76,7 +76,7 @@ $_['entry_shipping_address']     = 'Lieferadresse';
 $_['tab_order']                  = 'Bestellungen';
 
 // Error
-$_['error_permission']           = 'Achtung: Sie sind nicht berechtigt, Abonnements zu ändern!';
-$_['error_subscription_status']  = 'Achtung: Abonnementstatus muss ausgewählt werden!';
-$_['error_payment_method']       = 'Achtung: Zahlungsmethode existiert nicht!';
-$_['error_subscription']         = 'Warning: Subscription not yet added!';
+$_['error_permission']           = 'Warnung: Sie sind nicht berechtigt, Abonnements zu ändern!';
+$_['error_subscription_status']  = 'Warnung: Abonnementstatus muss ausgewählt werden!';
+$_['error_payment_method']       = 'Warnung: Zahlungsmethode existiert nicht!';
+$_['error_subscription']         = 'Warnung: Sie haben noch kein Abonnement hinzugefügt.';

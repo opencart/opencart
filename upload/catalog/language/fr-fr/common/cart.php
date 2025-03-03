@@ -12,6 +12,7 @@ $_['text_semi_month']            = 'demi-mois';
 $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
 $_['text_no_results']            = 'Votre panier est vide!';
+$_['text_model']                 = 'Modèle';
 $_['text_cart']                  = 'Voir le panier';
 $_['text_checkout']              = 'Paiement';
 

@@ -14,6 +14,7 @@ $_['text_comment']           = 'Succès: Commentaire ajouté!';
 $_['entry_payment_method']   = 'Choisir un mode de paiement...';
 
 // Erreur
+$_['error_order']            = 'La commande n\'a pu être trouvée. Veuillez svp actualiser la page de nouveau.';
 $_['error_customer']         = 'Client requis!';
 $_['error_payment_address']  = 'Adresse de facturation requise!';
 $_['error_shipping_address'] = 'Adresse de livraison requise!';

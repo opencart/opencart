@@ -93,6 +93,7 @@ $_['button_customer_add']           = 'Kunden hinzufügen';
 $_['button_approve']                = 'Genehmigen';
 $_['button_deny']                   = 'Leugnen';
 $_['button_reset']                  = 'Zurücksetzen';
+$_['button_login']                  = 'Login';
 $_['button_generate']               = 'Erzeugen';
 $_['button_view']                   = 'Sicht';
 $_['button_reward_add']             = 'Bonuspunkte hinzufügen';

@@ -14,8 +14,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/authorize');
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
+		if (isset($this->request->cookie['admin_authorize'])) {
+			$token = $this->request->cookie['admin_authorize'];
 		} else {
 			$token = '';
 		}
@@ -100,8 +100,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
+		if (isset($this->request->cookie['admin_authorize'])) {
+			$token = $this->request->cookie['admin_authorize'];
 		} else {
 			$token = '';
 		}
@@ -139,8 +139,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
+		if (isset($this->request->cookie['admin_authorize'])) {
+			$token = $this->request->cookie['admin_authorize'];
 		} else {
 			$token = '';
 		}
@@ -193,8 +193,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	public function unlock(): void {
 		$this->load->language('common/authorize');
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
+		if (isset($this->request->cookie['admin_authorize'])) {
+			$token = $this->request->cookie['admin_authorize'];
 		} else {
 			$token = '';
 		}

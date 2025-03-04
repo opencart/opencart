@@ -3,7 +3,6 @@
 $_['text_items']                 = '%s article(s) - %s';
 $_['text_points']                = 'Points';
 $_['text_subscription']          = 'Abonnement';
-$_['text_subscription_trial']    = '%s tous les %d %s(s) pour %d paiement(s), puis ';
 $_['text_subscription_duration'] = '%s tous les %d %s(s) pour %d paiement(s)';
 $_['text_subscription_cancel']   = '%s tous les %d %s(s) jusqu\'à annulation';
 $_['text_day']                   = 'jour';

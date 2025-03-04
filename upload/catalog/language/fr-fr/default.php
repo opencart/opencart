@@ -63,7 +63,6 @@ $_['button_search']         = 'Rechercher';
 $_['button_submit']         = 'Soumettre';
 $_['button_guest']          = 'Commander en tant qu\'invité';
 $_['button_view']           = 'Voir';
-$_['button_voucher']        = 'Appliquer le bon cadeau';
 $_['button_upload']         = 'Télécharger un fichier';
 $_['button_reward']         = 'Appliquer des points';
 $_['button_choose']         = 'Choisir';

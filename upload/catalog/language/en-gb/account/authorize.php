@@ -8,7 +8,7 @@ $_['text_code']     = 'Click the send button to send a security code to your ema
 $_['text_sent']     = 'Success: An email has been sent to your email account with a security code!';
 
 $_['text_locked']   = 'Your account has been locked!';
-$_['text_reset']    = 'Your account has been locked because of to many incorrect attempts at entering the security code. Click the reset button to receive a reset link via your email account.';
+$_['text_reset']    = 'Your account has been locked because of too many incorrect attempts at entering the security code. Click the reset button to receive a reset link via your email account.';
 $_['text_link']     = 'Success: An email with a reset link has been sent your email address!';
 
 $_['text_unlocked'] = 'Your account has been unlocked!';

@@ -13,7 +13,6 @@ $_['text_history']         = 'Historique';
 // Colonne
 $_['column_username']      = 'Nom d\'utilisateur API';
 $_['column_status']        = 'Statut';
-$_['column_token']         = 'Jeton';
 $_['column_ip']            = 'IP';
 $_['column_call']          = 'Requête';
 $_['column_date_added']    = 'Date d\'ajout';

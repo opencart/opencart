@@ -28,8 +28,6 @@ $_['entry_keyword']           = 'Mot-clé';
 $_['entry_parent']            = 'Parent';
 $_['entry_filter']            = 'Filtres';
 $_['entry_image']             = 'Image';
-$_['entry_top']               = 'Haut';
-$_['entry_column']            = 'Colonnes';
 $_['entry_sort_order']        = 'Ordre de Tri';
 $_['entry_status']            = 'Statut';
 $_['entry_layout']            = 'Remplacement de la Disposition';
@@ -37,8 +35,6 @@ $_['entry_layout']            = 'Remplacement de la Disposition';
 // Aide
 $_['help_parent']             = '(Autocomplétion)';
 $_['help_filter']             = '(Autocomplétion)';
-$_['help_top']                = 'Afficher dans la barre de menu du haut. Fonctionne uniquement pour les catégories parentes principales.';
-$_['help_column']             = 'Nombre de colonnes à utiliser pour les 3 catégories inférieures. Fonctionne uniquement pour les catégories parentes principales.';
 
 // Erreur
 $_['error_warning']           = 'Attention: Veuillez vérifier attentivement le formulaire pour les erreurs!';

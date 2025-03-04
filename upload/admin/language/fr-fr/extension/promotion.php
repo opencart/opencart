@@ -1,3 +1,3 @@
 <?php
-// Titre de l'en-tête
+// Titre
 $_['heading_title'] = 'Promotion';

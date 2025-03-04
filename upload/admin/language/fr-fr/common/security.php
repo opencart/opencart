@@ -41,6 +41,7 @@ $_['error_storage']                   = 'Attention: Le répertoire de stockage n
 $_['error_storage_root']              = 'Attention: Le répertoire de stockage doit être situé en dehors du répertoire racine!';
 $_['error_storage_name']              = 'Attention: Le nom du répertoire de stockage doit débuter comme suit: `storage_`. Exemple: `storage_`.';
 $_['error_admin']                     = 'Attention: Le répertoire admin n\'existe pas!';
+$_['error_admin_allowed']             = 'Attention: Le nom de répertoire admin ne peut être utilisé!';
 $_['error_admin_exists']              = 'Attention: Le nom du répertoire admin existe déjà!';
 $_['error_writable']                  = 'Attention: Les fichiers config.php et admin/config.php doivent être rendus modifiables!';
 $_['error_remove']                    = 'Attention: Le répertoire à supprimer n\'existe pas!';

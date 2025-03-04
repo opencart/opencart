@@ -32,7 +32,7 @@ $_['button_login_reply']    = 'Se connecter pour répondre';
 $_['button_like']           = 'J\'aime';
 $_['button_dislike']        = 'Je n\'aime pas';
 
-// Erreurs
+// Erreur
 $_['error_article']         = 'Attention: Article introuvable!';
 $_['error_article_comment'] = 'Attention: Commentaire de l\'article introuvable!';
 $_['error_token']           = 'Attention: Jeton de commentaire invalide!';

@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']    = 'Offres spéciales';
 
 // Texte

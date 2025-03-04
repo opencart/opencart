@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']              = 'Abonnements';
 
 // Texte
@@ -42,6 +42,7 @@ $_['column_notify']              = 'Client Notifié';
 $_['column_status']              = 'Statut';
 $_['column_date_added']          = 'Date d\'Ajout';
 $_['column_product']             = 'Détails du Produit';
+$_['column_model']               = 'Modèle';
 $_['column_quantity']            = 'Quantité';
 $_['column_trial_price']         = 'Prix d\'Essai';
 $_['column_price']               = 'Prix Unitaire';
@@ -51,7 +52,7 @@ $_['column_total']               = 'Total';
 $_['column_description']         = 'Description';
 $_['column_action']              = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_subscription_id']      = 'ID d\'Abonnement';
 $_['entry_order_id']             = 'ID de Commande';
 $_['entry_customer']             = 'Client';
@@ -78,3 +79,4 @@ $_['tab_order']                  = 'Commandes';
 $_['error_permission']           = 'Attention: Vous n\'avez pas la permission de modifier les abonnements!';
 $_['error_subscription_status']  = 'Attention: Le statut de l\'abonnement doit être sélectionné!';
 $_['error_payment_method']       = 'Attention: La méthode de paiement n\'existe pas!';
+$_['error_subscription']         = 'Attention: L\'abonnement n\'est pas encore ajouté!';

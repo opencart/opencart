@@ -12,7 +12,7 @@ $_['text_edit']          = 'Modifier un Statut d’Abonnement';
 $_['column_name']        = 'Nom du Statut d’Abonnement';
 $_['column_action']      = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']         = 'Nom du Statut d’Abonnement';
 
 // Erreur

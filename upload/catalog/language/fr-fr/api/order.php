@@ -1,8 +1,8 @@
 <?php
-// Text
+// Texte
 $_['text_success']           = 'Succès: Vous avez modifié les commandes!';
 
-// Error
+// Erreur
 $_['error_order']            = 'Attention: La commande n\'a pas pu être trouvée!';
 $_['error_customer']         = 'Attention: Les détails du client sont requis!';
 $_['error_payment_address']  = 'Attention: L\'adresse de paiement est requise!';

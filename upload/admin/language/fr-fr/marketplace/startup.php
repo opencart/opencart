@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']     = 'Démarrage';
 
 // Texte
@@ -12,7 +12,7 @@ $_['column_code']       = 'Code de démarrage';
 $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
-// Entry
+// Saisie
 $_['entry_description'] = 'Description';
 
 // Erreur

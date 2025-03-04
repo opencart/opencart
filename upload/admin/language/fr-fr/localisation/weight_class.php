@@ -14,7 +14,7 @@ $_['column_unit']      = 'Unité de Poids';
 $_['column_value']     = 'Valeur';
 $_['column_action']    = 'Action';
 
-// Champ
+// Saisie
 $_['entry_title']      = 'Titre du Poids';
 $_['entry_unit']       = 'Unité de Poids';
 $_['entry_value']      = 'Valeur';

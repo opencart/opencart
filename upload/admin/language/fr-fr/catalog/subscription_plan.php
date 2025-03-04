@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']          = 'Plans d\'Abonnement';
 
-// Text
+// Texte
 $_['text_success']           = 'Succès: Vous avez modifié les plans d\'abonnement!';
 $_['text_list']              = 'Liste des Plans d\'Abonnement';
 $_['text_add']               = 'Ajouter un Plan d\'Abonnement';
@@ -15,7 +15,12 @@ $_['text_semi_month']        = 'Demi-Mois';
 $_['text_month']             = 'Mois';
 $_['text_year']              = 'Année';
 
-// Entry
+// Colonne
+$_['column_name']           = 'Nom du Plan d\'Abonnement';
+$_['column_sort_order']     = 'Ordre de Tri';
+$_['column_action']         = 'Action';
+
+// Saisie
 $_['entry_name']            = 'Nom du Plan d\'Abonnement';
 $_['entry_trial_duration']  = 'Durée de l\'Essai';
 $_['entry_trial_cycle']     = 'Cycle de l\'Essai';
@@ -27,12 +32,7 @@ $_['entry_frequency']       = 'Fréquence';
 $_['entry_status']          = 'Statut';
 $_['entry_sort_order']      = 'Ordre de Tri';
 
-// Column
-$_['column_name']           = 'Nom du Plan d\'Abonnement';
-$_['column_sort_order']     = 'Ordre de Tri';
-$_['column_action']         = 'Action';
-
-// Help
+// Aide
 $_['help_trial_duration']   = 'La durée correspond au nombre de fois que l\'utilisateur effectuera un paiement.';
 $_['help_trial_cycle']      = 'Les montants d\'abonnement sont calculés par la fréquence et les cycles.';
 $_['help_trial_frequency']  = 'Si vous utilisez une fréquence de "semaine" et un cycle de "2", alors l\'utilisateur sera facturé toutes les 2 semaines.';
@@ -40,7 +40,7 @@ $_['help_duration']         = 'La durée correspond au nombre de fois que l\'uti
 $_['help_cycle']            = 'Les montants d\'abonnement sont calculés par la fréquence et les cycles.';
 $_['help_frequency']        = 'Si vous utilisez une fréquence de "semaine" et un cycle de "2", alors l\'utilisateur sera facturé toutes les 2 semaines.';
 
-// Error
+// Erreur
 $_['error_warning']         = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
 $_['error_permission']      = 'Attention: Vous n\'avez pas la permission de modifier les plans d\'abonnement!';
 $_['error_name']            = 'Le nom du plan d\'abonnement doit contenir entre 3 et 255 caractères!';

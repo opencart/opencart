@@ -1,9 +1,9 @@
 <?php
-// Text
+// Texte
 $_['text_success']       = 'Succès: Vous avez modifié votre panier!';
 $_['text_subscription']  = 'Abonnement';
 
-// Error
+// Erreur
 $_['error_warning']      = 'Attention: Veuillez vérifier attentivement le panier pour détecter d\'éventuelles erreurs!';
 $_['error_product']      = 'Attention: Le produit n\'a pas pu être trouvé!';
 $_['error_stock']        = 'Produit non disponible dans la quantité souhaitée ou en rupture de stock!';

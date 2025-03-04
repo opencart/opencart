@@ -23,7 +23,6 @@ $_['text_price']                 = 'Prix';
 $_['text_order_total']           = 'Totaux de la commande';
 $_['text_total']                 = 'Total';
 $_['text_subscription']          = 'Abonnement';
-$_['text_subscription_trial']    = '%s tous les %d %s pour %d paiement(s) puis ';
 $_['text_subscription_duration'] = '%s tous les %d %s pour %d paiement(s)';
 $_['text_subscription_cancel']   = '%s tous les %d %s jusqu\'à annulation';
 $_['text_day']                   = 'jour';

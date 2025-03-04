@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Manufacturer
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/manufacturer');
  *
  * @package Opencart\Admin\Controller\Catalog

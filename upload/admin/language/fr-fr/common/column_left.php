@@ -1,5 +1,5 @@
 <?php
-// Text
+// Texte
 $_['text_address_format']      = 'Format d\'Adresse';
 $_['text_affiliate']           = 'Affiliation';
 $_['text_api']                 = 'API';
@@ -81,8 +81,6 @@ $_['text_upgrade']             = 'Mise à Jour';
 $_['text_upload']              = 'Téléversements';
 $_['text_users']               = 'Utilisateurs';
 $_['text_user_group']          = 'Groupes d\'Utilisateurs';
-$_['text_voucher']             = 'Chèques-Cadeaux';
-$_['text_voucher_theme']       = 'Thèmes de Chèques-Cadeaux';
 $_['text_weight_class']        = 'Classes de Poids';
 $_['text_zone']                = 'Zones';
 $_['text_complete_status']     = 'Commandes Terminées';

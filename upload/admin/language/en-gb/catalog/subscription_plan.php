@@ -15,6 +15,11 @@ $_['text_semi_month']        = 'Semi Month';
 $_['text_month']             = 'Month';
 $_['text_year']              = 'Year';
 
+// Column
+$_['column_name']            = 'Subscription Plan Name';
+$_['column_sort_order']      = 'Sort Order';
+$_['column_action']          = 'Action';
+
 // Entry
 $_['entry_name']             = 'Subscription Plan Name';
 $_['entry_trial_duration']   = 'Trial Duration';
@@ -26,11 +31,6 @@ $_['entry_cycle']            = 'Cycle';
 $_['entry_frequency']        = 'Frequency';
 $_['entry_status']           = 'Status';
 $_['entry_sort_order']       = 'Sort Order';
-
-// Column
-$_['column_name']            = 'Subscription Plan Name';
-$_['column_sort_order']      = 'Sort Order';
-$_['column_action']          = 'Action';
 
 // Help
 $_['help_trial_duration']    = 'The duration is the number of times the user will make a payment.';

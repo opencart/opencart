@@ -12,7 +12,7 @@ $_['text_edit']        = 'Modifier un Statut de Retour';
 $_['column_name']      = 'Nom du Statut de Retour';
 $_['column_action']    = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']       = 'Nom du Statut de Retour';
 
 // Erreur

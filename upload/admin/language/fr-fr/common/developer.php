@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']          = 'Paramètres Développeur';
 
-// Text
+// Texte
 $_['text_developer_success'] = 'Succès: Vous avez modifié les paramètres développeur!';
 $_['text_cache_success']     = 'Succès: Vous avez vidé le cache!';
 $_['text_theme_success']     = 'Succès: Vous avez vidé le cache theme!';
@@ -13,16 +13,16 @@ $_['text_sass']              = 'SASS';
 $_['text_cache']             = 'Cache';
 $_['text_vendor']            = 'Fournisseur';
 
-// Column
+// Colonne
 $_['column_component']       = 'Composant';
 $_['column_action']          = 'Action';
 
-// Entry
+// Saisie
 $_['entry_cache']            = 'Cache';
 
-// Button
+// Bouton
 $_['button_on']              = 'Activé';
 $_['button_off']             = 'Désactivé';
 
-// Error
+// Erreur
 $_['error_permission']       = 'Attention: Vous n\'avez pas la permission de modifier les paramètres développeur!';

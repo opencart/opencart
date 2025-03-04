@@ -15,7 +15,7 @@ $_['column_code']            = 'Code de la Zone';
 $_['column_country']         = 'Pays';
 $_['column_action']          = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']             = 'Nom de la Zone';
 $_['entry_code']             = 'Code de la Zone';
 $_['entry_country']          = 'Pays';

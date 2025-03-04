@@ -53,10 +53,10 @@ $_['text_delete']        = 'Supprimer';
 $_['text_more']          = 'voir plus de réponses...';
 $_['text_refresh']       = 'Actualiser';
 
-// Entrée
+// Saisie
 $_['entry_pin']          = 'PIN';
 
-// Onglet
+// Onglets
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';
 $_['tab_download']       = 'Téléchargement';

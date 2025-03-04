@@ -17,7 +17,7 @@ $_['column_type']          = 'Type';
 $_['column_geo_zone']      = 'Zone Géographique';
 $_['column_action']        = 'Action';
 
-// Champ
+// Saisie
 $_['entry_name']           = 'Nom de la Taxe';
 $_['entry_rate']           = 'Taux de Taxes';
 $_['entry_type']           = 'Type';

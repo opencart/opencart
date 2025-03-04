@@ -1,8 +1,8 @@
 <?php
-// Heading
+// Titre
 $_['heading_title']                    = 'Boutiques';
 
-// Text
+// Texte
 $_['text_settings']                    = 'Paramètres';
 $_['text_success']                     = 'Succès: Vous avez modifié les boutiques!';
 $_['text_list']                        = 'Liste des boutiques';
@@ -24,12 +24,12 @@ $_['text_region']                      = 'Région';
 $_['text_language']                    = 'Langage';
 $_['text_currency']                    = 'Devise';
 
-// Column
+// Colonne
 $_['column_name']                      = 'Nom de la boutique';
 $_['column_url']                       = 'URL de la boutique';
 $_['column_action']                    = 'Action';
 
-// Entry
+// Saisie
 $_['entry_url']                        = 'URL de la boutique';
 $_['entry_meta_title']                 = 'Titre Meta';
 $_['entry_meta_description']           = 'Description Meta';
@@ -77,7 +77,6 @@ $_['entry_image_additional']           = 'Taille d\'image supplémentaire du pro
 $_['entry_image_related']              = 'Taille d\'image des produits associés (L x H)';
 $_['entry_image_article']              = 'Taille d\'image des articles (L x H)';
 $_['entry_image_topic']                = 'Taille d\'image des topiques (L x H)';
-$_['entry_image_blog']                 = 'Taille d\'image du blog (L x H)';
 $_['entry_image_compare']              = 'Taille d\'image de comparaison (L x H)';
 $_['entry_image_wishlist']             = 'Taille d\'image de la liste de souhaits (L x H)';
 $_['entry_image_cart']                 = 'Taille d\'image du panier (L x H)';
@@ -85,10 +84,10 @@ $_['entry_image_location']             = 'Taille d\'image de l\'emplacement (L x
 $_['entry_width']                      = 'Largeur';
 $_['entry_height']                     = 'Hauteur';
 
-// Help
+// Aide
 $_['help_url']                         = 'Incluez l\'URL complète de votre boutique. Assurez-vous d\'ajouter \'/\' à la fin. Exemple: http://www.votredomaine.com/chemin/<br/><br/>N\'utilisez pas de répertoires pour créer une nouvelle boutique. Vous devez toujours pointer un autre domaine ou sous-domaine vers votre hébergement.';
-$_['help_geocode']                     = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre boutique.';
 $_['help_icon']                        = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
+$_['help_geocode']                     = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre boutique.';
 $_['help_open']                        = 'Remplissez les horaires d\'ouverture de votre boutique.';
 $_['help_comment']                     = 'Ce champ est destiné à des notes spéciales que vous souhaitez communiquer au client, par exemple: la boutique n\'accepte pas les chèques.';
 $_['help_location']                    = 'Les différents emplacements de boutiques que vous souhaitez afficher sur le formulaire de contact.';
@@ -109,7 +108,7 @@ $_['help_stock_display']               = 'Afficher la quantité de stock sur la 
 $_['help_stock_checkout']              = 'Permettre aux clients de finaliser leurs achats même si les produits commandés ne sont pas en stock.';
 $_['help_product_count']               = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les boutiques avec beaucoup de sous-catégories!';
 
-// Error
+// Erreur
 $_['error_warning']                    = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                 = 'Attention: Vous n\'avez pas la permission de modifier les boutiques!';
 $_['error_url']                        = 'L\'URL de la boutique est requise!';
@@ -118,7 +117,6 @@ $_['error_name']                       = 'Le nom de la boutique doit comporter e
 $_['error_owner']                      = 'Le propriétaire de la boutique doit comporter entre 3 et 64 caractères!';
 $_['error_address']                    = 'L\'adresse de la boutique doit comporter entre 10 et 256 caractères!';
 $_['error_email']                      = 'L\'adresse e-mail semble invalide!';
-$_['error_telephone']                  = 'Le téléphone doit comporter entre 3 et 32 caractères!';
 $_['error_product_description_length'] = 'La longueur de la description du produit est requise!';
 $_['error_pagination']                 = 'La pagination est requise!';
 $_['error_customer_group_display']     = 'Vous devez inclure le groupe de clients par défaut si vous utilisez cette fonctionnalité!';

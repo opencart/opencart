@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Related
- * 
+ *
  * Can be loaded using $this->load->controller('product/related');
  *
  * @package Opencart\Catalog\Controller\Product

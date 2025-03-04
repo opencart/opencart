@@ -1,8 +1,8 @@
 <?php
-// Text
+// Texte
 $_['text_success']           = 'Succès: Le mode de paiement a été défini!';
 
-// Error
+// Erreur
 $_['error_customer']         = 'Attention: Les informations du client sont requises!';
 $_['error_product']          = 'Attention: Des produits sont requis!';
 $_['error_shipping_address'] = 'Attention: L\'adresse de livraison est requise!';

@@ -2,7 +2,7 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Shipping Method
- * 
+ *
  * Can be loaded using $this->load->controller('api/shipping_method');
  *
  * @package Opencart\Catalog\Controller\Api

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Information
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/information');
  *
  * @package Opencart\Admin\Controller\Catalog

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Cms;
 /**
  * Class Comment
- * 
+ *
  * Can be loaded using $this->load->controller('cms/comment');
  *
  * @package Opencart\Catalog\Controller\Cms

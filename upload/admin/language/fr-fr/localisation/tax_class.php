@@ -17,7 +17,7 @@ $_['text_store']        = 'Adresse du Magasin';
 $_['column_title']      = 'Titre de la Classe de Taxes';
 $_['column_action']     = 'Action';
 
-// Champ
+// Saisie
 $_['entry_title']       = 'Titre de la Classe de Taxes';
 $_['entry_description'] = 'Description';
 $_['entry_rate']        = 'Taux de Taxes';

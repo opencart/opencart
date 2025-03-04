@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']     = 'Recherche';
 $_['heading_tag']       = 'Tag - ';
 
@@ -22,6 +22,6 @@ $_['text_model_asc']    = 'Modèle (A - Z)';
 $_['text_model_desc']   = 'Modèle (Z - A)';
 $_['text_limit']        = 'Afficher';
 
-// Entrée
+// Saisie
 $_['entry_search']      = 'Critères de recherche';
 $_['entry_description'] = 'Rechercher dans les descriptions des produits';

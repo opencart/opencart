@@ -6,7 +6,7 @@ $_['heading_title']    = 'API Marketplace OpenCart';
 $_['text_success']     = 'Succès: Vous avez modifié les informations de votre API!';
 $_['text_signup']      = 'Veuillez entrer vos informations API OpenCart que vous pouvez obtenir <a href="https://www.opencart.com/index.php?route=account/store" target="_blank" class="alert-link">ici</a>.';
 
-// Entrée
+// Saisie
 $_['entry_username']   = 'Nom d’utilisateur';
 $_['entry_secret']     = 'Clé secrète';
 

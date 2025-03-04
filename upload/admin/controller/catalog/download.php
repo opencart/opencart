@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Download
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/download');
  *
  * @package Opencart\Admin\Controller\Catalog

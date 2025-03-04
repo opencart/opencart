@@ -24,7 +24,7 @@ $_['column_amount']       = 'Montant';
 $_['column_date_added']   = 'Date d’ajout';
 $_['column_action']       = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_name']          = 'Nom du coupon';
 $_['entry_code']          = 'Code';
 $_['entry_type']          = 'Type';
@@ -35,8 +35,6 @@ $_['entry_total']         = 'Montant total';
 $_['entry_category']      = 'Catégorie';
 $_['entry_product']       = 'Produits';
 $_['entry_date']          = 'Dates';
-$_['entry_date_start']    = 'Date de début';
-$_['entry_date_end']      = 'Date de fin';
 $_['entry_uses_total']    = 'Utilisations par coupon';
 $_['entry_uses_customer'] = 'Utilisations par client';
 $_['entry_status']        = 'Statut';

@@ -15,7 +15,7 @@ $_['text_affiliate_all']   = 'Tous les affiliés';
 $_['text_affiliate']       = 'Affiliés';
 $_['text_product']         = 'Produits';
 
-// Entrée
+// Saisie
 $_['entry_store']          = 'De';
 $_['entry_to']             = 'À';
 $_['entry_customer_group'] = 'Groupe de clients';
@@ -26,9 +26,9 @@ $_['entry_subject']        = 'Sujet';
 $_['entry_message']        = 'Message';
 
 // Aide
-$_['help_customer']        = '(Complétion automatique)';
-$_['help_affiliate']       = '(Complétion automatique)';
-$_['help_product']         = 'Envoyer uniquement aux clients ayant commandé des produits dans la liste. (Complétion automatique)';
+$_['help_customer']        = '(Autocomplétion)';
+$_['help_affiliate']       = '(Autocomplétion)';
+$_['help_product']         = 'Envoyer uniquement aux clients ayant commandé des produits dans la liste. (Autocomplétion)';
 
 // Erreur
 $_['error_permission']     = 'Attention: Vous n’avez pas la permission d’envoyer des e-mails!';

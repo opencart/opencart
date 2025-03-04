@@ -1,5 +1,5 @@
 <?php
-// En-tête
+// Titre
 $_['heading_title']     = 'Rapport en ligne';
 
 // Texte

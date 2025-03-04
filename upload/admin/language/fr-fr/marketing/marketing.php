@@ -24,7 +24,7 @@ $_['column_country']    = 'Pays';
 $_['column_date_added'] = 'Date d’ajout';
 $_['column_action']     = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_name']        = 'Nom de la campagne';
 $_['entry_description'] = 'Description de la campagne';
 $_['entry_code']        = 'Code de suivi';

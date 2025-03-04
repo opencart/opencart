@@ -13,7 +13,7 @@ $_['column_code']       = 'Code de l’événement';
 $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_description'] = 'Description';
 $_['entry_trigger']     = 'Déclencheur';
 $_['entry_action']      = 'Action';

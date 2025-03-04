@@ -10,7 +10,7 @@ $_['text_agree']             = 'J\'ai lu et j\'accepte les <a href="%s" class="m
 $_['text_success']           = 'Succès: Vous avez modifié le mode de paiement!';
 $_['text_comment']           = 'Succès: Commentaire ajouté!';
 
-// Entrée
+// Saisie
 $_['entry_payment_method']   = 'Choisir un mode de paiement...';
 
 // Erreur

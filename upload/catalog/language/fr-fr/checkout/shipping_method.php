@@ -7,7 +7,7 @@ $_['text_shipping_method']   = 'Options de mode de livraison';
 $_['text_shipping']          = 'Veuillez sélectionner le mode de livraison préféré à utiliser pour cette commande.';
 $_['text_success']           = 'Succès: Vous avez modifié le mode de livraison!';
 
-// Entrée
+// Saisie
 $_['entry_shipping_method']  = 'Choisir un mode de livraison...';
 
 // Erreur

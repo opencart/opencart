@@ -40,7 +40,7 @@ $_['column_description']        = 'Description';
 $_['column_amount']             = 'Montant';
 $_['column_action']             = 'Action';
 
-// Entrée
+// Saisie
 $_['entry_customer']            = 'Client';
 $_['entry_company']             = 'Entreprise';
 $_['entry_tracking']            = 'Code de suivi';

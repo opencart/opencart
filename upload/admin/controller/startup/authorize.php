@@ -49,7 +49,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			// Don't force redirect to authorize page if already on authorize page.
 			$ignore = [
 				'common/authorize',
-				'common/logout'
+				'common/login',
+				'common/logout',
+				'common/forgotten'
 			];
 
 			if (!in_array($route, $ignore)) {

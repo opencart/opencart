@@ -731,7 +731,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * $token_info = $this->model_user_user->getTokenByCode($user_id, $code);
 	 */
 	public function getTokenByCode(string $code): array {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_token` WHERE `date_added` < DATE_ADD(NOW(), INTERVAL 10 MINUTE)");
+		//$this->db->query("DELETE FROM `" . DB_PREFIX . "user_token` WHERE `date_added` < DATE_ADD(NOW(), INTERVAL 10 MINUTE)");
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_token` `ut` LEFT JOIN `" . DB_PREFIX . "user` `u` ON (`ut`.`user_id` = `u`.`user_id`) WHERE `code` = '" . $this->db->escape($code) . "'");
 

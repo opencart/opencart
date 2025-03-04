@@ -26,7 +26,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
 
 		if ($token_info && $token_info['total'] > 2) {
-			$this->response->redirect($this->url->link('account/authorize.reset', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -149,7 +149,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			} else {
 				unset($this->session->data['code']);
 
-				$json['redirect'] = $this->url->link('common/authorize.reset', 'language=' . $this->config->get('config_language'), true);
+				$json['redirect'] = $this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true);
 			}
 
 			$this->model_user_user->editAuthorizeTotal($token_info['user_authorize_id'], $total);
@@ -233,7 +233,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
 
 		if (!$token_info || $token_info['total'] <= 2) {
-			$json['redirect'] = $this->url->link('account/authorize', 'user_token=' . $this->session->data['user_token'], true);
+			$json['redirect'] = $this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true);
 		}
 
 		if (!$json) {
@@ -298,6 +298,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('account/authorize_unlock', $data));
+		$this->response->setOutput($this->load->view('common/authorize_unlock', $data));
 	}
 }

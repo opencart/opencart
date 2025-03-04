@@ -24,6 +24,7 @@ $_['entry_open']       = 'Öffnungszeiten';
 $_['entry_comment']    = 'Kommentar';
 
 // Help
+$_['help_telephone']   = 'Please enter your store location telephone number.';
 $_['help_geocode']     = 'Bitte geben Sie den Geocode Ihres Filialstandorts manuell ein.';
 $_['help_open']        = 'Geben Sie die Öffnungszeiten Ihres Geschäfts ein.';
 $_['help_comment']     = 'In dieses Feld können Sie besondere Hinweise geben, die Sie dem Kunden mitteilen möchten, z. B.: Das Geschäft akzeptiert keine Schecks.';

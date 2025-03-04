@@ -9,7 +9,7 @@ $_['text_forgotten']           = 'Passwort vergessen';
 $_['text_your_email']          = 'Ihre E-Mail-Adresse';
 $_['text_email']               = 'Geben Sie die mit Ihrem Konto verknüpfte E-Mail-Adresse ein. Klicken Sie auf „Senden“, um einen Link zum Zurücksetzen des Passworts per E-Mail zu erhalten.';
 $_['text_password']            = 'Geben Sie das neue Passwort ein, das Sie verwenden möchten.';
-$_['text_success']             = 'Eine E-Mail mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet!';
+$_['text_sent']                = 'An email with a confirmation link has been sent to your email address!';
 $_['text_reset']               = 'Erfolg: Ihr Passwort wurde erfolgreich aktualisiert.';
 
 // Entry

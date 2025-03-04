@@ -6,26 +6,12 @@
     <div class="row justify-content-sm-center">
       <div class="col-sm-10 col-md-8 col-lg-5">
         <div class="card">
-          <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
+          <div class="card-header"><i class="fa-solid fa-lock"></i> {{ text_locked }}</div>
           <div class="card-body">
-            <form id="form-authorize" action="{{ action }}" method="post" data-oc-toggle="ajax">
-              <p>{{ text_security }}</p>
-              <p>{{ text_code }}</p>
-              <div class="mb-3">
-                <label for="input-code" class="form-label">{{ entry_code }}</label>
-                <div class="input-group">
-                  <input type="text" name="code" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_send }}</button>
-                </div>
-                <div id="error-code" class="invalid-feedback"></div>
-              </div>
-              <div class="text-end">
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button>
-              </div>
-              {% if redirect %}
-                <input type="hidden" name="redirect" value="{{ redirect }}"/>
-              {% endif %}
-            </form>
+            <p>{{ text_reset }}</p>
+            <div class="d-grid">
+              <button type="button" id="button-reset" class="btn btn-danger btn-lg"><i class="fa-solid fa-unlock"></i> {{ button_reset }}</button>
+            </div>
           </div>
         </div>
       </div>
@@ -33,17 +19,17 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-send').on('click', function(e) {
+$('#button-reset').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=common/authorize.send&user_token={{ user_token }}',
+        url: 'index.php?route=common/authorize.confirm&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
-            $('#button-send').button('loading');
+            $('#button-reset').button('loading');
         },
         complete: function() {
-            $('#button-send').button('reset');
+            $('#button-reset').button('reset');
         },
         success: function(json) {
             console.log(json);
@@ -67,4 +53,3 @@ $('#button-send').on('click', function(e) {
 });
 //--></script>
 {{ footer }}
-

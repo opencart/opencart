@@ -113,6 +113,12 @@ $_['entry_order_id']             = 'Bestellnummer';
 $_['entry_total']                = 'Gesamt';
 $_['entry_date_from']            = 'Stammen aus';
 $_['entry_date_to']              = 'Datum bis';
+$_['text_sku']                   = 'Artikelnummer';
+$_['text_upc']                   = 'UPC';
+$_['text_ean']                   = 'EAN';
+$_['text_jan']                   = 'JAN';
+$_['text_isbn']                  = 'ISBN';
+$_['text_mpn']                   = 'MPN';
 
 // Help
 $_['help_override']              = 'Wenn die Änderung des Bestellstatus der Kundenbestellung aufgrund einer Betrugsschutzerweiterung blockiert ist, aktivieren Sie die Überschreibung.';

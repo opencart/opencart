@@ -93,6 +93,7 @@ $_['button_customer_add']           = 'Ajouter un Client';
 $_['button_approve']                = 'Approuver';
 $_['button_deny']                   = 'Refuser';
 $_['button_reset']                  = 'Réinitialiser';
+$_['button_login']                  = 'Se Connecter';
 $_['button_generate']               = 'Générer';
 $_['button_view']                   = 'Voir';
 $_['button_reward_add']             = 'Ajouter des Points de Récompenses';

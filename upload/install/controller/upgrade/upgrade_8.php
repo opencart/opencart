@@ -168,6 +168,11 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$remove[] = [
+				'table' => 'category',
+				'field' => 'column'
+			];
+
+			$remove[] = [
 				'table' => 'customer',
 				'field' => 'cart'
 			];

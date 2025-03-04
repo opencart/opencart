@@ -31,28 +31,12 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
 		if ($token_info && $token_info['total'] > 2) {
-			$this->response->redirect($this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true));
+			$this->response->redirect($this->url->link('account/authorize.reset', 'language=' . $this->config->get('config_language'), true));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['action'] = $this->url->link('account/authorize.save', 'language=' . $this->config->get('config_language'));
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
 
 		if (!$token_info) {
 			// Create a token that can be stored as a cookie and will be used to identify device is safe.
@@ -66,12 +50,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
 
-			$option = [
-				'expires' => time() + 60 * 60 * 24 * 90,
-				//'SameSite' => 'None'
-			];
-
-			setcookie('customer_authorize', $token, $option);
+			setcookie('customer_authorize', $token, time() + 60 * 60 * 24 * 90);
 		}
 
 		if (isset($this->request->get['route']) && !str_starts_with($this->request->get['route'], 'account/authorize')) {
@@ -128,7 +107,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
 				// If token is valid and total attempts are more than 2, redirect to unlock page.
 			} elseif ($token_info['total'] > 2) {
-				$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+				$json['redirect'] = $this->url->link('account/authorize.reset', 'language=' . $this->config->get('config_language'), true);
 			}
 		} else {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
@@ -171,7 +150,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			if (!$token_info) {
 				$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
 			} elseif ($token_info['total'] > 2) {
-				$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+				$json['redirect'] = $this->url->link('account/authorize.reset', 'language=' . $this->config->get('config_language'), true);
 			} elseif (!isset($this->request->post['code']) || !isset($this->session->data['code']) || $this->request->post['code'] != $this->session->data['code']) {
 				$total = $token_info['total'] + 1;
 
@@ -180,7 +159,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				} else {
 					unset($this->session->data['code']);
 
-					$json['redirect'] = $this->url->link('account/authorize.unlock', 'language=' . $this->config->get('config_language'), true);
+					$json['redirect'] = $this->url->link('account/authorize.reset', 'language=' . $this->config->get('config_language'), true);
 				}
 
 				$this->model_account_customer->editAuthorizeTotal($token_info['customer_authorize_id'], $total);
@@ -219,7 +198,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function unlock(): void {
+	public function reset(): void {
 		$this->load->language('account/authorize');
 
 		if (isset($this->request->cookie['customer_authorize'])) {
@@ -248,7 +227,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('account/authorize_unlock', $data));
+		$this->response->setOutput($this->load->view('account/authorize_reset', $data));
 	}
 
 	/**
@@ -298,7 +277,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function reset(): void {
+	public function unlock(): void {
 		$this->load->language('account/authorize');
 
 		if (isset($this->request->get['email'])) {
@@ -313,30 +292,45 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		// Logout customer
-		$this->customer->logout();
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		// Check total attempts
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getTokenByCode($code);
 
+		if ($customer_info && $customer_info['email'] == $email) {
+			$data['text_unlock'] = $this->language->get('text_unlock');
+
+			$this->model_account_customer->resetAuthorizes($customer_info['customer_id']);
+		} else {
+			$data['text_unlock'] = $this->language->get('text_failed');
+		}
+
 		// Reset token so it cant be used again
 		$this->model_account_customer->deleteTokenByCode($code);
 
-		if ($customer_info && $customer_info['email'] == $email) {
-			$this->model_account_customer->resetAuthorizes($customer_info['customer_id']);
-		} else {
-			$this->session->data['error'] = $this->language->get('error_reset');
+		// Logout customervv
+		$this->customer->logout();
 
-			//$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
-		}
+		unset($this->session->data['customer']);
+		unset($this->session->data['shipping_address']);
+		unset($this->session->data['shipping_method']);
+		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['payment_address']);
+		unset($this->session->data['payment_method']);
+		unset($this->session->data['payment_methods']);
+		unset($this->session->data['comment']);
+		unset($this->session->data['order_id']);
+		unset($this->session->data['coupon']);
+		unset($this->session->data['reward']);
+		unset($this->session->data['customer_token']);
 
-		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('account/authorize_reset', $data));
+		$this->response->setOutput($this->load->view('account/authorize_unlock', $data));
 	}
 }

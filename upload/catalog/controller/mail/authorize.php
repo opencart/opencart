@@ -19,7 +19,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * catalog/controller/account/authorize.send/after
 	 */
-	public function index(&$route, &$args, &$output): void {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($this->session->data['code'])) {
 			$code = (string)$this->session->data['code'];
 		} else {
@@ -71,7 +71,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * catalog/model/account/customer.addToken/after
 	 */
-	public function reset(&$route, &$args, &$output): void {
+	public function reset(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];
 		} else {
@@ -97,7 +97,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if ($type == 'authorize' && $customer_info) {
 			$this->load->language('mail/authorize_reset');
 
-			$data['reset'] = $this->url->link('account/authorize.reset', 'email=' . $customer_info['email'] . '&code=' . $code, true);
+			$data['reset'] = $this->url->link('account/authorize.unlock', 'email=' . $customer_info['email'] . '&code=' . $code, true);
 			$data['ip'] = oc_get_ip();
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 

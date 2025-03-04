@@ -33,7 +33,7 @@ $_['text_subtract']              = 'Soustraire';
 $_['text_percentage']            = 'Pourcentage';
 $_['text_image']                 = 'Image';
 $_['text_image_additional']      = 'Images Supplémentaires';
-$_['text_reward']                = 'Points de Fidélité';
+$_['text_reward']                = 'Points de Récompenses';
 $_['text_points']                = 'Points';
 $_['text_from']                  = 'De';
 $_['text_to']                    = 'À';
@@ -114,7 +114,7 @@ $_['entry_filter']               = 'Filtres';
 $_['entry_download']             = 'Téléchargements';
 $_['entry_related']              = 'Produits Associés';
 $_['entry_tag']                  = 'Tags du Produit';
-$_['entry_reward']               = 'Points de Fidélité';
+$_['entry_reward']               = 'Points de Récompenses';
 $_['entry_layout']               = 'Remplacement de la Disposition';
 $_['entry_subscription']         = 'Plan d\'Abonnement';
 

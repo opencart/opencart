@@ -21,7 +21,4 @@ $_['button_send']   = 'Envoyer';
 $_['button_reset']  = 'Réinitialiser';
 
 // Erreur
-$_['error_warning'] = 'Vous avez dépassé le nombre autorisé de tentatives de saisie du code de sécurité!';
-$_['error_token']   = 'Jeton d\'autorisation invalide!';
-$_['error_code']    = 'Le code de sécurité ne correspond pas!';
-$_['error_reset']   = 'Attention: Impossible de réinitialiser votre code de sécurité!';
+$_['error_code']    = 'Vous avez dépassé le nombre autorisé de tentatives de saisie du code de sécurité!';

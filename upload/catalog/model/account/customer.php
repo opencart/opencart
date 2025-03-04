@@ -516,25 +516,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Authorize By Customer
-	 *
-	 * @param int $customer_id primary key of the customer record
-	 *
-	 * @return array<string, mixed> authorize token record that has the customer ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $login_info = $this->model_account_customer->getAuthorizeByCustomer($customer_id);
-	 */
-	public function getAuthorizeTotal(int $customer_id): int {
-		$query = $this->db->query("SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `status` = '0' GROUP BY `customer_id`");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
 	 * Reset Customer Authorizes
 	 *
 	 * @param int $customer_id primary key of the customer record

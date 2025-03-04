@@ -53,6 +53,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			setcookie('customer_authorize', $token, time() + 60 * 60 * 24 * 90);
 		}
 
+		// Set the code to be emailed
+		$this->session->data['code'] = oc_token(6);
+
 		if (isset($this->request->get['route']) && !str_starts_with($this->request->get['route'], 'account/authorize')) {
 			$args = $this->request->get;
 
@@ -217,6 +220,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
 		if (!$token_info || $token_info['total'] <= 2) {
+			// Redirect if already have a valid token.
 			$this->response->redirect($this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true));
 		}
 
@@ -281,7 +285,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/authorize');
 
 		if (isset($this->request->get['email'])) {
-			$email = (string)$this->request->get['email'];
+			$email = urldecode((string)$this->request->get['email']);
 		} else {
 			$email = '';
 		}
@@ -310,7 +314,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Reset token so it cant be used again
 		$this->model_account_customer->deleteTokenByCode($code);
 
-		// Logout customervv
+		// Logout customer
 		$this->customer->logout();
 
 		unset($this->session->data['customer']);
@@ -324,9 +328,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['order_id']);
 		unset($this->session->data['coupon']);
 		unset($this->session->data['reward']);
+
+		// Remove customer token if set
 		unset($this->session->data['customer_token']);
 
-		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');

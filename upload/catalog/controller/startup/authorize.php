@@ -18,8 +18,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = (string)$this->request->cookie['authorize'];
+		if (isset($this->request->cookie['customer_authorize'])) {
+			$token = (string)$this->request->cookie['customer_authorize'];
 		} else {
 			$token = '';
 		}
@@ -53,11 +53,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			];
 
 			if (!in_array($route, $ignore)) {
-				if ($token_info && !$token_info['status'] && $token_info['attempts'] > 2) {
-					return new \Opencart\System\Engine\Action('account/authorize.unlock');
+				if ($token_info && !$token_info['status'] && $token_info['total'] > 2) {
+					return new \Opencart\System\Engine\Action('account/authorize.reset');
 				}
 
-				if (!$token_info || !$token_info['status'] && $token_info['attempts'] <= 2) {
+				if (!$token_info || !$token_info['status'] && $token_info['total'] <= 2) {
 					return new \Opencart\System\Engine\Action('account/authorize');
 				}
 			}

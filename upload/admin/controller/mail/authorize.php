@@ -19,11 +19,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 *
 	 * admin/controller/common/authorize.send/after
 	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$email = $this->user->getEmail();
-
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($this->session->data['code'])) {
-			$code = $this->session->data['code'];
+			$code = (string)$this->session->data['code'];
 		} else {
 			$code = '';
 		}
@@ -55,7 +53,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
 				$mail->setSubject($this->language->get('text_subject'));
-				$mail->setText($this->load->view('mail/authorize', $data));
+				$mail->setHtml($this->load->view('mail/authorize', $data));
 				$mail->send();
 			}
 		}
@@ -101,7 +99,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$this->load->language('mail/authorize_reset');
 
 			$data['username'] = $this->user->getUsername();
-			$data['reset'] = $this->url->link('common/authorize.reset', 'email=' . $email . '&code=' . $code, true);
+			$data['reset'] = $this->url->link('common/authorize.unlock', 'email=' . $user_info['email'] . '&code=' . $code, true);
 			$data['ip'] = oc_get_ip();
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -116,11 +114,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				];
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($email);
+				$mail->setTo($user_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
 				$mail->setSubject($this->language->get('text_subject'));
-				$mail->setText($this->load->view('mail/authorize_reset', $data));
+				$mail->setHtml($this->load->view('mail/authorize_reset', $data));
 				$mail->send();
 			}
 		}

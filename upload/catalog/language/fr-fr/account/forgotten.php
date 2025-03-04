@@ -9,7 +9,7 @@ $_['text_forgotten']           = 'Mot de passe oublié';
 $_['text_your_email']          = 'Votre adresse e-mail';
 $_['text_email']               = 'Entrez l\'adresse e-mail associée à votre compte. Cliquez sur envoyer pour recevoir un lien de réinitialisation de mot de passe par e-mail.';
 $_['text_password']            = 'Entrez le nouveau mot de passe que vous souhaitez utiliser.';
-$_['text_sent']                = 'An email with a confirmation link has been sent to your email address!';
+$_['text_sent']                = 'Un lien de confirmation a été envoyé à votre adresse e-mail!';
 $_['text_reset']               = 'Succès: Votre mot de passe a été réinitialisé avec succès.';
 
 // Saisie

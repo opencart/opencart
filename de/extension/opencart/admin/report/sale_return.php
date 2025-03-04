@@ -22,7 +22,7 @@ $_['column_returns']      = 'Nr. Rücksendungen';
 $_['entry_date_start']    = 'Datum Beginn';
 $_['entry_date_end']      = 'Datum Ende';
 $_['entry_group']         = 'Gruppieren nach';
-$_['entry_return_status'] = 'Rückgabestatus';
+$_['entry_return_status'] = 'Return Status';
 $_['entry_status']        = 'Status';
 $_['entry_sort_order']    = 'Sortierreihenfolge';
 

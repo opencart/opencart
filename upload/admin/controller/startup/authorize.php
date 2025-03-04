@@ -33,7 +33,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		// Block access to 2fa if not active or logged in
 		if ($route == 'common/authorize' && !$this->config->get('config_user_2fa')) {
-			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+			//$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		if ($this->config->get('config_user_2fa')) {
@@ -43,7 +43,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
 
 			if ($token_info && $token_info['status']) {
-				$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+				//$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
 			}
 
 			// Don't force redirect to authorize page if already on authorize page.

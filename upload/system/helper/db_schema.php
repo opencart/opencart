@@ -7427,11 +7427,6 @@ function oc_db_schema() {
 				'default' => ''
 			],
 			[
-				'name'    => 'code',
-				'type'    => 'varchar(40)',
-				'default' => ''
-			],
-			[
 				'name'    => 'ip',
 				'type'    => 'varchar(40)',
 				'default' => ''

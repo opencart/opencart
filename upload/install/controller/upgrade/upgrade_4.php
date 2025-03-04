@@ -382,12 +382,12 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
 
 			foreach ($query->rows as $extension) {
-				//get all setting from setting table
+				// Get all setting from setting table
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
 
 				if ($query->num_rows) {
 					foreach ($query->rows as $result) {
-						//update old column name to adding prefix before the name
+						// Update old column name to adding prefix before the name
 						if ($result['code'] == $extension['code'] && $result['code'] != $extension['type'] . '_' . $extension['code']) {
 							$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = '" . $this->db->escape($extension['type'] . '_' . $extension['code']) . "', `key` = '" . $this->db->escape($extension['type'] . '_' . $result['key']) . "', `value` = '" . $this->db->escape($result['value']) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 						}

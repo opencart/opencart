@@ -23,4 +23,5 @@ $_['text_zone']       = 'Region/Staat';
 $_['text_history']    = 'Anmeldeverlauf';
 $_['text_ip']         = 'IP';
 $_['text_date_added'] = 'Datum hinzugefügt';
+$_['text_contact']    = 'Für weitere Informationen können Sie den Ladenbesitzer hier kontaktieren:';
 $_['text_thanks']     = 'Danke,';

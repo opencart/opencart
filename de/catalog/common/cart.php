@@ -11,6 +11,7 @@ $_['text_semi_month']            = 'Halber Monat';
 $_['text_month']                 = 'Monat';
 $_['text_year']                  = 'Jahr';
 $_['text_no_results']            = 'Ihr Warenkorb ist leer!';
+$_['text_model']                 = 'Modell';
 $_['text_cart']                  = 'Warenkorb anzeigen';
 $_['text_checkout']              = 'Kasse';
 

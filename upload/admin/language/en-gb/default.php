@@ -93,6 +93,7 @@ $_['button_customer_add']           = 'Add Customer';
 $_['button_approve']                = 'Approve';
 $_['button_deny']                   = 'Deny';
 $_['button_reset']                  = 'Reset';
+$_['button_login']                  = 'Login';
 $_['button_generate']               = 'Generate';
 $_['button_view']                   = 'View';
 $_['button_reward_add']             = 'Add Reward Points';

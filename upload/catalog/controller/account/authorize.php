@@ -175,7 +175,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['code']);
 
 			// On success we need to reset the attempts and status.
-			//$this->model_account_customer->editAuthorizeStatus($token_info['customer_authorize_id'], true);
+			$this->model_account_customer->editAuthorizeStatus($token_info['customer_authorize_id'], true);
 			$this->model_account_customer->editAuthorizeTotal($token_info['customer_authorize_id'], 0);
 
 			if (isset($this->request->post['redirect'])) {

@@ -565,7 +565,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $token_info = $this->model_account_customer->getTokenByCode($code);
 	 */
 	public function getTokenByCode(string $code): array {
-		//$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE DATE_ADD(`date_added`, INTERVAL 10 MINUTE) > NOW()");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE DATE_ADD(`date_added`, INTERVAL 10 MINUTE) < NOW()");
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_token` `ct` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ct`.`customer_id` = `c`.`customer_id`) WHERE `ct`.`code` = '" . $this->db->escape($code) . "'");
 
